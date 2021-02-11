@@ -1,0 +1,246 @@
+%%
+%% PokerLab (c) 2018-21 Christopher A. Bohn
+%%
+
+\input{../../common/assignment.tex}
+
+\renewcommand{\labnumber}{1}
+\renewcommand{\labname}{C Programming Familiarization Lab}
+\renewcommand{\shortlabname}{pokerlab}
+\renewcommand{\collaborationrules}{Except as noted in Section~\ref{studyTheCode}, \individualeffort}
+\renewcommand{\duedate}{soon}
+\startdocument
+% \begin{document}
+
+
+
+The purpose of this assignment is to (re)familiarize you with some aspects of C
+that may not be intuitive to students who are new to C. Even if you know C,
+work this assignment to re-familiarize yourself.
+
+If you work faithfully at understanding the portions of code that you're
+instructed to study, and if you work faithfully at writing the code you're
+instructed to write you will receive credit for this assignment. The
+instructions are written assuming you will edit and run the code on
+\runtimeenvironment. If you wish, you may edit and run the code
+in a different environment; be sure that your compiler suppresses no warnings,
+and that if you are using an IDE that it is configured for C and not C++.
+
+\section{Terminology}
+
+The standard 52-card deck of ``French'' playing
+cards\footnote{\url{https://en.wikipedia.org/wiki/Standard_52-card_deck}}
+consists of 52 cards. The cards are divided into 4 ``suits,'' clubs
+($\clubsuit$), diamonds ($\diamondsuit$), hearts ($\heartsuit$), and spades
+($\spadesuit$). Each suit consists of 13 cards: the number cards 2-10, the
+``face cards'' (Jack, Queen, King), and the Ace. In most card games (including
+Poker), the Jack is greater in value than the 10, the Queen is greater in value
+than the Jack, and the King is greater in value than the Queen. In some games,
+the Ace is lesser in value than the 2, in other games it is greater in value
+than the King, and in some games, it can be either.
+
+Poker\footnote{\url{https://en.wikipedia.org/wiki/Poker}} is a game of chance
+and skill played with a standard deck of 52 playing cards, in which players
+attempt to construct the best ``hand'' they can. While there are many
+variations of the game, they all have this in common. A hand is a set of five
+cards, and it can be categorized into types of hands (described on the third
+page), which are ranked according to the statistical likelihood of being able
+to construct such a hand. When completed, the code in this assignment will
+generate a random hand and evaluate what type of hand it is.
+
+\section{Getting Started}
+
+Download \textit{\shortlabname.zip} or \textit{\shortlabname.tar} from
+\filesource\ and copy it to \runtimeenvironment. Once copied, unzip the file.
+The three source code files (\textit{card.h}, \textit{card.c},
+\textit{poker.c}) contain the starter code for this assignment, and the text
+file (\textit{answers.txt}) is where you'll provide some answers to demonstrate
+your ability to understand part of the starter code. The header file
+\textit{card.h} defines a ``card'' structure and specifies two functions that
+operate on cards. The source file \textbf{card.c} has the bodies for the
+specified functions, but some code is missing. Finally, the source file
+\textit{poker.c} is supposed to generate a poker hand of five cards, print
+those five cards, and then print what kind of hand it is -- but much of its
+code is missing. To compile the program, type:
+
+\texttt{gcc -std=c99 -Wall -o poker poker.c card.c}
+
+If you compile the starter code, it may generate a warning:
+
+\begin{verbatim}
+card.c:59:30: warning: format string is empty [-Wformat-zero-length]
+        sprintf(valueString, "", value);
+                             ^~
+\end{verbatim}
+
+Before you make any other changes, you should edit \textit{card.c} so that the
+program compiles without generating any warnings or errors. If you look at the
+source code, you'll see a comment with instructions ``\texttt{PLACE THE CONTROL
+STRING IN THE SECOND ARGUMENT THAT YOU WOULD USE TO PRINT AN INTEGER}.'' The
+command \lstinline{sprintf()} is like \lstinline{printf()} and
+\lstinline{fprintf()} except that it ``prints'' to a string. See $\S7.2$ of
+\textit{The C Programming Language} on pages 153-155 for a description of
+\lstinline{printf()} and \lstinline{sprintf()}, including some of the format
+specifiers you can put in the format string.
+
+If you also get a warning for an unused variable
+\begin{verbatim}
+poker.c:154:9: warning: unused variable ‘size_of_hand’ [-Wunused-variable]
+     int size_of_hand = 5;
+         ^
+\end{verbatim}
+then you can temporarily fix this warning by commenting-out the line
+\lstinline{int size_of_hand = 5} in \textit{poker.c}'s \function{main()}
+function.
+
+\section{Completing \textit{card.c}}
+
+Look over the rest of the code in \textit{card.c} and work at understanding
+anything that you don't initially understand. When you have done so, add the
+missing code to \function{create_card()} to populate a card's fields.
+Finally, change the first two lines of \function{display_card()} so
+that this function uses the fields from the card argument that is passed to the
+function.
+
+You may want to add a \function{main()} function to \textit{card.c} and compile
+only \textit{card.c} to check that you made the correct changes. Catching
+errors now will be easier than trying to catch them after you've started the
+next task.
+
+Examine the remaining starter code in \textit{poker.c} to make sure you
+understand it.
+
+\section{Completing \textit{poker.c}}
+
+If you added a \function{main()} function to \textit{card.c}, remove it so that
+there is only one \function{main()} function when you compile the full program.
+
+In \textit{poker.c}, the first thing you'll want to do is write the code for
+\function{populate_deck()}. Using \function{create_card()} from \textit{card.c},
+create cards corresponding to the 52 standard playing cards and add them to the
+\lstinline{deck[]} array. You might put code in \function{main()} to print out
+all 52 cards in \lstinline{deck[]} using \function{display_card()}, to confirm
+that you wrote \function{populate_deck()} correctly.
+
+\subsection{Types of Poker Hands}
+
+In the game of poker, hands are characterized by the similarities of the cards
+within. Traditionally, you characterize the hand by the ``best''
+characterization (that is, the one that is least likely to occur); for example,
+a hand that is a three of a kind also contains a pair, but you would only
+characterize the hand as a three of a kind. The \function{is...()} functions in
+\textit{poker.c} are intentionally simple; they do not (and should not) check
+whether there is a better way to characterize the hand. The types of hands
+(from most desirable to least desirable) are:
+
+\begin{description}
+\item[Royal Flush] This is an Ace, a King, a Queen, a Jack, and a 10, all of
+    the same suit. There is no function in the starter code for a royal flush,
+    nor do you need to write one, since a royal flush is essentially the best-
+    possible straight flush. (Note also that a Royal Flush is not possible for
+    this lab, based on our re-definition of a Straight, below.)
+\item[Straight Flush] This is five cards in a sequence, all of the same suit;
+    that is, five cards that are both a straight and a flush. This
+    characterization is checked by the function \function{is_straight_flush()}.
+\item[Four of a Kind] Four cards all have the same value. This
+    characterization is checked by the function \function{is_four_of_kind()}.
+\item[Full House] The hand contains a three of a kind and also contains a pair
+    with a different value than that of the first three cards. This
+    characterization is checked by the function \function{is_full_house()}.
+\item[Flush] Five cards all of the same suit. This characterization is checked
+    by the function \function{is_flush()}. In the interest of simplicity, for
+    this assignment we changed the definition of a flush to ``all cards are of
+    the same suit'' (this distinction only matters if the number of cards in
+    the hand is not five).
+\item[Straight] Five cards in a sequence. This characterization is checked by
+    the function \function{is_straight()}. In the interest of simplicity, for
+    this assignment we changed the definition of a straight to ``all cards are
+    in a sequence'' (this distinction only matters if the number of cards in
+    the hand is not five). We further re-defined an Ace to be adjacent only to
+    2 (in traditional poker, an Ace can be adjacent to 2 or to King but not
+    both at the same time).
+\item[Three of a Kind] Three cards all have the same value. This
+    characterization is checked by the function \function{is_three_of_kind()}.
+\item[Two Pair] The hand holds two different pairs. This characterization is
+    checked by the function \function{is_two_pair()}.
+\item[Pair] Two cards with the same value. This characterization is checked by
+    the function \function{is_pair()}.
+\item[High Card] If the hand cannot be better characterized, it is
+    characterized by the greatest-value card in the hand. The starter code
+    does not have a function to check for this since this is the
+    characterization if all of the other functions return a \textbf{0}.
+\end{description}
+
+\subsection{Study the Code}
+\label{studyTheCode}
+
+Look at the code for \function{is_pair()}. Notice that the parameter
+\lstinline{hand}'s type is \lstinline{card*}; that is, \lstinline{}{hand} is a
+pointer to a \lstinline{}{card}. In the code, though, we treat
+\lstinline{}{hand} as though it were an array. This is because in C, arrays are
+pointers and we can treat pointers as arrays. Now look at the rest of the code
+in \function{is_pair()}. Why does this return a \textbf{1} when the hand
+contains at least one pair?  Why does it return a \textbf{0} when the hand
+contains no pairs?  If you can't determine this on your own, you may talk it
+over with other students or the TA. Type your answer in \textit{answers.txt}.
+
+Look at the code for \function{is_flush()}. Why does this return a \textbf{1}
+when all cards in the hand have the same suit?  Why does it return a \textbf{0}
+when at least two cards have different suits?  If you can't determine this on
+your own, you may talk it over with other students or the TA. Type your answer
+in \textit{answers.txt}.
+
+Look at the code for \function{is_straight()}. This is a little more challenging
+to understand than \function{is_pair()} and \function{is_flush()}. Why does it
+return a \textbf{1} when all cards in the hand are in sequence?  Why does it
+return a \textbf{0} when they are not in sequence? If you can't determine this
+on your own, you may talk it over with other students or the TA. Type your
+answer in \textit{answers.txt}.
+
+Look at the code for \function{is_two_pair()}. Recall that in C, arrays are
+pointers. The assignment \lstinline{partial_hand = hand + i} makes use of
+\textit{pointer arithmetic}. If the assignment were
+\lstinline{partial_hand = hand} then it would assign \lstinline{hand}'s base
+address to \lstinline{partial_hand}, and so \lstinline{partial_hand} would point
+to the $0^{th}$ element of \lstinline{hand}. The expression $hand+i$ generates
+the address for the $i^{th}$ element of \lstinline{}{hand}, and so
+\lstinline{partial_hand = hand + i} assigns to \lstinline{partial_hand} the
+address of the $i^{th}$ element of \lstinline{hand}. This effectively makes
+\lstinline{partial_hand} an array such that
+$\forall j : \mathtt{partial\_hand[j] = hand[i+j]}$.
+
+Examine the remaining starter code in \textit{poker.c} to make sure you
+understand it.
+
+\subsection{Complete the code}
+
+Write the code in \textit{poker.c}'s \function{main()} function to generate a
+hand of five cards by calling \function{get_hand()}.\footnote{When you test the
+other functions you need to write, you might want to temporarily bypass
+\function{get_hand()} and explicitly assign specific cards to an array of five
+\lstinline{card}s.}  (Uncomment the \lstinline{int size_of_hand = 5} line if you
+previously commented it.)  Then have the program print out the five cards in
+the hand. Finally, by calling the \function{is...()} functions, determine the
+best-possible characterization of the hand and print out that information.
+
+Now write the code for \function{is_three_of_kind()}, \function{is_full_house()}, and
+\function{is_four_of_kind()}.
+
+\section{Turn-in and Grading}
+
+When you have completed this assignment, upload \textit{card.c},
+\textit{poker.c}, and \textit{answers.txt} to \filesubmission.
+
+This assignment is worth 10 points.
+\begin{description}
+\rubricitem{1}{Student's answers in \textit{answers.txt} demonstrate an understanding of C's logical boolean operations.}
+\rubricitem{1}{\function{create_card} populates a card's fields}
+\rubricitem{1}{\function{display_card} generates the printable representation of a card}
+\rubricitem{1}{\function{populate_deck} creates a deck of 52 cards}
+\rubricitem{2}{\function{is_three_of_kind} determines whether a hand is a three of a kind}
+\rubricitem{2}{\function{is_full_house} determines whether a hand is a full house}
+\rubricitem{1}{\function{is_four_of_kind} determines whether a hand is a four of a kind}
+\rubricitem{1}{\function{main} generates a hand of five cards, prints the hand, and determines the best-possible characterization of the hand}
+\end{description}
+
+\end{document}

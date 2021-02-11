@@ -1,0 +1,61 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage[procnames]{listings}
+\usepackage{hyperref}
+\usepackage{textcomp}
+\usepackage{bold-extra}
+
+
+% Customize the semester (or quarter) and the course number
+
+\newcommand{\courseterm}{Spring 2021}
+\newcommand{\coursenumber}{CSCE 231}
+
+% Customize how a typical lab will be managed;
+% you can always use \renewcommand for one-offs
+
+\newcommand{\runtimeenvironment}{your account on the \textit{csce.unl.edu} Linux server}
+\newcommand{\filesource}{Canvas or {\footnotesize$\sim$}cse231 on \textit{csce.unl.edu}}
+\newcommand{\filesubmission}{Canvas}
+
+% These are placeholder commands arnd will be renewed in each lab
+
+\newcommand{\labnumber}{}
+\newcommand{\labname}{Lab \labnumber\ Assignment}
+\newcommand{\shortlabname}{}
+\newcommand{\duedate}{}
+
+% Individual or team effort
+
+\newcommand{\individualeffort}{This is an individual-effort project. You may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs. Sharing code with or copying code from another student or the internet is prohibited.}
+\newcommand{\teameffort}{This is a team-effort project. You may discuss concepts and syntax with other students, but you may discuss solutions only with your assigned partner(s), the professor, and the TAs. Sharing code with or copying code from a student who is not on your team, or from the internet, is prohibited.}
+\newcommand{\collaborationrules}{}
+
+% You shouldn't need to customize these,
+% but you can if you like
+
+\lstset{language=c++, tabsize=4, basicstyle=\ttfamily, commentstyle=\itfamily}
+\newcommand{\function}[1]{\textbf{\lstinline{#1}}}
+\setlength{\headsep}{0.7cm}
+\hypersetup{colorlinks=true}
+
+\newcommand{\startdocument}{
+    \pagestyle{fancy}
+    \fancyhf{}
+    \lhead{\coursenumber}
+    \chead{\ Lab \labnumber: \labname}
+    \rhead{\courseterm}
+    \cfoot{\shortlabname-\thepage}
+
+	\begin{document}
+	\title{\labname}
+	\author{}
+	\date{Due: \duedate}
+	\maketitle
+
+    \textit{\collaborationrules}
+}
+
+\newcommand{\rubricitem}[2]{\item[\underline{\hspace{1cm}} +#1] #2}
