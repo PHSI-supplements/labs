@@ -1,0 +1,653 @@
+%%
+%% PokerLab (c) 2021 Christopher A. Bohn
+%%
+
+\input{../../common/assignment.tex}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{ulem}
+\usepackage{cancel}
+\usepackage{multicol}
+\lstset{language=c, numbers=left, showstringspaces=false,
+    moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+    }
+
+\renewcommand{\labnumber}{1}
+\renewcommand{\labname}{Bits and Pointers Manipulation Lab}
+\renewcommand{\shortlabname}{bitslab}
+\renewcommand{\collaborationrules}{\individualeffort}
+\renewcommand{\duedate}{Week of February 15, before the start of your lab section}
+
+\newcommand{\tab}{\ensuremath{\longrightarrow}}
+\newcommand{\nl}{\ensuremath{\hookleftarrow}}
+
+\startdocument
+% \begin{document}
+
+
+
+The purpose of this assignment is to give you more confidence in C programming
+and to begin your exposure to the underlying bit-level representation of data.
+You will also gain practice with pointers and with file input/output.
+
+The instructions are written assuming you will edit and run the code on
+\runtimeenvironment. If you wish, you may edit and run the code
+in a different environment; be sure that your compiler suppresses no warnings,
+and that if you are using an IDE that it is configured for C and not C++.
+
+
+\section*{Scenario}
+
+\begin{wrapfigure}{r}{0.33\textwidth}
+    \centering
+    \includegraphics[scale=.33]{some-expenses-spared}
+    % \caption{Some expenses were spared.}
+\end{wrapfigure}
+
+You've recently been hired to help get the Pleistocene Petting Zoo get started.
+Your new employer, Archie, is surprisingly honest: he admits to you that some
+expenses were spared. Archie cheerfully points out that any challenge is also
+an opportunity to succeed. You suspect your job will offer plenty of
+``opportunities to succeed.''
+
+\section{Using the ASCII table}
+
+You soon discover your first
+$\cancelto{\mathrm{opportunity}}{\mathrm{challenge}}$. Archie purchased your
+workstation from government surplus. Your keyboard is left over from early
+2001 and is missing the letter \textit{\texttt{W}}!\footnote{In January 2001,
+when President Bill Clinton's staff left the White House so that President
+George~W. Bush's staff could move in, they removed the \textit{\texttt{W}} key
+from several keyboards as a prank.} You decide to write an email requesting a
+new keyboard: \\
+\\
+\texttt{TO\tab Archie\nl} \\
+\texttt{RE\tab I Need a Working Keyboard\nl} \\
+\nl \\
+\texttt{Please order a new keyboard for me. This one is broken.\nl } \\ \\
+(Note: here, the \tab\ symbol represents the \texttt{TAB} character which is
+needed by the email program, and the \nl\ symbol represents a \texttt{NEWLINE}
+character.)
+
+You quickly realize that you can't type this directly into your mail program
+because of the missing \textit{\texttt{W}} key. So you decide to write a short
+program that will output the text that you want to send. The code you would
+like to write is:
+
+\begin{lstlisting}
+#include <stdio.h>
+
+int main() {
+    printf("TO\tArchie\n");
+    printf("RE\tI Need a Working Keyboard\n\n");
+    printf("Please order a new keyboard for me. This one is broken.\n");
+    return 0;
+}
+\end{lstlisting}
+
+Of course, the \texttt{W} and the \texttt{w} are still a problem, but you
+realize you can insert those characters by using their ASCII
+values.\footnote{Use the ASCII table in the textbook or type \texttt{man ascii}
+in a terminal window.} For example,
+
+\lstinline{printf("Hello World!\n");} \\
+can be replaced with
+
+\lstinline{printf("%s%c%s\n", "Hello ", ..., "orld!");} \\
+replacing \dots\ with the ASCII value for \texttt{W}. Recall that the first
+argument for \function{printf()} is a \textit{format string}: \texttt{\%s}
+specifies that a string should be placed at that position in the output, and
+\texttt{\%c} specifies that a character should be placed at that position in
+the output.
+
+As you open your editor, the \textit{\texttt{\textbackslash}} key falls off the
+keyboard, preventing you from typing \texttt{\textbackslash t} and
+\texttt{\textbackslash n}.
+
+Edit \texttt{problem1.c} so that it produces the specified output without using
+the W key or the backslash key. Build the executable with the command:
+\texttt{make bitslab1} -- be sure to fix both errors and warnings.
+
+You can double-check that you aren't using the W key or the backslash key with
+this command:
+
+\texttt{grep -e w -e W -e
+\textquotesingle\textbackslash\textbackslash\textquotesingle\ problem1.c | grep
+-v \textquotesingle{}\^{}\textbackslash{}s*\textbackslash{}*\textquotesingle} \\
+You can check that your program has the correct output with this command:
+
+\texttt{./bitslab1 | diff - problem1oracle}
+
+
+\section{Treating Characters as Numbers}
+
+Archie replies to your email, assuring you that a new keyboard has been
+ordered. Meanwhile, he needs you to write some code that will convert uppercase
+letters to lowercase letters and to indicate whether or not a character is a
+decimal digit. You realize this is easy work since those actual functions are
+part of the standard C library with their prototypes in \texttt{ctype.h}. As
+you get ready to impress your boss with how fast you can ``write'' this code by
+calling those standard functions, the \textit{\texttt{3}} key (which is also
+used for \textit{\texttt{\#}}) falls off of your keyboard, preventing you from
+typing \lstinline{#include <ctype.h>}. Several other number keys fall off soon
+thereafter (only \textit{\texttt{0}}, \textit{\texttt{7}}, and
+\textit{\texttt{9}} remain), along with the \textit{\texttt{s}} key. The
+\textit{\texttt{f}} key is looking fragile, so you decide that you had better
+not type too many \lstinline{if} statements (and without the
+\textit{\texttt{s}} key, you can't use a \lstinline{switch} statement at all).
+
+Edit \texttt{problem2.c} so that
+\begin{itemize}
+\item \function{is_digit()} returns 1 if the character is a decimal digit
+    (\textquotesingle 0\textquotesingle, \textquotesingle 1\textquotesingle,
+    \textquotesingle 2\textquotesingle, \dots) and 0 otherwise
+\item \function{to_lowercase()} will return the lowercase version of an
+    uppercase letter (\textquotesingle A\textquotesingle, \textquotesingle
+    B\textquotesingle, \textquotesingle C\textquotesingle, \dots) but will
+    return the original character if it is not an uppercase letter
+\end{itemize}
+You may not \lstinline{#include} any headers, you may not use any number keys
+other than the 0, 9, and 7 (which is also used for \textbf{\texttt{\&}}) keys,
+you may not use \lstinline{switch} statements, and you may use at most one
+\lstinline{if} statement in each function.
+
+Build the executable with the command: \texttt{make bitslab2} -- be sure to fix
+both errors and warnings.
+
+
+\section{Using Bitmasks and Shifting Bits}
+
+Your keyboard was mistakenly delivered to the Plywood Scenery Cutting Studio
+instead of the Pleistocene Petting Zoo. While that gets sorted out, you
+``borrow'' some tar from the La~Brea Tar Pits diorama and use the tar to
+re-attach your keyboard's missing keys. As you fasten a Scrabble tile in place
+for the \textit{\texttt{W}}, more keys fall off, denying you the use of
+\textit{\texttt{+}}, \textit{\texttt{-}}, \textit{\texttt{/}},
+\textit{\texttt{\%}}, and \textit{\texttt{5}}. You cannot get any more tar
+from the diorama, so you sit down to your next programming tasks without those
+keys.
+
+Edit \texttt{problem3.c} so that
+\begin{itemize}
+\item \function{is_even()} returns 1 if the number is even (that is,
+    divisible by 2) and 0 if the number is odd
+\item \function{produce_multiple_of_ten()} will always output a multiple of
+    10 following a specific formula: if a number is even then divide it by
+    2; otherwise, subtract 1 from the number and multiply the difference
+    by 5 (for example, an input of 7 yields 30 because $(7-1) \times 5 = 30$);
+    repeat until the last decimal digit is 0.
+\end{itemize}
+These numbers are guaranteed to be non-negative. You may not use addition (+),
+subtraction (-), division (/), nor modulo (\%). You also may not use the
+number 5.
+
+Hints:
+\begin{itemize}
+\item Following the weighted-sum technique to convert between binary and
+    decimal (or by examining Table~2.1), you will note that all even numbers
+    have a 0 as their least significant bit, and all odd numbers have a 1 as
+    their least significant bit
+\item Less obvious is that you can subtract 1 from an odd number by changing
+    its least significant bit to a 0
+\item As we will cover in Chapter~3, you can halve a number by shifting its
+    bits to the right by one
+\item You can create an integer by producing its bit pattern through a series
+    of bit operations
+\end{itemize}
+
+Build the executable with the command: \texttt{make bitslab3} -- be sure to fix
+both errors and warnings.
+
+
+\section{Stray Values on the Stack}
+
+Great news! Archie brings you your new keyboard. He also brings you a problem
+of his own. Because you were held up with the broken keyboard, Archie decided
+to try some programming on his own. He shows you his code:
+
+\begin{lstlisting}
+/***********************************************************************
+ * This program will output
+ **         Welcome to the
+ **    Pleistocene Petting Zoo!
+ **
+ ** Get ready for hands-on excitement on the count of three! 1.. 2.. 3..
+ ** Have fun!
+ * With brief pauses during the "Get ready" line.
+ ***********************************************************************/
+
+#include <stdio.h>
+#include <unistd.h>
+
+void splash_screen() {
+    const char *first_line = "\t     Welcome to the\n";
+    const char *second_line = "\tPleistocene Petting Zoo!\n";
+    printf("%s%s\n", first_line, second_line);
+}
+
+void count() {
+    int i;
+    sleep(1);
+    printf("Get ready for hands-on excitement on the count of three! ");
+    while (i < 3) {
+        fflush(stdout);
+        sleep(1);
+        i++;
+        printf("%d.. ", i);
+    }
+    printf("\nHave fun!\n");
+}
+
+int main() {
+    splash_screen();
+    count();
+    return 0;
+}
+\end{lstlisting}
+
+Sometimes the output was what he expected:
+\begin{verbatim}
+         Welcome to the
+    Pleistocene Petting Zoo!
+
+ Get ready for hands-on excitement on the count of three! 1.. 2.. 3..
+ Have fun!
+\end{verbatim}
+
+But sometimes the output was missing the
+``\texttt{1.. 2.. 3..}'':
+\begin{verbatim}
+         Welcome to the
+    Pleistocene Petting Zoo!
+
+ Get ready for hands-on excitement on the count of three!
+ Have fun!
+\end{verbatim}
+
+What mistake did Archie make? What change to \textit{one} line will fix
+Archie's bug? Place your answers in \textit{answers4.txt}.
+
+
+\section{Challenge and Response}
+
+You plug in your shiny, new keyboard, tune your satellite radio to the
+Greatest Hits of the 1920s, and settle in to solving a more interesting problem.
+
+To protect against corporate espionage, you are responsible for writing code
+for a challenge-and-response system. Anybody can challenge anyone else in the
+Pleistocene Petting Zoo's non-public areas by providing the name of a book and
+a word contained within the book, and the person being challenged must respond
+with another word from that book, based on certain rules:
+\begin{itemize}
+\item All of the book's words are sorted alphabetically without regard to
+    capitalization (for example, ``hello'' occurs after ``Hear'' and before
+    ``HELP'')
+\item The challenge word occurs \textit{occurrences} times in the book
+\item If \textit{occurrences} is an even number then the response word is the
+    word \textit{occurrences} places \textbf{before} the challenge word in the
+    alphabetized list; if the challenge word is less than \textit{occurrences}
+    places from the start of the list then the response word is the first word
+    in the list
+\item If \textit{occurrences} is an odd number then the response word is the
+    word \textit{occurrences} places \textbf{after} the challenge word in the
+    alphabetized list; if the challenge word is less than \textit{occurrences}
+    places from the end of the list then the response word is the last word
+    in the list
+\end{itemize}
+
+Here is a simple example. Suppose the words in the specified book are:
+
+\begin{center}
+\begin{tabular}{cc}
+\textit{word} & \textit{occurrences} \\ \hline
+apple       & 7 \\
+banana      & 4 \\
+carrot      & 15 \\
+date        & 3 \\
+eggplant    & 2 \\
+fig         & 6 \\
+granola     & 9 \\
+horseradish & 9 \\
+ice         & 6 \\
+jelly       & 3 \\
+kale        & 1 \\
+lemon       & 2 \\
+mango       & 8 \\
+Naan        & 7 \\
+orange      & 5 \\
+pineapple   & 1 \\
+quinoa      & 11 \\
+raisin      & 4 \\
+spaghetti   & 10 \\
+tomato      & 12 \\
+\end{tabular}
+\end{center}
+If the challenge word is ``horseradish'' then because horseradish occurs 9
+times in the book, the response word is ``quinoa,'' which is 9 places in the
+list after ``horseradish.'' If the challenge word is ``eggplant'' then the
+response is ``carrot,'' which is 2 places earlier in the list than
+``eggplant.'' If the challenge word is ``banana'' then the response word is
+``apple,'' which is the first word in the list. If the challenge word is
+``quinoa'' then the response word is ``tomato,'' the last word in the list.
+
+You break the problem down into four sub-problems:
+
+\subsection{Doubly-Linked List}
+
+A \textit{doubly-linked list} is a linked list with the property that each node
+maintains a link not only to the \lstinline{next} node but also a link to the
+\lstinline{previous} node. In C, these links are pointers.
+\begin{center}
+\includegraphics[scale=0.5]{doubly-linked-list}
+\end{center}
+Inserting new node, $C$ between adjacent nodes $A$ and $B$ (where $B = A.next$
+and $A = B.previous$) requires connecting $C.previous$ to $A$ and $C.next$ to
+$B$, and re-assigning $A.next$ to $C$ and $B.prevous$ to $C$.
+\begin{center}
+\includegraphics[scale=0.5]{list-insertion}
+\end{center}
+
+Design a \lstinline{struct} for a doubly-linked list's node. Besides the
+\lstinline{next} and \lstinline{previous} pointers, the node will have a
+payload: a string for a word and an integer for the number of times that word
+occurs in the book. In \textit{problem5.c}, write the code to create a node
+and the code to build a doubly-linked list.
+
+\subsection{Alphabetize Words}
+
+In Problem~2, you wrote code to convert uppercase letters to lowercase letters.
+In \textit{problem5.c}, write code that calls that function to convert all
+letters in a word to lowercase letters (do not copy the
+\function{to_lowercase()} function into \textit{problem5.c}; we will link to
+the function in \textit{problem2.c}).
+
+The starter code includes a function to compare two words (you do not need to
+write this function) but it assumes that both words are completely lowercase.
+
+\subsection{Insertion Sort}
+
+The \textit{insertion sort} algorithm reads an input and then traverses a
+sorted list to find the proper location in the sorted list for the input. The
+input is then inserted into the list at that location.
+
+For this problem, the user will be prompted to enter the name of a book, which
+will be the filename of a file that contains all of the book's words. All
+punctuation has already been removed from the files, and each line in the
+file contains exactly one word. In \textit{problem5.c}, write the code to read
+the file one line at a time.\footnote{See \S7.5 of Kernighan \& Ritchie's
+\textit{The C Programming Language}, 2nd ed. for \function{fopen()} and
+\function{fclose()}, and \S7.7 for \function{fgets()}.} For each word,
+convert it to lowercase, and then traverse the list to find the appropriate
+place for the word. (Note that there will not be a list to traverse when your
+code reads the first word!) If the word is not in the list then create a node
+for that word and insert it into the list at the correct location. If there is
+already a node containing that word, then increment that node's variable that
+tracks the number of occurrences.
+
+If your program requires more than a few seconds to build the list, there is a
+bug in your code.
+
+\subsection{Respond to a Challenge}
+
+After the word list is complete (after you have inserted all words in the
+file), the user will be prompted to enter the challenge word. In
+\textit{problem5.c}, write the code to traverse the word list to find that
+word. (Do not copy the \function{is_even()} function into \textit{problem5.c};
+we will link to the function in \textit{problem3.c}.) If the word is not
+present in the list, output ``(word) is not present!'' where ``(word)'' is the
+challenge word. If the word is in the list then use the number of occurrences
+recorded in that word's node to find the response word as described in the
+challenge-and-response rules, and output that word.
+
+If your program does not provide the response word nearly instantaneously,
+there is a bug in your code.
+
+\subsection*{Building the Executable}
+
+Build the executable with the command: \texttt{make bitslab5} -- be sure to fix
+both errors and warnings.
+
+\subsection*{The Books}
+
+As a small ``book'' to work with as you write your code, we have provided
+Abraham Lincoln's Gettysburg Address (filename ``GettysburgAddress''). This
+assignment's appendix has a table of the words in the Gettysburg Address and
+the corresponding response word. We hope that this table will be helpful when
+you test your code.
+
+For grading, we will use one of these five books:\footnote{For each book, this
+statement applies: ``This eBook is for the use of anyone anywhere in the United
+States and most other parts of the world at no cost and with almost no
+restrictions whatsoever. You may copy it, give it away or re-use it under the
+terms of the \href{http://www.gutenberg.org/policy/license}{Project Gutenberg
+License} included with this eBook or online at \url{www.gutenberg.org}. If you
+are not located in the United States, you'll have to check the laws of the
+country where you are located before using this ebook.'' A copy of the Project
+Gutenberg license is included with the starter code (filename
+``ProjectGutenbergLicense'').}
+\begin{itemize}
+\item Lewis Carroll's \textit{Alice's Adventures in Wonderland} (filename
+    ``AliceInWonderland'') \url{https://www.gutenberg.org/ebooks/11}
+\item Mary Shelly's \textit{Frankenstein; Or, The Modern Promethius} (filename
+    ``Frankenstein'') \url{https://www.gutenberg.org/ebooks/84}
+\item Arthur Conan Doyle's \textit{The Lost World} (filename ``TheLostWorld'')
+    \url{https://www.gutenberg.org/ebooks/139}
+\item Jonathan Swift's \textit{Gulliver's Travels into Several Remote Nations
+    of the World} (filename ``GulliversTravels'')
+    \url{https://www.gutenberg.org/ebooks/829}
+\item Oscar Wilde's \textit{The Importance of Being Earnest: A Trivial Comedy
+    for Serious People} (filename ``TheImportanceOfBeingEarnest'')
+    \url{https://www.gutenberg.org/ebooks/844}
+\end{itemize}
+
+\section*{Turn-in and Grading}
+
+When you have completed this assignment, upload \textit{problem1.c},
+\textit{problem2.c}, \textit{problem3.c}, \textit{answers4.txt}, and
+\textit{problem5.c} to \filesubmission.
+
+This assignment is worth 45 points.
+\begin{description}
+\rubricitem{4}{\textit{problem1.c} produces the specified output without the
+    use of \texttt{w}, \texttt{W}, \texttt{\textbackslash{}n}, or
+    \texttt{\textbackslash{}t}}.
+\rubricitem{4}{\function{is_digit()} in \textit{problem2.c} determines whether
+    or not a character is a digit, without \lstinline{#include}ing any files,
+    without using any numbers other than 0 and 9, without using a
+    \lstinline{switch} statment, and using at most one \lstinline{if}
+    statement.}
+\rubricitem{4}{\function{to_lowercase()} in \textit{problem2.c} converts
+    uppercase letters to lowercase and leaves other characters unchanged,
+    without \lstinline{#include}ing any files, without using a
+    \lstinline{switch} statment, and using at most one \lstinline{if}
+    statement.}
+\rubricitem{4}{\function{is_even()} in \textit{problem3.c} determines whether
+    a number is even or odd, without using arithmetic.}
+\rubricitem{4}{\function{produce_multiple_of_ten()} in \textit{problem3.c}
+    has the following, without using arithmetic other than multiplication:}
+    \begin{itemize}
+    \item Code to assign the value 5 to the variable \lstinline{five}
+    \item Code to divide an even number by 2
+    \item Code to subtract 1 from an odd number
+    \item Correct functionality
+    \end{itemize}
+\rubricitem{3}{Student's answers in \textit{answers4.txt} demonstrate an
+    understanding of the bug in the code and how to correct it.}
+\rubricitem{5}{Implemented a doubly-linked list in \textit{problem5.c}:
+    \lstinline{struct node}, \function{create_node()},
+    \function{insert_after()}, \function{insert_before()}.}
+\rubricitem{2}{Implemented \function{word_to_lowercase()} in
+    \textit{problem5.c}.}
+\rubricitem{5}{Implemented insertion sort in \textit{problem5.c}:
+    \function{insert_word()}.}
+\rubricitem{5}{\function{build_list()} in \textit{problem5.c} opens a file for
+    reading, reads one line at a time, passes the word that is read to
+    \function{insert_word()}, and closes the file after the last line has been
+    read.}
+\rubricitem{5}{\function{respond()} in \textit{problem5.c} produces the correct response word in accordance with the specified rules.}
+\end{description}
+
+\newpage
+
+\section*{Appendix: Gettysburg Address Challenge-and-Response Table}
+
+\begin{multicols}{2}
+\scriptsize
+\begin{tabular}{ccc}
+\textit{challenge word} & \textit{occurrences} & \textit{response word} \\ \hline
+a & 7 & and \\
+above & 1 & add \\
+add & 1 & advanced \\
+advanced & 1 & ago \\
+ago & 1 & all \\
+all & 1 & altogether \\
+altogether & 1 & and \\
+and & 6 & above \\
+any & 1 & are \\
+are & 3 & be \\
+as & 1 & battlefield \\
+battlefield & 1 & be \\
+be & 2 & as \\
+before & 1 & birth \\
+birth & 1 & brave \\
+brave & 1 & brought \\
+brought & 1 & but \\
+but & 2 & brave \\
+by & 1 & can \\
+can & 2 & but \\
+cannot & 3 & come \\
+cause & 1 & civil \\
+civil & 1 & come \\
+come & 1 & conceived \\
+conceived & 2 & civil \\
+consecrate & 1 & consecrated \\
+consecrated & 1 & continent \\
+continent & 1 & created \\
+created & 1 & dead \\
+dead & 3 & detract \\
+dedicate & 2 & created \\
+dedicated & 4 & continent \\
+detract & 1 & devotion \\
+devotion & 2 & dedicated \\
+did & 1 & died \\
+died & 1 & do \\
+do & 1 & earth \\
+earth & 1 & endure \\
+endure & 1 & engaged \\
+engaged & 1 & equal \\
+equal & 1 & far \\
+far & 2 & engaged \\
+fathers & 1 & field \\
+field & 1 & final \\
+final & 1 & fitting \\
+fitting & 1 & for \\
+for & 5 & freedom \\
+forget & 1 & forth \\
+forth & 1 & fought \\
+fought & 1 & four \\
+four & 1 & freedom \\
+freedom & 1 & from \\
+from & 2 & four \\
+full & 1 & gave \\
+\end{tabular}
+
+\columnbreak
+
+\begin{tabular}{ccc}
+\textit{challenge word} & \textit{occurrences} & \textit{response word} \\ \hline
+gave & 2 & from \\
+god & 1 & government \\
+government & 1 & great \\
+great & 3 & have \\
+ground & 1 & hallow \\
+hallow & 1 & have \\
+have & 5 & increased \\
+here & 8 & full \\
+highly & 1 & honored \\
+honored & 1 & in \\
+in & 4 & have \\
+increased & 1 & is \\
+is & 3 & last \\
+it & 5 & live \\
+larger & 1 & last \\
+last & 1 & liberty \\
+liberty & 1 & little \\
+little & 1 & live \\
+live & 1 & lives \\
+lives & 1 & living \\
+living & 2 & live \\
+long & 2 & lives \\
+measure & 1 & men \\
+men & 2 & long \\
+met & 1 & might \\
+might & 1 & nation \\
+nation & 5 & not \\
+never & 1 & new \\
+new & 2 & nation \\
+nobly & 1 & nor \\
+nor & 1 & not \\
+not & 2 & nobly \\
+note & 1 & now \\
+now & 1 & of \\
+of & 5 & perish \\
+on & 1 & or \\
+or & 2 & of \\
+our & 2 & on \\
+people & 3 & poor \\
+perish & 1 & place \\
+place & 1 & poor \\
+poor & 1 & portion \\
+portion & 1 & power \\
+power & 1 & proper \\
+proper & 1 & proposition \\
+proposition & 1 & rather \\
+rather & 2 & proper \\
+remaining & 1 & remember \\
+remember & 1 & resolve \\
+resolve & 1 & resting \\
+resting & 1 & say \\
+\end{tabular}
+
+\columnbreak
+
+\begin{tabular}{ccc}
+\textit{challenge word} & \textit{occurrences} & \textit{response word} \\ \hline
+say & 1 & score \\
+score & 1 & sense \\
+sense & 1 & seven \\
+seven & 1 & shall \\
+shall & 3 & struggled \\
+should & 1 & so \\
+so & 3 & task \\
+struggled & 1 & take \\
+take & 1 & task \\
+task & 1 & testing \\
+testing & 1 & that \\
+that & 12 & resting \\
+the & 10 & sense \\
+their & 1 & these \\
+these & 2 & the \\
+they & 3 & thus \\
+this & 6 & testing \\
+those & 1 & thus \\
+thus & 1 & to \\
+to & 8 & that \\
+under & 1 & unfinished \\
+unfinished & 1 & upon \\
+upon & 1 & us \\
+us & 3 & we \\
+vain & 1 & war \\
+war & 2 & us \\
+we & 10 & this \\
+what & 2 & war \\
+whether & 1 & which \\
+which & 2 & what \\
+who & 3 & world \\
+will & 1 & work \\
+work & 1 & world \\
+world & 1 & years \\
+years & 1 & years \\
+\end{tabular}
+\end{multicols}
+
+\end{document}
