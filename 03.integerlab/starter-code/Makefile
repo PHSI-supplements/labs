@@ -28,5 +28,5 @@ clean:
 	rm -f $(OBJ) *.s *~ core
 
 clear: clean
-	rm integerlab
+	rm integerlab integergrader
 
