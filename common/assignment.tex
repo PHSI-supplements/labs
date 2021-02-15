@@ -50,8 +50,8 @@
     \cfoot{\shortlabname-\thepage}
 
 	\begin{document}
-	\title{\labname}
-	\author{}
+	\title{\ Lab \labnumber}
+	\author{\labname}
 	\date{Due: \duedate}
 	\maketitle
 
@@ -59,3 +59,5 @@
 }
 
 \newcommand{\rubricitem}[2]{\item[\underline{\hspace{1cm}} +#1] #2}
+\newcommand{\bonusitem}[2]{\item[\underline{\hspace{1cm}} Bonus +#1] #2}
+\newcommand{\penaltyitem}[2]{\item[\underline{\hspace{1cm}} -#1] #2}
