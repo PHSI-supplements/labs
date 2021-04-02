@@ -23,16 +23,16 @@ lab assignment during lab time.}
 
 The instructions are written assuming you will edit and run the code on
 \runtimeenvironment. If you wish, you may edit the code in a different
-environment; however, you probably will not be able to assemble and link an
-executable on MacOS nor on Windows.
+environment; however, you will not be able to assemble and link an executable
+on MacOS nor on Windows.
 
 \section*{Scenario}
 
 You've settled into a comfortable routine at the Pleistocene Petting Zoo. While
-your job isn't quite as exciting as that of the sabre-toothed tigers' dentist,
-it still has something new and interesting almsot every day.
+your job isn't quite as exciting as that of the saber-toothed tigers' dentist,
+it still has something new and interesting almost every day.
 
-Archie announces that he heard that hand-crafted assmebly code can be faster
+Archie announces that he heard that hand-crafted assembly code can be faster
 than high-level language code. You try to explain that while this may have been
 true decades ago, modern optimizing compilers generate code faster than what a
 typical programmer can achieve with assembly code. Archie doesn't believe you
@@ -178,7 +178,7 @@ placed in it.
 
 \section{Sentence to Uppercase Function}
 
-The second of the three functions is converts lowercase letters in a sentence
+The second of the three functions converts lowercase letters in a sentence
 to uppercase letters. Here is the equivalent C code:
 
 \lstinputlisting[firstline=39, lastline=45, numbers=left]{addressinglab.c}
@@ -208,7 +208,7 @@ To preserve the illusion that the program called the \function{toupper}
 function, the lookup table stores integers (\function{toupper}'s specification
 states that it returns an \lstinline{int}). Insert a \lstinline{movzbl}
 instruction. The source is a location in the lookup table array: use the indexed
-addressing mode. The base address is \lstinline{rcx}; the index is the
+addressing mode. The base address is \lstinline{%rcx}; the index is the
 character from the previous instruction in \lstinline{%rdx}, and each array
 element is 4 bytes in size. The destination for this instruction is
 \lstinline{%ecx}.
@@ -282,7 +282,7 @@ is in \lstinline{%rbx}.
 Find the line in \textit{addressinglab.s} that says \\
 \texttt{\#\#\#\#\# PLACE INSTRUCTIONS FOR TASK \ref{task8} ON NEXT TWO LINES \#\#\#\#\#} \\
 On the next line, use a \lstinline{movq} instruction to copy
-\lstinline{package->ciphertext} into \lstinline{%rsi}. Use the displacmenet
+\lstinline{package->ciphertext} into \lstinline{%rsi}. Use the displacement
 addressing mode in the source operand. The base address is \lstinline{%rbx},
 and the \lstinline{ciphertext} field is positioned 8 bytes after the base
 address.

@@ -42,6 +42,7 @@ int main() {
 //    package->sentence_length = (int)strlen(plaintext);
 //    printf("Plaintext: %s\n", plaintext);
 //    printf("Key: %d\n", key);
+//    printf("Length: %d\n", package->sentence_length);
 //    bool is_valid = validate_cipher(package);
 //    printf("Cipher package %s valid.\n", is_valid ? "is" : "is not");
     capitalized_plaintext = caesar_cipher(capitalized_plaintext, ciphertext, -key);

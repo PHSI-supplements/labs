@@ -28,7 +28,7 @@ int compare_words(const char *word1, const char *word2);
 struct node *insert_word(struct node *head, const char *word);
 struct node *build_list();
 char *respond(const struct node *list, const char *challenge_word);
-char *get_input(const char *prompt);
+char *get_string_input(const char *prompt);
 
 
 /*** PROBLEM 5.1: Doubly-Linked List ***/
@@ -128,7 +128,7 @@ char *respond(const struct node *list, const char *challenge_word) {
 /*** main ***/
 
 /* Prompts the user and reads the user's input from stdin. */
-char *get_input(const char *prompt) {
+char *get_string_input(const char *prompt) {
     char *input = malloc(MAXIMUM_WORD_LENGTH);
     printf("%s: ", prompt);
     fgets(input, MAXIMUM_WORD_LENGTH, stdin);
