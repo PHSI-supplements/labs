@@ -487,7 +487,9 @@ int multiply_with_overflow_power_of_two() {
     expected.overflow = true;
     sprintf(expected_string, "%d %d %s", expected.product, expected.full_product, expected.overflow ? "overflow" : "no overflow");
     multiplication_result actual = multiply(operand1, operand2);
-    return print_product_outcome(&expected, &actual);
+    int score = print_product_outcome(&expected, &actual);
+    print_report();
+    return score;
 }
 
 int multiply_with_overflow_not_power_of_two() {
@@ -668,10 +670,12 @@ int division_by_factor() {
     division_result actual = divide(operand1, operand2);
     if (quotients_are_equal(expected, actual)) {
         strcpy(result_string, "BONUS!");
+        print_report();
         return 1;
     } else {
         sprintf(result_string, "NO BONUS  Actual: %d r%d, Division-by-Zero: %s",
                 actual.quotient, actual.remainder, actual.division_by_zero ? "true" : "false");
+        print_report();
         return 0;
     }
 }
@@ -689,10 +693,12 @@ int division_arbitrary() {
     division_result actual = divide(operand1, operand2);
     if (quotients_are_equal(expected, actual)) {
         strcpy(result_string, "BONUS!");
+        print_report();
         return 1;
     } else {
         sprintf(result_string, "NO BONUS  Actual: %d r%d, Division-by-Zero: %s",
                 actual.quotient, actual.remainder, actual.division_by_zero ? "true" : "false");
+        print_report();
         return 0;
     }
 }
