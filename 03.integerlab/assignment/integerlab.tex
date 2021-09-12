@@ -3,12 +3,14 @@
 %%
 
 \input{../../common/assignment.tex}
+\usepackage{cancel}
 
 \renewcommand{\labnumber}{3}
 \renewcommand{\labname}{Integer Representation and Arithmetic Lab}
 \renewcommand{\shortlabname}{integerlab}
 \renewcommand{\collaborationrules}{\individualeffort}
-\renewcommand{\duedate}{Week of February 22, before the start of your lab section}
+%\renewcommand{\duedate}{soon}
+\renewcommand{\duedate}{Week of September 20, before the start of your lab section}
 \startdocument
 % \begin{document}\documentclass[12pt]{article}
 
@@ -26,13 +28,30 @@ The instructions are written assuming you will edit and run the code on
 in a different environment; be sure that your compiler suppresses no warnings,
 and that if you are using an IDE that it is configured for C and not C++.
 
+\section{Scenario}
+
+All work at the Pleistocene Petting Zoo has stopped while Archie tries to find
+a $\cancelto{\mathrm{reasonable}}{\mathrm{gullible}}$ insurance company. Rather
+than furloughing staff, he's asked everybody to help out with his other startup
+companies for a week or two. He specifically asked that you help out with
+Eclectic Electronics.
+
+Eclectic Electronics is developing a patent-pending C-licon tool that will
+convert C code into an integrated circuit that has the same functionality as
+the original C code. To test it out, you've been tasked with writing the code
+to implement an Arithmetic Logic Unit (ALU). Your task will be to implement
+integer addition, subtraction, multiplication, and division. Because bitwise
+operations and bit shift operations have been implemented, you will be able to
+use C's bitwise and bit shift operators, but because arithmetic operations have
+not yet been implemented, you cannot use C's arithmetic operators.
+
 \section{Getting Started}
 
 Download \textit{\shortlabname.zip} or \textit{\shortlabname.tar} from
 \filesource\ and copy it to \runtimeenvironment. Once copied, unpackage the
 file. Three of the five files (\textit{alu.h}, \textit{alu.c}, and
-\textit{integerlab.c}) contain the starter code for this assignment. The last
-file \textit{integergrader.c} contains code to run your code through the lab's
+\textit{integerlab.c}) contain the starter code for this assignment. The fourth
+file (\textit{integergrader.c}) contains code to run your code through the lab's
 rubric. The last file (\textit{Makefile}) tells the \texttt{make} utility how
 to compile the code. To compile the program, type:
 
@@ -107,8 +126,8 @@ When you implement these functions, you may NOT use C's arithmetic operators:
 +\ \ ++\ \ +=\ \ -\ \ -{}-\ \ -=\ \ $*$\ \ /\ \ \%.  \textit{You will receive
 no credit for functions that use a prohibited operator.}  You may only use
 bitwise and $\&$, bitwise or $|$, bitwise exclusive-or \^{ }, bitwise
-complement $\tilde{ }$, and bit shifts $<<$ $>>$. \textbf{Exception:} You
-\textit{may} use addition for pointer arithmetic.
+complement $\tilde{ }$, and bit shifts $<<$ $>>$.
+%\textbf{Exception:} You \textit{may} use addition for pointer arithmetic.
 
 \textbf{Hints:}
 \begin{itemize}
@@ -130,8 +149,9 @@ unsigned integers.  If addition overflowed, set \lstinline{overflow} to
 \lstinline{true}.
 \begin{itemize}
 \item Addition must work for both signed and unsigned integers.
-\item You may find it beneficial to implement a 32-bit full adder and have
-    \function{add()} call the 32-bit full adder.
+\item You may find it beneficial for another part of the lab if you implement a
+    32-bit full adder; you can have \function{add()} call the 32-bit full
+    adder.
 \end{itemize}
 
 \subsubsection*{subtract()} Takes two 16-bit integers and subtracts the second
@@ -173,7 +193,7 @@ as the quotient and remainder.
     superpolynomial.} The brute-force approach of repeatedly subtracting
     \lstinline{divisor} from \lstinline{dividend} is a $\mathcal{O}(2^n)$
     algorithm, where $n$ is the number of bits.
-\item For full credit, be able to dividy by a power-of-two; for bonus credit,
+\item For full credit, be able to divide by a power-of-two; for bonus credit,
     be able to divide by an arbitrary non-negative integer.
 \end{itemize}
 
