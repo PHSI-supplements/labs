@@ -1,5 +1,5 @@
 %%
-%% PokerLab (c) 2021 Christopher A. Bohn
+%% KeyboardLab (c) 2021 Christopher A. Bohn
 %%
 
 \input{../../common/assignment.tex}
@@ -14,9 +14,10 @@
 
 \renewcommand{\labnumber}{1}
 \renewcommand{\labname}{Bits and Pointers Manipulation Lab}
-\renewcommand{\shortlabname}{bitslab}
+\renewcommand{\shortlabname}{keyboardlab}
 \renewcommand{\collaborationrules}{\individualeffort}
-\renewcommand{\duedate}{Week of February 15, before the start of your lab section}
+%\renewcommand{\duedate}{soon}
+\renewcommand{\duedate}{Week of September 13, before the start of your lab section}
 
 \newcommand{\tab}{\ensuremath{\longrightarrow}}
 \newcommand{\nl}{\ensuremath{\hookleftarrow}}
@@ -106,7 +107,7 @@ keyboard, preventing you from typing \texttt{\textbackslash t} and
 
 Edit \texttt{problem1.c} so that it produces the specified output without using
 the W key or the backslash key. Build the executable with the command:
-\texttt{make bitslab1} -- be sure to fix both errors and warnings.
+\texttt{make keyboardlab1} -- be sure to fix both errors and warnings.
 
 You can double-check that you aren't using the W key or the backslash key with
 this command:
@@ -116,7 +117,7 @@ this command:
 -v \textquotesingle{}\^{}\textbackslash{}s*\textbackslash{}*\textquotesingle} \\
 You can check that your program has the correct output with this command:
 
-\texttt{./bitslab1 | diff - problem1oracle}
+\texttt{./keyboardlab1 | diff - problem1oracle}
 
 
 \section{Treating Characters as Numbers}
@@ -151,8 +152,8 @@ other than the 0, 9, and 7 (which is also used for \textbf{\texttt{\&}}) keys,
 you may not use \lstinline{switch} statements, and you may use at most one
 \lstinline{if} statement in each function.
 
-Build the executable with the command: \texttt{make bitslab2} -- be sure to fix
-both errors and warnings.
+Build the executable with the command: \texttt{make keyboardlab2} -- be sure to
+fix both errors and warnings.
 
 
 \section{Using Bitmasks and Shifting Bits}
@@ -163,9 +164,9 @@ instead of the Pleistocene Petting Zoo. While that gets sorted out, you
 re-attach your keyboard's missing keys. As you fasten a Scrabble tile in place
 for the \textit{\texttt{W}}, more keys fall off, denying you the use of
 \textit{\texttt{+}}, \textit{\texttt{-}}, \textit{\texttt{/}},
-\textit{\texttt{\%}}, and \textit{\texttt{5}}. You cannot get any more tar
-from the diorama, so you sit down to your next programming tasks without those
-keys.
+\textit{\texttt{\%}}, \textit{\texttt{5}}, and \textit{\texttt{b}}. You cannot
+get any more tar from the diorama, so you sit down to your next programming
+tasks without those keys.
 
 Edit \texttt{problem3.c} so that
 \begin{itemize}
@@ -179,7 +180,7 @@ Edit \texttt{problem3.c} so that
 \end{itemize}
 These numbers are guaranteed to be non-negative. You may not use addition (+),
 subtraction (-), division (/), nor modulo (\%). You also may not use the
-number 5.
+number 5 nor the letter b.
 
 Hints:
 \begin{itemize}
@@ -195,8 +196,8 @@ Hints:
     of bit operations
 \end{itemize}
 
-Build the executable with the command: \texttt{make bitslab3} -- be sure to fix
-both errors and warnings.
+Build the executable with the command: \texttt{make keyboardlab3} -- be sure to
+fix both errors and warnings.
 
 
 \section{Stray Values on the Stack}
@@ -353,6 +354,10 @@ payload: a string for a word and an integer for the number of times that word
 occurs in the book. In \textit{problem5.c}, write the code to create a node
 and the code to build a doubly-linked list.
 
+The starter code also includes a \function{print_list()} function to help with
+debugging. This function traverses a linked list, printing each node's payload
+and its \lstinline{previous} and \lstinline{next} pointers.
+
 \subsection{Alphabetize Words}
 
 In Problem~2, you wrote code to convert uppercase letters to lowercase letters.
@@ -404,8 +409,8 @@ there is a bug in your code.
 
 \subsection*{Building the Executable}
 
-Build the executable with the command: \texttt{make bitslab5} -- be sure to fix
-both errors and warnings.
+Build the executable with the command: \texttt{make keyboardlab5} -- be sure to
+fix both errors and warnings.
 
 \subsection*{The Books}
 
@@ -464,7 +469,8 @@ This assignment is worth 45 points.
 \rubricitem{4}{\function{is_even()} in \textit{problem3.c} determines whether
     a number is even or odd, without using arithmetic.}
 \rubricitem{4}{\function{produce_multiple_of_ten()} in \textit{problem3.c}
-    has the following, without using arithmetic other than multiplication:}
+    has the following, without using arithmetic other than multiplication, and
+    without using the values 5, 0x5, 05, or 0b101:}
     \begin{itemize}
     \item Code to assign the value 5 to the variable \lstinline{five}
     \item Code to divide an even number by 2

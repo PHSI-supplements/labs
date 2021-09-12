@@ -128,7 +128,7 @@ char *respond(const struct node *list, const char *challenge_word) {
 /*** main ***/
 
 /* Prompts the user and reads the user's input from stdin. */
-char *get_string_input(const char *prompt) {
+char *get_input(const char *prompt) {
     char *input = malloc(MAXIMUM_WORD_LENGTH);
     printf("%s: ", prompt);
     fgets(input, MAXIMUM_WORD_LENGTH, stdin);

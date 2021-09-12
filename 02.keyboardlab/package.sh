@@ -3,11 +3,11 @@
 cd assignment
 make
 cd ../starter-code
-cp ../assignment/bitslab.pdf .
-tar cvf bitslab.tar *
-mv bitslab.tar ..
-zip bitslab.zip *
-mv bitslab.zip ..
-rm bitslab.pdf
+cp ../assignment/keyboardlab.pdf .
+tar cvf keyboardlab.tar *
+mv keyboardlab.tar ..
+zip keyboardlab.zip *
+mv keyboardlab.zip ..
+rm keyboardlab.pdf
 cd ..
 
