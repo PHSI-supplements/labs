@@ -3,7 +3,7 @@
  *             */
 
 /*
- * BitsLab (c) 2021 Christopher A. Bohn
+ * KeyboardLab (c) 2021 Christopher A. Bohn
  */
 
 #include <stdio.h>
