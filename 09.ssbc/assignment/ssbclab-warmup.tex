@@ -1,0 +1,125 @@
+%%
+%% SSBClab (c) 2020-21 Christopher A. Bohn
+%%
+
+\input{../../common/assignment.tex}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{media9}
+\usepackage{addfont}
+\addfont{OT1}{d7seg}{\dviiseg}
+\addfont{OT1}{deseg}{\deseg}
+
+\renewcommand{\labnumber}{9a}
+% \renewcommand{\labname}{Using C to Perform I/O on Simulated Hardware (Familiarization Lab)}
+\renewcommand{\labname}{Familiarization with Simulated Hardware}
+\renewcommand{\shortlabname}{ssbclab-warmup}
+\renewcommand{\collaborationrules}{\individualeffort}
+\renewcommand{\duedate}{Week of April 12, before the start of your lab section}
+\startdocument
+% \begin{document}\documentclass[12pt]{article}
+
+%\usepackage{fullpage}
+%\usepackage{enumitem}
+
+Due to the circumstances of this semester, we will not be using Altera
+single board computers for labs. Instead, we will use a simulated single
+board computer (SSBC).
+
+In this assignment, you will familiarize yourself with the Simulated Single Board Computer \textbf{You should be able to complete this
+lab assignment during lab time.}
+
+The instructions are written assuming you will edit and run the code on
+\runtimeenvironment. If you wish, you may edit the code in a different
+environment; however, you will not be able to link an executable except on
+\runtimeenvironment.
+
+\section{Getting Started}
+
+The accompanying document, \textit{ssbc.pdf} describes how to use the SSBC
+library: how to interact with the simulated SBC and how to use its inputs and
+outputs in a program.
+
+Download \textit{\shortlabname.zip} or \textit{\shortlabname.tar} from
+\filesource\ and copy it to \runtimeenvironment. Once copied, unpackage the
+file. You will find four files:
+\begin{description}
+    \item [ssbc.h] The header file for the SSBC library.
+    \item [Makefile] The Makefile to build the programs for this lab. You can build the programs individually, or you can build all of them using the command \texttt{make all}.
+    \item [demo.c] A program that demonstrates using the SSBC library. Run the
+        command \texttt{make demo} to build the program, and then run it with
+        the command \texttt{./demo}. This file is described line-by-line in
+        \textit{ssbc.pdf}
+    \item [warmup.c] Starter code for this lab. Run the command \texttt{make
+        warmup} to build the program, and then run it with the command
+        \texttt{./warmup}.
+    % \item [poll-calculator.c] Starter code for part 2 of this lab. Run the
+    %     command \texttt{make poll-calculator} to build the program, and then
+    %     run it with the command \texttt{./poll-calculator}.
+    % \item [interrupt-calculator.c] Starter code for part 3 of this lab. Run the command\\ \texttt{make interrupt-calculator} to build the program, and then run it with the command \texttt{./interrupt-calculator}.
+\end{description}
+
+\textbf{\textit{Note: }Do NOT use \function{printf} to print debugging
+information. Use \function{ssbc_print} instead.}
+
+\section{Familiarize Yourself with the Simulated Single Board Computer}
+
+Edit \textit{warmup.c} to write a program that uses the SSBC's input and output
+registers to meet the following specification:
+
+\begin{itemize}
+    \item When the left-most toggle switch is in the ``on'' position, the left
+        three seven-segment displays show {\dviiseg 231}; when the
+        left-most toggle switch is in the ``off'' position, the left three
+        seven-segment displays are blank.
+    \item When the right-most toggle switch is in the ``on'' position, the
+        right-most seven-segment display displays the number corresponding to
+        the last number button that was pressed. When the right-most toggle
+        switch is in the ``off'' position, the right-most seven-segment display
+        is blank. If a number button has not yet been pressed since launching
+        the program, the right-most seven-segment display will be blank, even
+        if the toggle switch is in the ``on'' position.
+    \item Toggling the middle two toggle switches has no effect.
+\end{itemize}
+
+\textit{Hint:} You may want to create a ten-element array of 8-bit bit vectors
+to map a decimal digit to the bit vector needed to display that digit on a
+single seven-segment display.
+
+\textit{Warning:} Blindly copying code from \textit{demo.c} into your lab
+solution will be counter-productive. Use \textit{demo.c} to understand how
+to use the SSBC library, and then design your lab solution.
+
+\section*{Turn-in and Grading}
+
+When you have completed this assignment, upload \textit{warmup.c} to
+\filesubmission.
+
+This assignment is worth 20 points. \\
+
+Rubric:
+\begin{description}
+\rubricitem{4}{{\dviiseg 231} displays on the three left displays when the
+    left-most toggle switch is in the ``on'' position.}
+\rubricitem{2}{The left three displays are blank when the left-most toggle
+    switch is in the ``off'' position.}
+\rubricitem{2}{The right-most display is blank if a number button has not yet
+    been pressed, regardless of the position of the right-most toggle switch.}
+\rubricitem{4}{If a number button has been pressed, then the right-most display
+    shows the number of the most-recent number button pressed when the right-
+    most toggle switch is in the ``on'' position.}
+\rubricitem{2}{The right-most display is blank when the right-most toggle
+    switch is in the ``off'' position.}
+\rubricitem{1}{The behaviors for the left-most toggle switch and for the right-
+    most toggle switch can happen at the same time (\textit{e.g.}, {\dviiseg
+    231} can be made to appear and disappear while also updating the number
+    entered from the keypad).}
+\rubricitem{1}{Nothing happens as a result of toggling either of the middle two
+    toggle switches.}
+\rubricitem{2}{The SSBC screen does not get corrupted under casual use of the
+    program.}
+\rubricitem{2}{The SSBC remains responsive to inputs throughout using the
+    program.}
+\end{description}
+
+\end{document}
