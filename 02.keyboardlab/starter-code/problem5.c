@@ -28,13 +28,16 @@ int compare_words(const char *word1, const char *word2);
 struct node *insert_word(struct node *head, const char *word);
 struct node *build_list();
 char *respond(const struct node *list, const char *challenge_word);
-char *get_string_input(const char *prompt);
+char *get_input(const char *prompt);
 
 
 /*** PROBLEM 5.1: Doubly-Linked List ***/
 
 struct node {
-    /* WRITE THIS STRUCT */
+    char word[MAXIMUM_WORD_LENGTH];
+    int occurrences;
+    struct node *next;
+    struct node *previous;
 };
 
 /* Allocates memory for a new node to hold the word, and initializes the node's fields.
@@ -127,6 +130,18 @@ char *respond(const struct node *list, const char *challenge_word) {
 
 /*** main ***/
 
+/* A utility function to help with debugging.  Traverses the list, printing
+ * each node's payload and the next/previous pointers. */
+void print_list(const struct node *head) {
+    const struct node *current_node;
+    current_node = head;
+    while (current_node != NULL) {
+        printf("NODE %p -- %15s:%d\tprev:%p next:%p\n",
+               current_node, current_node->word, current_node->occurrences, current_node->previous, current_node->next);
+        current_node = current_node->next;
+    }
+}
+
 /* Prompts the user and reads the user's input from stdin. */
 char *get_input(const char *prompt) {
     char *input = malloc(MAXIMUM_WORD_LENGTH);
@@ -138,6 +153,7 @@ char *get_input(const char *prompt) {
 
 int main() {
     struct node *list = build_list();
+    // print_list(list);
     char *challenge_word = get_input("Enter the challenge word");
     printf("Response word: %s\n", respond(list, challenge_word));
     return 0;
