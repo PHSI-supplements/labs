@@ -24,18 +24,6 @@
 \newcommand{\nano}{Arduino Nano}
 \renewcommand{\runtimeenvironment}{your \nano-based class hardware kit}
 
-% \newcommand{\power}{{power~(\color{red}\bf+}) rail}
-% \newcommand{\ground}{ground~({\color{RoyalBlue}\bf--}) rail}
-% \newcounter{checkpoint}
-% \newcommand{\checkpoint}[1]{\stepcounter{checkpoint}\vspace{1cm}
-% \textbf{\textsc{CheckPoint}~\thecheckpoint:} Before proceeding further, have a
-% TA or a classmate verify that you have correctly #1. Update
-% \textit{checkpoints.txt} file to indicate who checked your work and when they
-% did so.\vspace{1cm}}
-% \newcommand{\disconnect}{\textbf{Before proceeding further, disconnect the USB
-% cable from the \nano.}}
-% \newcommand{\rainbow}{male-to-male rainbow cable}
-
 \startdocument
 
 In this assignment, you will write functions to use the input and output
@@ -117,7 +105,7 @@ portion of the system.
             displayed.
         \item In no case shall the tool allow the user to input a value too
             great to be displayed on the \textbf{7-segment display module}. If
-            the user attempts to enter a value greater than 0xEFFF,FFFF in
+            the user attempts to enter a value greater than 0x7FFF,FFFF in
             hexadecimal, less than 0x8000,000 in hexadecimal, greater than
             99,999,999 in decimal, or less than -9,999,999 in decimal, then the
             \textbf{7-segment display module} shall display {\dviiseg too big}.
@@ -201,7 +189,7 @@ configure the specific pins.
     \centering
     \begin{tabular}{|c|c|c|l|}
         \hline
-        \textbf{DDRx\textit{n}} & \textbf{PORTx\textit{n}} & \textbf{Direction} & \textbf{High/Low Value} \\ \hline \hline
+        \textbf{DDx\textit{n}} & \textbf{PORTx\textit{n}} & \textbf{Direction} & \textbf{High/Low Value} \\ \hline \hline
         0 & 0   & Input, Hi-Z       & Takes on value from input device \\
         0 & 1   & Input, Pull-Up    & High unless input device pulls value low \\
         1 & 0/1 & Output            & Value assigned by program \\ \hline
@@ -313,7 +301,7 @@ two purposes.
     \lstinline{delay(2);} that pauses execution between detecting the first
     change of the button's or switch's position and acting upon it for 2ms,
     ample time for switch bounce to stabilize. The problem (beyond
-    \lstinline{delay()} being disallowed in this lab) is that even though
+    \lstinline{delay()} being disallowed in this lab) is that
     2,000µs is a long time to leave your system completely non-responsive.
     \item The solution used here allows your system to continue to respond to
     other external events. For example, you can press both buttons at very
@@ -364,16 +352,16 @@ logic levels on the rows and reading logic levels on the columns.
         pin to \texttt{D5}, \texttt{row7} to \texttt{D6}, and \texttt{row*} to
         \texttt{D7}.
     \item In the \function{setup_keypad()} function, use the \lstinline{gpio}
-        array to set pins \texttt{D5}, \texttt{D6}, \texttt{D7}, and
-        \texttt{D8} to \textbf{output}. Refer to
+        array to set pins \texttt{D4}, \texttt{D5}, \texttt{D6}, and
+        \texttt{D7} to \textbf{output}. Refer to
         Figures~\ref{fig:IoPortRegisters} and/or \ref{fig:NanoPinMapping} to
         determine which bits needs to be set. Use
         Table~\ref{table:DataDirection} to determine which values those bits
         need to be set to. \textbf{\textit{Take care not to change bits that
         you don't need to change.}}
     \item In the \function{setup_keypad()} function, use the \lstinline{gpio}
-        array to set the initial output values of \texttt{D5}, \texttt{D6},
-        \texttt{D7}, and \texttt{D8} to 0.
+        array to set the initial output values of \texttt{D4}, \texttt{D5},
+        \texttt{D6}, and \texttt{D7} to 0.
     \item Recall that \texttt{column1} is connected to \texttt{A0},
         \texttt{column2} pin to \texttt{A1}, \texttt{column3} to \texttt{A2},
         and \texttt{columnA} to \texttt{A3}.
@@ -395,7 +383,7 @@ the lookup table. The element \lstinline{keys[0][0]} will correspond to the
 
 We want the numerals \texttt{0}-\texttt{9} to produce their respective decimal
 (and hexadecimal) values. We want \texttt{A}-\texttt{D} to produce their
-respective hexadecimal values. We want \texttt{#} to produce the hexadecimal
+respective hexadecimal values. We want \texttt{\#} to produce the hexadecimal
 value 0xE, and we want \texttt{*} to produce the hexadecimal value 0xF.
 
     \begin{itemize}
@@ -432,8 +420,8 @@ lasts less than 500ms as a single keypress.
         iterates over the four rows.
     \item At the start of the loop body, set each row pin to output 1, except
         that the pin corresponding to the current iteration's row should output
-        0. For example, in the first iteration, you want \texttt{D6},
-        \texttt{D7}, and \texttt{D8} to output a 1 but \texttt{D5} to output a
+        0. For example, in the first iteration, you want \texttt{D5},
+        \texttt{D6}, and \texttt{D7} to output a 1 but \texttt{D4} to output a
         0. You will probably find it easier to do this in two lines, first
         setting \textit{all} of the row pins to 1 and then setting the current
         iteration's row pin to 0.
@@ -717,6 +705,108 @@ Rubric:
 \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due. (Cannot get both bonuses.)}
 \end{description}
 
-NOTE: This document will be updated with instructions to get it checked-off if
-you pursue the bonus credit.
+\section*{Lab Checkoff}
+
+You are not required to have your assignment checked-off by a TA or the
+professor. If you do not do so, then we will perform a functional check
+ourselves. In the interest of making grading go faster, we are offering a small
+bonus to get your assignment checked-off at the start of your scheduled lab
+time immediately after it is due. Because checking off all students during lab
+would take up most of the lab time, we are offering a slightly larger bonus if
+you complete your assignment early and get it checked-off by a TA or the
+professor during office hours.
+
+\begin{description}
+\item [[ ]] Establish that the code you are demonstrating is the code you
+    submitted to to \filesubmission.
+    \begin{itemize}
+    \item If you are getting checked-off during lab time, show the TA that the
+        file was submitted before it was due.
+    \item Download the file into your PollingLab directory. If necessary,
+        rename it to \textit{PollingLab.ino}.
+    \end{itemize}
+\item [[ ]] Upload \textit{PollingLab.ino} to your \nano.
+\item [] \textbf{If you completed demonstration mode, jump ahead to
+    \textit{Demonstration Mode}.} Successfully completing demonstration
+    \textit{prima facie} shows that the I/O functions correctly.
+\item [] \textbf{If you did not complete demonstration mode:}
+\item [[ ]] Using \function{test_simple_io()}, show on the Serial Monitor that
+    the left and right button presses are detected.
+\item [[ ]] Using \function{test_simple_io()}, show on the Serial Monitor that
+    the left and right switches' position changes are detected.
+\item [[ ]] Show that the external LED illuminates when it is supposed to (in a
+    bright room, you may need to shade the LED with your hand). You can do this
+    either by moving both switches to the right position (using the code in
+    \function{test_simple_io()}) or by showing the LED illuminate when you
+    press a key on the matrix keypad (if you started working on demonstration
+    mode).
+\item [[ ]] Show on the Serial Monitor that key presses on the matrix keypad
+    are correctly decoded.
+\item [[ ]] Show on the display module that values decoded from the matrix
+    keypad are displayed as the correct characters.
+\item[] \textbf{\textit{Demonstration Mode}}
+\item[[ ]] Place the left switch in the left position. The display module is
+    blank.
+\item[[ ]] Press a key on the matrix keypad. The corresponding character
+    appears on the display module, and the external LED illuminates for
+    approximately one-half of a second.
+\item[[ ]] Press a different key on the matrix keypad. The corresponding
+    character appears on the display module, and the external LED illuminates
+    for approximately one-half of a second.
+\item[[ ]] Press the right pushbutton. The display module blanks.
+\item[[ ]] Press a key on the matrix keypad. The corresponding character
+    appears on the display module, and the external LED illuminates for
+    approximately one-half of a second.
+\item[[ ]] Press the same key on the matrix keypad. The display module is
+    unchanged (still displays the corresponding character), but the external
+    LED still illuminates for approximately one-half of a second.
+\item[] \textbf{\textit{Conversion Mode}}
+\item[[ ]] Place the left switch in the right position. The display module
+    blanks.
+\item[[ ]] Press a key on the matrix keypad. The corresponding character
+    appears on the display module.
+\item[[ ]] Place the left switch in the left position. The display module
+    blanks.
+\item[[ ]] Place the left switch in the right position.
+\item[[ ]] Place the right switch in the left position.
+\item[[ ]] Press 2, then 3. \\
+    {\dviiseg \phantom{8888888}2} \\
+    {\dviiseg \phantom{888888}23}
+\item[[ ]] Press B. The display is unchanged.
+\item[[ ]] Press the left pushbutton, then 1. \\
+    {\dviiseg -\phantom{88888}23} \\
+    {\dviiseg -\phantom{8888}231}
+\item[[ ]] Place the right switch in the right position. \\
+    {\dviiseg FFFFFF19}
+\item[[ ]] Press 0, then A. \\
+    {\dviiseg FFFFF190} \\
+    {\dviiseg FFFF190A}
+\item[[ ]] Press the left pushbutton, then \#. \\
+    {\dviiseg \phantom{8888}E6F6} \\
+    {\dviiseg \phantom{888}E6F6E}
+\item[[ ]] Place the right switch in the left position. \\
+    {\dviiseg \phantom{88}946030}
+\item[[ ]] Press 4, then 5, then 6. \\
+    {\dviiseg \phantom{8}9460304} \\
+    {\dviiseg 94603045} \\
+    {\dviiseg \phantom{8}too big}
+\item[[ ]] Press the right pushbutton. The display module blanks.
+\item[[ ]] Place the right switch in the right position. The display remains
+    blank.
+\item[[ ]] Press 7, then 8, then 9, then C, then *, then 0, then \#, then D. \\
+    {\dviiseg \phantom{8888888}7} \\
+    {\dviiseg \phantom{888888}78} \\
+    {\dviiseg \phantom{88888}789} \\
+    {\dviiseg \phantom{8888}789C} \\
+    {\dviiseg \phantom{888}789CF} \\
+    {\dviiseg \phantom{88}789CF0} \\
+    {\dviiseg \phantom{8}789CF0E} \\
+    {\dviiseg 789CF0ED}
+\item[[ ]] Place the right switch in the left position. \\
+    {\dviiseg \phantom{888}Error}
+\item[[ ]] Press the right pushbutton. The display module blanks.
+\end{description}
+
+This concludes the demonstration of your system's functionality. The TAs will
+later examine your code for violations of the assignment's constraints.
 \end{document}
