@@ -8,12 +8,10 @@
 \renewcommand{\labname}{C Programming Familiarization Lab}
 \renewcommand{\shortlabname}{pokerlab}
 \renewcommand{\collaborationrules}{Except as noted in Section~\ref{studyTheCode}, \individualeffort}
-%\renewcommand{\duedate}{soon}
-\renewcommand{\duedate}{Week of August 30, before the start of your lab section}
+%\renewcommand{\duedate}{See \filesubmission\ for the due date}
+\renewcommand{\duedate}{Week of January 24, before the start of your lab section}
 \startdocument
 % \begin{document}
-
-
 
 The purpose of this assignment is to (re)familiarize you with some aspects of C
 that may not be intuitive to students who are new to C. Even if you know C,
@@ -21,11 +19,168 @@ work this assignment to re-familiarize yourself.
 
 If you work faithfully at understanding the portions of code that you're
 instructed to study, and if you work faithfully at writing the code you're
-instructed to write you will receive credit for this assignment. The
+instructed to write, you will receive credit for this assignment. The
 instructions are written assuming you will edit and run the code on
-\runtimeenvironment. If you wish, you may edit and run the code
-in a different environment; be sure that your compiler suppresses no warnings,
-and that if you are using an IDE that it is configured for C and not C++.
+\runtimeenvironment. Except for demonstrating that you can connect to
+\runtimeenvironment, you may edit and run the code in a different environment
+if you wish; be sure that your compiler suppresses no warnings, and that if you
+are using an IDE that it is configured for C and not C++.
+
+\section*{Learning Objectives}
+
+After successful completion of this assignment, students will be able to:
+\begin{itemize}
+\item Connect to \runtimeenvironment.
+\item Edit and compile a C program.
+\item Understand the similarities between Java and C code.
+\item Adapt to some differences between Java and C code, specifically those
+    associated with arrays, strings, and boolean values.
+\end{itemize}
+
+\subsection*{Continuing Forward}
+
+Even though the C code in this assignment can be edited, compiled, and run
+anywhere, there will be future lab assignments that must be completed on
+\runtimeenvironment. Having learned how to connect to \runtimeenvironment, you
+will be able to complete future labs.
+
+This lab is a first step in understanding the C language. Upcoming labs will
+build upon this understanding, both to improve your familiarity with the C
+language and also to apply that understanding to learning \coursenumber's
+concepts.
+
+\section*{During Lab Time}
+
+During your lab period, the TAs will help you connect to \runtimeenvironment,
+and they will show you how to edit and compile a C program. During the remaining
+time, the TAs will be available to answer questions.
+
+\section{Connecting to \runtimeenvironment}
+
+%% You will need to edit this section to tailor it to your
+%% particular environment.
+
+You will need to be able to set up a secure shell terminal to
+\runtimeenvironment. You will also need to be able to edit files either
+directly on \runtimeenvironment, or on your personal computer (or a lab
+computer) and to transfer files to and from \runtimeenvironment.
+
+\subsection{Secure Shell Terminal}
+
+You will need to run commands on \runtimeenvironment.
+
+If your personal computer (or the lab computer you're using) is a Windows
+machine, the most popular option is PuTTY. See
+\url{https://computing.unl.edu/faq-section/working-remotely#node-29471} for
+instructions. The principal difference is that instead of using
+\textit{cse.unl.edu} has the Host Name, use \textit{csce.unl.edu}.
+
+If your personal computer (or the lab computer you're using) is a Mac or a
+Linux box, the simplest option is to open a terminal window on your computer
+and type \texttt{ssh \textit{username}@csce.unl.edu}, where \textit{username}
+is your School of Computing login ID. See
+\url{https://computing.unl.edu/faq-section/working-remotely#node-300} for Mac,
+or \url{https://computing.unl.edu/faq-section/working-remotely#node-30086} for
+Linux.
+
+For a broad variety of platforms, you can use NoMachine (see
+\url{https://computing.unl.edu/faq-section/working-remotely#node-30855}). Note
+that NoMachine will only connect to \textit{cse.unl.edu}. After you have
+connected to \textit{cse.unl.edu} through NoMachine, you can open a terminal
+window and \texttt{ssh} to \textit{csce.unl.edu} just as you would from any
+other Linux system.
+
+If you already have an IDE on your personal computer, that IDE may provide the
+option of opening a secure shell terminal on a remote system. I do not
+guarantee that the TAs or the School of Computing tech support team can help
+you with connecting your IDE to \runtimeenvironment.
+
+\subsection{Editing Files}
+
+You might choose to edit files directly on \runtimeenvironment. If you do so,
+your options are \texttt{vim}, an enhanced version of the classic \texttt{vi}
+editor, GNU Emacs, or Pico (or its clone, GNU nano). Be aware that \texttt{vim}
+and Emacs have non-trivial learning curves: knowing how to use them will pay
+dividends in your future careers, but you may be frustrated if you're using to
+using more conventional editors. Pico, an editor derived from the classic
+\texttt{pine} email client, has a helpful list of available commands always
+shown at the bottom of the terminal.
+
+If you're using NoMachine, you can use Atom, a general-purpose text editor that
+will have a more-familiar style user interface. Because \textit{cse.unl.edu}
+and \textit{csce.unl.edu} share a file server, you can edit files on
+\textit{cse.unl.edu} and use them on \textit{csce.unl.edu} without having to
+take any action to transfer the files.
+
+Many students choose to edit files on their personal computer. If you do so,
+and if your personal computer is a Windows machine, try to configure your
+editor to use ``Unix-style'' end-of-line characters. This won't matter for most
+labs, but a couple of upcoming labs will need ``Unix-style'' line separators.
+If you cannot change this setting, then get in the habit of running
+\texttt{dos2unix \textit{filename}} on your files after transferring them to
+\runtimeenvironment\ to convert ``DOS-style'' line separators to ``Unix-style''
+line separators (this utility makes a few other changes, too, that have no
+bearing on \coursenumber assignments).
+
+Some IDEs allow you to edit files on a remote system. Bear in mind that these
+IDEs may add metafiles to the remote system in sufficient quantity to exceed
+your disk quota on the School of Computing's file server (VS Code is
+particularly notorious for this). I do not guarantee that the TAs or the School
+of Computing tech support team can help you with connecting your IDE to
+\runtimeenvironment.
+
+If you edit files on your personal computer but store files on your personal
+computer (that is, you aren't editing remote files), then you will need to
+transfer files between your personal computer and \runtimeenvironment.
+
+\subsection{Transferring Files}
+
+If you are editing your files on the School of Computing's file server, whether
+from within a secure shell terminal, from within NoMachine, or by configuring
+an IDE on your personal computer to do so, then you do not need to transfer
+files between the file server and your local computer -- but you may wish to
+set up the ability to do so anyway.
+
+Similarly, if you are editing files on a lab computer, you do not need to
+transfer files because the ``Z drive'' shares a file server with
+\textit{cse.unl.edu} and \textit{csce.unl.edu}.
+
+Otherwise, if you are editing local files on your personal computer, then you
+will need to be able to transfer files. If you are using Windows, then the most
+popular option is FileZilla -- see
+\url{https://computing.unl.edu/faq-section/working-remotely#node-291}. It does
+not matter whether you specify \textit{cse.unl.edu} or \textit{csce.unl.edu} as
+the host because they share the same file server.
+
+If you are using Mac or Linux, you have options. The School of Computing's FAQ
+suggests Cyberduck for Mac -- see
+\url{https://computing.unl.edu/faq-section/working-remotely#node-3459}, but
+FileZilla works fine on Mac and Linux. Another option, since you're already
+using terminal windows to \texttt{ssh} into \textit{csce.unl.edu} is to use
+the \texttt{scp} command. Basic use of the \texttt{scp} command is very much
+the same as basic use of the \texttt{cp} command, except that you specify the
+remote host. Copying files from your computer to the server: \\
+\texttt{scp \textit{file1} \textit{file2} \dots
+csce.unl.edu:\textit{filepath}} copies the files from your local computer to
+the \textit{filepath} on \runtimeenvironment, where \textit{filepath} is
+relative to your home directory. For example, \\
+\texttt{scp answers.txt csce.unl.edu:.} copies \textit{answers.txt} to the
+top-level of your home directory. Or, working the other direction: \\
+\texttt{scp csce.unl.edu:\textit{file} \textit{filepath}} copies \textit{file}
+from the remote server to \textit{filepath} on your local computer. Just as
+with \texttt{cp}, you can use the \texttt{-r} argument to copy directories: \\
+\texttt{scp -r pokerlab csce.unl.edu:.} \\
+\texttt{scp -r csce.unl.edu:pokerlab .}
+
+\section{Scenario}
+
+You're relaxing at your favorite hangout when another customer catches your
+attention. He's rather large (dare I say, \textit{mammoth}), a bit hairy, and
+looking frustrated in front of his laptop. ``I'm Archie,'' he says, ``and I'm
+trying to teach myself this card game called \textit{Poker}. I found this
+source code that I thought I could use to understand Poker better, but the code
+is incomplete, and I don't entirely understand what's there. Could you explain
+it to me, please?''
 
 \section{Terminology}
 
@@ -56,10 +211,15 @@ Download \textit{\shortlabname.zip} or \textit{\shortlabname.tar} from
 The three source code files (\textit{card.h}, \textit{card.c},
 \textit{poker.c}) contain the starter code for this assignment, and the text
 file (\textit{answers.txt}) is where you'll provide some answers to demonstrate
-your ability to understand part of the starter code. The header file
-\textit{card.h} defines a ``card'' structure and specifies two functions that
-operate on cards. The source file \textbf{card.c} has the bodies for the
-specified functions, but some code is missing. Finally, the source file
+your ability to understand part of the starter code. In the
+\mbox{\textit{equivalent-java}} directory you will find \textit{Card.java} and
+\textit{Poker.java} that has Java code that is equivalent to the C code. You do
+not need to use the Java files, but you may find them useful as a reference to
+help you understand some of the differences between Java and C.
+
+The header file \textit{card.h} defines a ``card'' structure and specifies two
+functions that operate on cards. The source file \textbf{card.c} has the bodies
+for the specified functions, but some code is missing. Finally, the source file
 \textit{poker.c} is supposed to generate a poker hand of five cards, print
 those five cards, and then print what kind of hand it is -- but much of its
 code is missing. To compile the program, type:
@@ -93,6 +253,31 @@ poker.c:154:9: warning: unused variable ‘size_of_hand’ [-Wunused-variable]
 then you can temporarily fix this warning by commenting-out the line
 \lstinline{int size_of_hand = 5} in \textit{poker.c}'s \function{main()}
 function.
+
+(Note that in future labs, we will provide a \textit{Makefile} that can be used
+to build applications.)
+
+\subsection*{Demonstrate that you can connect to \runtimeenvironment}
+
+By whatever means you use to place files on \runtimeenvironment, place
+\textit{answers.txt} on \runtimeenvironment. Open a secure shell terminal and
+navigate to the directory in which \textit{answers.txt} is located. Type these
+commands:
+\begin{itemize}
+\item[]\texttt{cat /etc/hostname} \\
+\textit{The response should be \texttt{csce.cs.unl.edu}. If it is
+\texttt{cse.unl.edu} then you connected to the wrong server. This will matter
+in two future lab assignments.}
+\item[]\texttt{whoami} \\
+\textit{This will print your School of Computing login ID.}
+\item[]\texttt{ls answers.txt} \\
+\textit{The response should be \texttt{answers.txt}. If it is \texttt{ls:
+cannot access $'$answers.txt$'$: No such file or directory} then you are not in
+the same directory as} answers.txt.
+\end{itemize}
+
+Take a screenshot and save the screenshot to submit to \filesubmission\ when you
+have completed the lab.
 
 \section{Completing \textit{card.c}}
 
@@ -234,14 +419,23 @@ When you have completed this assignment, upload \textit{card.c},
 
 This assignment is worth 10 points.
 \begin{description}
-\rubricitem{1}{Student's answers in \textit{answers.txt} demonstrate an understanding of C's logical boolean operations.}
+\rubricitem{1}{The screenshot shows that the student has connected to \runtimeenvironment\ and placed a copy of \textit{answers.txt} there.}
+\rubricitem{1}{The student's answers in \textit{answers.txt} demonstrate an understanding of C's logical boolean operations.}
 \rubricitem{1}{\function{create_card} populates a card's fields}
 \rubricitem{1}{\function{display_card} generates the printable representation of a card}
 \rubricitem{1}{\function{populate_deck} creates a deck of 52 cards}
-\rubricitem{2}{\function{is_three_of_kind} determines whether a hand is a three of a kind}
-\rubricitem{2}{\function{is_full_house} determines whether a hand is a full house}
+\rubricitem{1}{\function{is_three_of_kind} determines whether a hand is a three of a kind}
+\rubricitem{1}{\function{is_full_house} determines whether a hand is a full house}
 \rubricitem{1}{\function{is_four_of_kind} determines whether a hand is a four of a kind}
-\rubricitem{1}{\function{main} generates a hand of five cards, prints the hand, and determines the best-possible characterization of the hand}
+\rubricitem{2}{\function{main} generates a hand of five cards, prints the hand, and determines the best-possible characterization of the hand}
 \end{description}
+
+\section*{Epilogue}
+
+Archie's face lights up in a very big smile. ``Thanks!'' After pausing in
+thought for a moment, he says, ``Say, I've got a new startup company that could
+really use your help. Are you interested? It'll be exciting!''
+
+\textit{To be continued...}
 
 \end{document}

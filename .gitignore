@@ -42,6 +42,8 @@ ethumbs.db
 *.dvi
 *.fls
 *.fdb_latexmk
+*.bbl
+*.blg
 
 # C files
 *.o
@@ -55,6 +57,10 @@ ethumbs.db
 *.dylib
 *.exe
 *.out
+
+# Java files
+*.class
+javadoc/
 
 # Debug files
 *.dSYM/

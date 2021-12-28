@@ -30,14 +30,16 @@ void populate_deck() {
 
 /* Sorts an array of cards in-place from least value to greatest value. */
 card *sort(card *subdeck, int size) {
-    card temp;
-    for (int i = 0; i < size - 1; i++)
-        for (int j = i + 1; j < size; j++)
+    card temporary_card;
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = i + 1; j < size; j++) {
             if (subdeck[i].value > subdeck[j].value) {
-                temp = subdeck[i];
+                temporary_card = subdeck[i];
                 subdeck[i] = subdeck[j];
-                subdeck[j] = temp;
+                subdeck[j] = temporary_card;
             }
+        }
+    }
     return subdeck;
 }
 
@@ -59,8 +61,9 @@ card *get_hand(card *empty_hand, int size_of_hand) {
 int is_pair(card *hand, int size_of_hand) {
     /* STUDY THIS CODE.  WHY DOES IT PRODUCE THE INTENDED RESULT? */
     int pair = 0;
-    for (int i = 0; i < size_of_hand - 1; i++)
+    for (int i = 0; i < size_of_hand - 1; i++) {
         pair = pair || (hand[i].value == hand[i + 1].value);    // because hand is sorted, a pair must be two adjacent cards
+    }
     return pair;
 }
 
@@ -70,7 +73,7 @@ int is_two_pair(card *hand, int size_of_hand) {
     int number_of_pairs = 0;
     card *partial_hand;
     int i = 0;
-    while (i < size_of_hand) {      /* RECALL THAT ARRAYS ARE POINTERS */
+    while (i < size_of_hand - 1) {  /* RECALL THAT ARRAYS ARE POINTERS */
         partial_hand = hand + i;    /* THIS IS CHANGING THE ADDRESS IN THE "PARTIAL_HAND" POINTER TO ANOTHER PART OF THE ARRAY */
         if (is_pair(partial_hand, 2)) {
             number_of_pairs++;
@@ -96,8 +99,9 @@ int is_three_of_kind(card *hand, int size_of_hand) {
 int is_straight(card *hand, int size_of_hand) {
     /* STUDY THIS CODE.  WHY DOES IT PRODUCE THE INTENDED RESULT? */
     int not_straight = 0;
-    for (int i = 0; i < size_of_hand - 1; i++)
+    for (int i = 0; i < size_of_hand - 1; i++) {
         not_straight = not_straight + abs(hand[i + 1].value - hand[i].value - 1);
+    }
     return !not_straight;
 }
 
@@ -107,13 +111,14 @@ int is_flush(card *hand, int size_of_hand) {
     /* STUDY THIS CODE.  WHY DOES IT PRODUCE THE INTENDED RESULT? */
     int flush = 1;
     int suit = hand[0].suit;
-    for (int i = 1; i < size_of_hand; i++)
+    for (int i = 1; i < size_of_hand; i++) {
         flush = flush && (hand[i].suit == suit);
+    }
     return flush;
 }
 
 
-/* Returns 1 if three of the  cards in "hand" are three of a kind and another two are a pair; returns 0 otherwise.
+/* Returns 1 if three of the cards in "hand" are three of a kind and another two are a pair; returns 0 otherwise.
  * "hand" must be sorted from least value to greatest value. */
 int is_full_house(card *hand, int size_of_hand) {
     /* WRITE THIS FUNCTION */
