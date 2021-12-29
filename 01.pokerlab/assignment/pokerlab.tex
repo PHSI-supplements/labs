@@ -7,7 +7,7 @@
 \renewcommand{\labnumber}{1}
 \renewcommand{\labname}{C Programming Familiarization Lab}
 \renewcommand{\shortlabname}{pokerlab}
-\renewcommand{\collaborationrules}{Except as noted in Section~\ref{studyTheCode}, \individualeffort}
+\renewcommand{\collaborationrules}{Except as noted in Section~\ref{StudyTheCode}, \individualeffort}
 %\renewcommand{\duedate}{See \filesubmission\ for the due date}
 \renewcommand{\duedate}{Week of January 24, before the start of your lab section}
 \startdocument
@@ -199,10 +199,11 @@ Poker\footnote{\url{https://en.wikipedia.org/wiki/Poker}} is a game of chance
 and skill played with a standard deck of 52 playing cards, in which players
 attempt to construct the best ``hand'' they can. While there are many
 variations of the game, they all have this in common. A hand is a set of five
-cards, and it can be categorized into types of hands (described on the third
-page), which are ranked according to the statistical likelihood of being able
-to construct such a hand. When completed, the code in this assignment will
-generate a random hand and evaluate what type of hand it is.
+cards, and it can be categorized into types of hands (described in
+Section~\ref{TypesOfPokerHands}), which are ranked according to the statistical
+likelihood of being able to construct such a hand. When completed, the code in
+this assignment will generate a random hand and evaluate what type of hand it
+is.
 
 \section{Getting Started}
 
@@ -309,6 +310,7 @@ all 52 cards in \lstinline{deck[]} using \function{display_card()}, to confirm
 that you wrote \function{populate_deck()} correctly.
 
 \subsection{Types of Poker Hands}
+\label{TypesOfPokerHands}
 
 In the game of poker, hands are characterized by the similarities of the cards
 within. Traditionally, you characterize the hand by the ``best''
@@ -358,7 +360,7 @@ whether there is a better way to characterize the hand. The types of hands
 \end{description}
 
 \subsection{Study the Code}
-\label{studyTheCode}
+\label{StudyTheCode}
 
 Look at the code for \function{is_pair()}. Notice that the parameter
 \lstinline{hand}'s type is \lstinline{card*}; that is, \lstinline{}{hand} is a

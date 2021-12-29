@@ -18,8 +18,8 @@
 
 #define MAXIMUM_WORD_LENGTH 60
 
-char to_lowercase(char character);      // linked from problem2.c
-int is_even(int number);                // linked from problem3.c
+char decapitalize(char character);      // linked from problem2.c
+int is_even(int value);                // linked from problem3.c
 struct node *create_node(const char *word);
 void insert_after(struct node *existing_node, struct node *new_node);
 void insert_before(struct node *existing_node, struct node *new_node);

@@ -2,13 +2,13 @@
 
 This lab is designed to help students get started (or re-familiarize
 themselves) with C programming. We used to start with a lab that has a quine,
-ill-defined stack behavior, and a linked list, but within a semester of me
-teaching the course, I added "Homework 0" for a shallower learning curve.
-"Homework 0" evolved into PokerLab.
+a problem with ill-defined stack behavior, and a linked list, but within a
+semester of me teaching the course, I added "Homework 0" for a shallower
+learning curve. "Homework 0" evolved into PokerLab.
 
 Students will see code that has some of C's quirks: integers as booleans,
 strings as arrays, arrays as pointers, explicitly allocating memory, `printf`
-control strings -- all sorts of C goodness. They'll then apply what they
+format strings -- all sorts of C goodness. They'll then apply what they
 learned (and learn from mistakes) by finishing the program's implementation.
 
 There is no autograder for this lab -- I wrote this assignment to have an

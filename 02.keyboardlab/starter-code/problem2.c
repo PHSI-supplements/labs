@@ -14,7 +14,7 @@
  ******************************************************************************/
 
 /* Returns 1 if the argument is a decimal digit (such as '5'), 0 otherwise */
-int is_digit(char character) {
+int iz_digit(char character) {
     /* WRITE THIS FUNCTION */
     return -1;
 }
@@ -23,7 +23,7 @@ int is_digit(char character) {
  * If the argument is an uppercase letter, the function returns the
  * corresponding lowercase letter (e.g., 'D' yields 'd'). Otherwise, the
  * function returns the argument, unchanged. */
-char to_lowercase(char character) {
+char decapitalize(char character) {
     /* WRITE THIS FUNCTION */
     return '\0';
 }

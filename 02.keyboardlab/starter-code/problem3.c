@@ -17,9 +17,9 @@
 #include <stdio.h>
 #include <math.h>
 
-/* Returns 1 if the argument is an even number, and returns 0 if the argument
- * is an odd number */
-int is_even(int number) {
+/* Returns 1 if the argument is an even value, and returns 0 if the argument
+ * is an odd value */
+int is_even(int value) {
     /* WRITE THIS FUNCTION */
     return 0;
 }
@@ -30,19 +30,19 @@ int is_even(int number) {
  * - if a positive number is odd then subtract 1 and multiply the difference by 5 */
 int produce_multiple_of_ten(int seed) {
     int five = 0;                   /* CREATE THE VALUE 5 */
-    int subtract_one_mask = 0;      /* CREATE A BITMASK YOU CAN USE TO SUBTRACT 1 */
-    int number = seed > 0 ? seed : 0;
-    int position_of_last_digit = number > 0 ? (int)log10(number) : 0;
-    char number_string[33];
-    sprintf(number_string, "%d", number);
-    while (number_string[position_of_last_digit] != '0') {
-        if (is_even(number)) {
-            number = 0;             // DIVIDE BY 2
+    int deduct_one_mask = 0;        /* CREATE A BITMASK YOU CAN USE TO SUBTRACT 1 */
+    int value = seed > 0 ? seed : 0;
+    int position_of_last_digit = value > 0 ? (int)log10(value) : 0;
+    char value_text[33];
+    sprintf(value_text, "%d", value);
+    while (value_text[position_of_last_digit] != '0') {
+        if (is_even(value)) {
+            value = 0;             // DIVIDE BY 2
         } else {
-            number = 0;             // SUBTRACT 1 AND MULTIPLY THE DIFFERENCE BY 5
+            value = 0;             // SUBTRACT 1 AND MULTIPLY THE DIFFERENCE BY 5
         }
-        position_of_last_digit = number > 0 ? (int)log10(number) : 0;
-        sprintf(number_string, "%d", number);
+        position_of_last_digit = value > 0 ? (int)log10(value) : 0;
+        sprintf(value_text, "%d", value);
     }
-    return number;
+    return value;
 }

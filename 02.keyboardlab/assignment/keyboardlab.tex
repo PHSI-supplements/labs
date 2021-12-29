@@ -12,12 +12,12 @@
     moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
     }
 
-\renewcommand{\labnumber}{1}
+\renewcommand{\labnumber}{2}
 \renewcommand{\labname}{Bits and Pointers Manipulation Lab}
 \renewcommand{\shortlabname}{keyboardlab}
 \renewcommand{\collaborationrules}{\individualeffort}
-%\renewcommand{\duedate}{soon}
-\renewcommand{\duedate}{Week of September 13, before the start of your lab section}
+%\renewcommand{\duedate}{See \filesubmission\ for the due date}
+\renewcommand{\duedate}{Week of January 31, before the start of your lab section}
 
 \newcommand{\tab}{\ensuremath{\longrightarrow}}
 \newcommand{\nl}{\ensuremath{\hookleftarrow}}
@@ -109,14 +109,13 @@ Edit \texttt{problem1.c} so that it produces the specified output without using
 the W key or the backslash key. Build the executable with the command:
 \texttt{make keyboardlab1} -- be sure to fix both errors and warnings.
 
-You can double-check that you aren't using the W key or the backslash key with
-this command:
+You can double-check that you aren't using the W key or the backslash key by
+running the constraint-checking shell script: \\
+\texttt{./constraint-check.sh} \\
+(If you get a ``\texttt{Permission denied}'' error message, then run the
+command \texttt{chmod +x constraint-checking.sh} and then run the shell script.)
 
-\texttt{grep -e w -e W -e
-\textquotesingle\textbackslash\textbackslash\textquotesingle\ problem1.c | grep
--v \textquotesingle{}\^{}\textbackslash{}s*\textbackslash{}*\textquotesingle} \\
-You can check that your program has the correct output with this command:
-
+You can check that your program has the correct output with this command: \\
 \texttt{./keyboardlab1 | diff - problem1oracle}
 
 
@@ -139,10 +138,10 @@ not type too many \lstinline{if} statements (and without the
 
 Edit \texttt{problem2.c} so that
 \begin{itemize}
-\item \function{is_digit()} returns 1 if the character is a decimal digit
+\item \function{iz_digit()} returns 1 if the character is a decimal digit
     (\textquotesingle 0\textquotesingle, \textquotesingle 1\textquotesingle,
     \textquotesingle 2\textquotesingle, \dots) and 0 otherwise
-\item \function{to_lowercase()} will return the lowercase version of an
+\item \function{decapitalize()} will return the lowercase version of an
     uppercase letter (\textquotesingle A\textquotesingle, \textquotesingle
     B\textquotesingle, \textquotesingle C\textquotesingle, \dots) but will
     return the original character if it is not an uppercase letter
@@ -154,6 +153,14 @@ you may not use \lstinline{switch} statements, and you may use at most one
 
 Build the executable with the command: \texttt{make keyboardlab2} -- be sure to
 fix both errors and warnings.
+
+You can double-check that you aren't disallowed keys by running the
+constraint-checking shell script: \\
+\texttt{./constraint-check.sh} \\
+Because you are allowed at most one \lstinline{if} statement in each function,
+you may see two lines with \lstinline{if} statements reported when the script
+checks for \textquotesingle f\textquotesingle. You may also see some comments
+reported when the script checks for \textquotesingle *\textquotesingle.
 
 
 \section{Using Bitmasks and Shifting Bits}
@@ -180,14 +187,16 @@ Edit \texttt{problem3.c} so that
 \end{itemize}
 These numbers are guaranteed to be non-negative. You may not use addition (+),
 subtraction (-), division (/), nor modulo (\%). You also may not use the
-number 5 nor the letter b.
+number 5 nor the letter b. (Exceptions: you \textit{may} use the forward-slash
+(/) for comments, and the percent-sign (\%) that is already present in the
+\function{sprintf()} calls' format strings is allowed)
 
 Hints:
 \begin{itemize}
 \item Following the weighted-sum technique to convert between binary and
-    decimal (or by examining Table~2.1), you will note that all even numbers
-    have a 0 as their least significant bit, and all odd numbers have a 1 as
-    their least significant bit
+    decimal (or by examining the textbook's Table~2.1), you will note that all
+    even numbers have a 0 as their least significant bit, and all odd numbers
+    have a 1 as their least significant bit
 \item Less obvious is that you can subtract 1 from an odd number by changing
     its least significant bit to a 0
 \item As we will cover in Chapter~3, you can halve a number by shifting its
@@ -198,6 +207,12 @@ Hints:
 
 Build the executable with the command: \texttt{make keyboardlab3} -- be sure to
 fix both errors and warnings.
+
+You can double-check that you aren't disallowed keys by running the
+constraint-checking shell script: \\
+\texttt{./constraint-check.sh} \\
+You may see some comments reported when the script checks for
+\textquotesingle *\textquotesingle.
 
 
 \section{Stray Values on the Stack}
@@ -456,12 +471,12 @@ This assignment is worth 45 points.
 \rubricitem{4}{\textit{problem1.c} produces the specified output without the
     use of \texttt{w}, \texttt{W}, \texttt{\textbackslash{}n}, or
     \texttt{\textbackslash{}t}}.
-\rubricitem{4}{\function{is_digit()} in \textit{problem2.c} determines whether
+\rubricitem{4}{\function{iz_digit()} in \textit{problem2.c} determines whether
     or not a character is a digit, without \lstinline{#include}ing any files,
     without using any numbers other than 0 and 9, without using a
     \lstinline{switch} statment, and using at most one \lstinline{if}
     statement.}
-\rubricitem{4}{\function{to_lowercase()} in \textit{problem2.c} converts
+\rubricitem{4}{\function{decapitalize()} in \textit{problem2.c} converts
     uppercase letters to lowercase and leaves other characters unchanged,
     without \lstinline{#include}ing any files, without using a
     \lstinline{switch} statment, and using at most one \lstinline{if}

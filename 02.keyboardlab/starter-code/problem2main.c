@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-char is_digit(char character);
-char to_lowercase(char character);
+char iz_digit(char character);
+char decapitalize(char character);
 
 int main() {
     char c = (char)0xFF;
@@ -19,7 +19,7 @@ int main() {
         c = (char)getchar();
         if (c != '\n') {
             printf("isdigit('%c') =  %d\t\ttolower('%c') =      %c\n", c, isdigit(c), c, tolower(c));
-            printf("is_digit('%c') = %d\t\tto_lowercase('%c') = %c\n", c, is_digit(c), c, to_lowercase(c));
+            printf("iz_digit('%c') = %d\t\tto_lowercase('%c') = %c\n", c, iz_digit(c), c, decapitalize(c));
         }
     }
     return 0;
