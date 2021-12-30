@@ -12,7 +12,7 @@ chapter *NN*, you will find it in a `NN.labname` directory.
 
 Each `NN.labname` directory contains an `assignment` subdirectory that contains
 the writeup describing the assignment, a `starter-code` subdirectory that
-contains the starter code to provide to students, and a `package.sh` shell 
+contains the starter code to provide to students, and a `package.sh` shell
 script to generate the writeup pdf file and package it with the starter code
 in a zip file and tarball to distribute to students.
 
@@ -21,7 +21,7 @@ in a zip file and tarball to distribute to students.
 The `common/assignment.tex` file defines some commands that you will set once,
 or once per term.
 
--   **\\courseterm** The name of the current semester or quarter, such as 
+-   **\\courseterm** The name of the current semester or quarter, such as
     *Spring 2021*
 -   **\\coursenumber** The name of the course that the labs are being used in,
     such as *CSCE 231*
@@ -44,4 +44,11 @@ assignment.
         can specify custom conditions as well
 -   **\\duedate** When the lab assignment is due
 
+## Sample Solutions and Autograders
 
+While the labs' assignment sheets and starter code is available to anyone under
+the Apache License, I am providing sample solutions and autograders only to
+instructors who have adopted [*Programming at the Hardware/Software
+Interface*](https://www.greatriverlearning.com/product-details/1846). (Full
+disclosure: the autograders are works-in-progress, much to my TAs'
+disappointment.)
