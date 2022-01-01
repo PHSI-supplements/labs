@@ -1,0 +1,720 @@
+%%
+%% KeyboardLab (c) 2021 Christopher A. Bohn
+%%
+
+\input{../../common/assignment.tex}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{ulem}
+\usepackage{cancel}
+\usepackage{multicol}
+\captionsetup{width=.8\linewidth}
+\lstset{language=c, alsolanguage=java, numbers=left, showstringspaces=false,
+    moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+    }
+%%
+%%
+% Credit where credit is due. Skipping line numbers from
+% https://tex.stackexchange.com/questions/476100/lstlisting-line-number-gaps
+\makeatletter
+\let\orig@lstnumber=\thelstnumber
+
+\newcommand\lstsetnumber[1]{\gdef\thelstnumber{#1}}
+\newcommand\lstresetnumber{\global\let\thelstnumber=\orig@lstnumber}
+\makeatother
+%%
+%%
+
+\renewcommand{\labnumber}{3}
+\renewcommand{\labname}{Pointer Manipulation Lab}
+\renewcommand{\shortlabname}{pointerlab}
+\renewcommand{\collaborationrules}{\individualeffort}
+%\renewcommand{\duedate}{See \filesubmission\ for the due date}
+\renewcommand{\duedate}{Week of February 7, before the start of your lab section}
+
+% Update to reflect the CS2 course(s) at your institute
+\newcommand{\cstwo}{CSCE~156, RAIK~184H, or SOFT~161}
+
+\startdocument
+% \begin{document}
+
+The purpose of this assignment is to give you more confidence in C programming
+and to begin your exposure to the underlying bit-level representation of data.
+You will also gain practice with pointers and with file input/output.
+
+The instructions are written assuming you will edit and run the code on
+\runtimeenvironment. If you wish, you may edit and run the code
+in a different environment; be sure that your compiler suppresses no warnings,
+and that if you are using an IDE that it is configured for C and not C++.
+
+\section*{Learning Objectives}
+
+After successful completion of this assignment, students will be able to:
+\begin{itemize}
+\item \dots
+\end{itemize}
+
+\subsection*{Continuing Forward}
+
+\dots
+
+\section*{During Lab Time}
+
+During your lab period, the TAs will \dots
+
+\section*{Scenario}
+
+Working at the Pleistocene Petting Zoo certainly is proving to be interesting.
+You're glad that you don't have to worry about the problem of the giant sloths
+very slowly chasing their handlers, but now it seems that Archie has decided to
+try to write a program or two. At a glance, his code is smellier than the wooly
+rhinoceros' enclosure. But you take a closer look anyway to try to understand
+why his code acts strangely.
+
+\section{Stray Values in Memory}
+
+\subsection{Pleistocene Petting Zoo Marquee}
+
+Archie shows you his first program, which he hoped would be used to greet
+guests, but it doesn't always work right:
+
+\begin{lstlisting}
+/***********************************************************************
+ * This program will output
+ **         Welcome to the
+ **    Pleistocene Petting Zoo!
+ **
+ ** Get ready for hands-on excitement on the count of three! 1.. 2.. 3..
+ ** Have fun!
+ * With brief pauses during the "Get ready" line.
+ ***********************************************************************/
+
+#include <stdio.h>
+#include <unistd.h>
+
+void splash_screen() {
+    const char *first_line = "\t     Welcome to the\n";
+    const char *second_line = "\tPleistocene Petting Zoo!\n";
+    printf("%s%s\n", first_line, second_line);
+}
+
+void count() {
+    int i;
+    sleep(1);
+    printf("Get ready for hands-on excitement on the count of three! ");
+    while (i < 3) {
+        fflush(stdout);
+        sleep(1);
+        i++;
+        printf("%d.. ", i);
+    }
+    printf("\nHave fun!\n");
+}
+
+int main() {
+    splash_screen();
+    count();
+    return 0;
+}
+\end{lstlisting}
+
+Sometimes the output was what he expected:
+\begin{verbatim}
+         Welcome to the
+    Pleistocene Petting Zoo!
+
+ Get ready for hands-on excitement on the count of three! 1.. 2.. 3..
+ Have fun!
+\end{verbatim}
+
+But sometimes the output was missing the
+``\texttt{1.. 2.. 3..}'':
+\begin{verbatim}
+         Welcome to the
+    Pleistocene Petting Zoo!
+
+ Get ready for hands-on excitement on the count of three!
+ Have fun!
+\end{verbatim}
+
+What mistake did Archie make? What change to \textit{one} line will fix
+Archie's bug? Place your answers in \textit{answers.txt}.
+
+\subsection{Math Doesn't Work Right \dots Or Does It?}
+
+``Wow,'' Archie says. ``I can't believe that I missed that. Maybe you can help
+me with some other code that I wrote for one of my other start-ups. Here it
+is.'' Archie shows you the code:
+
+\begin{lstlisting}
+/***********************************************************************
+ * This program will add two numbers and then it will multiply two other
+ * numbers. Finally, it will subtract the second result from the first
+ * result.
+ ***********************************************************************/
+
+#include <stdio.h>
+
+int *add(int a, int b) {
+    int result = a + b;
+    return &result;
+}
+
+int *multiply(int p, int q) {
+    int result[1];
+    result[0] = p * q;
+    return result;
+}
+
+int main() {
+    int *sum = add(4, 5);
+    printf("sum = %d\n", *sum);
+    int *product = multiply(2, 3);
+    printf("product = %d\n", *product);
+    printf("sum - product = %d\n", *sum - *product);
+    return 0;
+\end{lstlisting}
+
+Archie explains that when he compiles the program with the \textbf{clang}
+compiler and then runs it, he gets this output:
+
+\begin{verbatim}
+sum = 9
+product = 6
+sum - product = 0
+\end{verbatim}
+
+And when he compiles the program with the \textbf{gcc} compiler and then runs
+it, the program terminates with a segmentation fault. ``I'm pretty sure that
+the segmentation fault is just gcc trying to protect me from trusting an
+incorrect answer -- but why does the code produce an incorrect answer?''
+
+What mistake did Archie make? Why does \lstinline{*sum - *product} produce the
+value 0?
+
+
+\section{Challenge and Response}
+
+You plug in your shiny, new keyboard, tune your satellite radio to the
+Greatest Hits of the 1920s, and settle in to solving a more interesting problem.
+
+To protect against corporate espionage, you are responsible for writing code
+for a challenge-and-response system. Anybody can challenge anyone else in the
+Pleistocene Petting Zoo's non-public areas by providing the name of a book and
+a word contained within the book, and the person being challenged must respond
+with another word from that book, based on certain rules:
+\begin{itemize}
+\item All of the book's words are sorted alphabetically without regard to
+    capitalization (for example, ``hello'' occurs after ``Hear'' and before
+    ``HELP'')
+\item The challenge word occurs \textit{occurrences} times in the book
+\item If \textit{occurrences} is an even number then the response word is the
+    word \textit{occurrences} places \textbf{before} the challenge word in the
+    alphabetized list; if the challenge word is less than \textit{occurrences}
+    places from the start of the list then the response word is the first word
+    in the list
+\item If \textit{occurrences} is an odd number then the response word is the
+    word \textit{occurrences} places \textbf{after} the challenge word in the
+    alphabetized list; if the challenge word is less than \textit{occurrences}
+    places from the end of the list then the response word is the last word
+    in the list
+\end{itemize}
+
+Here is a simple example. Suppose the words in the specified book are:
+
+\begin{center}
+\begin{tabular}{cc}
+\textit{word} & \textit{occurrences} \\ \hline
+apple       & 7 \\
+banana      & 4 \\
+carrot      & 15 \\
+date        & 3 \\
+eggplant    & 2 \\
+fig         & 6 \\
+granola     & 9 \\
+horseradish & 9 \\
+ice         & 6 \\
+jelly       & 3 \\
+kale        & 1 \\
+lemon       & 2 \\
+mango       & 8 \\
+naan        & 7 \\
+orange      & 5 \\
+pineapple   & 1 \\
+quinoa      & 11 \\
+raisin      & 4 \\
+spaghetti   & 10 \\
+tomato      & 12 \\
+\end{tabular}
+\end{center}
+If the challenge word is ``horseradish'' then because horseradish occurs 9
+times in the book, the response word is ``quinoa,'' which is 9 places in the
+list after ``horseradish.'' If the challenge word is ``eggplant'' then the
+response is ``carrot,'' which is 2 places earlier in the list than
+``eggplant.'' If the challenge word is ``banana'' then the response word is
+``apple,'' which is the first word in the list. If the challenge word is
+``quinoa'' then the response word is ``tomato,'' the last word in the list.
+
+You break the problem down into four sub-problems:
+
+\begin{enumerate}
+\item Designing the Data Structure and Its Algorithms
+\item Alphabetizing Words
+\item Inserting Words
+\item Responding to a Challenge
+\end{enumerate}
+
+\subsection*{The Books}
+
+Four small ``books'' are included with the starter code:
+
+\begin{itemize}
+\item ``Animals'' (sorted, 7 words)
+\item ``Plants'' (unsorted, 7 words)
+\item ``Cars'' (sorted; 74 words)
+\item ``Food'' (unsorted; 125 words)
+\end{itemize}
+
+Two real books have also been reduced to one word per line:\footnote{The text
+for these books was obtained from \href{http://www.gutenberg.org/}{Project
+Gutenberg}. In accordance with Paragraph~1.C of the
+\href{http://www.gutenberg.org/policy/license}{Project Gutenberg License}, all
+references to Project Gutenberg have been removed from the text that we are
+distributing. (Removing the references to Project Gutenberg was also necessary
+to ensure that \textit{only} the words from the books are used for the
+challenge-and-response system.)}
+
+\begin{itemize}
+\item Mary Shelly's \textit{Frankenstein; Or, The Modern Promethius} (filename
+    ``Frankenstein'') \url{https://www.gutenberg.org/ebooks/84} (sorted; 74,363
+    words)
+\item Arthur Conan Doyle's \textit{The Lost World} (filename ``TheLostWorld'')
+    \url{https://www.gutenberg.org/ebooks/139} (unsorted; 77,268 words)
+\end{itemize}
+
+The very small files of 7 words can be useful for debugging, and the moderate-
+sized files of 74-125 words should give you confidence in the correctness of
+your solution. The real books of more than 74,000 words will be used for
+grading. The files marked as \textit{sorted} have all of their words already in
+alphabetically sorted order, ignoring capitalization; the files marked as
+\textit{unsorted} do not have their words sorted (the words in ``Plants'' and
+``Food'' are in a randomly-selected order; the words in ``TheLostWorld'' appear
+in the order that they appear in the original \textit{The Lost World}).
+
+Each book file, ``\textit{file}'', has a corresponding
+``\textit{file}-table.md'' that contains a Markdown-formatted table of the
+challenge words, the number of occurrences for each challenge word, and the
+corresponding response word. You may use these files to confirm the correctness
+of your solution.
+
+Throughout the assignment, we note that if building the list takes
+more than a few seconds, there is a bug in your code; for context, we can build
+the list for \textit{Frankenstein} in under 1.9 seconds and the list for
+\textit{The Lost World} in under 2.4 seconds. We can locate a word (or
+determine the absence of a word) in the \textit{Frankenstein} list in under
+0.5ms and in the \textit{The Lost World} list in under 0.9ms.
+
+\subsection{Preparation}
+
+Copy your files \textit{problem2.c} and \textit{problem3.c} from KeyboardLab
+into the directory that has \textit{pointerlab.c}. If you did not successfully
+complete KeyboardLab, we will provide alternate implementations for you.
+
+\subsection{Designing the Data Structure and Its Algorithms, part 1}
+
+You decide that a linked list is the best data structure option for the
+challenge-and-response system. You probably learned about linked lists in
+\cstwo; however, we will provide a refresher.
+
+\subsubsection{Singly-Linked List}\label{sec:SinglyLinkedList}
+
+For now, you will design a linked list that will work for challenge words with
+an odd numbers of occurrences; that is, challenge words whose response word is
+later in the list than the challenge word.
+
+A \textit{linked list} is linear collection of data. Like an array, each
+element (or \textit{node}) has a particular position in the list, and when you
+iterate over the list, you always access the elements in the same order every
+time (unless you change or re-order the elements).
+
+In an array, the elements are contiguous in memory, and you can access a
+specific element by indexing the array (or, equivalently, performing pointer
+arithmetic). In a linked list, however, the nodes can be in arbitrary locations
+in memory, and the nodes are connected by references (in C, pointers). You can
+access a specific element only by following pointers from one node to the next
+until you reach the desired node.
+
+The simplest linked list is a \textit{singly-linked list}. A node consists of a
+\textit{payload} (the data that we care about) and a reference to the
+\textit{next} node.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{singly-linked-list}
+    \caption{Nodes in a singly-linked list consist of the payload data and a reference that points to the next node.}
+\end{figure}
+
+A linked list's greatest advantage over an array is that inserting and removing
+a node at an arbitrary location takes constant time, whereas inserting an
+element into an array (assuming there is sufficient memory allocated for the
+array ) or removing an element from an array requires moving all of the
+elements that follow the element's index. Inserting a new node, $C$ between
+adjacent nodes $A$ and $B$ (where $B = A.next$) requires connecting $C.next$ to
+$B$ and re-assigning $A.next$ to $C$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{sll-insertion}
+    \caption{Inserting a new node into a singly-linked list only requires assignments to the affected \textit{next} pointers.}
+\end{figure}
+
+As with an array, you do need to maintain a variable that points to the list.
+Conventionally, this is a reference to the \textit{head} of the list. (Note
+that if a new node is inserted before the current head node, then the new node
+becomes the head of the list, and your \lstinline{head} variable would need to
+be updated.) It is not uncommon to also maintain a reference to the
+\textit{tail} of the list.
+
+\subsubsection{Equivalent Java Code}
+
+In Java, you probably wouldn't implement your own linked list; instead, you
+would use \lstinline{java.util.LinkedList}, which has been available since
+J2SE~1.2. A list of hypothetical \lstinline{Payload} objects would be created
+with:
+\begin{lstlisting}[numbers=none]
+    List<Payload> payloads = new LinkedList<>;
+\end{lstlisting}
+
+C doesn't have a built-in linked list data type, so you will need to design
+one. Let us consider what a custom linked list would look like in Java.
+
+\begin{lstlisting}[mathescape=true]
+public class Node {
+    private final String word;          $\label{code:javaWord}$
+    private int occurrences;            $\label{code:javaOccurrences}$
+    private Node next;                  $\label{code:javaNext}$
+    private Node previous;              $\label{code:javaPrevious}$
+
+    public Node(String word) {$\lstsetnumber{\ldots}$
+        ...$\lstresetnumber\setcounter{lstnumber}{11}$
+    }
+
+    public void insertAfter(Node existingNode) {$\lstsetnumber{\ldots}$
+        ...$\lstresetnumber\setcounter{lstnumber}{22}$
+    }
+
+    public void insertBefore(Node existingNode) {$\lstsetnumber{\ldots}$
+        ...$\lstresetnumber\setcounter{lstnumber}{33}$
+    }$\lstsetnumber{\ldots}$
+    ...$\lstresetnumber\setcounter{lstnumber}{98}$
+}
+\end{lstlisting}
+
+Creating and inserting a new node would look something like this:
+
+\begin{lstlisting}[firstnumber=200, mathescape=true]
+    Node node = new Node("eggplant");   $\label{code:newNode}$
+    Node otherNode = ... // code to determine where the new node goes
+    node.insertAfter(otherNode);        $\label{code:javaInsertAfter}$
+\end{lstlisting}
+
+Recall that in Java, all variables except primitive types (such as
+\lstinline{occurrences} on line~\ref{code:javaOccurrences}) are references. This
+means that the \lstinline{next} field on line~\ref{code:javaNext} is a reference
+to another Node, just as we described in Section~\ref{sec:SinglyLinkedList}.
+The payload is the \lstinline{word} and how many \lstinline{occurrences} the
+word has, exactly what we need for the challenge-and-response system.
+
+Recall also that in java, the \lstinline{new} keyword allocates space for the
+new object, and the constructor call -- \lstinline{Node("eggplant")} --
+initializes the object.
+
+\subsubsection{C Implementation}
+
+Open \textit{pointerlab.c} in your IDE or editor. You'll see a
+\lstinline{struct} with the same fields as our Java example:
+
+\lstinputlisting[linerange=36-41, firstnumber=36]{../starter-code/pointerlab.c}
+
+You'll also see the \function{create_node()} function:
+
+\lstinputlisting[linerange=43-49, firstnumber=43]{../starter-code/pointerlab.c}
+
+As you can see, it allocates space for a new node using \function{malloc()}.
+The code that you will need to add to it will copy the \lstinline{word}
+argument into the \lstinline{word} field and set an appropriate initial value
+for the \lstinline{occurrences} field. Since we don't yet know where this node
+will go, set the \lstinline{next} and \lstinline{previous} pointers to
+\lstinline{NULL}.
+
+The other function you need to write now is \function{insert_after()}:
+
+\lstinputlisting[linerange=51-56, firstnumber=51]{../starter-code/pointerlab.c}
+
+As the name and documentation indicate, you need to add code that will update
+the nodes' \lstinline{next} pointers so that \lstinline{new_node} is placed in
+the list immediately after \lstinline{existing_node}. For now, you can ignore
+the \lstinline{previous} pointers.
+
+After you have implemented \function{create_node()} and
+\function{insert_after()}, go to the \function{main()} function and un-comment
+the call to \function{test_linked_list_functions()}.
+
+\lstinputlisting[linerange=180-181, firstnumber=180]{../starter-code/pointerlab.c}
+
+Build the executable with the command: \texttt{make pointerlab}. Be sure to fix
+both errors and warnings. When the program compiles without generating any
+warnings or errors, run it. The output should indicate a list with the nodes in
+the order of ``first node,'' ``fourth node,'' ``second node,'' and ``third
+node.''
+
+\subsection{Alphabetize Words}
+
+In KeyboardLab Problem~2, you wrote code to convert uppercase letters to
+lowercase letters. Add code to \function{word_to_lowercase()} that calls that
+function to convert all letters in a word to lowercase letters (do not copy the
+\function{to_lowercase()} function into \textit{pointerlab.c}; we will link to
+the function in \textit{problem2.c}).
+
+\lstinputlisting[linerange=68-82, firstnumber=68]{../starter-code/pointerlab.c}
+
+The starter code includes a function to compare two words (you do not need to
+write this function) but it assumes that both words are completely lowercase.
+
+If you did not complete KeyboardLab, then place this code in your
+\textit{problem2.c} file:
+
+\begin{lstlisting}
+#include <ctype.h>
+
+char decapitalize(char character) {
+    return tolower(character);
+}
+\end{lstlisting}
+
+\subsection{Inserting Words, part 1}
+
+Comment-out (or delete) the call to \function{test_linked_list_functions()}.
+
+For this sub-problem, the user will be prompted to enter the name of a book,
+which will be the filename of a file that contains all of the book's words. All
+punctuation has already been removed from the files, and each line in the file
+contains exactly one word. For now, you will design the code to
+work with files whose contents are already sorted.
+
+\lstinputlisting[linerange=87-108, firstnumber=87]{../starter-code/pointerlab.c}
+
+Add code to \function{insert_word()} and \function{build_list()} to read the
+specified file one line at a time.\footnote{See \S7.5 of Kernighan \& Ritchie's
+\textit{The C Programming Language}, 2nd ed. for \function{fopen()} and
+\function{fclose()}, and \S7.7 for \function{fgets()}.} For each word,
+convert it to lowercase, and then traverse the list to find the appropriate
+place for the word. (Note that there will not be a list to traverse when your
+code reads the first word!) If the word is not in the list then create a node
+for that word and insert it into the list at the correct location. If there is
+already a node containing that word, then increment that node's variable that
+tracks the number of occurrences.
+
+Build the program and correct all warnings and errors. When the program
+compiles without generating any warnings or errors, run it. If your program
+requires more than a few seconds to build the list, there is a bug in your
+code. If your program does not produce the expected output, the
+\function{print_list()} utility function will help you see the list that your
+created.
+
+\subsection{Respond to a Challenge}
+
+You now have implemented enough of the other sub-problems that you can write the
+code to respond to a challenge if the number of occurrences is odd.
+
+\lstinputlisting[linerange=114-130, firstnumber=114]{../starter-code/pointerlab.c}
+
+After the word list is complete (after you have inserted all words in the
+file), the user will be prompted to enter the challenge word. Add code to
+\function{respond()} that traverses the word list to find that word. If the word
+is not present in the list, output ``(word) is not present!'' where ``(word)''
+is the challenge word.
+
+In KeyboardLab Problem~3, you wrote code to determine whether an integer value
+is even. Add code to \function{respond()} such that if the challenge word is
+present in the list and the number of occurrences is even, output ``(word) has
+(number) of occurrences'' where ``(word)'' is the challenge word and
+``(number)'' is the number of occurrences. If the number of occurrences is odd
+then use the number of occurrences recorded in that word's node to find the
+response word as described in the challenge-and-response rules, and output that
+word. (Do not copy the \function{is_even()} function into
+\textit{pointerlab.c}; we will link to the function in \textit{problem3.c}.)
+
+If you did not complete KeyboardLab, then place this code in your
+\textit{problem3.c} file:
+
+\begin{lstlisting}
+int is_even(int value) {
+    return !(value % 2);
+}
+\end{lstlisting}
+
+If your program does not provide the response word nearly instantaneously,
+there is a bug in your code.
+
+\subsection*{Next Steps}
+
+You have now completed a significant portion of the assignment: you can build
+the word list if the words in the file are already sorted, and you can provide
+the response to a challenge word if the number of occurrences is odd. The next
+steps will require modifying some of your code, so this would be a good time to
+make a backup copy of \textit{pointerlab.c} or to commit it to a private Git
+repository.
+
+In Section~\ref{sec:DoublyLinkedList} you will implement a
+\textit{doubly-linked list} which will allow you to write code to respond to a
+challenge word if the number of occurrences is even. In
+Section~\ref{sec:InsertionSort} you will implement the \textit{Insertion Sort}
+algorithm which will allow you to build a list even when the words in the file
+are not already sorted.
+
+You may tackle either of the remaining tasks before tackling the other.
+
+\subsection{Designing the Data Structure and Its Algorithms, part 2: Doubly-Linked List}\label{sec:DoublyLinkedList}
+
+A \textit{doubly-linked list} is a linked list with the property that each node
+maintains a link not only to the \lstinline{next} node but also a link to the
+\lstinline{previous} node. In C, these links are pointers.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{doubly-linked-list}
+    \caption{Nodes in a singly-linked list consist of the payload data and references that point to the previous and next nodes.}
+\end{figure}
+
+Inserting new node, $C$ between adjacent nodes $A$ and $B$ (where $B = A.next$
+and $A = B.previous$) requires connecting $C.previous$ to $A$ and $C.next$ to
+$B$, and re-assigning $A.next$ to $C$ and $B.prevous$ to $C$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{dll-insertion}
+    \caption{Inserting a new node into a doubly-linked list requires assignments to the affected \textit{previous} and \textit{next} pointers.}
+\end{figure}
+
+Modify your \function{insert_after()} function to update not only the
+\lstinline{next} pointers but also the \lstinline{previous} pointers so that
+\lstinline{new_node} is placed between \lstinline{existing_node} and the node
+that originally was located immediately after \lstinline{existing_node}.
+
+After the program compiles without warnings or errors, you may want to use
+\function{print_list} to confirm that the \lstinline{previous} pointers are
+updated correctly.
+
+Now implement \function{insert_before()}:
+
+\lstinputlisting[linerange=67-72, firstnumber=67]{../starter-code/pointerlab.c}
+
+(If you already implemented Insertion Sort, you probably will not use
+\function{insert_before()} except to test that you implemented it correctly;
+however, it is still an appropriate function to implement for a doubly-linked
+list, and its implementation is part of your grade for this assignment.)
+
+If your program requires more than a few seconds to build the list, there is a
+bug in your code.
+
+Update your \function{respond()} function so that when the number of
+occurrences is even, the output is not ``(word) has (number) of occurrences''
+but is instead the appropriate response word as described in the challenge-and-
+response rules.
+
+You can now provide the response to a challenge word regardless of whether the
+number of occurrences is even or odd. This would be a good time to make a
+backup copy of \textit{pointerlab.c} or to commit it to a private Git
+repository.
+
+\subsection{Inserting Words, part 1: Insertion Sort}\label{sec:InsertionSort}
+
+While you probably learned about sorting in \cstwo, you may not have learned
+about \textit{Insertion Sort}. If you did learn about Insertion Sort, you
+probably learned that it's a $\mathcal{O}(n^2)$ algorithm that is less
+efficient than $\mathcal{O}(n\mathrm{log}n)$ sorting algorithms such as
+Merge Sort. Insertion Sort has a particular advantage in that it can be applied
+\textit{as the list is built}, making for a much simpler and less error-prone
+implementation than a different sort that requires the list to already be built.
+
+The Insertion Sort algorithm reads an input and then traverses a sorted list to
+find the proper location in the sorted list for the input. The input is then
+inserted into the list at that location.
+
+Your current implementation of \function{insert_word()} is based off of the
+assumption that the word is either at the tail of the list or is not present in
+the list. Update \function{insert_word()} so that it looks for the word in the
+sorted list. If the word is found, then update the number of occurrences as
+before. If the word is not present in its proper location in the sorted list,
+then insert a new node for that word at its proper location in the sorted list.
+
+If your program requires more than a few seconds to build the list, there is a
+bug in your code.
+
+You can now provide build the word list regardless of whether the words in the
+file are already sorted. This would be a good time to make a backup copy of
+\textit{pointerlab.c} or to commit it to a private Git repository.
+
+\section*{Turn-in and Grading}
+
+When you have completed this assignment, upload \textit{problem1.c},
+\textit{problem2.c}, \textit{problem3.c}, \textit{answers4.txt}, and
+\textit{problem5.c} to \filesubmission.
+
+This assignment is worth 45 points.
+\begin{description}
+\rubricitem{4}{\textit{problem1.c} produces the specified output without the
+    use of \texttt{w}, \texttt{W}, \texttt{\textbackslash{}n}, or
+    \texttt{\textbackslash{}t}}.
+\rubricitem{4}{\function{iz_digit()} in \textit{problem2.c} determines whether
+    or not a character is a digit, without \lstinline{#include}ing any files,
+    without using any numbers other than 0 and 9, without using a
+    \lstinline{switch} statment, and using at most one \lstinline{if}
+    statement.}
+\rubricitem{4}{\function{decapitalize()} in \textit{problem2.c} converts
+    uppercase letters to lowercase and leaves other characters unchanged,
+    without \lstinline{#include}ing any files, without using a
+    \lstinline{switch} statment, and using at most one \lstinline{if}
+    statement.}
+\rubricitem{4}{\function{is_even()} in \textit{problem3.c} determines whether
+    a number is even or odd, without using arithmetic.}
+\rubricitem{4}{\function{produce_multiple_of_ten()} in \textit{problem3.c}
+    has the following, without using arithmetic other than multiplication, and
+    without using the values 5, 0x5, 05, or 0b101:}
+    \begin{itemize}
+    \item Code to assign the value 5 to the variable \lstinline{five}
+    \item Code to divide an even number by 2
+    \item Code to subtract 1 from an odd number
+    \item Correct functionality
+    \end{itemize}
+\rubricitem{3}{Student's answers in \textit{answers4.txt} demonstrate an
+    understanding of the bug in the code and how to correct it.}
+\rubricitem{5}{Implemented a doubly-linked list in \textit{problem5.c}:
+    \lstinline{struct node}, \function{create_node()},
+    \function{insert_after()}, \function{insert_before()}.}
+\rubricitem{2}{Implemented \function{word_to_lowercase()} in
+    \textit{problem5.c}.}
+\rubricitem{5}{Implemented insertion sort in \textit{problem5.c}:
+    \function{insert_word()}.}
+\rubricitem{5}{\function{build_list()} in \textit{problem5.c} opens a file for
+    reading, reads one line at a time, passes the word that is read to
+    \function{insert_word()}, and closes the file after the last line has been
+    read.}
+\rubricitem{5}{\function{respond()} in \textit{problem5.c} produces the correct response word in accordance with the specified rules.}
+\end{description}
+
+\section*{Epilogue}
+
+You hear somebody enter the room. ``\textit{Frankenstein}, `boat','' is the
+challenge, and she answers, ``borne.'' Archie introduces you to the new
+arrival, ``This is Lilith Redd from business operations.'' He turns to her and
+continues, ``Lil, what's the good word?''
+
+``The word isn't good, I'm afraid. I just heard back from the insurance
+company.''
+
+\textit{To be continued...}
+
+\end{document}

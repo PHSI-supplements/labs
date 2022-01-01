@@ -3,11 +3,10 @@
 cd assignment
 make
 cd ../starter-code
-cp ../assignment/keyboardlab.pdf .
-tar cvf keyboardlab.tar *
-mv keyboardlab.tar ..
-zip keyboardlab.zip *
-mv keyboardlab.zip ..
-rm keyboardlab.pdf
+cp ../assignment/pointerlab.pdf .
+tar cvf pointerlab.tar *
+mv pointerlab.tar ..
+zip pointerlab.zip *
+mv pointerlab.zip ..
+rm pointerlab.pdf
 cd ..
-

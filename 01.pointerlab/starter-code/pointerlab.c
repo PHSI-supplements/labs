@@ -3,7 +3,7 @@
  */
 
 /*
- * KeyboardLab (c) 2021 Christopher A. Bohn
+ * PointerLab (c) 2021 Christopher A. Bohn
  */
 
 /******************************************************************************
@@ -19,7 +19,7 @@
 #define MAXIMUM_WORD_LENGTH 60
 
 char decapitalize(char character);      // linked from problem2.c
-int is_even(int value);                // linked from problem3.c
+int is_even(int value);                 // linked from problem3.c
 struct node *create_node(const char *word);
 void insert_after(struct node *existing_node, struct node *new_node);
 void insert_before(struct node *existing_node, struct node *new_node);
@@ -31,7 +31,7 @@ char *respond(const struct node *list, const char *challenge_word);
 char *get_input(const char *prompt);
 
 
-/*** PROBLEM 5.1: Doubly-Linked List ***/
+/*** THE DATA STRUCTURE AND ITS ALGORITHMS ***/
 
 struct node {
     char word[MAXIMUM_WORD_LENGTH];
@@ -40,8 +40,8 @@ struct node {
     struct node *previous;
 };
 
-/* Allocates memory for a new node to hold the word, and initializes the node's fields.
- * Returns a pointer to the new node. */
+/* Allocates memory for a new node to hold the word, and initializes the
+ * node's fields. Returns a pointer to the new node. */
 struct node *create_node(const char *word) {
     struct node *new_node = malloc(sizeof(struct node));
     /* WRITE THE REST OF THIS FUNCTION */
@@ -63,43 +63,45 @@ void insert_before(struct node *existing_node, struct node *new_node) {
 }
 
 
-/*** PROBLEM 5.2: Alphabetize Words ***/
+/*** ALPHABETIZE WORDS ***/
 
-/* Returns a copy of the word that has all uppercase letters replaced with
- * lowercase letters. The original string is unchanged. */
+/* Returns a copy of the word that has all uppercase letters replaced
+ * with lowercase letters. The original string is unchanged. */
 char *word_to_lowercase(const char *word) {
     /* WRITE THIS FUNCTION */
     return NULL;
 }
 
 /* Compares two words based on alphabetical order.
- * If word1 occurs alphabetically before word2, then this function returns a negative value.
- * If word1 occurs alphabetically after word2, then this function returns a positive value.
- * If the two words are identical, then this function returns 0.
- * This function is really just a wrapper around strncmp.  */
+ * Returns a negative value if word1 occurs alphabetically before word2.
+ * Returns a positive value if word1 occurs alphabetically after word2.
+ * Returns 0 if the two words are identical.
+ * This function is really just a wrapper around strncmp. */
 int compare_words(const char *word1, const char *word2) {
     return strncmp(word1, word2, MAXIMUM_WORD_LENGTH);
 }
 
 
-/*** PROBLEM 5.3: Insertion Sort ***/
+/*** INSERTING WORDS ***/
 
-/* Determines if the word is already in the list. If it is, then the number of
- * occurrences for that word is incremented. If it isn't, then a new node is
- * created for the word and inserted into the list at the correct alphabetic
- * location. Returns a pointer to the head of the list, which is either the
- * original head or a node containing the word (if the word occurs before the
- * original head's word or if the original head is NULL). */
+/* Determines if the word is already in the list. If it is, then the
+ * number of occurrences for that word is incremented. If it isn't, then
+ * a new node is created for the word and inserted into the list at the
+ * correct alphabetic location. Returns a pointer to the head of the
+ * list, which is either the original head or a node containing the word
+ * (if the word occurs before the original head's word or if the
+ * original head is NULL). */
 struct node *insert_word(struct node *head, const char *word) {
     /* WRITE THIS FUNCTION */
     return NULL;
 }
 
-/* Gets the name of the book file from the user and reads the file line-by-line.
- * Under the assumption that there is exactly one word per line and that all
- * punctuation has been removed, this function builds a doubly-linked list
- * of the words in alphabetical order, keeping track (as part of a node's
- * payload) how many times each word occurs in the file. */
+/* Gets the name of the book file from the user and reads the file
+ * line-by-line. Under the assumption that there is exactly one word per
+ * line and that all punctuation has been removed, this function builds
+ * a doubly-linked list of the words in alphabetical order, keeping
+ * track (as part of a node's payload) how many times each word occurs
+ * in the file. */
 struct node *build_list() {
     const char *filename = get_input("Enter the name of the book file");
     /* WRITE THE REST OF THIS FUNCTION */
@@ -107,19 +109,21 @@ struct node *build_list() {
 }
 
 
-/*** PROBLEM 5.4: Respond to Challenge ***/
+/*** RESPOND TO A CHALLENGE ***/
 
-/* Given an alphabetically sorted list of words with the number of occurrences
- * of each word, and given the challenge_word, will return the response word
- * based on the following rules:
- * - If the number of occurrences is an even number then the response word is
- *   that many places *before* challenge_word in the list
- *   - If the challenge_word is fewer than that number of places from the head
- *     of the list, then the response word is the word at the head of the list
- * - If the number of occurrences is an odd number then the response word is
- *   that many places *after* challenge_word in the list
- *   - If the challenge_word is fewer than that number of places from the tail
- *     of the list, then the response word is the word at the tail of the list
+/* Given an alphabetically sorted list of words with the number of
+ * occurrences of each word, and given the challenge_word, will return
+ * the response word based on the following rules:
+ * - If the number of occurrences is an even number then the response
+ *   word is that many places *before* challenge_word in the list
+ *   - If the challenge_word is fewer than that number of places from
+ *     the head of the list, then the response word is the word at the
+ *     head of the list
+ * - If the number of occurrences is an odd number then the response
+ *   word is that many places *after* challenge_word in the list
+ *   - If the challenge_word is fewer than that number of places from
+ *     the tail of the list, then the response word is the word at the
+ *     tail of the list
  * - If challenge_word is not present in the list, then the response is
  *   "<challenge_word> is not present!" */
 char *respond(const struct node *list, const char *challenge_word) {
@@ -128,7 +132,7 @@ char *respond(const struct node *list, const char *challenge_word) {
 }
 
 
-/*** main ***/
+/*** UTILITY FUNCTIONS ***/
 
 /* A utility function to help with debugging.  Traverses the list, printing
  * each node's payload and the next/previous pointers. */
@@ -136,10 +140,29 @@ void print_list(const struct node *head) {
     const struct node *current_node;
     current_node = head;
     while (current_node != NULL) {
-        printf("NODE %p -- %15s:%d\tprev:%p next:%p\n",
-               current_node, current_node->word, current_node->occurrences, current_node->previous, current_node->next);
+        printf("NODE %p -- %15s:%d\tprev:%p (%-15s) next:%p (%-15s)\n",
+               current_node, current_node->word, current_node->occurrences,
+               current_node->previous, current_node->previous == NULL ? " " : current_node->previous->word,
+               current_node->next, current_node->next == NULL ? " " : current_node->next->word);
         current_node = current_node->next;
     }
+}
+
+/* Constructs short linked list for testing purposes. */
+void test_linked_list_functions() {
+    char word[MAXIMUM_WORD_LENGTH];
+    strncpy(word, "first node", MAXIMUM_WORD_LENGTH);
+    struct node *head = create_node(word);
+    strncpy(word, "second node", MAXIMUM_WORD_LENGTH);
+    struct node *another_node = create_node(word);
+    insert_after(head, another_node);
+    strncpy(word, "third node", MAXIMUM_WORD_LENGTH);
+    another_node = create_node(word);
+    insert_after(head->next, another_node);
+    strncpy(word, "fourth node", MAXIMUM_WORD_LENGTH);
+    another_node = create_node(word);
+    insert_after(head, another_node);
+    print_list(head);
 }
 
 /* Prompts the user and reads the user's input from stdin. */
@@ -151,9 +174,13 @@ char *get_input(const char *prompt) {
     return input;
 }
 
+
+/*** MAIN ***/
+
 int main() {
+//    test_linked_list_functions();
     struct node *list = build_list();
-    // print_list(list);
+//    print_list(list);
     char *challenge_word = get_input("Enter the challenge word");
     printf("Response word: %s\n", respond(list, challenge_word));
     return 0;
