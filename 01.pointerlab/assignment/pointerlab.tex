@@ -1,5 +1,5 @@
 %%
-%% KeyboardLab (c) 2021 Christopher A. Bohn
+%% PointerLab (c) 2021 Christopher A. Bohn
 %%
 
 \input{../../common/assignment.tex}
@@ -52,16 +52,28 @@ and that if you are using an IDE that it is configured for C and not C++.
 
 After successful completion of this assignment, students will be able to:
 \begin{itemize}
-\item \dots
+\item Recognize the hazards of indeterminate values.
+\item Use C's string functions from \lstinline{string.h}\footnote{See \S7.8.1 and \S{}B.3 of Kernighan \& Ritchie's \textit{The C Programming Language}, 2nd ed.}.
+\item Use C's file I/O functions from \lstinline{stdio.h}\footnote{See \S7.5, \S7.7, and \S{}B1.1 \textit{The C Programming Language}, 2nd ed.}.
+\item Alias and reassign pointers.
+\item Create and traverse a linked list.
 \end{itemize}
 
 \subsection*{Continuing Forward}
 
-\dots
+Being able to understand the mistakes in
+Sections~\ref{sec:uninitializedVariables} and \ref{sec:localAddresses} will
+help you avoid them in future labs. Being able to work with pointers -- that
+is, with variables that hold addresses -- will help you specifically in future
+labs that use pointers but more generally in future labs that require you to
+think about accessing memory.
 
 \section*{During Lab Time}
 
-During your lab period, the TAs will \dots
+During your lab period, the TAs will provide a refresher on linked lists and
+will describe Insertion Sort. The TAs will also describe some string functions
+and some I/O functions from C's standard library. During the remaining time,
+the TAs will be available to answer questions.
 
 \section*{Scenario}
 
@@ -74,7 +86,7 @@ why his code acts strangely.
 
 \section{Stray Values in Memory}
 
-\subsection{Pleistocene Petting Zoo Marquee}
+\subsection{Pleistocene Petting Zoo Marquee}\label{sec:uninitializedVariables}
 
 Archie shows you his first program, which he hoped would be used to greet
 guests, but it doesn't always work right:
@@ -141,7 +153,7 @@ But sometimes the output was missing the
 What mistake did Archie make? What change to \textit{one} line will fix
 Archie's bug? Place your answers in \textit{answers.txt}.
 
-\subsection{Math Doesn't Work Right \dots Or Does It?}
+\subsection{Math Doesn't Work Right \dots Or Does It?}\label{sec:localAddresses}
 
 ``Wow,'' Archie says. ``I can't believe that I missed that. Maybe you can help
 me with some other code that I wrote for one of my other start-ups. Here it
@@ -174,6 +186,7 @@ int main() {
     printf("product = %d\n", *product);
     printf("sum - product = %d\n", *sum - *product);
     return 0;
+}
 \end{lstlisting}
 
 Archie explains that when he compiles the program with the \textbf{clang}
@@ -191,7 +204,7 @@ the segmentation fault is just gcc trying to protect me from trusting an
 incorrect answer -- but why does the code produce an incorrect answer?''
 
 What mistake did Archie make? Why does \lstinline{*sum - *product} produce the
-value 0?
+value 0? Place your answer in \textit{answers.txt}.
 
 
 \section{Challenge and Response}
@@ -296,11 +309,12 @@ challenge-and-response system.)}
 The very small files of 7 words can be useful for debugging, and the moderate-
 sized files of 74-125 words should give you confidence in the correctness of
 your solution. The real books of more than 74,000 words will be used for
-grading. The files marked as \textit{sorted} have all of their words already in
-alphabetically sorted order, ignoring capitalization; the files marked as
-\textit{unsorted} do not have their words sorted (the words in ``Plants'' and
-``Food'' are in a randomly-selected order; the words in ``TheLostWorld'' appear
-in the order that they appear in the original \textit{The Lost World}).
+grading (as will smaller problem instances). The files marked as
+\textit{sorted} have all of their words already in alphabetically sorted order,
+ignoring capitalization; the files marked as \textit{unsorted} do not have
+their words sorted (the words in ``Plants'' and ``Food'' are in a randomly-
+selected order; the words in ``TheLostWorld'' appear in the order that they
+appear in the original \textit{The Lost World}).
 
 Each book file, ``\textit{file}'', has a corresponding
 ``\textit{file}-table.md'' that contains a Markdown-formatted table of the
@@ -318,8 +332,9 @@ determine the absence of a word) in the \textit{Frankenstein} list in under
 \subsection{Preparation}
 
 Copy your files \textit{problem2.c} and \textit{problem3.c} from KeyboardLab
-into the directory that has \textit{pointerlab.c}. If you did not successfully
-complete KeyboardLab, we will provide alternate implementations for you.
+into the directory that has \textit{pointerlab.c} and
+\textit{challenge-response.c}. If you did not successfully complete
+KeyboardLab, we will provide alternate implementations for you.
 
 \subsection{Designing the Data Structure and Its Algorithms, part 1}
 
@@ -432,14 +447,15 @@ initializes the object.
 
 \subsubsection{C Implementation}
 
-Open \textit{pointerlab.c} in your IDE or editor. You'll see a
-\lstinline{struct} with the same fields as our Java example:
+In \textit{challenge-response.h}, you'll see a \lstinline{struct} with the same
+fields as our Java example:
 
-\lstinputlisting[linerange=36-41, firstnumber=36]{../starter-code/pointerlab.c}
+\lstinputlisting[linerange=19-24, firstnumber=36]{../starter-code/challenge-response.h}
 
-You'll also see the \function{create_node()} function:
+In \textit{challenge-response.c}, you'll also see the \function{create_node()}
+function:
 
-\lstinputlisting[linerange=43-49, firstnumber=43]{../starter-code/pointerlab.c}
+\lstinputlisting[linerange=23-29, firstnumber=23]{../starter-code/challenge-response.c}
 
 As you can see, it allocates space for a new node using \function{malloc()}.
 The code that you will need to add to it will copy the \lstinline{word}
@@ -450,7 +466,7 @@ will go, set the \lstinline{next} and \lstinline{previous} pointers to
 
 The other function you need to write now is \function{insert_after()}:
 
-\lstinputlisting[linerange=51-56, firstnumber=51]{../starter-code/pointerlab.c}
+\lstinputlisting[linerange=31-36, firstnumber=31]{../starter-code/challenge-response.c}
 
 As the name and documentation indicate, you need to add code that will update
 the nodes' \lstinline{next} pointers so that \lstinline{new_node} is placed in
@@ -458,10 +474,11 @@ the list immediately after \lstinline{existing_node}. For now, you can ignore
 the \lstinline{previous} pointers.
 
 After you have implemented \function{create_node()} and
-\function{insert_after()}, go to the \function{main()} function and un-comment
-the call to \function{test_linked_list_functions()}.
+\function{insert_after()}, go to the \function{main()} function in
+textit{pointerlab.c} and un-comment the call to
+\function{test_linked_list_functions()}.
 
-\lstinputlisting[linerange=180-181, firstnumber=180]{../starter-code/pointerlab.c}
+\lstinputlisting[linerange=54-55, firstnumber=54]{../starter-code/pointerlab.c}
 
 Build the executable with the command: \texttt{make pointerlab}. Be sure to fix
 both errors and warnings. When the program compiles without generating any
@@ -474,10 +491,10 @@ node.''
 In KeyboardLab Problem~2, you wrote code to convert uppercase letters to
 lowercase letters. Add code to \function{word_to_lowercase()} that calls that
 function to convert all letters in a word to lowercase letters (do not copy the
-\function{to_lowercase()} function into \textit{pointerlab.c}; we will link to
-the function in \textit{problem2.c}).
+\function{to_lowercase()} function into \textit{challenge-response.c}; we will
+link to the function in \textit{problem2.c}).
 
-\lstinputlisting[linerange=68-82, firstnumber=68]{../starter-code/pointerlab.c}
+\lstinputlisting[linerange=48-62, firstnumber=48]{../starter-code/challenge-response.c}
 
 The starter code includes a function to compare two words (you do not need to
 write this function) but it assumes that both words are completely lowercase.
@@ -503,18 +520,20 @@ punctuation has already been removed from the files, and each line in the file
 contains exactly one word. For now, you will design the code to
 work with files whose contents are already sorted.
 
-\lstinputlisting[linerange=87-108, firstnumber=87]{../starter-code/pointerlab.c}
+\lstinputlisting[linerange=67-88, firstnumber=67]{../starter-code/challenge-response.c}
 
 Add code to \function{insert_word()} and \function{build_list()} to read the
-specified file one line at a time.\footnote{See \S7.5 of Kernighan \& Ritchie's
-\textit{The C Programming Language}, 2nd ed. for \function{fopen()} and
-\function{fclose()}, and \S7.7 for \function{fgets()}.} For each word,
-convert it to lowercase, and then traverse the list to find the appropriate
-place for the word. (Note that there will not be a list to traverse when your
-code reads the first word!) If the word is not in the list then create a node
-for that word and insert it into the list at the correct location. If there is
-already a node containing that word, then increment that node's variable that
-tracks the number of occurrences.
+specified file one line at a time.\footnote{See \S7.5 and \S{}B1.1.1 of
+Kernighan \& Ritchie's \textit{The C Programming Language}, 2nd ed. for
+\function{fopen()} and \function{fclose()}, and \S7.7 and \S{}B1.1.4 for
+\function{fgets()}.} For each word, convert it to lowercase, and then traverse
+the list to find the appropriate place for the word. (Note that there will not
+be a list to traverse when your code reads the first word!) If the word is not
+in the list then create a node for that word and insert it into the list at the
+correct location. If there is already a node containing that word, then
+increment that node's variable that tracks the number of occurrences. Be sure
+that \textit{only} the word is placed in a node; specifically, do not include a
+newline character nor any other characters that are not part of the word.
 
 Build the program and correct all warnings and errors. When the program
 compiles without generating any warnings or errors, run it. If your program
@@ -523,28 +542,28 @@ code. If your program does not produce the expected output, the
 \function{print_list()} utility function will help you see the list that your
 created.
 
-\subsection{Respond to a Challenge}
+\subsection{Respond to a Challenge, part 1}
 
 You now have implemented enough of the other sub-problems that you can write the
 code to respond to a challenge if the number of occurrences is odd.
 
-\lstinputlisting[linerange=114-130, firstnumber=114]{../starter-code/pointerlab.c}
+\lstinputlisting[linerange=93-111, firstnumber=93]{../starter-code/challenge-response.c}
 
 After the word list is complete (after you have inserted all words in the
 file), the user will be prompted to enter the challenge word. Add code to
 \function{respond()} that traverses the word list to find that word. If the word
-is not present in the list, output ``(word) is not present!'' where ``(word)''
+is not present in the list, return ``(word) is not present!'', where ``(word)''
 is the challenge word.
 
 In KeyboardLab Problem~3, you wrote code to determine whether an integer value
 is even. Add code to \function{respond()} such that if the challenge word is
-present in the list and the number of occurrences is even, output ``(word) has
-(number) of occurrences'' where ``(word)'' is the challenge word and
-``(number)'' is the number of occurrences. If the number of occurrences is odd
-then use the number of occurrences recorded in that word's node to find the
-response word as described in the challenge-and-response rules, and output that
-word. (Do not copy the \function{is_even()} function into
-\textit{pointerlab.c}; we will link to the function in \textit{problem3.c}.)
+present in the list and the number of occurrences is even, the function returns
+``(word) has (number) of occurrences'', where ``(word)'' is the challenge word
+and ``(number)'' is the number of occurrences. If the number of occurrences is
+odd then use the number of occurrences recorded in that word's node to find the
+response word as described in the challenge-and-response rules, and return that
+word. (Do not copy the \function{is_even()} function into \textit{challenge-
+response.c}; we will link to the function in \textit{problem3.c}.)
 
 If you did not complete KeyboardLab, then place this code in your
 \textit{problem3.c} file:
@@ -564,8 +583,8 @@ You have now completed a significant portion of the assignment: you can build
 the word list if the words in the file are already sorted, and you can provide
 the response to a challenge word if the number of occurrences is odd. The next
 steps will require modifying some of your code, so this would be a good time to
-make a backup copy of \textit{pointerlab.c} or to commit it to a private Git
-repository.
+make a backup copy of \textit{challenge-response.c} or to commit it to a
+private Git repository.
 
 In Section~\ref{sec:DoublyLinkedList} you will implement a
 \textit{doubly-linked list} which will allow you to write code to respond to a
@@ -576,7 +595,9 @@ are not already sorted.
 
 You may tackle either of the remaining tasks before tackling the other.
 
-\subsection{Designing the Data Structure and Its Algorithms, part 2: Doubly-Linked List}\label{sec:DoublyLinkedList}
+\subsection{Designing the Data Structure and Its Algorithms, part 2, and \\
+    Respond to a Challenge, part 2: \\
+    Doubly-Linked List}\label{sec:DoublyLinkedList}
 
 A \textit{doubly-linked list} is a linked list with the property that each node
 maintains a link not only to the \lstinline{next} node but also a link to the
@@ -609,35 +630,31 @@ updated correctly.
 
 Now implement \function{insert_before()}:
 
-\lstinputlisting[linerange=67-72, firstnumber=67]{../starter-code/pointerlab.c}
-
-(If you already implemented Insertion Sort, you probably will not use
-\function{insert_before()} except to test that you implemented it correctly;
-however, it is still an appropriate function to implement for a doubly-linked
-list, and its implementation is part of your grade for this assignment.)
+\lstinputlisting[linerange=48-53, firstnumber=48]{../starter-code/challenge-response.c}
 
 If your program requires more than a few seconds to build the list, there is a
 bug in your code.
 
 Update your \function{respond()} function so that when the number of
-occurrences is even, the output is not ``(word) has (number) of occurrences''
-but is instead the appropriate response word as described in the challenge-and-
-response rules.
+occurrences is even, the returned string is not ``(word) has (number) of
+occurrences'' but is instead the appropriate response word as described in the
+challenge-and-response rules.
 
 You can now provide the response to a challenge word regardless of whether the
 number of occurrences is even or odd. This would be a good time to make a
-backup copy of \textit{pointerlab.c} or to commit it to a private Git
+backup copy of \textit{challenge-response.c} or to commit it to a private Git
 repository.
 
-\subsection{Inserting Words, part 1: Insertion Sort}\label{sec:InsertionSort}
+\subsection{Inserting Words, part 2: Insertion Sort}\label{sec:InsertionSort}
 
 While you probably learned about sorting in \cstwo, you may not have learned
 about \textit{Insertion Sort}. If you did learn about Insertion Sort, you
 probably learned that it's a $\mathcal{O}(n^2)$ algorithm that is less
 efficient than $\mathcal{O}(n\mathrm{log}n)$ sorting algorithms such as
-Merge Sort. Insertion Sort has a particular advantage in that it can be applied
-\textit{as the list is built}, making for a much simpler and less error-prone
-implementation than a different sort that requires the list to already be built.
+Merge Sort and Quick Sort. Insertion Sort has a particular advantage in that it
+can be applied \textit{as the list is built}, making for a much simpler and
+less error-prone implementation than a different sort that requires the list to
+already be built.
 
 The Insertion Sort algorithm reads an input and then traverses a sorted list to
 find the proper location in the sorted list for the input. The input is then
@@ -655,7 +672,7 @@ bug in your code.
 
 You can now provide build the word list regardless of whether the words in the
 file are already sorted. This would be a good time to make a backup copy of
-\textit{pointerlab.c} or to commit it to a private Git repository.
+\textit{challenge-response.c} or to commit it to a private Git repository.
 
 \section*{Turn-in and Grading}
 
@@ -663,46 +680,76 @@ When you have completed this assignment, upload \textit{problem1.c},
 \textit{problem2.c}, \textit{problem3.c}, \textit{answers4.txt}, and
 \textit{problem5.c} to \filesubmission.
 
-This assignment is worth 45 points.
+This assignment is worth 30 points.
 \begin{description}
-\rubricitem{4}{\textit{problem1.c} produces the specified output without the
-    use of \texttt{w}, \texttt{W}, \texttt{\textbackslash{}n}, or
-    \texttt{\textbackslash{}t}}.
-\rubricitem{4}{\function{iz_digit()} in \textit{problem2.c} determines whether
-    or not a character is a digit, without \lstinline{#include}ing any files,
-    without using any numbers other than 0 and 9, without using a
-    \lstinline{switch} statment, and using at most one \lstinline{if}
-    statement.}
-\rubricitem{4}{\function{decapitalize()} in \textit{problem2.c} converts
-    uppercase letters to lowercase and leaves other characters unchanged,
-    without \lstinline{#include}ing any files, without using a
-    \lstinline{switch} statment, and using at most one \lstinline{if}
-    statement.}
-\rubricitem{4}{\function{is_even()} in \textit{problem3.c} determines whether
-    a number is even or odd, without using arithmetic.}
-\rubricitem{4}{\function{produce_multiple_of_ten()} in \textit{problem3.c}
-    has the following, without using arithmetic other than multiplication, and
-    without using the values 5, 0x5, 05, or 0b101:}
-    \begin{itemize}
-    \item Code to assign the value 5 to the variable \lstinline{five}
-    \item Code to divide an even number by 2
-    \item Code to subtract 1 from an odd number
-    \item Correct functionality
-    \end{itemize}
-\rubricitem{3}{Student's answers in \textit{answers4.txt} demonstrate an
-    understanding of the bug in the code and how to correct it.}
-\rubricitem{5}{Implemented a doubly-linked list in \textit{problem5.c}:
-    \lstinline{struct node}, \function{create_node()},
-    \function{insert_after()}, \function{insert_before()}.}
-\rubricitem{2}{Implemented \function{word_to_lowercase()} in
-    \textit{problem5.c}.}
-\rubricitem{5}{Implemented insertion sort in \textit{problem5.c}:
-    \function{insert_word()}.}
-\rubricitem{5}{\function{build_list()} in \textit{problem5.c} opens a file for
-    reading, reads one line at a time, passes the word that is read to
+\rubricitem{2}{Student's answers in \textit{answers.txt} demonstrate an
+    understanding of the bug in Section~\ref{sec:uninitializedVariables}'s code
+    and how to correct it.}
+\rubricitem{2}{Student's answer in \textit{answers.txt} demonstrate an
+    understanding of the bug in Section~\ref{sec:localAddresses}'s code.}
+\rubricitem{1}{\function{create_node} creates and initializes a
+    \lstinline{struct node} as specified.} % Depending on the insert_word
+    % code, 0 or 1 is a reasonable initial value for the occurrences field
+\item[\hspace{1cm}]\function{insert_after} correctly places a new node in a
+    list by updating:
+    \begin{description}
+    \rubricitem{2}{\lstinline{next} pointers (singly- and doubly-linked lists).}
+    \rubricitem{2}{\lstinline{previous} pointers (doubly-linked lists).}
+    \end{description}
+\rubricitem{2}{\function{insert_before} correctly places a new node in a
+    doubly-linked list.}
+\rubricitem{2}{\function{word_to_lowercase} returns a copy of the input string
+    with uppercase letters replaced with lowercase letters}
+\item[\hspace{1cm}]\function{insert_word}:
+    \begin{description}
+    \rubricitem{2}{creates a new node at the end of the list when the word
+        properly belongs at the end of the list and is not already present in
+        the list.}
+    \rubricitem{2}{does not create a new node but instead updates the number of
+        occurrences, when the word is present at the end of the list.}
+    \rubricitem{2}{creates a new node at the appropriate location in the list,
+        regardless of where its appropriate location is, when it is not already
+        present in the list.}
+    \rubricitem{2}{does not create a new node but instead updates the number of
+        occurrences when the word is present, regardless of  its location in
+        the list.}
+    \end{description}
+\item[\hspace{1cm}]\function{build_list} opens a file for reading, builds a
+    list by reading one line at a time and the word that is read to
     \function{insert_word()}, and closes the file after the last line has been
-    read.}
-\rubricitem{5}{\function{respond()} in \textit{problem5.c} produces the correct response word in accordance with the specified rules.}
+    read, when:
+    \begin{description}
+    \rubricitem{2}{the words in the file are pre-sorted, and the
+        \lstinline{next} pointers are updated (\textit{i.e.}, part 1 of the
+        sub-problems are complete).}
+    \rubricitem{1}{the words in the file are not pre-sorted, and the
+        \lstinline{next} pointers are updated (\textit{i.e.},
+        Section~\ref{sec:InsertionSort} is complete).}
+    \rubricitem{1}{the words in the file are pre-sorted, and the
+        \lstinline{previous} pointers are updated (\textit{i.e.},
+        Section~\ref{sec:DoublyLinkedList} is complete).}
+    \rubricitem{1}{the words in the file are pre-sorted, and the
+        \lstinline{previous} pointers are updated (\textit{i.e.}, part 2 of the
+        sub-problems are complete).}
+    \end{description}
+\item[\hspace{1cm}]\function{respond} produces the correct response word in accordance with the specified rules when:
+    \begin{description}
+    \rubricitem{1}{the words in the file are pre-sorted, and the
+        \lstinline{next} pointers are updated (\textit{i.e.}, part 1 of the
+        sub-problems are complete).}
+    \rubricitem{1}{the words in the file are not pre-sorted, and the
+        \lstinline{next} pointers are updated (\textit{i.e.},
+        Section~\ref{sec:InsertionSort} is complete).}
+    \rubricitem{1}{the words in the file are pre-sorted, and the
+        \lstinline{previous} pointers are updated (\textit{i.e.},
+        Section~\ref{sec:DoublyLinkedList} is complete).}
+    \rubricitem{1}{the words in the file are pre-sorted, and the
+        \lstinline{previous} pointers are updated (\textit{i.e.}, part 2 of the
+        sub-problems are complete).}
+    \end{description}
+\item[Penalties]
+\penaltyitem{1}Newline characters are included in the word strings when
+    building a list.
 \end{description}
 
 \section*{Epilogue}
