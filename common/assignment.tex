@@ -11,6 +11,7 @@
 \usepackage{textcomp}
 \usepackage{bold-extra}
 \usepackage[dvipsnames]{xcolor}
+\usepackage{etoolbox}
 
 
 % Customize the semester (or quarter) and the course number
@@ -25,7 +26,7 @@
 \newcommand{\filesource}{Canvas or {\footnotesize$\sim$}cse231 on \textit{csce.unl.edu}}
 \newcommand{\filesubmission}{Canvas}
 
-% These are placeholder commands arnd will be renewed in each lab
+% These are placeholder commands and will be renewed in each lab
 
 \newcommand{\labnumber}{}
 \newcommand{\labname}{Lab \labnumber\ Assignment}
@@ -38,6 +39,30 @@
 \newcommand{\teameffort}{This is a team-effort project. You may discuss concepts and syntax with other students, but you may discuss solutions only with your assigned partner(s), the professor, and the TAs. Sharing code with or copying code from a student who is not on your team, or from the internet, is prohibited.}
 \newcommand{\freecollaboration}{In addition to the professor and the TAs, you may freely seek help on this assignment from other students.}
 \newcommand{\collaborationrules}{}
+
+% Do you care about software engineering?
+
+\providebool{allowspaghetticode}
+
+\setbool{allowspaghetticode}{false}
+
+\newcommand{\softwareengineeringfrontmatter}{
+    \ifboolexpe{not bool{allowspaghetticode}}{
+        \section*{No Spaghetti Code Allowed}
+        In the interest of keeping your code readable, you may \textit{not} use
+        any \lstinline{goto} statements, nor may you use any \lstinline{break}
+        statements to exit from a loop, nor may you have any functions
+        \lstinline{return} from within a loop.
+    }{}
+}
+
+\newcommand{\spaghetticodepenalties}[1]{
+    \ifboolexpe{not bool{allowspaghetticode}}{
+        \penaltyitem{1}{for each \lstinline{goto} statement, \lstinline{break}
+            statement used to exit from a loop, or \lstinline{return} statement
+            that occurs within a loop.}
+    }{}
+}
 
 % You shouldn't need to customize these,
 % but you can if you like
