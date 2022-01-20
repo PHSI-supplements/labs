@@ -8,6 +8,6 @@ tar cvf keyboardlab.tar *
 mv keyboardlab.tar ..
 zip keyboardlab.zip *
 mv keyboardlab.zip ..
-rm keyboardlab.pdf
+mv keyboardlab.pdf ..
 cd ..
 

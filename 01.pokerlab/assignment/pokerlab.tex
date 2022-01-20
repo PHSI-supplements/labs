@@ -57,8 +57,8 @@ time, the TAs will be available to answer questions.
 
 \section{Connecting to \runtimeenvironment}
 
-%% You will need to edit this section to tailor it to your
-%% particular environment.
+%% You will need to edit this section to tailor it to your  %%
+%% particular environment.                                  %%
 
 You will need to be able to set up a secure shell terminal to
 \runtimeenvironment. You will also need to be able to edit files either
@@ -161,16 +161,17 @@ the \texttt{scp} command. Basic use of the \texttt{scp} command is very much
 the same as basic use of the \texttt{cp} command, except that you specify the
 remote host. Copying files from your computer to the server: \\
 \texttt{scp \textit{file1} \textit{file2} \dots
-csce.unl.edu:\textit{filepath}} copies the files from your local computer to
-the \textit{filepath} on \runtimeenvironment, where \textit{filepath} is
-relative to your home directory. For example, \\
-\texttt{scp answers.txt csce.unl.edu:.} copies \textit{answers.txt} to the
-top-level of your home directory. Or, working the other direction: \\
-\texttt{scp csce.unl.edu:\textit{file} \textit{filepath}} copies \textit{file}
-from the remote server to \textit{filepath} on your local computer. Just as
-with \texttt{cp}, you can use the \texttt{-r} argument to copy directories: \\
-\texttt{scp -r pokerlab csce.unl.edu:.} \\
-\texttt{scp -r csce.unl.edu:pokerlab .}
+username@csce.unl.edu:\textit{filepath}} copies the files from your local
+computer to the \textit{filepath} on \runtimeenvironment, where
+\textit{filepath} is relative to your home directory. For example, \\
+\texttt{scp answers.txt username@csce.unl.edu:.} copies \textit{answers.txt}
+to the top-level of your home directory. Or, working the other direction: \\
+\texttt{scp username@csce.unl.edu:\textit{file} \textit{filepath}} copies
+\textit{file} from the remote server to \textit{filepath} on your local
+computer. Just as with \texttt{cp}, you can use the \texttt{-r} argument to
+copy directories: \\
+\texttt{scp -r pokerlab username@csce.unl.edu:.} \\
+\texttt{scp -r username@csce.unl.edu:pokerlab .}
 
 \section{Scenario}
 
@@ -180,7 +181,7 @@ looking frustrated in front of his laptop. ``I'm Archie,'' he says, ``and I'm
 trying to teach myself this card game called \textit{Poker}. I found this
 source code that I thought I could use to understand Poker better, but the code
 is incomplete, and I don't entirely understand what's there. Could you explain
-it to me, please?''
+the code to me, please?''
 
 \section{Terminology}
 

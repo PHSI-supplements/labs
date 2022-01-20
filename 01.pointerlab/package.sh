@@ -8,5 +8,5 @@ tar cvf pointerlab.tar *
 mv pointerlab.tar ..
 zip pointerlab.zip *
 mv pointerlab.zip ..
-rm pointerlab.pdf
+mv pointerlab.pdf ..
 cd ..

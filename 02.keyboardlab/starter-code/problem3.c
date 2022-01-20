@@ -9,9 +9,9 @@
 /******************************************************************************
  * This code will output a multiple of ten based on a particular formula.
  * The implementation cannot use addition (+), subtraction (-), division (/),
- * nor modulo (%). The implementation may not use the literal number 5.
- * This will require use of bitwise AND, bitwise OR, left-shift, and
- * right-shift.
+ * nor modulo (%). The implementation may not use the literal number 5, nor
+ * can it use a binary literal (i.e., 0b101). This will require use of
+ * bitwise AND, bitwise OR, left-shift, and right-shift.
  ******************************************************************************/
 
 #include <stdio.h>

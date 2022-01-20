@@ -1,6 +1,6 @@
 all: lab
 
-lab: bitslab.tex ../../common/assignment.tex
+lab: keyboardlab.tex ../../common/assignment.tex
 	pdflatex keyboardlab
 #	bibtex   keyboardlab
 	pdflatex keyboardlab

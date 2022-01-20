@@ -1,6 +1,6 @@
 all: lab
 
-lab: bitslab.tex ../../common/assignment.tex
+lab: pointerlab.tex ../../common/assignment.tex
 	pdflatex pointerlab
 #	bibtex   pointerlab
 	pdflatex pointerlab
