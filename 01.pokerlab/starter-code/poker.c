@@ -144,7 +144,7 @@ int is_straight_flush(card *hand, int size_of_hand) {
 int main(int argc, char const *argv[]) {
     srand(time(NULL));
     populate_deck();
-    int sizeOfHand = 5;
+    int size_of_hand = 5;
     /* ADD WHATEVER CODE HERE YOU NEED */
 
     return 0;

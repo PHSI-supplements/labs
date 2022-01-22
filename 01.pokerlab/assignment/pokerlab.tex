@@ -173,7 +173,9 @@ copy directories: \\
 \texttt{scp -r pokerlab username@csce.unl.edu:.} \\
 \texttt{scp -r username@csce.unl.edu:pokerlab .}
 
-\section{Scenario}
+\softwareengineeringfrontmatter
+
+\section*{Scenario}
 
 You're relaxing at your favorite hangout when another customer catches your
 attention. He's rather large (dare I say, \textit{mammoth}), a bit hairy, and
@@ -205,8 +207,6 @@ Section~\ref{TypesOfPokerHands}), which are ranked according to the statistical
 likelihood of being able to construct such a hand. When completed, the code in
 this assignment will generate a random hand and evaluate what type of hand it
 is.
-
-\softwareengineeringfrontmatter
 
 \section{Getting Started}
 
@@ -327,9 +327,9 @@ whether there is a better way to characterize the hand. The types of hands
 \begin{description}
 \item[Royal Flush] This is an Ace, a King, a Queen, a Jack, and a 10, all of
     the same suit. There is no function in the starter code for a royal flush,
-    nor do you need to write one, since a royal flush is essentially the best-
-    possible straight flush. (Note also that a Royal Flush is not possible for
-    this lab, based on our re-definition of a Straight, below.)
+    nor do you need to write one, since a royal flush is essentially the
+    best- possible straight flush. (Note also that a Royal Flush is not possible
+    for this lab, based on our re-definition of a Straight, below.)
 \item[Straight Flush] This is five cards in a sequence, all of the same suit;
     that is, five cards that are both a straight and a flush. This
     characterization is checked by the function \function{is_straight_flush()}.
@@ -377,9 +377,9 @@ over with other students or the TA. Type your answer in \textit{answers.txt}.
 
 Look at the code for \function{is_flush()}. Why does this return a \textbf{1}
 when all cards in the hand have the same suit?  Why does it return a \textbf{0}
-when at least two cards have different suits?  If you can't determine this on
-your own, you may talk it over with other students or the TA. Type your answer
-in \textit{answers.txt}.
+when at least two cards have different suits than each other?  If you can't
+determine this on your own, you may talk it over with other students or the TA.
+Type your answer in \textit{answers.txt}.
 
 Look at the code for \function{is_straight()}. This is a little more challenging
 to understand than \function{is_pair()} and \function{is_flush()}. Why does it
@@ -419,8 +419,8 @@ Now write the code for \function{is_three_of_kind()}, \function{is_full_house()}
 
 \section{Turn-in and Grading}
 
-When you have completed this assignment, upload \textit{card.c},
-\textit{poker.c}, and \textit{answers.txt} to \filesubmission.
+When you have completed this assignment, upload your screenshot,
+\textit{card.c}, \textit{poker.c}, and \textit{answers.txt} to \filesubmission.
 
 This assignment is worth 10 points.
 \begin{description}
