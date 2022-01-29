@@ -20,7 +20,7 @@ typedef enum {
 } suits;
 
 typedef struct {
-    int value;      // 1=Ace, 11=Jack, 12=Queen, 13=Queen. 2-10 as that number. No other values allowed.
+    int value;      // 1=Ace, 11=Jack, 12=Queen, 13=King. 2-10 as that number. No other values allowed.
     suits suit;
 } card;
 

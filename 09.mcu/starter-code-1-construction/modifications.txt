@@ -1,0 +1,48 @@
+STUDENT: (Type your name here)
+
+
+If you are re-using a class kit from Fall 2021, make the following modifications
+to your class kit.
+
+
+1. Remove the wire that connects contact point e31 to the upper power (+) rail.
+Remove the wire that connects contact point e36 to the upper power (+) rail.
+
+2. If you had to remove any other wires for step 1, return those wires to their
+original positions.
+
+CHECKPOINT: Verify that
+        - Left switch's left pin is pulled low (no change)
+        - Left switch's center pin is connected to Arduino Nano's A4 pin (no change)
+        - Left switch's right pin is not connected to anything (this is a change from Fall 2021)
+        - Right switch's left pin is pulled low (no change)
+        - Right switch's center pin is connected to Arduino nano's A5 pin (no change)
+        - Right switch's right pin is not connected to anything (this is a change from Fall 2021)
+        - Left pushbutton's left lead is connected to a lower NAND input and to the Arduino Nano's D8 pin (no change)
+        - Left pushbutton's right lead is pulled low (no change)
+        - Right pushbutton's left lead is connected to a lower NAND input and to the Arduino Nano's D9 pin (no change)
+        - Right pushbutton's right lead is pulled low (no change)
+    Verified by:
+    Date/Time:
+
+3. AFTER you have had your wiring checked, download the *new* InputTest.ino
+from Canvas.
+
+4. Connect your Arduino Nano to the computer. Compile the *new* InputTest.ino
+and upload it to your Arduino Nano.
+
+5. Open the Arduino IDE's Serial Monitor, and then manipulate the switches to
+confirm that
+    - Each switch's value is 0 when in the left position, and its value is 1 when in the right position
+    - Each button's value is 1 when not pressed, and its value is 0 when pressed
+    - The Button NAND is normally 0 but becomes 1 when either button is pressed
+    - Each of the 16 keys on the matrix keypad produces the expected effect
+
+ 6. Compile OutputTest.ino, upload it to your Arduino Nano, and confirm that
+ your display module still functions correctly.
+
+ 7. Compile your MyBlink.ino that you prepared in Fall 2021 (or create a new
+ MyBlink.ino using the kit's assembly instructions), upload it to your Arduino
+ Nano, and confirm that your external LED still functions correctly (recall
+ that you may have to shade the LED with your hand to see it turning on and
+ off).

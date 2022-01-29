@@ -21,8 +21,6 @@ void setup() {
   }
   pinMode(3, INPUT);
   // Switches
-  // pinMode(A4, INPUT);
-  // pinMode(A5, INPUT);
   pinMode(A4, INPUT_PULLUP);
   pinMode(A5, INPUT_PULLUP);
   // Pushbuttons

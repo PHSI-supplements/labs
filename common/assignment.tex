@@ -50,7 +50,8 @@
     \ifboolexpe{not bool{allowspaghetticode}}{
         \section*{No Spaghetti Code Allowed}
         In the interest of keeping your code readable, you may \textit{not} use
-        any \lstinline{goto} statements, nor may you use any \lstinline{break}
+        any \lstinline{goto} statements, nor may you use any
+        \lstinline{continue} statements, nor may you use any \lstinline{break}
         statements to exit from a loop, nor may you have any functions
         \lstinline{return} from within a loop.
     }{}
@@ -58,9 +59,10 @@
 
 \newcommand{\spaghetticodepenalties}[1]{
     \ifboolexpe{not bool{allowspaghetticode}}{
-        \penaltyitem{1}{for each \lstinline{goto} statement, \lstinline{break}
-            statement used to exit from a loop, or \lstinline{return} statement
-            that occurs within a loop.}
+        \penaltyitem{1}{for each \lstinline{goto} statement,
+            \lstinline{continue} statement, \lstinline{break} statement used to
+            exit from a loop, or \lstinline{return} statement that occurs within
+            a loop.}
     }{}
 }
 
