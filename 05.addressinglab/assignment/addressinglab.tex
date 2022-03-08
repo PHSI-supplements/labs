@@ -1,5 +1,5 @@
 %%
-%% AddressingLab (c) 2021 Christopher A. Bohn
+%% AddressingLab (c) 2021-22 Christopher A. Bohn
 %%
 
 \input{../../common/assignment.tex}
@@ -9,7 +9,7 @@
 \renewcommand{\shortlabname}{addressinglab}
 \renewcommand{\collaborationrules}{\individualeffort}
 %\renewcommand{\duedate}{soon}
-\renewcommand{\duedate}{Week of October 11, before the start of your lab section}
+\renewcommand{\duedate}{Week of February 28, before the start of your lab section}
 \startdocument
 % \begin{document}\documentclass[12pt]{article}
 
@@ -19,13 +19,43 @@
 
 
 In this assignment, you will practice creating the source and destination for
-x86 assembly language instructions. \textbf{You should be able to complete this
-lab assignment during lab time.}
+x86 assembly language instructions. There is no design effort required for this
+lab assignment, and \textbf{you should be able to complete it during lab time}.
 
 The instructions are written assuming you will edit and run the code on
 \runtimeenvironment. If you wish, you may edit the code in a different
 environment; however, you will not be able to assemble and link an executable
 on MacOS nor on Windows.
+
+\section*{Learning Objectives}
+
+After successful completion of this assignment, students will be able to:
+\begin{itemize}
+\item Write x86 assembly instructions using an immediate value as the source
+\item Write x86 assembly instructions using registers as the source and/or
+    destination
+\item Write x86 assembly instructions using memory as the source or destination
+\item Use the common x86 memory addressing modes
+\end{itemize}
+
+\subsection*{Continuing Forward}
+
+The original purpose of this lab was to improve students' familiarity with
+x86 addressing modes to improve their performance on the exam. This improved
+familiarity will also serve you well on two upcoming labs, one in which you have
+to be able to interpret functions in assembly code, and one in which you will
+have to write short snippets of assembly code as part of a buffer overflow
+attack.
+
+\section*{During Lab Time}
+
+During your lab period, the TAs will provide a refresher on the format of x86
+assembly instructions and of the role of each component of the most-general
+form of memory addressing: $D(R_b, R_i, S)$. During the remaining time, the TAs
+will be available to answer questions.
+
+\textbf{You should be able to complete this lab assignment during lab time};
+however, it is not due until \duedate.
 
 \section*{Scenario}
 
@@ -335,5 +365,16 @@ This assignment is worth 10 points. \\
 \rubricitem{1}{Task~\ref{task7}:~\nameref{task7}}
 \rubricitem{2}{Task~\ref{task8}:~\nameref{task8}}
 \end{description}
+
+\section*{Epilogue}
+
+Archie is hurriedly packing is trunk, like he's about to leave on a
+short-notice urgent trip. Before charging out the door, he pauses to tell you,
+``Newman just stole some of our samples. I need to track him down before he
+sells them to the Supersized Safari Syndicate. I guess this means you're in
+charge of the Zoo's computer system now. Don't worry, you'll be fine. What
+could possibly go wrong?''
+
+\textit{To be continued...}
 
 \end{document}

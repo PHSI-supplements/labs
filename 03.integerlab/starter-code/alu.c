@@ -47,7 +47,7 @@ multiplication_result multiply(uint16_t multiplicand, uint16_t multiplier) {
 }
 
 /* Divides the first argument by the second.  The function stores the quotient
- * in the return structure's quotient field and the the quotient in the
+ * in the return structure's quotient field and the the remainder in the
  * remainder field.  If the divisor is zero then the quotient and remainder
  * fields should be ignored, and the division_by_zero field should be set. */
 division_result divide(uint16_t dividend, uint16_t divisor) {

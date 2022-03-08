@@ -8,6 +8,6 @@ tar cvf addressinglab.tar *
 mv addressinglab.tar ..
 zip addressinglab.zip *
 mv addressinglab.zip ..
-rm addressinglab.pdf
+mv addressinglab.pdf ..
 cd ..
 

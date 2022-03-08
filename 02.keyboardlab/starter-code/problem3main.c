@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
+int is_even(int value);
 int produce_multiple_of_ten(int seed);
 
 int main() {

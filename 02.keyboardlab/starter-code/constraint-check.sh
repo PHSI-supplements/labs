@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "NOTE: Particular comments may generate false positives."
+echo
 for pattern in w W '\\'
 do
 	echo [CHECKING] ${pattern} in problem1.c
@@ -24,7 +26,7 @@ do
 	grep -e ".*${pattern}.*/\*" -e ".*${pattern}.*//" -e "\*/.*${pattern}" problem2.c
 done
 
-for pattern in + - / 5 %
+for pattern in + - / 5 % b B
 do
 	echo [CHECKING] ${pattern} in problem3.c
 	if [ $pattern == / ]

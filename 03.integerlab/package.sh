@@ -8,6 +8,6 @@ tar cvf integerlab.tar *
 mv integerlab.tar ..
 zip integerlab.zip *
 mv integerlab.zip ..
-rm integerlab.pdf
+mv integerlab.pdf ..
 cd ..
 

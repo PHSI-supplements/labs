@@ -182,8 +182,8 @@ constraint-checking shell script: \\
 \texttt{./constraint-check.sh} \\
 Because you are allowed at most one \lstinline{if} statement in each function,
 you may see two lines with \lstinline{if} statements reported when the script
-checks for \textquotesingle f\textquotesingle. You may also see some comments
-reported when the script checks for \textquotesingle *\textquotesingle.
+checks for \textquotesingle f\textquotesingle. %You may also see some comments
+%reported when the script checks for \textquotesingle *\textquotesingle.
 
 
 \section{Using Bitmasks and Shifting Bits}
@@ -234,8 +234,8 @@ fix both errors and warnings.
 You can double-check that you aren't using disallowed keys by running the
 constraint-checking shell script: \\
 \texttt{./constraint-check.sh} \\
-You may see some comments reported when the script checks for
-\textquotesingle *\textquotesingle.
+%You may see some comments reported when the script checks for
+%\textquotesingle /\textquotesingle.
 
 
 \section*{Turn-in and Grading}
@@ -264,15 +264,15 @@ This assignment is worth 20 points.
 \penaltyitem{4}{The solution to \textit{problem1.c} uses \texttt{w},
     \texttt{W}, \texttt{\textbackslash{}n}, or \texttt{\textbackslash{}t}.}
 \penaltyitem{4}{\function{iz_digit())} uses a digit other than 0 and 9, uses a
-    \lstinline{switch} statment, or uses more than one \lstinline{if}
-    statement.}
-\penaltyitem{4}{\function{decapitalize()} \lstinline{#include}s one or more
-    files, uses a \lstinline{switch} statment, or uses more than one
-    \lstinline{if} statement.}
+    \lstinline{switch} statment, uses more than one \lstinline{if} statement, or
+    uses code from an \lstinline{#include}d header.}
+\penaltyitem{4}{\function{decapitalize()} uses a \lstinline{switch} statment,
+    uses more than one \lstinline{if} statement, or uses code from an
+    \lstinline{#include}d header.}
 \penaltyitem{4}{\function{is_even()} uses arithmetic.}
 \penaltyitem{4}{\function{produce_multiple_of_ten()} uses addition,
     subtraction, division, or modulo; or \function{produce_multiple_of_ten()}
-    uses the literal the value 5, 0x5, 05, or 0b101.}
+    uses the literal value 5, 0x5, 05, or 0b101.}
 \spaghetticodepenalties{1}
 \end{description}
 

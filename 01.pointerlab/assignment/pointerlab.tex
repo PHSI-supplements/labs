@@ -176,9 +176,8 @@ int *add(int a, int b) {
 }
 
 int *multiply(int p, int q) {
-    int result[1];
-    result[0] = p * q;
-    return result;
+    int result = a * b;
+    return &result;
 }
 
 int main() {
@@ -186,7 +185,8 @@ int main() {
     printf("sum = %d\n", *sum);
     int *product = multiply(2, 3);
     printf("product = %d\n", *product);
-    printf("sum - product = %d\n", *sum - *product);
+    printf("sum - product = %d - %d = %d\n",
+                        *sum, *product, *sum - *product);
     return 0;
 }
 \end{lstlisting}
@@ -197,7 +197,7 @@ compiler and then runs it, he gets this output:
 \begin{verbatim}
 sum = 9
 product = 6
-sum - product = 0
+sum - product = 6 - 6 = 0
 \end{verbatim}
 
 And when he compiles the program with the \textbf{gcc} compiler and then runs
@@ -205,8 +205,9 @@ it, the program terminates with a segmentation fault. ``I'm pretty sure that
 the segmentation fault is just gcc trying to protect me from trusting an
 incorrect answer -- but why does the code produce an incorrect answer?''
 
-What mistake did Archie make? Why does \lstinline{*sum - *product} produce the
-value 0? Place your answer in \textit{answers.txt}.
+What mistake did Archie make? Why does \lstinline{*sum} have the value 6 on
+line 25? Why does \lstinline{*sum - *product} produce the value 0? Place your
+answer in \textit{answers.txt}.
 
 
 \section{Challenge and Response}
@@ -295,9 +296,9 @@ Two real books have also been reduced to one word per line:\footnote{The text
 for these books was obtained from \href{http://www.gutenberg.org/}{Project
 Gutenberg}. In accordance with Paragraph~1.C of the
 \href{http://www.gutenberg.org/policy/license}{Project Gutenberg License}, all
-references to Project Gutenberg have been removed from the text that we are
-distributing. (Removing the references to Project Gutenberg was also necessary
-to ensure that \textit{only} the words from the books are used for the
+references to Project Gutenberg have been removed from the ``derived works''
+that we are distributing. (Removing the references to Project Gutenberg was also
+necessary to ensure that \textit{only} the words from the books are used for the
 challenge-and-response system.)}
 
 \begin{itemize}
@@ -308,15 +309,15 @@ challenge-and-response system.)}
     \url{https://www.gutenberg.org/ebooks/139} (unsorted; 77,268 words)
 \end{itemize}
 
-The very small files of 7 words can be useful for debugging, and the moderate-
-sized files of 74-125 words should give you confidence in the correctness of
-your solution. The real books of more than 74,000 words will be used for
-grading (as will smaller problem instances). The files marked as
+The very small files of 7 words can be useful for debugging, and the
+moderate-sized files of 74-125 words should give you confidence in the
+correctness of your solution. The real books of more than 74,000 words will be
+used for grading (as will smaller problem instances). The files marked as
 \textit{sorted} have all of their words already in alphabetically sorted order,
 ignoring capitalization; the files marked as \textit{unsorted} do not have
-their words sorted (the words in ``Plants'' and ``Food'' are in a randomly-
-selected order; the words in ``TheLostWorld'' appear in the order that they
-appear in the original \textit{The Lost World}).
+their words sorted (the words in ``Plants'' and ``Food'' are in a
+randomly-selected order; the words in ``TheLostWorld'' appear in the order that
+they appear in the original \textit{The Lost World}).
 
 Each book file, ``\textit{file}'', has a corresponding
 ``\textit{file}-table.md'' that contains a Markdown-formatted table of the
@@ -542,7 +543,7 @@ compiles without generating any warnings or errors, run it. If your program
 requires more than a few seconds to build the list, there is a bug in your
 code. If your program does not produce the expected output, the
 \function{print_list()} utility function will help you see the list that your
-created.
+code created.
 
 \subsection{Respond to a Challenge, part 1}
 
@@ -564,8 +565,9 @@ present in the list and the number of occurrences is even, the function returns
 and ``(number)'' is the number of occurrences. If the number of occurrences is
 odd then use the number of occurrences recorded in that word's node to find the
 response word as described in the challenge-and-response rules, and return that
-word. (Do not copy the \function{is_even()} function into \textit{challenge-
-response.c}; we will link to the function in \textit{problem3.c}.)
+word. (Do not copy the \function{is_even()} function into
+\textit{challenge-response.c}; we will link to the function in
+\textit{problem3.c}.)
 
 If you did not complete KeyboardLab, then place this code in your
 \textit{problem3.c} file:

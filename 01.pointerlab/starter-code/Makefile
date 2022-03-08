@@ -1,14 +1,14 @@
 CC = gcc
 CFLAGS = -Og -std=c99 -Wall -g
 DEPS = challenge-response
-LIBS =
-OBJ = problem2.o problem3.o challenge-response-solution.o pointerlab.o
+LIBS = -lm
+OBJ = problem2.o problem3.o challenge-response.o pointerlab.o
 EXEC = pointerlab
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-pointerlab: challenge-response-solution.o pointerlab.o problem2.o problem3.o
+pointerlab: challenge-response.o pointerlab.o problem2.o problem3.o
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 all: $(EXEC)

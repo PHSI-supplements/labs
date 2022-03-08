@@ -885,7 +885,7 @@ Figure~\ref{fig:keypad-header}.
 Peel off a 4-conductor cable from the \rainbow. Insert one end in contact
 points h26-h29, in the same breadboard rows as the keypad's row pins
 (Figure~\ref{fig:keypad-row-cable}). Insert the other end of the cable in
-contact points j9-j5 (Figure~\ref{fig:keypad-row-nano}). You want the \nano's
+contact points j9-j6 (Figure~\ref{fig:keypad-row-nano}). You want the \nano's
 \texttt{D4} pin to connect to the keypad's \texttt{row1} pin, \texttt{D5} to
 \texttt{row4}, \texttt{D6} to \texttt{row7}, and \texttt{D7} to \texttt{row*}
 (Figure~\ref{fig:keypad-row-full}).
@@ -993,7 +993,7 @@ slider switches.
 Insert one slider switch into contact points a29-a31. Peel off one wire from
 the \rainbow, and use it to connect contact point e29 to the upper \ground.
 Place the other slider switch into contact points a34-a36. Peel off another
-wire from the \rainbow, and use it to connect contact point e29 to the upper
+wire from the \rainbow, and use it to connect contact point e34 to the upper
 \ground. % See Figure~\ref{fig:switch-power-ground}.
 
 Peel off one wire from the \rainbow, and use it to connect contact point d30
@@ -1100,15 +1100,17 @@ Peel off a 2-conductor cable from the \rainbow, and use it to connect contact
 points a21 and a22 (electrically connected to the 74LS20's \texttt{C1} and
 \texttt{D1}, pins 4 and 5) to a \power. Peel off another 2-conductor cable and
 use it to connect contact points d39 and d43 (electrically connected to the
-ungrounded sides of the pushbuttons) to contact points b18 and b19
-(electrically connected to the 74LS20's \texttt{A1} and \texttt{B1}, pins 1 and
-2). See Figure~\ref{fig:pushbutton-nand}.
+ungrounded sides of the pushbuttons) to the 74LS20: contact point d39 should be
+connected to contact point b19 (electrically connected to the 74LS20's
+\texttt{B1}, pin 2), and contact point d43 should be connected to contact point
+b18 (electrically connected to the 74LS20's \texttt{A1}, pin 1). See
+Figure~\ref{fig:pushbutton-nand}.
 
-Peel off another 2-conductor cable from the \rainbow, and use
-it to connect contact points j4 and j5 (electrically connected to the \nano's
-\texttt{D8} and \texttt{D9} pins) to contact points c18 and c19 (electrically
-connected to the 74LS20's \texttt{A1} and \texttt{B1}, and to the pushbuttons
-through the cable you installed in the previous paragraph). See
+Peel off another 2-conductor cable from the \rainbow, and use it to connect
+contact points j4 and j5 (electrically connected to the \nano's \texttt{D9} and
+\texttt{D8} pins) to contact points c18 and c19 (electrically connected to the
+74LS20's \texttt{A1} and \texttt{B1}, and to the pushbuttons through the cable
+you installed in the previous paragraph), respectively. See
 Figure~\ref{fig:pushbutton-nano}.
 
 \begin{figure}\begin{multicols}{2}

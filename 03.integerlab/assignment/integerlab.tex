@@ -1,22 +1,24 @@
 %%
-%% IntegerLab (c) 2018-21 Christopher A. Bohn
+%% IntegerLab (c) 2018-22 Christopher A. Bohn
 %%
 
 \input{../../common/assignment.tex}
 \usepackage{cancel}
 
-\renewcommand{\labnumber}{3}
+\renewcommand{\labnumber}{4}
 \renewcommand{\labname}{Integer Representation and Arithmetic Lab}
 \renewcommand{\shortlabname}{integerlab}
 \renewcommand{\collaborationrules}{\individualeffort}
 %\renewcommand{\duedate}{soon}
-\renewcommand{\duedate}{Week of September 20, before the start of your lab section}
+\renewcommand{\duedate}{Week of February 14, before the start of your lab section}
 \startdocument
 % \begin{document}\documentclass[12pt]{article}
 
 %\usepackage{fullpage}
 %\usepackage{enumitem}
 
+%% TODO: remove bonus credit (or at least make it selectable on/off) and
+%% introduce comparators and logical operators; update parser
 
 
 In this assignment, you will become more familiar with bit-level
@@ -28,6 +30,34 @@ The instructions are written assuming you will edit and run the code on
 in a different environment; be sure that your compiler suppresses no warnings,
 and that if you are using an IDE that it is configured for C and not C++.
 
+\section*{Learning Objectives}
+
+After successful completion of this assignment, students will be able to:
+\begin{itemize}
+\item Apply bit operations in non-trivial applications
+\item Illustrate ripple-carry binary addition
+\item Recognize whether integer overflow has occurred
+\item Explain the relationship between multiplication, division, and bit shifts
+\item Express multiplication as an efficient use of other functions
+
+\end{itemize}
+
+\subsection*{Continuing Forward}
+
+You used bit operations for toy applications in KeyboardLab; in IntegerLab you
+will use bit operations to re-implement integer arithmetic. This increased
+familiarity with bit operations will pay off handsomely in next lab and
+also in the I/O labs. Your increased understanding of integer operations will
+improve your performance on the exam.
+
+\section*{During Lab Time}
+
+During your lab period, the TAs will review ripple-carry addition, overflow for
+unsigned and signed integers, and bit shift-based multiplication and division.
+During the remaining time, the TAs will be available to answer questions.
+
+\softwareengineeringfrontmatter
+
 \section{Scenario}
 
 All work at the Pleistocene Petting Zoo has stopped while Archie tries to find
@@ -36,14 +66,17 @@ than furloughing staff, he's asked everybody to help out with his other startup
 companies for a week or two. He specifically asked that you help out with
 Eclectic Electronics.
 
-Eclectic Electronics is developing a patent-pending C-licon tool that will
-convert C code into an integrated circuit that has the same functionality as
-the original C code. To test it out, you've been tasked with writing the code
-to implement an Arithmetic Logic Unit (ALU). Your task will be to implement
-integer addition, subtraction, multiplication, and division. Because bitwise
-operations and bit shift operations have been implemented, you will be able to
-use C's bitwise and bit shift operators, but because arithmetic operations have
-not yet been implemented, you cannot use C's arithmetic operators.
+Herb Bee, the chief engineer, explains that Eclectic Electronics is developing
+a patent-pending C-licon tool that will convert C code into an integrated
+circuit that has the same functionality as the original C code. To test it out,
+he tasked you with writing the code to implement an Arithmetic Logic Unit
+(ALU). Your task will be to implement integer addition, subtraction,
+multiplication, and division. Because bitwise operations and bit shift
+operations have been implemented, you will be able to use C's bitwise and bit
+shift operators, but because arithmetic operations have not yet been
+implemented, you cannot use C's arithmetic operators. Because C library
+functions generally make use of arithmetic operations (which have not yet been
+implemented), you cannot use library functions.
 
 \section{Getting Started}
 
@@ -57,11 +90,12 @@ to compile the code. To compile the program, type:
 
 \texttt{make}
 
-This will produce an executable file called \texttt{integerlab}.  If you're
-using your own computer and you don't have \texttt{make} available to you, then
-you can compile the program by typing:
-
-\texttt{gcc -std=c99 -Wall -o integerlab integerlab.c alu.c}
+This will produce an executable file called \texttt{integerlab}.
+%  If you're
+% using your own computer and you don't have \texttt{make} available to you, then
+% you can compile the program by typing:
+%
+% \texttt{gcc -std=c99 -Wall -o integerlab integerlab.c alu.c}
 
 \section{Description of IntegerLab Files and Tasks}
 
@@ -123,11 +157,14 @@ functions, you may add helper functions to make your code more modular; you may
 only place these helper functions in \textit{alu.c}.
 
 When you implement these functions, you may NOT use C's arithmetic operators:
-+\ \ ++\ \ +=\ \ -\ \ -{}-\ \ -=\ \ $*$\ \ /\ \ \%.  \textit{You will receive
-no credit for functions that use a prohibited operator.}  You may only use
-bitwise and $\&$, bitwise or $|$, bitwise exclusive-or \^{ }, bitwise
-complement $\tilde{ }$, and bit shifts $<<$ $>>$.
-%\textbf{Exception:} You \textit{may} use addition for pointer arithmetic.
++\ \ ++\ \ +=\ \ -\ \ -{}-\ \ -=\ \ $*$\ \ /\ \ \%. You may not use
+floating-point operators as a substitute for integer operators. You may use
+only functions that you write yourself). If you use \lstinline{printf}
+statements for debugging instead of using a debugger, remove them before
+turning in your code. \textit{You will receive no credit for functions that use
+a prohibited operator or function.}  You may only use bitwise and $\&$, bitwise
+or $|$, bitwise exclusive-or \^{ }, bitwise complement $\sim$, and bit shifts
+$<<$ $>>$.
 
 \textbf{Hints:}
 \begin{itemize}
@@ -298,18 +335,31 @@ Run \texttt{./integerlab signed} (or run \texttt{./integergrader})
 (+ - * / \%), and examine algorithms.
 \begin{description}
 \penaltyitem{13}{The \function{add()} function (or a helper function for
-    \function{add()}) uses an arithmetic operator (+ - * / \%)}
+    \function{add()}) uses an arithmetic operator (+ - * / \%) or a function
+    you did not write}
 \penaltyitem{13}{The \function{subtract()} function (or a helper function for
-    \function{subtract()}) uses an arithmetic operator (+ - * / \%)}
+    \function{subtract()}) uses an arithmetic operator (+ - * / \%) or a
+    function you did not write}
 \penaltyitem{8}{The \function{multiply()} function (or a helper function for
-    \function{multiply()}) uses an arithmetic operator (+ - * / \%),
+    \function{multiply()}) uses an arithmetic operator (+ - * / \%) or a
+    function you did not write,
     \textit{and/or} \function{multiply()} uses a superpolynomial multiplication
     algorithm, such as but not limited to brute-force repeated addition}
 \penaltyitem{6}{\textbf(also no bonus) The \function{divide()} function (or a
     helper function for \function{divide()}) uses an arithmetic operator
-    (+ - * / \%), \textit{and/or} \function{divide()} uses a  superpolynomial
-    division algorithm, such as but not limtited to brute-force repeated
-    subtraction}
+    (+ - * / \%) or a function you did not write,
+    \textit{and/or} \function{divide()} uses a superpolynomial division
+    algorithm, such as but not limited to brute-force repeated subtraction}
+\spaghetticodepenalties{1}
 \end{description}
+
+\section*{Epilogue}
+
+Herb smiles as he hands you the the test results from the latest integrated
+circuit fab batch. ``C-licon successfully turned your code into an ALU. Nicely
+done!'' I think maybe it's time to use it to introduce some optimizations into
+the Floating Point Unit (FPU) on our experimental microprocessor.
+
+\textit{To be continued...}
 
 \end{document}

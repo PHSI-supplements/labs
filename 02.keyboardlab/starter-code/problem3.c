@@ -21,7 +21,7 @@
  * is an odd value */
 int is_even(int value) {
     /* WRITE THIS FUNCTION */
-    return 0;
+    return -1;
 }
 
 /* Outputs a multiple of 10 by repeatedly applying a formula:
