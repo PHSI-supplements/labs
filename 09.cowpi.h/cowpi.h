@@ -17,12 +17,13 @@
 #include "Arduino.h"
 
 
-/* Uncomment one (and only one) Microcontroller Board.
+/* One (and only one) Microcontroller Board should be defined.
  * If no board is defined, then your sketch will not compile.
  * If multiple boards are defined, your sketch may not compile, or it may
  *   have undefined behavior.
  */
 
+// #define UNO
 #define NANO
 // #define NANO_EVERY
 // #define NANO_BLE
@@ -33,19 +34,19 @@
 
 
 
+#if defined UNO
+#define NANO
+#endif //UNO-NANO EQUIVALENCE
 
 #if defined NANO
-uint8_t * const IObase = (uint8_t *)0x20;
-#define D8_D13  0                 // PINB/DDRB/PORTB / PCMSK0
-#define A0_A5   1                 // PINC/DDRC/PORTC / PCMSK1
-#define D0_D7   2                 // PIND/DDRD/PORTD / PCMSK2
+uint8_t * const cowpi_IObase = (uint8_t *)0x20;
 #elif defined NANO_EVERY
-uint8_t * const IObase = (uint8_t *)0x0;
+uint8_t * const cowpi_IObase = (uint8_t *)0x0;
 #error Arduino Nano Every is not yet supported for CowPi
 #elif defined NANO_BLE
-#error Arduino Nano BLE is not yet supported for CowPi
+#error Arduino Nano 33 BLE is not yet supported for CowPi
 #elif defined NANO_IOT
-#error Arduino Nano IOT is not yet supported for CowPi
+#error Arduino Nano 33 IOT is not yet supported for CowPi
 #elif defined NANO_RP2040
 #error Arduino Nano RP2040 is not yet supported for CowPi
 #elif defined MEGA_2560
@@ -63,72 +64,74 @@ uint8_t * const IObase = (uint8_t *)0x0;
 #define MAX7219                 0x80
 
 
-#define cowpi_setup(options) do {           \
-  /* Simple I/O */                          \
-  pinMode(A4, INPUT_PULLUP);                \
-  pinMode(A5, INPUT_PULLUP);                \
-  pinMode( 8, INPUT_PULLUP);                \
-  pinMode( 9, INPUT_PULLUP);                \
-  pinMode(10, INPUT_PULLUP);                \
-  pinMode(11, INPUT_PULLUP);                \
-  pinMode(12, OUTPUT);                      \
-  pinMode(13, OUTPUT);                      \
-  /* Keypad */                              \
-  pinMode( 4, OUTPUT);                      \
-  pinMode( 5, OUTPUT);                      \
-  pinMode( 6, OUTPUT);                      \
-  pinMode( 7, OUTPUT);                      \
-  pinMode(A0, INPUT_PULLUP);                \
-  pinMode(A1, INPUT_PULLUP);                \
-  pinMode(A2, INPUT_PULLUP);                \
-  pinMode(A3, INPUT_PULLUP);                \
-  digitalWrite(4, LOW);                     \
-  digitalWrite(5, LOW);                     \
-  digitalWrite(6, LOW);                     \
-  digitalWrite(7, LOW);                     \
-  /* Display Module */                      \
-  if((options) & SPI) {                     \
-    pinMode(10, OUTPUT);                    \
-    pinMode(11, OUTPUT);                    \
-  }                                         \
-  if((options) & I2C) {                     \
-    pinMode(A4, OUTPUT);                    \
-    pinMode(A5, OUTPUT);                    \
-  }                                         \
-  if((options) & MAX7219) {                 \
-    /* Clear all digit registers */         \
-    for(int i = 1; i <= 8; i++) {           \
-      digitalWrite(10, LOW);                \
-      shiftOut(11, 13, MSBFIRST, i);        \
-      shiftOut(11, 13, MSBFIRST, 0);        \
-      digitalWrite(10, HIGH);               \
-    }                                       \
-    /* Take display out of decode mode */   \
-    digitalWrite(10, LOW);                  \
-    shiftOut(11, 13, MSBFIRST, 0x9);        \
-    shiftOut(11, 13, MSBFIRST, 0);          \
-    digitalWrite(10, HIGH);                 \
-    /* Intensity at 13/32 */                \
-    digitalWrite(10, LOW);                  \
-    shiftOut(11, 13, MSBFIRST, 0xA);        \
-    shiftOut(11, 13, MSBFIRST, 6);          \
-    digitalWrite(10, HIGH);                 \
-    /* Scan all eight digits */             \
-    digitalWrite(10, LOW);                  \
-    shiftOut(11, 13, MSBFIRST, 0xB);        \
-    shiftOut(11, 13, MSBFIRST, 7);          \
-    digitalWrite(10, HIGH);                 \
-    /* Take display out of shutdown mode */ \
-    digitalWrite(10, LOW);                  \
-    shiftOut(11, 13, MSBFIRST, 0xC);        \
-    shiftOut(11, 13, MSBFIRST, 1);          \
-    digitalWrite(10, HIGH);                 \
-    /* Take display out of test mode */     \
-    digitalWrite(10, LOW);                  \
-    shiftOut(11, 13, MSBFIRST, 0xF);        \
-    shiftOut(11, 13, MSBFIRST, 1);          \
-    digitalWrite(10, HIGH);                 \
-  }                                         \
+#define cowpi_setup(options) do {                       \
+  /* Simple I/O */                                      \
+  pinMode(A4, INPUT_PULLUP);                            \
+  pinMode(A5, INPUT_PULLUP);                            \
+  pinMode( 8, INPUT_PULLUP);                            \
+  pinMode( 9, INPUT_PULLUP);                            \
+  pinMode(10, INPUT_PULLUP);                            \
+  pinMode(11, INPUT_PULLUP);                            \
+  pinMode(12, OUTPUT);                                  \
+  pinMode(13, OUTPUT);                                  \
+  /* Keypad */                                          \
+  pinMode( 4, OUTPUT);                                  \
+  pinMode( 5, OUTPUT);                                  \
+  pinMode( 6, OUTPUT);                                  \
+  pinMode( 7, OUTPUT);                                  \
+  pinMode(A0, INPUT_PULLUP);                            \
+  pinMode(A1, INPUT_PULLUP);                            \
+  pinMode(A2, INPUT_PULLUP);                            \
+  pinMode(A3, INPUT_PULLUP);                            \
+  digitalWrite(4, LOW);                                 \
+  digitalWrite(5, LOW);                                 \
+  digitalWrite(6, LOW);                                 \
+  digitalWrite(7, LOW);                                 \
+  /* Display Module */                                  \
+  if((options) & SPI) {                                 \
+    pinMode(10, OUTPUT);                                \
+    pinMode(11, OUTPUT);                                \
+  }                                                     \
+  if((options) & I2C) {                                 \
+    pinMode(A4, OUTPUT);                                \
+    pinMode(A5, OUTPUT);                                \
+  }                                                     \
+  if((options) & MAX7219) {                             \
+    /* Clear all digit registers */                     \
+    for(int i = 1; i <= 8; i++) {                       \
+      digitalWrite(10, LOW);                            \
+      shiftOut(11, 13, MSBFIRST, i);                    \
+      shiftOut(11, 13, MSBFIRST, 0);                    \
+      digitalWrite(10, HIGH);                           \
+    }                                                   \
+    /* Take display out of decode mode */               \
+    digitalWrite(10, LOW);                              \
+    shiftOut(11, 13, MSBFIRST, 0x9);                    \
+    shiftOut(11, 13, MSBFIRST, 0);                      \
+    digitalWrite(10, HIGH);                             \
+    /* Intensity at 13/32 */                            \
+    digitalWrite(10, LOW);                              \
+    shiftOut(11, 13, MSBFIRST, 0xA);                    \
+    shiftOut(11, 13, MSBFIRST, 6);                      \
+    digitalWrite(10, HIGH);                             \
+    /* Scan all eight digits */                         \
+    digitalWrite(10, LOW);                              \
+    shiftOut(11, 13, MSBFIRST, 0xB);                    \
+    shiftOut(11, 13, MSBFIRST, 7);                      \
+    digitalWrite(10, HIGH);                             \
+    /* Take display out of shutdown mode */             \
+    digitalWrite(10, LOW);                              \
+    shiftOut(11, 13, MSBFIRST, 0xC);                    \
+    shiftOut(11, 13, MSBFIRST, 1);                      \
+    digitalWrite(10, HIGH);                             \
+    /* Take display out of test mode */                 \
+    digitalWrite(10, LOW);                              \
+    shiftOut(11, 13, MSBFIRST, 0xF);                    \
+    shiftOut(11, 13, MSBFIRST, 1);                      \
+    digitalWrite(10, HIGH);                             \
+    /* Enable SPI, Controller, set clock rate fck/16 */ \
+    SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);      \
+  }                                                     \
 } while(0)
 
 
@@ -139,56 +142,60 @@ uint8_t * const IObase = (uint8_t *)0x0;
  *
  *
  * EXTERNAL PINS
- * Pins `D8_D13` `A0_A5` `D0_D7` cowpi_gpio_registers[] at IObase + 0x03 (0x23)
- * * D8..D13 at IObase + 0x03 (0x23)
- * * A0..A5  at IObase + 0x06 (0x26)
- * * D0..D7  at IObase + 0x09 (0x29)
+ * Pins `D8_D13` `A0_A5` `D0_D7` cowpi_ioPortRegisters[] at cowpi_IObase + 0x03 (0x23)
+ * * D8..D13 at cowpi_IObase + 0x03 (0x23)
+ * * A0..A5  at cowpi_IObase + 0x06 (0x26)
+ * * D0..D7  at cowpi_IObase + 0x09 (0x29)
  *
  *
  * PIN-BASED INTERRUPTS
- * cowpi_pin_interrupt_registers      at IObase + 0x1B (0x3B)
+ * cowpi_pinInterruptRegisters      at cowpi_IObase + 0x1B (0x3B)
  *
  *
  * PROTOCOLS
- * SPI           cowpi_spi_registers  at IObase + 0x2C (0x4C)
- * I2C (aka TWI) cowpi_i2c_registers  at IObase + 0x98 (0xB8)
+ * SPI           cowpi_spiRegisters at cowpi_IObase + 0x2C (0x4C)
+ * I2C (aka TWI) cowpi_i2cRegisters at cowpi_IObase + 0x98 (0xB8)
  *
  *
  * TIMER/COUNTERS
- * Timer0 cowpi_timer_registers_8bit  at IObase + 0x24 (0x44)
- * Timer1 cowpi_timer_registers_16bit at IObase + 0x60 (0x80)
- * Timer2 cowpi_timer_registers_8bit  at IObase + 0x90 (0xB0)
+ * Timer0 cowpi_timerRegisters8bit  at cowpi_IObase + 0x24 (0x44)
+ * Timer1 cowpi_timerRegisters16bit at cowpi_IObase + 0x60 (0x80)
+ * Timer2 cowpi_timerRegisters8bit  at cowpi_IObase + 0x90 (0xB0)
  *
- * Timer `0` `1` `2` Interrupt Mask Register uint8_t[] at IObase + 0x4E (0x6E)
+ * Timer `0` `1` `2` Interrupt Mask Register uint8_t[] at cowpi_IObase + 0x4E (0x6E)
  * * TIMSKx
  * * 0 at (0x6E)
  * * 1 at (0x6F)
  * * 2 at (0x70)
- * Timer `0` `1` `2` Interrupt Flag Register uint8_t[] at IObase + 0x15 (0x35)
+ * Timer `0` `1` `2` Interrupt Flag Register uint8_t[] at cowpi_IObase + 0x15 (0x35)
  * * TIFRx
  * * 0 at (0x35)
  * * 1 at (0x36)
  * * 2 at (0x37)
  *
- * General Timer/Counter Control Register (Timer0 & Timer1) uint8_t at IObase + 0x23 (0x4C)
+ * General Timer/Counter Control Register (Timer0 & Timer1) uint8_t at cowpi_IObase + 0x23 (0x4C)
  * * GTCCR
- * Asynchronous Status Register (Timer2 only)               uint8_t at IObase + 0x96 (0xB6)
+ * Asynchronous Status Register (Timer2 only)               uint8_t at cowpi_IObase + 0x96 (0xB6)
  * * ASSR
  */
 
 #ifdef NANO
 
+#define D8_D13  0                 // PINB/DDRB/PORTB / PCMSK0
+#define A0_A5   1                 // PINC/DDRC/PORTC / PCMSK1
+#define D0_D7   2                 // PIND/DDRD/PORTD / PCMSK2
+
 typedef struct {
   volatile uint8_t input;                   // PINx
   volatile uint8_t direction;               // DDRx
   volatile uint8_t output;                  // PORTx
-} cowpi_gpio_registers;
+} cowpi_ioPortRegisters;
 
 typedef struct {
   volatile uint8_t control;                 // SPCR
   volatile uint8_t status;                  // SPSR
   volatile uint8_t data;                    // SPDR
-} cowpi_spi_registers;
+} cowpi_spiRegisters;
 
 typedef struct {
   volatile uint8_t bit_rate;                // TWBR
@@ -197,7 +204,7 @@ typedef struct {
   volatile uint8_t data;                    // TWBB
   volatile uint8_t control;                 // TWCR
   volatile uint8_t peripheral_address_mask; // TWAMR
-} cowpi_i2c_registers;
+} cowpi_i2cRegisters;
 
 typedef struct {
   // pci = pin change interrupt
@@ -213,14 +220,14 @@ typedef struct {
                   // * D8..D13 at (0x6B)
                   // * A0..A5  at (0x6C)
                   // * D0..D7  at (0x6D)
-} cowpi_pin_interrupt_registers;
+} cowpi_pinInterruptRegisters;
 
 typedef struct {
   volatile uint16_t control;                // TCCRxB TCCRxA
   volatile uint8_t  counter;                // TCNTx
   volatile uint8_t  compareA;               // OCRxA
   volatile uint8_t  compareB;               // OCRxB
-} cowpi_timer_registers_8bit;
+} cowpi_timerRegisters8bit;
 
 typedef struct {
   volatile uint32_t control;                // Reserved TCCRxC TCCRxB TCCRxA
@@ -228,7 +235,7 @@ typedef struct {
   volatile uint16_t capture;                // ICRxH ICRxL
   volatile uint16_t compareA;               // OCRxAH OCRxAL
   volatile uint16_t compareB;               // OCRxBH OCRxBL
-} cowpi_timer_registers_16bit;
+} cowpi_timerRegisters16bit;
 
 #endif //NANO
 
