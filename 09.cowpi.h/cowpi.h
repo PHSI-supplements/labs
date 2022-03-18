@@ -17,44 +17,23 @@
 #include "Arduino.h"
 
 
-/* One (and only one) Microcontroller Board should be defined.
- * If no board is defined, then your sketch will not compile.
- * If multiple boards are defined, your sketch may not compile, or it may
- *   have undefined behavior.
- */
-
-// #define UNO
-#define NANO
-// #define NANO_EVERY
-// #define NANO_BLE
-// #define NANO_IOT
-// #define NANO_RP2040
-// #define MEGA_2560
-// #define PICO
-
-
-
-#if defined UNO
-#define NANO
-#endif //UNO-NANO EQUIVALENCE
-
-#if defined NANO
+#if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_NANO
 uint8_t * const cowpi_IObase = (uint8_t *)0x20;
-#elif defined NANO_EVERY
+#elif defined ARDUINO_AVR_NANO_EVERY
 uint8_t * const cowpi_IObase = (uint8_t *)0x0;
 #error Arduino Nano Every is not yet supported for CowPi
-#elif defined NANO_BLE
+#elif defined ARDUINO_ARDUINO_NANO33BLE
 #error Arduino Nano 33 BLE is not yet supported for CowPi
-#elif defined NANO_IOT
+#elif defined ARDUINO_SAMD_NANO_33_IOT
 #error Arduino Nano 33 IOT is not yet supported for CowPi
-#elif defined NANO_RP2040
+#elif defined ARDUINO_NANO_RP2040_CONNECT
 #error Arduino Nano RP2040 is not yet supported for CowPi
-#elif defined MEGA_2560
+#elif defined ARDUINO_AVR_MEGA2560
 #error Arduino Mega 2560 is not yet supported for CowPi
-#elif defined PICO
-#error Raspberry Pi Pico is not yet supported for CowPi
+#elif defined ARDUINO_RASPBERRY_PI_PICO
+#error Raspberry Pi Pico Arduino core is not yet supported for CowPi
 #else
-#error Microcontroller board must be specified!
+#error Your microcontroller board is not supported for CowPi.
 #endif //MICROCONTROLLER BOARD
 
 
@@ -109,10 +88,10 @@ uint8_t * const cowpi_IObase = (uint8_t *)0x0;
     shiftOut(11, 13, MSBFIRST, 0x9);                    \
     shiftOut(11, 13, MSBFIRST, 0);                      \
     digitalWrite(10, HIGH);                             \
-    /* Intensity at 13/32 */                            \
+    /* Intensity at 7/32 */                             \
     digitalWrite(10, LOW);                              \
     shiftOut(11, 13, MSBFIRST, 0xA);                    \
-    shiftOut(11, 13, MSBFIRST, 6);                      \
+    shiftOut(11, 13, MSBFIRST, 3);                      \
     digitalWrite(10, HIGH);                             \
     /* Scan all eight digits */                         \
     digitalWrite(10, LOW);                              \
@@ -127,12 +106,13 @@ uint8_t * const cowpi_IObase = (uint8_t *)0x0;
     /* Take display out of test mode */                 \
     digitalWrite(10, LOW);                              \
     shiftOut(11, 13, MSBFIRST, 0xF);                    \
-    shiftOut(11, 13, MSBFIRST, 1);                      \
+    shiftOut(11, 13, MSBFIRST, 0);                      \
     digitalWrite(10, HIGH);                             \
     /* Enable SPI, Controller, set clock rate fck/16 */ \
     SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);      \
   }                                                     \
 } while(0)
+
 
 
 
@@ -179,7 +159,7 @@ uint8_t * const cowpi_IObase = (uint8_t *)0x0;
  * * ASSR
  */
 
-#ifdef NANO
+#if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_NANO
 
 #define D8_D13  0                 // PINB/DDRB/PORTB / PCMSK0
 #define A0_A5   1                 // PINC/DDRC/PORTC / PCMSK1

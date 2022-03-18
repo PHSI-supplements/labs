@@ -8,11 +8,14 @@
 
 #include "cowpi.h"
 
-#define BUTTON_NO_REPEAT_TIME 500
-#define DEBOUNCE_TIME 20
+#define BUTTON_NO_REPEAT_TIME 500u
+#define DEBOUNCE_TIME 20u
+#define ILLUMINATION_TIME 500u
+#define NUMBER_OF_DIGITS 8
 
 uint8_t getKeyPressed();
 void displayData(uint8_t address, uint8_t value);
+void testSimpleIO();
 
 cowpi_ioPortRegisters *ioPorts;   // an array of I/O ports
 cowpi_spiRegisters *spi;          // a pointer to the single set of SPI registers

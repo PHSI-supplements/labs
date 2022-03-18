@@ -4,19 +4,16 @@
 
 \input{../../common/assignment.tex}
 \usepackage{enumitem}
-% \usepackage{alphalph}
 \usepackage{graphicx}
-%\usepackage{media9}
 \usepackage{addfont}
 \addfont{OT1}{d7seg}{\dviiseg}
 % \addfont{OT1}{deseg}{\deseg}
-%\usepackage[normalem]{ulem}
 \usepackage{subfig}
 % \usepackage{wrapfig}
-%\usepackage{animate}
 \usepackage{multicol}
 % \usepackage{caption}
 % \captionsetup{width=.8\linewidth}
+
 % \lstset{language=c, numbers=left, showstringspaces=false,
 %     moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
 %     }
@@ -198,10 +195,29 @@ start off with something simple, like a number builder tool.''
         {\dviiseg 782} is preferred, but {\dviiseg 00000782} is allowed.
     \item In no case shall the tool allow the user to input a value too
         great to be displayed on the \textbf{7-segment display module}. If
-        the user attempts to enter a value greater than 0x7FFF,FFFF in
-        hexadecimal, less than 0x8000,0000 in hexadecimal, greater than
-        99,999,999 in decimal, or less than -9,999,999 in decimal, then the
+        the user attempts to enter a value greater than $0x7FFF,FFFF$ in
+        hexadecimal, less than $0x8000,0000$ in hexadecimal, greater than
+        $99,999,999$ in decimal, or less than $-9,999,999$ in decimal, then the
         \textbf{7-segment display module} shall display {\dviiseg too big}.
+        \begin{itemize}
+        \item \textit{n.b.}, in a hexadecimal 32-bit negative integer, an
+            \texttt{F} in the most-significant hex-digit might only be a sign
+            extension; in this scenario, if the user inputs another hex-digit
+            then it is still a valid number because it would not be less than
+            $0x8000,0000$. \\ \\
+            For example, adding another digit to the 32-bit integer
+            $0xF865,4321$ would \textit{not} produce a too-great value because
+            the 36-bit integer $0xF,8654,3210 = -2,041,302,512_{10}$, and the
+            32-bit integer $0x8654,3210 = -2,041,302,512_{10}$. Because
+            $0x8000,0000 = -2,147,483,648_{10} \leq -2,041,302,512_{10}$, adding
+            the \texttt{0} digit did not produce a ``too big'' value. \\ \\
+            On the other hand, adding another digit to the 32-bit integer
+            $0xF765,4321$ \textit{would} produce a too-great value because the
+            36-bit integer $0xF,7654,3210 = -2,309,737,968_{10}$, but the 32-bit
+            integer $0x8654,3210 = 1,985,229,328_{10}$. Because
+            $0x8000,0000 = -2,147,483,648_{10} > -2,309,737,968_{10}$, adding
+            the \texttt{0} digit did produce a ``too big'' value.
+        \end{itemize}
     \item Except as specified in requirement \ref{spec:printValueToConsole},
         nothing shall be printed on the Serial Montior when the system is in
         building mode.
@@ -277,7 +293,6 @@ the DDR data direction register used to set each pin as input or output. Each
 pin is individually controlled by a particular bit in the port registers.
 Figure~\ref{fig:IoPortRegisters} shows these nine registers and their
 corresponding addresses.
-%, and Table~\ref{table:DataDirection} shows how to configure the specific pins.
 You do not need to configure the pins for input or output; the
 \function{cowpi_setup} macro provided in \textit{cowpi.h} takes care of all
 necessary configuration.
@@ -312,7 +327,7 @@ memory-mapped I/O registers in a more readable form. For example, the
 which I/O port registers are used for output to peripherals and which are used
 for input from peripherals.
 
-\lstinputlisting[linerange=188-192]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange=168-172]{../starter-code/PollingLab/cowpi.h}
 
 The \nano's three I/O ports are placed contiguously in the memory address space,
 which will allow us to create a pointer to the lowest-addressed port and then
@@ -320,7 +335,7 @@ treat that pointer as an array of I/O ports. Some named constants that we can
 use to index that array further eliminate the need to remember which port
 corresponds to each \nano\ pin.
 
-\lstinputlisting[linerange=184-186]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange=164-166]{../starter-code/PollingLab/cowpi.h}
 
 Finally, there is a constant pointer, \lstinline{cowpi_IObase} that holds the
 memory address that is the start of ATmega328P's memory-mapped input/output
@@ -328,8 +343,8 @@ register bank, and a comment reminding us that the external pins' input/output
 registers start 3 bytes above \lstinline{cowpi_IObase} (which is also
 information we can get from Figure~\ref{fig:IoPortRegisters}).
 
-\lstinputlisting[linerange=42-42]{../starter-code/PollingLab/cowpi.h}
-\lstinputlisting[linerange=139-145, breaklines=true,
+\lstinputlisting[linerange=21-21]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange=119-125, breaklines=true,
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}]{../starter-code/PollingLab/cowpi.h}
 
 On line 17 of \textit{PollingLab.ino}, there is a global variable,
@@ -376,8 +391,6 @@ message whenever you press a button or toggle a switch. The external LED will
 also light up whenever both switches are in the right position (if the room is
 bright, you may have to shade the LED with your hand to see that it has
 illuminated).
-% You can use this function to check whether you wrote
-% \function{setup_simple_io()} correctly.
 
 Recall that the left switch is connected to pin \texttt{A4} and the right
 switch is connected to pin \texttt{A5}. Recall also that the left pushbutton is
@@ -431,11 +444,7 @@ milliseconds have passed. This serves two purposes.
 
 The \function{testSimpleIO()} function uses \function{digitalRead()} and
 \function{digitalWrite()}, two functions that are part of the Arudino core that
-you cannot use in this lab.
-% After you've satisfied yourself that you correctly
-% configured pins \texttt{A4}, \texttt{A5}, \texttt{D8}, \texttt{D9}, and
-% \texttt{D12}, you need to remove these functions.
-You need to remove these functions.
+you cannot use in this lab. You need to remove these functions.
 
     \begin{itemize}
     \item Use the \lstinline{ioPorts} array to read from \texttt{A4},
@@ -482,7 +491,7 @@ pressed on the keypad. The most efficient for a simple application such as the
 Number Building Tool is to use a lookup table. Starting on line 32 of
 \textit{PollingLab.ino} you will find a 2-dimensional array that will serve as
 the lookup table.
-\lstinputlisting[linerange=26-37]{../starter-code/PollingLab/PollingLab.ino}
+\lstinputlisting[linerange=29-40]{../starter-code/PollingLab/PollingLab.ino}
 The element \lstinline{keys[0][0]} will correspond to the
 \texttt{1} key; \lstinline{keys[0][3]} will correspond to the \texttt{A} key;
 \lstinline{keys[3][0]} will correspond to the \texttt{*} key; and
@@ -518,14 +527,14 @@ least one of them holds the value 0.
     \begin{itemize}
     \item Find the \lstinline{if} block starging on line 56 in
         \textit{PollingLab.ino}. Un-comment this \lstinline{if} block.
-        \lstinputlisting[linerange=56-65]{../starter-code/PollingLab/PollingLab.ino}
+        \lstinputlisting[linerange=59-68]{../starter-code/PollingLab/PollingLab.ino}
     \item Replace the \lstinline{...} on line 56 with a conditional expression
         that evaluates to \texttt{true} whenever at least one of the column
         pins holds the value 0.
     \end{itemize}
 
 Now locate \function{getKeyPressed()}.
-\lstinputlisting[linerange=68-76]{../starter-code/PollingLab/PollingLab.ino}
+\lstinputlisting[linerange=71-79]{../starter-code/PollingLab/PollingLab.ino}
 
     \begin{itemize}
     \item Inside the \lstinline{if} block, add a \lstinline{for} loop that
@@ -649,14 +658,14 @@ The \lstinline{cowpi_spiRegisters} has three fields: \lstinline{control},
 \lstinline{status}, and \lstinline{data}, corresponding to the \texttt{SPCR},
 \texttt{SPSR}, and \texttt{SPDR} registers, respectively.
 
-\lstinputlisting[linerange=194-198]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange=174-178]{../starter-code/PollingLab/cowpi.h}
 
 There is a global variable on line 18 of \textit{PollingLab.ino},
 \lstinline{spi}, that we will use to access the SPI registers. If you look in
 \textit{cowpi.h}, you will see a comment noting that the SPI registers start
 0x2C bytes above \lstinline{cowpi_IObase}.
 
-\lstinputlisting[linerange=155-156]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange={119-123,135-136}]{../starter-code/PollingLab/cowpi.h}
 
     \begin{itemize}
     \item On line 51 of \textit{PollingLab.ino}, find this line in
@@ -671,7 +680,7 @@ There is a global variable on line 18 of \textit{PollingLab.ino},
 We will use a lookup table to determine the bit patterns that need to be sent
 to the display module. Starting on line 43 of \textit{PollingLab.ino} you will
 find a 1-dimensional array that will serve as the lookup table.
-\lstinputlisting[linerange=39-45]{../starter-code/PollingLab/PollingLab.ino}
+\lstinputlisting[linerange=42-48]{../starter-code/PollingLab/PollingLab.ino}
 The element \lstinline{sevenSegments[0]} will contain the bit pattern for the
 numeral {\dviiseg 0},  \lstinline{sevenSegments[1]} will contain the bit
 pattern for the numeral {\dviiseg 1}, and so on through
@@ -746,25 +755,34 @@ The best way to tackle building mode is to break it into bite-sized
 subproblems. Start by implementing the code to build the value in accordance
 with requirement~\ref{spec:BuildingValue}. Here are some recommendations:
     \begin{itemize}
+    \item If you are running short on time, pay attention to the rubric to
+        determine which requirements you should prioritize to maximize your
+        score
     \item Start without considering the negation button.
+    \item Start without worrying about handling values that are too big.
     \item Keep an array of the bit patterns to be displayed separate from the
-        actual value being built. While it won't matter as much in when using
-        the hexadecimal number base, constantly re-calculating the BCD
-        representation of a value every time a key is pressed in decimal mode
-        may become a performance bottleneck since division (and modulo) is not
-        implemented in hardware \textit{and} even the (8-bit) hardware-
-        implemented arithmetic will require several processor cycles for 32-bit
-        arithmetic on the value.
-    \item When a key is pressed, update both the value being built, the
+        actual value being built.
+        \begin{itemize}
+        \item When a key is pressed, update both the value being built, the
         array of display bit patterns, and the actual display. The array can be
         updated simply by moving existing bit patterns into other positions in
         the array.
-        \begin{itemize}
-        \item Some students in the past recalculated the value being built after
-        each keypress by applying a decimal (or hexadecimal) weighted-sum of the
-        individual digits. This works but requires seven multiplications and
-        seven additions. \textit{Updating} the value being built only requires
-        one multiplication and one addition.
+        \item This is a tradeoff -- maintaining both the value being built
+        and a ``display buffer'' will require 8 extra bytes of your limited
+        RAM, but your program will run faster (and you shouldn't need so much
+        RAM that 8 bytes more or less will make a difference).
+        \item If you maintain only the value being built and recalculate the BCD
+        representation of a value every time a key is pressed in the decimal
+        number base, this may become a performance bottleneck since division
+        (and modulo) is not implemented in hardware, \textit{and} even the
+        (8-bit) hardware-implemented addition/subtraction/multiplication will
+        require several processor cycles for 32-bit arithmetic on the value.
+        \item Some students in the past maintained only the ``display buffer''
+        and recalculated the value being built after each keypress by applying
+        a decimal (or hexadecimal) weighted-sum of the individual digits. This
+        works but requires seven multiplications and seven additions.
+        \textit{Updating} the value being built only requires one
+        multiplication and one addition.
         \item Don't forget to print the value being built to the Serial Monitor.
         \end{itemize}
     \item Conveniently, you can also use the code to update the display array
@@ -774,7 +792,7 @@ with requirement~\ref{spec:BuildingValue}. Here are some recommendations:
 
 \begin{figure}
     \centering
-    {\dviiseg \huge \begin{tabular}{r} too big  \\
+    {\dviiseg \huge \begin{tabular}{r} too big \\
                                       88888888 \\
                                          % error
                                     \end{tabular}}
@@ -805,19 +823,18 @@ This assignment is worth 40 points. \\
 
 Rubric:
 \begin{description}
-\rubricitem{8}{Simple input/output functions correctly.}
+\rubricitem{8}{Simple input/output functions correctly. (3 points for switches; 3 points for pushbuttons; 2 points for LED)}
 \rubricitem{10}{Matrix keypad functions correctly.}
 \rubricitem{8}{7-Segment Display Module functions correctly.}
 \rubricitem{1}{System is in demonstration mode only when left switch is in left position and builder mode when the left switch is in the right position.}
 \rubricitem{1}{External LED illuminates when key is pressed and deluminates 500ms later if in demonstration mode. (This behavior is unspecified when in building mode.)}
-\rubricitem{2}{When in demonstration  mode, the numeral corresponding to the key pressed is displayed in the least-significant digit on the Display Module, in accordance with requirements~\ref{spec:decimalExplained}, \ref{spec:hexadecimalExplained}, and \ref{spec:demonstrationKeyPress}.}
+\rubricitem{2}{When in demonstration  mode, the numeral corresponding to the key pressed is displayed in the least-significant digit on the Display Module, in accordance with requirements~\ref{spec:decimalExplained}, \ref{spec:hexadecimalExplained}, and \ref{spec:demonstrationKeyPress}. (1 point for decimal number base; 1 point for hexadecimal number base)}
 \rubricitem{1}{When in demonstration mode, the right pushbutton clears the display.}
-\rubricitem{2}{Builds a value consistent with requirements~\ref{spec:decimalExplained} and \ref{spec:BuildingValue} when in building mode and using the decimal number base.}
-\rubricitem{2}{Builds a value consistent with requirements~\ref{spec:hexadecimalExplained} and \ref{spec:BuildingValue} when in building mode and using the hexadecimal number base.}
-\rubricitem{1}{Negates value in the decimal number base when left pushbutton is pressed while in building mode.}
-\rubricitem{1}{Negates value in the hexadecimal number base when left pushbutton is pressed while in building mode.}
-\rubricitem{1}{Displays correct message when the number being built is too big.}
-\rubricitem{1}{When in building mode, prints the number being built (and nothing else) to the Serial Monitor. (This behavior is unspecified when in demonstration mode.)}
+\rubricitem{2}{Builds a value consistent with requirements~\ref{spec:decimalExplained} and \ref{spec:BuildingValue} when in building mode and using the decimal number base. (\textonehalf\ point for each of: printing correct positive values, printing correct negative values, displaying correct positive values, displaying correct negative values)}
+\rubricitem{2}{Builds a value consistent with requirements~\ref{spec:hexadecimalExplained} and \ref{spec:BuildingValue} when in building mode and using the hexadecimal number base. (\textonehalf\ point for each of: printing correct positive values, printing correct negative values, displaying correct positive values, displaying correct negative values)}
+\rubricitem{1}{Negates value in the decimal number base when left pushbutton is pressed while in building mode. (\textonehalf\ point for each of: printing and displaying correct positive values, printing and displaying correct negative values)}
+\rubricitem{1}{Negates value in the hexadecimal number base when left pushbutton is pressed while in building mode. (\textonehalf\ point for each of: storing and displaying correct positive values, storing and displaying correct negative values)}
+\rubricitem{2}{Detects and displays correct message when the number being built is too big. (\textonequarter\ point for detecting too-big numbers for each of: positive decimal numbers, negative decimal numbers, positive hexadecimal numbers, negative hexadecimal numbers; \textonequarter\ point for no false detections among each of: decimal numbers, hexadecimal numbers; \textonehalf\ point for printing the correct message)}
 \rubricitem{1}{When in building mode the right pushbutton clears all digits on the Display Module except the least-significant digit, which displays {\dviiseg 0}.}
 \bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due. (You cannot get both bonuses.)}
 \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due. (Your code must be uploaded to \filesubmission\ \textit{before} it is due. You cannot get both bonuses.)}
@@ -826,7 +843,7 @@ Rubric:
 \penaltyitem{10}{Obtaining values from matrix keypad relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
 \penaltyitem{8}{Sending values to the 7-segment display module relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
 \penaltyitem{5}{Code associated with demonstration mode (other than that covered in the first three penalty items) relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
-\penaltyitem{8}{Code associated with conversion mode (other than that covered in the first three penalty items) relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
+\penaltyitem{9}{Code associated with conversion mode (other than that covered in the first three penalty items) relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
 \spaghetticodepenalties{1}
 \end{description}
 
@@ -874,110 +891,215 @@ professor during office hours.
 \textit{prima facie} shows that the I/O functions correctly.
 
 \textbf{If you did not complete demonstration mode:}
+\renewcommand{\labelenumi}{\Alph{enumi}.}
 \begin{enumerate}
-\item (\phantom{xxx}) Using \function{testSimpleIO()}, show on the Serial Monitor that
-    the left and right button presses are detected.
-\item (\phantom{xxx}) Using \function{testSimpleIO()}, show on the Serial Monitor that
-    the left and right switches' position changes are detected.
-\item (\phantom{xxx}) Show that the external LED illuminates when it is supposed to (in a
-    bright room, you may need to shade the LED with your hand). You can do this
-    either by moving both switches to the right position (using the code in
-    \function{testSimpleIO()}) or by showing the LED illuminate when you
-    press a key on the matrix keypad (if you started working on demonstration
-    mode).
-\item (\phantom{xxx}) Show on the Serial Monitor that key presses on the matrix keypad
-    are correctly decoded.
-\item (\phantom{xxx}) Show on the display module that values decoded from the matrix
-    keypad are displayed as the correct characters.
+\item (\phantom{xxx}) Using \function{testSimpleIO()}, show on the Serial
+    Monitor that the left and right button presses are detected. \\
+    \textit{+1\textonehalf\ pushbutton presses detected} \\
+    \textit{+1\textonehalf\ left and right pushbuttons are distinguished from
+    each other}
+\item (\phantom{xxx}) Using \function{testSimpleIO()}, show on the Serial
+    Monitor that the left and right switches' position changes are detected. \\
+    \textit{+1\textonehalf\ switch positions detected} \\
+    \textit{+1\textonehalf\ left and right switches are distinguished from
+    each other}
+\item (\phantom{xxx}) Show that the external LED illuminates when it is
+    supposed to (in a bright room, you may need to shade the LED with your
+    hand). You can do this either by moving both switches to the right position
+    (using the code in \function{testSimpleIO()}) or by showing the LED
+    illuminate when you press a key on the matrix keypad (if you started
+    working on demonstration mode). \\
+    \textit{+2 LED works}
+\item (\phantom{xxx}) Show on the Serial Monitor that key presses on the matrix
+    keypad are correctly decoded. \\
+    \textit{+10 keypad works}
+\item (\phantom{xxx}) Show on the display module that values decoded from the
+    matrix keypad are displayed as the correct characters. \\
+    \textit{+8 display module works}
+\end{enumerate}
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+\begin{enumerate}
 \item [] \textbf{\textit{Demonstration Mode}}
 \item (\phantom{xxx}) Place both switches in the left position. The display
     module is initially blank.
 \item(\phantom{xxx}) Press a number key on the matrix keypad. The corresponding
     character appears on the display module, and the external LED illuminates
-    for approximately one-half of a second.
+    for approximately one-half of a second. \\
+    \textit{+1 LED illumination} \\
+    \textit{+2 LED works}
 \item (\phantom{xxx}) Press a different number key on the matrix keypad.
     The corresponding character appears on the display module, and the external
-    LED illuminates for approximately one-half of a second.
+    LED illuminates for approximately one-half of a second. \\
+    \textit{+\textonehalf\ decimal numeral} \\
+    \textit{+10 keypad works} \\
+    \textit{+8 display module works}
 \item (\phantom{xxx}) Press a letter key on the matrix keypad. The display
-    module is unchanged.
+    module is unchanged. \\
+    \textit{+\textonehalf\ letter rejected in decimal number base}
 \item (\phantom{xxx}) Place the right switch in the right position. The display
     is unchanged.
 \item (\phantom{xxx}) Press a letter key on the matrix keypad. The
     corresponding character appears on the display module, and the external LED
-    illuminates for approximately one-half of a second.
-\item (\phantom{xxx}) Press the right pushbutton. The display module blanks.
+    illuminates for approximately one-half of a second. \\
+    \textit{+1 hexadecimal numeral} \\
+    \textit{+1\textonehalf\ switch positions detected}
+\item (\phantom{xxx}) Press the right pushbutton. The display module blanks. \\
+    \textit{+1 clear display} \\
+    \textit{+1\textonehalf\ pushbutton presses detected}
 \item (\phantom{xxx}) Press a key on the matrix keypad. The corresponding
     character appears on the display module, and the external LED illuminates
-    for approximately one-half of a second.
+    for approximately one-half of a second. \\
+    \textit{establishes that demonstration mode continues to work; if not then
+    deduct half of the decimal/hexadecimal numeral points (if any)}
 \item (\phantom{xxx}) Press the same key on the matrix keypad. The display
     module is unchanged (still displays the corresponding character), but the
-    external LED still illuminates for approximately one-half of a second.
-\item[] \textbf{\textit{Building Mode}}
+    external LED still illuminates for approximately one-half of a second. \\
+    \textit{establishes that the same key can be pressed twice with
+    well-defined behavior; if the display changes then deduct half of the
+    decimal/hexadecimal numeral points (if any); if the LED does not illuminate
+    then deduct half of the ``LED illumination'' point (if any) but not the
+    ``LED works'' points}
+\item (\phantom{xxx}) Press the left pushbutton. Nothing happens. \\
+    \textit{+1\textonehalf\ left and right pushbuttons are distinguished from
+    each other}
+\item[] \textbf{\textit{Demonstration Mode and Building Mode are Different}}
 \item (\phantom{xxx}) Place the left switch in the right position. The display
     remains unchanged.
 \item (\phantom{xxx}) Press the right pushbutton. The display shows \\
-    {\dviiseg\phantom{0000000}0}\hspace{1cm}(additional leading 0s are allowed) \\
-    and the Serial Monitor shows \\
-    {\dviiseg\phantom{00000000}}\hspace{2cm}0
+    {\dviiseg\phantom{0000000}0}\hspace{1cm}(additional leading 0s are allowed)
+    \\ and the Serial Monitor shows \\
+    {\dviiseg\phantom{00000000}}\hspace{1cm}\texttt{0} \\
+    \textit{+1 left switch selects mode} \\
+    \textit{+1\textonehalf\ left and right switches are distinguished from
+    each other}
+\item[] \textbf{\textit{Building Mode}}
 \item (\phantom{xxx}) Place the right switch in the left position. The display
     remains unchanged.
 \item (\phantom{xxx}) Press 2, then 3. \\
-    {\dviiseg \phantom{0000000}2}\hspace{2cm}2 \\
-    {\dviiseg \phantom{000000}23}\hspace{2cm}23
-\item (\phantom{xxx}) Press B. The display is unchanged.
+    {\dviiseg \phantom{0000000}2}\hspace{1cm}\texttt{2} \\
+    {\dviiseg \phantom{000000}23}\hspace{1cm}\texttt{23}
+\item (\phantom{xxx}) Press B. The display is unchanged. \\
+    \textit{printing (+\textonehalf) \& displaying (+\textonehalf) positive decimal numbers}
 \item (\phantom{xxx}) Press the left pushbutton, then 1. \\
-    {\dviiseg \phantom{00000}-23}\hspace{2cm}-23 \\
-    {\dviiseg \phantom{0000}-231}\hspace{2cm}-231
+    {\dviiseg \phantom{00000}-23}\hspace{1cm}\texttt{-23}\hspace{1cm}
+    \textit{+\textonehalf\ negates decimal positive values} \\
+    {\dviiseg \phantom{0000}-231}\hspace{1cm}\texttt{-231}\hspace{1cm}
+    \textit{printing (+\textonehalf) \& displaying (+\textonehalf) negative decimal numbers}
 \item (\phantom{xxx}) Press the left pushbutton, then 4. \\
-    {\dviiseg \phantom{00000}231}\hspace{2cm}231 \\
-    {\dviiseg \phantom{0000}2314}\hspace{2cm}2314
-\item (\phantom{xxx}) Press D. The display is unchanged.
+    {\dviiseg \phantom{00000}231}\hspace{1cm}\texttt{231}\hspace{1cm}
+    \textit{+\textonehalf\ negates decimal negative values} \\
+    {\dviiseg \phantom{0000}2314}\hspace{1cm}\texttt{2314}\hspace{1cm}
+    \textit{establishes that building mode continues to work}
+\item (\phantom{xxx}) Press D. The display is unchanged. \\
+    \textit{establishes that building mode continues to work; if building mode
+    does not work after negation, deduct half of the printing/displaying
+    decimal points (if any)}
 \item (\phantom{xxx}) Press the right pushbutton, and place the right switch in
     the right position. \\
-    {\dviiseg\phantom{0000000}0}\hspace{2cm}0
+    {\dviiseg\phantom{0000000}0}\hspace{1cm}\texttt{0}\hspace{1cm}
+    \textit{+1 display resets to 0}
 \item(\phantom{xxx}) Press \#, then 7. \\
-    {\dviiseg \phantom{0000000}E}\hspace{2cm}E \\
-    {\dviiseg \phantom{000000}E7}\hspace{2cm}E7
+    {\dviiseg \phantom{0000000}E}\hspace{1cm}\texttt{E} \\
+    {\dviiseg \phantom{000000}E7}\hspace{1cm}\texttt{E7}\hspace{1cm}
+    \textit{printing (+\textonehalf) \& displaying (+\textonehalf) positive hex
+    numbers}
 \item (\phantom{xxx}) Press the left pushbutton. \\
-    {\dviiseg FFFFFF19}\hspace{2cm}FFFFFF19
+    {\dviiseg FFFFFF19}\hspace{1cm}\texttt{FFFFFF19}\hspace{1cm}
+    \textit{+\textonehalf\ negates hex positive values}
 \item(\phantom{xxx}) Press 0, then A. \\
-    {\dviiseg FFFFF190}\hspace{2cm}FFFFF190 \\
-    {\dviiseg FFFF190A}\hspace{2cm}FFFF190A
+    {\dviiseg FFFFF190}\hspace{1cm}\texttt{FFFFF190} \\
+    {\dviiseg FFFF190A}\hspace{1cm}\texttt{FFFF190A}\hspace{1cm}
+    \textit{printing (+\textonehalf) \& displaying (+\textonehalf) negative hex
+    numbers}
 \item(\phantom{xxx}) Press the left pushbutton, then *. \\
-    {\dviiseg \phantom{0000}E6F6}\hspace{2cm}E6F6 \\
-    {\dviiseg \phantom{000}E6F6F}\hspace{2cm}E6F6F
+    {\dviiseg \phantom{0000}E6F6}\hspace{1cm}\texttt{E6F6}\hspace{1cm}
+    \textit{+\textonehalf\ negates hex negative values} \\
+    {\dviiseg \phantom{000}E6F6F}\hspace{1cm}\texttt{E6F6F}\hspace{1cm}
+    \textit{establishes that building mode continues to work}
 \item(\phantom{xxx}) Press B, then C, then D, then 0. \\
-    {\dviiseg \phantom{00}E6F6FB}\hspace{2cm}E6F6FB \\
-    {\dviiseg \phantom{0}E6F6FBC}\hspace{2cm}E6F6FBC \\
-    {\dviiseg           E6F6FBCD}\hspace{2cm}E6F6FBCD \\
-    {\dviiseg \phantom{0}too big}\hspace{2cm}too big
+    {\dviiseg \phantom{00}E6F6FB}\hspace{1cm}\texttt{E6F6FB} \\
+    {\dviiseg \phantom{0}E6F6FBC}\hspace{1cm}\texttt{E6F6FBC} \\
+    {\dviiseg           E6F6FBCD}\hspace{1cm}\texttt{E6F6FBCD}\hspace{1cm}
+    \textit{no false detection - hex \#1} \\
+    {\dviiseg \phantom{0}too big}\hspace{1cm}\texttt{too big}\hspace{1cm}
+    \textit{too big - negative hex \#1}
+\item (\phantom{xxx}) Press the right pushbutton; then press 1, then 2, then 3, then A, then B, then 6, then 5, then 4, then 7. \\
+    {\dviiseg \phantom{0000000}0}\hspace{1cm}\texttt{0} \\
+    {\dviiseg \phantom{0000000}1}\hspace{1cm}\texttt{1} \\
+    {\dviiseg \phantom{000000}12}\hspace{1cm}\texttt{12} \\
+    {\dviiseg \phantom{00000}123}\hspace{1cm}\texttt{123} \\
+    {\dviiseg \phantom{0000}123A}\hspace{1cm}\texttt{123A} \\
+    {\dviiseg \phantom{000}123AB}\hspace{1cm}\texttt{123AB} \\
+    {\dviiseg \phantom{00}123AB6}\hspace{1cm}\texttt{123AB6} \\
+    {\dviiseg \phantom{0}123AB65}\hspace{1cm}\texttt{123AB65} \\
+    {\dviiseg           123AB654}\hspace{1cm}\texttt{123AB654}\hspace{1cm}
+    \textit{no false detection - hex \#2} \\
+    {\dviiseg \phantom{0}too big}\hspace{1cm}\texttt{too big}\hspace{1cm}
+    \textit{+\textonequarter\ too big - positive hex}
+\item (\phantom{xxx}) Press the right pushbutton; then push *, then 2, then 3, then A, then B, then 6, then 5, then 4, then 7. \\
+    {\dviiseg \phantom{0000000}0}\hspace{1cm}\texttt{0} \\
+    {\dviiseg \phantom{0000000}F}\hspace{1cm}\texttt{F} \\
+    {\dviiseg \phantom{000000}F2}\hspace{1cm}\texttt{F2} \\
+    {\dviiseg \phantom{00000}F23}\hspace{1cm}\texttt{F23} \\
+    {\dviiseg \phantom{0000}F23A}\hspace{1cm}\texttt{F23A} \\
+    {\dviiseg \phantom{000}F23AB}\hspace{1cm}\texttt{F23AB} \\
+    {\dviiseg \phantom{00}F23AB6}\hspace{1cm}\texttt{F23AB6} \\
+    {\dviiseg \phantom{0}F23AB65}\hspace{1cm}\texttt{F23AB65} \\
+    {\dviiseg           F23AB654}\hspace{1cm}\texttt{F23AB654}\hspace{1cm}
+    \textit{no false detection - hex \#3} \\
+    {\dviiseg \phantom{0}too big}\hspace{1cm}\texttt{too big}\hspace{1cm}
+    \textit{too big - negative hex \#2}
+\item (\phantom{xxx}) Press the right pushbutton; then push *, then 9, then 3, then A, then B, then 6, then 5, then 4, then 7, then 8. \\
+    {\dviiseg \phantom{0000000}0}\hspace{1cm}\texttt{0} \\
+    {\dviiseg \phantom{0000000}F}\hspace{1cm}\texttt{F} \\
+    {\dviiseg \phantom{000000}F9}\hspace{1cm}\texttt{F9} \\
+    {\dviiseg \phantom{00000}F93}\hspace{1cm}\texttt{F93} \\
+    {\dviiseg \phantom{0000}F93A}\hspace{1cm}\texttt{F93A} \\
+    {\dviiseg \phantom{000}F93AB}\hspace{1cm}\texttt{F93AB} \\
+    {\dviiseg \phantom{00}F93AB6}\hspace{1cm}\texttt{F93AB6} \\
+    {\dviiseg \phantom{0}F93AB65}\hspace{1cm}\texttt{F93AB65} \\
+    {\dviiseg           F93AB654}\hspace{1cm}\texttt{F93AB654} \\
+    {\dviiseg           93AB6547}\hspace{1cm}\texttt{93AB6547}\hspace{1cm}
+    \textit{no false detection - hex \#4} \\
+    {\dviiseg \phantom{0}too big}\hspace{1cm}\texttt{too big}\hspace{1cm}
+    \textit{too big - negative hex \#3} \\
+    \textit{+\textonequarter\ for all three ``too bit - negative hex''} \\
+    \textit{+\textonequarter\ for all four ``no false detection - hex''}
 \item (\phantom{xxx}) Press the right pushbutton, and place the right switch in
     the left position. \\
-    {\dviiseg\phantom{0000000}0}\hspace{2cm}0
+    {\dviiseg \phantom{0000000}0}\hspace{1cm}\texttt{0}
 \item (\phantom{xxx}) Press 5, then 6, then 7, then 8, then 9, then 0, then 1, then 2, then 3. \\
-    {\dviiseg \phantom{0000000}5}\hspace{2cm}5 \\
-    {\dviiseg \phantom{000000}56}\hspace{2cm}56 \\
-    {\dviiseg \phantom{00000}567}\hspace{2cm}567 \\
-    {\dviiseg \phantom{0000}5678}\hspace{2cm}5678 \\
-    {\dviiseg \phantom{000}56789}\hspace{2cm}56789 \\
-    {\dviiseg \phantom{00}567890}\hspace{2cm}567890 \\
-    {\dviiseg \phantom{0}5678901}\hspace{2cm}5678901 \\
-    {\dviiseg           56789012}\hspace{2cm}56789012 \\
-    {\dviiseg \phantom{0}too big}\hspace{2cm}too big
-\item (\phantom{xxx}) Press the right pushbutton. \\
-    {\dviiseg\phantom{0000000}0}\hspace{2cm}0
-\item (\phantom{xxx}) Press 3, then the left pushbutton, then 4, then 5, then 6, then 7, then 8, then 9, then 0. \\
-    {\dviiseg \phantom{0000000}3}\hspace{2cm}3 \\
-    {\dviiseg \phantom{000000}-3}\hspace{2cm}-3 \\
-    {\dviiseg \phantom{00000}-34}\hspace{2cm}-34 \\
-    {\dviiseg \phantom{0000}-345}\hspace{2cm}-345 \\
-    {\dviiseg \phantom{000}-3456}\hspace{2cm}-3456 \\
-    {\dviiseg \phantom{00}-34567}\hspace{2cm}-34567 \\
-    {\dviiseg \phantom{0}-345678}\hspace{2cm}-345678 \\
-    {\dviiseg           -3456789}\hspace{2cm}-3456789 \\
-    {\dviiseg \phantom{0}too big}\hspace{2cm}too big
+    {\dviiseg \phantom{0000000}5}\hspace{1cm}\texttt{5} \\
+    {\dviiseg \phantom{000000}56}\hspace{1cm}\texttt{56} \\
+    {\dviiseg \phantom{00000}567}\hspace{1cm}\texttt{567} \\
+    {\dviiseg \phantom{0000}5678}\hspace{1cm}\texttt{5678} \\
+    {\dviiseg \phantom{000}56789}\hspace{1cm}\texttt{56789} \\
+    {\dviiseg \phantom{00}567890}\hspace{1cm}\texttt{567890} \\
+    {\dviiseg \phantom{0}5678901}\hspace{1cm}\texttt{5678901} \\
+    {\dviiseg           56789012}\hspace{1cm}\texttt{56789012}\hspace{1cm}
+    \textit{no false detection - decimal \#1} \\
+    {\dviiseg \phantom{0}too big}\hspace{1cm}\texttt{too big}\hspace{1cm}
+    \textit{+\textonequarter\ too big - positive decimal}
+\item (\phantom{xxx}) Press the right pushbutton; then press 3, then the left pushbutton, then 4, then 5, then 6, then 7, then 8, then 9, then 0. \\
+    {\dviiseg \phantom{0000000}0}\hspace{1cm}\texttt{0} \\
+    {\dviiseg \phantom{0000000}3}\hspace{1cm}\texttt{3} \\
+    {\dviiseg \phantom{000000}-3}\hspace{1cm}\texttt{-3} \\
+    {\dviiseg \phantom{00000}-34}\hspace{1cm}\texttt{-34} \\
+    {\dviiseg \phantom{0000}-345}\hspace{1cm}\texttt{-345} \\
+    {\dviiseg \phantom{000}-3456}\hspace{1cm}\texttt{-3456} \\
+    {\dviiseg \phantom{00}-34567}\hspace{1cm}\texttt{-34567} \\
+    {\dviiseg \phantom{0}-345678}\hspace{1cm}\texttt{-345678} \\
+    {\dviiseg           -3456789}\hspace{1cm}\texttt{-3456789}\hspace{1cm}
+    \textit{no false detection - decimal \#2} \\
+    {\dviiseg \phantom{0}too big}\hspace{1cm}\texttt{too big}\hspace{1cm}
+    \textit{+\textonequarter\ too big - negative decimal} \\
+    \textit{+\textonequarter\ for both ``no false detection - decimal''} \\
+    \textit{+\textonehalf\ if all ``too big'' displayed the correct message;
+    +\textonequarter\ if all but one ``too big'' displayed the correct message}
 \end{enumerate}
 
 This concludes the demonstration of your system's functionality. The TAs will
-later examine your code for violations of the assignment's constraints.
+later examine your code for violations of the assignment's constraints. If your
+code looks like it is tailored for this checklist, the TAs may re-grade using a
+different checklist\texttt{.}
 \end{document}
