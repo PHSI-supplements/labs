@@ -327,7 +327,7 @@ memory-mapped I/O registers in a more readable form. For example, the
 which I/O port registers are used for output to peripherals and which are used
 for input from peripherals.
 
-\lstinputlisting[linerange=168-172]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange=175-179]{../starter-code/PollingLab/cowpi.h}
 
 The \nano's three I/O ports are placed contiguously in the memory address space,
 which will allow us to create a pointer to the lowest-addressed port and then
@@ -335,7 +335,7 @@ treat that pointer as an array of I/O ports. Some named constants that we can
 use to index that array further eliminate the need to remember which port
 corresponds to each \nano\ pin.
 
-\lstinputlisting[linerange=164-166]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange=171-173]{../starter-code/PollingLab/cowpi.h}
 
 Finally, there is a constant pointer, \lstinline{cowpi_IObase} that holds the
 memory address that is the start of ATmega328P's memory-mapped input/output
@@ -343,8 +343,8 @@ register bank, and a comment reminding us that the external pins' input/output
 registers start 3 bytes above \lstinline{cowpi_IObase} (which is also
 information we can get from Figure~\ref{fig:IoPortRegisters}).
 
-\lstinputlisting[linerange=21-21]{../starter-code/PollingLab/cowpi.h}
-\lstinputlisting[linerange=119-125, breaklines=true,
+\lstinputlisting[linerange=17-17]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange=126-132, breaklines=true,
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}]{../starter-code/PollingLab/cowpi.h}
 
 On line 17 of \textit{PollingLab.ino}, there is a global variable,
@@ -635,10 +635,10 @@ configure the SPI hardware, \texttt{SPSR} which is used to indicate the status
 of a data transfer, and \texttt{SPDR} which is used to transfer data to and from
 an SPI peripheral device (see Table~\ref{table:SPIregisters}).
 
-The \function{cowpi_setup} macro enables SPI by setting the \texttt{SPE} bit to
-1, sets the \nano\ as the controller by setting the Controller (née MSTR) bit
+The \function{cowpi_spiEnable} macro enables SPI by setting the \texttt{SPE} bit
+to 1, sets the \nano\ as the controller by setting the Controller (née MSTR) bit
 to 1, and sets the SPI clock at 1MHz by setting the SPR1 and SPR0 bits to 01.
-All remaining bits in \texttt{SPCR} were set to 0.
+All remaining bits in \texttt{SPCR} are set to 0.
 
 \begin{table}
 \centering \small
@@ -658,14 +658,14 @@ The \lstinline{cowpi_spiRegisters} has three fields: \lstinline{control},
 \lstinline{status}, and \lstinline{data}, corresponding to the \texttt{SPCR},
 \texttt{SPSR}, and \texttt{SPDR} registers, respectively.
 
-\lstinputlisting[linerange=174-178]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange=181-185]{../starter-code/PollingLab/cowpi.h}
 
 There is a global variable on line 18 of \textit{PollingLab.ino},
 \lstinline{spi}, that we will use to access the SPI registers. If you look in
 \textit{cowpi.h}, you will see a comment noting that the SPI registers start
 0x2C bytes above \lstinline{cowpi_IObase}.
 
-\lstinputlisting[linerange={119-123,135-136}]{../starter-code/PollingLab/cowpi.h}
+\lstinputlisting[linerange={126-130,142-143}]{../starter-code/PollingLab/cowpi.h}
 
     \begin{itemize}
     \item On line 51 of \textit{PollingLab.ino}, find this line in
@@ -698,7 +698,8 @@ include this in the lookup table.)
     \caption{Segments to be activated for the sixteen numerals. The first row shows the segments to be activated; the second row shows all segments to more clearly show which segment is which. \label{fig:SevenSegmentNumerals}}
 \end{figure}
 
-In \function{displayData()}:
+In \function{displayData()}, between \lstinline{cowpi_spiEnable} and
+\lstinline{cowpi_spiDisable}:
     \begin{itemize}
     \item Use the \lstinline{ioPorts} array to set \texttt{D10} to 0, instructing the display module to listen for data from the \nano.
     \item The MAX7219 expects the address to be sent before the value. Use the

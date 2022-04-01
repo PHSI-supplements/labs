@@ -44,7 +44,7 @@ const uint8_t keys[4][4] = {
 //  DP   A    B    C    D    E    F    G
 // This array holds the bit patterns to display each hexadecimal numeral
 const uint8_t sevenSegments[16] = {
-  
+
 };
 
 void setup() {
@@ -81,6 +81,9 @@ uint8_t getKeyPressed() {
 void displayData(uint8_t address, uint8_t value) {
   // address is MAX7219's register address (1-8 for digits; otherwise see MAX7219 datasheet Table 2)
   // value is the bit pattern to place in the register
+  cowpi_spiEnable;
+  // ...
+  cowpi_spiDisable;
 }
 
 uint8_t leftSwitchLastPosition = 0;
