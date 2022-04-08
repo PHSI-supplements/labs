@@ -219,7 +219,7 @@ start off with something simple, like a number builder tool.''
             the \texttt{0} digit did produce a ``too big'' value.
         \end{itemize}
     \item Except as specified in requirement \ref{spec:printValueToConsole},
-        nothing shall be printed on the Serial Montior when the system is in
+        nothing shall be printed on the Serial Monitor when the system is in
         building mode.
     \item If the user toggles the \textbf{right switch} (\textit{i.e.}, changes
         the number base) while in builder mode: if the number being built is 0
@@ -278,6 +278,9 @@ failure in this situation, the simplest fix in this case is to unplug the
 \nano, plug it back in, and re-attempt the upload.) (Another quick note on
 using \function{print()} and \function{println()}: please read these functions'
 documentation to understand what the functions can -- and can't -- do.)
+
+Do \textit{not} edit \textit{cowpi.h}; all of your code must go in
+\textit{PollingLab.ino}.
 
 \section{Implementing Demonstration Mode} \label{sec:DemonstrationMode}
 
@@ -525,7 +528,7 @@ pins \texttt{A0}-\texttt{A3} to determine if each holds the value 1 or if at
 least one of them holds the value 0.
 
     \begin{itemize}
-    \item Find the \lstinline{if} block starging on line 56 in
+    \item Find the \lstinline{if} block starting on line 56 in
         \textit{PollingLab.ino}. Un-comment this \lstinline{if} block.
         \lstinputlisting[linerange=59-68]{../starter-code/PollingLab/PollingLab.ino}
     \item Replace the \lstinline{...} on line 56 with a conditional expression
@@ -844,7 +847,7 @@ Rubric:
 \penaltyitem{10}{Obtaining values from matrix keypad relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
 \penaltyitem{8}{Sending values to the 7-segment display module relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
 \penaltyitem{5}{Code associated with demonstration mode (other than that covered in the first three penalty items) relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
-\penaltyitem{9}{Code associated with conversion mode (other than that covered in the first three penalty items) relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
+\penaltyitem{9}{Code associated with building mode (other than that covered in the first three penalty items) relies on code that violates the constraints in Section~\ref{sec:Constraints}.}
 \spaghetticodepenalties{1}
 \end{description}
 
