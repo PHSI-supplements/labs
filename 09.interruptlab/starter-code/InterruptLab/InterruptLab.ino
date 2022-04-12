@@ -9,11 +9,13 @@
 #include "cowpi.h"
 
 #define DEBOUNCE_TIME 20u
+#define SINGLE_CLICK_TIME 150u
+#define DOUBLE_CLICK_TIME 500u
 #define NUMBER_OF_DIGITS 8
 
 void setupTimer();
 void handleButtonAction();
-void handleKeyPress();
+void handleKeypress();
 void displayData(uint8_t address, uint8_t value);
 
 /* Memory-mapped I/O */
@@ -23,11 +25,11 @@ cowpi_timerRegisters16bit *timer1;  // a pointer to one 16-bit timer
 cowpi_timerRegisters8bit *timer2;   // a pointer to one 8-bit timer
 
 /* Variables for software debouncing */
-unsigned long lastLeftButtonAction = 0;
-unsigned long lastRightButtonAction = 0;
-unsigned long lastLeftSwitchSlide = 0;
-unsigned long lastRightSwitchSlide = 0;
-unsigned long lastKeypadPress = 0;
+volatile unsigned long lastLeftButtonAction = 0;
+volatile unsigned long lastRightButtonAction = 0;
+volatile unsigned long lastLeftSwitchSlide = 0;
+volatile unsigned long lastRightSwitchSlide = 0;
+volatile unsigned long lastKeypadPress = 0;
 
 
 // Layout of Matrix Keypad
@@ -75,10 +77,10 @@ void handleButtonAction() {
   // ...
 }
 
-void handleKeyPress() {
+void handleKeypress() {
   unsigned long now = millis();
   if (now - lastKeypadPress > DEBOUNCE_TIME) {
-    uint8_t keyPressed;
+    uint8_t keyPressed = 0xFF;
     lastKeypadPress = now;
     // ...
   }
@@ -87,7 +89,5 @@ void handleKeyPress() {
 void displayData(uint8_t address, uint8_t value) {
   // address is MAX7219's register address (1-8 for digits; otherwise see MAX7219 datasheet Table 2)
   // value is the bit pattern to place in the register
-  cowpi_spiEnable;
   // ...
-  cowpi_spiDisable;
 }

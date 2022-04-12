@@ -157,15 +157,16 @@ to do anything too fancy; let's try a number base conversion tool.''
         be displayed. For example, {\dviiseg 782} is allowed, but {\dviiseg
         00000782} is not allowed.
     \item Whenever the user presses and then releases the \textbf{right
-        pushbutton}, the number being built shall reset to 0, and the
-        \textbf{7-segment display module} shall be cleared, \textit{except} that
-        the least-significant digit shall display {\dviiseg 0} (this being the
-        new number being built). \textit{The change shall take effect only when
-        the user \underline{releases} the \textbf{right pushbutton}.}
+        pushbutton} at least 150ms later, the number being built shall reset to
+        0, and the \textbf{7-segment display module} shall be cleared,
+        \textit{except} that the least-significant digit shall display
+        {\dviiseg 0} (this being the new number being built). \textit{The change
+        shall take effect only when the user \underline{releases} the
+        \textbf{right pushbutton}.}
     \item Whenever the user presses and then releases the \textbf{left
-        pushbutton}, the value being displayed shall be negated. \textit{The
-        change shall take effect only when the user \underline{releases} the
-        \textbf{left pushbutton}.}
+        pushbutton} at least 150ms later, the value being displayed shall be
+        negated. \textit{The change shall take effect only when the user
+        \underline{releases} the \textbf{left pushbutton}.}
         \begin{enumerate}
         \item In the decimal number base, the presence or absence of negative
             sign shall indicate whether or not a value is negative
@@ -203,9 +204,11 @@ to do anything too fancy; let's try a number base conversion tool.''
 \item The user shall be able to see the number converted to a different number
     base.
     \begin{enumerate}
-    \item Whenever the user presses both \textbf{pushbuttons} simultaneously,
+    \item Whenever the user presses double-clicks the \textbf{left pushbutton},
         the \textbf{7-segment display module} shall display the number in the
-        opposite number base.
+        opposite number base. \textbf{A \textit{double-click} is defined as
+        pressing the button and releasing it no more than 150ms later, and
+        pressing it again no later than 500ms after that.}
         \begin{enumerate}
             \item If the \textbf{right switch} is toggled to the left, then the
                 decimal number shall be displayed as the equivalent hexadecimal
@@ -217,12 +220,12 @@ to do anything too fancy; let's try a number base conversion tool.''
                 base, then {\dviiseg error} shall be displayed.
         \end{enumerate}
     \item The conversion shall take place immediately after the
-        \textbf{pushbuttons} are both depressed.
+        \textbf{left pushbutton} is double-clicked.
     \item If the \textbf{left switch} is toggled to the left, then exactly 20
-        seconds after the \textbf{pushbuttons} are both depressed, the number
+        seconds after the \textbf{left pushbutton} is double-clicked, the number
         shall be displayed in its original number base.
     \item If the \textbf{left switch} is toggled to the right, then exactly 7.5
-        seconds after the \textbf{pushbuttons} are both depressed, the number
+        seconds after the \textbf{left pushbutton} is double-clicked, the number
         shall be displayed in its original number base.
     \item If {\dviiseg error} is displayed due to the value being too great to
         be displayed in the new number base, then after 7.5~seconds or
@@ -233,10 +236,8 @@ to do anything too fancy; let's try a number base conversion tool.''
         LED} shall be illuminated. When the number is being displayed in its
         original number base, the \textbf{external LED} shall not be
         illuminated.
-    \item If the \textbf{pushbuttons} are both depressed, then releasing the
-        \textbf{right pushbutton} shall not cause the number to be cleared, and
-        releasng the \textbf{left pushbtton} shall not cause the number to be
-        negated.
+    \item If the \textbf{left pushbutton} is double-clicked, then releasing the
+        \textbf{left pushbtton} shall not cause the number to be negated.
     \end{enumerate}
 \item If the user changes the position of the \textbf{right switch} while the
     number is a value other than 0, the system's behavior is unspecified.
@@ -334,19 +335,13 @@ want to keep your code for building numbers handy, though it will require
 several changes.
 
 If you did not successfully implement \function{displayData()} during
-PollingLab, you may use this immplementation:
-\begin{lstlisting}
-void displayData(uint8_t address, uint8_t value) {
-  // Sends data to MAX7219 using shiftOut, not using SPI hardware
-  // address is register address
-  //     (1-8 for digits; otherwise see datasheet Table 2)
-  // value is the value to place in the register
-  digitalWrite(SS, LOW);
-  shiftOut(MOSI, SCK, MSBFIRST, address);
-  shiftOut(MOSI, SCK, MSBFIRST, value);
-  digitalWrite(SS, HIGH);
-}
-\end{lstlisting}
+PollingLab, you may have \function{displayData()} simply call
+\function{cowpi_sendDataToMax7219(address, value)}. If you did not successfully
+implement \function{getKeypressed()} during PollingLab, you may have
+\function{handleKeypress()} call \function{cowpi_getKeypress()} (note that
+\function{cowpi_getKeypress()}) does not take care of switch debouncing, and it
+returns the character corresponding to the symbol on the key that was pressed,
+not the numeric value specified by this assignment.)
 
 If you need to rewrite any other code from the previous lab, you may do so
 without explicitly using the memory-mapped I/O registers. You may instead use
@@ -707,12 +702,10 @@ has been pressed or released and whether it was pressed or released.
 
 Your keypad handler (\function{handleKeypress}) needs to determine which key was
 pressed -- you can reuse your code from PollingLab that scans the keypad with
-minimal changes. One such change is keeping track of whether a CHANGE interrupt
-is the result of a key press or a key release; another such change is that you
-don't need to \lstinline{return} a value. If insufficient time (a few
-milliseconds) has passed since the last time the keypad handler was invoked, you
-can simply exit the handler function under the assumption that switch bounce is
-generating erroneous interrupts.
+minimal changes. One such change is that you don't need to \lstinline{return} a
+value. If insufficient time (a few milliseconds) has passed since the last time
+the keypad handler was invoked, you can simply exit the handler function under
+the assumption that switch bounce is generating erroneous interrupts.
 
 \textbf{NOTE} Any global variables used by your ISR should be declared as
 \lstinline{volatile}.
@@ -731,25 +724,30 @@ number has lapsed. This will probably take place in your timer ISR, in
 \textbf{NOTE} Any global variables used by your ISRs or their helper functions
 should be declared as \lstinline{volatile}.
 
-Implement code to determine when both buttons have been pressed.
+Implement code to determine when the left button has been released more than or
+less than 150ms after it was pressed.
+
+Implement code to determine when the left button has been pressed, released no
+more than 150ms later, and pressed again no more than 500ms after that;
+\textit{i.e.}, determine when the left button has been double-clicked.
 
 Implement code that, based on the position of the left switch, will determine
-when 7.5 seconds or 20 seconds have elapsed since both buttons were pressed.
+when 7.5 seconds or 20 seconds have elapsed since the left button was
+double-clicked.
 
 Modify the \function{println} statements in your timer ISR and in
 \function{handleButtonAction()} to:
 \begin{itemize}
-\item Print when both buttons have been pressed.
+\item Print when the left button has been double-clicked.
 \item Print when 7.5 seconds or 20 seconds (as appropriate) have elapsed since
-    both buttons were pressed.
-\item Print when a button is released, and which button, but only if it was the
-    only button that had been pressed (recall that if both buttons were pressed
-    then releasing the buttons should have no effect).
+    the double-click.
+\item Print when a button is released, and which button, but only if it was more
+    than 150ms after it was pressed.
 \end{itemize}
 
-Add code that will illuminate the external LED when both buttons have been pressed
-and that will deluminate the external LED 7.5~seconds or 20~seconds (as
-appropriate) later.
+Add code that will illuminate the external LED when the left button has been
+double-clicked and that will deluminate the external LED 7.5~seconds or
+20~seconds (as appropriate) later.
 
 \section{Building and Converting Numbers}\label{sec:BuildingAndConverting}
 
@@ -764,8 +762,8 @@ your to prevent leading zeroes if necessary.
 should be declared as \lstinline{volatile}.
 
 Modify your code from Section~\ref{sec:ConversionTimeout} so that, instead of
-printing that both buttons have been pressed, the converted number will be
-displayed (\textit{i.e.}, if the number is being built in decimal then the
+printing that the left button has been double-clicked, the converted number will
+be displayed (\textit{i.e.}, if the number is being built in decimal then the
 equivalent number in hexadecimal will be displayed, and if the number is being
 build in hexadecimal then the equivalent number in decimal will be displayed).
 Further modify your code so that, instead of printing that 7.5~seconds or
@@ -789,8 +787,8 @@ Rubric:
     interrupt.}
 \rubricitem{2}{The pushbuttons' interrupt handler determines which button was
     released.}
-\rubricitem{2}{The pushbuttons' interrupt handler determines whether both
-    buttons are both pressed at the same time.}
+\rubricitem{2}{The pushbuttons' interrupt handler determines whether the left
+    button has been double-clicked.}
 \item[Matrix Keypad Interrupts]
 \rubricitem{4}{Matrix keypad presses are detected with an external interrupt.}
 \rubricitem{2}{The keypad's interrupt handler determines which key was pressed.}
@@ -798,12 +796,12 @@ Rubric:
 \rubricitem{2}{Timer interrupts for Timer1 or Timer2 are enabled and handled.}
 \rubricitem{4}{The timer interrupts configured such that, when combined with
     other logic, the software is able to determine when exactly 7.5~seconds or
-    exactly 20~seconds have passed since both buttons were pressed.}
+    exactly 20~seconds have passed since the left button was double-clicked.}
 \item[Conversion Timeout]
 \rubricitem{2}{The system is able to determine when exactly 7.5~seconds have
-    passed since both buttons were pressed at the same time.}
+    passed since the left button was double-clicked.}
 \rubricitem{2}{The system is able to determine when exactly 20~seconds have
-    passed since both buttons were pressed at the same time.}
+    passed since the left button was double-clicked.}
 \item[Building Numbers]
 \rubricitem{3}{Builds a value consistent with
     requirements~\ref{spec:initallyZero}--\ref{spec:noLeadingZeroes}.
@@ -822,12 +820,12 @@ Rubric:
     \textonequarter\ point for no false detections; \textonequarter\ point for
     displaying the correct message)}
 \item[Converting Numbers]
-\rubricitem{2}{Converts from decimal to hexadecimal when both pushbuttons are
-    pressed. (1 point for correctly-displayed positive numbers; 1 point for
-    correctly-displayed negative numbers)}
-\rubricitem{2}{Converts from hexadecimal to decimal when both pushbuttons are
-    pressed. (1 point for correctly-displayed positive numbers; 1 point for
-    correctly-displayed negative numbers)}
+\rubricitem{2}{Converts from decimal to hexadecimal when the left button is
+    double-clicked. (1 point for correctly-displayed positive numbers; 1 point
+    for correctly-displayed negative numbers)}
+\rubricitem{2}{Converts from hexadecimal to decimal when the left button is
+    double-clicked. (1 point for correctly-displayed positive numbers; 1 point
+    for correctly-displayed negative numbers)}
 \rubricitem{1}{Displays the number in its original number base 7.5~seconds or
     20~seconds (as appropriate) after displaying the converted number.}
 \rubricitem{1}{Detects and displays correct message when the number being
@@ -838,10 +836,13 @@ Rubric:
     number (or the convered error message) is displayed.}
 \item[Other Requirements]
 \rubricitem{1}{The number being built does not change when a button is pressed.}
-\rubricitem{1}{If both buttons were pressed, then the number being built does
-    not change when the buttons are released.}
-\bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due. (You cannot get both bonuses.)}
-\bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due. (Your code must be uploaded to \filesubmission\ \textit{before} it is due. You cannot get both bonuses.)}
+\rubricitem{1}{If the left button is double-clicked, then the number being built
+    does not change when the button is released.}
+\bonusitem{2}{Get assignment checked-off by TA or professor during office hours
+    before it is due. (You cannot get both bonuses.)}
+\bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your
+    scheduled lab immediately after it is due. (Your code must be uploaded to
+    \filesubmission\ \textit{before} it is due. You cannot get both bonuses.)}
 \item[Penalties]
 \penaltyitem{0}{No penalty needed for ``Pushbutton Interrupts,'' ``Matrix Keypad
     Interrupts,'' or ``Timer Interrupts'' portions of rubric since credit for
@@ -970,18 +971,16 @@ professor during office hours.
 \checkoffitem{Place the left switch in the right (hexadecimal) position. Place
     the right switch in the right (7.5~seconds) position.}
 \checkoffitem{Press A. {\dviiseg A} may appear on the display module.}
-\checkoffitem{Press and hold both pushbuttons. One or more of three things will
+\checkoffitem{Double-click the left pushbutton. One or more of three things will
     happen:}
     \begin{itemize}
-    \item The Serial Monitor indicates that both pushbuttons are DOWN (might
-        indicate that one is DOWN and the other is UP and then indicate that
-        both are DOWN).
+    \item The Serial Monitor indicates that a double-click occurred.
     \item The display will update to {\dviiseg 10} or an attempt to do so, such
         as {\dviiseg 0} or {\dviiseg 1}.
     \item The external LED illuminates.
     \end{itemize}
-    \textit{+2 pushbutton ISR determines whether both buttons are pressed at the
-        same time} \\
+    \textit{+2 pushbutton ISR determines whether the left button is
+    double-clicked} \\
 \checkoffitem{Wait 7.5~seconds. One or more of three things will happen:}
     \begin{itemize}
     \item The Serial Monitor indicates that 7.5~seconds have elapsed.
@@ -991,15 +990,14 @@ professor during office hours.
     \textit{+2 system determines when 7.5~seconds have passed} \\
     \textit{+1 external LED illuminates while and only while converted number is
     displayed}
-\checkoffitem{Release both buttons. The Serial Monitor may briefly indicate that
-    one button is DOWN and the other is UP, and it may indicate that both
-    buttons are UP, but there is no other observable behavior.} \\
-    \textit{+1 the number being built does not change when both buttons are
-    released}
+% \checkoffitem{Release both buttons. The Serial Monitor may briefly indicate that
+%     one button is DOWN and the other is UP, and it may indicate that both
+%     buttons are UP, but there is no other observable behavior.} \\
+    \textit{+1 the number being built does not change when the left button is
+    released during a double-click}
 \checkoffitem{Place the right switch in the left (20~seconds) position.}
-\checkoffitem{Press and release both pushbuttons (press and hold if necessary).
-    One or more of the previously-mentioned indications of simultaneous button
-    presses happen.}
+\checkoffitem{Double-click the left pushbutton. One or more of the
+    previously-mentioned indications of simultaneous button presses happen.}
 \checkoffitem{Wait 20~seconds. One or more of the previously-mentioned
     indications of conversion timeout happen.} \\
     \textit{+2 system determines when 20~seconds have passed}
@@ -1041,7 +1039,7 @@ professor during office hours.
     \textit{+\textonequarter\ correctly negates negative decimal values}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
-\checkoffitem{Enter the value 12369874}. The output is {\dviiseg 12369874} on
+\checkoffitem{Enter the value 12369874. The output is {\dviiseg 12369874} on
     the display module.} \\
     \textit{+\textonequarter\ no false ``too big'' detections}
 \checkoffitem{Press 0. The output is {\dviiseg{8}too big} on the display
@@ -1052,43 +1050,43 @@ professor during office hours.
     on the display module.}
 \checkoffitem{Enter the value 1234. The output is {\dviiseg\phantom{8888}1234}
     on the display module.}
-\checkoffitem{Press and release both pushbuttons. The output is
+\checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg\phantom{88888}4D2} on the display module.} \\
     \textit{+1 converts positive decimal to hexadecimal}
 \checkoffitem{Wait 7.5~seconds for the conversion to timeout, and press and
     release the left pushbutton. The output is {\dviiseg\phantom{888}-1234} on
     the display module.}
-\checkoffitem{Press and release both pushbuttons. The output is
+\checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg FFFFFB2E} on the display module.} \\
     \textit{+1 converts negative decimal to hexadecimal}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
 \checkoffitem{Place the left switch in the right (hexadecimal) position.}
-\checkoffitem{Enter the value 0x56B7}. The output is
+\checkoffitem{Enter the value 0x56B7. The output is
     {\dviiseg\phantom{8888}56B7} on the display module.}
-\checkoffitem{Press and release both pushbuttons. The output is
+\checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg\phantom{888}22199} on the display module.} \\
     \textit{+1 converts positive hexadecimal to decimal}
 \checkoffitem{Wait 7.5~seconds for the conversion to timeout, and press and
     release the left pushbutton. The output is {\dviiseg FFFFA949} on
     the display module.}
-\checkoffitem{Press and release both pushbuttons. The output is
+\checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg\phantom{88}-22199} on the display module.} \\
     \textit{+1 converts negative hexadecimal to decimal}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
-\checkoffitem{Enter the value 0x6A0,0000}. The output is
+\checkoffitem{Enter the value 0x6A0,0000. The output is
     {\dviiseg\phantom{8}6A00000} on the display module.}
-\checkoffitem{Press and release both pushbuttons. The output is
+\checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg\phantom{888}ERROR} on the display module.} \\
     \textit{+\textonehalf\ detects that converted number is too great to
     display} \\
     \textit{+\textonequarter\ displays correct error message}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
-\checkoffitem{Enter the value 0x5F5,E0FF}. The output is
+\checkoffitem{Enter the value 0x5F5,E0FF. The output is
     {\dviiseg\phantom{8}5F5E0FF} on the display module.}
-\checkoffitem{Press and release both pushbuttons. The output is
+\checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg 99999999} on the display module.} \\
     \textit{+\textonequarter\ no false ``error'' detections}
 \end{enumerate}
