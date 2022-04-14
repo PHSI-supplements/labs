@@ -959,7 +959,7 @@ professor during office hours.
     \end{itemize}
 \checkoffitem{Press the right pushbutton. The Serial Monitor may indicate that
     the right pushbutton is DOWN and the left pushbutton is UP, but there is
-    no other observable behavior.}
+    no other observable behavior.} \\
     \textit{+1 The number being build does not change when a button is pressed.}
 \checkoffitem{Release right left pushbutton. One or both of two things will
     happen:}
@@ -989,7 +989,7 @@ professor during office hours.
     \end{itemize}
     \textit{+2 system determines when 7.5~seconds have passed} \\
     \textit{+1 external LED illuminates while and only while converted number is
-    displayed}
+    displayed} \\
 % \checkoffitem{Release both buttons. The Serial Monitor may briefly indicate that
 %     one button is DOWN and the other is UP, and it may indicate that both
 %     buttons are UP, but there is no other observable behavior.} \\
@@ -1042,9 +1042,9 @@ professor during office hours.
 \checkoffitem{Enter the value 12369874. The output is {\dviiseg 12369874} on
     the display module.} \\
     \textit{+\textonequarter\ no false ``too big'' detections}
-\checkoffitem{Press 0. The output is {\dviiseg{8}too big} on the display
+\checkoffitem{Press 0. The output is {\dviiseg\phantom{8}too big} on the display
     module.} \\
-    \textit{+\textonehalf\ detects that a number is ``too big''}
+    \textit{+\textonehalf\ detects that a number is ``too big''} \\
     \textit{+\textonequarter\ displays correct error message}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
@@ -1053,12 +1053,19 @@ professor during office hours.
 \checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg\phantom{88888}4D2} on the display module.} \\
     \textit{+1 converts positive decimal to hexadecimal}
-\checkoffitem{Wait 7.5~seconds for the conversion to timeout, and press and
-    release the left pushbutton. The output is {\dviiseg\phantom{888}-1234} on
-    the display module.}
+\checkoffitem{Wait 7.5~seconds for the conversion to timeout. The output is
+    {\dviiseg\phantom{8888}1234} on the display module.} \\
+    \textit{+\textonequarter\ the original positive decimal number displays after
+    timeout}
+\checkoffitem{Press and release the left pushbutton. The output is
+    {\dviiseg\phantom{888}-1234} on the display module.}
 \checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg FFFFFB2E} on the display module.} \\
     \textit{+1 converts negative decimal to hexadecimal}
+\checkoffitem{Wait 7.5~seconds for the conversion to timeout. The output is
+    {\dviiseg\phantom{888}-1234} on the display module.} \\
+    \textit{+\textonequarter\ the original negative decimal number displays after
+    timeout}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
 \checkoffitem{Place the left switch in the right (hexadecimal) position.}
@@ -1067,12 +1074,19 @@ professor during office hours.
 \checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg\phantom{888}22199} on the display module.} \\
     \textit{+1 converts positive hexadecimal to decimal}
-\checkoffitem{Wait 7.5~seconds for the conversion to timeout, and press and
-    release the left pushbutton. The output is {\dviiseg FFFFA949} on
-    the display module.}
+\checkoffitem{Wait 7.5~seconds for the conversion to timeout. The output is
+    {\dviiseg\phantom{8888}56B7} on the display module.} \\
+    \textit{+\textonequarter\ the original positive hexadecimal number displays
+    after timeout}
+\checkoffitem{Press and release the left pushbutton. The output is
+    {\dviiseg FFFFA949} on the display module.}
 \checkoffitem{Double-click the left pushbutton. The output is
     {\dviiseg\phantom{88}-22199} on the display module.} \\
     \textit{+1 converts negative hexadecimal to decimal}
+\checkoffitem{Wait 7.5~seconds for the conversion to timeout. The output is
+    {\dviiseg FFFFA949} on the display module.} \\
+    \textit{+\textonequarter\ the original negative hexadecimal number displays
+    after timeout}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
 \checkoffitem{Enter the value 0x6A0,0000. The output is
@@ -1082,6 +1096,9 @@ professor during office hours.
     \textit{+\textonehalf\ detects that converted number is too great to
     display} \\
     \textit{+\textonequarter\ displays correct error message}
+\checkoffitem{Wait 7.5~seconds for the conversion to timeout. The output is
+    {\dviiseg\phantom{8}6A00000} on the display module.} \\
+    \textit{+1 the original number displays after timeout}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
 \checkoffitem{Enter the value 0x5F5,E0FF. The output is
