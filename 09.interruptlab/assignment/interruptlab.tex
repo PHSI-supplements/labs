@@ -582,7 +582,7 @@ interrupt service routine (ISR) for timer interrupts, you will use AVR-libc's
 \function{ISR}\footnote{\url{https://www.nongnu.org/avr-libc/user-manual/group__avr__interrupts.html}}
 macro.
 
-In \textit{CalculatorLab.ino}, outside of any other function, write this code that looks like a function:
+In \textit{InterruptLab.ino}, outside of any other function, write this code that looks like a function:
 
 \begin{lstlisting}
 ISR(vector) {
@@ -961,15 +961,15 @@ professor during office hours.
     the right pushbutton is DOWN and the left pushbutton is UP, but there is
     no other observable behavior.} \\
     \textit{+1 The number being build does not change when a button is pressed.}
-\checkoffitem{Release right left pushbutton. One or both of two things will
+\checkoffitem{Release right pushbutton. One or both of two things will
     happen:}
     \begin{itemize}
     \item The Serial Monitor indicates that both pushbuttons are UP.
     \item {\dviiseg 0} appears on the display module.
     \end{itemize}
     \textit{+2 pushbutton ISR determines which button was released}
-\checkoffitem{Place the left switch in the right (hexadecimal) position. Place
-    the right switch in the right (7.5~seconds) position.}
+\checkoffitem{Place the right switch in the right (hexadecimal) position. Place
+    the right switch in the left (7.5~seconds) position.}
 \checkoffitem{Press A. {\dviiseg A} may appear on the display module.}
 \checkoffitem{Double-click the left pushbutton. One or more of three things will
     happen:}
@@ -995,13 +995,13 @@ professor during office hours.
 %     buttons are UP, but there is no other observable behavior.} \\
     \textit{+1 the number being built does not change when the left button is
     released during a double-click}
-\checkoffitem{Place the right switch in the left (20~seconds) position.}
+\checkoffitem{Place the left switch in the left (20~seconds) position.}
 \checkoffitem{Double-click the left pushbutton. One or more of the
     previously-mentioned indications of simultaneous button presses happen.}
 \checkoffitem{Wait 20~seconds. One or more of the previously-mentioned
     indications of conversion timeout happen.} \\
     \textit{+2 system determines when 20~seconds have passed}
-\checkoffitem{Place the right switch in the right (7.5~seconds) position.}
+\checkoffitem{Place the left switch in the right (7.5~seconds) position.}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
 \checkoffitem{Enter the value 0x123A. The output is {\dviiseg\phantom{8888}123A}
@@ -1020,7 +1020,7 @@ professor during office hours.
 \checkoffitem{Press the and release the left pushbutton. The output is
     {\dviiseg 49AB8764} on the display module.} \\
     \textit{+\textonequarter\ correctly negates negative hexadecimal values}
-\checkoffitem{Place the left switch in the left (decimal) position.}
+\checkoffitem{Place the right switch in the left (decimal) position.}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
 \checkoffitem{Enter the value 1478. The output is {\dviiseg\phantom{8888}1478}
@@ -1068,7 +1068,7 @@ professor during office hours.
     timeout}
 \checkoffitem{Press and release the right pushbutton. The output is {\dviiseg 0}
     on the display module.}
-\checkoffitem{Place the left switch in the right (hexadecimal) position.}
+\checkoffitem{Place the right switch in the right (hexadecimal) position.}
 \checkoffitem{Enter the value 0x56B7. The output is
     {\dviiseg\phantom{8888}56B7} on the display module.}
 \checkoffitem{Double-click the left pushbutton. The output is

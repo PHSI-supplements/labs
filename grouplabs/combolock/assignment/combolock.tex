@@ -1,0 +1,445 @@
+%%
+%% CombinationLock GroupLab (c) 2022 Christopher A. Bohn
+%%
+
+\input{../../../common/assignment.tex}
+\usepackage{enumitem}
+% \usepackage{graphicx}
+\usepackage{addfont}
+\addfont{OT1}{d7seg}{\dviiseg}
+% \addfont{OT1}{deseg}{\deseg}
+% \usepackage{subfig}
+% \usepackage{wrapfig}
+% \usepackage{multicol}
+% \usepackage{caption}
+% \captionsetup{width=.8\linewidth}
+
+% \lstset{language=c, numbers=left, showstringspaces=false,
+%     moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+%     }
+
+
+
+\renewcommand{\labnumber}{10}
+\renewcommand{\labname}{Implementing an Electronic Combination Lock}
+\renewcommand{\shortlabname}{combolock -- grouplab}
+\renewcommand{\collaborationrules}{\teameffort}
+%\renewcommand{\duedate}{soon}
+\renewcommand{\duedate}{Week of May 2, Before the start of your lab section\footnote{See Piazza for the due dates of teams with students from different lab sections.}}
+\newcommand{\nano}{Arduino Nano}
+\renewcommand{\runtimeenvironment}{your \nano-based class hardware kit}
+
+\startdocument
+
+In this assignment, you will collaboratively write code for \runtimeenvironment\
+to implement a simple embedded system. Specifically, you will immplement an
+electronic combination lock.
+
+The instructions are written assuming you will edit the code in the Arduino IDE
+and run it on \runtimeenvironment, constructed according to the pre-lab
+instructions. If you wish, you may edit the code in a different environment;
+however, our ability to provide support for problems with other IDEs is limited.
+
+Please familiarize yourself with the entire assignment before beginning.
+Section~\ref{sec:FunctionalSpecification} has the functional specification of
+the system system you will develop. Section~\ref{sec:Constraints} describes
+the few implementation constraints. Section~\ref{sec:AccessingEEProm} describes
+your options for storing data on and retrieving data from the \nano's EEPROM.
+
+\section*{Learning Objectives}
+
+After successful completion of this assignment, students will be able to:
+\begin{itemize}
+\item Work collaboratively on a hardware/software project
+\item Design and implement a simple embedded system
+\item Expand their programming knowledge by consulting documentation
+\end{itemize}
+
+\subsection*{Continuing Forward}
+
+This penultimate lab assignment does not contribute to the final lab assignment.
+By integrating elements of what you learned in this course, and by demonstrating
+that you can review documentation to learn on your own, to design a small
+embedded system, you will show how much progress you have made this semester.
+
+\section*{During Lab Time}
+
+During your lab period, coordinate with your group partner(s) to decide on your
+working arrangements. Unless you're only going to work on the assignment when
+you're together, you may want to set up a private Git repository that is shared
+with your partner(s). With your partner(s), think through your system's design
+and begin implementing it. The TAs will be available for questions.
+
+\softwareengineeringfrontmatter
+
+\section{Scenario}
+
+``I have various teams working on different projects around here to improve
+security,'' Archie reminds you. He glances toward the Zoo's labs, where there's
+now a guy who looks like the actor who portrayed the fictional actor who
+portrayed the Norse god Odin, trying to avoid children while wistfully talking
+about raising rabbits in Montana. You briefly wonder why there are children
+someplace where there are also carnivorous megafauna, and then you remember that
+you work at a petting zoo. ``What I need your team to do,'' Archie continues,
+``is make a combination lock so that only authorized people can get into our lab
+facilities.''
+
+\section{Electronic Combination Lock Specification} \label{sec:FunctionalSpecification}
+
+\begin{enumerate}
+\item A combination shall consist of three numbers in a particular order.
+    \begin{enumerate}
+    \item Each of the three numbers shall consist of exactly two hexadecimal
+        digits.
+    \item It shall be possible for any two of the numbers to be duplicates of
+        each other. It shall be possible for all three numbers to be duplicates
+        of each other. For example, 98-98-98 is a valid combination.
+    \end{enumerate}
+\item When displayed on the \textbf{display module}, the combination's first
+    number shall occupy the two leftmost digits; the second number shall occupy
+    the middle two digits; and the third number shall occupy the two rightmost
+    digits. Dashes shall be displayed between the numbers, for example:
+    {\dviiseg 12-34-56}. If one or more of the positions has not had a number
+    entered, then the digits for the unentered positions(s) shall be blank.
+    For example, if the first number has been entered but not the second and
+    third, then the display will show {\dviiseg 12-\phantom{88}-\phantom{88}}.
+\item The combination's numbers shall be entered using the \textbf{matrix
+    keypad}. Buttons with decimal numerals (\textit{0-9}) or alphabetic letters
+    (\textit{A-D}) shall be interpreted as having the corresponding hexadecimal
+    numeral; the button with the octothorp (\#) shall be interpreted as having
+    the hexadecimal numeral \textit{E}; and the button with the asterisk (*)
+    shall be interpreted as having the hexadecimal numeral \textit{F}.
+\item When the system is powered-up, it shall be LOCKED, regardless of its state
+    before losing power, and the display shall have all numbers blank:
+    {\dviiseg \phantom{88}-\phantom{88}-\phantom{88}}.
+\item When the system is LOCKED, the system shall display the combination-entry
+    display.
+\item \label{spec:enterCombination} When the system displays the
+    combination-entry display, it shall display the currently-entered
+    cobmiantion (which might not be the correct combination), and the user shall
+    be able to enter and change the currently-entered combination.
+    \begin{enumerate}
+    \item The system shall indicate to the user the position in the combination
+        that they are entering a number for, by blinking the decimal points for
+        that position's two digits on-and-off every half-second. For example,
+        when all numbers are unentered and the user is being prompted to enter
+        the first number, the display shall show: \\
+        {\dviiseg \phantom{8}.\phantom{8}.-\phantom{88}-\phantom{88}} for a
+            half-second, then \\
+        {\dviiseg \phantom{88}-\phantom{88}-\phantom{88}} for a half-second,
+            then \\
+        {\dviiseg \phantom{8}.\phantom{8}.-\phantom{88}-\phantom{88}} for a
+            half-second, then \\
+        {\dviiseg \phantom{88}-\phantom{88}-\phantom{88}} for a half-second, and
+            so on.
+    \item Hereafter, the blinking decimal points will be referred to as the
+        \textit{cursor}.
+    \item The cursor shall continue to blink while and after the user has
+        entered numerals. For exmaple, after the user has entered ``1'' as the
+        first digit of the first number, the display shall repeatedly show: \\
+        {\dviiseg 1.\phantom{8}.-\phantom{88}-\phantom{88}} for a
+            half-second, and \\
+        {\dviiseg 1\phantom{8}-\phantom{88}-\phantom{88}} for a half-second,
+            then \\
+        then after the user has entered ``2'' as the second digit of the first
+        number, the display shall repeatedly show: \\
+        {\dviiseg 1.2.-\phantom{88}-\phantom{88}} for a
+            half-second, and \\
+        {\dviiseg 12-\phantom{88}-\phantom{88}} for a half-second.
+    \item The user shall advance the cursor to the next number to be entered by
+        pressing the \textbf{right pushbutton}.
+        \begin{enumerate}
+        \item The cursor shall not advance until the user presses the
+            \textbf{right pushbutton}.
+        \item If the cursor is positioned on the first number, then
+            advancing the cursor places the cursor in the second nummber's
+            position.
+        \item If the cursor is in the second number's position, then
+            advancing repositions the cursor in the third number's position
+        \item If the cursor is in the third number's position, then
+            advancing the cursor places the cursor in the first number's
+            position.
+        \end{enumerate}
+    \item The user shall be able to change the numbers they have entered by
+        advancing the cursor from position to position.
+    \item The user shall assert that they have entered the combination by
+        pressing the \textbf{left pushbutton}.
+    \item If the user has not entered numbers for all three positions before
+        pressing the \textbf{left pushbutton}, then the system shall display
+        {\dviiseg \phantom{888}error} for one second and then resume displaying
+        the combination-entry display.
+    \end{enumerate}
+\item The \textbf{switches} shall be ignored while the system is LOCKED.
+\item If the user had entered the correct combination when when they pressed
+    the \textbf{left pushbutton}, then the system shall be UNLOCKED and shall
+    display {\dviiseg lab open}.
+\item If the user had entered an incorrect combination when they pressed the
+    \textbf{left pushbutton}, then the system shall display
+    {\dviiseg bad try 1} \\ {\dviiseg bad try 2} or \\ {\dviiseg bad try 3} for
+    one second, depending on whether it was their first, second, or third
+    attempt.
+\item After the user's first and second ``bad try'' messages, the system shall
+    resume displaying the combination-entry display.
+\item After the user's third ``bad try'' message, the system shall be ALARMED.
+    \begin{enumerate}
+    \item When the system is ALARMED, it shall display {\dviiseg alert!} and
+        the \textbf{external LED} shall blink on-and-off every quarter-second.
+    \item When the system is ALARMED, it shall not accept further input until
+        it has been powered-down and then powered-up.
+    \end{enumerate}
+\item \label{spec:changeCombination} When the system is UNLOCKED, the user shall
+    be able to change the combination.
+    \begin{enumerate}
+    \item When the user places both \textbf{switches} in the right positions and
+        then pressing the \textbf{left pushbutton}, the system shall be
+        CHANGING.
+    \item When the system is CHANGING, it shall display {\dviiseg enter} for
+        one second and and then shall display the combination-entry display, and
+        the user shall be able to enter the proposed new combination, with the
+        following change:
+        \begin{enumerate}
+        \item Pressing the \textbf{left pushbutton} while the
+            \textbf{left switch} is in the right position shall have no effect.
+        \item If the user places the \textbf{left switch} in the left position
+            and then presses the \textbf{left pushbutton}, then the system
+            shall be CONFIRMING.
+        \end{enumerate}
+    \item When the system is CONFIRMING, it shall display {\dviiseg re-enter}
+        for one second and hen shall display the combination-entry display, and
+        the user shall be able to enter the proposed new combination, with the
+        following change:
+        \begin{enumerate}
+        \item Pressing the \textbf{left pushbutton} while the
+            \textbf{right switch} is in the right position shall have no effect.
+        \item If the user places the \textbf{right switch} in the left position
+            and then presses the \textbf{left pushbutton}, then the system
+            shall display {\dviiseg changed} if the confirmed
+            combination matches the proposed combination, or {\dviiseg nochange}
+            fif the confirmed combination differs from the proposed
+            combination. The system shall then be UNLOCKED.
+        \end{enumerate}
+    \end{enumerate}
+\item \label{spec:locking} When the system is UNLOCKED, the user shall be able
+    to lock the system by one of the two methods listed below. The system shall
+    be LOCKED. It shall display {\dviiseg closed} for one seceond and then shall
+    display the combination-entry display.
+    \begin{enumerate}
+    \item One option to lock the system is placing both \textbf{switches} in the
+        left positions and then pressing both \textbf{pushbuttons}
+        simultaneously.
+    \item The other option to lock the system is placing both \textbf{switches}
+        in the left positions and then double-clicking the \textbf{right
+        pushbutton}.
+    \end{enumerate}
+    \begin{itemize}
+    \item You only need to implement \textit{one} of these locking mechanisms.
+        With the Cow Pi's hardware, double-clicking is easier to detect with
+        interrupts, and chording is easier to detect with polling.
+    \end{itemize}
+\item Except as specified in Requirements~\ref{spec:changeCombination} and
+    \ref{spec:locking}, pressing the \textbf{pushbuttons} shall have no effect
+    when the system is UNLOCKED.
+\item \label{spec:persistentCombination} The correct combination shall be
+    persistent even while the system is unpowered. For example, if the user
+    changes the combination, powers-down the system, and powers-up the system,
+    then the correct combination shall still be the combination that they had
+    changed it to before powering-down the system.
+\end{enumerate}
+
+\section{Constraints}\label{sec:Constraints}
+
+You may re-use code from the previous lab assignments and from \textit{cowpi.h},
+or you can rewrite the necessary code using functions, macros, types, or
+constants that are part of the Arduino
+core;\footnote{\url{https://www.arduino.cc/reference/en/}} functions, macros,
+types, or constants of
+avr-libc;\footnote{\url{https://www.nongnu.org/avr-libc/user-manual/index.html}}
+or one of Arduino's standard
+libraries.\footnote{\url{https://www.arduino.cc/reference/en/libraries/} The
+standard libraries are those under the heading, ``Official Arduino Libraries.''}
+You may \textit{not} use a third-party library, not even one that the Arduino
+Libraries reference page links to (if it isn't among those available in the
+Arudino IDE's ``Sketch'' $\rightarrow$ ``Include Library'' menu under ``Arduino
+libraries'' then you may not use it).
+
+You can use memory-mapped I/O registers, or you can use functions provided by
+the Arduino core read from and write to pins. You can use polling, or you can
+use interrupts. You can have as much or as little code in the \function{loop()}
+function as you deem fit.
+
+Do \textit{not} edit \textit{cowpi.h}; all of your code must go in
+\textit{ComboLock.ino}.
+
+\section{Accessing the EEPROM} \label{sec:AccessingEEProm}
+
+To implement Requirement~\ref{spec:persistentCombination}, you will want to save
+your lock's combination in your \nano's EEPROM. The \nano\ has 1KB of EEPROM,
+and you will use only a tiny fraction of this (depending on your implementation,
+you will probably use either 3 or 6 bytes of the EEPROM). While the EEPROM is
+not part of the ATmega328P's memory address space, you can access it, one byte
+at a time, using memory-mapped I/O. If you choose to use memory-mapped I/O to access the EEPROM, please read the ATmega328P
+datasheet,\footnote{\url{http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf}}
+§7.4 and §7.6. Alternatively, you can use the Arduino EEPROM library. If you
+choose to use the EEPROM library, please read the EEPROM library's
+documentation\footnote{\url{https://docs.arduino.cc/learn/built-in-libraries/eeprom}}
+and guide.\footnote{\url{https://docs.arduino.cc/learn/programming/eeprom-guide}}
+We recommend that you use the \function{EEPROM.get()} and
+\function{EEPROM.put()} library functions, as they work with arbitrary data
+types and write to the EEPROM in the most-efficient manner possible.
+
+\subsection*{Clearing Part of EEPROM Memory}
+
+In the event that you forget your lock's combination (or that you need to set
+the combination before your first use), we have provided
+\textit{ClearEEPROMPage.ino} that will set four bytes to 0. Using the Serial
+Monitor, you will be prompted to enter a number divisible by 4 (not to exceed
+1023). The 4-byte EEPROM page starting at that address will then be set to 0.
+If you need to clear more than four bytes, press the RESET button on top of your
+\nano\ to run the program again.
+\textbf{NOTE:} after you type in the number, you will send that number to the
+\nano\ one of three ways:
+\begin{description}
+\item [Arduino 1.8] Use your mouse to click on the ``Send'' button.
+\item [Arduino 2.0 on Windows or Linux] Press Control-Enter on your keyboard.
+\item [Arudino 2.0 on Macintosh] Press Command-Enter on your keyboard.
+\end{description}
+
+\subsection*{Non-Performing and Toxic Team Members}
+
+\begin{description}
+\item[Non-performing team members] If a student is habitually failing to be a
+contributing member of your team beyond your ability to resolve, you may
+ask a TA or the professor for help resolving the problem.  In extreme
+circumstances, the professor may remove that student from the team.  This
+can occur only after we've discussed your team's dilemma and concurred
+that no better option is available.
+\item [Toxic team members] If a student's behavior is harming the other team
+members' ability to learn and perform, the professor may remove that
+student from the team.  This can occur only after we've discussed your
+team's dilemma and concurred that no better option is available. If necessary,
+the case will be referred to Student Affairs for appropriate action.
+\end{description}
+
+We will find a way for an unfired team member to demonstrate mastery of the
+lab material and earn credit for the assignment without having to commplete the
+full assignment on their own.
+
+A fired team member may complete the project on his/her own, or join a group
+with other fired team members (if any exist).
+
+\section*{Turn-in and Grading}\addcontentsline{toc}{section}{Rubric}
+
+When you have completed this assignment, upload \textit{ComboLock.ino} to
+\filesubmission.
+
+This assignment is worth 80 points. \\
+
+Rubric:
+\begin{description}
+\rubricitem{2}{Combinations are displayed as three 2-hex-digit numbers separated
+    by dashes.}
+\rubricitem{4}{Numbers are entered using the matrix keypad.}
+\rubricitem{2}{The lock is locked when powered-up.}
+\rubricitem{4}{When the lock is locked, it displays the combination-entry
+    display, initially showing empty numbers (only dashes).}
+\rubricitem{4}{The cursor indicating which number is being entered is
+    represented as blinking decimal points in the relevant number position.}
+\rubricitem{4}{The user can move the cursor between number positions by pressing
+    the right button.}
+\rubricitem{4}{After entering a combination, the user can submit the combination
+    by pressing the left button.}
+\rubricitem{2}{If the user tries to submit an incomplete combination, the lock
+    displays ``error'' and then returns to the combination-entry display.}
+\rubricitem{4}{When the user unlocks the lock, it displays ``lab open''.}
+\rubricitem{2}{When the user mis-enters the combination, it displays ``bad try''
+    and the attempt number.}
+\rubricitem{4}{After the first two bad tries, the user is given another
+    opportunity to enter the combination.}
+\rubricitem{4}{After the third bad try, the system displays ``alert!'', the
+    external LED rapidly blinks, and the lock becomes unresponsive.}
+\rubricitem{4}{The user can begin changing the combination by moving both
+    switches to the right and pressing the left button.}
+\rubricitem{4}{When the user begins changing the combination, the lock displays
+    ``enter'' and then shows the combination-entry display.}
+\rubricitem{4}{After entering a new combination, the user can begin confirming
+    the combination by slidig the left switch to the left and pressing the left
+    button.}
+\rubricitem{4}{When the user begins confirming the combination, the lock
+    displays ``re-enter'' and then shows the combination-entry display.}
+\rubricitem{4}{After entering the confirming combination, the user can compare
+    the new combination with the confirmed combination by sliding the right switch
+    to the left and pressing the left button.}
+\rubricitem{4}{If the user successfully confirmed the new combination, the lock
+    displays ``changed'', and the new combination is the correct combination
+    for future unlocking attempts.}
+\rubricitem{4}{If the user failed to confirm the new combination, the lock
+    displays ``unchanged'', and the previously-correct combination remains the
+    combination for future unlocking attempts.}
+\rubricitem{4}{The user can lock the lock by moving both switches to the left
+    and \textit{either} double-clicking the right button, \textit{or} pressing
+    both buttons at the same time. (Only one of these methods needs to be
+    implemented).}
+\rubricitem{2}{The inputs that are explicitly specified as having no effect in
+    certain situations are ignored in those situations.}
+\rubricitem{4}{The correct combination persists while Arduino is powered-down.}
+\rubricitem{2}{The source code is well-organized and is readable.}
+\bonusitem{2}{Get assignment checked-off by TA or professor during office hours
+    before it is due. (You cannot get both bonuses.)}
+\bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your
+    scheduled lab immediately after it is due. (Your code must be uploaded to
+    \filesubmission\ \textit{before} it is due. You cannot get both bonuses.)}
+\spaghetticodepenalties{1}
+\end{description}
+
+Students' scores may be adjusted up or down as necessary if the team had an
+inequitable distribution of effort.
+
+\section*{Epilogue}
+
+After fastening the new electronic combination lock to the lab door, Archie
+smiles and tells you that this was a job well done. With all of the excitement
+neatly wrapped-up and arriving at a satisfactory conclusion, you look forward to
+a boring career in which there's absolutely no screaming and running for your
+life.
+
+\textit{The End...?}
+
+
+% \newpage
+
+\section*{Appendix: Lab Checkoff}\addcontentsline{toc}{section}{Lab Checkoff}
+
+You are not required to have your assignment checked-off by a TA or the
+professor. If you do not do so, then we will perform a functional check
+ourselves. In the interest of making grading go faster, we are offering a small
+bonus to get your assignment checked-off at the start of your scheduled lab
+time immediately after it is due. Because checking off all students during lab
+would take up most of the lab time, we are offering a slightly larger bonus if
+you complete your assignment early and get it checked-off by a TA or the
+professor during office hours.
+
+The check-off checklist will be added soon.
+
+% \begin{description}
+% \precheckoffitem{Establish that the code you are demonstrating is the code
+%     you submitted to to \filesubmission.}
+%     \begin{itemize}
+%     \item If you are getting checked-off during lab time, show the TA that the
+%         file was submitted before it was due.
+%     \item Download the file into your ComboLab directory. If necessary,
+%         rename it to \textit{ComboLab.ino}.
+%     \end{itemize}
+% \precheckoffitem{Upload \textit{ComboLab.ino} to your \nano\ and open the
+%     Serial Monitor.}
+% \end{description}
+%
+% \begin{enumerate}
+% \checkoffitem{\dots} \\
+%     \textit{+XX \dots}
+% \end{enumerate}
+%
+% This concludes the demonstration of your system's functionality. The TAs will
+% later examine your code for violations of the assignment's constraints. If your
+% code looks like it is tailored for this checklist, the TAs may re-grade using a
+% different checklist.
+\end{document}
