@@ -94,6 +94,8 @@ facilities.''
     \item It shall be possible for any two of the numbers to be duplicates of
         each other. It shall be possible for all three numbers to be duplicates
         of each other. For example, 98-98-98 is a valid combination.
+    \item Single-digit numbers must have leading zeroes. For example,
+        01-02-03 is a valid combination, but 1-2-3 is not.
     \end{enumerate}
 \item When displayed on the \textbf{display module}, the combination's first
     number shall occupy the two leftmost digits; the second number shall occupy
@@ -116,7 +118,7 @@ facilities.''
     display.
 \item \label{spec:enterCombination} When the system displays the
     combination-entry display, it shall display the currently-entered
-    cobmiantion (which might not be the correct combination), and the user shall
+    cobmination (which might not be the correct combination), and the user shall
     be able to enter and change the currently-entered combination.
     \begin{enumerate}
     \item The system shall indicate to the user the position in the combination
@@ -166,7 +168,7 @@ facilities.''
         pressing the \textbf{left pushbutton}.
     \item If the user has not entered numbers for all three positions before
         pressing the \textbf{left pushbutton}, then the system shall display
-        {\dviiseg \phantom{888}error} for one second and then resume displaying
+        {\dviiseg error} for one second and then resume displaying
         the combination-entry display.
     \end{enumerate}
 \item The \textbf{switches} shall be ignored while the system is LOCKED.
@@ -175,9 +177,15 @@ facilities.''
     display {\dviiseg lab open}.
 \item If the user had entered an incorrect combination when they pressed the
     \textbf{left pushbutton}, then the system shall display
-    {\dviiseg bad try 1} \\ {\dviiseg bad try 2} or \\ {\dviiseg bad try 3} for
+    {\dviiseg badtry 1} \\ {\dviiseg badtry 2} or \\ {\dviiseg badtry 3} for
     one second, depending on whether it was their first, second, or third
     attempt.
+    \begin{itemize}
+    \item The original specification had a space between ``bad'' and ``try.''
+        You may choose instead to have the space between the words and no space
+        between ``try'' and the number.
+    \item You may add the middle segment to the letter `y' if you wish.
+    \end{itemize}
 \item After the user's first and second ``bad try'' messages, the system shall
     resume displaying the combination-entry display.
 \item After the user's third ``bad try'' message, the system shall be ALARMED.
@@ -205,7 +213,7 @@ facilities.''
             shall be CONFIRMING.
         \end{enumerate}
     \item When the system is CONFIRMING, it shall display {\dviiseg re-enter}
-        for one second and hen shall display the combination-entry display, and
+        for one second and then shall display the combination-entry display, and
         the user shall be able to enter the proposed new combination, with the
         following change:
         \begin{enumerate}
@@ -215,8 +223,10 @@ facilities.''
             and then presses the \textbf{left pushbutton}, then the system
             shall display {\dviiseg changed} if the confirmed
             combination matches the proposed combination, or {\dviiseg nochange}
-            fif the confirmed combination differs from the proposed
+            if the confirmed combination differs from the proposed
             combination. The system shall then be UNLOCKED.
+        % \item After displaying the ``changed'' or ``no change'' message for
+        %     two seconds, \dots
         \end{enumerate}
     \end{enumerate}
 \item \label{spec:locking} When the system is UNLOCKED, the user shall be able
@@ -362,7 +372,7 @@ Rubric:
 \rubricitem{4}{When the user begins changing the combination, the lock displays
     ``enter'' and then shows the combination-entry display.}
 \rubricitem{4}{After entering a new combination, the user can begin confirming
-    the combination by slidig the left switch to the left and pressing the left
+    the combination by sliding the left switch to the left and pressing the left
     button.}
 \rubricitem{4}{When the user begins confirming the combination, the lock
     displays ``re-enter'' and then shows the combination-entry display.}
@@ -373,7 +383,7 @@ Rubric:
     displays ``changed'', and the new combination is the correct combination
     for future unlocking attempts.}
 \rubricitem{4}{If the user failed to confirm the new combination, the lock
-    displays ``unchanged'', and the previously-correct combination remains the
+    displays ``nochange'', and the previously-correct combination remains the
     combination for future unlocking attempts.}
 \rubricitem{4}{The user can lock the lock by moving both switches to the left
     and \textit{either} double-clicking the right button, \textit{or} pressing
@@ -418,28 +428,142 @@ would take up most of the lab time, we are offering a slightly larger bonus if
 you complete your assignment early and get it checked-off by a TA or the
 professor during office hours.
 
-The check-off checklist will be added soon.
+\begin{description}
+\precheckoffitem{Establish that the code you are demonstrating is the code
+    you submitted to to \filesubmission.}
+    \begin{itemize}
+    \item If you are getting checked-off during lab time, show the TA that the
+        file was submitted before it was due.
+    \item Download the file into your ComboLab directory. If necessary,
+        rename it to \textit{ComboLab.ino}.
+    \end{itemize}
+\precheckoffitem{Upload \textit{ComboLab.ino} to your \nano\ and open the
+    Serial Monitor.}
+\end{description}
 
-% \begin{description}
-% \precheckoffitem{Establish that the code you are demonstrating is the code
-%     you submitted to to \filesubmission.}
-%     \begin{itemize}
-%     \item If you are getting checked-off during lab time, show the TA that the
-%         file was submitted before it was due.
-%     \item Download the file into your ComboLab directory. If necessary,
-%         rename it to \textit{ComboLab.ino}.
-%     \end{itemize}
-% \precheckoffitem{Upload \textit{ComboLab.ino} to your \nano\ and open the
-%     Serial Monitor.}
-% \end{description}
-%
-% \begin{enumerate}
-% \checkoffitem{\dots} \\
-%     \textit{+XX \dots}
-% \end{enumerate}
-%
-% This concludes the demonstration of your system's functionality. The TAs will
-% later examine your code for violations of the assignment's constraints. If your
-% code looks like it is tailored for this checklist, the TAs may re-grade using a
-% different checklist.
+\begin{enumerate}
+\checkoffitem{The combination screen is displayed
+    {\dviiseg \phantom{88}-\phantom{88}-\phantom{88}}) with the cursor (two
+    decimal points) blinking in the left-most position. No numbers are
+    displayed in the combination.} \\
+    \textit{+2 The lock is locked when powered-up.} \\
+    \textit{+2 When locked, shows combo-entry display, initially without numbers
+        (power-up).} \\
+    \textit{+2 The cursor is represented with decimal points in the relevant
+        position.} \\
+    \textit{+2 The cursor blinks.}
+\checkoffitem{Place both switches in the left position.}
+\checkoffitem{Press the right button twice. The cursor moves into the middle
+    position and then the right-most position.} \\
+    \textit{+3 The user can move the cursor using the right button.}
+\checkoffitem{Press the right button again. the cursor moves into the left-most
+    position.} \\
+    \textit{+1 The cursor wraps-around from the last number to the first
+        number.}
+\checkoffitem{Press 1, then A. The display shows {\dviiseg
+    1.A.-\phantom{88}-\phantom{88}}}. \\
+    \textit{+1 Combinations use 2-hex-digit numbers.} \\
+    \textit{+4 Numbers are entered using the keypad.}
+\checkoffitem{Press the left button. The display shows {\dviiseg error} and then
+    {\dviiseg 1.A.-\phantom{88}-\phantom{88}}.} \\
+    \textit{+1 Submit ``error'' combination with left button.} \\
+    \textit{+1 Incomplete combination produces error message.} \\
+    \textit{+1 After the error message, the combo-entry display returns.}
+\checkoffitem{Finish entering an incorrect combination. The display shows all
+    three numbers, separated by dashes.} \\
+    \textit{+1 Combinations are three numbers separated by dashes.}
+\checkoffitem{Press the left button. The display shows {\dviiseg badtry 1} and
+    then the combo-display display.} \\
+    \textit{+1 Submit ``bad try'' combination with left button.} \\
+    \textit{+1 Wrong combination produces bad-try message.} \\
+    \textit{+2 After the first bad try, the combo-entry display returns.}
+\checkoffitem{Enter another incorrect combination and press the left button. The
+    display shows {\dviiseg badtry 2} and then the combo-display display.} \\
+    \textit{+1 The ``bad try'' number increments.} \\
+    \textit{+2 After the second bad try, the combo-entry display returns.}
+\checkoffitem{Enter another incorrect combination and press the left button. The
+    display shows {\dviiseg badtry 3} and then {\dviiseg alert!}. The external
+    LED rapidly blinks.} \\
+    \textit{+1 After the third bad try, the sytem displays an alert message.} \\
+    \textit{+2 After the third bad try, the external LED rapidly blinks.}
+\checkoffitem{Press buttons and keys a few times. Nothing happens except that
+    the alert message is still displayed and the LED still blinks.} \\
+    \textit{+1 After the third bad try, the system is non-responsive.}
+\checkoffitem{Press the \nano's RESET button (on the top of the \nano).}
+\checkoffitem{Enter the correct combination and press the left button. The
+    system displays {\dviiseg lab open}.} \\
+    \textit{+2 Submit correct combination with left button.} \\
+    \textit{+4 When the user locks the lock, it displays ``lab open.''}
+\checkoffitem{Double-check that both switches are in the left position. Press
+    the left button. Nothing happens. Press the right button. Nothing
+    happens.} \\
+    \textit{+1 Single-presses of only one button have no effect when the lock is unlocked and the switches are not in the right position.}
+\checkoffitem{Place both switches in the right position and press the left
+    button. The system displays {\dviiseg enter} then
+    {\dviiseg \phantom{88}-\phantom{88}-\phantom{88}}.} \\
+    \textit{+4 Start changing combo by pushing left button while both switches
+        are to the right.} \\
+    \textit{+2 When starting to change the combo, ``enter'' is displayed.} \\
+    \textit{+2 After displaying ``enter,'' the combo-entry display is shown.}
+\checkoffitem{Enter a new combination.}
+\checkoffitem{Press the left button. Nothing happens.} \\
+    \textit{+\textonehalf\ Left button has no effect unless left switch is
+    moved.}
+\checkoffitem{Place the left switch in the left position and press the left
+    button. The system displays {\dviiseg re-enter} then
+    {\dviiseg \phantom{88}-\phantom{88}-\phantom{88}}.} \\
+    \textit{+4 Start confirming by moving the left switch and pressing the left
+        button.} \\
+    \textit{+2 When starting to change the combo, ``re-enter'' is displayed.} \\
+    \textit{+2 After displaying ``re-enter,'' the combo-entry display is shown.}
+\checkoffitem{Enter a non-matching combination.}
+\checkoffitem{Press the left button. Nothing happens.} \\
+    \textit{+\textonehalf\ Left button has no effect unless right switch is
+        moved.}
+\checkoffitem{Place the right switch in the left position and press the left
+    button. The system displays {\dviiseg nochange}. Though unspecified, it is
+    acceptable to display {\dviiseg lab open} after displaying {\dviiseg
+    nochange} for at least one second.} \\
+    \textit{+4 Compare combos by moving the right switch and pressing the left
+        button.} \\
+    \textit{+2 When the combos do not match, ``nochange'' is displayed.}
+\checkoffitem{Double-check that both switches are in the left position. Either
+    double-click the right button \textit{or} press both buttons at the same
+    time. The system displays {\dviiseg closed} and then {\dviiseg
+    \phantom{88}-\phantom{88}-\phantom{88}}.} \\
+    \textit{+4 Re-lock the lock using one of the specified techniques.} \\
+    \textit{+2 When locked, shows combo-entry display, initially without numbers
+        (re-locked).}
+\checkoffitem{Enter the original, correct combination and press the left button.
+    The system displays {\dviiseg lab open}.} \\
+    \textit{+2 When the combos do not match, the previously-correct combo
+        remains the correct combo.}
+\checkoffitem{Move both switches to the right, enter a new combination, move the
+    left switch to the left, and press the left button. The system displays
+    {\dviiseg re-enter} then {\dviiseg
+    \phantom{88}-\phantom{88}-\phantom{88}}.}
+\checkoffitem{Enter the matching combination, move the right switch to the left,
+    and press the right button. The system displays {\dviiseg nochange}. Though
+    unspecified, it is acceptable to display {\dviiseg lab open} after
+    displaying {\dviiseg changed} for at least one second.} \\
+    \textit{+2 When the combos match, ``changed'' is displayed.}
+\checkoffitem{Double-check that both switches are in the left position. Either
+    double-click the right button \textit{or} press both buttons at the same
+    time. The system displays {\dviiseg closed} and then {\dviiseg
+    \phantom{88}-\phantom{88}-\phantom{88}}.}
+\checkoffitem{Enter the new combination and press the left button. The system
+    displays {\dviiseg lab open}.} \\
+    \textit{+2 When the combos match, the new combo is the correct combo.}
+\checkoffitem{Press the \nano's RESET button.}
+\checkoffitem{Enter the new combination and press the left button. The system
+    displays {\dviiseg lab open}.} \\
+    \textit{+4 The correct combination persists while the Arduino is
+    powered-down.}
+\end{enumerate}
+
+This concludes the demonstration of your system's functionality. The TAs will
+later examine your code to assess the remaining 2 points for your source code
+being well-organized and readable, to evaluate any claimed extra credit, and
+for violations of the assignment's constraints. If your code looks like it is
+tailored for this checklist, the TAs may re-grade using a different checklist.
 \end{document}

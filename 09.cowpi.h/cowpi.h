@@ -77,6 +77,9 @@ uint8_t * const cowpi_IObase = (uint8_t *)0x0;
   digitalWrite(5, LOW);                                 \
   digitalWrite(6, LOW);                                 \
   digitalWrite(7, LOW);                                 \
+  /* External Interrupts */                             \
+  pinMode( 2, INPUT);                                   \
+  pinMode( 3, INPUT);                                   \
   /* Display Module */                                  \
   if((options) & SPI) {                                 \
     pinMode(10, OUTPUT);                                \

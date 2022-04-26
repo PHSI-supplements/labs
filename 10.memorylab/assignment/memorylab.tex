@@ -1,19 +1,46 @@
 %%
-%% MemoryLab (c) 2021 Christopher A. Bohn
+%% MemoryLab (c) 2021-22 Christopher A. Bohn
 %%
 
 \input{../../common/assignment.tex}
 
 \usepackage{graphicx}
 
-\renewcommand{\labnumber}{10}
+%%% StickyNote from https://tex.stackexchange.com/questions/159679/sticky-notes-image
+\usepackage{xparse}
+% \usepackage{fontspec}
+% \setmainfont{Humor Sans}
+\usepackage{tikz}
+\usetikzlibrary{shadows}
+\usepackage{lipsum}
+
+\definecolor{myyellow}{RGB}{242,226,149}
+
+\NewDocumentCommand\StickyNote{O{6cm}mO{6cm}}{%
+\begin{tikzpicture}
+\node[
+drop shadow={
+  shadow xshift=2pt,
+  shadow yshift=-4pt
+},
+inner xsep=7pt,
+fill=myyellow,
+xslant=-0.1,
+yslant=0.1,
+inner ysep=10pt
+] {\parbox[t][#1][c]{#3}{#2}};
+\end{tikzpicture}%
+}
+%%%
+
+\renewcommand{\labnumber}{11}
 \renewcommand{\labname}{Memory Measurement Lab}
 \renewcommand{\shortlabname}{memorylab}
 \renewcommand{\collaborationrules}{This is an individual-effort project. You
 may discuss the nature of memory technologies and of memory hierarchies with
 classmates, but you must draw your own conclusions.}
 %\renewcommand{\duedate}{soon}
-\renewcommand{\duedate}{Week of December 6, at the end of your lab section}
+\renewcommand{\duedate}{Week of May 2, at the end of your lab section}
 \newcommand{\nano}{Arduino Nano}
 \renewcommand{\runtimeenvironment}{your \nano-based class hardware kit and your
 account on the \textit{csce.unl.edu} Linux server}
@@ -27,12 +54,41 @@ be able to complete this lab assignment during lab time.}
 The instructions are written assuming you will run the code on
 \runtimeenvironment.
 
+\section*{Learning Objectives}
+
+After successful completion of this assignment, students will be able to:
+\begin{itemize}
+\item Identify the relative speeds of some types of memory.
+\item Draw conclusions about a cache's design based on timing data.
+\item Recognize the performance benefits of cache-friendly code.
+\end{itemize}
+
+\subsection*{Continuing Forward}
+
+This final lab assignment should give you a qualitative appreciation of memory
+concepts discussed in the course.
+
+\section*{During Lab Time}
+
+\textbf{You must complete this lab assignment during lab time}; it is due at the
+end of your scheduled lab session. The TAs will be available to answer
+questions.
+
+\section{Scenario}
+
+{\large \textbf{Mid-Credits Scene}:} Herb walks up to you. ``Could you do me a
+favor, please? I'd like to better characterize some of the performance
+characteristics of the Cow Pi, but I don't have the time to do so. Now that the
+urgency over developing the security systems is behind us, I need to get back to
+Eclectic Electronics to clean up a couple of messes that I had to leave there
+while we developed the Cow Pi. Do you mind measuring the memory performance?''
+
 \section{Arduino Memories}
 
 The ATmega328P microcontroller on your \nano\ has three memories:
 \begin{itemize}
-\item 2KB SRAM read/write data memory
-\item 1KB EEPROM read-only data memory
+\item 2KB SRAM data memory
+\item 1KB EEPROM data memory
 \item 32KB flash instruction memory
 \end{itemize}
 
@@ -74,7 +130,7 @@ flash memory.
 After you upload the sketch to your \nano, those four functions will each run
 once, and the average time to read a value from a CPU register, from SRAM, and
 from flash memory will be calculated and displayed. If you wish to re-run the
-sketch, you can press the \nano's Reset button to restart the program without
+sketch, you can press the \nano's RESET button to restart the program without
 re-uploading it.
 
 Upload \textit{MemoryMeasurement.ino} to your \nano\ now.
@@ -161,7 +217,7 @@ Normally you should correct your code to address warnings; however, in this
 particular case, we are intentionally updating these variables without using
 the values they contain.
 
-Open \textit{CacheSizes.xlsx}.
+Open \textit{CacheCharts.xlsx}.
 
 \subsection{Measuring Cache Level Sizes}
 
@@ -184,23 +240,23 @@ Conflict misses, in which a valid cache block must be displaced to allow
 another cache block to be placed in the cache even though a different cache
 design might have prevented the conflict; and Capacity misses, in which the
 working set is too great to fit in the cache, and no cache design could have
-prevented a conflict. The first option will increase the working set size until
-it is too great to fit in the L1 cache, and then until it is too great to fit
-in the L2 cache, and finally until it is too great to fit in the L3 cache. The
-program will measure how much CPU time your process spends waiting for data (it
-will only measure the time allotted to \textit{your} process, so other process
-running should have little effect on your measurements). We are less concerned
-with the specific amount of time, as we are with when there are noticeable
-increases in the time.
+prevented a conflict. \textit{CacheMeasurement}'s first option will increase the
+working set size until it is too great to fit in the L1 cache, and then until it
+is too great to fit in the L2 cache, and finally until it is too great to fit in
+the L3 cache. The program will measure how much CPU time your process spends
+waiting for data (it will only measure the time allotted to \textit{your}
+process, so other process running should have little effect on your
+measurements). We are less concerned with the specific amount of time, as we are
+with when there are noticeable increases in the time.
 
 Figure~\ref{fig:LaptopCache} shows a graph similar to the one you will
 produce. The figure shows the cache size measurements for an Intel Core i7
-processor in a MacBook. This particular processor has a 32KB L1 data cache
-(also a 32KB L1 instruction cache), a 256KB L2 cache, and a 2MB L3 cache. There
-are labels showing where these limits are exceeded -- other measurement
-artifacts make it difficult to discern the limit of the L1 cache, but we can
-use the chart to reasonably estimate the sizes of the L2 and L3 caches with an
-error less than a factor of 2.
+processor in a 2018 MacBook Pro. This particular processor has a 32KB L1 data
+cache (also a 32KB L1 instruction cache), a 256KB L2 cache, and a 2MB L3 cache.
+There are labels showing where these limits are exceeded -- other measurement
+artifacts make it difficult to discern the limit of the L1 cache, but we can use
+the chart to reasonably estimate the sizes of the L2 and L3 caches with an error
+less than a factor of 2.
 
 \begin{figure}
     \centering
@@ -209,13 +265,13 @@ error less than a factor of 2.
 \end{figure}
 
 Select the first option, and measure the sizes of the cache levels. Copy the
-timing data into the ``Data'' tab in \textit{CacheSizes.xlsx}, in cells C2:C52
+timing data into the ``Data'' tab in \textit{CacheCharts.xlsx}, in cells C2:C52
 (that is, under the heading ``first run''). Repeat the first option, copying
 the timing data under the ``second run'' heading. Repeat again for a third,
 fourth, and fifth run. (If you get the error ``\texttt{Cputime limit exceeded
 (core dumped)}'' then restart the program.) Save \textit{CacheCharts.xlsx}.
 
-The ``AVERAGE TIME'' column throws out the greatest and shortest measurements
+The ``AVERAGE TIME'' column throws out the longest and shortest measurements
 and then averages the remaining three measurements. These averages are plotted
 in the ``Cache Size'' tab.
 
@@ -244,20 +300,20 @@ next set of measurements will exploit this fact by increasing the access stride
 so that you can notice when there is a slight increase in timing due to the
 stride exceeding the length of a cache line.
 
-Select the second option to determinethe size of a cache line. Copy the data
-into \textit{CacheChart.xlsx}'s ``Data'' tab, cells c64:c74 (that is, under the
+Select the second option to determine the size of a cache line. Copy the data
+into \textit{CacheChart.xlsx}'s ``Data'' tab, cells C64:C74 (that is, under the
 heading ``first run''). Repeat the first option, copying the timing data under
 the ``second run'' heading. Repeat again for a third, fourth, and fifth run.
 Save \textit{CacheCharts.xlsx}.
 
-The ``AVERAGE TIME'' column throws out the greatest and shortest measurements
+The ``AVERAGE TIME'' column throws out the longest and shortest measurements
 and then averages the remaining three measurements. These averages are plotted
 in the ``Cache Line Size'' tab.
 
 If you can discern a point at which the stride exceeds a cache line, then
 estimate the size of a cache line on the Intel Xeon process, and place your
-estimate in \textit{answers.txt}. It's very likely that you won't be able to do
-so. If you cannot, then use Figure~\ref{fig:LaptopCacheLine} to estimate the
+estimate in \textit{answers.txt}. It's very possible that you won't be able to
+do so. If you cannot, then use Figure~\ref{fig:LaptopCacheLine} to estimate the
 size of a cache line on the Intel Core i7 processor, and place your estimate in
 \textit{answers.txt}.
 
@@ -289,5 +345,28 @@ This assignment is worth 10 points. \\
 
 Your conclusions do not need to be correct to receive full credit. You can
 receive full credit if your conclusions are reasonable, given your measurements.
+
+
+
+\section*{Epilogue}
+
+{\large \textbf{Post-Credits Scene}:} As an opportunity to stretch your legs,
+you decided to walk from your office at the Pleistocene Petting Zoo to Eclectic
+Electronics to personally give Herb your memory measurement data. As you
+approach Eclectic Electronics' labs, you notice that the lights are flickering,
+and sparks are dripping from the ceiling. You see that the new Cow Pi-based
+electronic lock is still holding the lab door shut squarely in its frame -- but
+the door frame has been torn from the wall and is laying askew in the hallway.
+Peeking into the lab, you see a platform, empty except for a note. The note says:
+
+\begin{center}\StickyNote[5cm]{\begin{center}
+i\textsc{Suck \\ Robot Vacuum Cleaner \\ \phantom{x}}
+\end{center}\begin{flushleft}
+CAUTION! Stuck in ``Malevolent Sentience'' mode. \\ \phantom{x} \\
+Do \underline{\underline{not}} turn on until after
+troubleshooting the problem and uploading new software.
+\end{flushleft}}[7cm]\end{center}
+
+\textit{Cut to black.}
 
 \end{document}
