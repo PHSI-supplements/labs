@@ -1,0 +1,12 @@
+# From the CLion-PlatformIO wizard
+.pio
+CMakeListsPrivate.txt
+cmake-build-*/
+
+# Exclude files not relevant to the library itself
+include/
+lib/
+test/
+CMakeLists.txt
+platformio.ini
+src/main.cpp

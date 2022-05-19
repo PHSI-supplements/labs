@@ -55,7 +55,8 @@ uint8_t * const cowpi_io_base = (uint8_t *)0x20;
 #elif defined ARDUINO_AVR_NANO_EVERY
 uint8_t * const cowpi_io_base = (uint8_t *)0x0;
 #error Arduino Nano Every is not yet supported for CowPi
-#elif defined ARDUINO_ARDUINO_NANO33BLE
+#elif defined ARDUINO_NANO33BLE
+// double-check whether Nano 33 BLE Sense is a distinct board wrt IDE
 #error Arduino Nano 33 BLE is not yet supported for CowPi
 #elif defined ARDUINO_SAMD_NANO_33_IOT
 #error Arduino Nano 33 IOT is not yet supported for CowPi
