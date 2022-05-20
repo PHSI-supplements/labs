@@ -15,6 +15,7 @@
 
 uint8_t *const cowpi_io_base = (uint8_t *) 0x20;
 
+
 #define cowpi_spi_enable do {                           \
     /* Enable SPI, Controller, set clock rate fck/16 */ \
     SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);      \
@@ -24,12 +25,16 @@ uint8_t *const cowpi_io_base = (uint8_t *) 0x20;
     SPCR = 0;                                           \
 } while(0)
 
-#define D8_D13    0                 // PINB/DDRB/PORTB / PCMSK0
-#define A0_A5     1                 // PINC/DDRC/PORTC / PCMSK1
-#define D0_D7     2                 // PIND/DDRD/PORTD / PCMSK2
+
 #define COWPI_PB  0                 // PINB/DDRB/PORTB / PCMSK0
+#define D8_D13    0
 #define COWPI_PC  1                 // PINC/DDRC/PORTC / PCMSK1
+#define A0_A5     1
+#define D14_D19   1
+#define A0_A7     1
+#define D14_D21   1
 #define COWPI_PD  2                 // PIND/DDRD/PORTD / PCMSK2
+#define D0_D7     2
 
 typedef struct {
     uint8_t input;                      // PINx

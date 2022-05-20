@@ -1,0 +1,56 @@
+# DATATYPES
+
+cowpi_ioport_t	KEYWORD1
+cowpi_spi_t	KEYWORD1
+cowpi_i2c_t	KEYWORD1
+cowpi_pininterrupt_t	KEYWORD1
+cowpi_timer8bit_t	KEYWORD1
+cowpi_timer16bit_t	KEYWORD1
+
+
+# FUNCTIONS
+
+cowpi_setup	KEYWORD2
+cowpi_stdio_setup	KEYWORD2
+cowpi_get_keypress	KEYWORD2
+cowpi_left_button_is_pressed	KEYWORD2
+cowpi_right_button_is_pressed	KEYWORD2
+cowpi_left_switch_in_left_position	KEYWORD2
+cowpi_right_switch_in_left_position	KEYWORD2
+cowpi_left_switch_in_right_position	KEYWORD2
+cowpi_right_switch_in_right_position	KEYWORD2
+cowpi_illuminate_led	KEYWORD2
+cowpi_deluminate_led	KEYWORD2
+cowpi_max7219_send	KEYWORD2
+cowpi_max7219_shutdown()	KEYWORD2
+cowpi_max7219_startup()	KEYWORD2
+cowpi_max7219_no_decode()	KEYWORD2
+cowpi_max7219_bcd_decode()	KEYWORD2
+cowpi_max7219_set_intensity	KEYWORD2
+cowpi_lcd1602_spi_send	KEYWORD2
+
+
+# CODE STRUCTURES (kind of)
+
+cowpi_spi_enable	KEYWORD3
+cowpi_spi_disable	KEYWORD3
+
+
+# CONSTANTS
+
+cowpi_io_base	LITERAL1
+
+SPI	LITERAL1
+I2C	LITERAL1
+MAX7219	LITERAL1
+LCD1602	LITERAL1
+
+COWPI_PB
+COWPI_PC
+COWPI_PD
+A0_A5
+A0_A7
+D0_D7
+D8_D13
+D14_D19
+D14_D21

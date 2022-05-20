@@ -3,15 +3,14 @@
  */
 
 /******************************************************************************
- * This header provides the base address for memory-mapped I/O and
- * data structures to conveniently access the I/O registers.
+ * This header organizes the other headers.
  ******************************************************************************/
 
 #ifndef COWPI_H
 #define COWPI_H
 
 #include <Arduino.h>
-
+#include "cowpi_max7219.h"
 
 /* Public-facing function prototypes */
 
@@ -21,8 +20,6 @@ extern "C" {
 void cowpi_setup(unsigned int configuration);
 void cowpi_stdio_setup(unsigned long baud);
 char cowpi_get_keypress();
-void cowpi_send_data_to_max7219(uint8_t address, uint8_t value);
-void cowpi_send_data_to_spi_lcd1602(uint8_t address, uint8_t value);
 bool cowpi_left_button_is_pressed();
 bool cowpi_right_button_is_pressed();
 bool cowpi_left_switch_in_left_position();
@@ -31,6 +28,7 @@ bool cowpi_left_switch_in_right_position();
 bool cowpi_right_switch_in_right_position();
 void cowpi_illuminate_led();
 void cowpi_deluminate_led();
+void cowpi_lcd1602_spi_send(uint8_t address, uint8_t data);
 #ifdef __cplusplus
 } // extern "C"
 #endif

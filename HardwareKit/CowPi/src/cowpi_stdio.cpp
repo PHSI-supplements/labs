@@ -10,6 +10,7 @@ static FILE *serial_monitor;
 static int cowpi_getc(FILE *stream);
 static int cowpi_putc(char c, FILE *stream);
 
+
 void cowpi_stdio_setup(unsigned long baud) {
     Serial.begin(baud);
     fdev_setup_stream(serial_monitor, cowpi_putc, cowpi_getc, _FDEV_SETUP_RW);
@@ -18,7 +19,7 @@ void cowpi_stdio_setup(unsigned long baud) {
 }
 
 static int cowpi_getc(FILE *stream) {
-    while(!Serial.available()) {}
+    while (!Serial.available()) {}
     return Serial.read();
 }
 
