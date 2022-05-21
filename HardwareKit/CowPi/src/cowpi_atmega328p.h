@@ -11,18 +11,20 @@
 #define COWPI_ATMEGA328P_H
 
 #include <Arduino.h>
+#include "cowpi_internal.h"
 
 
 uint8_t *const cowpi_io_base = (uint8_t *) 0x20;
 
 
-#define cowpi_spi_enable do {                           \
-    /* Enable SPI, Controller, set clock rate fck/16 */ \
-    SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);      \
+#define cowpi_spi_enable do {                                                               \
+    /* Enable SPI, Controller, set clock rate fck/16 */                                     \
+    SPCR = cowpi_lcd1602_adafruit ? (1 << SPE) | (1 << DORD) | (1 << MSTR) | (1 << SPR0)    \
+                                  : (1 << SPE) |               (1 << MSTR) | (1 << SPR0);   \
 } while(0)
 
-#define cowpi_spi_disable do {                          \
-    SPCR = 0;                                           \
+#define cowpi_spi_disable do {                                                              \
+    SPCR = 0;                                                                               \
 } while(0)
 
 
@@ -35,6 +37,7 @@ uint8_t *const cowpi_io_base = (uint8_t *) 0x20;
 #define D14_D21   1
 #define COWPI_PD  2                 // PIND/DDRD/PORTD / PCMSK2
 #define D0_D7     2
+
 
 typedef struct {
     uint8_t input;                      // PINx

@@ -27,7 +27,10 @@ cowpi_max7219_startup()	KEYWORD2
 cowpi_max7219_no_decode()	KEYWORD2
 cowpi_max7219_bcd_decode()	KEYWORD2
 cowpi_max7219_set_intensity	KEYWORD2
-cowpi_lcd1602_spi_send	KEYWORD2
+cowpi_lcd1602_spi_place_character	KEYWORD2
+cowpi_lcd1602_spi_send_command	KEYWORD2
+cowpi_lcd1602_spi_send_character	KEYWORD2
+cowpi_lcd1602_clear_display	KEYWORD2
 
 
 # CODE STRUCTURES (kind of)

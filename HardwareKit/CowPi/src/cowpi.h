@@ -11,6 +11,7 @@
 
 #include <Arduino.h>
 #include "cowpi_max7219.h"
+#include "cowpi_lcd1602.h"
 
 /* Public-facing function prototypes */
 
@@ -28,7 +29,6 @@ bool cowpi_left_switch_in_right_position();
 bool cowpi_right_switch_in_right_position();
 void cowpi_illuminate_led();
 void cowpi_deluminate_led();
-void cowpi_lcd1602_spi_send(uint8_t address, uint8_t data);
 #ifdef __cplusplus
 } // extern "C"
 #endif
@@ -40,6 +40,7 @@ void cowpi_lcd1602_spi_send(uint8_t address, uint8_t data);
 #define I2C                     0x02
 #define MAX7219                 0x80
 #define LCD1602                 0x40
+#define LCD1602_ADAFRUIT        0x20
 
 
 /* Board-specific definitions */

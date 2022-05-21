@@ -3,12 +3,13 @@
  */
 
 /******************************************************************************
- * This header has utility functions for peripherals driven by MAX7219.
+ * Utility functions for peripherals driven by MAX7219.
  ******************************************************************************/
 
 #ifndef COWPI_MAX7219_H
 #define COWPI_MAX7219_H
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,26 +23,5 @@ void cowpi_max7219_set_intensity(uint8_t intensity);
 #ifdef __cplusplus
 } // extern "C"
 #endif
-
-
-inline void cowpi_max7219_shutdown() {
-    cowpi_max7219_send(0xC, 0);
-}
-
-inline void cowpi_max7219_startup() {
-    cowpi_max7219_send(0xC, 1);
-}
-
-inline void cowpi_max7219_no_decode() {
-    cowpi_max7219_send(0x9, 0);
-}
-
-inline void cowpi_max7219_bcd_decode() {
-    cowpi_max7219_send(0x9, 0xF);
-}
-
-inline void cowpi_max7219_set_intensity(uint8_t intensity) {
-    cowpi_max7219_send(0xA, intensity & 0xF);
-}
 
 #endif //COWPI_MAX7219_H
