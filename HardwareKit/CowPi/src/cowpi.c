@@ -6,15 +6,15 @@
 #include "cowpi_internal.h"
 
 
-bool cowpi_lcd1602_adafruit = false;    // global variable definition
+bool cowpi_spi_lsbfirst = false;        // global variable definition
 
 
 /******************************************************************************
  * Setup functions
  ******************************************************************************/
 
-static void cowpi_setup_max7219();
-static void cowpi_setup_lcd1602();
+static void cowpi_setup_max7219(unsigned int configuration);
+static void cowpi_setup_lcd1602(unsigned int configuration);
 
 void cowpi_setup(unsigned int configuration) {
     /* Simple I/O */
@@ -57,15 +57,19 @@ void cowpi_setup(unsigned int configuration) {
         pinMode(SCL, OUTPUT);   // likewise with D19 aka A5 and SCL
     }
     if (configuration & MAX7219) {
-        cowpi_setup_max7219();
+        cowpi_spi_lsbfirst = false;
+        cowpi_setup_max7219(configuration);
     }
-    if ((configuration & LCD1602) || (configuration & LCD1602_ADAFRUIT)) {
-        cowpi_lcd1602_adafruit = configuration & LCD1602_ADAFRUIT ? true : false;
-        cowpi_setup_lcd1602();
+    if (configuration & LCD1602) {
+        cowpi_spi_lsbfirst = true;  // if this is SPI, done; if this is I2C, who cares?
+        cowpi_setup_lcd1602(configuration);
     }
 }
 
-static void cowpi_setup_max7219() {
+static void cowpi_setup_max7219(unsigned int configuration) {
+    if (!(configuration & SPI)) {
+        cowpi_configuration_error;
+    }
     /* Clear all digit registers */
     for (int i = 1; i <= 8; i++) {
         cowpi_max7219_send(i, 0);
@@ -82,20 +86,23 @@ static void cowpi_setup_max7219() {
     cowpi_max7219_send(0xF, 0);
 }
 
-static void cowpi_setup_lcd1602() {
+static void cowpi_setup_lcd1602(unsigned int configuration) {
+    if (!(configuration & (SPI | I2C))) {
+        cowpi_configuration_error;
+    }
     /* HD44780U datasheet says LCD needs 40ms after Vcc=2.7V, or 15ms after Vcc=4.5V */
     delayMicroseconds(12500);   // Don't want to use delay(50) just in case interrupts are disabled.
     delayMicroseconds(12500);   // Don't want to use delayMicroseconds(50000) because that's 3x longer than
     delayMicroseconds(12500);   // delayMicroseconds is safe for. Note that 16383 == 2**14 - 1 -- this suggests
     delayMicroseconds(12500);   // that while there will be some drift, the real problem is integer overflow
     /* Place in 4-bit mode because 74HC595 is an 8-bit shift register, and we need RS & EN bits, too */
-    cowpi_lcd1602_spi_4bit_mode();
+    cowpi_lcd1602_spi_4bit_mode(configuration);
     /* 4-bit mode, 2 line display, 5x8 dot matrix */
-    cowpi_lcd1602_spi_send_command(0x28);
-    /* with each character: increment location, do not shift display */
-    cowpi_lcd1602_spi_send_command(0x06);
-    /* display on, cursor off, no blink */
-    cowpi_lcd1602_spi_send_command(0x0C);
+    cowpi_lcd1602_send_command(0x28);
+    /* with each character: increment location, do not shift display (0x06) */
+    cowpi_lcd1602_send_command(LCDENTRY_CURSORMOVESRIGHT | LCDENTRY_TEXTNOSHIFT);
+    /* display on, cursor off, no blink (0x0C) */
+    cowpi_lcd1602_send_command(LCDONOFF_DISPLAYON | LCDONOFF_CURSOROFF | LCDONOFF_BLINKOFF);
     /* clear display */
     cowpi_lcd1602_clear_display();
 }

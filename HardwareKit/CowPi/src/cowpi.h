@@ -40,7 +40,6 @@ void cowpi_deluminate_led();
 #define I2C                     0x02
 #define MAX7219                 0x80
 #define LCD1602                 0x40
-#define LCD1602_ADAFRUIT        0x20
 
 
 /* Board-specific definitions */
