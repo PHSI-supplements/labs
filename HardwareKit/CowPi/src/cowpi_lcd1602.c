@@ -7,14 +7,15 @@
  ******************************************************************************/
 
 #include <Arduino.h>
-#include "cowpi.h"
+#include "cowpi_setup.h"
 #include "cowpi_lcd1602.h"
 #include "cowpi_internal.h"
 
 
 /* we'll need these when we incorporate backlight control */
-static uint8_t last_command;
-static bool backlit;
+#define ENTRY_MODE_MARKER 0x4
+static uint8_t last_entry_mode = ENTRY_MODE_MARKER;
+static bool is_backlit = false;
 
 
 static void (*cowpi_lcd1602_send_halfbyte)(uint8_t halfbyte, bool is_command);  // hmm... if we expose this then students could simply implement send_halfbyte() and assign the function pointer
@@ -34,12 +35,24 @@ void cowpi_lcd1602_spi_place_cursor(uint8_t address) {
 void cowpi_lcd1602_send_command(uint8_t command) {
     cowpi_lcd1602_send_halfbyte((command >> 4) & 0xF, true);
     cowpi_lcd1602_send_halfbyte( command       & 0xF, true);
-    delayMicroseconds(50);      // most commands require 37us-38us according to various datasheets
+    if (command & ENTRY_MODE_MARKER) {
+        last_entry_mode = command;
+    }
+    delayMicroseconds(50);      // most commands require 37us-38us according to various datasheets; the exceptions have their own functions
 }
 
 void cowpi_lcd1602_send_character(uint8_t data) {
     cowpi_lcd1602_send_halfbyte((data >> 4) & 0xF, false);
     cowpi_lcd1602_send_halfbyte( data       & 0xF, false);
+    delayMicroseconds(50);      // HD44780U datasheet says 41us (37+4) needed until character is updated and ddram address is updated; SPLC780D simply says 38us
+}
+
+void cowpi_lcd1602_create_character(uint8_t encoding, uint8_t pixel_vector[8]) {
+    uint8_t cgram_start = (encoding & 0x7) << 3;
+    for (int row = 0; row < 8; row++) {
+        cowpi_lcd1602_send_command((cgram_start + row) | 0x40);
+        cowpi_lcd1602_send_character(pixel_vector[row]);
+    }
 }
 
 void cowpi_lcd1602_clear_display() {
@@ -53,7 +66,8 @@ void cowpi_lcd1602_return_home() {
 }
 
 void cowpi_lcd1602_set_backlight(bool backlight_on) {
-    ;   // not yet implemented; safe to ignore for now since some hardware configurations will ignore it always
+    is_backlit = backlight_on;
+    cowpi_lcd1602_send_command(last_entry_mode);
 }
 
 void cowpi_lcd1602_spi_4bit_mode(unsigned int configuration) {
@@ -80,24 +94,32 @@ void cowpi_lcd1602_spi_4bit_mode(unsigned int configuration) {
 
 static void cowpi_lcd1602_send_halfbyte_spi(uint8_t halfbyte, bool is_command) {
     // we'll use the AdaFruit mapping
+    /* LSB    QH  QG  QF  QE  QD  QC  QB  QA  MSB *
+     * LSB  LITE  D4  D5  D6  D7  EN  RS  xx  MSB */
     uint8_t rs = is_command ? 0 : 1 << 6;
     uint8_t en = 1 << 5;
-    uint8_t packet = rs | (halfbyte << 1);
+    uint8_t packet = rs | (halfbyte << 1) | (is_backlit ? 1 : 0);
     // place data on the line
     digitalWrite(10, LOW);
     shiftOut(MOSI, SCK, LSBFIRST, packet);
     digitalWrite(10, HIGH);
     // pulse
-    delayMicroseconds(1); // lady ada's value -- tom alby doesn't have a delay here. Come to think of it, he doesn't send halfbyte then pulse. His comment: "there is a setup time for RS before the rising ede of EN which is easily met because RS is set before calling the function There is a setup time for the data before the falling edge of EN which is also met by setting up the data before the pulse
     digitalWrite(10, LOW);
     shiftOut(MOSI, SCK, LSBFIRST, packet | en);
     digitalWrite(10, HIGH);
-//    delayMicroseconds(100); // lady ada notes that commands need > 37 us to settle -- 100us is overkill
-                            // I took care of the 37-38us in send_command()
+    // Tom Alby uses NOPs to get to create an exact 0.5us pulse (6 NOPs (6 cycles) + 1 memory write (2 cycles) = 0.5us)
+    // but that isn't portable (also: AVR docs say to use _delay_ms() or _delay_us(), which also aren't portable)
+    delayMicroseconds(1);
+    // I don't think we need to preserve the data, but no harm / no foul
+    digitalWrite(10, LOW);
+    shiftOut(MOSI, SCK, LSBFIRST, packet);
+    digitalWrite(10, HIGH);
 }
 
 static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
-    // this mapping seems typical
-    // except that we haven't implemented it yet
-    cowpi_configuration_error;
+    // this mapping seems works with AdaFruit's I2C interfaces and with the EE Shop's cheaper I2C interface
+    /* MSB   GP7 GP6 GP5 GP4 GP3 GP2 GP1 GP0  LSB *
+     * MSB  LITE  D7  D6  D5  D4  EN  RS  xx  LSB */
+    cowpi_configuration_error;  // except that we haven't implemented it yet,
+                                // and I'm not sure that I want to
 }

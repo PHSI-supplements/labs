@@ -10,6 +10,7 @@
 #define COWPI_H
 
 #include <Arduino.h>
+#include "cowpi_setup.h"
 #include "cowpi_max7219.h"
 #include "cowpi_lcd1602.h"
 
@@ -18,8 +19,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-void cowpi_setup(unsigned int configuration);
-void cowpi_stdio_setup(unsigned long baud);
 char cowpi_get_keypress();
 bool cowpi_left_button_is_pressed();
 bool cowpi_right_button_is_pressed();
@@ -32,14 +31,6 @@ void cowpi_deluminate_led();
 #ifdef __cplusplus
 } // extern "C"
 #endif
-
-
-/* Use to create argument to cowpi_setup() */
-
-#define SPI                     0x01
-#define I2C                     0x02
-#define MAX7219                 0x80
-#define LCD1602                 0x40
 
 
 /* Board-specific definitions */

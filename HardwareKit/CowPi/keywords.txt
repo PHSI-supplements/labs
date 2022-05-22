@@ -31,6 +31,7 @@ cowpi_lcd1602_place_character	KEYWORD2
 cowpi_lcd1602_spi_place_cursor	KEYWORD2
 cowpi_lcd1602_send_command	KEYWORD2
 cowpi_lcd1602_send_character	KEYWORD2
+cowpi_lcd1602_create_character	KEYWORD2
 cowpi_lcd1602_clear_display	KEYWORD2
 cowpi_lcd1602_return_home	KEYWORD2
 cowpi_lcd1602_set_backlight	KEYWORD2
