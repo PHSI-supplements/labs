@@ -17,7 +17,7 @@ extern bool cowpi_spi_lsbfirst;
 #ifdef __cplusplus
 extern "C" {
 #endif
-void cowpi_lcd1602_spi_4bit_mode(unsigned int configuration);
+void cowpi_lcd1602_set_4bit_mode(unsigned int configuration);
 #ifdef __cplusplus
 } // extern "C"
 #endif

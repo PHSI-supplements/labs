@@ -20,10 +20,12 @@ void cowpi_stdio_setup(unsigned long baud);
 
 /* Use to create argument to cowpi_setup() */
 
-#define SPI                     0x01
-#define I2C                     0x02
-#define MAX7219                 0x80
-#define LCD1602                 0x40
+#define SPI                     0x01u
+#define I2C                     0x02u
+#define IIC                     0x02u
+#define TWI                     0x02u
+#define MAX7219                 0x80u
+#define LCD1602                 0x40u
 
 
 #endif //COWPI_SETUP_H

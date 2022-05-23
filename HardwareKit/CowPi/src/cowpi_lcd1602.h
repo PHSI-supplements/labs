@@ -11,9 +11,12 @@
 
 #include <stdint.h>
 
+extern void (*cowpi_lcd1602_send_halfbyte)(uint8_t halfbyte, bool is_command);  // we can hide this again by parameterizing cowpi_initialize_i2c with the function and the address -- thereby also making cowpi_i2c_peripheral_address non-global
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+void cowpi_initialize_i2c_lcd1602(uint8_t peripheral_address, void (*send_halfbyte_function)(uint8_t halfbyte, bool is_command));
 void cowpi_lcd1602_place_character(uint8_t address, uint8_t data);
 void cowpi_lcd1602_spi_place_cursor(uint8_t address);
 void cowpi_lcd1602_send_command(uint8_t command);

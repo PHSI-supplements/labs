@@ -6,7 +6,7 @@
 #include "cowpi_internal.h"
 
 
-bool cowpi_spi_lsbfirst = false;        // global variable definition
+bool cowpi_spi_lsbfirst = false;                // global variable definition
 
 
 /******************************************************************************
@@ -47,6 +47,9 @@ void cowpi_setup(unsigned int configuration) {
         pinMode(10, OUTPUT);    // we'll always use 10 for chip select when using SPI
         pinMode(MOSI, OUTPUT);  // but 11 isn't COPI for Mega2560
         pinMode(SCK, OUTPUT);   // and 13 isn't SCK for Mega2560
+        digitalWrite(10, HIGH);
+        digitalWrite(MOSI, LOW);
+        digitalWrite(SCK, LOW);
         /* Enabling and disabling SPI must happen just-in-time
          * because enabling SPI overrides DDR for CIPO pin
          * (D12 except on Mega), setting it to input.
@@ -55,13 +58,17 @@ void cowpi_setup(unsigned int configuration) {
     if (configuration & I2C) {
         pinMode(SDA, OUTPUT);   // similarly, D18 aka A4 isn't SDA on Mega2560
         pinMode(SCL, OUTPUT);   // likewise with D19 aka A5 and SCL
+        digitalWrite(SDA, HIGH);
+        digitalWrite(SCL, HIGH);
+        /* Initialize I2C separately in case we're
+         * using a bit-bang implementation */
     }
     if (configuration & MAX7219) {
         cowpi_spi_lsbfirst = false;
         cowpi_setup_max7219(configuration);
     }
     if (configuration & LCD1602) {
-        cowpi_spi_lsbfirst = true;  // if this is SPI, done; if this is I2C, who cares?
+        cowpi_spi_lsbfirst = true;          // if this is SPI, done; if this is I2C, who cares?
         cowpi_setup_lcd1602(configuration);
     }
 }
@@ -96,7 +103,7 @@ static void cowpi_setup_lcd1602(unsigned int configuration) {
     delayMicroseconds(12500);   // delayMicroseconds is safe for. Note that 16383 == 2**14 - 1 -- this suggests
     delayMicroseconds(12500);   // that while there will be some drift, the real problem is integer overflow
     /* Place in 4-bit mode because 74HC595 is an 8-bit shift register, and we need RS & EN bits, too */
-    cowpi_lcd1602_spi_4bit_mode(configuration);
+    cowpi_lcd1602_set_4bit_mode(configuration);
     /* 4-bit mode, 2 line display, 5x8 dot matrix */
     cowpi_lcd1602_send_command(0x28);
     /* with each character: increment location, do not shift display (0x06) */
@@ -169,12 +176,20 @@ bool cowpi_right_switch_in_right_position() {
     return cowpi_switch_in_right_position(19, 11);
 }
 
-void cowpi_illuminate_led() {
+void cowpi_illuminate_external_led() {
     digitalWrite(12, HIGH);
 }
 
-void cowpi_deluminate_led() {
+void cowpi_illuminate_internal_led() {
+    digitalWrite(13, HIGH);
+}
+
+void cowpi_deluminate_external_led() {
     digitalWrite(12, LOW);
+}
+
+void cowpi_deluminate_internal_led() {
+    digitalWrite(13, LOW);
 }
 
 static inline bool cowpi_pin_is_output(uint8_t pin) {

@@ -17,17 +17,27 @@
 uint8_t *const cowpi_io_base = (uint8_t *) 0x20;
 
 
-#define cowpi_spi_enable do {                                                               \
-    /* Enable SPI, Controller, set clock rate fck/16 */                                     \
-    SPCR = cowpi_spi_lsbfirst   ? (1 << SPE) | (1 << DORD) | (1 << MSTR) | (1 << SPR0)      \
-                                : (1 << SPE) |               (1 << MSTR) | (1 << SPR0);     \
-    /* By repeating myself, both constants will be generated at compile time */             \
+#define cowpi_spi_enable do {                                                                           \
+    /* Enable SPI, Controller, set clock rate fck/16 [1MHz] */                                          \
+    SPCR = cowpi_spi_lsbfirst   ? (1 << SPE) | (1 << DORD) | (1 << MSTR) | (1 << SPR0)                  \
+                                : (1 << SPE) |               (1 << MSTR) | (1 << SPR0);                 \
+    /* By repeating myself, both constants will be generated at compile time */                         \
 } while(0)
 
-#define cowpi_spi_disable do {                                                              \
-    SPCR = 0;                                                                               \
+#define cowpi_spi_disable do {                                                                          \
+    SPCR = 0;                                                                                           \
 } while(0)
 
+#define cowpi_initialize_i2c do {                                                                       \
+    /* Set SCL Frequency [100kHz] = CPU Clock Frequency [16MHz] / (16 + 2 * TWBR * prescaler [1]) */    \
+    TWBR = 72;                                                                                          \
+    TWSR &= ~((1 << TWPS1) | (1 << TWPS0));                                                             \
+    /* We won't rely on interrupts since students will work with display before knowing interrupts. */  \
+    /* We're also not going to enable acknowledgements: the basic labs will only use                    \
+     * controller-transmitter mode, and without interrupts we can't honor the ACK anyway. */            \
+    /* So we'll just enable TWI */                                                                      \
+    TWCR = (1 << TWEN) | (1 << TWEA);                                                                   \
+} while(0)
 
 #define COWPI_PB  0                 // PINB/DDRB/PORTB / PCMSK0
 #define D8_D13    0

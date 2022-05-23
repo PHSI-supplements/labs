@@ -16,12 +16,23 @@
 #define ENTRY_MODE_MARKER 0x4
 static uint8_t last_entry_mode = ENTRY_MODE_MARKER;
 static bool is_backlit = false;
+static uint8_t i2c_address;
 
 
-static void (*cowpi_lcd1602_send_halfbyte)(uint8_t halfbyte, bool is_command);  // hmm... if we expose this then students could simply implement send_halfbyte() and assign the function pointer
+void (*cowpi_lcd1602_send_halfbyte)(uint8_t halfbyte, bool is_command) = NULL;
+
+
 static void cowpi_lcd1602_send_halfbyte_spi(uint8_t halfbyte, bool is_command);
 static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command);
 
+
+void cowpi_initialize_i2c_lcd1602(uint8_t peripheral_address, void (*send_halfbyte_function)(uint8_t halfbyte, bool is_command)) {
+    if ((peripheral_address < 8) || (peripheral_address > 127)) {
+        cowpi_configuration_error;
+    }
+    i2c_address = peripheral_address;
+    cowpi_lcd1602_send_halfbyte = send_halfbyte_function;
+}
 
 void cowpi_lcd1602_place_character(uint8_t address, uint8_t data) {
     cowpi_lcd1602_spi_place_cursor(address);
@@ -70,7 +81,7 @@ void cowpi_lcd1602_set_backlight(bool backlight_on) {
     cowpi_lcd1602_send_command(last_entry_mode);
 }
 
-void cowpi_lcd1602_spi_4bit_mode(unsigned int configuration) {
+void cowpi_lcd1602_set_4bit_mode(unsigned int configuration) {
     if (configuration & SPI) {
         cowpi_lcd1602_send_halfbyte = cowpi_lcd1602_send_halfbyte_spi;
     } else if (configuration & I2C) {
@@ -120,6 +131,62 @@ static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
     // this mapping seems works with AdaFruit's I2C interfaces and with the EE Shop's cheaper I2C interface
     /* MSB   GP7 GP6 GP5 GP4 GP3 GP2 GP1 GP0  LSB *
      * MSB  LITE  D7  D6  D5  D4  EN  RS  xx  LSB */
-    cowpi_configuration_error;  // except that we haven't implemented it yet,
-                                // and I'm not sure that I want to
+//    cowpi_configuration_error;  // except that we haven't implemented it yet
+    uint8_t mask;
+    digitalWrite(SDA, HIGH);
+    digitalWrite(SCL, HIGH);    // should already be HIGH, but let's go with it
+    delayMicroseconds(10);      // just to be sure
+    // Start
+    digitalWrite(SDA, LOW);
+    delayMicroseconds(5);      // various hold times all seem to be shorter than 5us
+    digitalWrite(SCL, LOW);
+    delayMicroseconds(10);
+    // Place peripheral address on the line
+    mask = 0x40;
+    for (int i = 0; i < 7; i++) {
+        digitalWrite(SDA, (i2c_address & mask) >> (7 - i));
+        delayMicroseconds(5);
+        digitalWrite(SCL, HIGH);
+        delayMicroseconds(10);
+        digitalWrite(SCL, LOW);
+        delayMicroseconds(5);   // We're giving this the rough equivalent of a 50kHz clock
+        mask >>= 1;
+    }
+    // R/W = write
+    digitalWrite(SDA, LOW);
+    delayMicroseconds(5);
+    digitalWrite(SCL, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(SCL, LOW);
+    delayMicroseconds(5);
+    // Take the line low, so we can listen for ACK (but we won't actually listen)
+    digitalWrite(SDA, LOW);
+    delayMicroseconds(5);
+    digitalWrite(SCL, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(SCL, LOW);
+    delayMicroseconds(5);
+    // Place data on the line
+    mask = 0x80;
+    for (int i = 0; i < 8; i++) {
+        digitalWrite(SDA, (halfbyte & mask) >> (8 - i));
+        delayMicroseconds(5);
+        digitalWrite(SCL, HIGH);
+        delayMicroseconds(10);
+        digitalWrite(SCL, LOW);
+        delayMicroseconds(5);
+        mask >>= 1;
+    }
+    // Take the line low, so we can listen for ACK (but we won't actually listen)
+    digitalWrite(SDA, LOW);
+    delayMicroseconds(5);
+    digitalWrite(SCL, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(SCL, LOW);
+    delayMicroseconds(5);
+    // Stop (we probably should create a "send byte" function that has a Restart between the halfbytes)
+    delayMicroseconds(5);
+    digitalWrite(SCL, HIGH);
+    delayMicroseconds(5);
+    digitalWrite(SDA, HIGH);
 }

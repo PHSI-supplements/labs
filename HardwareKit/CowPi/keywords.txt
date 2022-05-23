@@ -19,8 +19,10 @@ cowpi_left_switch_in_left_position	KEYWORD2
 cowpi_right_switch_in_left_position	KEYWORD2
 cowpi_left_switch_in_right_position	KEYWORD2
 cowpi_right_switch_in_right_position	KEYWORD2
-cowpi_illuminate_led	KEYWORD2
-cowpi_deluminate_led	KEYWORD2
+cowpi_illuminate_external_led	KEYWORD2
+cowpi_illuminate_internal_led	KEYWORD2
+cowpi_deluminate_external_led	KEYWORD2
+cowpi_deluminate_internal_led	KEYWORD2
 cowpi_max7219_send	KEYWORD2
 cowpi_max7219_shutdown()	KEYWORD2
 cowpi_max7219_startup()	KEYWORD2
@@ -35,12 +37,14 @@ cowpi_lcd1602_create_character	KEYWORD2
 cowpi_lcd1602_clear_display	KEYWORD2
 cowpi_lcd1602_return_home	KEYWORD2
 cowpi_lcd1602_set_backlight	KEYWORD2
+cowpi_initialize_i2c_lcd1602	KEYWORD2
 
 
 # CODE STRUCTURES (kind of)
 
 cowpi_spi_enable	KEYWORD3
 cowpi_spi_disable	KEYWORD3
+cowpi_initialize_i2c	KEYWORD3
 
 
 # CONSTANTS
@@ -49,6 +53,8 @@ cowpi_io_base	LITERAL1
 
 SPI	LITERAL1
 I2C	LITERAL1
+IIC	LITERAL1
+TWI	LITERAL1
 MAX7219	LITERAL1
 LCD1602	LITERAL1
 

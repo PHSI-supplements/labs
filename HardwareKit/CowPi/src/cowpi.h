@@ -26,8 +26,10 @@ bool cowpi_left_switch_in_left_position();
 bool cowpi_right_switch_in_left_position();
 bool cowpi_left_switch_in_right_position();
 bool cowpi_right_switch_in_right_position();
-void cowpi_illuminate_led();
-void cowpi_deluminate_led();
+void cowpi_illuminate_external_led();
+void cowpi_illuminate_internal_led();
+void cowpi_deluminate_external_led();
+void cowpi_deluminate_internal_led();
 #ifdef __cplusplus
 } // extern "C"
 #endif
