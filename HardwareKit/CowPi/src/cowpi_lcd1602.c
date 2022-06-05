@@ -77,15 +77,17 @@ void cowpi_lcd1602_set_backlight(bool backlight_on) {
 void cowpi_lcd1602_set_4bit_mode(unsigned int configuration) {
     uint8_t i2c_address = cowpi_get_display_i2c_address();
     if ((i2c_address < 8) || (i2c_address > 127)) {
-        cowpi_error("I2C Peripheral address must be between 8 and 127, inclusive.");
+        char s[61];
+        cowpi_error(strcpy_P(s, PSTR("I2C Peripheral address must be between 8 and 127, inclusive.")));
     } else if (!cowpi_lcd1602_send_halfbyte) {
         if (configuration & SPI) {
             cowpi_lcd1602_send_halfbyte = cowpi_lcd1602_send_halfbyte_spi;
         } else if (configuration & I2C) {
             cowpi_lcd1602_send_halfbyte = cowpi_lcd1602_send_halfbyte_i2c;
         } else {
-            cowpi_error("CowPi must use a serial protocol with LCD1602. "
-                        "Use `cowpi_setup(LCD1602 | SPI);` or `cowpi_setup(LCD1602 | I2C);`.");
+            char s[115];
+            cowpi_error(strcpy_P(s, PSTR("CowPi must use a serial protocol with LCD1602. "
+                                         "Use `cowpi_setup(LCD1602 | SPI);` or `cowpi_setup(LCD1602 | I2C);`.")));
             // That may not always be the case -- for example, Arduino Mega 2560, Raspberry Pi, or Raspberry Pi Pico
         }
     }
@@ -150,7 +152,8 @@ static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
         en = 1 << 2;
         packet = rs | (halfbyte << 4) | (is_backlit ? 1 << 3 : 0);
     } else {
-        cowpi_error("CowPi only knows ADAFRUIT and WOKWI dialects for I2C-to-LCD1602 mapping.");
+        char s[73];
+        cowpi_error(strcpy_P(s, PSTR("CowPi only knows ADAFRUIT and WOKWI dialects for I2C-to-LCD1602 mapping.")));
     }
 /*
     // start bit

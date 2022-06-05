@@ -87,7 +87,8 @@ unsigned int cowpi_get_display_dialect() {
 
 void cowpi_set_display_i2c_address(uint8_t peripheral_address) {
     if ((peripheral_address < 8) || (peripheral_address > 127)) {
-        cowpi_error("I2C Peripheral address must be between 8 and 127, inclusive.");
+        char s[61];
+        cowpi_error(strcpy_P(s, PSTR("I2C Peripheral address must be between 8 and 127, inclusive.")));
     }
     display_i2c_address = peripheral_address;
 }
@@ -98,7 +99,8 @@ uint8_t cowpi_get_display_i2c_address() {
 
 static void cowpi_setup_max7219(unsigned int configuration) {
     if (!(configuration & SPI)) {
-        cowpi_error("MAX7219 can only be used with SPI protocol. Use `cowpi_setup(MAX7219 | SPI);`.");
+        char s[79];
+        cowpi_error(strcpy_P(s, PSTR("MAX7219 can only be used with SPI protocol. Use `cowpi_setup(MAX7219 | SPI);`.")));
     }
     /* Clear all digit registers */
     for (int i = 1; i <= 8; i++) {
@@ -118,8 +120,9 @@ static void cowpi_setup_max7219(unsigned int configuration) {
 
 static void cowpi_setup_lcd1602(unsigned int configuration) {
     if (!(configuration & (SPI | I2C))) {
-        cowpi_error("CowPi must use a serial protocol with LCD1602. "
-                    "Use `cowpi_setup(LCD1602 | SPI);` or `cowpi_setup(LCD1602 | I2C);`.");
+        char s[115];
+        cowpi_error(strcpy_P(s, PSTR("CowPi must use a serial protocol with LCD1602. "
+                                     "Use `cowpi_setup(LCD1602 | SPI);` or `cowpi_setup(LCD1602 | I2C);`.")));
         // That may not always be the case -- for example, Arduino Mega 2560, Raspberry Pi, or Raspberry Pi Pico
     }
     /* HD44780U datasheet says LCD needs 40ms after Vcc=2.7V, or 15ms after Vcc=4.5V */
@@ -141,7 +144,7 @@ static void cowpi_setup_lcd1602(unsigned int configuration) {
 
 void cowpi_error(const char *message) {
     /* Try to give useful information */
-    if (!stdout) {
+    if (stdout) {
         printf("%s\n", message);
     }
     for (;;) {

@@ -11,6 +11,8 @@
 
 /* Global variable declarations */
 
+// none
+
 
 /* Internal-facing function prototypes */
 
@@ -26,6 +28,8 @@ void cowpi_error(const char *message);
 
 
 /* Macros for internal use only */
+
+// none
 
 
 #endif //COWPI_INTERNAL_H

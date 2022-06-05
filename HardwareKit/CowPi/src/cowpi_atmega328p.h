@@ -11,6 +11,7 @@
 #define COWPI_ATMEGA328P_H
 
 #include <Arduino.h>
+#include <avr/pgmspace.h>
 #include "cowpi_internal.h"
 
 
