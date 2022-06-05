@@ -6,7 +6,8 @@
 #include "cowpi_internal.h"
 
 
-bool cowpi_spi_lsbfirst = false;                // global variable definition
+static unsigned int cowpi_display_device_and_dialect = ADAFRUIT;
+static uint8_t display_i2c_address = 255;
 
 
 /******************************************************************************
@@ -60,22 +61,44 @@ void cowpi_setup(unsigned int configuration) {
         pinMode(SCL, OUTPUT);   // likewise with D19 aka A5 and SCL
         digitalWrite(SDA, HIGH);
         digitalWrite(SCL, HIGH);
-        /* Initialize I2C separately in case we're
-         * using a bit-bang implementation */
+        cowpi_initialize_i2c;
     }
     if (configuration & MAX7219) {
-        cowpi_spi_lsbfirst = false;
+        cowpi_display_device_and_dialect |= MAX7219;
         cowpi_setup_max7219(configuration);
     }
     if (configuration & LCD1602) {
-        cowpi_spi_lsbfirst = true;          // if this is SPI, done; if this is I2C, who cares?
+        cowpi_display_device_and_dialect |= LCD1602;
         cowpi_setup_lcd1602(configuration);
     }
 }
 
+bool cowpi_is_spi_lsbfirst() {
+    return ((cowpi_display_device_and_dialect & (DISPLAY_DIALECT_MASK | DISPLAY_DEVICE_MASK)) == (ADAFRUIT | MAX7219));
+}
+
+void cowpi_set_display_dialect(unsigned int dialect) {
+    cowpi_display_device_and_dialect = (cowpi_display_device_and_dialect & ~DISPLAY_DIALECT_MASK) | dialect;
+}
+
+unsigned int cowpi_get_display_dialect() {
+    return (cowpi_display_device_and_dialect & DISPLAY_DIALECT_MASK);
+}
+
+void cowpi_set_display_i2c_address(uint8_t peripheral_address) {
+    if ((peripheral_address < 8) || (peripheral_address > 127)) {
+        cowpi_error("I2C Peripheral address must be between 8 and 127, inclusive.");
+    }
+    display_i2c_address = peripheral_address;
+}
+
+uint8_t cowpi_get_display_i2c_address() {
+    return display_i2c_address;
+}
+
 static void cowpi_setup_max7219(unsigned int configuration) {
     if (!(configuration & SPI)) {
-        cowpi_configuration_error;
+        cowpi_error("MAX7219 can only be used with SPI protocol. Use `cowpi_setup(MAX7219 | SPI);`.");
     }
     /* Clear all digit registers */
     for (int i = 1; i <= 8; i++) {
@@ -95,7 +118,9 @@ static void cowpi_setup_max7219(unsigned int configuration) {
 
 static void cowpi_setup_lcd1602(unsigned int configuration) {
     if (!(configuration & (SPI | I2C))) {
-        cowpi_configuration_error;
+        cowpi_error("CowPi must use a serial protocol with LCD1602. "
+                    "Use `cowpi_setup(LCD1602 | SPI);` or `cowpi_setup(LCD1602 | I2C);`.");
+        // That may not always be the case -- for example, Arduino Mega 2560, Raspberry Pi, or Raspberry Pi Pico
     }
     /* HD44780U datasheet says LCD needs 40ms after Vcc=2.7V, or 15ms after Vcc=4.5V */
     delayMicroseconds(12500);   // Don't want to use delay(50) just in case interrupts are disabled.
@@ -112,6 +137,25 @@ static void cowpi_setup_lcd1602(unsigned int configuration) {
     cowpi_lcd1602_send_command(LCDONOFF_DISPLAYON | LCDONOFF_CURSOROFF | LCDONOFF_BLINKOFF);
     /* clear display */
     cowpi_lcd1602_clear_display();
+}
+
+void cowpi_error(const char *message) {
+    /* Try to give useful information */
+    if (!stdout) {
+        printf("%s\n", message);
+    }
+    for (;;) {
+        digitalWrite(12, HIGH);
+        digitalWrite(13, HIGH);
+        /* if interrupts are disabled then both LEDs lit is the best warning we can give */
+        delay(1);
+        digitalWrite(12, HIGH);
+        digitalWrite(13, LOW);
+        delay(500);
+        digitalWrite(12, LOW);
+        digitalWrite(13, HIGH);
+        delay(500);
+    }
 }
 
 

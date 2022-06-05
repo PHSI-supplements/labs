@@ -19,8 +19,8 @@ uint8_t *const cowpi_io_base = (uint8_t *) 0x20;
 
 #define cowpi_spi_enable do {                                                                           \
     /* Enable SPI, Controller, set clock rate fck/16 [1MHz] */                                          \
-    SPCR = cowpi_spi_lsbfirst   ? (1 << SPE) | (1 << DORD) | (1 << MSTR) | (1 << SPR0)                  \
-                                : (1 << SPE) |               (1 << MSTR) | (1 << SPR0);                 \
+    SPCR = cowpi_is_spi_lsbfirst()  ? (1 << SPE) | (1 << DORD) | (1 << MSTR) | (1 << SPR0)              \
+                                    : (1 << SPE) |               (1 << MSTR) | (1 << SPR0);             \
     /* By repeating myself, both constants will be generated at compile time */                         \
 } while(0)
 
