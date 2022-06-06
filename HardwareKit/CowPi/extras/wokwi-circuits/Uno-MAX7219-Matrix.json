@@ -38,10 +38,9 @@
     {
       "type": "wokwi-max7219-matrix",
       "id": "matrix1",
-      "top": 69.93,
-      "left": -240.56,
-      "rotate": 90,
-      "attrs": { "chain": "1" }
+      "top": 67.63,
+      "left": -270.36,
+      "attrs": { "layout": "fc16", "chain": "1" }
     }
   ],
   "connections": [
