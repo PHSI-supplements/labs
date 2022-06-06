@@ -115,21 +115,21 @@ static void cowpi_lcd1602_send_halfbyte_spi(uint8_t halfbyte, bool is_command) {
     uint8_t en = 1 << 5;
     uint8_t packet = rs | (halfbyte << 1) | (is_backlit ? 1 : 0);
     // place data on the line
-    digitalWrite(10, LOW);
+    digitalWrite(SPI_CHIP_SELECT, LOW);
     shiftOut(MOSI, SCK, LSBFIRST, packet);
-    digitalWrite(10, HIGH);
+    digitalWrite(SPI_CHIP_SELECT, HIGH);
     // pulse
-    digitalWrite(10, LOW);
+    digitalWrite(SPI_CHIP_SELECT, LOW);
     shiftOut(MOSI, SCK, LSBFIRST, packet | en);
-    digitalWrite(10, HIGH);
+    digitalWrite(SPI_CHIP_SELECT, HIGH);
     // Tom Alby uses NOPs to get to create an exact 0.5us pulse (6 NOPs (6 cycles) + 1 memory write (2 cycles) = 0.5us)
     // but that isn't portable (also: AVR docs say to use _delay_ms() or _delay_us(), which also aren't portable)
     // However, since we're only doing a half-byte at a time, function calls, etc., will provide sufficient delay
 //    delayMicroseconds(1);
 //    // I don't think we need to preserve the data, but no harm / no foul
-//    digitalWrite(10, LOW);
+//    digitalWrite(SPI_CHIP_SELECT, LOW);
 //    shiftOut(MOSI, SCK, LSBFIRST, packet);
-//    digitalWrite(10, HIGH);
+//    digitalWrite(SPI_CHIP_SELECT, HIGH);
 }
 
 static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {

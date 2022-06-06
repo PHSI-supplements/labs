@@ -18,47 +18,47 @@ static void cowpi_setup_max7219(unsigned int configuration);
 static void cowpi_setup_lcd1602(unsigned int configuration);
 
 void cowpi_setup(unsigned int configuration) {
-    /* Simple I/O */
-    pinMode( 8, INPUT_PULLUP);  // left button
-    pinMode( 9, INPUT_PULLUP);  // right button
-    pinMode(18, INPUT_PULLUP);  // aka A4 (D58 on Arduino Mega 2560) -- left switch (default, unless using I2C)
-    pinMode(11, INPUT_PULLUP);  // left switch (alternate, unless using SPI)
-    pinMode(19, INPUT_PULLUP);  // aka A5 (D59 on Arduino Mega 2560) -- right switch (default, unless using I2C)
-    pinMode(10, INPUT_PULLUP);  // right switch (alternate, unless using SPI)
-    pinMode(12, OUTPUT);        // external LED
-    pinMode(13, OUTPUT);        // internal LED
+    /* Switches and Buttons */
+    pinMode( LEFT_BUTTON, INPUT_PULLUP);
+    pinMode( RIGHT_BUTTON, INPUT_PULLUP);
+    pinMode(LEFT_SWITCH_DEFAULT, INPUT_PULLUP);     // When using SPI or when no protocol is specified
+    pinMode(LEFT_SWITCH_ALTERNATE, INPUT_PULLUP);   // When using I2C
+    pinMode(RIGHT_SWITCH_DEFAULT, INPUT_PULLUP);    // When using SPI or when no protocol is specified
+    pinMode(RIGHT_SWITCH_ALTERNATE, INPUT_PULLUP);  // When using I2C
+    pinMode(LED_EXTERNAL, OUTPUT);
+    pinMode(LED_BUILTIN, OUTPUT);
     /* Keypad */
-    pinMode( 4, OUTPUT);        // row 1
-    pinMode( 5, OUTPUT);        // row 4
-    pinMode( 6, OUTPUT);        // row 7
-    pinMode( 7, OUTPUT);        // row *
-    pinMode(14, INPUT_PULLUP);  // aka A0 (D54 on Arduino Mega 2560) -- column 1
-    pinMode(15, INPUT_PULLUP);  // aka A1 (D55 on Arduino Mega 2560) -- column 2
-    pinMode(16, INPUT_PULLUP);  // aka A2 (D56 on Arduino Mega 2560) -- column 3
-    pinMode(17, INPUT_PULLUP);  // aka A3 (D57 on Arduino Mega 2560) -- column A
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-    digitalWrite(6, LOW);
-    digitalWrite(7, LOW);
+    pinMode( KEYPAD_ROW_1, OUTPUT);
+    pinMode( KEYPAD_ROW_4, OUTPUT);
+    pinMode( KEYPAD_ROW_7, OUTPUT);
+    pinMode( KEYPAD_ROW_STAR, OUTPUT);
+    pinMode(KEYPAD_COLUMN_1, INPUT_PULLUP);
+    pinMode(KEYPAD_COLUMN_2, INPUT_PULLUP);
+    pinMode(KEYPAD_COLUMN_3, INPUT_PULLUP);
+    pinMode(KEYPAD_COLUMN_A, INPUT_PULLUP);
+    digitalWrite(KEYPAD_ROW_1, LOW);
+    digitalWrite(KEYPAD_ROW_4, LOW);
+    digitalWrite(KEYPAD_ROW_7, LOW);
+    digitalWrite(KEYPAD_ROW_STAR, LOW);
     /* External Interrupts */
-    pinMode(2, INPUT);          // pushbutton NAND
-    pinMode(3, INPUT);          // keypad NAND
+    pinMode(PUSHBUTTON_NAND, INPUT);
+    pinMode(KEYPAD_NAND, INPUT);
     /* Display Module */
     if (configuration & SPI) {
-        pinMode(10, OUTPUT);    // we'll always use 10 for chip select when using SPI
-        pinMode(MOSI, OUTPUT);  // but 11 isn't COPI for Mega2560
-        pinMode(SCK, OUTPUT);   // and 13 isn't SCK for Mega2560
-        digitalWrite(10, HIGH);
+        pinMode(SPI_CHIP_SELECT, OUTPUT);
+        pinMode(MOSI, OUTPUT);
+        pinMode(SCK, OUTPUT);
+        digitalWrite(SPI_CHIP_SELECT, HIGH);
         digitalWrite(MOSI, LOW);
         digitalWrite(SCK, LOW);
         /* Enabling and disabling SPI must happen just-in-time
          * because enabling SPI overrides DDR for CIPO pin
-         * (D12 except on Mega), setting it to input.
-         * See cowpi_spi_enable and cowpi_spi_disable. */
+         * (D12 except D50 on Mega2560), setting it to input.
+         * See `cowpi_spi_enable` and `cowpi_spi_disable`. */
     }
     if (configuration & I2C) {
-        pinMode(SDA, OUTPUT);   // similarly, D18 aka A4 isn't SDA on Mega2560
-        pinMode(SCL, OUTPUT);   // likewise with D19 aka A5 and SCL
+        pinMode(SDA, OUTPUT);
+        pinMode(SCL, OUTPUT);
         digitalWrite(SDA, HIGH);
         digitalWrite(SCL, HIGH);
         cowpi_initialize_i2c;
@@ -148,15 +148,15 @@ void cowpi_error(const char *message) {
         printf("%s\n", message);
     }
     for (;;) {
-        digitalWrite(12, HIGH);
-        digitalWrite(13, HIGH);
+        digitalWrite(LED_EXTERNAL, HIGH);
+        digitalWrite(LED_BUILTIN, HIGH);
         /* if interrupts are disabled then both LEDs lit is the best warning we can give */
         delay(1);
-        digitalWrite(12, HIGH);
-        digitalWrite(13, LOW);
+        digitalWrite(LED_EXTERNAL, HIGH);
+        digitalWrite(LED_BUILTIN, LOW);
         delay(500);
-        digitalWrite(12, LOW);
-        digitalWrite(13, HIGH);
+        digitalWrite(LED_EXTERNAL, LOW);
+        digitalWrite(LED_BUILTIN, HIGH);
         delay(500);
     }
 }
@@ -173,6 +173,7 @@ static bool cowpi_switch_in_right_position(uint8_t default_pin, uint8_t alternat
 char cowpi_get_keypress() {
     // returns character corresponding to that on a 4x4 matrix keypad's face (0-9, A-D, *, #)
     // this function is intentionally unreadable
+    // (it also won't work right on Mega 2560, but we can fix that)
     int8_t a = 0;
     int8_t b = 14;
     uint16_t c;
@@ -200,43 +201,43 @@ char cowpi_get_keypress() {
 }
 
 bool cowpi_left_button_is_pressed() {
-    return !digitalRead(8);
+    return !digitalRead(LEFT_BUTTON);
 }
 
 bool cowpi_right_button_is_pressed() {
-    return !digitalRead(9);
+    return !digitalRead(RIGHT_BUTTON);
 }
 
 bool cowpi_left_switch_in_left_position() {
-    return cowpi_switch_in_left_position(18, 11);
+    return cowpi_switch_in_left_position(LEFT_SWITCH_DEFAULT, LEFT_SWITCH_ALTERNATE);
 }
 
 bool cowpi_right_switch_in_left_position() {
-    return cowpi_switch_in_left_position(19, 10);
+    return cowpi_switch_in_left_position(RIGHT_SWITCH_DEFAULT, RIGHT_SWITCH_ALTERNATE);
 }
 
 bool cowpi_left_switch_in_right_position() {
-    return cowpi_switch_in_right_position(18, 11);
+    return cowpi_switch_in_right_position(LEFT_SWITCH_DEFAULT, LEFT_SWITCH_ALTERNATE);
 }
 
 bool cowpi_right_switch_in_right_position() {
-    return cowpi_switch_in_right_position(19, 10);
+    return cowpi_switch_in_right_position(RIGHT_SWITCH_DEFAULT, RIGHT_SWITCH_ALTERNATE);
 }
 
 void cowpi_illuminate_external_led() {
-    digitalWrite(12, HIGH);
+    digitalWrite(LED_EXTERNAL, HIGH);
 }
 
 void cowpi_illuminate_internal_led() {
-    digitalWrite(13, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
 }
 
 void cowpi_deluminate_external_led() {
-    digitalWrite(12, LOW);
+    digitalWrite(LED_EXTERNAL, LOW);
 }
 
 void cowpi_deluminate_internal_led() {
-    digitalWrite(13, LOW);
+    digitalWrite(LED_BUILTIN, LOW);
 }
 
 static inline bool cowpi_pin_is_output(uint8_t pin) {

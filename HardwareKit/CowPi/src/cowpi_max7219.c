@@ -8,13 +8,14 @@
 
 #include <Arduino.h>
 #include "cowpi_max7219.h"
+#include "cowpi_internal.h"
 
 
 void cowpi_max7219_send(uint8_t address, uint8_t data) {
-    digitalWrite(10, LOW);
+    digitalWrite(SPI_CHIP_SELECT, LOW);
     shiftOut(MOSI, SCK, MSBFIRST, address);
     shiftOut(MOSI, SCK, MSBFIRST, data);
-    digitalWrite(10, HIGH);
+    digitalWrite(SPI_CHIP_SELECT, HIGH);
 }
 
 void cowpi_max7219_no_decode() {
