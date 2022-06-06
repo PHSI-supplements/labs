@@ -13,6 +13,7 @@
 
 // One last protection against accidental misuse
 #ifndef ARDUINO_ARCH_AVR
+// hmm... it looks like Arduino may have provided a pgmspace.h file that does much of this for us for non-AVR architectures
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,10 +31,15 @@ static __inline__ const char *PSTR(const char *s) {
     return s;
 }
 
+__attribute__((__always_inline__)) static __inline__ uint8_t pgm_read_byte(const uint8_t *p);
+static __inline__ uint8_t pgm_read_byte(const uint8_t *p) {
+    return *p;
+}
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif //GUARD
+#endif //ARDUINO_ARCH_AVR
 
 #endif //COWPI_DUMMY_PGMSPACE_H

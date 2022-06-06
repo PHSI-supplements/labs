@@ -21,10 +21,10 @@ void cowpi_setup(unsigned int configuration) {
     /* Simple I/O */
     pinMode( 8, INPUT_PULLUP);  // left button
     pinMode( 9, INPUT_PULLUP);  // right button
-    pinMode(18, INPUT_PULLUP);  // aka A4 -- left switch (default, unless using I2C on "standard" variant)
-    pinMode(10, INPUT_PULLUP);  // left(TODO?) switch (alternate, unless using SPI on "standard" variant)
-    pinMode(19, INPUT_PULLUP);  // aka A5 -- right switch (default, unless using I2C on "standard" variant)
-    pinMode(11, INPUT_PULLUP);  // right(TODO?) switch (alternate, unless using SPI on "standard" variant)
+    pinMode(18, INPUT_PULLUP);  // aka A4 (D58 on Arduino Mega 2560) -- left switch (default, unless using I2C)
+    pinMode(11, INPUT_PULLUP);  // left switch (alternate, unless using SPI)
+    pinMode(19, INPUT_PULLUP);  // aka A5 (D59 on Arduino Mega 2560) -- right switch (default, unless using I2C)
+    pinMode(10, INPUT_PULLUP);  // right switch (alternate, unless using SPI)
     pinMode(12, OUTPUT);        // external LED
     pinMode(13, OUTPUT);        // internal LED
     /* Keypad */
@@ -32,10 +32,10 @@ void cowpi_setup(unsigned int configuration) {
     pinMode( 5, OUTPUT);        // row 4
     pinMode( 6, OUTPUT);        // row 7
     pinMode( 7, OUTPUT);        // row *
-    pinMode(14, INPUT_PULLUP);  // aka A0 -- column 1
-    pinMode(15, INPUT_PULLUP);  // aka A1 -- column 2
-    pinMode(16, INPUT_PULLUP);  // aka A2 -- column 3
-    pinMode(17, INPUT_PULLUP);  // aka A3 -- column A
+    pinMode(14, INPUT_PULLUP);  // aka A0 (D54 on Arduino Mega 2560) -- column 1
+    pinMode(15, INPUT_PULLUP);  // aka A1 (D55 on Arduino Mega 2560) -- column 2
+    pinMode(16, INPUT_PULLUP);  // aka A2 (D56 on Arduino Mega 2560) -- column 3
+    pinMode(17, INPUT_PULLUP);  // aka A3 (D57 on Arduino Mega 2560) -- column A
     digitalWrite(4, LOW);
     digitalWrite(5, LOW);
     digitalWrite(6, LOW);
@@ -208,19 +208,19 @@ bool cowpi_right_button_is_pressed() {
 }
 
 bool cowpi_left_switch_in_left_position() {
-    return cowpi_switch_in_left_position(18, 10);
+    return cowpi_switch_in_left_position(18, 11);
 }
 
 bool cowpi_right_switch_in_left_position() {
-    return cowpi_switch_in_left_position(19, 11);
+    return cowpi_switch_in_left_position(19, 10);
 }
 
 bool cowpi_left_switch_in_right_position() {
-    return cowpi_switch_in_right_position(18, 10);
+    return cowpi_switch_in_right_position(18, 11);
 }
 
 bool cowpi_right_switch_in_right_position() {
-    return cowpi_switch_in_right_position(19, 11);
+    return cowpi_switch_in_right_position(19, 10);
 }
 
 void cowpi_illuminate_external_led() {

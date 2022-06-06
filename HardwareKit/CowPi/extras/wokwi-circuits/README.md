@@ -78,7 +78,11 @@ display (an 8x8 LED matrix -- I'd prefer an 8-digit 7-segment display, but
 neither has that). TinkerCad can have more than one microcontroller in one
 simulation, but each microcontroller only gets one file which is problematic
 for non-trivial projects, whereas Wokwi allows many files (but only one
-microcontroller) per project. The only advantages that TinkerCad has over
-Wokwi are that TinkerCad has simple logic ICs (such as the 74LS20) but Wokwi
-doesn't -- which means that InterruptLab would need to use pin change interrupts
-instead of external interrupts -- and TinkerCad has a built-in debugger.
+microcontroller) per project. Wokwi also has an "okay" autocomplete feature.
+The only advantages that TinkerCad has over Wokwi are that TinkerCad has simple
+logic ICs (such as the 74LS20) but Wokwi doesn't -- which means that
+InterruptLab would need to use pin change interrupts instead of external
+interrupts -- ~~and TinkerCad has a built-in debugger~~ and TinkerCad has a
+debugger that has a look-and-feel like that of an IDE debugger, whereas Wokwi
+uses [Web GDB](https://docs.wokwi.com/gdb-debugging) (since my students will
+have learned GDB before the hardware labs, I can live with that).
