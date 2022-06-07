@@ -6,7 +6,7 @@
 #include "cowpi_internal.h"
 
 
-static unsigned int cowpi_display_device_and_dialect = ADAFRUIT;
+static unsigned int cowpi_display_device_and_dialect = STANDARD;
 static uint8_t display_i2c_address = 255;
 
 
@@ -74,7 +74,7 @@ void cowpi_setup(unsigned int configuration) {
 }
 
 bool cowpi_is_spi_lsbfirst() {
-    return ((cowpi_display_device_and_dialect & (DISPLAY_DIALECT_MASK | DISPLAY_DEVICE_MASK)) == (ADAFRUIT | MAX7219));
+    return ((cowpi_display_device_and_dialect & (DISPLAY_DIALECT_MASK | DISPLAY_DEVICE_MASK)) == (ADAFRUIT | LCD1602));
 }
 
 void cowpi_set_display_dialect(unsigned int dialect) {
