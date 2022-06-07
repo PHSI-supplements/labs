@@ -34,8 +34,8 @@ uint8_t cowpi_get_display_i2c_address();
 
 /* Use as argument to cowpi_set_display_dialect() */
 
-#define ADAFRUIT                0x8000u
-#define WOKWI                   0x4000u
+#define STANDARD                0x8000u
+#define ADAFRUIT                0x4000u
 
 
 /* Masks to distinguish between configuration fields */

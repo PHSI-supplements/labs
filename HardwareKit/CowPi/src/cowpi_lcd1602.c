@@ -28,11 +28,11 @@ void cowpi_lcd1602_set_send_function(void (*send_halfbyte_function)(uint8_t half
 }
 
 void cowpi_lcd1602_place_character(uint8_t address, uint8_t data) {
-    cowpi_lcd1602_spi_place_cursor(address);
+    cowpi_lcd1602_place_cursor(address);
     cowpi_lcd1602_send_character(data);
 }
 
-void cowpi_lcd1602_spi_place_cursor(uint8_t address) {
+void cowpi_lcd1602_place_cursor(uint8_t address) {
     cowpi_lcd1602_send_command(address | 0x80);
 }
 
@@ -65,7 +65,7 @@ void cowpi_lcd1602_clear_display() {
 }
 
 void cowpi_lcd1602_return_home() {
-    cowpi_lcd1602_send_command(0x10);
+    cowpi_lcd1602_send_command(0x02);
     delayMicroseconds(2000);    // tom alby is silent; adafruit uses 2ms; datasheets agree on 1.52ms
 }
 
@@ -76,14 +76,15 @@ void cowpi_lcd1602_set_backlight(bool backlight_on) {
 
 void cowpi_lcd1602_set_4bit_mode(unsigned int configuration) {
     uint8_t i2c_address = cowpi_get_display_i2c_address();
-    if ((i2c_address < 8) || (i2c_address > 127)) {
-        char s[61];
-        cowpi_error(strcpy_P(s, PSTR("I2C Peripheral address must be between 8 and 127, inclusive.")));
-    } else if (!cowpi_lcd1602_send_halfbyte) {
+    if (!cowpi_lcd1602_send_halfbyte) {
         if (configuration & SPI) {
-            cowpi_lcd1602_send_halfbyte = cowpi_lcd1602_send_halfbyte_spi;
+            cowpi_lcd1602_set_send_function(cowpi_lcd1602_send_halfbyte_spi);
         } else if (configuration & I2C) {
-            cowpi_lcd1602_send_halfbyte = cowpi_lcd1602_send_halfbyte_i2c;
+            if ((i2c_address < 8) || (i2c_address > 127)) {
+                char s[61];
+                cowpi_error(strcpy_P(s, PSTR("I2C Peripheral address must be between 8 and 127, inclusive.")));
+            }
+            cowpi_lcd1602_set_send_function(cowpi_lcd1602_send_halfbyte_i2c);
         } else {
             char s[115];
             cowpi_error(strcpy_P(s, PSTR("CowPi must use a serial protocol with LCD1602. "
@@ -108,7 +109,7 @@ void cowpi_lcd1602_set_4bit_mode(unsigned int configuration) {
 }
 
 static void cowpi_lcd1602_send_halfbyte_spi(uint8_t halfbyte, bool is_command) {
-    // we'll use the AdaFruit mapping
+    // we'll use the AdaFruit mapping for its SPI+I2C interface -- probably will add other dialect(s) later
     /* LSB    QH  QG  QF  QE  QD  QC  QB  QA  MSB *
      * LSB  LITE  D4  D5  D6  D7  EN  RS  xx  MSB */
     uint8_t rs = is_command ? 0 : 1 << 6;
@@ -116,52 +117,85 @@ static void cowpi_lcd1602_send_halfbyte_spi(uint8_t halfbyte, bool is_command) {
     uint8_t packet = rs | (halfbyte << 1) | (is_backlit ? 1 : 0);
     // place data on the line
     digitalWrite(SPI_CHIP_SELECT, LOW);
-    shiftOut(MOSI, SCK, LSBFIRST, packet);
+    shiftOut(MOSI, SCK, cowpi_is_spi_lsbfirst() ? LSBFIRST : MSBFIRST, packet);
     digitalWrite(SPI_CHIP_SELECT, HIGH);
     // pulse
     digitalWrite(SPI_CHIP_SELECT, LOW);
-    shiftOut(MOSI, SCK, LSBFIRST, packet | en);
+    shiftOut(MOSI, SCK, cowpi_is_spi_lsbfirst() ? LSBFIRST : MSBFIRST, packet | en);
     digitalWrite(SPI_CHIP_SELECT, HIGH);
     // Tom Alby uses NOPs to get to create an exact 0.5us pulse (6 NOPs (6 cycles) + 1 memory write (2 cycles) = 0.5us)
     // but that isn't portable (also: AVR docs say to use _delay_ms() or _delay_us(), which also aren't portable)
     // However, since we're only doing a half-byte at a time, function calls, etc., will provide sufficient delay
-//    delayMicroseconds(1);
-//    // I don't think we need to preserve the data, but no harm / no foul
-//    digitalWrite(SPI_CHIP_SELECT, LOW);
-//    shiftOut(MOSI, SCK, LSBFIRST, packet);
-//    digitalWrite(SPI_CHIP_SELECT, HIGH);
+    delayMicroseconds(1);
+    // end the pulse
+    digitalWrite(SPI_CHIP_SELECT, LOW);
+    shiftOut(MOSI, SCK, cowpi_is_spi_lsbfirst() ? LSBFIRST : MSBFIRST, packet);
+    digitalWrite(SPI_CHIP_SELECT, HIGH);
+}
+
+static inline void shift_out(uint8_t data_pin, uint8_t clock_pin, uint8_t bit_order, uint8_t value, uint8_t us_hold) {
+    // On a 16MHz ATMega328P, `shiftOut` should give us 77-91MHz clock, but in practice seems to be too fast for I2C
+    // Might be even faster on Arduino Nano Every
+    // Will definitely be too fast on Arduino's ARM microcontrollers
+    for (int i = 0; i < 8; i++) {
+        digitalWrite(data_pin, !!(value & (1 << (bit_order == LSBFIRST ? i : 7 - i))));
+        delayMicroseconds(us_hold / 2);
+        digitalWrite(clock_pin, HIGH);
+        delayMicroseconds(us_hold);
+        digitalWrite(clock_pin, LOW);
+        delayMicroseconds(us_hold / 2);
+    }
+}
+
+static inline uint8_t get_ack(uint8_t data_pin, uint8_t clock_pin, uint8_t us_hold) {
+    // Take the line low, so we can listen for ACK (but we won't actually listen)
+//    digitalWrite(SDA, LOW);
+//    delayMicroseconds(5);
+//    digitalWrite(SCL, HIGH);
+//    delayMicroseconds(4);
+//    digitalWrite(SCL, LOW);
+    digitalWrite(SDA, LOW);
+    pinMode(SDA, INPUT);
+    delayMicroseconds(us_hold);
+    digitalWrite(SCL, HIGH);
+    delayMicroseconds(us_hold / 2);
+    uint8_t nack = digitalRead(SDA);
+    digitalWrite(SCL, LOW);
+    delayMicroseconds(us_hold / 2);
+    pinMode(SDA, OUTPUT);
+    return !nack;
 }
 
 static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
     uint8_t packet = 0, rs = 0, en = 0;
     unsigned int dialect = cowpi_get_display_dialect();
-    if (dialect == ADAFRUIT) {
-        // this mapping seems works with AdaFruit's I2C interfaces and with the EE Shop's cheaper I2C interface
+    if (dialect == STANDARD) {
+        // this mapping is used with most I2C interfaces and libraries
+        // https://github.com/johnrickman/LiquidCrystal_I2C
+        // https://github.com/blackhack/LCD_I2C
+        /* MSB  P7  P6  P5  P4  P3  P2  P1  P0  LSB *
+         * MSB  D7  D6  D5  D4 LITE EN  RW  RS  LSB */
+        rs = is_command ? 0 : 1;
+        en = 1 << 2;
+        packet = rs | (halfbyte << 4) | (is_backlit ? 1 << 3 : 0);
+    } else if (dialect == ADAFRUIT) {
+        // this mapping is used with AdaFruit's SPI+I2C interface
         // https://github.com/adafruit/Adafruit_LiquidCrystal
         /* MSB   GP7 GP6 GP5 GP4 GP3 GP2 GP1 GP0  LSB *
          * MSB  LITE  D7  D6  D5  D4  EN  RS  xx  LSB */
         rs = is_command ? 0 : 1 << 1;
         en = 1 << 2;
         packet = rs | (halfbyte << 3) | (is_backlit ? 1 << 7 : 0);
-    } else if (dialect == WOKWI) {
-        // this alternate mapping is used in LiquidCrystal_I2C and Wokwi
-        // https://github.com/johnrickman/LiquidCrystal_I2C
-        /* MSB  GP7 GP6 GP5 GP4  GP3 GP2 GP1 GP0  LSB *
-         * MSB   D7  D6  D5  D4 LITE  EN  RW  RS  LSB */
-        rs = is_command ? 0 : 1;
-        en = 1 << 2;
-        packet = rs | (halfbyte << 4) | (is_backlit ? 1 << 3 : 0);
     } else {
         char s[73];
-        cowpi_error(strcpy_P(s, PSTR("CowPi only knows ADAFRUIT and WOKWI dialects for I2C-to-LCD1602 mapping.")));
+        cowpi_error(strcpy_P(s, PSTR("CowPi only knows STANDARD and ADAFRUIT dialects for I2C-to-LCD1602 mapping.")));
     }
-/*
     // start bit
     TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTA);
     while (!(TWCR & (1<<TWINT)));
     if ((TWSR & 0xF8) != 0x08) printf("did not receive start!\n");
     // I2C address + /w
-    TWDR = i2c_address << 1;
+    TWDR = cowpi_get_display_i2c_address() << 1;
     TWCR = (1<<TWINT) | (1<<TWEN);
     while (!(TWCR & (1<<TWINT)));
     if ((TWSR & 0xF8) != 0x18) printf("did not receive address!\n");
@@ -174,55 +208,62 @@ static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
     TWDR = packet | en;
     TWCR = (1<<TWINT) | (1<<TWEN);
     while (!(TWCR & (1<<TWINT)));
-    if ((TWSR & 0xF8)!= 0x28) printf("did not receive pulse!\n");
+    if ((TWSR & 0xF8)!= 0x28) printf("did not receive leading edge of the pulse!\n");
+    delayMicroseconds(1);
+    // end the pulse
+    TWDR = packet;
+    TWCR = (1<<TWINT) | (1<<TWEN);
+    while (!(TWCR & (1<<TWINT)));
+    if ((TWSR & 0xF8)!= 0x28) printf("did not receive the trailing edge of the pulse!\n");
+    // stop bit
     TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
-*/
-
-    // On a 16MHz ATMega328P, shiftOut(...MSBFIRST...) gives us 77-91MHz clock
-    // Might be different on Arduino Nano Every
-    // Will definitely be different on faster ARM microcontrollers
-    // But we'll worry about that later (probably using F_CPU)
-
+/*
     // start bit
     digitalWrite(SDA, HIGH);
     digitalWrite(SCL, HIGH);    // should already be HIGH, but let's go with it
-    delayMicroseconds(5);       // just to be sure
+    delayMicroseconds(15);       // just to be sure
     // Start
     digitalWrite(SDA, LOW);
-    delayMicroseconds(5);       // various hold times all seem to be shorter than 5us
+    delayMicroseconds(15);       // various hold times all seem to be shorter than 5us
     digitalWrite(SCL, LOW);
     // I2C address + /w
-    shiftOut(SDA, SCL, MSBFIRST, cowpi_get_display_i2c_address() << 1);
-    // Take the line low, so we can listen for ACK (but we won't actually listen)
-    digitalWrite(SDA, LOW);
-    delayMicroseconds(5);
-    digitalWrite(SCL, HIGH);
-    digitalWrite(SCL, LOW);
+    shift_out(SDA, SCL, MSBFIRST, cowpi_get_display_i2c_address() << 1, 14);
+//    // Take the line low, so we can listen for ACK (but we won't actually listen)
+//    digitalWrite(SDA, LOW);
+//    delayMicroseconds(5);
+//    digitalWrite(SCL, HIGH);
+//    delayMicroseconds(4);
+//    digitalWrite(SCL, LOW);
+    if (!get_ack(SDA, SCL, 14)) printf("did not receive address!\n"); else printf("received address\n");
     // place data on the line
-    shiftOut(SDA, SCL, MSBFIRST, packet);
+    shift_out(SDA, SCL, MSBFIRST, packet, 4);
     // Take the line low, so we can listen for ACK (but we won't actually listen)
     digitalWrite(SDA, LOW);
     delayMicroseconds(5);
     digitalWrite(SCL, HIGH);
+    delayMicroseconds(4);
     digitalWrite(SCL, LOW);
     // pulse
-    shiftOut(SDA, SCL, MSBFIRST, packet | en);
+    shift_out(SDA, SCL, MSBFIRST, packet | en, 4);
     // Take the line low, so we can listen for ACK (but we won't actually listen)
     digitalWrite(SDA, LOW);
     delayMicroseconds(5);
     digitalWrite(SCL, HIGH);
+    delayMicroseconds(4);
     digitalWrite(SCL, LOW);
-    // delayMicroseconds(1);
-    // // I don't think we need to preserve the data, but no harm / no foul
-    // shiftOut(SDA, SCL, MSBFIRST, packet);
-    // // Take the line low, so we can listen for ACK (but we won't actually listen)
-    // digitalWrite(SDA, LOW);
-    // delayMicroseconds(5);
-    // digitalWrite(SCL, HIGH);
-    // digitalWrite(SCL, LOW);
-    // delayMicroseconds(5);
+    delayMicroseconds(1);
+    // end the pulse
+    shift_out(SDA, SCL, MSBFIRST, packet, 4);
+    // Take the line low, so we can listen for ACK (but we won't actually listen)
+    digitalWrite(SDA, LOW);
+    delayMicroseconds(5);
+    digitalWrite(SCL, HIGH);
+    delayMicroseconds(4);
+    digitalWrite(SCL, LOW);
+    delayMicroseconds(5);
     // stop bit
     digitalWrite(SCL, HIGH);
     delayMicroseconds(5);
     digitalWrite(SDA, HIGH);
+*/
 }
