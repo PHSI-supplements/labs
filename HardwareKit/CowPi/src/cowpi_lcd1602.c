@@ -51,7 +51,7 @@ void cowpi_lcd1602_send_character(uint8_t data) {
     delayMicroseconds(50);      // HD44780U datasheet says 41us (37+4) needed until character is updated and ddram address is updated; SPLC780D simply says 38us
 }
 
-void cowpi_lcd1602_create_character(uint8_t encoding, uint8_t pixel_vector[8]) {
+void cowpi_lcd1602_create_character(uint8_t encoding, const uint8_t pixel_vector[8]) {
     uint8_t cgram_start = (encoding & 0x7) << 3;
     for (int row = 0; row < 8; row++) {
         cowpi_lcd1602_send_command((cgram_start + row) | 0x40);
@@ -162,7 +162,7 @@ static inline bool transmit_bitbang_i2c(uint8_t value) {
 }
 
 static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
-    printf("halfbyte = 0x%x\tis_command = %d\n", halfbyte, is_command);
+//    printf("halfbyte = 0x%x\tis_command = %d\n", halfbyte, is_command);
     uint8_t packet = 0, rs = 0, en = 0;
     unsigned int dialect = cowpi_get_display_dialect();
     if (dialect == STANDARD) {

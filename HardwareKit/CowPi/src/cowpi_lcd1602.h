@@ -19,7 +19,7 @@ void cowpi_lcd1602_place_character(uint8_t address, uint8_t data);
 void cowpi_lcd1602_place_cursor(uint8_t address);
 void cowpi_lcd1602_send_command(uint8_t command);
 void cowpi_lcd1602_send_character(uint8_t data);
-void cowpi_lcd1602_create_character(uint8_t encoding, uint8_t pixel_vector[8]);
+void cowpi_lcd1602_create_character(uint8_t encoding, const uint8_t pixel_vector[8]);
 void cowpi_lcd1602_clear_display();
 void cowpi_lcd1602_return_home();
 void cowpi_lcd1602_set_backlight(bool backlight_on);
