@@ -133,40 +133,36 @@ static void cowpi_lcd1602_send_halfbyte_spi(uint8_t halfbyte, bool is_command) {
     digitalWrite(SPI_CHIP_SELECT, HIGH);
 }
 
-static inline void shift_out(uint8_t data_pin, uint8_t clock_pin, uint8_t bit_order, uint8_t value, uint8_t us_hold) {
-    // On a 16MHz ATMega328P, `shiftOut` should give us 77-91MHz clock, but in practice seems to be too fast for I2C
-    // Might be even faster on Arduino Nano Every
-    // Will definitely be too fast on Arduino's ARM microcontrollers
+static inline bool transmit_bitbang_i2c(uint8_t value) {
+    // On a 16MHz ATMega328P, `shiftOut` should give us 77-91MHz clock, might be too fast for I2C in practice.
+    // Probably same (but maybe faster) on Arduino Nano Every.
+    // Will definitely be too fast on Arduino's ARM-based devices.
+    printf("sending 0x%x\n", value);
     for (int i = 0; i < 8; i++) {
-        digitalWrite(data_pin, !!(value & (1 << (bit_order == LSBFIRST ? i : 7 - i))));
-        delayMicroseconds(us_hold / 2);
-        digitalWrite(clock_pin, HIGH);
-        delayMicroseconds(us_hold);
-        digitalWrite(clock_pin, LOW);
-        delayMicroseconds(us_hold / 2);
+        delayMicroseconds(4);   // 4.7us t_scl, minus the 1us we're going to delay for t_sds
+        digitalWrite(SDA, (value >> (7 - i)) & 0x1);
+        delayMicroseconds(2);   // 1us t_icr + 250ns t_sds
+        digitalWrite(SCL, HIGH);
+        delayMicroseconds(6);   // 1us t_icr + 4us t_sch + 0.3us t_icf + 0ns t_sdh
+        digitalWrite(SCL, LOW);
     }
-}
-
-static inline uint8_t get_ack(uint8_t data_pin, uint8_t clock_pin, uint8_t us_hold) {
-    // Take the line low, so we can listen for ACK (but we won't actually listen)
+    delayMicroseconds(4);       // t_phl = ??
 //    digitalWrite(SDA, LOW);
-//    delayMicroseconds(5);
-//    digitalWrite(SCL, HIGH);
-//    delayMicroseconds(4);
-//    digitalWrite(SCL, LOW);
-    digitalWrite(SDA, LOW);
     pinMode(SDA, INPUT);
-    delayMicroseconds(us_hold);
+    delayMicroseconds(2);
     digitalWrite(SCL, HIGH);
-    delayMicroseconds(us_hold / 2);
+    delayMicroseconds(3);
     uint8_t nack = digitalRead(SDA);
+    delayMicroseconds(3);
     digitalWrite(SCL, LOW);
-    delayMicroseconds(us_hold / 2);
     pinMode(SDA, OUTPUT);
+
+    digitalWrite(SDA, LOW);
     return !nack;
 }
 
 static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
+    printf("halfbyte = 0x%x\tis_command = %d\n", halfbyte, is_command);
     uint8_t packet = 0, rs = 0, en = 0;
     unsigned int dialect = cowpi_get_display_dialect();
     if (dialect == STANDARD) {
@@ -193,77 +189,63 @@ static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
     // start bit
     TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTA);
     while (!(TWCR & (1<<TWINT)));
-    if ((TWSR & 0xF8) != 0x08) printf("did not receive start!\n");
+    if ((TWSR & 0xF8) != 0x08) cowpi_error("Controller did not send I2C start!");
     // I2C address + /w
     TWDR = cowpi_get_display_i2c_address() << 1;
     TWCR = (1<<TWINT) | (1<<TWEN);
     while (!(TWCR & (1<<TWINT)));
-    if ((TWSR & 0xF8) != 0x18) printf("did not receive address!\n");
+    if ((TWSR & 0xF8) != 0x18) cowpi_error("I2C peripheral did not receive address!");
     // place data on the line
     TWDR = packet;
     TWCR = (1<<TWINT) | (1<<TWEN);
     while (!(TWCR & (1<<TWINT)));
-    if ((TWSR & 0xF8)!= 0x28) printf("did not receive data!\n");
+    if ((TWSR & 0xF8)!= 0x28) cowpi_error("I2C peripheral did not receive data!");
     // pulse
     TWDR = packet | en;
     TWCR = (1<<TWINT) | (1<<TWEN);
     while (!(TWCR & (1<<TWINT)));
-    if ((TWSR & 0xF8)!= 0x28) printf("did not receive leading edge of the pulse!\n");
+    if ((TWSR & 0xF8)!= 0x28) cowpi_error("I2C peripheral did not receive leading edge of the pulse!");
     delayMicroseconds(1);
     // end the pulse
     TWDR = packet;
     TWCR = (1<<TWINT) | (1<<TWEN);
     while (!(TWCR & (1<<TWINT)));
-    if ((TWSR & 0xF8)!= 0x28) printf("did not receive the trailing edge of the pulse!\n");
+    if ((TWSR & 0xF8)!= 0x28) cowpi_error("I2C peripheral did not receive the trailing edge of the pulse!");
     // stop bit
     TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
 /*
-    // start bit
+    // hold bus "free" for 4.7us (t_buf) between stop and start (almost certainly redundant)
     digitalWrite(SDA, HIGH);
-    digitalWrite(SCL, HIGH);    // should already be HIGH, but let's go with it
-    delayMicroseconds(15);       // just to be sure
-    // Start
+    digitalWrite(SCL, HIGH);
+    delayMicroseconds(5);
+    // start bit
     digitalWrite(SDA, LOW);
-    delayMicroseconds(15);       // various hold times all seem to be shorter than 5us
+    delayMicroseconds(5);   // .3us t_icf + 4us t_sth (start hold)
     digitalWrite(SCL, LOW);
+//    printf("starting...");TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTA);
+//    while (!(TWCR & (1<<TWINT)));
+//    if ((TWSR & 0xF8) != 0x08) cowpi_error("Controller did not send I2C start!"); else printf("start bit sent\n");
     // I2C address + /w
-    shift_out(SDA, SCL, MSBFIRST, cowpi_get_display_i2c_address() << 1, 14);
-//    // Take the line low, so we can listen for ACK (but we won't actually listen)
-//    digitalWrite(SDA, LOW);
-//    delayMicroseconds(5);
-//    digitalWrite(SCL, HIGH);
-//    delayMicroseconds(4);
-//    digitalWrite(SCL, LOW);
-    if (!get_ack(SDA, SCL, 14)) printf("did not receive address!\n"); else printf("received address\n");
+    bool ack = transmit_bitbang_i2c(cowpi_get_display_i2c_address() << 1);
+    if (!ack) cowpi_error("I2C peripheral did not receive address!");
     // place data on the line
-    shift_out(SDA, SCL, MSBFIRST, packet, 4);
-    // Take the line low, so we can listen for ACK (but we won't actually listen)
-    digitalWrite(SDA, LOW);
-    delayMicroseconds(5);
-    digitalWrite(SCL, HIGH);
-    delayMicroseconds(4);
-    digitalWrite(SCL, LOW);
+    ack = transmit_bitbang_i2c(packet);
+    if (!ack) cowpi_error("I2C peripheral did not receive data!");
     // pulse
-    shift_out(SDA, SCL, MSBFIRST, packet | en, 4);
-    // Take the line low, so we can listen for ACK (but we won't actually listen)
-    digitalWrite(SDA, LOW);
-    delayMicroseconds(5);
-    digitalWrite(SCL, HIGH);
-    delayMicroseconds(4);
-    digitalWrite(SCL, LOW);
+    transmit_bitbang_i2c(packet | en);
+    if (!ack) cowpi_error("I2C peripheral did not receive leading edge of the pulse!");
     delayMicroseconds(1);
     // end the pulse
-    shift_out(SDA, SCL, MSBFIRST, packet, 4);
-    // Take the line low, so we can listen for ACK (but we won't actually listen)
-    digitalWrite(SDA, LOW);
-    delayMicroseconds(5);
-    digitalWrite(SCL, HIGH);
-    delayMicroseconds(4);
-    digitalWrite(SCL, LOW);
-    delayMicroseconds(5);
+    transmit_bitbang_i2c(packet);
+    if (!ack) cowpi_error("I2C peripheral did not receive trailing edge of the pulse!");
     // stop bit
+    digitalWrite(SDA, LOW); // should already be low from ack bit, but just to be sure
+    digitalWrite(SCL, LOW); // should already be low, but just to be sure
+    delayMicroseconds(5);   // 5us t_sch
     digitalWrite(SCL, HIGH);
-    delayMicroseconds(5);
+    delayMicroseconds(5);   // 1us t_icr + 4us t_sps
     digitalWrite(SDA, HIGH);
+//    printf("stopping..."); TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO); printf("stopped\n");
+//    TWCR = 1<<TWINT;
 */
 }
