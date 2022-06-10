@@ -1,41 +1,29 @@
-/*
- * CowPi (c) 2021-22 Christopher A. Bohn
- */
-
-/******************************************************************************
- * This header organizes the other headers.
+/**************************************************************************//**
+ *
+ * @file cowpi_boards.h
+ *
+ * @author Christopher A. Bohn
+ *
+ * @brief Imports the appropriate microcontroller-specific definitions for the
+ * microcontroller board that is in use.
+ *
  ******************************************************************************/
 
-#ifndef COWPI_H
-#define COWPI_H
+/* CowPi (c) 2021-22 Christopher A. Bohn
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-#include <Arduino.h>
-#include "cowpi_setup.h"
-#include "cowpi_max7219.h"
-#include "cowpi_lcd1602.h"
-
-/* Public-facing function prototypes */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-char cowpi_get_keypress();
-bool cowpi_left_button_is_pressed();
-bool cowpi_right_button_is_pressed();
-bool cowpi_left_switch_in_left_position();
-bool cowpi_right_switch_in_left_position();
-bool cowpi_left_switch_in_right_position();
-bool cowpi_right_switch_in_right_position();
-void cowpi_illuminate_external_led();
-void cowpi_illuminate_internal_led();
-void cowpi_deluminate_external_led();
-void cowpi_deluminate_internal_led();
-#ifdef __cplusplus
-} // extern "C"
-#endif
-
-
-/* Board-specific definitions */
+#ifndef COWPI_BOARDS_H
+#define COWPI_BOARDS_H
 
 #if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_NANO
 #include "cowpi_atmega328p.h"
@@ -57,4 +45,4 @@ uint8_t * const cowpi_io_base = (uint8_t *)0x0;
 #error Your microcontroller board is not yet supported for CowPi.
 #endif //MICROCONTROLLER BOARD
 
-#endif //COWPI_H
+#endif //COWPI_BOARDS_H

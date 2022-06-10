@@ -1,12 +1,28 @@
-/*
- * CowPi (c) 2021-22 Christopher A. Bohn
- */
-
-/******************************************************************************
- * Utility functions for 2x16 LCD display.
+/**************************************************************************//**
+ *
+ * @file cowpi_lcd1602.c
+ *
+ * @brief @copybrief cowpi_lcd1602.h
+ *
+ * @copydetails cowpi_lcd1602.h
+ *
  ******************************************************************************/
 
+/* CowPi (c) 2021-22 Christopher A. Bohn
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include <Arduino.h>
+#include <stdio.h>
 #include "cowpi_setup.h"
 #include "cowpi_lcd1602.h"
 #include "cowpi_internal.h"
@@ -17,19 +33,44 @@ static uint8_t last_entry_mode = ENTRY_MODE_MARKER;
 static bool is_backlit = false;
 
 
-static void (*cowpi_lcd1602_send_halfbyte)(uint8_t halfbyte, bool is_command) = NULL;
+cowpi_lcd1602_send_halfbyte_t cowpi_lcd1602_send_halfbyte = NULL;
 
+static void cowpi_lcd1602_set_4bit_mode(unsigned int configuration);
 static void cowpi_lcd1602_send_halfbyte_spi(uint8_t halfbyte, bool is_command);
 static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command);
 
 
-void cowpi_lcd1602_set_send_function(void (*send_halfbyte_function)(uint8_t halfbyte, bool is_command)) {
+void cowpi_setup_lcd1602(unsigned int configuration) {
+    if (!(configuration & (SPI | I2C))) {
+        char s[115];
+        cowpi_error(strcpy_P(s, PSTR("CowPi must use a serial protocol with LCD1602. "
+                                     "Use `cowpi_setup(LCD1602 | SPI);` or `cowpi_setup(LCD1602 | I2C);`.")));
+        // That may not always be the case -- for example, Arduino Mega 2560, Raspberry Pi, or Raspberry Pi Pico
+    }
+    /* HD44780U datasheet says LCD needs 40ms after Vcc=2.7V, or 15ms after Vcc=4.5V */
+    delayMicroseconds(12500);   // Don't want to use delay(50) just in case interrupts are disabled.
+    delayMicroseconds(12500);   // Don't want to use delayMicroseconds(50000) because that's 3x longer than
+    delayMicroseconds(12500);   // delayMicroseconds is safe for. Note that 16383 == 2**14 - 1 -- this suggests
+    delayMicroseconds(12500);   // that while there will be some drift, the real problem is integer overflow
+    /* Place in 4-bit mode because 74HC595 is an 8-bit shift register, and we need RS & EN bits, too */
+    cowpi_lcd1602_set_4bit_mode(configuration);
+    /* 4-bit mode, 2 line display, 5x8 dot matrix */
+    cowpi_lcd1602_send_command(0x28);
+    /* with each character: increment location, do not shift display (0x06) */
+    cowpi_lcd1602_send_command(LCDENTRY_CURSORMOVESRIGHT | LCDENTRY_TEXTNOSHIFT);
+    /* display on, cursor off, no blink (0x0C) */
+    cowpi_lcd1602_send_command(LCDONOFF_DISPLAYON | LCDONOFF_CURSOROFF | LCDONOFF_BLINKOFF);
+    /* clear display */
+    cowpi_lcd1602_clear_display();
+}
+
+void cowpi_lcd1602_set_send_halfbyte_function(void (*send_halfbyte_function)(uint8_t halfbyte, bool is_command)) {
     cowpi_lcd1602_send_halfbyte = send_halfbyte_function;
 }
 
-void cowpi_lcd1602_place_character(uint8_t address, uint8_t data) {
+void cowpi_lcd1602_place_character(uint8_t address, uint8_t character) {
     cowpi_lcd1602_place_cursor(address);
-    cowpi_lcd1602_send_character(data);
+    cowpi_lcd1602_send_character(character);
 }
 
 void cowpi_lcd1602_place_cursor(uint8_t address) {
@@ -45,9 +86,9 @@ void cowpi_lcd1602_send_command(uint8_t command) {
     delayMicroseconds(50);      // most commands require 37us-38us according to various datasheets; the exceptions have their own functions
 }
 
-void cowpi_lcd1602_send_character(uint8_t data) {
-    cowpi_lcd1602_send_halfbyte((data >> 4) & 0xF, false);
-    cowpi_lcd1602_send_halfbyte( data       & 0xF, false);
+void cowpi_lcd1602_send_character(uint8_t character) {
+    cowpi_lcd1602_send_halfbyte((character >> 4) & 0xF, false);
+    cowpi_lcd1602_send_halfbyte(character & 0xF, false);
     delayMicroseconds(50);      // HD44780U datasheet says 41us (37+4) needed until character is updated and ddram address is updated; SPLC780D simply says 38us
 }
 
@@ -78,13 +119,13 @@ void cowpi_lcd1602_set_4bit_mode(unsigned int configuration) {
     uint8_t i2c_address = cowpi_get_display_i2c_address();
     if (!cowpi_lcd1602_send_halfbyte) {
         if (configuration & SPI) {
-            cowpi_lcd1602_set_send_function(cowpi_lcd1602_send_halfbyte_spi);
+            cowpi_lcd1602_set_send_halfbyte_function(cowpi_lcd1602_send_halfbyte_spi);
         } else if (configuration & I2C) {
             if ((i2c_address < 8) || (i2c_address > 127)) {
                 char s[61];
                 cowpi_error(strcpy_P(s, PSTR("I2C Peripheral address must be between 8 and 127, inclusive.")));
             }
-            cowpi_lcd1602_set_send_function(cowpi_lcd1602_send_halfbyte_i2c);
+            cowpi_lcd1602_set_send_halfbyte_function(cowpi_lcd1602_send_halfbyte_i2c);
         } else {
             char s[115];
             cowpi_error(strcpy_P(s, PSTR("CowPi must use a serial protocol with LCD1602. "

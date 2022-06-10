@@ -1,11 +1,17 @@
-/*
- * CowPi (c) 2021-22 Christopher A. Bohn
- */
-
-/******************************************************************************
- * This header defines dummy functions & macros to replace those in
+/**************************************************************************//**
+ *
+ * @file cowpi_dummy_pgmspace.h
+ *
+ * @author Christopher A. Bohn
+ *
+ * @brief This header defines dummy functions & macros to replace those in
  * avr/pgmspace.h for non-AVR architectures (or that don't need avr/pgmspace.h,
  * in the case of the ATMega4809).
+ *
+ * This header might not be needed, as it looks like Arduino has provided a
+ * pgmspace.h header for some or all non-AVR architectures. When we extend the
+ * library to the Raspberry Pi Pico SDK, we may need it, though.
+ *
  ******************************************************************************/
 
 #ifndef COWPI_DUMMY_PGMSPACE_H
@@ -13,7 +19,8 @@
 
 // One last protection against accidental misuse
 #ifndef ARDUINO_ARCH_AVR
-// hmm... it looks like Arduino may have provided a pgmspace.h file that does much of this for us for non-AVR architectures
+
+/** @cond */
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,6 +46,8 @@ static __inline__ uint8_t pgm_read_byte(const uint8_t *p) {
 #ifdef __cplusplus
 }
 #endif
+
+/** @endcond */
 
 #endif //ARDUINO_ARCH_AVR
 

@@ -14,6 +14,7 @@ cowpi_setup	KEYWORD2
 cowpi_stdio_setup	KEYWORD2
 cowpi_set_display_dialect	KEYWORD2
 cowpi_get_display_dialect	KEYWORD2
+cowpi_is_spi_lsbfirst	KEYWORD2
 cowpi_set_display_i2c_address	KEYWORD2
 cowpi_get_display_i2c_address	KEYWORD2
 cowpi_get_keypress	KEYWORD2
@@ -41,7 +42,7 @@ cowpi_lcd1602_create_character	KEYWORD2
 cowpi_lcd1602_clear_display	KEYWORD2
 cowpi_lcd1602_return_home	KEYWORD2
 cowpi_lcd1602_set_backlight	KEYWORD2
-cowpi_lcd1602_set_send_function	KEYWORD2
+cowpi_lcd1602_set_send_halfbyte_function	KEYWORD2
 
 
 # CODE STRUCTURES (kind of)

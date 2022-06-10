@@ -1,13 +1,30 @@
-/*
- * CowPi (c) 2021-22 Christopher A. Bohn
- */
+/**************************************************************************//**
+ *
+ * @file cowpi_internal.h
+ *
+ * @author Christopher A. Bohn
+ *
+ * @brief Function and constants that are not meant for use by application code.
+ *
+ ******************************************************************************/
 
+/* CowPi (c) 2021-22 Christopher A. Bohn
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #ifndef COWPI_INTERNAL_H
 #define COWPI_INTERNAL_H
 
-#include <stdio.h>
-
+/** @cond */
 
 /* Constants */
 
@@ -64,9 +81,9 @@ static const uint8_t SPI_CHIP_SELECT        = 10;
 #ifdef __cplusplus
 extern "C" {
 #endif
-void cowpi_lcd1602_set_4bit_mode(unsigned int configuration);
-bool cowpi_is_spi_lsbfirst();
 void cowpi_error(const char *message);
+void cowpi_setup_max7219(unsigned int configuration);
+void cowpi_setup_lcd1602(unsigned int configuration);
 #ifdef __cplusplus
 } // extern "C"
 #endif
@@ -76,5 +93,6 @@ void cowpi_error(const char *message);
 
 // none
 
+/** @endcond */
 
 #endif //COWPI_INTERNAL_H
