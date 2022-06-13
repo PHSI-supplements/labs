@@ -43,8 +43,8 @@ Because it's punny.
 Typically, yes, but *Cowduino* isn't very punny, is it?
 
 Besides, there soon will be a version of the Cow Pi that makes use of the
-Raspberry Pi Pico. That's why we said that the circuit has a microcontroller
-board and not an Arduino Nano.
+Raspberry Pi Pico. That's why we said that the circuit has "a microcontroller
+board" instead of "an Arduino Nano."
 
 ## Why did you design something new? Didn't you consider something manufactured?
 
@@ -69,7 +69,7 @@ can keep the cost down.
 ## The Cow Pi uses nearly all of the pins on the Arudino Nano; that'll make it hard to do any other projects with it.
 
 Yes, that's true. The Cow Pi is designed to support specific learning
-objectives. If you want to do a differnet project, then disassemble the kit and
+objectives. If you want to do a different project, then disassemble the kit and
 use the parts to build your project.
 
 ## Why don't you just use existing libraries like `LiquidCrystal` and `Wire`?

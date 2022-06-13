@@ -61,7 +61,7 @@ void cowpi_max7219_no_decode(void) {
 }
 
 void cowpi_max7219_bcd_decode(void) {
-    cowpi_max7219_send(0x9, 0xF);
+    cowpi_max7219_send(0x9, 0xFF);
 }
 
 void cowpi_max7219_set_intensity(uint8_t intensity) {

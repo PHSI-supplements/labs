@@ -1,20 +1,12 @@
-#include "cowpi.h"
+#include "CowPi.h"
+#include "cowpi_font_7segment.h"
 
-const uint8_t H     = 0x37;
-const uint8_t E     = 0x4F;
-const uint8_t L     = 0x0E;
-const uint8_t O     = 0x1D;
-const uint8_t space = 0x00;
-const uint8_t W     = 0x3F;
-const uint8_t R     = 0x05;
-const uint8_t D     = 0x3D;
-const uint8_t bang  = 0xA0;
-
-const uint8_t hello_world[] = {H, E, L, L, O, space, W, O, R, L, D, bang, space, space};
 const int8_t length = 14;
+uint8_t hello_world[length];
 
 void setup() {
     cowpi_setup(MAX7219 | SPI);
+    cowpi_string_to_7segment(hello_world, "Hello world!  ");
 }
 
 void loop() {

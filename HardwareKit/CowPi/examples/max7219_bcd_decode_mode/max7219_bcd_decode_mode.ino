@@ -1,4 +1,4 @@
-#include "cowpi.h"
+#include "CowPi.h"
 
 void setup() {
     cowpi_setup(MAX7219 | SPI);

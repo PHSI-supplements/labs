@@ -58,8 +58,9 @@
  *
  * @author Christopher A. Bohn
  *
- * @brief This header organizes the other headers. It is the only header from the
- * CowPi library that application code should `#include`.
+ * @brief This header organizes the other headers. Except for the font headers,
+ * it is the only header from the CowPi library that application code should
+ * `#include`.
  *
  ******************************************************************************/
 
