@@ -27,6 +27,7 @@
 #include "cowpi_setup.h"
 
 
+/** @private */
 void cowpi_setup_max7219(unsigned int configuration) {
     if (!(configuration & SPI)) {
         char s[79];

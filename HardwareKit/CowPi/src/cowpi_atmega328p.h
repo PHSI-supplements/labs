@@ -4,11 +4,26 @@
  *
  * @author Christopher A. Bohn
  *
- * @brief Macros and constants for the ATMega328p microcontroller (Arduino Uno,
+ * @brief Macros and constants for the ATmega328P microcontroller (Arduino Uno,
  *      Arduino Nano)
  *
  * This header provides the base address for memory-mapped I/O and
  * data structures to conveniently access the I/O registers.
+ *
+ * Possibly-useful memory-mapped registers:
+ * | Use                                            | Datatype              | Offset from `cowpi_io_base`       |
+ * |:----------------------------------------------:|:----------------------|:----------------------------------|
+ * | External pins                                  | cowpi_ioport_t[3]     | 0x03 (index with named constants) |
+ * | Pin-based interrupts                           | cowpi_pininterrupt_t  | 0x1B                              |
+ * | SPI protocol                                   | cowpi_spi_t           | 0x2C                              |
+ * | I2C protocol                                   | cowpi_i2c_t           | 0x98                              |
+ * | Timer0                                         | cowpi_timer8bit_t     | 0x24                              |
+ * | Timer1                                         | cowpi_timer16bit_t    | 0x60                              |
+ * | Timer2                                         | cowpi_timer8bit_t     | 0x90                              |
+ * | Timer interrupt masks (TIMSKx)                 | uint8_t[3]            | 0x4E (index with timer number)    |
+ * | Timer interrupt flags (TIFRx)                  | uint8_t[3]            | 0x35 (index with timer number)    |
+ * | General timer/counter control register (GTCCR) | uint8_t               | 0x23                              |
+ * | Asynchronous Status Register (ASSR)            | uint8_t               | 0x96                              |
  *
  ******************************************************************************/
 
@@ -113,7 +128,10 @@ uint8_t *const cowpi_io_base = (uint8_t *) 0x20;
 
 
 /**
- * @brief Structure for the general-purpose I/O pins
+ * @brief Structure for the general-purpose I/O pins.
+ *
+ * An array of these structures can be indexed using named constants
+ * (COWPI_PB, etc).
  */
 typedef struct {
     uint8_t input;                      //!< Read inputs from field (PINx)
@@ -122,7 +140,7 @@ typedef struct {
 } cowpi_ioport_t;
 
 /**
- * @brief Structure for the SPI hardware
+ * @brief Structure for the SPI hardware.
  */
 typedef struct {
     uint8_t control;                    //!< SPI control register (SPCR)
@@ -131,7 +149,7 @@ typedef struct {
 } cowpi_spi_t;
 
 /**
- * @brief Structure for the TWI (aka I2C, IIC) hardware
+ * @brief Structure for the TWI (aka I2C, IIC) hardware.
  */
 typedef struct {
     uint8_t bit_rate;                   //!< TWI bit rate register, works in concert with status register (TWBR)
@@ -139,11 +157,11 @@ typedef struct {
     uint8_t address;                    //!< TWI peripheral address register (TWAR)
     uint8_t data;                       //!< TWI data register (TWBB)
     uint8_t control;                    //!< TWI control register(TWCR)
-    uint8_t peripheral_address_mask;    //!< TWI peripheral address mask registeer (TWAMR)
+    uint8_t peripheral_address_mask;    //!< TWI peripheral address mask register (TWAMR)
 } cowpi_i2c_t;
 
 /**
- * @brief Structure for pin-based interrupts: pin change interrupts and external interrupts
+ * @brief Structure for pin-based interrupts: pin change interrupts and external interrupts.
  */
 typedef struct {
     uint8_t pci_flags;                  //!< Pin change interrupt flag register (PCIFR)
@@ -157,7 +175,7 @@ typedef struct {
 } cowpi_pininterrupt_t;
 
 /**
- * @brief Structure for 8-bit timer/counter (TIMER0 or TIMER1)
+ * @brief Structure for 8-bit timer/counter (TIMER0 or TIMER1).
  *
  * The timer/counter interrupt mask register (TIMSKx) and the timer/counter
  * interrupt flag register (TIFRx) are not part of this structure. Neither
@@ -172,10 +190,11 @@ typedef struct {
 } cowpi_timer8bit_t;
 
 /**
- * @brief Structure for 16-bit timer/counter (TIMER1)
+ * @brief Structure for 16-bit timer/counter (TIMER1).
  *
  * The timer/counter interrupt mask register (TIMSKx) and the timer/counter
- * interrupt flag register (TIFRx) are not part of this structure.
+ * interrupt flag register (TIFRx) are not part of this structure. Does not
+ * include the general timer/counter control register (GTCCR).
  */
 typedef struct {
     uint32_t control;                 //!< Timer/counter control registers A, B, & C; register A is the low-order byte (Reserved TCCRxC TCCRxB TCCRxA)

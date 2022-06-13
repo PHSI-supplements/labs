@@ -18,7 +18,7 @@ program you write for the basic Cow Pi, with two possible changes:
   slider switches in the SPI configuration (*i.e.*, the switches are attached
   to pins A4 and A5), and a MAX7219-based 8x8 LED matrix that uses the SPI
   protocol.
-- `Uno-LCD1602-SPI.json` -- Has two pushbuttons (tactile switches), two
+- `Uno-LCD1602-SPI-Adafruit.json` -- Has two pushbuttons (tactile switches), two
   slider switches in the SPI configuration (*i.e.*, the switches are attached
   to pins A4 and A5), and a LCD1602 connected to a 74HC595 so that it uses the
   SPI protocol. The '595 pins are mapped to the LCD1602's pins using the
@@ -26,8 +26,8 @@ program you write for the basic Cow Pi, with two possible changes:
 - `Uno-LCD1602-I2C.json` -- Has two pushbuttons (tactile switches), two
   slider switches in the I2C configuration (*i.e.*, the switches are attached
   to pins D10 and D11), and a LCD1602 that uses the I2C protocol. Wokwi has
-  the I2C mapped to the LCD1602's pins using the `WOKWI` dialect; this cannot be
-  changed unless you rewrite the LCD1602 module on a local Wokwi instance.
+  the I2C mapped to the LCD1602's pins using the `STANDARD` dialect; this cannot
+  be changed unless you rewrite the LCD1602 module on a local Wokwi instance.
 
 ## Why have a simulation?
 
@@ -51,7 +51,7 @@ the aging DE1 boards and probably wouldn't want to if we could since replacing
 a board that finally went dud wouldn't be a simple matter of walking down the
 hall from the lab room to the sysadmin suite.
 
-And so, for the Pandemic Year, I wrote the "Simulated Single Board Computer" 
+And so, for the Pandemic Year, I wrote the "Simulated Single Board Computer"
 (SSBC) to run on the department's Linux server. The SSBC was a hack that
 required students to lock a mutex before updating the simulated memory-mapped
 I/O registers to prevent a race condition with the SSBC's display. I later
@@ -59,11 +59,11 @@ learned that it also didn't give students the confidence that they got from
 working with "real" hardware, which was a little problematic when some of those
 students became TAs.
 
-If we have another Pandemic Year, our university's EE Shop would temporarily 
+If we have another Pandemic Year, our university's EE Shop would temporarily
 suspend its no-shipping policy like it did for 2020-21, but it would be nice
 if international students didn't have to worry about international shipping!
 And so I decided that a simulation of the Cow Pi was necessary. While I
-initially considered using something like 
+initially considered using something like
 [simavr](https://github.com/buserror/simavr) and writing a full simulator
 myself, there are a couple of online simulators already available:
 [TinkerCad](https://www.tinkercad.com/) and [Wokwi](https://wokwi.com/) (Wokwi
@@ -85,4 +85,5 @@ InterruptLab would need to use pin change interrupts instead of external
 interrupts -- ~~and TinkerCad has a built-in debugger~~ and TinkerCad has a
 debugger that has a look-and-feel like that of an IDE debugger, whereas Wokwi
 uses [Web GDB](https://docs.wokwi.com/gdb-debugging) (since my students will
-have learned GDB before the hardware labs, I can live with that).
+have learned GDB before the hardware labs, I can live with that, even if Web
+GDB is a bit slow).

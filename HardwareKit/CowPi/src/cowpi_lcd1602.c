@@ -40,6 +40,7 @@ static void cowpi_lcd1602_send_halfbyte_spi(uint8_t halfbyte, bool is_command);
 static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command);
 
 
+/** @private */
 void cowpi_setup_lcd1602(unsigned int configuration) {
     if (!(configuration & (SPI | I2C))) {
         char s[115];

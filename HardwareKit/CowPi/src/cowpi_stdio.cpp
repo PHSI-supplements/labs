@@ -48,5 +48,8 @@ static int cowpi_getc(FILE *stream) {
 
 static int cowpi_putc(char c, FILE *stream) {
     Serial.write(c);
+    if (c == '\n') {
+        Serial.write('\r');
+    }
     return c;
 }

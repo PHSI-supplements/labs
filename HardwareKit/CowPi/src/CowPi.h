@@ -3,7 +3,7 @@
  *
  * @version 0.3
  *
- * @copyright 2021-22 Christopher A. Bohn
+ * @copyright (c) 2021-22 Christopher A. Bohn
  *
  * @section overview Overview
  *
