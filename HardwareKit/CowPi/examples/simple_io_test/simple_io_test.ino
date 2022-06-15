@@ -1,4 +1,4 @@
-#include "cowpi.h"
+#include "CowPi.h"
 
 void setup() {
     cowpi_stdio_setup(9600);
