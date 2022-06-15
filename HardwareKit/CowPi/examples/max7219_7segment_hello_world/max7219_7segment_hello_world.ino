@@ -6,7 +6,7 @@ uint8_t hello_world[length];
 
 void setup() {
     cowpi_setup(MAX7219 | SPI);
-    cowpi_string_to_7segment(hello_world, "Hello world!  ");
+    cowpi_font_string_to_7segment(hello_world, "Hello world!  ");
 }
 
 void loop() {

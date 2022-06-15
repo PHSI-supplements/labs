@@ -46,6 +46,10 @@
 #include <stdint.h>
 #include <avr/pgmspace.h>
 
+/** @addtogroup font
+ *  @{
+ */
+
 const uint8_t cowpi_font_7segment[0x80] PROGMEM = {
 //      00 nul   01 soh   02 stx   03 etx   04 eot   05 enq   06 ack   07 bel   08 bs    09 ht    0a nl    0b vt    0c np    0d cr    0e so    0f si
         0x7E, 0x30, 0x6D, 0x79, 0x33, 0x5B, 0x5F, 0x70, 0x7F, 0x7B, 0x77, 0x1F, 0x0D, 0x3D, 0x4F, 0x47,
@@ -65,6 +69,8 @@ const uint8_t cowpi_font_7segment[0x80] PROGMEM = {
         0x67, 0x73, 0x05, 0x5B, 0x0F, 0x3E, 0x27, 0x3F, 0x55, 0x3B, 0x6D, 0x4C, 0x06, 0x58, 0x40, 0xFF
 };
 
+/** @} */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -83,15 +89,12 @@ extern "C" {
  * are mapped to bits in the manner specified in the MAX7219/MAX7221 datasheet
  * (MSB DP-A-B-C-D-E-F-G LSB).
  *
+ * @addtogroup font
+ *
  * @param c the ASCII character whose 7-segment bit vector is to be provided
  * @return  a 7-segment bit vector
  */
-inline uint8_t cowpi_ascii_to_7segment(char c) __attribute__((__always_inline__));
-inline uint8_t cowpi_ascii_to_7segment(char c) {
-    return pgm_read_byte(cowpi_font_7segment + c);
-}
-
-//inline uint8_t *cowpi_string_to_7segment(uint8_t *destination, const char *s);
+uint8_t cowpi_font_ascii_to_7segment(char c);
 
 /**
  * @brief Provides an array of 7-segment bit vectors for an ASCII character
@@ -105,18 +108,14 @@ inline uint8_t cowpi_ascii_to_7segment(char c) {
  *
  * @note The array of bit vectors will *not* be NUL-terminated.
  *
+ * @addtogroup font
+ *
  * @param destination   an empty array of sufficient size to hold the bit
  *      vectors
  * @param s             the string to be converted into 7-segment bit vectors
  * @return              `destination`, with the requested bit vectors
  */
-inline uint8_t *cowpi_string_to_7segment(uint8_t *destination, const char *s) {
-    uint8_t *character_destination = destination;
-    while (*s) {
-        *character_destination++ = cowpi_ascii_to_7segment(*s++);
-    }
-    return destination;
-}
+uint8_t *cowpi_font_string_to_7segment(uint8_t *destination, const char *s);
 
 #ifdef __cplusplus
 } // extern "C"

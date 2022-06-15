@@ -85,21 +85,25 @@
  */
 /** @defgroup scanned Scanned Inputs
  *  @brief Keypad that is scanned through a combination of writing to pins and
- *  reading from other pins.
+ *          reading from other pins.
  */
 /** @defgroup protocol Protocol-Based Outputs
  *  @brief Display modules that are communicated with using either the SPI or
- *  the I2C protocol.
+ *          the I2C protocol.
  */
 /** @defgroup configuration Configuration Functions and Constants
  *  @brief Functions and constants used to configure the Cow Pi hardware and
- *  library at the start of a program.
+ *          library at the start of a program.
  */
 /** @defgroup query Configuration Queries
  *  @brief Functions used to determine the Cow Pi's configuration
  */
 /** @defgroup display Display Modules
  *  @brief Functions for display modules
+ */
+/**
+ * @defgroup font Displayable Fonts
+ * @brief Character fonts for display modules
  */
 /** @defgroup architecture Microcontroller-Specific Definitions
  *  @brief Macros and constants that are specific to a particular microcontroller
@@ -112,6 +116,7 @@
 #include "cowpi_boards.h"
 #include "cowpi_setup.h"
 #include "cowpi_io.h"
+#include "cowpi_fonts.h"
 #include "cowpi_max7219.h"
 #include "cowpi_lcd1602.h"
 

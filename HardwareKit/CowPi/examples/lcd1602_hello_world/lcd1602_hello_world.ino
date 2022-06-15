@@ -1,4 +1,4 @@
-#include "cowpi.h"
+#include "CowPi.h"
 
 void setup() {
     cowpi_stdio_setup(9600);
@@ -9,6 +9,13 @@ void setup() {
 //    protocol = SPI;
     protocol = I2C;
 
+    /* If SPI, then set the dialect (SPI-to-LCD1602 mapping) because right now
+     * only the ADAFRUIT dialect is supported, but I don't want to imply that
+     * there won't be another default anytime soon */
+    if (protocol == SPI) {
+        cowpi_set_display_dialect(ADAFRUIT);
+    }
+
     /* If I2C, then the I2C address and possibly dialect (I2C-to-LCD1602 mapping)
      * need to be set before calling `cowpi_setup`. */
     if (protocol == I2C) {
@@ -18,8 +25,8 @@ void setup() {
 
     cowpi_setup(LCD1602 | protocol);
 
-    printf("You should see the backlight blinking.\n\r");
-    printf("Adjust the contrast until you can see the \"Hello, world!\" message.\n\r");
+    printf("You should see the backlight blinking.\n");
+    printf("Adjust the contrast until you can see the \"Hello, world!\" message.\n");
 
     if (protocol == I2C) {
         uint8_t i2c_address = cowpi_get_display_i2c_address();

@@ -1,4 +1,4 @@
-#include "cowpi.h"
+#include "CowPi.h"
 
 const uint8_t runner[][8] = {
         {0x06, 0x06, 0x0c, 0x16, 0x04, 0x06, 0x09, 0x01},
@@ -16,6 +16,13 @@ void setup() {
     /* Select either the SPI protocol or the I2C protocol */
 //    protocol = SPI;
     protocol = I2C;
+
+    /* If SPI, then set the dialect (SPI-to-LCD1602 mapping) because right now
+     * only the ADAFRUIT dialect is supported, but I don't want to imply that
+     * there won't be another default anytime soon */
+    if (protocol == SPI) {
+        cowpi_set_display_dialect(ADAFRUIT);
+    }
 
     /* If I2C, then the I2C address and possibly dialect (I2C-to-LCD1602 mapping)
      * need to be set before calling `cowpi_setup`. */
