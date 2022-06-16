@@ -1,8 +1,19 @@
 %%
 %% MCUlab (c) 2021-22 Christopher A. Bohn
 %%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
 
 \input{../../../common/assignment.tex}
+\input{../../../common/semester.tex}
 \usepackage{enumitem}
 \usepackage{graphicx}
 %\usepackage{media9}
@@ -15,14 +26,13 @@
 \usepackage{animate}
 \usepackage{multicol}
 
-\renewcommand{\labnumber}{10-prelab}
+\renewcommand{\labnumber}{\hardwareprelabnumber}
 \renewcommand{\labname}{Physical Assembly of Hardware for I/O Labs}
 \renewcommand{\shortlabname}{i/o-prelab}
-\renewcommand{\collaborationrules}{\freecollaboration}
-%\renewcommand{\duedate}{soon}
-\renewcommand{\duedate}{Before the start of your lab section on April 5 or 6}
+\renewcommand{\collaborationrules}{\hardwareprelabcollaboration}
+\renewcommand{\duedate}{\hardwareprelabdue}
 
-\newcommand{\nano}{Arduino Nano}
+\newcommand{\nano}{\developmentboard} % TODO: replace \nano with \developmentboard
 \newcommand{\power}{{power~(\color{red}\bf+}) rail}
 \newcommand{\ground}{ground~({\color{RoyalBlue}\bf--}) rail}
 \newcounter{checkpoint}
@@ -35,8 +45,9 @@ did so.\vspace{1cm}}
 cable from the \nano.}}
 \newcommand{\rainbow}{male-to-male rainbow cable}
 
-\startdocument
-% \begin{document}\documentclass[12pt]{article}
+\pagelayout
+\begin{document}
+\labidentifier
 
 %\usepackage{fullpage}
 %\usepackage{enumitem}
