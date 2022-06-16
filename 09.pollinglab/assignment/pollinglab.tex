@@ -1,8 +1,19 @@
 %%
 %% PollingLab (c) 2021-22 Christopher A. Bohn
 %%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
 
 \input{../../common/assignment.tex}
+\input{../../common/semester.tex}
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{addfont}
@@ -20,16 +31,16 @@
 
 
 
-\renewcommand{\labnumber}{8}
+\renewcommand{\labnumber}{\pollinglabnumber}
 \renewcommand{\labname}{Using Polling with Memory-Mapped Input/Output}
 \renewcommand{\shortlabname}{memory-mapped i/o -- pollinglab}
-\renewcommand{\collaborationrules}{\individualeffort}
-%\renewcommand{\duedate}{soon}
-\renewcommand{\duedate}{Week of April 11, Before the start of your lab section}
-\newcommand{\nano}{Arduino Nano}
-\renewcommand{\runtimeenvironment}{your \nano-based class hardware kit}
-
-\startdocument
+\renewcommand{\collaborationrules}{\pollinglabcollaboration}
+\renewcommand{\duedate}{\pollinglabdue}
+\newcommand{\nano}{\developmentboard} % TODO: replace \nano with \developmentboard
+\renewcommand{\runtimeenvironment}{\pollinglabenvironment}
+\pagelayout
+\begin{document}
+\labidentifier
 
 In this assignment, you will write functions to use the input and output
 devices on \runtimeenvironment. You will then use those functions to implement

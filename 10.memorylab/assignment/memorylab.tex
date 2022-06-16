@@ -1,8 +1,19 @@
 %%
 %% MemoryLab (c) 2021-22 Christopher A. Bohn
 %%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
 
 \input{../../common/assignment.tex}
+\input{../../common/semester.tex}
 
 \usepackage{graphicx}
 
@@ -33,18 +44,17 @@ inner ysep=10pt
 }
 %%%
 
-\renewcommand{\labnumber}{11}
+\renewcommand{\labnumber}{\memorylabnumber}
 \renewcommand{\labname}{Memory Measurement Lab}
 \renewcommand{\shortlabname}{memorylab}
-\renewcommand{\collaborationrules}{This is an individual-effort project. You
-may discuss the nature of memory technologies and of memory hierarchies with
-classmates, but you must draw your own conclusions.}
-%\renewcommand{\duedate}{soon}
-\renewcommand{\duedate}{Week of May 2, at the end of your lab section}
-\newcommand{\nano}{Arduino Nano}
+\renewcommand{\collaborationrules}{\memorylabcollaboration}
+\renewcommand{\duedate}{\memorylabdue}
+\newcommand{\nano}{\developmentboard} % TODO: replace \nano with \developmentboard
 \renewcommand{\runtimeenvironment}{your \nano-based class hardware kit and your
 account on the \textit{csce.unl.edu} Linux server}
-\startdocument
+\pagelayout
+\begin{document}
+\labidentifier
 
 
 In this assignment, you will measure the speed of different memories and draw
