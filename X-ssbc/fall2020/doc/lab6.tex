@@ -1,0 +1,391 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage}
+\usepackage{enumitem}
+\usepackage{graphicx}
+% \usepackage{movie15}
+\usepackage{media9}
+\usepackage{listings}
+\lstset{language=c, numbers=left}
+\usepackage{addfont}
+\addfont{OT1}{d7seg}{\dviiseg}
+\addfont{OT1}{deseg}{\deseg}
+
+\begin{document}
+\title{Using C to Perform I/O on Simulated Hardware}
+\author{}
+\date{Part 1 due the week of November 9 at 11:59pm on your lab day\\
+Parts 2 \& 3 due the week of November 16 at 11:59pm on your lab day}
+\maketitle
+
+Due to the circumstances of this semester, we will not be using Altera
+single board computers for labs. Instead, we will use a simulated single
+board computer (SSBC). \textbf{This lab is designed for use on the csce.unl.edu
+Linux server.}
+
+The accompanying document, \textit{ssbc.pdf} describes how to use the SSBC
+library: how to interact with the simulated SBC and how to use its inputs and
+outputs in a program.
+
+The file archive \textit{lab6.tar} includes six files:
+\begin{description}
+    \item [ssbc.h] The header file for the SSBC library.
+    \item [Makefile] The Makefile to build the programs for this lab. You can build the programs individually, or you can build all of them using the command \texttt{make all}.
+    \item [demo.c] A program that demonstrates using the SSBC library. Run the
+        command \texttt{make demo} to build the program, and then run it with
+        the command \texttt{./demo}. This file is described line-by-line in
+        \textit{ssbc.pdf}
+    \item [warmup.c] Starter code for part 1 of this lab. Run the command
+        \texttt{make warmup} to build the program, and then run it with the
+        command \texttt{./warmup}.
+    \item [poll-calculator.c] Starter code for part 2 of this lab. Run the
+        command \texttt{make poll-calculator} to build the program, and then
+        run it with the command \texttt{./poll-calculator}.
+    \item [interrupt-calculator.c] Starter code for part 3 of this lab. Run the command\\ \texttt{make interrupt-calculator} to build the program, and then run it with the command \texttt{./interrupt-calculator}.
+\end{description}
+
+\textbf{\textit{Note: }Do NOT use \texttt{printf} to print debugging
+information. Use \texttt{ssbc\_print} instead.}
+
+\section{Familiarize Yourself with the Simulated Single Board Computer}
+
+\textbf{20 points}
+
+Edit \textit{warmup.c} to write a program that uses the SSBC's input and output
+registers to meet the following specification:
+
+\begin{itemize}
+    \item When the left-most toggle switch is in the ``on'' position, the left
+        three seven-segment displays show {\dviiseg 231}; when the
+        left-most toggle switch is in the ``off'' position, the left three
+        seven-segment displays are blank.
+    \item When the right-most toggle switch is in the ``on'' position, the
+        right-most seven-segment display displays the number corresponding to
+        the last number button that was pressed. When the right-most toggle
+        switch is in the ``off'' position, the right-most seven-segment display
+        is blank. If a number button has not yet been pressed since launching
+        the program, the right-most seven-segment display will be blank, even
+        if the toggle switch is in the ``on'' position.
+    \item Toggling the middle two toggle switches has no effect.
+\end{itemize}
+
+\textit{Hint:} You may want to create a ten-element array of 8-bit bit vectors
+to map a decimal digit to the bit vector needed to display that digit on a
+single seven-segment display.
+
+\vspace{0.5cm}
+
+Rubric:
+\begin{description}
+    \item[\underline{\hspace{1cm}} +4] {\dviiseg 231} displays on the three
+        left displays when the left-most toggle switch is in the ``on''
+        position.
+    \item[\underline{\hspace{1cm}} +2] The left three displays are blank when
+        the left-most toggle switch is in the ``off'' position.
+    \item[\underline{\hspace{1cm}} +2] The right-most display is blank if
+        a number button has not yet been pressed, regardless of the position of
+        the right-most toggle switch.
+    \item [\underline{\hspace{1cm}} +4] If a number button has been pressed,
+        then the right-most display shows the number of the most-recent number
+        button pressed when the right-most toggle switch is in the ``on''
+        position.
+    \item[\underline{\hspace{1cm}} +2] The right-most display is blank when
+        the right-most toggle switch is in the ``off'' position.
+    \item[\underline{\hspace{1cm}} +1] The behaviors for the left-most toggle
+        switch and for the right-most toggle switch can happen at the same time
+        (\textit{e.g.}, {\dviiseg 231} can be made to appear and disappear
+        while also updating the number entered from the keypad).
+    \item[\underline{\hspace{1cm}} +1] Nothing happens as a result of toggling
+        either of the middle two toggle switches.
+    \item[\underline{\hspace{1cm}} +2] The SSBC screen does not get corrupted
+        under casual use of the program.
+    \item[\underline{\hspace{1cm}} +2] The SSBC remains responsive to inputs
+        throughout using the program.
+\end{description}
+
+\section{Use Polling to Detect Inputs} \label{polling}
+
+\textbf{35 points}
+
+It may not have been obvious while you were writing your warmup program, but
+you can not tell when the user has pressed the same number button twice in a
+row by simply reading the BCD value from the number pad's register. This is
+obvious if you run the demonstration program and pay attention to the debug
+window. In Part~\ref{polling}, you will overcome this problem by
+\textit{polling} the number pad register's \textit{dirty bit}.
+
+``Dirty bit'' is a bit used to indicate that something has changed. Here, the
+dirty bit indicates that the user has pressed a number button. ``Polling'' is a
+technique to periodically read a value to determine if it has changed.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=10cm]{AreWeThereYet}
+    \caption{Polling. \tiny Image by 20th Century Fox Television}
+\end{figure}
+
+Edit \textit{poll-calculator.c} to write a program that uses the SSBC's input
+and output registers to meet the following specification:
+
+\begin{itemize}
+    \item Functionality: implement a simple 2-function decimal integer
+        calculator.
+    \begin{itemize}
+        \item Initially, $operand1$ and $operand2$ will hold the
+            value $0$.
+        \item When all toggle switches are in the ``off'' position, the
+            seven-segment displays will be blank.
+        \item When toggle switch 3 (the switch that is toggled by the `a' key)
+            is moved to the ``on'' position, the program starts to build
+            $operand1$. When toggle switch 3 is moved to the ``off''
+            position, $operand1$ takes the value that was built.
+        \item When toggle switch 2 (the switch that is toggled by the `s' key)
+            is moved to the ``on'' position, the program starts to build
+            $operand2$. When toggle switch 2 is moved to the ``off''
+            position, $operand2$ takes the value that was built.
+        \item When building an operand:
+        \begin{itemize}
+            \item The right-most seven-segment display (the ``ones'' place)
+                will always display a digit. The remaining seven-segment
+                displays will not display leading $0$s.
+            \item The value being built will initially be $0$, and so {\dviiseg
+                0} will be initially displayed.
+            \item When the first number button is pressed after starting to
+                build an operand, the ``ones'' place will display that digit.
+                For example, if the user presses `5', then {\dviiseg 5} will be
+                displayed.
+            \item There will never be leading $0$s in the ``tens,''
+                ``hundreds,'' and ``thousands'' places.
+            \item When the second, third, and fourth number button is pressed
+                (if a second, third, or fourth number button is pressed) then
+                the existing digits will shift one decimal digit to the left,
+                and the newly-entered number will go in the ``ones'' place. For
+                example, if the user presses `5', `3', `0', and `9', then the
+                display will show these values in sequence: \\
+                \begin{tabular}{r}
+                {\dviiseg 0} \\
+                {\dviiseg 5} \\
+                {\dviiseg 53} \\
+                {\dviiseg 530} \\
+                {\dviiseg 5309}
+                \end{tabular}
+            \item There is no way to build a negative operand.
+            \item Except as noted in Part~\ref{bonus}, you may assume that
+                operands are representable with four or fewer decimal digits.
+                Unless you implement the bonus, we are not specifying the
+                correct behavior if the user presses a fifth number button.
+        \end{itemize}
+        \item Number button presses will be ignored except when building
+            operands.
+        \item When toggle switch 1 (the switch that is toggled by the `d' key)
+            is moved to the ``on'' position, the seven-segment displays will
+            display the sum of $operand1 + operand2$. If the sum is $0$ then
+            {\dviiseg 0} shall be displayed; otherwise, there shall be no
+            leading $0$s. Except as noted in Part~\ref{bonus}, you may assume
+            that the sum is representable with four or fewer decimal digits.
+            Unless you implement the bonus, we are not specifying the correct
+            behavior for sums greater than $9,999$.
+        \item When toggle switch 0 (the switch that is toggled by the `f' key)
+            is moved to the ``on'' position, the seven-segment displays will
+            display the difference of $operand1 - operand2$. If the difference
+            is $0$ then {\dviiseg 0} shall be displayed; otherwise, there shall
+            be no leading $0$s. Except as noted in Part~\ref{bonus}, you may
+            assume that the difference is non-negative; unless you implement
+            the bonus, the correct behavior for negative differences is
+            unspecified.
+        \item You may assume that at most one toggle switch will ever be in the
+            ``on'' position. We are not specifying the correct behavior if two
+            toggle switches are in the ``on'' position.
+    \end{itemize}
+    \item Implementation
+    \begin{itemize}
+        \item Poll the number pad register's dirty bit to determine when a
+            number button has been pressed. The SSBC library will place a $1$
+            in the dirty bit whenver a number button has been pressed.
+        \item Afer reading the number pad register's BCD value, clear the dirty
+            bit by setting it to $0$.
+        \item You may use any built-in C operations.
+        \item \textit{Hint: } You may want to write a function that will
+            convert a integer into the bit vector for the seven-segment
+            displays' register. The array to generate bit vectors for a single
+            digit from the warmup exercise will also be useful.
+    \end{itemize}
+\end{itemize}
+
+Rubric:
+\begin{description}
+    \item[\underline{\hspace{1cm}} +1] The displays are blank when all toggle
+        switches are in the ``off'' position
+    \item[\underline{\hspace{1cm}} +1] $Operand1$ with with one digit can be
+        built.
+    \item[\underline{\hspace{1cm}} +2] $Operand1$ with non-repeating digits can
+        be built, \textit{e.g.}, $231$.
+    \item[\underline{\hspace{1cm}} +3] $Operand1$ with repeating digits can be
+        built, \textit{e.g.}, $2331$.
+    \item[\underline{\hspace{1cm}} +1] When building $operand1$, the
+        ``ones'' place is always displayed
+    \item[\underline{\hspace{1cm}} +2] When building $operand1$,
+        there are no leading $0$s in the ``tens,'' ``hundreds,'' or
+        ``thousands'' places.
+    \item[\underline{\hspace{1cm}} +1] When toggle switch 3 is moved to the
+        ``off'' position, $operand1$ takes on the value built.
+    \item[\underline{\hspace{1cm}} +9] It is possible to build $operand2$ in
+        accordance with specification.
+    \item[\underline{\hspace{1cm}} +1] When toggle switch 2 is moved to the
+        ``off'' position, $operand2$ takes on the value built.
+    \item[\underline{\hspace{1cm}} +5] When toggle switch 1 is moved to the
+        ``on'' position, the sum of $operand1 + operand2$ is displayed without
+        leading $0$s.
+    \item[\underline{\hspace{1cm}} +5] When toggle switch 0 is moved to the
+        ``on'' position, the difference of $operand1 - operand2$ is displayed
+        without leading $0$s.
+    \item[\underline{\hspace{1cm}} +3] Number button presses are detected by
+        polling the dirty bit.
+    \item[\underline{\hspace{1cm}} +1] The dirty bit is reset after obtaining a
+        the value of the number button pressed.
+\end{description}
+
+\section{Use Interrupts to Detect Inputs} \label{interrupts}
+
+\textbf{20 points}
+
+In a more complex program, polling inputs can be unwieldy. An alternative is
+interrupt-driven programming, in which your program responds to hardware
+interrupts rather than repeatedly checking whether an update is available. A
+mix of polling and interrupts is common when only some inputs generate an
+interrupt. In Part~\ref{interrupts}, your program will detect number button
+presses by reacting to a simulated hardware interrupt.
+
+The simulated SBC simulates hardware interrupts with operating system signals.
+Specifically, if your program sets the ``IRQ enable'' bit, then the SSBC libary
+will raise \texttt{SIGUSR1} signal whenever a number button is pressed. The
+SSBC library initially sets this signal to be ignored; however, if you register
+a signal handler with \texttt{sigset} then your program can react to the signal
+as though it were a hardware interrupt.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=10cm]{MomMomMom}
+    \caption{Interrupts. \tiny Image by 20th Century Fox Television}
+\end{figure}
+
+Edit \textit{interrupt-calculator.c} to write a program that uses the SSBC's
+input and output registers to meet the following specification:
+
+\begin{itemize}
+    \item Functionality: implement a simple 2-function decimal integer
+        calculator using the same specification as the calulator from
+        Part~\ref{polling}.
+    \item Implementation
+    \begin{itemize}
+        \item Write a signal handler to take the appropriate action when a
+            number button is pressed, based on the program's current state.
+        \item Register that signal handler to execute whenever the
+            \texttt{SIGUSR1} signal is raised.
+        \item Do \textit{not} poll the number keypad's register. (You will
+            still need to poll the toggle switches' register.)
+        \item You may use any built-in C operations.
+        \item \textit{Hint: } Much of the code you wrote for Part~\ref{polling}
+            can be reused, but the overall structure will differ.
+    \end{itemize}
+\end{itemize}
+
+Rubric:
+\begin{description}
+    \item[\underline{\hspace{1cm}} +0.33] The displays are blank when all toggle
+        switches are in the ``off'' position
+    \item[\underline{\hspace{1cm}} +4.5] It is possible to build $operand1$ in
+        accordance with specification.
+    \item[\underline{\hspace{1cm}} +0.33] When toggle switch 3 is moved to the
+        ``off'' position, $operand1$ takes on the value built.
+    \item[\underline{\hspace{1cm}} +4.5] It is possible to build $operand2$ in
+        accordance with specification.
+    \item[\underline{\hspace{1cm}} +0.33] When toggle switch 2 is moved to the
+        ``off'' position, $operand2$ takes on the value built.
+    \item[\underline{\hspace{1cm}} +2.5] When toggle switch 1 is moved to the
+        ``on'' position, the sum of $operand1 + operand2$ is displayed without
+        leading $0$s.
+    \item[\underline{\hspace{1cm}} +2.5] When toggle switch 0 is moved to the
+        ``on'' position, the difference of $operand1 - operand2$ is displayed
+        without leading $0$s.
+    \item[\underline{\hspace{1cm}} +5] Number button presses are detected by
+        handling the \texttt{SIGUSR1} signal.
+\end{description}
+
+\section{Extra Credit} \label{bonus}
+
+\textbf{Up to 15 bonus points}
+
+The calculator specification left a few edge cases unspecified. For bonus
+credit, implement some or all of these specifications for the edge cases.
+
+\textbf{Note: } to receive bonus credit, you only need to implement the edge
+cases in one of the calculator implementations; you do not need to implement
+the edge cases in both calculator implementations. \textit{If you implement the
+edge cases, indicate so in the header comments of the calculator implementation
+that you want evaluated for bonus credit. \textbf{We will not evaluate a
+calculator implementation for bonus credit that does not state that it has the
+edge cases implemented.}}
+
+\begin{itemize}
+    \item \textbf{Handle an attempt to build a too-great operand (+5)}
+    \begin{itemize}
+        \item When building an operand, if the user presses a fifth number
+            button, the operand being built is invalid. The seven-segment
+            displays shall display {\dviiseg err}.
+        \item The only way to clear this error is to move the operand's toggle
+            switch to the ``off'' position. When the user does so, the original
+            operand's value will be preserved. For example:
+        \begin{itemize}
+            \item $operand1$ holds the value $53$.
+            \item The user moves toggle switch 3 to the ``on'' position and
+                presses `4', `5', `2', `3' which causes the display will show
+                these values in sequence: \\
+                \begin{tabular}{r}
+                {\dviiseg 0} \\
+                {\dviiseg 4} \\
+                {\dviiseg 45} \\
+                {\dviiseg 452} \\
+                {\dviiseg 4523}
+                \end{tabular}
+            \item If the user were to move toggle switch 3 to the ``off''
+                position, then $operand1$ would take the value $4,523$.
+                Instead, the user presses `7' which causes the display to show
+                {\dviiseg err}.
+            \item The user now moves toggle switch 3 to the ``off'' position,
+                and $operand1$ retains the value $53$.
+        \end{itemize}
+        \item This edge case must work for both operands to receive any credit
+            for this edge case.
+    \end{itemize}
+    \item \textbf{Handle a too-great sum (+3)} If, when toggle switch 1 is
+        moved to the ``on'' position, the sum is greater than $9,999$ then the
+        seven-segment displays shall display {\dviiseg err}.
+    \item \textbf{Handle negative differences (+5)} If, when toggle switch 0 is
+        moved to the ``off'' position, the difference is between $-1$ and $-
+        999$ (inclusive) then the difference shall be displayed, including the
+        negative sign. As with non-negative values, there shall be no leading
+        $0$s. For example, subtracting $53-102$ would cause the seven-segment
+        displays to display {\dviiseg -49}.
+    \item \textbf{Handle a too-low difference (+2)} If, when toggle switch 0 is
+        moved to the ``off'' position, the difference is less than $-999$ then
+        the seven-segment displays shall display {\dviiseg err}.
+    \begin{itemize}
+        \item If you do not implement the 5-point ``Handle negative
+        differences'' bonus, then you can receive the 2-point ``Handle a too-
+        low difference'' by displaying {\dviiseg err} for any value less than
+        $0$.
+    \end{itemize}
+\end{itemize}
+
+\section{Deliverables}
+
+\begin{enumerate}
+\item \textit{warmup.c}, due the week of November 9 at 11:59pm on the day of
+    your scheduled lab section
+\item \textit{poll-calculator.c}, due the week of November 16 at 11:59pm on the
+    day of your scheduled lab section
+\item \textit{interrupt-calculator.c}, due the week of November 16 at 11:59pm
+    on the day of your scheduled lab section
+\end{enumerate}
+
+\end{document}

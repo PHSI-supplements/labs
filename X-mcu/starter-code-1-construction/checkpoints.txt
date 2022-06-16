@@ -1,0 +1,51 @@
+STUDENT: (Type your name here)
+
+
+Note: If you have CSCE 231 students verify your checkpoints, please use their
+name as it appears in Canvas.
+
+
+CHECKPOINT 1: Arduino Nano is positioned correctly on the breadboard.
+    Verified by: 
+    Date/Time:   
+
+
+CHECKPOINT 2: Code successfully uploaded to Arduino Nano.
+    Verified by: 
+    Date/Time:   
+
+
+CHECKPOINT 3: Power rails and ground rails are wired correctly.
+    Verified by: 
+    Date/Time:   
+
+
+CHECKPOINT 4: LED and resistor are positioned correctly on the breadboard.
+    Verified by: 
+    Date/Time:   
+
+
+CHECKPOINT 5: Display module is correctly connected to the breadboard.
+    Verified by: 
+    Date/Time:   
+
+
+CHECKPOINT 6: 74LS20 is positioned correctly and is wired correctly.
+    Verified by: 
+    Date/Time:   
+
+
+CHECKPOINT 7: Matrix keypad is positioned correctly and is wired correctly.
+    Verified by: 
+    Date/Time:   
+
+
+CHECKPOINT 8: Slider switches are positioned correctly and are wired correctly.
+    Verified by: 
+    Date/Time:   
+
+
+CHECKPOINT 9: Pushbuttons are positioned correctly and are wired correctly.
+    Verified by: 
+    Date/Time:   
+
