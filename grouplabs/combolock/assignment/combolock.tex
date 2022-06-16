@@ -1,8 +1,19 @@
 %%
 %% CombinationLock GroupLab (c) 2022 Christopher A. Bohn
 %%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
 
 \input{../../../common/assignment.tex}
+\input{../../../common/semester.tex}
 \usepackage{enumitem}
 % \usepackage{graphicx}
 \usepackage{addfont}
@@ -20,16 +31,16 @@
 
 
 
-\renewcommand{\labnumber}{10}
+\renewcommand{\labnumber}{\capstonelabnumber}
 \renewcommand{\labname}{Implementing an Electronic Combination Lock}
 \renewcommand{\shortlabname}{combolock -- grouplab}
-\renewcommand{\collaborationrules}{\teameffort}
-%\renewcommand{\duedate}{soon}
-\renewcommand{\duedate}{Week of May 2, Before the start of your lab section\footnote{See Piazza for the due dates of teams with students from different lab sections.}}
-\newcommand{\nano}{Arduino Nano}
-\renewcommand{\runtimeenvironment}{your \nano-based class hardware kit}
-
-\startdocument
+\renewcommand{\collaborationrules}{\capstonelabcollaboration}
+\renewcommand{\duedate}{\capstonelabdue}
+\newcommand{\nano}{\developmentboard} % TODO: replace \nano with \developmentboard
+\renewcommand{\runtimeenvironment}{\capstonelabenvironment}
+\pagelayout
+\begin{document}
+\labidentifier
 
 In this assignment, you will collaboratively write code for \runtimeenvironment\
 to implement a simple embedded system. Specifically, you will immplement an

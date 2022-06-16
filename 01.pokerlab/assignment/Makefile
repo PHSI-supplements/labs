@@ -1,6 +1,6 @@
 all: lab
 
-lab: pokerlab.tex ../../common/assignment.tex
+lab: pokerlab.tex ../../common/assignment.tex ../../common/semester.tex
 	pdflatex pokerlab
 #	bibtex   pokerlab
 	pdflatex pokerlab

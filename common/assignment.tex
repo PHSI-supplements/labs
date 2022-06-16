@@ -1,5 +1,16 @@
 %%
-%% (c) 2021 Christopher A. Bohn
+%% labs/common/assignment.tex
+%% (c) 2021-22 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
 %%
 
 \documentclass[12pt]{article}
@@ -13,19 +24,6 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{etoolbox}
 
-
-% Customize the semester (or quarter) and the course number
-
-\newcommand{\courseterm}{Spring 2022}
-\newcommand{\coursenumber}{CSCE 231}
-
-% Customize how a typical lab will be managed;
-% you can always use \renewcommand for one-offs
-
-\newcommand{\runtimeenvironment}{your account on the \textit{csce.unl.edu} Linux server}
-\newcommand{\filesource}{Canvas or {\footnotesize$\sim$}cse231 on \textit{csce.unl.edu}}
-\newcommand{\filesubmission}{Canvas}
-
 % These are placeholder commands and will be renewed in each lab
 
 \newcommand{\labnumber}{}
@@ -35,16 +33,22 @@
 
 % Individual or team effort
 
-\newcommand{\individualeffort}{This is an individual-effort project. You may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs. Sharing code with or copying code from another student or the internet is prohibited.}
-\newcommand{\teameffort}{This is a team-effort project. You may discuss concepts and syntax with other students, but you may discuss solutions only with your assigned partner(s), the professor, and the TAs. Sharing code with or copying code from a student who is not on your team, or from the internet, is prohibited.}
-\newcommand{\freecollaboration}{In addition to the professor and the TAs, you may freely seek help on this assignment from other students.}
+\newcommand{\individualeffort}{This is an individual-effort project. You may
+    discuss concepts and syntax with other students, but you may discuss
+    solutions only with the professor and the TAs. Sharing code with or copying
+    code from another student or the internet is prohibited.}
+\newcommand{\teameffort}{This is a team-effort project. You may discuss concepts
+    and syntax with other students, but you may discuss solutions only with your
+    assigned partner(s), the professor, and the TAs. Sharing code with or
+    copying code from a student who is not on your team, or from the internet,
+    is prohibited.}
+\newcommand{\freecollaboration}{In addition to the professor and the TAs, you
+    may freely seek help on this assignment from other students.}
 \newcommand{\collaborationrules}{}
 
-% Do you care about software engineering?
+% Software engineering (if you care about that)
 
 \providebool{allowspaghetticode}
-
-\setbool{allowspaghetticode}{false}
 
 \newcommand{\softwareengineeringfrontmatter}{
     \ifboolexpe{not bool{allowspaghetticode}}{
@@ -74,21 +78,29 @@
 \setlength{\headsep}{0.7cm}
 \hypersetup{colorlinks=true}
 
-\newcommand{\startdocument}{
+\newcommand{\pagelayout}{
     \pagestyle{fancy}
     \fancyhf{}
     \lhead{\coursenumber}
     \chead{\ Lab \labnumber: \labname}
     \rhead{\courseterm}
     \cfoot{\shortlabname-\thepage}
+}
 
-	\begin{document}
-	\title{\ Lab \labnumber}
-	\author{\labname}
-	\date{Due: \duedate}
-	\maketitle
+\newcommand{\labidentifier}{
+    \title{\ Lab \labnumber}
+    \author{\labname}
+    \date{Due: \duedate}
+    \maketitle
 
     \textit{\collaborationrules}
+}
+
+% deprecated
+\newcommand{\startdocument}{
+    \pagelayout
+	\begin{document}
+	\labidentifier
 }
 
 \newcommand{\rubricitem}[2]{\item[\underline{\hspace{1cm}} +#1] #2}
