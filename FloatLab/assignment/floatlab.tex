@@ -1,5 +1,3 @@
-%! suppress = TooLargeSection
-\usepackage{listings}
 %%
 %% FloatLab (c) 2019-22 Christopher A. Bohn
 %%
@@ -14,8 +12,8 @@
 %% limitations under the License.
 %%
 
-\input{../../../common/assignment.tex}
-\input{../../../common/semester.tex}
+\input{../../common/assignment.tex}
+\input{../../common/semester.tex}
 
 \renewcommand{\labnumber}{\floatlabnumber}
 \renewcommand{\labname}{Floating Point Representation and Arithmetic Lab}
@@ -153,7 +151,7 @@
 
     \subsection{Printing a IEEE~754-Compliant Value}
 
-    Examine the stub for \function{print_ieee754()}.
+    Examine the stub for \function{ieee754_to_string()}.
     This function prints its \lstinline{ieee754_t} argument bit vector in hexadecimal, and then it is supposed to print the bit vector as a binary floating point value.
     Making use of the query functions that you wrote, the stub prints the sign and handles the special cases.
 
@@ -572,97 +570,53 @@ char fraction_string[40];
     \textit{We will, however, deduct points if you have the wrong sign for Zero.}
 
 
-    \section*{Turn-in and Grading}
+    \section{Turn-in and Grading}
 
     When you have completed this assignment, upload \textit{fpu.c} to
     \filesubmission.
 
     This assignment is worth 40 points. \\
 
-%    Run \texttt{./integer lab unsigned} (or run \texttt{./integer grader})
-%    \begin{description}
-%        \rubricitem{2}{Satisfies additive identity; for example, 5+0 = 5}
-%        \rubricitem{2}{Performs addition; for example, 32+10 = 42}
-%        \rubricitem{2}{Sums between $2^{15}$ and $2^{16}-1$ do not overflow; for
-%        example, 30000+5000 = 35000}
-%        \rubricitem{2}{Sums greater than $2^{16}-1$ do overflow; for example,
-%            60000+6000 = 464 and reports Overflow}
-%        \rubricitem{2}{Satisfies subtractive identity; for example, 5-0 = 5}
-%        \rubricitem{2}{Performs subtraction; for example, 40000-300 = 39700}
-%        \rubricitem{2}{Differences of zero do not overflow; for example, 10-10 = 0}
-%        \rubricitem{2}{Negative differences do overflow; for example, 2-3  = 65535 and
-%        reports Overflow}
-%        \rubricitem{1}{Satisfies multiplicative identity; for example, 3*1 = 3}
-%        \rubricitem{1}{Satisfies multiplicative zero; for example, 3*0 = 0}
-%        \rubricitem{1}{Performs multiplication when multiplier is a power of two; for
-%        example, 3*4 = 12}
-%        \rubricitem{1}{Performs multiplication when multiplier is not a power of two;
-%        for example, 3*5 = 15}
-%        \rubricitem{1}{Products less than $2^{16}$ do not overflow when multiplier is a
-%        power of two; for example, 3000*16 = 48000}
-%        \rubricitem{1}{Products less than $2^{16}$ do not overflow when multiplier is
-%        not a power of two; for example, 3000*20 = 60000}
-%        \rubricitem{1}{Products greater than $2^{16}-1$ do overflow when multiplier is
-%        a power of two; for example, 3000*32 = 30464 and reports Overflow with the
-%        full answer 0x17700}
-%        \rubricitem{1}{Products greater than $2^{16}-1$ do overflow when multiplier is
-%        not a power of two; for example, 3000*25 = 9464 and reports Overflow with
-%        the full answer 0x124f8}
-%        \rubricitem{1}{Satisfies divisive identity; for example, 8/1 = 8}
-%        \rubricitem{1}{A value divides itself once; for example, 8/8 = 1}
-%        \rubricitem{1}{Satisfies divisive zero; for example, 0/8 = 0}
-%        \rubricitem{1}{Reports division by zero; for example, 8/0 reports Division by
-%        Zero}
-%        \rubricitem{1}{Divides a power of two by another power of two; for example,
-%            32/4 = 8}
-%        \rubricitem{1}{Divides an arbitrary non-negative integer by a power of two; for
-%        example, 30/4 = 7 remainder 2}
-%        \bonusitem{1}{Divides an arbitrary non-negative integer by one of its factors;
-%        for example, 30/5 = 6}
-%        \bonusitem{1}{Divides an arbitrary non-negative integer by an arbitrary
-%        integer; for example, 32/5 = 6 remainder 2}
-%    \end{description}
-%
-%
-%    Run \texttt{./integer lab signed} (or run \texttt{./integer grader})
-%    \begin{description}
-%        \rubricitem{1}{Satisfies additive identity; for example, 5+0 = 5}
-%        \rubricitem{1}{Performs addition with positive values; for example, 32+10 = 42}
-%        \rubricitem{1}{Sums less than $2^{15}$ do not overflow; for example,
-%            30000+2000 = 32000}
-%        \rubricitem{1}{Sums greater than $2^{15}-1$ do overflow; for example,
-%            30000+3000 = -32536 and reports Overflow}
-%        \rubricitem{1}{Performs addition with a negative value; for example, -2+3 = 1}
-%        \rubricitem{1}{Satisfies subtractive identity; for example, 5-0 = 5}
-%        \rubricitem{1}{Performs subtraction; for example 200-50 = 150}
-%        \rubricitem{1}{Can subtract a greater value from a lesser without overflowing;
-%        for example, 10-20 = -10}
-%        \rubricitem{1}{Can subtract from a negative value; for example, -10-10 = -20}
-%        \rubricitem{1}{Differences beyond $-2^{15}$ overflow; for example,
-%            -30000-3000 = 32536 and reports Overflow}
-%    \end{description}
-%
-%    \textbf{Penalties.} Search \textit{alu.c} for arithmetic operators
-%    (+ - * / \%), and examine algorithms.
-%    \begin{description}
-%        \penaltyitem{13}{The \function{add()} function (or a helper function for
-%        \function{add()}) uses an arithmetic operator (+ - * / \%) or a function
-%        you did not write}
-%        \penaltyitem{13}{The \function{subtract()} function (or a helper function for
-%        \function{subtract()}) uses an arithmetic operator (+ - * / \%) or a
-%        function you did not write}
-%        \penaltyitem{8}{The \function{multiply()} function (or a helper function for
-%        \function{multiply()}) uses an arithmetic operator (+ - * / \%) or a
-%        function you did not write,
-%            \textit{and/or} \function{multiply()} uses a super-polynomial multiplication
-%            algorithm, such as but not limited to brute-force repeated addition}
-%        \penaltyitem{6}{\textbf(also no bonus) The \function{divide()} function (or a
-%        helper function for \function{divide()}) uses an arithmetic operator
-%            (+ - * / \%) or a function you did not write,
-%            \textit{and/or} \function{divide()} uses a super-polynomial division
-%            algorithm, such as but not limited to brute-force repeated subtraction}
-%        \spaghetticodepenalties{1}
-%    \end{description}
+    \begin{description}
+        \rubricitem{1}{\function{is_nan()} correctly reports whether or not its argument is a number}
+        \rubricitem{1}{\function{is_zero()} correctly reports whether or not its argument is zero}
+        \rubricitem{1}{\function{is_infinity()} correctly reports whether or not its argument is infinite}
+        \rubricitem{1}{\function{is_negative()} correctly reports whether or not its argument is negative}
+        \rubricitem{2}{\function{ieee754_to_string()} correctly extracts the significand}
+        \rubricitem{2}{\function{ieee754_to_string()} correctly extracts the exponent}
+        \rubricitem{1}{\lstinline{value == normalize(denormalize(value))} holds true for unadjusted values}
+        \rubricitem{1}{\lstinline{value == normalize(denormalize(value))} holds true for values with adjusted exponents}
+        \rubricitem{1}{\function{negate()} correctly changes its argument's sign}
+        \rubricitem{6}{\function{add()} can add integers \& fractions, positive \& negative values, and ``large'' \& ``small'' numbers}
+        \rubricitem{2}{The identity and commutative properties hold for \function{add()}}
+        \rubricitem{1}{\function{add()} provides correct answers for its special cases}
+        \rubricitem{5}{\function{multiply()} can multiply integers \& fractions, positive \& negative values, and ``large'' \& ``small'' numbers}
+        \rubricitem{3}{The identity, zero, and commutative properties hold for \function{multiply()}}
+        \rubricitem{1}{\function{multiply()} provides correct answers for its special cases}
+        \rubricitem{1}{\function{divide()} provides correct answers for its special cases}
+        \rubricitem{1}{\function{divide()} can divide when the divisor is of the form $\pm 2^n, -126 \le n \le 127$}
+        \rubricitem{1}{\function{divide()} can divide when the dividend's significand is a multiple of the divisor's significand}
+        \rubricitem{1}{\function{add()} demonstrates that \function{normalize()} rounds down when the truncated part of the significand is less than halfway between representable values}
+        \rubricitem{1}{\function{add()} demonstrates that \function{normalize()} rounds up when the truncated part of the significand is more than halfway between representable values}
+        \rubricitem{2}{\function{add()} demonstrates that \function{normalize()} rounds to the nearest-even when the truncated part of the significand is exactly halfway between representable values}
+        \rubricitem{1}{Rounding can carry into the exponent}
+        \rubricitem{1}{\function{add()} and/or \function{multiply()} demonstrate that \function{normalize()} overflows to infinity}
+        \rubricitem{1}{\function{add()}, \function{multiply()}, and/or \function{divide()} demonstrate that \function{normalize()} gracefully underflows through subnormal numbers}
+        \rubricitem{1}{\function{multiply()} and/or \function{divide()} demonstrate that \function{normalize() underflows to zero}}
+        \bonusitem{2}{\function{divide()} can divide arbitrary values}
+    \end{description}
+
+    \textbf{Penalties}
+    \begin{description}
+        \spaghetticodepenalties{1}
+        \penaltyitem{1 (each)}{\function{is_nan()}, \function{is_zero()}, \function{is_infinity()}, \function{is_negative()}, and/or \function{negate()} use \lstinline{float} or \lstinline{double} variables or constants, use C's floating point operations, and/or a function you did not write}
+        \penaltyitem{4}{\function{ieee754_to_string} uses \lstinline{float} or \lstinline{double} variables or constants, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+        \penaltyitem{31}{\function{denormalize()}, \function{adjust_exponent()}, and/or \function{normalize()} use \lstinline{float} or \lstinline{double} variables or constants, use C's floating point operations, and/or a function you did not write}
+        \item[] If \function{denormalize()}, \function{adjust_exponent()}, and \function{normalize()} are not penalized:
+        \penaltyitem{9}{\function{add()} uses \lstinline{float} or \lstinline{double} variables or constants, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+        \penaltyitem{9}{\function{multiply()} uses \lstinline{float} or \lstinline{double} variables or constants, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+        \penaltyitem{3 (and no bonus)}{\function{divide()} uses \lstinline{float} or \lstinline{double} variables or constants, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+        \end{description}
 
 
     \section{Epilogue}
