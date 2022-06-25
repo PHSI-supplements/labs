@@ -78,7 +78,7 @@ bool is_negative(ieee754_t number) { return false; }
  * decimal.
  *
  * The caller is responsible for providing a buffer of sufficient size to hold
- * the string (45 bytes is sufficient).
+ * the string (57 bytes is sufficient).
  *
  * @param destination a buffer to hold the string
  * @param number the value to be converted into a string
@@ -307,6 +307,6 @@ ieee754_t divide(ieee754_t dividend, ieee754_t divisor) {
             .is_infinite = 0};
     /* COMPUTE THE QUOTIENT */
 
-    
+
     return normalize(quotient);
 }
