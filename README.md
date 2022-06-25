@@ -106,13 +106,12 @@ do and in which order you want your students to do the labs in.
     integer arithmetic. I'm redesigning the lab, as many students are now
     copying an algorithm out of the textbook for the extra-credit portion of
     the assignment.
--   **FloatLab** is not yet publicly available -- it will have students
-    implement floating point normalization and arithmetic. For the past few
-    years (okay, I paused work on FloatLab while working on the textbook), I've
-    been trying to arrive at a 16-bit floating point lab but have struggled with
-    a bootstrapping problem of being able to get students started without giving
-    them a worked solution. I've finally given up on that and am writing a
-    32-bit floating point lab.
+-   **FloatLab** has students implement floating point normalization and
+    arithmetic. For the past few years (okay, I paused work on FloatLab while
+    working on the textbook), I'd been trying to arrive at a 16-bit floating
+    point lab but struggled with a bootstrapping problem of being able to get
+    students started without giving them a worked solution. I've finally given
+    up on that and wrote a 32-bit floating point lab.
 -   **AddressingLab** guides students through creating operands for x86-64
     assembly code using immediate values, register operands, and memory operands
     (using direct, indexed, and offset addressing). To give students a low-effort
@@ -126,11 +125,11 @@ do and in which order you want your students to do the labs in.
     assignment sheets to match those of these labs. Soon enough, I'll have
     replacement labs written.)
 -   **ConcurrencyLab** was meant to get students thinking about concurrent flows
-    of control. I recommend that you do not use this lab until I've completely
-    redesigned it: I've only used it once because it suffers from the problem of
-    not having realistic partial credit: either you see how to do the lab and
-    are able to get full credit, or you don't and get no credit. That can't be
-    fixed without starting over from scratch.
+    of control. *I recommend that you do not use this lab until I've completely
+    redesigned it*: I've only used it once because it suffers from the problem
+    of not having realistic partial credit: either you see how to do the lab and
+    are able to get full credit, or you don't and get very little credit. That
+    can't be fixed without starting over from scratch.
 -   **I/O PreLab** is assigned several weeks before the I/O labs to give
     students plenty of time to assemble their hardware kits.
 -   **PollingLab** is the first I/O lab. Students are introduced to
@@ -139,8 +138,8 @@ do and in which order you want your students to do the labs in.
 -   **InterruptLab** introduces students to interrupt-driven I/O. They work both
     at the register level and also at a higher level of abstraction.
 -   **SSBCLabs** (Simulated Single-Board Computer) were kludges that I wrote for
-    students to use during the pandemic year for the I/O labs. I'll soon remove
-    them from this repo because they need more work to make them less hacky,
+    students to use during the pandemic year for the I/O labs. *I'll soon remove
+    them from this repo* because they need more work to make them less hacky,
     and the direction we went with the new I/O hardware offers us better
     options in the unlikely event that we have another pandemic year.
 -   **CapstoneLab**, also known as GroupLab, is one of a handful of labs that
