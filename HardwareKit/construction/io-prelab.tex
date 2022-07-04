@@ -1,0 +1,95 @@
+%! suppress = MissingImport
+%%
+%% I/O Prelab (c) 2021-22 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\input{../../common/assignment.tex}
+\input{../../common/semester.tex}
+\input{macros.tex}
+
+\renewcommand{\labnumber}{\ioprelabnumber}
+\renewcommand{\labname}{Physical Assembly of Hardware for I/O Labs}
+\renewcommand{\shortlabname}{i/o-prelab}
+\renewcommand{\collaborationrules}{\ioprelabcollaboration}
+\renewcommand{\duedate}{\ioprelabdue}
+
+
+\pagelayout
+\begin{document}
+\labidentifier
+
+In the I/O labs, we will use a microcontroller board with some peripherals.
+In this prelab, you will assemble the hardware for the I/O labs.
+
+\section{Obtaining the Hardware} \obtaininghardware
+
+\section{Inventorying the Hardware} \label{sec:inventory} \input{inventory/inventorying-the-hardware}
+
+\vspace{0.5cm}
+
+\section*{Assembling the Class Kit}
+
+    You will assemble the hardware in the following steps.
+    \textbf{At various checkpoints, you should pause to have a TA or classmate double-check your work.}
+    When you do so, update the \textit{checkpoints.txt} file to indicate who checked your work and when they did so.
+
+    You may want to store your partially- and fully-completed kit in a plastic food container or some other container to prevent jumper wires from being pulled out while in your backpack.
+
+    \textit{
+        \textbf{Note:} The following pages include both diagrams and photographs of the assembly.
+        The wire colors in the diagrams do not match the wire colors in the assembly.
+        The wire colors in the diagrams are coded by the purpose they serve, whereas the wire colors in the photographs are the colors of wires removed from the \rainbow.
+    }
+
+\section{Microcontroller and IDE} \input{microcontroller/microcontroller-and-ide.tex}
+
+\section{Direct Input/Output Devices} \input{direct/direct-io.tex}
+
+\section{Matrix Keypad} \input{keypad/matrix-keypad.tex}
+
+\section{Display Module} \input{display/display-module.tex}
+
+\section*{Kit Assembly is Complete}
+
+    You have now finished assembling the class kit (Figure~\ref{fig:complete}).
+    In the upcoming I/O labs, you will use the kit to learn about memory-mapped I/O and about handling low-level interrupts.
+
+    \begin{figure}
+        \centering
+        \subfloat[]{
+            \includegraphics[height=0.55\textheight]{fritzing_diagrams/complete}
+%            \label{fig:complete-diagram}
+        }
+
+        \subfloat[]{
+            \includegraphics[height=0.35\textheight]{completed-kit}
+%            \label{fig:complete-kit}
+        }
+        \caption{The fully-assembled class kit.\label{fig:complete}}
+    \end{figure}
+
+\section*{Turn-in and Grading}
+
+    When you have completed this assignment, upload \textit{checkpoints.txt} to \filesubmission.
+
+    This assignment is worth 1 point, with up to 5 bonus points for helping other students. \\
+
+    Rubric:
+    \begin{description}
+        \rubricitem{0.5}{You bring your fully-assembled class kit to your lab section the week it is due.}
+        \rubricitem{0.5}{You upload the completed \textit{checkpoints.txt} file to \filesubmission.}
+        \bonusitem{0.1}{For each checkpoint you verify for fellow students, as reported in their \textit{checkpoints.txt} files;
+            maximum of 5.0 bonus points.}
+    \end{description}
+
+\end{document}

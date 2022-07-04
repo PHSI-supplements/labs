@@ -39,8 +39,8 @@ uint8_t * const cowpi_io_base = (uint8_t *)0x0;
 #error Arduino Nano RP2040 is not yet supported for CowPi
 #elif defined ARDUINO_AVR_MEGA2560
 #error Arduino Mega 2560 is not yet supported for CowPi
-#elif defined ARDUINO_RASPBERRY_PI_PICO
-#error Raspberry Pi Pico Arduino core is not yet supported for CowPi
+#elif defined ARDUINO_RASPBERRY_PI_PICO || defined PICO_RP2040
+#error Raspberry Pi Pico is not yet supported for CowPi
 #else
 #error Your microcontroller board is not yet supported for CowPi.
 #endif //MICROCONTROLLER BOARD

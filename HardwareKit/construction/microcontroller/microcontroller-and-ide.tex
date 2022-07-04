@@ -1,0 +1,191 @@
+%! suppress = MissingImport
+\newcommand{\microcontrollerreference}{}
+\newcommand{\pindescription}{}
+\newcommand{\icspdescription}{}
+\newcommand{\usartdescription}{}
+\newcommand{\digitalpindescription}{}
+\newcommand{\analogpindescription}{}
+\newcommand{\regulatedvoltagedescription}{}
+\newcommand{\unregulatedvoltagedescription}{}
+\newcommand{\resetdescription}{Finally, the \texttt{RESET} pins will reset the \developmentboard\ if grounded (pressing the button in the middle of the \developmentboard\ will also reset it).}
+\newcommand{\microcontrollerprocessorandmemory}{}
+\newcommand{\microcontrollerintegertiming}{}
+\newcommand{\microcontrollerdivisionandfloats}{There is no hardware divider, and there is no floating point hardware, so integer division (to include the modulo operation) and all floating point operations are performed in software, requiring hundreds of clock cycles.}
+\newcommand{\memorymodeldescription}{If you have already read the first half of Chapter 8, the \microcontroller\ has separate instruction and data memory, similar to the simple processor design described in the first half of Chapter 8.}
+\newcommand{\pipelinedescription}{If you have already read the second half of Chapter 8, the \microcontroller\ has a 2-stage pipeline (with \textit{Fetch} and \textit{Execute} stages).}
+
+%! suppress = NonMatchingIf
+\ifdefstring{\microcontroller}{ATmega328P}{
+    \renewcommand{\microcontrollerreference}{Atmel ATmega328P\footnote{\url{https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf}}}
+    \renewcommand{\icspdescription}{The six upward-pointing pins are used to program the \developmentboard\ without using a host computer; we will not use these.}
+    \renewcommand{\usartdescription}{\texttt{RX0} and \texttt{TX1} are used for asynchronous serial communication; as the USB interface also uses the same corresponding pins on the \microcontroller, we will not use these two pins (you will notice that when the \developmentboard\ communicates with the host computer, the \texttt{RX} and \texttt{TX} LEDs will illuminate).}
+    \renewcommand{\microcontrollerprocessorandmemory}{an 8-bit processor with 32KB of flash memory for the program and 2KB of RAM for data}
+    \renewcommand{\microcontrollerintegertiming}{While 8-bit logical operations, as well as 8-bit addition and subtraction, can be completed in one clock cycle, multiplication requires two clock cycles (16-bit operations require additional clock cycles).}
+}{}
+
+%! suppress = NonMatchingIf
+\ifdefstring{\formfactor}{nano}{
+    \renewcommand{\analogpindescription}{Pins \texttt{A0}-\texttt{A7} are analog input pins; however, \texttt{A0}-\texttt{A5} can also be used as digital input/output pins\texttt{D14}-\texttt{D19}. \texttt{AREF} (analog reference) is used to provide a reference voltage for the ADC (we will not use this pin).}
+    \renewcommand{\pindescription}{It has thirty downward-pointing pins.}
+    \renewcommand{\digitalpindescription}{Pins \texttt{D2}-\texttt{D13} are digital input/output pins.}
+    \renewcommand{\unregulatedvoltagedescription}{\texttt{VIN} can be used to power the \developmentboard\ if connected to an unregulated power supply, such as a 9V battery; the \developmentboard's onboard voltage regulator will then provide regulated voltages needed.}
+}{}
+
+%! suppress = NonMatchingIf
+\ifbool{fivevolt}{
+    \renewcommand{\regulatedvoltagedescription}{Pins \texttt{3V3} and \texttt{5V} provide regulated 3.3 volts and 5 volts for external circuitry; \texttt{5V} can also be used to power the \developmentboard\ if connected to a regulated 5V power supply.}
+}{
+    \renewcommand{\regulatedvoltagedescription}{The \texttt{3V3} pin provides regulated 3.3 volts for external circuitry; it can also be used to power the \developmentboard\ if connected to a regulated 3.3V power supply. The \texttt{VUSB} pin can provide regulated 5 volts only if the \texttt{VUSB} jumper pads on the \developmentboard's underside are soldered together.}
+}
+
+%%%%%%%%%%
+
+A microcontroller, such as the \microcontrollerreference\ on the \developmentboard, is a very simple processor when compared to a microprocessor designed for general-purpose computing.
+At the same time, a microcontroller has some features not present on a microprocessor, such as built-in analog-to-digital converters (ADCs).\footnote{We will not use the ADCs in the I/O labs.} A microcontroller board, such as the \developmentboard, combines the microcontroller with other components\footnote{Typically, a voltage regulator, a crystal oscillator, and a USB interface.} in a form factor convenient for experimentation.
+
+The \developmentboard\ has a USB port to connect to a computer and/or to provide power to the \developmentboard.
+\icspdescription
+\pindescription
+\usartdescription
+\digitalpindescription
+\analogpindescription
+\regulatedvoltagedescription
+\unregulatedvoltagedescription
+The \texttt{GND} pins are for the common ground;
+the ground portions of external circuitry and of external power supplies must be electrically connected to the \developmentboard's ground.
+\resetdescription
+Note that, unlike a general-purpose computer, when a microcontroller is reset it will restart its program when the reset is released.
+
+The \microcontroller\ microcontroller on the \developmentboard\ is \microcontrollerprocessorandmemory.
+\microcontrollerintegertiming
+\microcontrollerdivisionandfloats
+
+\memorymodeldescription
+\pipelinedescription
+If you have already read Chapter 10, the \microcontroller\ does not have cache memory;
+however, the data memory is SRAM, the same memory technology used in microprocessors' memory caches.
+If you have already read Chapter 10, the \microcontroller\ does not have a memory management unit for virtual memory;
+instead, the \microcontroller\ uses only physical addressing.
+
+\subsection{Breadboard Terminology}
+
+If you are not familiar with solderless breadboards, read the
+\href{https://learn.adafruit.com/breadboards-for-beginners?view=all}{Breadboards for Beginners} Guide at adafruit.com.
+
+Even though breadboards are often viewed in ``landscape'' orientation (such as in the photo in Section~\ref{sec:inventory} and as seen in the diagram figures) instead of ``portrait'' orientation, the numbered sections are called rows and the lettered sections are called columns.
+In the interest of preserving common usage, we will use this terminology.
+We will refer to specific contact points using the letter-number combination.
+
+\input{/Users/cabohn/textbook/labs/HardwareKit/construction/microcontroller/breadboard/nano-breadboard.tex}
+
+\subsection{Install Arduino IDE}
+
+The Arduino IDE is installed on the lab computers.
+If you choose to install the Arduino IDE on your personal laptop, you can download it from
+\url{https://www.arduino.cc/en/software}.
+Alternatively, you can install a browser plugin to use the
+\href{https://create.arduino.cc/projecthub/Arduino_Genuino/getting-started-with-arduino-web-editor-on-various-platforms-4b3e4a}{Arduino Web Editor}.
+There are third-party plugins for many other IDEs; however, using these may limit our ability to help you if your have difficulties.
+
+\subsubsection*{About Arduino Programs}
+
+An Arduino program is called a \textit{sketch} for historical reasons.\footnote{The Arduino language is based off of the Wiring language, which in turn is based off of the Processing language, which was designed to make computing accessible to artists.}
+For all intents and purposes, you can think of it as a C++ program\footnote{Your code in the I/O labs will be C code.} in which you write two functions, \function{setup} and \function{loop}, along with any helper code that you need.
+The file extension for sketches is \textbf{\textit{.ino}} (as in, Ardu\textbf{\textit{ino}}).
+The Arduino IDE will compile your sketch and link it to a \function{main} function that looks something like:
+\begin{lstlisting}
+int main() {
+    setup();
+    while(1) {
+        loop();
+    }
+}
+\end{lstlisting}
+(The actual \function{main} function\footnote{\url{https://github.com/arduino/ArduinoCore-avr/blob/master/cores/arduino/main.cpp}} also calls a few other functions from the Arduino core library.)
+
+\subsection{Connect to the \developmentboard}
+
+Connect one end of the mini-USB cable to a lab computer or to your personal laptop.\footnote{You can connect it to a ``wall wart'' USB power supply to run the \developmentboard, but you need to connect it to a computer to upload a new sketch to the \developmentboard.}
+Connect the mini-USB end of the cable to your \developmentboard.
+The \texttt{PWR} LED will light up, and you may see the \texttt{L} LED repeatedly blink on-and-off.
+The \texttt{L} LED is connected to the \developmentboard's pin D13, and Arduino microcontroller boards typically leave the factory with \textit{Blink.ino} loaded, but it does not matter if yours does not have \textit{Blink.ino} pre-loaded.
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);                       // wait for a second
+}
+\end{lstlisting}
+
+Open the Arduino IDE on the computer that your \developmentboard\ is connected to.
+Connect the Arduino IDE to the \developmentboard.
+\input{/Users/cabohn/textbook/labs/HardwareKit/construction/microcontroller/ide/nano-ide.tex}
+
+\subsection{Upload a New Sketch}
+
+From the Arduino IDE's menu, open the \textit{Blink.ino} example: \\
+\textit{File} $\rightarrow$ \textit{Examples} $\rightarrow$ \textit{01.Basics} $\rightarrow$ \textit{Blink} \\
+Select \textit{Save As...} and save the project as \textit{MyBlink}.
+
+Edit the values in the \function{delay} calls to change the delays between the LED turning on, off, and on again.
+Select values that will visibly have a difference, such as 250 or 2000.
+Compile the program using the ``Verify'' checkmark in the IDE's toolbar and make corrections if the program doesn't compile.
+Upload the program to your \developmentboard\ using the ``Upload'' arrow in the IDE's toolbar.
+(If you forget to compile first, the IDE will compile your program before uploading, but I find it useful to find compile-time mistakes before attempting to upload the program.)
+
+If you successfully uploaded \textit{MyBlink.ino} then you will see the following in the IDE's \textit{Output} window:
+\begin{quote}
+\dots (elided configuration data)\dots
+\begin{verbatim}
+avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x1e950f (probably m328p)
+avrdude: reading input file "/var/folders/p7/lx4gt70d0_34cpy8r0j3c95c0000gp/T/arduino-sketch-11A4823C54657006C9F78B0812B621A8/MyBlink.ino.hex"
+avrdude: writing flash (932 bytes):
+
+Writing | ################################################## | 100% 0.33s
+
+avrdude: 932 bytes of flash written
+
+avrdude done.  Thank you.
+
+
+--------------------------
+upload complete.
+\end{verbatim}\end{quote}
+and then the LED's on-off pattern will change, reflecting the \function{delay} values you assigned (Figure~\ref{fig:myblink}).
+
+\subsubsection*{Handling Errors}
+
+If you get an error when attempting to upload a sketch, try these corrective measures:
+
+\begin{enumerate}
+    \item Double-check that you have ``ATmega328P (Old Bootloader)'' selected (see Figure~\ref{fig:selecting-processor}).
+    \item Try uploading again (if you attempt to upload a sketch too soon after connecting your \developmentboard\ to your computer, the USB interface won't have finished its handshake).
+    \item The \href{https://support.arduino.cc/hc/en-us/articles/4401874331410--Error-avrdude-when-uploading}{Troubleshooting Guide} recommends disconnecting your \developmentboard\ and reconnecting it, then selecting whichever COM port appears.
+\end{enumerate}
+
+If, instead of an error, your IDE ``hangs'' while collecting configuration data, try this corrective measure:
+
+\begin{itemize}
+\item Press the \texttt{RESET} button in the middle of the \developmentboard; the IDE should begin uploading the sketch after you release the button.
+\end{itemize}
+
+\begin{figure}
+    \centering
+    \animategraphics[autoplay,loop,height=5cm]{8}{microcontroller/animations/myblink-}{0}{6}
+    \caption{\textit{MyBlink.ino} has a different on-off pattern than \textit{Blink.ino}.\label{fig:myblink}}
+\end{figure}
+
+\checkpoint{uploaded new code to the \developmentboard}

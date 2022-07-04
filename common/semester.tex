@@ -30,6 +30,23 @@
 
 \newcommand{\developmentboard}{Arduino Nano}
 
+%\newcommand{\serialprotocol}{SPI}
+\newcommand{\serialprotocol}{I2C}
+
+%\newcommand{\displaymodule}{MAX7219digits}
+%\newcommand{\displaymodule}{MAX7219matrix}
+\newcommand{\displaymodule}{LCD1602}
+
+\setbool{usedisplayfont}{true}
+
+\newcommand{\obtaininghardware}{
+    The EE Shop has prepared ``class kits'' for CSCE 231; your class kit costs \$20. The EE Shop is located at 122 Scott
+    Engineering Center and is open M-F 7am-4pm. You do not need an appointment. You may pay at the window with cash,
+    with a personal check, or with your NCard. If you wish to pay by credit card, you must make the purchase from
+    \url{https://marketplace.unl.edu/ees/engineering-class-kits/csce231-kit.html} the day before you visit the EE
+    Shop.\footnote{The price listed on the website is \$18.65; after sales tax is added, your total will be \$20.}
+}
+
 % Update to reflect the CS2 course(s) at your institute
 
 \newcommand{\cstwo}{CSCE~156, RAIK~184H, or SOFT~161}
@@ -72,9 +89,9 @@
 \newcommand{\pollinglabdue}{Week of April 11, before the start of your lab section}
 \newcommand{\pollinglabenvironment}{your \developmentboard-based class hardware kit}
 
-\newcommand{\hardwareprelabnumber}{\pollinglabnumber-prelab}
-\newcommand{\hardwareprelabcollaboration}{\freecollaboration}
-\newcommand{\hardwareprelabdue}{Before the start of your lab section on April 5 or 6}
+\newcommand{\ioprelabnumber}{\pollinglabnumber-prelab}
+\newcommand{\ioprelabcollaboration}{\freecollaboration}
+\newcommand{\ioprelabdue}{Before the start of your lab section on April 5 or 6}
 
 \newcommand{\interruptlabnumber}{10}
 \newcommand{\interruptlabcollaboration}{\individualeffort}
