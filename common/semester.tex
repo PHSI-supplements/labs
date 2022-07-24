@@ -16,7 +16,7 @@
 
 % Customize the semester (or quarter) and the course number
 
-\newcommand{\courseterm}{Spring 2022}
+\newcommand{\courseterm}{Fall 2022}
 \newcommand{\coursenumber}{CSCE 231}
 
 % Customize how a typical lab will be managed;
@@ -29,10 +29,8 @@
 % Customize for the I/O lab hardware
 
 \newcommand{\developmentboard}{Arduino Nano}
-
 %\newcommand{\serialprotocol}{SPI}
 \newcommand{\serialprotocol}{I2C}
-
 %\newcommand{\displaymodule}{MAX7219digits}
 %\newcommand{\displaymodule}{MAX7219matrix}
 \newcommand{\displaymodule}{LCD1602}
@@ -40,11 +38,10 @@
 \setbool{usedisplayfont}{true}
 
 \newcommand{\obtaininghardware}{
-    The EE Shop has prepared ``class kits'' for CSCE 231; your class kit costs \$20. The EE Shop is located at 122 Scott
-    Engineering Center and is open M-F 7am-4pm. You do not need an appointment. You may pay at the window with cash,
-    with a personal check, or with your NCard. If you wish to pay by credit card, you must make the purchase from
-    \url{https://marketplace.unl.edu/ees/engineering-class-kits/csce231-kit.html} the day before you visit the EE
-    Shop.\footnote{The price listed on the website is \$18.65; after sales tax is added, your total will be \$20.}
+    The EE Shop has prepared ``class kits'' for CSCE 231; your class kit costs \$30.
+    The EE Shop is located at 122 Scott Engineering Center and is open M-F 7am-4pm. You do not need an appointment.
+    You may pay at the window with cash, with a personal check, or with your NCard.
+    The EE shop does \textit{not} accept credit cards.
 }
 
 % Update to reflect the CS2 course(s) at your institute
@@ -58,8 +55,11 @@
 % Which assignments are you using this semester, and when are they due?
 
 \newcommand{\pokerlabnumber}{1}
-\newcommand{\pokerlabcollaboration}{Except as noted in Section~\ref{StudyTheCode}, \individualeffort}
-\newcommand{\pokerlabdue}{Week of January 24, before the start of your lab section}
+\newcommand{\pokerlabcollaboration}{
+    Sections~\ref{sec:connecting}, \ref{sec:terminology}, \ref{sec:gettingstarted}, \ref{subsec:typesofpokerhands}, and~\ref{subsec:studythecode}: \freecollaboration
+    Sections~\ref{sec:completingcard} and~\ref{subsec:completepoker}: \individualeffort
+}
+\newcommand{\pokerlabdue}{Week of August 29, before the start of your lab section}
 
 \newcommand{\keyboardlabnumber}{2}
 \newcommand{\keyboardlabcollaboration}{\individualeffort}

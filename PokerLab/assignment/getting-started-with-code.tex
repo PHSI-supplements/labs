@@ -1,0 +1,54 @@
+Download \textit{\shortlabname.zip} or \textit{\shortlabname.tar} from \filesource\ and copy it to \runtimeenvironment.
+Once copied, unzip the file.
+The three source code files (\textit{card.h}, \textit{card.c}, \textit{poker.c}) contain the starter code for this assignment, and the text file (\textit{answers.txt}) is where you'll provide some answers to demonstrate your ability to understand part of the starter code.
+In the \mbox{\textit{equivalent-java}} directory you will find \textit{Card.java} and \textit{Poker.java} that has Java code that is equivalent to the C code.
+You do not need to use the Java files, but you may find them useful as a reference to help you understand some differences between Java and C\@.
+
+The header file \textit{card.h} defines a ``card'' structure and specifies two functions that operate on cards.
+The source file \textbf{card.c} has the bodies for the specified functions, but some code is missing.
+Finally, the source file \textit{poker.c} is supposed to generate a poker hand of five cards, print those five cards, and then print what kind of hand it is -- but much of its code is missing.
+To compile the program, type:
+
+\texttt{gcc -std=c99 -Wall -o poker poker.c card.c}
+
+If you compile the starter code, it may generate a warning:
+
+\begin{verbatim}
+card.c:59:30: warning: format string is empty [-Wformat-zero-length]
+        sprintf(valueString, "", value);
+                             ^~
+\end{verbatim}
+
+Before you make any other changes, you should edit \textit{card.c} so that the program compiles without generating any warnings or errors.
+If you look at the source code, you'll see a comment with instructions ``\texttt{PLACE THE CONTROL STRING IN THE SECOND ARGUMENT THAT YOU WOULD USE TO PRINT AN INTEGER}.''
+The command \lstinline{sprintf()} is like \lstinline{printf()} and \lstinline{fprintf()} except that it ``prints'' to a string.
+See $\S7.2$ of \textit{The C Programming Language} on pages 153--155 for a description of \lstinline{printf()} and \lstinline{sprintf()}, including some format specifiers you can put in the format string.
+
+If you also get a warning for an unused variable
+\begin{verbatim}
+poker.c:154:9: warning: unused variable ‘size_of_hand’ [-Wunused-variable]
+     int size_of_hand = 5;
+         ^
+\end{verbatim}
+then you can temporarily fix this warning by commenting-out the line \lstinline{int size_of_hand = 5} in \textit{poker.c}'s \function{main()} function.
+
+(Note that in future labs, we will provide a \textit{Makefile} that can be used to build applications.)
+
+\subsection*{Demonstrate that you can connect to \runtimeenvironment}
+
+By whatever means you use to place files on \runtimeenvironment, place \textit{answers.txt} on \runtimeenvironment.
+Open a secure shell terminal and navigate to the directory in which \textit{answers.txt} is located.
+Type these commands:
+\begin{itemize}
+    \item[]\texttt{cat /etc/hostname} \\
+    \textit{The response should be \texttt{csce.cs.unl.edu}.                % Need to genericize this
+    If it is \texttt{cse.unl.edu} then you connected to the wrong server.   % Need to genericize this
+    This will matter in two future lab assignments.}
+    \item[]\texttt{whoami} \\
+    \textit{This will print your School of Computing login ID.}
+    \item[]\texttt{ls answers.txt} \\
+    \textit{The response should be \texttt{answers.txt}.
+    If it is \texttt{ls: cannot access $'$answers.txt$'$: No such file or directory} then you are not in the same directory as} answers.txt.
+\end{itemize}
+
+Take a screenshot and save the screenshot to submit to \filesubmission\ when you have completed the lab.

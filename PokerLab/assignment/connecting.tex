@@ -1,0 +1,68 @@
+%% You will need to edit this file to tailor it to your  %%
+%% particular environment.                               %%
+
+You will need to be able to set up a secure shell terminal to \runtimeenvironment.
+You will also need to be able to edit files either directly on \runtimeenvironment, or on your personal computer (or a lab computer) and to transfer files to and from \runtimeenvironment.
+
+\subsection{Secure Shell Terminal}
+
+You will need to run commands on \runtimeenvironment.
+
+If your personal computer (or the lab computer you're using) is a Windows machine, the most popular option is PuTTY\@.
+See \url{https://computing.unl.edu/faq-section/working-remotely#node-29471} for instructions.
+The principal difference is that instead of using \textit{cse.unl.edu} has the Host Name, use \textit{csce.unl.edu}.
+
+If your personal computer (or the lab computer you're using) is a Mac or a Linux box, the simplest option is to open a terminal window on your computer and type \texttt{ssh \textit{username}@csce.unl.edu}, where \textit{username} is your School of Computing login ID\@.
+See \url{https://computing.unl.edu/faq-section/working-remotely#node-300} for Mac, or \url{https://computing.unl.edu/faq-section/working-remotely#node-30086} for Linux.
+
+For a broad variety of platforms, you can use NoMachine (see \url{https://computing.unl.edu/faq-section/working-remotely#node-30855}).
+Note that NoMachine will only connect to \textit{cse.unl.edu}.
+After you have connected to \textit{cse.unl.edu} through NoMachine, you can open a terminal window and \texttt{ssh} to \textit{csce.unl.edu} just as you would from any other Linux system.
+
+If you already have an IDE on your personal computer, that IDE may provide the option of opening a secure shell terminal on a remote system.
+I do not guarantee that the TAs or the School of Computing tech support team can help you with connecting your IDE to \runtimeenvironment.
+
+\subsection{Editing Files}
+
+You might choose to edit files directly on \runtimeenvironment.
+If you do so, your options are \texttt{vim}, an enhanced version of the classic \texttt{vi} editor, GNU Emacs, or Pico (or its clone, GNU nano).
+Be aware that \texttt{vim} and Emacs have non-trivial learning curves: knowing how to use them will pay dividends in your future careers, but you may be frustrated if you're using to using more conventional editors.
+Pico, an editor derived from the classic \texttt{pine} email client, has a helpful list of available commands always shown at the bottom of the terminal.
+
+If you're using NoMachine, you can use Atom, a general-purpose text editor that will have a more-familiar style user interface.
+Because \textit{cse.unl.edu} and \textit{csce.unl.edu} share a file server, you can edit files on \textit{cse.unl.edu} and use them on \textit{csce.unl.edu} without having to take any action to transfer the files.
+
+Many students choose to edit files on their personal computer.
+If you do so, and if your personal computer is a Windows machine, try to configure your editor to use ``Unix-style'' end-of-line characters.
+This won't matter for most labs, but a couple of upcoming labs will need ``Unix-style'' line separators.
+If you cannot change this setting, then get in the habit of running \texttt{dos2unix \textit{filename}} on your files after transferring them to \runtimeenvironment\ to convert ``DOS-style'' line separators to ``Unix-style'' line separators (this utility makes a few other changes, too, that have no bearing on \coursenumber assignments).
+
+Some IDEs allow you to edit files on a remote system.
+Bear in mind that these IDEs may add metafiles to the remote system in sufficient quantity to exceed your disk quota on the School of Computing's file server (VS Code is particularly notorious for this).
+I do not guarantee that the TAs or the School of Computing tech support team can help you with connecting your IDE to \runtimeenvironment.
+
+If you edit files on your personal computer but store files on your personal computer (that is, you aren't editing remote files), then you will need to transfer files between your personal computer and \runtimeenvironment.
+
+\subsection{Transferring Files}
+
+If you are editing your files on the School of Computing's file server, whether from within a secure shell terminal, from within NoMachine, or by configuring an IDE on your personal computer to do so, then you do not need to transfer files between the file server and your local computer -- but you may wish to set up the ability to do so anyway.
+
+Similarly, if you are editing files on a lab computer, you do not need to transfer files because the ``Z drive'' shares a file server with \textit{cse.unl.edu} and \textit{csce.unl.edu}.
+
+Otherwise, if you are editing local files on your personal computer, then you will need to be able to transfer files.
+If you are using Windows, then the most popular option is FileZilla -- see \url{https://computing.unl.edu/faq-section/working-remotely#node-291}.
+It does not matter whether you specify \textit{cse.unl.edu} or \textit{csce.unl.edu} as the host because they share the same file server.
+
+If you are using Mac or Linux, you have options.
+The School of Computing's FAQ suggests Cyberduck for Mac -- see \url{https://computing.unl.edu/faq-section/working-remotely#node-3459}, but FileZilla works fine on Mac and Linux.
+Another option, since you're already using terminal windows to \texttt{ssh} into \textit{csce.unl.edu} is to use the \texttt{scp} command.
+Basic use of the \texttt{scp} command is very much the same as basic use of the \texttt{cp} command, except that you specify the remote host.
+Copying files from your computer to the server: \\
+\texttt{scp \textit{file1} \textit{file2} \dots username@csce.unl.edu:\textit{filepath}} copies the files from your local computer to the \textit{filepath} on \runtimeenvironment, where \textit{filepath} is relative to your home directory.
+For example, \\
+\texttt{scp answers.txt username@csce.unl.edu:.} copies \textit{answers.txt} to the top-level of your home directory.
+Or, working the other direction: \\
+\texttt{scp username@csce.unl.edu:\textit{file} \textit{filepath}} copies \textit{file} from the remote server to \textit{filepath} on your local computer.
+Just as with \texttt{cp}, you can use the \texttt{-r} argument to copy directories: \\
+\texttt{scp -r pokerlab username@csce.unl.edu:.} \\
+\texttt{scp -r username@csce.unl.edu:pokerlab .}
