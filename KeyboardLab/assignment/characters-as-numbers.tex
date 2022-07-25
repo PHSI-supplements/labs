@@ -1,0 +1,20 @@
+Archie replies to your email, assuring you that a new keyboard has been ordered.
+Meanwhile, he needs you to write some code that will convert uppercase letters to lowercase letters and to indicate whether a character is a decimal digit.
+You realize this is easy work since those actual functions are part of the standard C library with their prototypes in \texttt{ctype.h}.
+As you get ready to impress your boss with how fast you can ``write'' this code by calling those standard functions, the \textit{\texttt{3}} key (which is also used for \textit{\texttt{\#}}) falls off of your keyboard, preventing you from typing \lstinline{#include <ctype.h>}.
+Several other number keys fall off soon thereafter (only \textit{\texttt{0}}, \textit{\texttt{7}}, and \textit{\texttt{9}} remain), along with the \textit{\texttt{s}} key.
+The \textit{\texttt{f}} key is looking fragile, so you decide that you had better not type too many \lstinline{if} statements (and without the \textit{\texttt{s}} key, you can't use a \lstinline{switch} statement at all).
+
+Edit \texttt{problem2.c} so that
+\begin{itemize}
+    \item \function{iz_digit()} returns 1 if the character is a decimal digit (\textquotesingle 0\textquotesingle, \textquotesingle 1\textquotesingle, \textquotesingle 2\textquotesingle, \dots) and 0 otherwise
+    \item \function{decapitalize()} will return the lowercase version of an uppercase letter (\textquotesingle A\textquotesingle, \textquotesingle B\textquotesingle, \textquotesingle C\textquotesingle, \dots) but will return the original character if it is not an uppercase letter
+\end{itemize}
+You may not \lstinline{#include} any headers, you may not use any number keys other than the 0, 9, and 7 (which is also used for \textbf{\texttt{\&}}) keys, you may not use \lstinline{switch} statements, and you may use at most one \lstinline{if} statement in each function.
+
+Build the executable with the command: \texttt{make keyboardlab2} -- be sure to fix both errors and warnings.
+
+You can double-check that you aren't using disallowed keys by running the constraint-checking shell script: \\
+\texttt{./constraint-check.sh} \\
+Because you are allowed at most one \lstinline{if} statement in each function, you may see two lines with \lstinline{if} statements reported when the script checks for \textquotesingle f\textquotesingle.
+%You may also see some comments reported when the script checks for \textquotesingle *\textquotesingle.

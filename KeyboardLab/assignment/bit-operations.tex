@@ -1,0 +1,30 @@
+Your keyboard was mistakenly delivered to the Plywood Scenery Cutting Studio instead of the Pleistocene Petting Zoo.
+While that gets sorted out, you ``borrow'' some tar from the La~Brea Tar Pits diorama and use the tar to re-attach your keyboard's missing keys.
+As you fasten a Scrabble tile in place for the \textit{\texttt{W}}, more keys fall off, denying you the use of \textit{\texttt{+}}, \textit{\texttt{-}}, \textit{\texttt{/}}, \textit{\texttt{\%}}, \textit{\texttt{5}}, and \textit{\texttt{b}}.
+You cannot get any more tar from the diorama, so you sit down to your next programming tasks without those keys.
+
+Edit \texttt{problem3.c} so that
+\begin{itemize}
+    \item \function{is_even()} returns 1 if the number is even (that is, divisible by 2) and 0 if the number is odd
+    \item \function{produce_multiple_of_ten()} will always output a multiple of 10 following a specific formula: if a number is even then divide it by 2;
+    otherwise, subtract 1 from the number and multiply the difference by 5 (for example, an input of 7 yields 30 because $(7-1) \times 5 = 30$);
+    repeat until the last decimal digit is 0.
+\end{itemize}
+These numbers are guaranteed to be non-negative.
+You may not use addition (+), subtraction (-), division (/), nor modulo (\%).
+You also may not use the number 5 nor the letter b.
+(Exceptions: you \textit{may} use the forward-slash (/) for comments, and the percent-sign (\%) that is already present in the \function{sprintf()} calls' format strings is allowed)
+
+Hints:
+\begin{itemize}
+    \item Following the weighted-sum technique to convert between binary and decimal (or by examining the textbook's Table~2.1), you will note that all even numbers have a 0 as their least significant bit, and all odd numbers have a 1 as their least significant bit
+    \item Less obvious is that you can subtract 1 from an odd number by changing its least significant bit to a 0
+    \item As we will cover in Chapter~3, you can halve a number by shifting its bits to the right by one
+    \item You can create an integer by producing its bit pattern through a series of bit operations
+\end{itemize}
+
+Build the executable with the command: \texttt{make keyboardlab3} -- be sure to fix both errors and warnings.
+
+You can double-check that you aren't using disallowed keys by running the constraint-checking shell script: \\
+\texttt{./constraint-check.sh} \\
+%You may see some comments reported when the script checks for \textquotesingle /\textquotesingle.

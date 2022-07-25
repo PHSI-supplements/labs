@@ -1,0 +1,76 @@
+
+When you have completed this assignment, upload \textit{answers.txt} and
+\textit{challenge-response.c} to \filesubmission.
+
+This assignment is worth 30 points.
+\begin{description}
+    \rubricitem{2}{Student's answers in \textit{answers.txt} demonstrate an
+    understanding of the bug in Section~\ref{subsec:uninitializedvariables}'s code
+    and how to correct it.}
+    \rubricitem{2}{Student's answer in \textit{answers.txt} demonstrate an
+    understanding of the bug in Section~\ref{subsec:localaddresses}'s code.}
+    \rubricitem{1}{\function{create_node} creates and initializes a
+    \lstinline{struct node} as specified.} % Depending on the insert_word
+    % code, 0 or 1 is a reasonable initial value for the occurrences field
+    \item[\hspace{1cm}]\function{insert_after} correctly places a new node in a
+    list by updating:
+    \begin{description}
+        \rubricitem{2}{\lstinline{next} pointers (singly- and doubly-linked lists).}
+        \rubricitem{2}{\lstinline{previous} pointers (doubly-linked lists).}
+    \end{description}
+    \rubricitem{2}{\function{insert_before} correctly places a new node in a
+    doubly-linked list.}
+    \rubricitem{2}{\function{word_to_lowercase} returns a copy of the input string
+    with uppercase letters replaced with lowercase letters}
+    \item[\hspace{1cm}]\function{insert_word}:
+    \begin{description}
+        \rubricitem{2}{creates a new node at the end of the list when the word
+        properly belongs at the end of the list and is not already present in
+        the list.}
+        \rubricitem{2}{does not create a new node but instead updates the number of
+        occurrences, when the word is present at the end of the list.}
+        \rubricitem{2}{creates a new node at the appropriate location in the list,
+            regardless of where its appropriate location is, when it is not already
+            present in the list.}
+        \rubricitem{2}{does not create a new node but instead updates the number of
+        occurrences when the word is present, regardless of  its location in
+        the list.}
+    \end{description}
+    \item[\hspace{1cm}]\function{build_list} opens a file for reading, builds a
+    list by reading one line at a time and the word that is read to
+    \function{insert_word()}, and closes the file after the last line has been
+    read, when:
+    \begin{description}
+        \rubricitem{2}{the words in the file are pre-sorted, and the
+        \lstinline{next} pointers are updated (\textit{i.e.}, part 1 of the
+        sub-problems are complete).}
+        \rubricitem{1}{the words in the file are not pre-sorted, and the
+        \lstinline{next} pointers are updated (\textit{i.e.},
+            Section~\ref{subsec:insertionsort} is complete).}
+        \rubricitem{1}{the words in the file are pre-sorted, and the
+        \lstinline{previous} pointers are updated (\textit{i.e.},
+            Section~\ref{subsec:doublylinkedlist} is complete).}
+        \rubricitem{1}{the words in the file are not pre-sorted, and the
+        \lstinline{previous} pointers are updated (\textit{i.e.}, part 2 of the
+        sub-problems are complete).}
+    \end{description}
+    \item[\hspace{1cm}]\function{respond} produces the correct response word in accordance with the specified rules when:
+    \begin{description}
+        \rubricitem{1}{the words in the file are pre-sorted, and the
+        \lstinline{next} pointers are updated (\textit{i.e.}, part 1 of the
+        sub-problems are complete).}
+        \rubricitem{1}{the words in the file are not pre-sorted, and the
+        \lstinline{next} pointers are updated (\textit{i.e.},
+            Section~\ref{subsec:insertionsort} is complete).}
+        \rubricitem{1}{the words in the file are pre-sorted, and the
+        \lstinline{previous} pointers are updated (\textit{i.e.},
+            Section~\ref{subsec:doublylinkedlist} is complete).}
+        \rubricitem{1}{the words in the file are pre-sorted, and the
+        \lstinline{previous} pointers are updated (\textit{i.e.}, part 2 of the
+        sub-problems are complete).}
+    \end{description}
+    \item[Penalties]
+    \penaltyitem{1}Newline characters are included in the word strings when
+    building a list.
+    \spaghetticodepenalties{1}
+\end{description}

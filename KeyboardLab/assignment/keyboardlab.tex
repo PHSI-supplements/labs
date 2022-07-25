@@ -14,14 +14,11 @@
 
 \input{../../common/assignment.tex}
 \input{../../common/semester.tex}
-\usepackage{graphicx}
-\usepackage{wrapfig}
-\usepackage{ulem}
-\usepackage{cancel}
-\usepackage{multicol}
+\input{../../common/storylines.tex}
+
 \lstset{language=c, numbers=left, showstringspaces=false,
     moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
-    }
+}
 
 \renewcommand{\labnumber}{\keyboardlabnumber}
 \renewcommand{\labname}{Bit Manipulation Lab}
@@ -36,262 +33,21 @@
 \begin{document}
 \labidentifier
 
-The purpose of this assignment is to give you more confidence in C programming
-and to begin your exposure to the underlying bit-level representation of data.
-
-The instructions are written assuming you will edit and run the code on
-\runtimeenvironment. If you wish, you may edit and run the code
-in a different environment; be sure that your compiler suppresses no warnings,
-and that if you are using an IDE that it is configured for C and not C++.
-
-\section*{Learning Objectives}
-
-After successful completion of this assignment, students will be able to:
-\begin{itemize}
-\item Use the ASCII table to determine the corresponding integer values of C
-    \lstinline{char} values.
-\item Apply arithmetic operators and comparators to C \lstinline{}{char} values.
-\item Construct and use a bitmask.
-\item Use bitwise operators and bit shift operators to create and modify values.
-\end{itemize}
-
-\subsection*{Continuing Forward}
-
-Your experience with viewing values as bit patterns will be applicable in
-future labs, as will bit masks and bit operations. Some of the functions you
-write in this lab will be used in the next lab.
-
-\section*{During Lab Time}
-
-During your lab period, the TAs will demonstrate how to read the ASCII table and
-will provide a refresher on bitwise AND, bitwise OR, and left- and right-shifts.
-During the remaining time, the TAs will be available to answer questions.
+\input{frontmatter}
 
 \softwareengineeringfrontmatter
 
-\section*{Scenario}
+\section*{Scenario}                         \FirstDayOnTheJob
 
-\begin{wrapfigure}{r}{0.33\textwidth}
-    \centering
-    \includegraphics[scale=.33]{some-expenses-spared}
-    \caption{Some expenses were spared.}
-\end{wrapfigure}
+\section{Using the ASCII table}             \input{using-ascii-table}
 
-You've recently been hired to help get the Pleistocene Petting Zoo get started.
-Your new employer, Archie, is surprisingly honest: he admits to you that some
-expenses were spared. Archie cheerfully points out that any challenge is also
-an opportunity to succeed. You suspect your job will offer plenty of
-``opportunities to succeed.''
+\section{Treating Characters as Numbers}    \input{characters-as-numbers}
 
-\section{Using the ASCII table}
+\section{Using Bitmasks and Shifting Bits}  \input{bit-operations}
 
-You soon discover your first
-$\cancelto{\mathrm{opportunity}}{\mathrm{challenge}}$. Archie purchased your
-workstation from government surplus. Your keyboard is left over from early
-2001 and is missing the letter \textit{\texttt{W}}!\footnote{In January 2001,
-when President Bill Clinton's staff left the White House so that President
-George~W. Bush's staff could move in, they removed the \textit{\texttt{W}} key
-from several keyboards as a prank.} You decide to write an email requesting a
-new keyboard: \\
-\\
-\texttt{TO\tab Archie\nl} \\
-\texttt{RE\tab I Need a Working Keyboard\nl} \\
-\nl \\
-\texttt{Please order a new keyboard for me. This one is broken.\nl } \\ \\
-(Note: here, the \tab\ symbol represents the \texttt{TAB} character which is
-needed by the email program, and the \nl\ symbol represents a \texttt{NEWLINE}
-character.)
+\section{Turn-in and Grading}               \input{grading}
 
-You quickly realize that you can't type this directly into your mail program
-because of the missing \textit{\texttt{W}} key. So you decide to write a short
-program that will output the text that you want to send. The code you would
-like to write is:
-
-\begin{lstlisting}
-#include <stdio.h>
-
-int main() {
-    printf("TO\tArchie\n");
-    printf("RE\tI Need a Working Keyboard\n\n");
-    printf("Please order a new keyboard for me. This one is broken.\n");
-    return 0;
-}
-\end{lstlisting}
-
-Of course, the \texttt{W} and the \texttt{w} are still a problem, but you
-realize you can insert those characters by using their ASCII
-values.\footnote{Use the ASCII table in the textbook or type \texttt{man ascii}
-in a terminal window.} For example,
-
-\lstinline{printf("Hello World!\n");} \\
-can be replaced with
-
-\lstinline{printf("%s%c%s\n", "Hello ", ..., "orld!");} \\
-replacing \dots\ with the ASCII value for \texttt{W}. Recall that the first
-argument for \function{printf()} is a \textit{format string}: \texttt{\%s}
-specifies that a string should be placed at that position in the output, and
-\texttt{\%c} specifies that a character should be placed at that position in
-the output.
-
-As you open your editor, the \textit{\texttt{\textbackslash}} key falls off the
-keyboard, preventing you from typing \texttt{\textbackslash t} and
-\texttt{\textbackslash n}.
-
-Edit \texttt{problem1.c} so that it produces the specified output without using
-the W key or the backslash key. Build the executable with the command:
-\texttt{make keyboardlab1} -- be sure to fix both errors and warnings.
-
-You can double-check that you aren't using the W key or the backslash key by
-running the constraint-checking shell script: \\
-\texttt{./constraint-check.sh} \\
-(If you get a ``\texttt{Permission denied}'' error message, then run the
-command \\
-\texttt{chmod +x constraint-check.sh} \\
-and then run the shell script.)
-
-You can check that your program has the correct output with this command: \\
-\texttt{./keyboardlab1 | diff - problem1oracle}
-
-
-\section{Treating Characters as Numbers}
-
-Archie replies to your email, assuring you that a new keyboard has been
-ordered. Meanwhile, he needs you to write some code that will convert uppercase
-letters to lowercase letters and to indicate whether or not a character is a
-decimal digit. You realize this is easy work since those actual functions are
-part of the standard C library with their prototypes in \texttt{ctype.h}. As
-you get ready to impress your boss with how fast you can ``write'' this code by
-calling those standard functions, the \textit{\texttt{3}} key (which is also
-used for \textit{\texttt{\#}}) falls off of your keyboard, preventing you from
-typing \lstinline{#include <ctype.h>}. Several other number keys fall off soon
-thereafter (only \textit{\texttt{0}}, \textit{\texttt{7}}, and
-\textit{\texttt{9}} remain), along with the \textit{\texttt{s}} key. The
-\textit{\texttt{f}} key is looking fragile, so you decide that you had better
-not type too many \lstinline{if} statements (and without the
-\textit{\texttt{s}} key, you can't use a \lstinline{switch} statement at all).
-
-Edit \texttt{problem2.c} so that
-\begin{itemize}
-\item \function{iz_digit()} returns 1 if the character is a decimal digit
-    (\textquotesingle 0\textquotesingle, \textquotesingle 1\textquotesingle,
-    \textquotesingle 2\textquotesingle, \dots) and 0 otherwise
-\item \function{decapitalize()} will return the lowercase version of an
-    uppercase letter (\textquotesingle A\textquotesingle, \textquotesingle
-    B\textquotesingle, \textquotesingle C\textquotesingle, \dots) but will
-    return the original character if it is not an uppercase letter
-\end{itemize}
-You may not \lstinline{#include} any headers, you may not use any number keys
-other than the 0, 9, and 7 (which is also used for \textbf{\texttt{\&}}) keys,
-you may not use \lstinline{switch} statements, and you may use at most one
-\lstinline{if} statement in each function.
-
-Build the executable with the command: \texttt{make keyboardlab2} -- be sure to
-fix both errors and warnings.
-
-You can double-check that you aren't using disallowed keys by running the
-constraint-checking shell script: \\
-\texttt{./constraint-check.sh} \\
-Because you are allowed at most one \lstinline{if} statement in each function,
-you may see two lines with \lstinline{if} statements reported when the script
-checks for \textquotesingle f\textquotesingle. %You may also see some comments
-%reported when the script checks for \textquotesingle *\textquotesingle.
-
-
-\section{Using Bitmasks and Shifting Bits}
-
-Your keyboard was mistakenly delivered to the Plywood Scenery Cutting Studio
-instead of the Pleistocene Petting Zoo. While that gets sorted out, you
-``borrow'' some tar from the La~Brea Tar Pits diorama and use the tar to
-re-attach your keyboard's missing keys. As you fasten a Scrabble tile in place
-for the \textit{\texttt{W}}, more keys fall off, denying you the use of
-\textit{\texttt{+}}, \textit{\texttt{-}}, \textit{\texttt{/}},
-\textit{\texttt{\%}}, \textit{\texttt{5}}, and \textit{\texttt{b}}. You cannot
-get any more tar from the diorama, so you sit down to your next programming
-tasks without those keys.
-
-Edit \texttt{problem3.c} so that
-\begin{itemize}
-\item \function{is_even()} returns 1 if the number is even (that is,
-    divisible by 2) and 0 if the number is odd
-\item \function{produce_multiple_of_ten()} will always output a multiple of
-    10 following a specific formula: if a number is even then divide it by
-    2; otherwise, subtract 1 from the number and multiply the difference
-    by 5 (for example, an input of 7 yields 30 because $(7-1) \times 5 = 30$);
-    repeat until the last decimal digit is 0.
-\end{itemize}
-These numbers are guaranteed to be non-negative. You may not use addition (+),
-subtraction (-), division (/), nor modulo (\%). You also may not use the
-number 5 nor the letter b. (Exceptions: you \textit{may} use the forward-slash
-(/) for comments, and the percent-sign (\%) that is already present in the
-\function{sprintf()} calls' format strings is allowed)
-
-Hints:
-\begin{itemize}
-\item Following the weighted-sum technique to convert between binary and
-    decimal (or by examining the textbook's Table~2.1), you will note that all
-    even numbers have a 0 as their least significant bit, and all odd numbers
-    have a 1 as their least significant bit
-\item Less obvious is that you can subtract 1 from an odd number by changing
-    its least significant bit to a 0
-\item As we will cover in Chapter~3, you can halve a number by shifting its
-    bits to the right by one
-\item You can create an integer by producing its bit pattern through a series
-    of bit operations
-\end{itemize}
-
-Build the executable with the command: \texttt{make keyboardlab3} -- be sure to
-fix both errors and warnings.
-
-You can double-check that you aren't using disallowed keys by running the
-constraint-checking shell script: \\
-\texttt{./constraint-check.sh} \\
-%You may see some comments reported when the script checks for
-%\textquotesingle /\textquotesingle.
-
-
-\section*{Turn-in and Grading}
-
-When you have completed this assignment, upload \textit{problem1.c},
-\textit{problem2.c}, and \textit{problem3.c} to \filesubmission.
-
-This assignment is worth 20 points.
-\begin{description}
-\rubricitem{4}{\textit{problem1.c} produces the specified output.}
-\rubricitem{4}{\function{iz_digit()} in \textit{problem2.c} determines whether
-    or not a character is a digit.}
-\rubricitem{4}{\function{decapitalize()} in \textit{problem2.c} converts
-    uppercase letters to lowercase and leaves other characters unchanged.}
-\rubricitem{4}{\function{is_even()} in \textit{problem3.c} determines whether
-    a number is even or odd.}
-\item[\hspace{1cm}]\function{produce_multiple_of_ten()} in \textit{problem3.c}
-    has the following:
-    \begin{description}
-    \rubricitem{1}{Code to assign the value 5 to the variable \lstinline{five}}
-    \rubricitem{1}{Code to divide an even number by 2}
-    \rubricitem{1}{Code to subtract 1 from an odd number}
-    \rubricitem{1}{Correct functionality}
-    \end{description}
-\item[Penalties]
-\penaltyitem{4}{The solution to \textit{problem1.c} uses \texttt{w},
-    \texttt{W}, \texttt{\textbackslash{}n}, or \texttt{\textbackslash{}t}.}
-\penaltyitem{4}{\function{iz_digit())} uses a digit other than 0 and 9, uses a
-    \lstinline{switch} statment, uses more than one \lstinline{if} statement, or
-    uses code from an \lstinline{#include}d header.}
-\penaltyitem{4}{\function{decapitalize()} uses a \lstinline{switch} statment,
-    uses more than one \lstinline{if} statement, or uses code from an
-    \lstinline{#include}d header.}
-\penaltyitem{4}{\function{is_even()} uses arithmetic.}
-\penaltyitem{4}{\function{produce_multiple_of_ten()} uses addition,
-    subtraction, division, or modulo; or \function{produce_multiple_of_ten()}
-    uses the literal value 5, 0x5, 05, or 0b101.}
-\spaghetticodepenalties{1}
-\end{description}
-
-\section*{Epilogue}
-
-Great news! Archie brings you your new keyboard. He also brings you a problem
-of his own. Because you were held up with the broken keyboard, Archie decided
-to try some programming on his own, and his code is behaving strangely.
+\section*{Epilogue}                         \HasKeyboard
 
 \textit{To be continued...}
 
