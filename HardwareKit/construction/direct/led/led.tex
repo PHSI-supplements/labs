@@ -22,12 +22,12 @@ Figure~\ref{fig:led-diagram} shows a diagram of the components you will install 
 
 Take the 1k$\Omega$ resistor and place a right-angle bend in each lead about 0.4in (1cm) from the ends (we want the remaining length to be about 1.5in (3.8cm) -- you do not need to be exact;\footnote{If you want to try to be exact, you can use the breadboard's contact points to measure: they are 0.1in (2.54mm) apart.}
 the leads are flexible enough that you only need to be approximate) -- see Figure~\ref{fig:resistor-bent}.
-Insert one of the resistor's leads into contact point i1 (electrically connected to the \developmentboard's \texttt{D12} pin in g1) and the other into contact point i16.
+Insert one of the resistor's leads into contact point \resistorcontactpointone\ (electrically connected to the \developmentboard's \ledpin\ pin in g1) and the other into contact point \resistorcontactpointtwo.
 Gently press along the length of the resistor, causing the leads to deform slightly, until the resistor's height above the breadboard is about the same as the \developmentboard's printed circuit board.
 See Figure~\ref{fig:resistor-inserted}.
 
 Take the LED and spread the leads apart slightly.
-Insert the longer lead (the anode) in contact point j16, and the shorter lead (the cathode) in the upper \ground.
+Insert the longer lead (the anode) in contact point \ledanodecontactpoint, and the shorter lead (the cathode) in the upper \ground.
 See Figure~\ref{fig:led-inserted}.
 
 \begin{figure}
@@ -38,12 +38,12 @@ See Figure~\ref{fig:led-inserted}.
 
 \begin{figure}
     \centering
-    \subfloat[The resistor run between contact points i1 and i16.]{
+    \subfloat[The resistor run between contact points \resistorcontactpointone\ and \resistorcontactpointtwo.]{
         \includegraphics[width=0.65\textwidth]{direct/led/resistor-inserted}
         \label{fig:resistor-inserted}
     }
     \hfil
-    \subfloat[The LED's longer lead is in contact point j16, and its shorter lead is in the \ground.]{
+    \subfloat[The LED's longer lead is in contact point \ledanodecontactpoint, and its shorter lead is in the \ground.]{
         \includegraphics[width=0.25\textwidth]{direct/led/led-inserted}
         \label{fig:led-inserted}
     }
@@ -55,9 +55,9 @@ When you have finished installing the external LED, there should be the electric
 \begin{table}
     \begin{center}\begin{tabular}{||c|c|c|c||} \hline\hline
     LED lead    & Resistor lead & \developmentboard\ pin    & Pulled High/Low \\ \hline
-    Anode       & Right         &               & \\
-    Cathode     &               &               & Pulled Low \\
-                & Left          & \texttt{D12}  & \\ \hline\hline
+    Anode       & Right         &           & \\
+    Cathode     &               &           & Pulled Low \\
+                & Left          & \ledpin\  & \\ \hline\hline
     \end{tabular}\end{center}
     \caption{Electrical Connections for External LED.\label{tab:led}}
 \end{table}
@@ -65,6 +65,7 @@ When you have finished installing the external LED, there should be the electric
 \checkpoint{installed the LED and its current-limiting resistor}
 
 In the Arduino IDE, load \textit{MyBlink.ino}.
+%TODO: figure out how to generalize MyBlink
 In the \function{pinMode} and the two \function{digitalWrite} calls, replace the \lstinline{LED_BUILTIN} argument with \lstinline{12}:
 \begin{lstlisting}
 void setup() {
@@ -84,7 +85,7 @@ Now, instead of the built-in LED, the external LED that you installed will blink
 
 \begin{figure}
     \centering
-    \animategraphics[autoplay,loop,height=5cm]{8}{direct/animations/revisedblink-}{0}{6}
+    \animategraphics[autoplay,loop,height=4cm]{8}{direct/animations/revisedblink-}{0}{6}
     \caption{The revised \textit{MyBlink.ino} causes the external LED to blink.\label{fig:revisedblink}}
 \end{figure}
 

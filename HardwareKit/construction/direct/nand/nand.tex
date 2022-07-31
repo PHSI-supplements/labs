@@ -28,10 +28,12 @@ Figure~\ref{fig:nand-diagram} shows the wiring to install the 74LS20.
 
 \disconnect\
 
+\prepunch{\nandupperrow\ and \nandlowerrow}
+
 Remove the anti-static foam from the 74LS20's pins.
 As described in the \href{https://learn.adafruit.com/breadboards-for-beginners/breadboard-usage}{guide at adafruit.com}, gently press the 74LS20's pins against a tabletop until they're approximately square to the IC's case.
 With its notch to the left, place the 74LS20 on the breadboard straddling the center divider on rows 18--24.
-Double-check that the 74LS20's pins 1--7 are on contact points e18-e24 and that pins 8--14 are on contact points f24-f18 (Figure~\ref{fig:nand-ready} shows that the IC's pins are not splayed outside the contact points nor are folded under the IC's case).
+Double-check that the 74LS20's pins 1--7 are on contact points \nandlowerrow\ and that pins 8--14 are on contact points \nandupperrow\ (Figure~\ref{fig:nand-ready} shows that the IC's pins are not splayed outside the contact points nor are folded under the IC's case).
 Gently press on the 74LS20 to insert the pins into the contact points, using a slight rocking motion if necessary.
 As shown in Figure~\ref{fig:nand-inserted}, the IC is fully inserted when its case is flush with the breadboard.
 
@@ -50,13 +52,18 @@ As shown in Figure~\ref{fig:nand-inserted}, the IC is fully inserted when its ca
 \end{figure}
 
 Peel one wire from the \rainbow;
-use this wire to connect contact point j18 (electrically connected to the 74LS20's $\mathtt{V_{CC}}$, pin 14) to a \power.
+use this wire to connect contact point \nandvcc\ (electrically connected to the 74LS20's $\mathtt{V_{CC}}$, pin 14) to the upper \power.
 Peel off another wire from the \rainbow;
-use this wire to connect contact point a24 (electrically connected to the 74LS20's \texttt{GND}, pin 7) to a \ground.
+use this wire to connect contact point \nandground\ (electrically connected to the 74LS20's \texttt{GND}, pin 7) to the contact point \mculowergroundcontactpoint (electrically connected to one of the \developmentboard's \texttt{GND} pins).
 See Figure~\ref{fig:nand-power}.
 
-Peel a two-wire cable from the \rainbow.
-Use this cable to connect contact point d23 (electrically connected to the 74LS20's \texttt{Y1}, pin 6) to contact point j11 (electrically connected to the \developmentboard's \texttt{D2} pin), and to connect contact point g24 (electrically connected to the 74LS20's \texttt{Y2}, pin 8) to contact point j10 (electrically connected to the \developmentboard's \texttt{D3} pin).
+Peel four more wires from the \rainbow.
+Use two wires to connect contact points \nandupperc\ and \nandupperd\ to the upper \power.
+Use another wire to connect contact point \nanduppery (electrically connected to the 74LS20's \texttt{Y2}, pin 8) to contact point \mcubuttonnandpoint\ (electrically connected to the \developmentboard's \mcubuttonnand\ pin).
+These three wires configured the 74LS20's upper 4-input NAND gate to act as a 2-input NAND gate;
+you will provide the inputs in Section~\ref{subsec:pushbuttons}.
+Use the fourth wire to connect contact point \nandlowery\ (electrically connected to the 74LS20's \texttt{Y1}, pin 6) to contact point \mcukeypadnandpoint\ (electrically connected to the \developmentboard's \mcukeypadnand\ pin);
+you will  provide the inputs for the lower 4-input NAND gate in Section~\ref{sec:keypad}.
 See Figure~\ref{fig:nand-outputs}.
 
 \begin{figure}
@@ -78,9 +85,11 @@ When you have finished wiring the 74LS20, there should be the electrical connect
 \begin{table}
     \begin{center}\begin{tabular}{||c|c|c||} \hline\hline
     74LS20 Pin  & \developmentboard\ pin    & Pulled High/Low \\ \hline
-    6           & \texttt{D2}   & \\
+    6           & \texttt{D3}   & \\
     7           &               & Pulled Low \\
-    8           & \texttt{D3}   & \\
+    8           & \texttt{D2}   & \\
+    12          &               & Pulled High \\
+    13          &               & Pulled High \\
     14          &               & Pulled High \\ \hline\hline
     \end{tabular}\end{center}
     \caption{Initial Electrical Connections for NAND Gates.\label{tab:nand}}

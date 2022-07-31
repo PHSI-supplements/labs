@@ -1,0 +1,204 @@
+%! suppress = NonMatchingIf
+\newcommand{\namerows}[1]{
+    \draw (#1,1)  node {\tiny{a}};
+    \draw (#1,2)  node {\tiny{b}};
+    \draw (#1,3)  node {\tiny{c}};
+    \draw (#1,4)  node {\tiny{d}};
+    \draw (#1,5)  node {\tiny{e}};
+    \draw (#1,8)  node {\tiny{f}};
+    \draw (#1,9)  node {\tiny{g}};
+    \draw (#1,10) node {\tiny{h}};
+    \draw (#1,11) node {\tiny{i}};
+    \draw (#1,12) node {\tiny{j}};
+}
+
+\newcommand{\drawic}[4]{
+    \draw[gray,very thin] (#1,#2) +(-.4,-.4) rectangle +(#3-.6,3.4);
+    \draw[gray,very thin]  (#1,#2) +(-.4,1) arc [start angle=-90, end angle=90, radius=.5];
+    \draw[black] (#1,#2) +(-.2,-.2) rectangle +(#3-.8,.2);
+    \draw[black] (#1,#2) +(-.2,2.8) rectangle +(#3-.8,3.2);
+    \draw (#1,#2) +(#3*.5-.5,1.5) node {\centering \tiny{#4}};
+}
+
+\newcommand{\drawtarget}[2]{\draw[black] (#1,#2) circle (2pt);}
+
+%! suppress = MissingImport
+\newcommand{\drawlabelledtarget}[4]{
+    \drawtarget{#1}{#2}
+    \ifnumequal{#3}{1}{\draw (#1,#2) +( 4pt, 4pt) node {\rotatebox{ 45}{\scalebox{.4}{#4}}};}{}
+    \ifnumequal{#3}{2}{\draw (#1,#2) +(-4pt, 4pt) node {\rotatebox{-45}{\scalebox{.4}{#4}}};}{}
+    \ifnumequal{#3}{3}{\draw (#1,#2) +(-4pt,-4pt) node {\rotatebox{ 45}{\scalebox{.4}{#4}}};}{}
+    \ifnumequal{#3}{4}{\draw (#1,#2) +( 4pt,-4pt) node {\rotatebox{-45}{\scalebox{.4}{#4}}};}{}
+}
+
+\newcommand{\drawx}[2]{
+    \draw (#1,#2) +(-.2,-.2) -- +(.2,.2);
+    \draw (#1,#2) +(-.2,.2) -- +(.2,-.2);
+}
+
+\newcommand{\drawnanopower}[1]{
+    \drawtarget{#1+11}{12}
+    \draw (#1+11,12) -- (#1+11,20) -- (9,20) node[ground] {\tiny{upper ground rail}};
+    \ifbool{fivevolt}{
+        \drawtarget{#1+11}{1}
+        \draw (#1+11,1) -- (#1+11,-3)
+    }{
+        \drawtarget{#1+1}{1}
+        \draw (#1+1,1) -- (#1+1,-3)
+    } -- (-2,-3) -- (-2,17) node[vcc] {\tiny{upper power rail}};
+}
+
+\newcommand{\drawnandpower}[1]{
+    \foreach \x in {0,1,2} {
+        \drawtarget{#1+\x}{12}
+        \draw[rounded corners] (#1,12) +(\x,0) -- +(\x,5) -- (#1-.5,17);
+    }
+    \draw (#1,17) -- (16.5,17);
+    \draw (16.5,17) arc [start angle=0, end angle=180, radius=.5];
+    \draw (15.5,17) -- (12.5,17);
+    \draw (12.5,17) arc [start angle=0, end angle=180, radius=.5];
+    \draw (11.5,17) -- (-2,17);
+    \nandgroundwire
+}
+
+%! suppress = Ellipsis
+\newcommand{\drawbreadboard}{
+    \foreach \x in {1,2,...,63} {
+        \foreach \y in {1,2,...,5} {
+            \draw[white,fill=gray] (\x,\y) circle (1pt);
+        }
+        \foreach \y in {8,9,...,12} {
+            \draw[white,fill=gray] (\x,\y) circle (1pt);
+        }
+        \draw (\x,-.5)  node {\rotatebox{45}{\tiny{$\x$}}};
+        \draw (\x,13.5) node {\rotatebox{45}{\tiny{$\x$}}};
+    }
+    \foreach \x in {5,10,...,60} {
+        \draw[gray,very thin] (\x,-.3) -- (\x,.5);
+    }
+    \drawx{1}{1}
+    \drawx{1}{12}
+    \drawx{63}{1}
+    \drawx{63}{12}
+    \namerows{0}
+    \namerows{64}
+    \namerows{\mcux+\mcuwidth+0.5}
+    \namerows{44.5}
+}
+
+\newcommand{\drawnano}[3] {
+    \draw[gray,very thin] (#1,#2) +(-1.4,-.4) rectangle +(15.4,6.4);
+    \draw[black] (#1,#2) +(-.2,-.2)  rectangle +(14.2,.2);
+    \draw[black] (#1,#2) +(-.2,5.8)  rectangle +(14.2,6.2);
+    \draw (#1,#2) +(7,3.5) node {\centering \tiny{#3}};
+    \draw (#1,#2) +(-1.8,3) node {\rotatebox{90}{\centering \tiny{USB}}};
+    \drawnanopower{#1}
+}
+
+\newcommand{\drawnand}[2]{
+    \drawic{#1}{#2}{7}{\ifbool{fivevolt}{74LS20}{74HC20}}
+    \drawnandpower{#1}
+    \buttonnandoutput
+    \keypadnandoutput
+}
+
+\newcommand{\drawswitch}[2]{
+    \draw[gray,very thin] (#1,#2) +(-.4,-.4) rectangle +(2.4,.4);
+    \draw[black] (#1,#2) +(-.2,-.2) rectangle +(2.2,.2);
+    \draw (#1,#2) +(1,-.6) node {\centering \tiny{switch}};
+}
+
+\newcommand{\drawbutton}[3]{
+    \ifnumequal{#3}{2}{
+        \draw[gray,very thin] (#1,#2) +(-.25,-1.25) rectangle +(2.25,1.25);
+        \draw[black] (#1,#2) +(-.2,-.2) rectangle +(.2,.2);
+        \draw[black] (#1,#2) +(1.8,-.2) rectangle +(2.2,.2);
+        \draw (#1,#2) +(1,-.6) node {\centering \tiny{button}};
+    }{
+        \draw[gray,very thin] (#1,#2) +(-.25,.2) rectangle +(2.25,2.8);
+        \draw[black] (#1,#2) +(-.2,-.2) rectangle +(.2,.2);
+        \draw[black] (#1,#2) +(1.8,-.2) rectangle +(2.2,.2);
+        \draw[black] (#1,#2) +(-.2,2.8) rectangle +(.2,3.2);
+        \draw[black] (#1,#2) +(1.8,2.8) rectangle +(2.2,3.2);
+        \draw (#1,#2) +(1,.6) node {\centering \tiny{button}};
+    }
+}
+
+\newcommand{\drawkeypad}[2]{
+    \draw[gray,very thin] (#1,#2) +(-.4,-.4) rectangle +(7.4,.4);
+    \draw[black] (#1,#2) +(-.2,-.2) rectangle +(7.2,.2);
+    \draw (#1,#2) +(1.5,.5) node {\centering \tiny{rows}};
+    \draw (#1,#2) +(5.5,.6) node {\centering \tiny{cols}};
+    \draw (#1,#2) +(3.5,-.6) node {\centering \tiny{keypad}};
+}
+
+\newcommand{\drawiiclcd}[2]{
+    \draw[gray,very thin] (#1,#2) +(-.4,-.4) rectangle +(15.4,6.4);
+    \draw[black] (#1,#2) +(-.2,-.2) rectangle +(15.2,.2);
+    \foreach \y in {1.5,2.5,3.5,4.5} {
+        \draw[gray,very thin] (#1,#2) +(-2.5,\y) -- +(.5,\y);
+    }
+    \draw[gray!50,fill=gray!50] (#1,#2) +(15.5,2.4) rectangle +(17,3.6);
+    \draw[gray] (#1,#2) +(14.5,2.5) -- +(17,2.5);
+    \draw[gray] (#1,#2) +(14.5,3.5) -- +(17,3.5);
+    \draw (#1,#2) +(7.5,5.5) node {\centering \tiny{LCD Serial Adapter}};
+}
+
+\newcommand{\drawlcdisplay}[2]{
+    \draw[gray,very thin] (#1,#2) +(-3,.4) rectangle +(28.4,-13.4);
+    \draw[gray,very thin] (#1,#2) +(-1,-1.8) rectangle +(26,-11.4);
+    \draw[black] (#1,#2) +(-.2,-.2) rectangle +(15.2,.2);
+    \draw (#1,#2) +(8,-12.5) node {\centering \tiny{LCD 2x16-character Display Module}};
+}
+
+%TODO: parameterize
+\newcommand{\drawledcircuit}{
+    \ctikzset{bipoles/resistor/height=0.1}
+    \ctikzset{bipoles/resistor/width=0.3}
+    \ctikzset{bipoles/diode/height=0.2}
+    \ctikzset{bipoles/diode/width=0.2}
+    \draw (.8,10.8)   rectangle (1.2,11.2);
+    \draw (15.8,10.8) rectangle (16.2,11.2);
+    \draw (15.8,11.8) rectangle (16.2,12.2);
+    \draw (1,11) -- (1.5,10.5) to[R] (15.5,10.5) -- (16,11);
+    \draw (16,12) -- (16,14) to[led] (16,17) -- (16,20) -- (9,20);
+}
+
+%TODO: paramterize number of pins
+\newcommand{\drawswitches}[1]{
+    \foreach \x in {0,5} {
+        \drawswitch{#1+\x}{1}
+        \drawtarget{#1+\x+1}{5}
+        \draw[rounded corners] (#1+\x+1,5) -- ++(1,2-\x/10) -- ++(5-.8*\x,0) -- ++(.5,1+\x/10) -- +(0,12) -- (9,20);
+    }
+    \leftswitchwire
+    \rightswitchwire
+}
+
+\newcommand{\drawbuttons}[2]{
+    \foreach \x in {0,4} {
+        \drawbutton{#1+\x}{1}{#2}
+        \drawtarget{#1+\x+2}{5}
+        \draw[rounded corners] (#1+\x+2,5) -- +(.5,1) -- +(.5,15) -- (9,20);
+    }
+    \leftbuttonwire
+    \rightbuttonwire
+}
+
+%! suppress = Ellipsis
+\newcommand{\drawkeypadandtargets}[1]{
+    \drawkeypad{#1}{12}
+    \keypadrowwires
+    \keypadcolumnwires
+}
+
+\newcommand{\drawdisplay}[1]{
+    \drawiiclcd{#1}{11}
+    \drawlcdisplay{#1}{9}
+    \drawlabelledtarget{8}{1}{4}{  SDA}
+    \drawlabelledtarget{9}{1}{4}{ SCL}
+%TODO: paramterize \drawdisplay by display type
+%    \drawlabelledtarget{3}{12}{1}{CS}
+%    \drawlabelledtarget{2}{12}{1}{ DIN}
+%    \drawlabelledtarget{1}{1}{4}{  SCK}
+}

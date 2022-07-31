@@ -14,6 +14,9 @@
 }
 \newcommand{\disconnect}{\textbf{Before proceeding further, disconnect the USB cable from the \developmentboard.}}
 \newcommand{\rainbow}{male-to-male rainbow cable}
+\newcommand{\prepunch}[1]{
+    \textit{If you are using a breadboard template} then use a jumper wire's lead to pre-punch holes into contact points #1.
+}
 
 
 % Customization variables
@@ -21,6 +24,7 @@
 \newcommand{\microcontroller}{}
 \newcommand{\formfactor}{}
 \providebool{fivevolt}
+\providebool{hasnand}
 
 \ifdefstring{\developmentboard}{Arduino Nano}{
     \renewcommand{\microcontroller}{ATmega328P}
@@ -29,4 +33,5 @@
 
 \ifdefstring{\microcontroller}{ATmega328P}{
     \setbool{fivevolt}{true}
+    \setbool{hasnand}{true}
 }{}

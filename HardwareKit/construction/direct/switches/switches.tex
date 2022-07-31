@@ -3,66 +3,94 @@ In this section, you will install the ``slider'' switches that toggle between th
 We will wire them such that when a switch is toggled to the left, it will produce a 0, and when it is toggled to the right, it will produce a 1.
 Figure~\ref{fig:switch-diagram} shows a diagram of the wiring for the slider switches.
 
+%! suppress = NonMatchingIf
 \begin{figure}[p]
     \centering
-    \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-spi}
+    \ifdefstring{\serialprotocol}{SPI}{
+        \subfloat[3-pin switches]{
+            \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-spi-spdt}
+        }
+        \hfil
+        \subfloat[2-pin switches]{
+            \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-spi-dip1}
+        }
+    }{}
+    \ifdefstring{\serialprotocol}{I2C}{
+        \subfloat[3-pin switches]{
+            \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-i2c-spdt}
+        }
+        \hfil
+        \subfloat[2-pin switches]{
+            \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-i2c-dip1}
+        }
+    }{}
     \caption{Diagram of wiring associated with toggle switch input.
         \label{fig:switch-diagram}}
 \end{figure}
 
 \disconnect\
 
-Insert one slider switch into contact points a29-a31.
-Peel off one wire from the \rainbow, and use it to connect contact point e29 to the upper \ground.
-Place the other slider switch into contact points a34-a36.
-Peel off another wire from the \rainbow, and use it to connect contact point e34 to the upper \ground.
-% See Figure~\ref{fig:switch-power-ground}.
+\prepunch{a\controlrow{1} and a\controlrow{6}}
+If you have 3-pin switches, then pre-punch holes into contact points a\controlrow{2}, a\controlrow{3}, a\controlrow{7} and a\controlrow{8}.
+If you have 2-pin switches, then pre-punch holes into contact points a\controlrow{4} and a\controlrow{9}.
 
-Peel off one wire from the \rainbow, and use it to connect contact point d30 (electrically connected to the left switch's center pin) to contact point a8 (electrically connected to the \developmentboard's \texttt{A4} pin).
-Peel off another wire from the \rainbow, and use it to connect contact point d35 (electrically connected to the right switch's center pin) to contact point a9 (electrically connected to the \developmentboard's \texttt{A5} pin).
-% See Figure~\ref{fig:switch-nano}. See Figure~\ref{fig:switch-spst}.
+Insert one slider switch into contact points a\controlrow{1}--a\controlrow{3} (for 3-pin switches) or contact points a\controlrow{1}--a\controlrow{4} (for 2-pin switches).
+Place the other slider switch  into contact points a\controlrow{6}--a\controlrow{8} (for 3-pin switches) or contact points a\controlrow{6}--a\controlrow{9} (for 2-pin switches).
 
-The switches' right pins will not be electrically connected to anything.
+For the two wires that will connect the switches to the \developmentboard, you can use 10cm jumpers (especially if that is all that you have);
+however, if you use 20cm jumpers, then in Section~\ref{sec:keypad} we will show how to keep some wires away from the controls.
+Peel off one wire from the \rainbow and use it to connect contact point e\controlrow{1} (electrically connected to the left switch's left pin) to contact point \mculeftswitchpoint (electrically connected to the \developmentboard's \mculeftswitch\ pin).
+Peel off another wire from the \rainbow and use it to connect contact point e\controlrow{6} (electrically connected to the right switch's left pin) to contact point \mcurightswitchpoint (electrically connected to the \developmentboard's \mcurightswitch\ pin).
 
-% \begin{figure}
-%     \centering
-%     \subfloat[The slider switches, each with their left pin grounded and their
-%         right pin connected to 5V.]{
-%         \includegraphics[width=0.3\textwidth]{switch-power-ground}
-%         \label{fig:switch-power-ground}
-%     }
-%     \hfil
-%     \subfloat[Connections between the \developmentboard\ and the slider switches.]{
-%         \includegraphics[width=0.6\textwidth]{switch-nano}
-%         \label{fig:switch-nano}
-%     }
-%     \caption{Wiring the Slider Switches}
-% \end{figure}
+Peel off two more wires from the \rainbow.
+You will use these to connect the switches center pins (for 3-pin switches) or right pins (for 2-pin switches) to the upper \ground.
+Specifically, place the end of one wire into contact point e\controlrow{2} (for 3-pin switches) or e\controlrow{4} (for 2-pin switches);
+place the other end of that wire into the upper \ground.
+Now place the end of the other wire into contact point e\controlrow{7} (for 3-pin switches) or e\controlrow{9} (for 2-pin switches);
+place the other end of that wire into the upper \ground.
 
+If you have 3-pin switches, the switches' right pins will not be electrically connected to anything.
+
+%TODO: parameterize for I2C vs SPI; add spdt vs dip1 close-ups
 \begin{figure}
     \centering
-    \includegraphics[width=0.6\textwidth]{direct/switches/switch-spst}
-    \caption{The slider switches, each with one pin grounded, one pin connected to the \developmentboard, and one pin floating. \label{fig:switch-spst}}
+    \includegraphics[width=0.6\textwidth]{direct/switches/switch-spdt-i2c}
+    \caption{The slider switches, each with one pin grounded, one pin connected to the \developmentboard, and one pin floating.
+        \label{fig:switch-spdt}}
 \end{figure}
 
 When you have finished setting up the switches' wiring, there should be the
-electrical connections described in Table~\ref{tab:switch}.
+electrical connections described in Table~\ref{tab:switch-spdt} or \ref{tab:switch-dip1}.
 
 \begin{table}
     \begin{center}\begin{tabular}{||c|c|c||} \hline\hline
     Switch                      & \developmentboard\ pin    & Pulled High/Low \\ \hline
-    Left switch's left pin      &               & Pulled Low \\
-    Left switch's center pin    & \texttt{A4}   & \\
+    Left switch's left pin      & \mculeftswitch    & \\
+    Left switch's center pin    &                   & Pulled Low \\
     Left switch's right pin     & \multicolumn{2}{c||}{not connected / floating} \\
-    Right switch's left pin     &               & Pulled Low \\
-    Right switch's center pin   & \texttt{A5}   & \\
+    Right switch's left pin     & \mcurightswitch   & \\
+    Right switch's center pin   &                   & Pulled Low \\
     Right switch's right pin    & \multicolumn{2}{c||}{not connected / floating} \\ \hline\hline
     \end{tabular}\end{center}
-    \caption{Electrical Connections for Slider Switches.\label{tab:switch}}
+    \caption{Electrical Connections for 3-pin Slider Switches.
+        \label{tab:switch-spdt}}
+\end{table}
+
+\begin{table}
+    \begin{center}\begin{tabular}{||c|c|c||} \hline\hline
+    Switch                      & \developmentboard\ pin    & Pulled High/Low \\ \hline
+    Left switch's left pin      & \mculeftswitch    & \\
+    Left switch's right pin     &                   & Pulled Low \\
+    Right switch's left pin     & \mcurightswitch   & \\
+    Right switch's right pin    &                   & Pulled Low \\ \hline\hline
+    \end{tabular}\end{center}
+    \caption{Electrical Connections for 2-pin Slider Switches.
+        \label{tab:switch-dip1}}
 \end{table}
 
 \checkpoint{inserted and wired the slider switches}
 
+%TODO: update for CowPi library example code
 Connect your \developmentboard\ to the computer.
 In the IDE's Serial Monitor, notice that the LEFT~SWITCH is 0 when the left switch is toggled to the left, and it is 1 when the left switch is toggled to the right.
 Similarly, the RIGHT~SWITCH's value is 0 or 1, depending on whether the right switch is toggled to the left or right.

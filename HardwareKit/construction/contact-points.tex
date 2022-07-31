@@ -1,0 +1,207 @@
+%! suppress = NonMatchingIf
+
+\newcommand{\mcupin}[1]{\texttt{#1}}
+\newcommand{\controlrow}[1]{\pgfmathparse{\controlsstartat+#1}\pgfmathprintnumber{\pgfmathresult}}
+
+\newcommand{\mculeftswitch}{??}
+\newcommand{\mculeftswitchpoint}{??}
+\newcommand{\mculeftswitchx}{??}
+\newcommand{\mculeftswitchy}{??}
+\newcommand{\mcurightswitch}{??}
+\newcommand{\mcurightswitchpoint}{??}
+\newcommand{\mcurightswitchx}{??}
+\newcommand{\mcurightswitchy}{??}
+\ifdefstring{\formfactor}{nano}{
+    \newcommand{\mcux}{1}
+    \newcommand{\mcuy}{3}
+    \newcommand{\mcuwidth}{15}
+    \newcommand{\mcuupperrow}{g1--g15}
+    \newcommand{\mculowerrow}{c1--c15}
+    \newcommand{\mcufivevolt}{c12}
+    \newcommand{\mcufivevoltcontactpoint}{a12}
+    \newcommand{\mcuupperground}{g12}
+    \newcommand{\mcuuppergroundcontactpoint}{j12}
+    \newcommand{\mculowererground}{c14}
+    \newcommand{\mculowergroundcontactpoint}{a14}
+    \newcommand{\mcubuttonnand}{\mcupin{D2}}
+    \newcommand{\mcubuttonnandpoint}{j11}
+    \newcommand{\mcukeypadnand}{\mcupin{D3}}
+    \newcommand{\mcukeypadnandpoint}{j10}
+    \newcommand{\mcukeypadrowone}{\mcupin{D4}}
+    \newcommand{\mcukeypadrowonepoint}{j9}
+    \newcommand{\mcukeypadrowonex}{9}
+    \newcommand{\mcukeypadrowoney}{12}
+    \newcommand{\mcukeypadrowfour}{\mcupin{D5}}
+    \newcommand{\mcukeypadrowfourpoint}{j8}
+    \newcommand{\mcukeypadrowfourx}{8}
+    \newcommand{\mcukeypadrowfoury}{12}
+    \newcommand{\mcukeypadrowseven}{\mcupin{D6}}
+    \newcommand{\mcukeypadrowsevenpoint}{j7}
+    \newcommand{\mcukeypadrowsevenx}{7}
+    \newcommand{\mcukeypadrowseveny}{12}
+    \newcommand{\mcukeypadrowstar}{\mcupin{D7}}
+    \newcommand{\mcukeypadrowstarpoint}{j6}
+    \newcommand{\mcukeypadrowstarx}{6}
+    \newcommand{\mcukeypadrowstary}{12}
+    \newcommand{\mculeftbutton}{\mcupin{D8}}
+    \newcommand{\mculeftbuttonpoint}{j5}
+    \newcommand{\mculeftbuttonx}{5}
+    \newcommand{\mculeftbuttony}{12}
+    \newcommand{\mcurightbutton}{\mcupin{D9}}
+    \newcommand{\mcurightbuttonpoint}{j4}
+    \newcommand{\mcurightbuttonx}{4}
+    \newcommand{\mcurightbuttony}{12}
+    \newcommand{\mcukeypadcolone}{\mcupin{D14/A0}}
+    \newcommand{\mcukeypadcolonepoint}{a4}
+    \newcommand{\mcukeypadcolonex}{4}
+    \newcommand{\mcukeypadcoloney}{1}
+    \newcommand{\mcukeypadcoltwo}{\mcupin{D15/A1}}
+    \newcommand{\mcukeypadcoltwopoint}{a5}
+    \newcommand{\mcukeypadcoltwox}{5}
+    \newcommand{\mcukeypadcoltwoy}{1}
+    \newcommand{\mcukeypadcolthree}{\mcupin{D16/A2}}
+    \newcommand{\mcukeypadcolthreepoint}{a6}
+    \newcommand{\mcukeypadcolthreex}{6}
+    \newcommand{\mcukeypadcolthreey}{1}
+    \newcommand{\mcukeypadcolA}{\mcupin{D17/A3}}
+    \newcommand{\mcukeypadcolApoint}{a7}
+    \newcommand{\mcukeypadcolAx}{7}
+    \newcommand{\mcukeypadcolAy}{1}
+    \ifdefstring{\serialprotocol}{I2C}{
+        \renewcommand{\mcurightswitch}{\mcupin{D10}}
+        \renewcommand{\mcurightswitchpoint}{j3}
+        \renewcommand{\mcurightswitchx}{3}
+        \renewcommand{\mcurightswitchy}{12}
+        \renewcommand{\mculeftswitch}{\mcupin{D11}}
+        \renewcommand{\mculeftswitchpoint}{j2}
+        \renewcommand{\mculeftswitchx}{2}
+        \renewcommand{\mculeftswitchy}{12}
+    }{}
+    \ifdefstring{\serialprotocol}{SPI}{
+        \renewcommand{\mculeftswitch}{\mcupin{D18/A4}}
+        \renewcommand{\mculeftswitchpoint}{a8}
+        \renewcommand{\mculeftswitchx}{8}
+        \renewcommand{\mculeftswitchy}{1}
+        \renewcommand{\mcurightswitch}{\mcupin{D19/A5}}
+        \renewcommand{\mcurightswitchpoint}{a9}
+        \renewcommand{\mcurightswitchx}{9}
+        \renewcommand{\mcurightswitchy}{1}
+    }{}
+    
+    \newcommand{\resistorcontactpointone}{i1}
+    \newcommand{\resistorcontactpointtwo}{i16}
+    \newcommand{\ledanodecontactpoint}{j16}
+    \newcommand{\ledpin}{\mcupin{D12}}
+}{}
+
+\newcommand{\controlsstartat}{\mcux+\mcuwidth+2}
+\newcommand{\leftbuttontarget}{\mculeftbuttonpoint}
+\newcommand{\rightbuttontarget}{\mcurightbuttonpoint}
+\newcommand{\mculeftbuttonfrom}{e\controlrow{11}}
+\newcommand{\mcurightbuttonfrom}{e\controlrow{15}}
+\newcommand{\keypadrowtargetcol}{j}
+\newcommand{\keypadrowtargetrowstart}{\mcukeypadrowonex}
+\newcommand{\mcukeypadrowfromcol}{h}
+\newcommand{\mcukeypadrowfromcontrolrowstart}{0}
+\newcommand{\keypadcolumntargetcol}{a}
+\newcommand{\keypadcolumnonetargetrow}{\mcukeypadcolonex}
+\newcommand{\keypadcolumntwotargetrow}{\mcukeypadcoltwox}
+\newcommand{\keypadcolumnthreetargetrow}{\mcukeypadcolthreex}
+\newcommand{\keypadcolumnAtargetrow}{\mcukeypadcolAx}
+\newcommand{\mcukeypadcolumnfromcol}{h}
+\newcommand{\mcukeypadcolumnonefromrow}{\controlrow{4}}
+\newcommand{\mcukeypadcolumntwofromrow}{\controlrow{5}}
+\newcommand{\mcukeypadcolumnthreefromrow}{\controlrow{6}}
+\newcommand{\mcukeypadcolumnAfromrow}{\controlrow{7}}
+\ifbool{hasnand}{
+    \newcommand{\nandx}{\mcux+\mcuwidth+2}
+    \newcommand{\nandy}{5}
+    \newcommand{\nandupperrow}{f24--f18}
+    \newcommand{\nandlowerrow}{e18--e24}
+    \newcommand{\nanduppernc}{g21--j21}
+    \newcommand{\nandlowernc}{a20--d20}
+    \newcommand{\nandvcc}{j18}
+    \newcommand{\nandground}{a24}
+    \newcommand{\nandgroundwire}{\drawlabelledtarget{\nandx+6}{1}{1}{\mculowergroundcontactpoint}\drawlabelledtarget{\mcux+13}{1}{1}{\nandground}}
+    \newcommand{\nandupperc}{j20}
+    \newcommand{\nandupperd}{j19}
+    \newcommand{\nanduppery}{i24}
+    \newcommand{\buttonnandoutput}{\drawlabelledtarget{\nandx+6}{11}{1}{\mcubuttonnandpoint}\drawlabelledtarget{\mcux+10}{12}{4}{\nanduppery}}
+    \newcommand{\nandlowery}{c23}
+    \newcommand{\keypadnandoutput}{\drawlabelledtarget{\nandx+5}{3}{1}{\mcukeypadnandpoint}\drawlabelledtarget{\mcux+9}{12}{4}{\nandlowery}}
+    \newcommand{\nandupperain}{i23}
+    \newcommand{\nandupperaout}{h23}
+    \newcommand{\nandupperbin}{i22}
+    \newcommand{\nandupperbout}{h22}
+    \newcommand{\nandlowerain}{c18}
+    \newcommand{\nandloweraout}{b18}
+    \newcommand{\nandlowerbin}{c19}
+    \newcommand{\nandlowerbout}{b19}
+    \newcommand{\nandlowercin}{c21}
+    \newcommand{\nandlowercout}{b21}
+    \newcommand{\nandlowerdin}{c22}
+    \newcommand{\nandlowerdout}{b22}
+    \renewcommand{\controlsstartat}{\nandx+8}
+    \renewcommand{\leftbuttontarget}{\nandupperbin}
+    \renewcommand{\rightbuttontarget}{\nandupperain}
+    \renewcommand{\mculeftbuttonfrom}{\nandupperbout}
+    \renewcommand{\mcurightbuttonfrom}{\nandupperaout}
+    \renewcommand{\keypadcolumntargetcol}{c}
+    \renewcommand{\keypadcolumnonetargetrow}{\controlrow{-8}}
+    \renewcommand{\keypadcolumntwotargetrow}{\controlrow{-7}}
+    \renewcommand{\keypadcolumnthreetargetrow}{\controlrow{-5}}
+    \renewcommand{\keypadcolumnAtargetrow}{\controlrow{-4}}
+    \renewcommand{\mcukeypadcolumnfromcol}{b}
+    \renewcommand{\mcukeypadcolumnonefromrow}{\keypadcolumnonetargetrow}
+    \renewcommand{\mcukeypadcolumntwofromrow}{\keypadcolumntwotargetrow}
+    \renewcommand{\mcukeypadcolumnthreefromrow}{\keypadcolumnthreetargetrow}
+    \renewcommand{\mcukeypadcolumnAfromrow}{\keypadcolumnAtargetrow}
+}{}
+
+\newcommand{\leftswitchwire}{\drawlabelledtarget{\controlsstartat+1}{5}{1}{\mculeftswitchpoint}\drawlabelledtarget{\mculeftswitchx}{\mculeftswitchy}{1+3*(\mculeftswitchy-1)/11}{e\controlrow{1}}}
+\newcommand{\rightswitchwire}{\drawlabelledtarget{\controlsstartat+6}{5}{1}{\mcurightswitchpoint}\drawlabelledtarget{\mcurightswitchx}{\mcurightswitchy}{1+3*(\mcurightswitchy-1)/11}{e\controlrow{6}}}
+
+\newcommand{\leftbuttonwire}{
+    \drawlabelledtarget{\controlsstartat+11}{5}{1}{\leftbuttontarget}
+    \drawlabelledtarget{\mculeftbuttonx}{\mculeftbuttony}{4}{\mculeftbuttonfrom}
+    \ifbool{hasnand}{
+        \drawlabelledtarget{\nandx+4}{\nandy+6}{1}{e\controlrow{11}}
+        \drawlabelledtarget{\nandx+4}{\nandy+5}{4}{\mculeftbuttonpoint}
+    }{}
+}
+\newcommand{\rightbuttonwire}{
+    \drawlabelledtarget{\controlsstartat+15}{5}{1}{\rightbuttontarget}
+    \drawlabelledtarget{\mcurightbuttonx}{\mcurightbuttony}{4}{\mcurightbuttonfrom}
+    \ifbool{hasnand}{
+        \drawlabelledtarget{\nandx+5}{\nandy+6}{1}{e\controlrow{15}}
+        \drawlabelledtarget{\nandx+5}{\nandy+5}{4}{\mcurightbuttonpoint}
+    }{}
+}
+
+\newcommand{\keypadrowwires}{
+    \foreach \x in {0,1,2,3} {
+        \drawlabelledtarget{\mcukeypadrowonex-\x}{\mcukeypadrowoney}{4}{\mcukeypadrowfromcol\controlrow{\mcukeypadrowfromcontrolrowstart+\x}}
+        \drawlabelledtarget{\controlsstartat+\x}{10}{4}{\keypadrowtargetcol\pgfmathparse{\keypadrowtargetrowstart-\x}\pgfmathprintnumber{\pgfmathresult}}
+    }
+}
+
+\newcommand{\keypadcolumnwires}{
+    \drawlabelledtarget{\controlsstartat+4}{10}{4}{\keypadcolumntargetcol\keypadcolumnonetargetrow}
+    \drawlabelledtarget{\controlsstartat+5}{10}{4}{\keypadcolumntargetcol\keypadcolumntwotargetrow}
+    \drawlabelledtarget{\controlsstartat+6}{10}{4}{\keypadcolumntargetcol\keypadcolumnthreetargetrow}
+    \drawlabelledtarget{\controlsstartat+7}{10}{4}{\keypadcolumntargetcol\keypadcolumnAtargetrow}
+    \drawlabelledtarget{\mcukeypadcolonex}{\mcukeypadcoloney}{1}{\mcukeypadcolumnfromcol\mcukeypadcolumnonefromrow}
+    \drawlabelledtarget{\mcukeypadcoltwox}{\mcukeypadcoltwoy}{1}{\mcukeypadcolumnfromcol\mcukeypadcolumntwofromrow}
+    \drawlabelledtarget{\mcukeypadcolthreex}{\mcukeypadcolthreey}{1}{\mcukeypadcolumnfromcol\mcukeypadcolumnthreefromrow}
+    \drawlabelledtarget{\mcukeypadcolAx}{\mcukeypadcolAy}{1}{\mcukeypadcolumnfromcol\mcukeypadcolumnAfromrow}
+    \ifbool{hasnand}{
+        \drawlabelledtarget{\nandx}{2}{4}{a4}
+        \drawlabelledtarget{\nandx+1}{2}{4}{a5}
+        \drawlabelledtarget{\nandx+3}{2}{4}{a6}
+        \drawlabelledtarget{\nandx+4}{2}{4}{a7}
+        \drawlabelledtarget{\nandx}{3}{1}{h\controlrow{4}}
+        \drawlabelledtarget{\nandx+1}{3}{1}{h\controlrow{5}}
+        \drawlabelledtarget{\nandx+3}{3}{1}{h\controlrow{6}}
+        \drawlabelledtarget{\nandx+4}{3}{1}{h\controlrow{7}}
+    }{}
+}
