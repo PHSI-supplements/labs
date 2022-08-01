@@ -60,6 +60,8 @@ static const uint8_t KEYPAD_COLUMN_3        = 16;   // aka A2
 static const uint8_t KEYPAD_COLUMN_A        = 17;   // aka A3
 #endif //ARDUINO_AVR_MEGA2560
     // LEDs
+static const uint8_t LEFT_LED               = 13;
+static const uint8_t RIGHT_LED              = 12;
 static const uint8_t LED_EXTERNAL           = 12;
 // Arduino Defined   LED_BUILTIN            = 13
     // SPI

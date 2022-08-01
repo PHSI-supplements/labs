@@ -84,6 +84,22 @@ bool cowpi_right_switch_in_right_position(void) {
     return cowpi_switch_in_right_position(RIGHT_SWITCH_DEFAULT, RIGHT_SWITCH_ALTERNATE);
 }
 
+void cowpi_illuminate_right_led(void) {
+    digitalWrite(RIGHT_LED, HIGH);
+}
+
+void cowpi_illuminate_left_led(void) {
+    digitalWrite(LEFT_LED, HIGH);
+}
+
+void cowpi_deluminate_right_led(void) {
+    digitalWrite(RIGHT_LED, LOW);
+}
+
+void cowpi_deluminate_left_led(void) {
+    digitalWrite(LEFT_LED, LOW);
+}
+
 void cowpi_illuminate_external_led(void) {
     digitalWrite(LED_EXTERNAL, HIGH);
 }

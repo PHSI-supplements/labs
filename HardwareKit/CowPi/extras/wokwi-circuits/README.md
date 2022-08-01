@@ -26,7 +26,7 @@ program you write for the basic Cow Pi, with two possible changes:
 - `Uno-LCD1602-I2C.json` -- Has two pushbuttons (tactile switches), two
   slider switches in the I2C configuration (*i.e.*, the switches are attached
   to pins D10 and D11), and a LCD1602 that uses the I2C protocol. Wokwi has
-  the I2C mapped to the LCD1602's pins using the `STANDARD` dialect; this cannot
+  the I2C mapped to the LCD1602's pins using the `COWPI_DEFAULT` dialect; this cannot
   be changed unless you rewrite the LCD1602 module on a local Wokwi instance.
 
 ## Why have a simulation?

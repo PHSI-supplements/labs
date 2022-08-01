@@ -207,7 +207,7 @@ static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
 //    printf("halfbyte = 0x%x\tis_command = %d\n", halfbyte, is_command);
     uint8_t packet = 0, rs = 0, en = 0;
     unsigned int dialect = cowpi_get_display_dialect();
-    if (dialect == STANDARD) {
+    if (dialect == COWPI_DEFAULT) {
         // this mapping is used with most I2C interfaces and libraries
         // https://github.com/johnrickman/LiquidCrystal_I2C
         // https://github.com/blackhack/LCD_I2C
@@ -226,7 +226,7 @@ static void cowpi_lcd1602_send_halfbyte_i2c(uint8_t halfbyte, bool is_command) {
         packet = rs | (halfbyte << 3) | (is_backlit ? 1 << 7 : 0);
     } else {
         char s[73];
-        cowpi_error(strcpy_P(s, PSTR("CowPi only knows STANDARD and ADAFRUIT dialects for I2C-to-LCD1602 mapping.")));
+        cowpi_error(strcpy_P(s, PSTR("CowPi only knows COWPI_DEFAULT and ADAFRUIT dialects for I2C-to-LCD1602 mapping.")));
     }
     // start bit
     TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTA);

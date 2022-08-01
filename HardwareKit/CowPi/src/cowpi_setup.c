@@ -28,14 +28,14 @@
 #include "cowpi_boards.h"
 
 
-static unsigned int cowpi_display_device_and_dialect = STANDARD;
+static unsigned int cowpi_display_device_and_dialect = COWPI_DEFAULT;
 static uint8_t display_i2c_address = 255;
 
 
 void cowpi_setup(unsigned int configuration) {
     /* Switches and Buttons */
-    pinMode( LEFT_BUTTON, INPUT_PULLUP);
-    pinMode( RIGHT_BUTTON, INPUT_PULLUP);
+    pinMode(LEFT_BUTTON, INPUT_PULLUP);
+    pinMode(RIGHT_BUTTON, INPUT_PULLUP);
     pinMode(LEFT_SWITCH_DEFAULT, INPUT_PULLUP);     // When using SPI or when no protocol is specified
     pinMode(LEFT_SWITCH_ALTERNATE, INPUT_PULLUP);   // When using I2C
     pinMode(RIGHT_SWITCH_DEFAULT, INPUT_PULLUP);    // When using SPI or when no protocol is specified
@@ -43,10 +43,10 @@ void cowpi_setup(unsigned int configuration) {
     pinMode(LED_EXTERNAL, OUTPUT);
     pinMode(LED_BUILTIN, OUTPUT);
     /* Keypad */
-    pinMode( KEYPAD_ROW_1, OUTPUT);
-    pinMode( KEYPAD_ROW_4, OUTPUT);
-    pinMode( KEYPAD_ROW_7, OUTPUT);
-    pinMode( KEYPAD_ROW_STAR, OUTPUT);
+    pinMode(KEYPAD_ROW_1, OUTPUT);
+    pinMode(KEYPAD_ROW_4, OUTPUT);
+    pinMode(KEYPAD_ROW_7, OUTPUT);
+    pinMode(KEYPAD_ROW_STAR, OUTPUT);
     pinMode(KEYPAD_COLUMN_1, INPUT_PULLUP);
     pinMode(KEYPAD_COLUMN_2, INPUT_PULLUP);
     pinMode(KEYPAD_COLUMN_3, INPUT_PULLUP);

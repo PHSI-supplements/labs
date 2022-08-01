@@ -153,7 +153,55 @@ bool cowpi_left_switch_in_right_position(void);
 bool cowpi_right_switch_in_right_position(void);
 
 /**
- * @brief Illuminates the external LED.
+ * @brief Illuminates the right LED, aka the external LED.
+ *
+ * This is a portable implementation, not a memory-mapped implementation.
+ *
+ * Assumes the external LED is in Arduino pin D12. An LED illuminates when the
+ * pin is placed high, to match the semantics of Arduino's built-in LED.
+ *
+ * @ingroup outputs
+ */
+void cowpi_illuminate_right_led(void);
+
+/**
+ * @brief Illuminates the left LED, aka the built-in LED, aka the internal LED.
+ *
+ * This is a portable implementation, not a memory-mapped implementation.
+ *
+ * Assumes the internal LED is in Arduino pin D13. The Arduino semantics are
+ * that an LED illuminates when the pin is placed high.
+ *
+ * @ingroup outputs
+ */
+void cowpi_illuminate_left_led(void);
+
+/**
+ * @brief Deluminates the right LED, aka the external LED.
+ *
+ * This is a portable implementation, not a memory-mapped implementation.
+ *
+ * Assumes the external LED is in Arduino pin D12. An LED deluminates when the
+ * pin is placed low, to match the semantics of Arduino's built-in LED.
+ *
+ * @ingroup outputs
+ */
+void cowpi_deluminate_right_led(void);
+
+/**
+ * @brief Deluminates the left LED, aka the built-in LED, aka the internal LED.
+ *
+ * This is a portable implementation, not a memory-mapped implementation.
+ *
+ * Assumes the internal LED is in Arduino pin D13. The Arduino semantics are
+ * that an LED deluminates when the pin is placed low.
+ *
+ * @ingroup outputs
+ */
+void cowpi_deluminate_left_led(void);
+
+/**
+ * @brief Illuminates the external LED, aka the right LED.
  *
  * This is a portable implementation, not a memory-mapped implementation.
  *
@@ -165,7 +213,7 @@ bool cowpi_right_switch_in_right_position(void);
 void cowpi_illuminate_external_led(void);
 
 /**
- * @brief Illuminates the internal LED, aka the built-in LED.
+ * @brief Illuminates the internal LED, aka the built-in LED, aka the left LED.
  *
  * This is a portable implementation, not a memory-mapped implementation.
  *
@@ -177,7 +225,7 @@ void cowpi_illuminate_external_led(void);
 void cowpi_illuminate_internal_led(void);
 
 /**
- * @brief Deluminates the external LED.
+ * @brief Deluminates the external LED, aka the right LED.
  *
  * This is a portable implementation, not a memory-mapped implementation.
  *
@@ -189,7 +237,7 @@ void cowpi_illuminate_internal_led(void);
 void cowpi_deluminate_external_led(void);
 
 /**
- * @brief Deluminates the internal LED, aka the built-in LED.
+ * @brief Deluminates the internal LED, aka the built-in LED, aka the left LED.
  *
  * This is a portable implementation, not a memory-mapped implementation.
  *

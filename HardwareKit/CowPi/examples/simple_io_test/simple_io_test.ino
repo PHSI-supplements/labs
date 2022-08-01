@@ -19,7 +19,7 @@ void setup() {
 }
 
 void loop() {
-    bool internal_led, external_led;
+    bool left_led, right_led;
     char c;
     printf("\n");
     printf("Keypad:       %c       Column pins:  %d%d%d%d    Keypad NAND: %d\n", (c = cowpi_get_keypress()) ? c : ' ',
@@ -35,19 +35,19 @@ void loop() {
 #endif
     printf("\n");
     if (cowpi_left_button_is_pressed() && cowpi_left_switch_in_right_position()) {
-        internal_led = true;
-        cowpi_illuminate_internal_led();
+        left_led = true;
+        cowpi_illuminate_left_led();
     } else {
-        internal_led = false;
-        cowpi_deluminate_internal_led();
+        left_led = false;
+        cowpi_deluminate_left_led();
     }
     if (cowpi_right_button_is_pressed() && cowpi_right_switch_in_right_position()) {
-        external_led = true;
-        cowpi_illuminate_external_led();
+        right_led = true;
+        cowpi_illuminate_right_led();
     } else {
-        external_led = false;
-        cowpi_deluminate_external_led();
+        right_led = false;
+        cowpi_deluminate_right_led();
     }
-    printf("Internal LED: %s     External LED: %s\n", internal_led ? "ON " : "OFF", external_led ? "ON " : "OFF");
+    printf("Left LED: %s         Right LED: %s\n", left_led ? "ON " : "OFF", right_led ? "ON " : "OFF");
     delay(500);
 }

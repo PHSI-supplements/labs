@@ -41,6 +41,8 @@ void cowpi_stdio_setup(unsigned long baud) {
     stdout = &serial_monitor;
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 static int cowpi_getc(FILE *stream) {
     while (!Serial.available()) {}
     return Serial.read();
@@ -53,3 +55,4 @@ static int cowpi_putc(char c, FILE *stream) {
     }
     return c;
 }
+#pragma GCC diagnostic pop

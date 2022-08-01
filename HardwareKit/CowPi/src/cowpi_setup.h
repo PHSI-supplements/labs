@@ -37,7 +37,7 @@ extern "C" {
  * and configures the library to work with the specified display module and
  * communication protocol.
  *
- * @attention If a non-`STANDARD` dialect is used, then
+ * @attention If a non-`COWPI_DEFAULT` dialect is used, then
  * `cowpi_set_display_dialect()` must be called *before* `cowpi_setup()`.
  *
  * @attention If the `I2C` (or `IIC` or `TWI`) protocol is used, then
@@ -60,8 +60,8 @@ void cowpi_setup(unsigned int configuration);
  *
  * Some display modules (*e.g.*, MAX7219-based modules) have only one possible
  * mapping, and calling this function has no effect for those modules. For other
- * display modules, the `STANDARD` dialect is the default; this function does
- * not need to be called if the `STANDARD` dialect will be used.
+ * display modules, the `COWPI_DEFAULT` dialect is the default; this function does
+ * not need to be called if the `COWPI_DEFAULT` dialect will be used.
  *
  * @attention If this function is called, it must be called before
  * `cowpi_setup()` so that the display module can be properly configured.
@@ -80,7 +80,7 @@ void cowpi_set_display_dialect(unsigned int dialect);
  * module bits, that the library has been configured to use.
  *
  * Some display modules (*e.g.*, MAX7219-based modules) have only one possible
- * mapping. For other the `STANDARD` dialect is the default; this will be the
+ * mapping. For other the `COWPI_DEFAULT` dialect is the default; this will be the
  * return value if `cowpi_set_display_dialect()` was not called.
  *
  * @sa cowpi_set_display_dialect
@@ -185,7 +185,7 @@ uint8_t cowpi_get_display_i2c_address(void);
 /** @addtogroup configuration
  * @{
  */
-#define STANDARD                0x8000u //!< Instructs `cowpi_set_display_dialect()` to configure the library to use the common mapping of protocol bits to display module bits
+#define COWPI_DEFAULT           0x8000u //!< Instructs `cowpi_set_display_dialect()` to configure the library to use the common mapping of protocol bits to display module bits
 #define ADAFRUIT                0x4000u //!< Instructs `cowpi_set_display_dialect()` to configure the library for [Adafruit's I2C/SPI character LCD backpack](https://www.adafruit.com/product/292)
 /** @} */
 
