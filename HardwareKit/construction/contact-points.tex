@@ -76,6 +76,10 @@
         \renewcommand{\mculeftswitchpoint}{j2}
         \renewcommand{\mculeftswitchx}{2}
         \renewcommand{\mculeftswitchy}{12}
+        \newcommand{\mcuscl}{\mcupin{D19/A5}}
+        \newcommand{\mcusclpoint}{a9}
+        \newcommand{\mcusda}{\mcupin{D18/A4}}
+        \newcommand{\mcusdapoint}{a8}
     }{}
     \ifdefstring{\serialprotocol}{SPI}{
         \renewcommand{\mculeftswitch}{\mcupin{D18/A4}}
@@ -86,6 +90,12 @@
         \renewcommand{\mcurightswitchpoint}{a9}
         \renewcommand{\mcurightswitchx}{9}
         \renewcommand{\mcurightswitchy}{1}
+        \newcommand{\mcusck}{\mcupin{D13}}
+        \newcommand{\mcusckpoint}{a1}
+        \newcommand{\mcucs}{\mcupin{D10}}
+        \newcommand{\mcucspoint}{j3}
+        \newcommand{\mcucopi}{\mcupin{11}}
+        \newcommand{\mcucopipoint}{j2}
     }{}
     
     \newcommand{\resistorcontactpointone}{i1}

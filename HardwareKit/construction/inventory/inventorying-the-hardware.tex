@@ -19,7 +19,7 @@
 \ifdefstring{\displaymodule}{LCD1602}{
     \renewcommand{\displaymoduleitem}{
         \item One (1) $2 \times 16$ character LCD display module \\ \includegraphics[height=2cm]{inventory/lcd1602}
-        \ifdefstring{\serialprotocol}{I2C}{ \item One (1) I2C-LCD Serial Interface (might be attached to display module) \\ \includegraphics[height=2cm]{inventory/lcd-adapter} \hspace{1cm} or \hspace{1cm} \includegraphics[height=2cm]{inventory/adafruit-lcd-adapter} \hspace{1cm} or \hspace{1cm} \includegraphics[height=2cm]{inventory/piggyback-lcd-adapter} }{}
+        \ifdefstring{\serialprotocol}{I2C}{ \item One (1) I$^2$C-LCD Serial Interface (might be attached to display module) \\ \includegraphics[height=2cm]{inventory/lcd-adapter} \hspace{1cm} or \hspace{1cm} \includegraphics[height=2cm]{inventory/adafruit-lcd-adapter} \hspace{1cm} or \hspace{1cm} \includegraphics[height=2cm]{inventory/piggyback-lcd-adapter} }{}
         \ifdefstring{\serialprotocol}{SPI}{\item One (1) 74HC595 8-bit shift register \\ \textbf{\textit{Add shift register image here}}}{} %\includegraphics[height=2cm]{inventory/shiftregister}}{}
     }
     \ifdefstring{\serialprotocol}{I2C}{\renewcommand{\fmcableitem}{\item One (1) 4-conductor 20cm ``rainbow'' cable (female-to-male) \\ \includegraphics[height=2cm]{inventory/fm-4cable}}}{}
