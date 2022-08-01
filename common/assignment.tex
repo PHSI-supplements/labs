@@ -36,9 +36,6 @@
 \usepackage[americanresistor]{circuitikz}
 \usepackage[normalem]{ulem}
 \usepackage{wrapfig}
-\usepackage{graphicx}
-\usepackage{graphicx}
-\usepackage{graphicx}
 \usepackage{xcolor}
 %\usepackage[dvipsnames]{xcolor}
 
@@ -128,9 +125,9 @@
 
 \newcommand{\display}[1]{
     \ifboolexpe{bool{usedisplayfont}}{
-        \ifdefstring{\displaymodule}{MAX7219digits}{{\dviiseg #1}}{}\fi
-        \ifdefstring{\displaymodule}{MAX7219matrix}{{\deseg #1}}{}\fi
-        \ifdefstring{\displaymodule}{LCD1602}{{\necker #1}}{}\fi
+        \ifdefstring{\displaymodule}{MAX7219digits}{{\dviiseg #1}}{}
+        \ifdefstring{\displaymodule}{MAX7219matrix}{{\deseg #1}}{}
+        \ifdefstring{\displaymodule}{LCD1602}{{\necker #1}}{}
         % We don't yet have a Cow Pi configuration with 14-segment displays, so no \deseg yet
     }{
         \texttt{#1}

@@ -22,12 +22,12 @@ void loop() {
     bool left_led, right_led;
     char c;
     printf("\n");
-    printf("Keypad:       %c       Column pins:  %d%d%d%d    Keypad NAND: %d\n", (c = cowpi_get_keypress()) ? c : ' ',
+    printf("Keypad:      %c        Column pins:  %d%d%d%d    Keypad NAND: %d\n", (c = cowpi_get_keypress()) ? c : ' ',
            digitalRead(14), digitalRead(15), digitalRead(16), digitalRead(17), digitalRead(3));
-    printf("Left switch:  %s   Right switch: %s\n",
+    printf("Left switch: %s    Right switch: %s\n",
            cowpi_left_switch_in_left_position() ? "LEFT " : "RIGHT",
            cowpi_right_switch_in_left_position() ? "LEFT " : "RIGHT");
-    printf("Left button:  %s   Right button: %s",
+    printf("Left button: %s    Right button: %s",
            cowpi_left_button_is_pressed() ? "DOWN " : "UP   ",
            cowpi_right_button_is_pressed() ? "DOWN " : "UP   ");
 #if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_NANO || defined ARDUINO_AVR_MEGA2560
@@ -48,6 +48,6 @@ void loop() {
         right_led = false;
         cowpi_deluminate_right_led();
     }
-    printf("Left LED: %s         Right LED: %s\n", left_led ? "ON " : "OFF", right_led ? "ON " : "OFF");
+    printf("Left LED:    %s      Right LED:    %s\n", left_led ? "ON " : "OFF", right_led ? "ON " : "OFF");
     delay(500);
 }

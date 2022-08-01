@@ -137,16 +137,20 @@ When you have finished setting up the keypad wiring, there should be the electri
 
 \checkpoint{inserted and wired the matrix keypad}
 
-%TODO: update for library examples
-In the Arduino IDE, open \textit{InputTest.ino}.
+\textbf{NOTE:} Do not press more than one key on the matrix keypad at a time.
+There are certain combinations of keys that could result in a short-circuit from power to ground, possibly damaging your \developmentboard.
+Your \developmentboard\ has some safety measures to prevent damage in that situation, but it would be better for you not to test those safety measures.
+
 Connect your \developmentboard\ to the computer.
-Compile \textit{InputTest.ino} and upload it to your \developmentboard.
-Open the IDE's Serial Monitor (\textit{Tools} $\rightarrow$ \textit{Serial Monitor}).
-You will see several lines reporting the current value of various inputs. (You will also see the \developmentboard's \texttt{TX} LED blinking as the \developmentboard\ sends these lines to your computer.)
-Right now, KEYPAD~COLUMNS is always 1111, and KEYPAD~NAND is always 0.
-Notice that when you press 1, 4, 7, or *, KEYPAD~COLUMNS becomes 0111;
-similarly, pressing a button in the 2$^{nd}$ column causes KEYPAD~COLUMNS to become 1011;
+In the IDE's Serial Monitor, notice that there is normally no character after \texttt{Keypad:}, that Column~pins is normally 1111, and that Keypad~NAND is normally 0.
+Press the 5 key on the matrix keypad.
+Notice that the first line of the message from the \developmentboard is now
+\begin{verbatim}
+    Keypad:      5        Column pins:  1011    Keypad NAND: 1
+\end{verbatim}
+In general, when you press a key on the keypad, the corresponding character will be displayed after \texttt{Keypad:}, and Keypad~NAND will become 1.
+When you press 1, 4, 7, or *, Column~pins becomes 0111;
+similarly, pressing a key in the 2$^{nd}$ column causes Column~pins to become 1011;
 in the 3$^{rd}$ column, 1101;
 and in the A$^{th}$ column, 1110.
-Whenever any keypad button is pressed, KEYPAD~NAND becomes 1.
 Be sure to test all 16 keys.

@@ -4,18 +4,21 @@
 \newcommand{\numberofserialpins}{zero}
 \newcommand{\numeralofserialpins}{0}
 \newcommand{\serialpins}{\dots\dots\dots}
+\newcommand{\displaytest}{\dots\dots\dots}
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{SPI}{
     \renewcommand{\numberofserialpins}{five}
     \renewcommand{\numeralofserialpins}{5}
     \renewcommand{\serialpins}{\texttt{DIN} (data in), \texttt{CS} (chip select), and \texttt{CLK} (clock)}
+    \renewcommand{\displaytest}{max7219\_7segment\_hello\_world}
     Examine the 7-segment display module.
-    }{}
+}{}
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{I2C}{
     \renewcommand{\numberofserialpins}{four}
     \renewcommand{\numeralofserialpins}{4}
     \renewcommand{\serialpins}{\texttt{SDA} (serial data), and \texttt{SCL} (serial clock)}
+    \renewcommand{\displaytest}{lcd1602\_hello\_world}
     Examine the I$^2$C-LCD serial interface.
 }{}
 Notice that the header has \numberofserialpins pins (Figure~\ref{fig:display-module-header}): \texttt{VCC} (common collector voltage), \texttt{GND} (ground), \serialpins.
@@ -67,9 +70,9 @@ Take the \numeralofserialpins-conductor female-to-male rainbow cable and attach 
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{I2C}{
     Identify the wire that is connected to the display module's \texttt{SCL} pin;
-    insert the male end of this wire in contact point \mcusclpoint (electrically connected to the \developmentboard's \mcuscl pin).
-    Insert the male end of the \texttt{SDA} wire into contact point \mcusdapoint (electrically connected to the \developmentboard's \mcusda pin).
-}
+    insert the male end of this wire in contact point \mcusclpoint\ (electrically connected to the \developmentboard's \mcuscl pin).
+    Insert the male end of the \texttt{SDA} wire into contact point \mcusdapoint\ (electrically connected to the \developmentboard's \mcusda pin).
+}{}
 Insert the \texttt{GND} wire into the upper \ground, and the \texttt{VCC} wire into the upper \power.
 
 %\begin{figure}
@@ -130,12 +133,45 @@ When you have finished connecting the display module, there should be the electr
 
 \checkpoint{connected the display module to the breadboard}
 
-%TODO: update for library example
-In the Arduino IDE, open \textit{DisplayTest.ino}.
-Connect your \developmentboard\ to the computer.
-Compile \textit{DisplayTest.ino} and upload it to your \developmentboard.
-You should see {\dviiseg 8.} move back and forth across the display (Figure~\ref{fig:display-test}).
-You may be able to see the \developmentboard's built-in LED blink rapidly: recall that it's connected to pin 13, which is used as the clock signal when the \developmentboard\ sends data to the display module.
+In the Arduino IDE, open the
+\textit{File} $\rightarrow$ \textit{Examples} $\rightarrow$ \textit{CowPi} $\rightarrow$ \textit{\displaytest}
+example.
+Find these lines in the \function{setup()} function:
+
+\begin{lstlisting}[numbers=left, firstnumber=9]
+//    protocol = SPI;
+    protocol = I2C;
+\end{lstlisting}
+
+%! suppress = NonMatchingIf
+\ifdefstring{\serialprotocol}{I2C}{
+    Make sure that the \lstinline{protocol = I2C} line is uncommented and that the \lstinline{protocol = SPI} line is commented-out.
+}{}
+%! suppress = NonMatchingIf
+\ifdefstring{\serialprotocol}{SPI}{
+    Comment-out the \lstinline{protocol = I2C} line, and uncomment the \lstinline{protocol = SPI} line.
+}{}
+
+Compile the program and upload it to your \developmentboard.
+
+%! suppress = NonMatchingIf
+\ifdefstring{\serialprotocol}{I2C}{
+    You should see the display module's backlight blink on and off.
+    If so, then you have correctly connected the display module and serial adapter even if you don't see a message on the display module.
+
+    Using a screwdriver, turn the trim potentiometer on the serial adapter until you can see the message: \\
+    \display{
+        Hello, world! \\
+        i2c address=0x27
+    }
+}{}
+%! suppress = NonMatchingIf
+\ifdefstring{\serialprotocol}{SPI}{
+    \dots\dots\dots \\
+    Old message: \\
+    You should see {\dviiseg 8.} move back and forth across the display (Figure~\ref{fig:display-test}).
+    You may be able to see the \developmentboard's built-in LED blink rapidly: recall that it's connected to pin 13, which is used as the clock signal when the \developmentboard\ sends data to the display module.
+}{}
 
 \begin{figure}
     \centering

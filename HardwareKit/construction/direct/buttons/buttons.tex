@@ -114,8 +114,14 @@ When you have finished setting up the pushbuttons' wiring, there should be the e
 
 \checkpoint{inserted and wired the momentary pushbuttons}
 
-%TODO: update for library examples
 Connect your \developmentboard\ to the computer.
-In the IDE's Serial Monitor, notice that the LEFT~BUTTON is always 1, the RIGHT~BUTTON is always 1, and the BUTTON~NAND is always 0.
-Notice that when you press a button, the Serial Monitor shows that its value becomes 0, and when you release a button, its value becomes 1 again.
-If either button is pressed, BUTTON~NAND becomes 1, and it is 0 only when both buttons are not pressed.
+In the IDE's Serial Monitor, notice that Left~button is normally UP, but it becomes DOWN when you press the left button.
+Similarly, Right~button is normally UP, but it becomes DOWN when you press the right button.
+Notice also that Button~NAND is normally 0, but it becomes 1 whenever you press either button (or both).
+
+Notice that both Left~LED and Right~LED are normally OFF\@.
+Position both switches to the right.
+Notice than when (and only when) the left button is to the right and you're also pressing the left button, Left~LED becomes ON, and the LED labelled ``L'' on the \developmentboard illuminates.
+Similarly, when (and only when) the right button is to the right and you're also pressing the right button, Right~LED becomes ON, and the LED that you installed illuminates.
+(There may be a delay of about a half-second between you pressing a button and the LED illuminating, and between you releasing a button and the LED deluminating.
+We will look at why this happens and how to prevent it in an upcoming lab.)
