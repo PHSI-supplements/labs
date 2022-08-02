@@ -39,7 +39,10 @@ Figure~\ref{fig:display-diagram} shows a diagram of the wiring to connect the di
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{fritzing_diagrams/display-max7219}
+    %! suppress = NonMatchingIf
+    \ifdefstring{\serialprotocol}{I2C}{\includegraphics[width=0.9\textwidth]{fritzing_diagrams/display-lcd1602}}{}
+    %! suppress = NonMatchingIf
+    \ifdefstring{\serialprotocol}{SPI}{\includegraphics[width=0.9\textwidth]{fritzing_diagrams/display-max7219}}{}
     \caption{Diagram of display module's connections to the breadboard.
     \label{fig:display-diagram}}
 \end{figure}
