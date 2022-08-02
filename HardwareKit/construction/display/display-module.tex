@@ -29,7 +29,10 @@ Figure~\ref{fig:display-diagram} shows a diagram of the wiring to connect the di
 %TODO: parameterize the files (module header, display, display module female connectors)
 \begin{figure}
     \centering
-    \includegraphics[width=5cm]{display/spi-module-header}
+    %! suppress = NonMatchingIf
+    \ifdefstring{\serialprotocol}{I2C}{\includegraphics[width=5cm]{display/i2c-module-header}}{}
+    %! suppress = NonMatchingIf
+    \ifdefstring{\serialprotocol}{SPI}{\includegraphics[width=5cm]{display/spi-module-header}}{}
     \caption{The display module's header has \numberofserialpins\ pins.
     \label{fig:display-module-header}}
 \end{figure}
@@ -163,7 +166,14 @@ Compile the program and upload it to your \developmentboard.
     \display{
         Hello, world! \\
         i2c address=0x27
-    }
+    } \\
+    (See figure~\ref{fig:lcd-display-test}.)
+
+    \begin{figure}
+        \centering
+        \animategraphics[autoplay,palindrome,height=5cm]{2}{display/animations/lcd1602-}{0}{1}
+        \caption{\textit{\displaytest.ino} blinks the backlight and displays a ``Hello World'' message. \label{fig:lcd-display-test}}
+    \end{figure}
 }{}
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{SPI}{
@@ -171,10 +181,10 @@ Compile the program and upload it to your \developmentboard.
     Old message: \\
     You should see {\dviiseg 8.} move back and forth across the display (Figure~\ref{fig:display-test}).
     You may be able to see the \developmentboard's built-in LED blink rapidly: recall that it's connected to pin 13, which is used as the clock signal when the \developmentboard\ sends data to the display module.
-}{}
 
-\begin{figure}
-    \centering
-    \animategraphics[autoplay,palindrome,height=5cm]{10}{display/animations/displaytest-}{0}{7}
-    \caption{\textit{DisplayTest.ino} illuminates all segments on a digit, one digit at a time. \label{fig:display-test}}
-\end{figure}
+    \begin{figure}
+        \centering
+        \animategraphics[autoplay,palindrome,height=5cm]{10}{display/animations/displaytest-}{0}{7}
+        \caption{\textit{DisplayTest.ino} illuminates all segments on a digit, one digit at a time. \label{fig:display-test}}
+    \end{figure}
+}{}

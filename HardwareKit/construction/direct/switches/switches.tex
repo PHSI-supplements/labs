@@ -10,19 +10,19 @@ Figure~\ref{fig:switch-diagram} shows a diagram of the wiring for the slider swi
         \subfloat[3-pin switches]{
             \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-spi-spdt}
         }
-        \hfil
-        \subfloat[2-pin switches]{
-            \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-spi-dip1}
-        }
+%        \hfil
+%        \subfloat[2-pin switches]{
+%            \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-spi-dip1}
+%        }
     }{}
     \ifdefstring{\serialprotocol}{I2C}{
         \subfloat[3-pin switches]{
             \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-i2c-spdt}
         }
-        \hfil
-        \subfloat[2-pin switches]{
-            \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-i2c-dip1}
-        }
+%        \hfil
+%        \subfloat[2-pin switches]{
+%            \includegraphics[width=0.9\textwidth]{fritzing_diagrams/switch-i2c-dip1}
+%        }
     }{}
     \caption{Diagram of wiring associated with toggle switch input.
         \label{fig:switch-diagram}}
@@ -30,26 +30,29 @@ Figure~\ref{fig:switch-diagram} shows a diagram of the wiring for the slider swi
 
 \disconnect\
 
-\prepunch{a\controlrow{1} and a\controlrow{6}}
-If you have 3-pin switches, then pre-punch holes into contact points a\controlrow{2}, a\controlrow{3}, a\controlrow{7} and a\controlrow{8}.
-If you have 2-pin switches, then pre-punch holes into contact points a\controlrow{4} and a\controlrow{9}.
+%\prepunch{a\controlrow{1} and a\controlrow{6}}
+%If you have 3-pin switches, then pre-punch holes into contact points a\controlrow{2}, a\controlrow{3}, a\controlrow{7} and a\controlrow{8}.
+%If you have 2-pin switches, then pre-punch holes into contact points a\controlrow{4} and a\controlrow{9}.
+\prepunch{a\controlrow{1}--a\controlrow{3} and a\controlrow{6}--a\controlrow{8}}
 
-Insert one slider switch into contact points a\controlrow{1}--a\controlrow{3} (for 3-pin switches) or contact points a\controlrow{1}--a\controlrow{4} (for 2-pin switches).
-Place the other slider switch  into contact points a\controlrow{6}--a\controlrow{8} (for 3-pin switches) or contact points a\controlrow{6}--a\controlrow{9} (for 2-pin switches).
+Insert one slider switch into contact points a\controlrow{1}--a\controlrow{3}. % (for 3-pin switches) or contact points a\controlrow{1}--a\controlrow{4} (for 2-pin switches).
+Place the other slider switch  into contact points a\controlrow{6}--a\controlrow{8}. % (for 3-pin switches) or contact points a\controlrow{6}--a\controlrow{9} (for 2-pin switches).
 
 For the two wires that will connect the switches to the \developmentboard, you can use 10cm jumpers (especially if that is all that you have);
 however, if you use 20cm jumpers, then in Section~\ref{sec:keypad} we will show how to keep some wires away from the controls.
-Peel off one wire from the \rainbow and use it to connect contact point e\controlrow{1} (electrically connected to the left switch's left pin) to contact point \mculeftswitchpoint (electrically connected to the \developmentboard's \mculeftswitch\ pin).
-Peel off another wire from the \rainbow and use it to connect contact point e\controlrow{6} (electrically connected to the right switch's left pin) to contact point \mcurightswitchpoint (electrically connected to the \developmentboard's \mcurightswitch\ pin).
+Peel off one wire from the \rainbow\ and use it to connect contact point e\controlrow{1} (electrically connected to the left switch's left pin) to contact point \mculeftswitchpoint\ (electrically connected to the \developmentboard's \mculeftswitch\ pin).
+Peel off another wire from the \rainbow\ and use it to connect contact point e\controlrow{6} (electrically connected to the right switch's left pin) to contact point \mcurightswitchpoint\ (electrically connected to the \developmentboard's \mcurightswitch\ pin).
 
 Peel off two more wires from the \rainbow.
-You will use these to connect the switches center pins (for 3-pin switches) or right pins (for 2-pin switches) to the upper \ground.
-Specifically, place the end of one wire into contact point e\controlrow{2} (for 3-pin switches) or e\controlrow{4} (for 2-pin switches);
+You will use these to connect the switches center pins %(for 3-pin switches) or right pins (for 2-pin switches)
+to the upper \ground.
+Specifically, place the end of one wire into contact point e\controlrow{2}; %(for 3-pin switches) or e\controlrow{4} (for 2-pin switches);
 place the other end of that wire into the upper \ground.
-Now place the end of the other wire into contact point e\controlrow{7} (for 3-pin switches) or e\controlrow{9} (for 2-pin switches);
+Now place the end of the other wire into contact point e\controlrow{7}; %(for 3-pin switches) or e\controlrow{9} (for 2-pin switches);
 place the other end of that wire into the upper \ground.
+The switches' right pins will not be electrically connected to anything.
 
-If you have 3-pin switches, the switches' right pins will not be electrically connected to anything.
+%If you have 3-pin switches, the switches' right pins will not be electrically connected to anything.
 
 %TODO: parameterize for I2C vs SPI; add spdt vs dip1 close-ups
 \begin{figure}
@@ -60,7 +63,7 @@ If you have 3-pin switches, the switches' right pins will not be electrically co
 \end{figure}
 
 When you have finished setting up the switches' wiring, there should be the
-electrical connections described in Table~\ref{tab:switch-spdt} or \ref{tab:switch-dip1}.
+electrical connections described in Table~\ref{tab:switch-spdt}.% or \ref{tab:switch-dip1}.
 
 \begin{table}
     \begin{center}\begin{tabular}{||c|c|c||} \hline\hline
@@ -76,17 +79,17 @@ electrical connections described in Table~\ref{tab:switch-spdt} or \ref{tab:swit
         \label{tab:switch-spdt}}
 \end{table}
 
-\begin{table}
-    \begin{center}\begin{tabular}{||c|c|c||} \hline\hline
-    Switch                      & \developmentboard\ pin    & Pulled High/Low \\ \hline
-    Left switch's left pin      & \mculeftswitch    & \\
-    Left switch's right pin     &                   & Pulled Low \\
-    Right switch's left pin     & \mcurightswitch   & \\
-    Right switch's right pin    &                   & Pulled Low \\ \hline\hline
-    \end{tabular}\end{center}
-    \caption{Electrical Connections for 2-pin Slider Switches.
-        \label{tab:switch-dip1}}
-\end{table}
+%\begin{table}
+%    \begin{center}\begin{tabular}{||c|c|c||} \hline\hline
+%    Switch                      & \developmentboard\ pin    & Pulled High/Low \\ \hline
+%    Left switch's left pin      & \mculeftswitch    & \\
+%    Left switch's right pin     &                   & Pulled Low \\
+%    Right switch's left pin     & \mcurightswitch   & \\
+%    Right switch's right pin    &                   & Pulled Low \\ \hline\hline
+%    \end{tabular}\end{center}
+%    \caption{Electrical Connections for 2-pin Slider Switches.
+%        \label{tab:switch-dip1}}
+%\end{table}
 
 \checkpoint{inserted and wired the slider switches}
 

@@ -66,19 +66,34 @@ In this prelab, you will assemble the hardware for the I/O labs.
     You have now finished assembling the class kit (Figure~\ref{fig:complete}).
     In the upcoming I/O labs, you will use the kit to learn about memory-mapped I/O and about handling low-level interrupts.
 
-    \begin{figure}
-        \centering
-        \subfloat[]{
-            \includegraphics[height=0.55\textheight]{fritzing_diagrams/complete}
-%            \label{fig:complete-diagram}
-        }
+\begin{figure}
+    \centering
+    %! suppress = NonMatchingIf
+    \ifdefstring{\serialprotocol}{SPI}{
+            \subfloat[]{
+                \includegraphics[height=0.55\textheight]{fritzing_diagrams/complete-max7219}
+    %            \label{fig:complete-diagram}
+            }
 
-        \subfloat[]{
-            \includegraphics[height=0.35\textheight]{completed-kit}
-%            \label{fig:complete-kit}
-        }
-        \caption{The fully-assembled class kit.\label{fig:complete}}
-    \end{figure}
+            \subfloat[]{
+                \includegraphics[height=0.35\textheight]{completed-kit-max7219}
+    %            \label{fig:complete-kit}
+            }
+    }{}
+    %! suppress = NonMatchingIf
+    \ifdefstring{\serialprotocol}{I2C}{
+            \subfloat[]{
+                \includegraphics[height=0.55\textheight]{fritzing_diagrams/complete-lcd1602}
+    %            \label{fig:complete-diagram}
+            }
+
+            \subfloat[]{
+                \includegraphics[height=0.35\textheight]{completed-kit-lcd1602}
+    %            \label{fig:complete-kit}
+            }
+    }{}
+\caption{The fully-assembled class kit.\label{fig:complete}}
+\end{figure}
 
 \section{Turn-in and Grading}
 
