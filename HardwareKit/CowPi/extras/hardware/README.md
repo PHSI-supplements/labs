@@ -90,7 +90,7 @@ Changes from mk1b:
 ![Cow Pi mk1d](mk1d.jpg)
 
 - Microcontroller board: Arduino Nano
-- Display module: 2x16 character LCD dot-matrix display ($\mathrm{I}^2\mathrm{C}$)
+- Display module: 2x16 character LCD dot-matrix display (I2C)
 
 ### Future Mark 1 Models
 
@@ -140,14 +140,14 @@ demonstrations.
 A single 11-socket female header can accept a MAX7219-based 8x8 LED matrix
 face-up (SPI, sockets 1-5), a MAX7219-based 8-digit 7-segment display face-up
 (SPI, sockets 5-9), or a common serial adapter for an LCD1602 display mounted
-piggyback on the face-up display ($\mathrm{I}^2\mathrm{C}$, sockets 8-11) -- though we soon
+piggyback on the face-up display (I2C, sockets 8-11) -- though we soon
 discovered that the weight of the LCD1602 would cause the Arduino Uno to tip
 over. Other display modules are also usable (such as an SPI adapter for the
 LCD1602) but they might have to be connected by Dupont wires instead of being
 directly inserted into the sockets.
 
 A DPDT dip switch changes the toggle-able switches' input pins to free-up the
-pins needed for SPI or for $\mathrm{I}^2\mathrm{C}$, depending on which communication protocol
+pins needed for SPI or for I2C, depending on which communication protocol
 needs to be used. Because of this flexibility, the mk2b can be quickly
 configured to be equivalent to the mk1b/mk1c, to the mk1d, and to other
 configurations that are not available in the Mark 1 series. This flexibility was
@@ -164,7 +164,7 @@ we really don't consider this to be a failure -- just a missed opportunity).
 
 The impetus for the Cow Pi mk2c was to create a durable version of the mk1d, but
 as part of preparing for the mk3a, we included the ability to switch between the
-$\mathrm{I}^2\mathrm{C}$ adapter component and a 74HC595-based SPI adapter circuit for the
+I2C adapter component and a 74HC595-based SPI adapter circuit for the
 LCD1602. We also, as part of experimentation with ARM-based microcontrollers and
 the display modules, incorporated options to change between 5V and 3.3V at
 various stages between the microcontroller board and the display module.
@@ -191,10 +191,10 @@ than Mark 1 Cow Pis).
 ### mk3a
 
 - Microcontroller board: Arduino Nano or Arduino Nano Every
-- Display module: 2x16 character LCD dot-matrix display (SPI or $\mathrm{I}^2\mathrm{C}$)
+- Display module: 2x16 character LCD dot-matrix display (SPI or I2C)
 
 In the final design stages now, we expect the Cow Pi mk3a to be configurable *at
-assembly time* to use SPI or $\mathrm{I}^2\mathrm{C}$; the selection will be based on which
+assembly time* to use SPI or I2C; the selection will be based on which
 components are soldered to the board. Dynamically changing the protocol (like
 the mk2b) will not be possible. Like the mk2c, the keypad will be sixteen
 tactile switches, though sixteen diodes will replace the four resistors, which
