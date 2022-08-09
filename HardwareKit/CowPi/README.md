@@ -19,7 +19,7 @@ complexity that didn't contribute to the learning objectives.
 
 We decided to create a library for three reasons:
 - It allows us to provide some additional bootstrapping for students: they'll
-  be able to work on polling logic using some of the funcitons in the library
+  be able to work on polling logic using some of the functions in the library
   and then later replace those with functions that use memory-mapped I/O. Or
   they can start with memory-mapped I/O and then move on to the polling logic.
   Before they library, students had no choice but to start with memory-mapped
@@ -27,7 +27,7 @@ We decided to create a library for three reasons:
 - It allows us to replace parameterized macros with functions.
 - We can use more complex display modules. Originally, the Cow Pi's display
   module was an 8-digit/7-segment display module. The Terasic Altera DE1 boards
-  that we used to use had a 4-digit/7-segment display. Manipuating 7-segment
+  that we used to use had a 4-digit/7-segment display. Manipulating 7-segment
   displays is incredibly easy. To simplify the supply chain for our supplier,
   we're going to try using 2-row/16-column LCD display modules. Manipulating
   the LCD1602 display modules is not incredibly easy. With a library, we can let
@@ -57,16 +57,16 @@ using the DE1s, our computer engineering students switched to the [Terasic
 DE10-Lite](http://de10-lite.terasic.com/), but we decided that the cost was too
 great for the features that our CS and SE students would use.
 
-The problem we ran into with the various Arudino shields or Raspberry Pi hats is
+The problem we ran into with the various Arduino shields or Raspberry Pi hats is
 that they either were unavailable in the quantity we needed, or would require
 our students to solder them together -- and we have no expectations that our
 CS and SE students are able to solder. We were pretty sure that they could put
 together a circuit on a solderless breadboard, though.
 
-We are, however, planning to have PCBs manufacutred and assembled, assuming we
+We are, however, planning to have PCBs manufactured and assembled, assuming we
 can keep the cost down.
 
-## The Cow Pi uses nearly all of the pins on the Arudino Nano; that'll make it hard to do any other projects with it.
+## The Cow Pi uses nearly all of the pins on the Arduino Nano; that'll make it hard to do any other projects with it.
 
 Yes, that's true. The Cow Pi is designed to support specific learning
 objectives. If you want to do a different project, then disassemble the kit and
@@ -95,7 +95,7 @@ The Cow Pi works with the Arduino Nano and the Arduino Uno.
 
 We have plans to make it work with the Arduino Mega 2560, the Arduino Nano
 Every, the Arduino Nano 33 IOT, and the Raspberry Pi Pico (both using the
-Arudino framework and using the Pico SDK). Probably the Raspberry Pi 4 and 400,
+Arduino framework and using the Pico SDK). Probably the Raspberry Pi 4 and 400,
 too. Eventually the Arduino Nano 33 BLE Sense, the Arduino RP2040 Connect, and
 the Arduino Uno WiFi (but we don't have samples of any of these laying
 around).
