@@ -1,0 +1,41 @@
+When you have completed this assignment, upload \textit{problem1.c},
+\textit{problem2.c}, and \textit{problem3.c} to \filesubmission.
+
+This assignment is worth 35 points.
+\begin{description}
+    \rubricitem{4}{\textit{problem1.c} produces the specified output (no partial credit).}
+    \rubricitem{4}{\function{iz_digit()} in \textit{problem2.c} determines whether or not a character is a digit.}
+    \rubricitem{4}{\function{decapitalize()} in \textit{problem2.c} converts uppercase letters to lowercase and leaves other characters unchanged.}
+    \rubricitem{4}{\function{is_even()} in \textit{problem3.c} determines whether a number is even or odd.}
+    \item[\hspace{1cm}]\function{produce_multiple_of_ten()} in \textit{problem3.c} has:
+    \begin{description}
+        \rubricitem{1}{code to assign the value 5 to the variable \lstinline{five}.}
+        \rubricitem{1}{code to divide an even number by 2.}
+        \rubricitem{1}{code to subtract 1 from an odd number.}
+        \rubricitem{1}{correct functionality.}
+    \end{description}
+    \rubricitem{2}{Student's answers in \textit{answers.txt} demonstrate an understanding of the bug in Section~\ref{subsec:uninitializedvariables}'s code and how to correct it.}
+    \rubricitem{2}{Student's answer in \textit{answers.txt} demonstrate an understanding of the bug in Section~\ref{subsec:localaddresses}'s code.}
+    \rubricitem{1}{\function{create_node} creates and initializes a \lstinline{struct node} as specified.}
+    % Depending on the insert_word code, 0 or 1 is a reasonable initial value for the occurrences field
+    \rubricitem{2}{\function{insert_after} correctly places a new node in a list by updating the \lstinline{next} pointers (singly- and doubly-linked lists).}
+    \rubricitem{2}{\function{word_to_lowercase} returns a copy of the input string with uppercase letters replaced with lowercase letters.}
+    \item[\hspace{1cm}]\function{insert_word}:
+    \begin{description}
+        \rubricitem{1}{creates a new node at the appropriate location in the list when the word is not already present in the list (where the appropriate location is immediately after the last word to have been added).}
+        \rubricitem{1}{does not create a new node but instead updates the number of occurrences, when the word is present in the list.}
+    \end{description}
+    \rubricitem{2}{\function{build_list} opens a file for reading, builds a list by reading one line at a time and the word that is read to \function{insert_word()}, and closes the file after the last line has been read, when the words in the file are pre-sorted.}
+    \rubricitem{2}{\function{respond} produces the correct response word in accordance with the specified rules when the words in the file are pre-sorted.}
+    \item[Penalties]
+    \penaltyitem{4}{The solution to \textit{problem1.c} uses \texttt{w}, \texttt{W}, \texttt{\textbackslash{}n}, or \texttt{\textbackslash{}t}.}
+    \penaltyitem{4}{\function{iz_digit())} uses a digit other than 0 and 9, uses a \lstinline{switch} statement, uses more than one \lstinline{if} statement, or uses code from an \lstinline{#include}d header.}
+    \penaltyitem{4}{\function{decapitalize()} uses a \lstinline{switch} statement, uses more than one \lstinline{if} statement, or uses code from an \lstinline{#include}d header.}
+    \penaltyitem{4}{\function{is_even()} uses arithmetic.}
+    \penaltyitem{4}{\function{produce_multiple_of_ten()} uses addition, subtraction, division, or modulo; or \function{produce_multiple_of_ten()} uses the literal value 5, 0x5, 05, or 0b101.}
+    \penaltyitem{1}Newline characters are included in the word strings when building a list.
+    \spaghetticodepenalties{1}
+    \item[Bonuses]
+    \bonusitem{2}{Your challenge-response code can build a list and generate the correct response when the words in the file are unsorted}
+    \bonusitem{2}{Your challenge-response code can generate a list from a file of up to 75,000 words and generate the correct response within 15 seconds}
+\end{description}

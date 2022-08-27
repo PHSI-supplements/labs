@@ -3,7 +3,7 @@
  */
 
 /*
- * KeyboardLab (c) 2021 Christopher A. Bohn
+ * KeyboardLab (c) 2021-22 Christopher A. Bohn
  */
 
 /******************************************************************************

@@ -3,21 +3,24 @@
  */
 
 /*
- * KeyboardLab (c) 2021 Christopher A. Bohn
+ * KeyboardLab (c) 2021-22 Christopher A. Bohn
  */
 
 /******************************************************************************
- * This code will output the equivalent of the following three lines of code
+ * This code will generate a string as though using the following lines of code
  * but will be accomplished without using the W key or the backslash key.
  *
- * printf("TO\tArchie\n");
- * printf("RE\tI Need a Working Keyboard\n\n");
- * printf("Please order a new keyboard for me. This one is broken.\n");
+ * sprintf(destination, "TO\tArchie\n"
+ *                      "RE\tI Need a Working Keyboard\n"
+ *                      "\n"
+ *                      "Please order a new keyboard for me. This one is broken.\n");
+ * return destination;
  ******************************************************************************/
 
 #include <stdio.h>
+#include <string.h>
 
-int main() {
+char *write_email(char *destination, size_t destination_size) {
     /* WRITE THIS FUNCTION */
-    return 0;
+    return destination;
 }

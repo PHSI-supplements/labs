@@ -1,0 +1,77 @@
+%%
+%% KeyboardAndPointerLab (c) 2021-22 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\input{../../common/assignment.tex}
+\input{../../common/semester.tex}
+\input{../../common/storylines.tex}
+\input{linked-list-nodes.tex}
+
+\lstset{language=c, numbers=left, showstringspaces=false,
+    moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+}
+%%
+%%
+% Credit where credit is due. Skipping line numbers from
+% https://tex.stackexchange.com/questions/476100/lstlisting-line-number-gaps
+\makeatletter
+\let\orig@lstnumber=\thelstnumber
+
+\newcommand\lstsetnumber[1]{\gdef\thelstnumber{#1}}
+\newcommand\lstresetnumber{\global\let\thelstnumber=\orig@lstnumber}
+\makeatother
+%%
+%%
+
+\renewcommand{\labnumber}{\keyboardpointerlabnumber}
+\renewcommand{\labname}{Bit and Pointer Manipulation Lab}
+\renewcommand{\shortlabname}{keyboardlab}
+\renewcommand{\collaborationrules}{\keyboardpointerlabcollaboration}
+\renewcommand{\duedate}{\keyboardpointerlabdue}
+
+\newcommand{\tab}{\ensuremath{\longrightarrow}}
+\newcommand{\nl}{\ensuremath{\hookleftarrow}}
+
+\pagelayout
+\begin{document}
+\labidentifier
+
+\input{frontmatter}
+
+\softwareengineeringfrontmatter
+
+\section*{Scenario}                                             \FirstDayOnTheJob
+
+\section{Using the ASCII table}\label{sec:ascii}                \input{using-ascii-table}
+
+\section{Treating Characters as Numbers}\label{sec:char-num}    \input{characters-as-numbers}
+
+\section{Using Bitmasks and Shifting Bits}\label{sec:bit-ops}   \input{bit-operations}
+
+\section{Stray Values in Memory}
+
+    \HasKeyboard
+
+    \ArchieWroteSmellyCode
+
+    \input{archies-code}
+
+\section{Challenge and Response}                                \input{abbreviated-challenge-and-response}
+
+\section{Turn-in and Grading}                                   \input{grading}
+
+\section*{Epilogue}                                             \InsurancePreview
+
+\textit{To be continued...}
+
+\end{document}

@@ -1,9 +1,8 @@
 # KeyboardLab
 
 This lab is designed to get students accustomed to thinking about data at the
-bit-level. Originally combined with what is now PointersLab, these problems,
-along with putting together a sorted doubly-linked list, is apparently too
-much for one week's worth of effort.
+bit-level.Somewhere between a third and a half of the students are able to 
+complete this lab during lab time.
 
 Students will have to use the ASCII table, should treat characters as integers
 (though some students found ways to solve problem 2 that treats characters as
@@ -28,5 +27,3 @@ include the meme, then comment-out these lines:
 \end{wrapfigure}
 ```
 
-I don't currently have an autograder for this lab other than the constraint
-checker, but that will change soon.

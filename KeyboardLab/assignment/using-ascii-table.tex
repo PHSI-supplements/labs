@@ -15,12 +15,20 @@ The code you would like to write is:
 
 \begin{lstlisting}
 #include <stdio.h>
+#include <string.h>
 
-int main() {
-    printf("TO\tArchie\n");
-    printf("RE\tI Need a Working Keyboard\n\n");
-    printf("Please order a new keyboard for me. This one is broken.\n");
-    return 0;
+char *write_email(char *destination, size_t destination_size) {
+    char *lines[3] = {
+            "TO\tArchie\n",
+            "RE\tI Need a Working Keyboard\n\n",
+            "Please order a new keyboard for me. This one is broken.\n"
+    };
+    sprintf(destination, "%s", lines[0]);
+    size_t remaining_space = destination_size - strlen(lines[0]);
+    strncat(destination, lines[1], remaining_space);
+    remaining_space = remaining_space - strlen(lines[1]);
+    strncat(destination, lines[2], remaining_space);
+    return destination;
 }
 \end{lstlisting}
 
@@ -36,6 +44,10 @@ Recall that the first argument for \function{printf()} is a \textit{format strin
 
 As you open your editor, the \textit{\texttt{\textbackslash}} key falls off the keyboard, preventing you from typing \texttt{\textbackslash t} and \texttt{\textbackslash n}.
 
+\textit{Note: } the \function{sprintf()} function\footnote{\url{https://www.gnu.org/software/libc/manual/html_node/Formatted-Output-Functions.html\#index-sprintf}} is very much like the \function{printf()} function, except that it ``prints'' into a string.
+The \function{strncat()} function\footnote{\url{https://www.gnu.org/software/libc/manual/html_node/Truncating-Strings.html\#index-strncat}} takes two string arguments and a \lstinline{size} argument.
+It will place a copy of the second string at the end of the first, or it will place a copy of the first \lstinline{size} characters of the second string at the end of the first if the second string is longer than \lstinline{size}.
+
 Edit \texttt{problem1.c} so that it produces the specified output without using the W key or the backslash key.
 Build the executable with the command: \texttt{make keyboardlab1} -- be sure to fix both errors and warnings.
 
@@ -45,5 +57,5 @@ You can double-check that you aren't using the W key or the backslash key by run
 \texttt{chmod +x constraint-check.sh} \\
 and then run the shell script.)
 
-You can check that your program has the correct output with this command: \\
-\texttt{./keyboardlab1 | diff - problem1oracle}
+%You can check that your program has the correct output with this command: \\
+%\texttt{./keyboardlab1 | diff - problem1oracle}

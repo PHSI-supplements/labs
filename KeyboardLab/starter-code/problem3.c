@@ -3,7 +3,7 @@
  */
 
 /*
- * KeyboardLab (c) 2021 Christopher A. Bohn
+ * KeyboardLab (c) 2021-22 Christopher A. Bohn
  */
 
 /******************************************************************************
@@ -29,17 +29,18 @@ int is_even(int value) {
  * - if a positive number is even then divide it by 2
  * - if a positive number is odd then subtract 1 and multiply the difference by 5 */
 int produce_multiple_of_ten(int seed) {
-    int five = 0;                   /* CREATE THE VALUE 5 */
-    int deduct_one_mask = 0;        /* CREATE A BITMASK YOU CAN USE TO SUBTRACT 1 */
     int value = seed > 0 ? seed : 0;
     int position_of_last_digit = value > 0 ? (int)log10(value) : 0;
     char value_text[33];
     sprintf(value_text, "%d", value);
     while (value_text[position_of_last_digit] != '0') {
-        if (is_even(value)) {
-            value = 0;             // DIVIDE BY 2
-        } else {
-            value = 0;             // SUBTRACT 1 AND MULTIPLY THE DIFFERENCE BY 5
+        if (is_even(value)) {       // DIVIDE BY 2
+            value = 0;                      /* DIVIDE BY TWO WITHOUT USING DIVISION */
+        } else {                    // SUBTRACT 1 AND MULTIPLY THE DIFFERENCE BY 5
+            int deduct_one_mask = 0;        /* CREATE A BITMASK YOU CAN USE TO REDUCE AN ODD NUMBER'S VALUE 1 */
+            int difference = 0;             /* USE THAT BITMASK TO REDUCE value BY ONE */
+            int five = 0;                   /* CREATE THE VALUE 5 */
+            value = difference * five;
         }
         position_of_last_digit = value > 0 ? (int)log10(value) : 0;
         sprintf(value_text, "%d", value);
