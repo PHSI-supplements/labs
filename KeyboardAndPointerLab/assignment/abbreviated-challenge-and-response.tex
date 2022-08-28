@@ -7,8 +7,8 @@ Anybody can challenge anyone else in the Pleistocene Petting Zoo's non-public ar
     \item The challenge word occurs \textit{occurrences} times in the book
     \item If $occurrences$ is an odd number then the response word is the word $occurrences$ places \textbf{after} the challenge word in the alphabetized list;
     if the challenge word is less than $occurrences$ places from the end of the list then ``wrap around'' to the start of the list and resume counting
-    \item If $occurrences$ is an even number then the response word is the word is $2 \times occurrences - 1$ places \textbf{after} the challenge word in the alphabetized list;
-    if the challenge word is less than $2 \times occurrences - 1$ places from the end of the list then ``wrap around'' to the start of the list and resume counting
+    \item If $occurrences$ is an even number then the response word is the word is ${2 \times occurrences - 1}$ places \textbf{after} the challenge word in the alphabetized list;
+    if the challenge word is less than ${2 \times occurrences - 1}$ places from the end of the list then ``wrap around'' to the start of the list and resume counting
 \end{itemize}
 
 Here is a simple example.
@@ -86,7 +86,7 @@ Each book file, ``\textit{file}'', has a corresponding ``\textit{file}-table.md'
 You may use these files to confirm the correctness of your solution.
 
 Throughout the assignment, we note that if building the list takes more than a few seconds, there is a bug in your code;
-for context, we can build the list for \textit{Frankenstein} in under 1.9 seconds and the list for \textit{The Lost World} in under 2.4 seconds.
+for context, we can build the list for \textit{Frankenstein} in 1--2 seconds and the list for \textit{The Lost World} in 1.5--3 seconds.
 We can locate a word (or determine the absence of a word) in the \textit{Frankenstein} list in under 0.5ms and in the \textit{The Lost World} list in under 0.9ms.
 Your code may take longer, but it should not take much longer.
 
@@ -236,16 +236,23 @@ The other function you need to write now is \function{insert_after()}:
 As the name and documentation indicate, you need to add code that will update the nodes' \lstinline{next} pointers so that \lstinline{new_node} is placed in the list immediately after \lstinline{existing_node}.
 You can ignore the \lstinline{previous} pointers for this assignment.
 
+Two notes:
+\begin{itemize}
+    \item The header comment notes that ``If \lstinline{existing_node}'s original \lstinline{next} is non-NULL, then that will become \lstinline{new_node}'s \lstinline{next}.''
+            In the case of the circular linked list used in this lab, \lstinline{existing_node}'s \lstinline{next} pointer \textit{must} be non-NULL, and so you do not need to check for NULL \lstinline{next} pointers.
+    \item There is another function, \function{insert_before()}, which you do not need to implement in this lab.
+\end{itemize}
+
 After you have implemented \function{create_node()} and \function{insert_after()}, go to the \function{main()} function in \textit{pointerlab.c} and un-comment the call to \function{test_linked_list_functions()}.
 
-\lstinputlisting[linerange=54-55, firstnumber=54]{../starter-code/problem5main.c}
+\lstinputlisting[linerange=58-59, firstnumber=58]{../starter-code/problem5main.c}
 
-Build the executable with the command: \texttt{make pointerlab}.
+Build the executable with the command: \texttt{make keyboardlab5}.
 Be sure to fix both errors and warnings.
-When the program compiles without generating any warnings or errors, run it.
+When the program compiles without generating any warnings or errors, run it with the command \texttt{./keyboardlab5}.
 The output should indicate a list with the nodes in the order of ``first node,'' ``fourth node,'' ``second node,'' and ``third node.''
 
-\subsection{Alphabetize Words}
+\subsection{Change All Uppercase Letters to Lowercase}
 
 In Problem~2, you wrote code to convert uppercase letters to lowercase letters.
 Add code to \function{word_to_lowercase()} that calls that function to convert all letters in a word to lowercase letters.
@@ -275,9 +282,12 @@ For this sub-problem, the user will be prompted to enter the name of a book, whi
 All punctuation has already been removed from the files, and each line in the file contains exactly one word.
 For this assignment, you only need to work with files whose contents are already sorted.
 
-\lstinputlisting[linerange=67-88, firstnumber=67]{../starter-code/challenge-response.c}
+\lstinputlisting[linerange=67-90, firstnumber=67]{../starter-code/challenge-response.c}
 
-Add code to \function{insert_word()} and \function{build_list()} to read the specified file one line at a time.\footnote{See \S7.5 and \S{}B1.1.1 of Kernighan \& Ritchie's \textit{The C Programming Language}, 2nd ed. for \function{fopen()} and \function{fclose()}, and \S7.7 and \S{}B1.1.4 for \function{fgets()}.}
+Add code to \function{insert_word()}\footnote{\function{insert_word()}'s header comment says that the head of the list is the node with alphabetically-earliest word.
+    For a circular linked list, you can write a perfectly-functional implementation with the head at anyplace in the list, but our grading software assumes that the head is the alphabetically-earliest word.
+    If you write code that meets the specification but is not scored correctly, see the syllabus for grade challenges.}
+and \function{build_list()} to read the specified file one line at a time.\footnote{See \S7.5 and \S{}B1.1.1 of Kernighan \& Ritchie's \textit{The C Programming Language}, 2nd ed. for \function{fopen()} and \function{fclose()}, and \S7.7 and \S{}B1.1.4 for \function{fgets()}.}
 For each word, convert it to lowercase, and then traverse the list to find the appropriate place for the word.
 (Note that there will not be a list to traverse when your code reads the first word!)
 If the word is not in the list then create a node for that word and insert it into the list at the correct location.
@@ -296,7 +306,7 @@ If your program does not produce the expected output, the \function{print_list()
 
 You now have implemented enough of the other sub-problems that you can write the code to respond to a challenge.
 
-\lstinputlisting[linerange=93-111, firstnumber=93]{../starter-code/challenge-response.c}
+\lstinputlisting[linerange=95-113, firstnumber=95]{../starter-code/challenge-response.c}
 
 After the word list is complete (after you have inserted all words in the file), the user will be prompted to enter the challenge word.
 Add code to \function{respond()} that traverses the word list to find that word.
@@ -346,10 +356,9 @@ If the word is found, then update the number of occurrences as before.
 If the word is not present in its proper location in the sorted list, then insert a new node for that word at its proper location in the sorted list.
 If your program requires more than a few seconds to build the list, there is a bug in your code.
 
-\subsubsection{Double-Linked List} \label{subsec:doublylinkedlist}
+\subsubsection{Doubly-Linked List} \label{subsec:doublylinkedlist}
 
-You may see a small performance improvement if you create a circular doubly-linked list instead of a circular singly-linked list.
-Being able to traverse the list forward and backward, when combined with examining the alphabetic distance between the current node's word and the new node's word (or the challenge word), will allow you to reduce the worst-case from $n-1$ node traversals to $\frac{n}{2}$ node traversals.
+You may be able to produce small performance improvements if you can traverse the list forward and backward by creating a circular doubly-linked list instead of a circular singly-linked list.
 
 A \textit{doubly-linked list} is a linked list with the property that each node maintains a link not only to the \lstinline{next} node but also a link to the \lstinline{previous} node.
 In C, these links are pointers.

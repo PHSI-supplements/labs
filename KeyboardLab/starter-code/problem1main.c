@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *write_email(char *destination, size_t destination_size);
+char *generate_email(char *destination, size_t destination_size);
 
 int main() {
     const char desired_message[] =  // I'm looking forward to the C23 `#embed` feature
@@ -21,7 +21,7 @@ int main() {
     const int buffer_length = 3 * sizeof(desired_message);  // this works because desired_message is constant
     char *buffer = calloc(buffer_length,
                           sizeof(char)); // pre-fills buffer with `\0`s so students don't need to worry about that
-    buffer = write_email(buffer, buffer_length);
+    buffer = generate_email(buffer, buffer_length);
     char *terminator = strchr(buffer, '\0');                // strchr will eventually find a NUL character
     if (terminator - buffer >= buffer_length) {             // does the NUL appear within the buffer?
         printf("Your string is much too long!");

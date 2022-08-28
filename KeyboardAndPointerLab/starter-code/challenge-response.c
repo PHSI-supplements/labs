@@ -70,7 +70,9 @@ int compare_words(const char *word1, const char *word2) {
  * correct alphabetic location. Returns a pointer to the head of the
  * list, which is either the original head or a node containing the word
  * (if the word occurs before the original head's word or if the
- * original head is NULL). */
+ * original head is NULL).
+ * NOTE: THIS FUNCTION ASSUMES THAT THE HEAD OF THE LIST IS THE NODE WITH
+ * THE ALPHABETICALLY-EARLIEST WORD! */
 struct node *insert_word(struct node *head, const char *word) {
     /* WRITE THIS FUNCTION */
     return NULL;
@@ -94,15 +96,12 @@ struct node *build_list(const char *filename) {
  * occurrences of each word, and given the challenge_word, will return
  * the response word based on the following rules:
  * - If the number of occurrences is an even number then the response
- *   word is that many places *before* challenge_word in the list
- *   - If the challenge_word is fewer than that number of places from
- *     the head of the list, then the response word is the word at the
- *     head of the list
+ *   word is 2*occurrences-1 *after* challenge_word in the list
  * - If the number of occurrences is an odd number then the response
  *   word is that many places *after* challenge_word in the list
- *   - If the challenge_word is fewer than that number of places from
- *     the tail of the list, then the response word is the word at the
- *     tail of the list
+ * - If the challenge_word is fewer than that number of places from
+ *   the end of the list, then "wrap around" to the start of the list
+ *   and resume counting
  * - If challenge_word is not present in the list, then the response is
  *   "<challenge_word> is not present!" */
 char *respond(const struct node *list, const char *challenge_word) {

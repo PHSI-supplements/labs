@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 
-char *write_email(char *destination, size_t destination_size) {
+char *generate_email(char *destination, size_t destination_size) {
     /* WRITE THIS FUNCTION */
     return destination;
 }

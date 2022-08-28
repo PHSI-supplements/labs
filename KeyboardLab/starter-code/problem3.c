@@ -34,9 +34,9 @@ int produce_multiple_of_ten(int seed) {
     char value_text[33];
     sprintf(value_text, "%d", value);
     while (value_text[position_of_last_digit] != '0') {
-        if (is_even(value)) {       // DIVIDE BY 2
+        if (is_even(value)) {
             value = 0;                      /* DIVIDE BY TWO WITHOUT USING DIVISION */
-        } else {                    // SUBTRACT 1 AND MULTIPLY THE DIFFERENCE BY 5
+        } else {
             int deduct_one_mask = 0;        /* CREATE A BITMASK YOU CAN USE TO REDUCE AN ODD NUMBER'S VALUE 1 */
             int difference = 0;             /* USE THAT BITMASK TO REDUCE value BY ONE */
             int five = 0;                   /* CREATE THE VALUE 5 */

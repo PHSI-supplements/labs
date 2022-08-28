@@ -17,7 +17,7 @@ The code you would like to write is:
 #include <stdio.h>
 #include <string.h>
 
-char *write_email(char *destination, size_t destination_size) {
+char *generate_email(char *destination, size_t destination_size) {
     char *lines[3] = {
             "TO\tArchie\n",
             "RE\tI Need a Working Keyboard\n\n",
@@ -50,6 +50,12 @@ It will place a copy of the second string at the end of the first, or it will pl
 
 Edit \texttt{problem1.c} so that it produces the specified output without using the W key or the backslash key.
 Build the executable with the command: \texttt{make keyboardlab1} -- be sure to fix both errors and warnings.
+
+Run the executable with the command: \texttt{./keyboardlab1}.
+This will print your email message.
+If it matches the intended email message, then you will be informed tht it does.
+If it does not match the intended email message, then the program will also print the intended email message so that you can compare the two to look for the differences.
+If the two messages appear identical but are reported to be different lengths, then the difference might be trailing whitespace, spaces instead of tabs, or unprintable characters.
 
 You can double-check that you aren't using the W key or the backslash key by running the constraint-checking shell script: \\
 \texttt{./constraint-check.sh} \\

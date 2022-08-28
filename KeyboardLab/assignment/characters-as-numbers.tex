@@ -14,6 +14,10 @@ You may not \lstinline{#include} any headers, you may not use any number keys ot
 
 Build the executable with the command: \texttt{make keyboardlab2} -- be sure to fix both errors and warnings.
 
+Run the executable with the command: \texttt{./keyboardlab2}.
+You will be prompted to enter a character, and the program will use that character to compare the outputs of your functions to the reference functions from \texttt{ctype.h}.
+You will repeatedly be prompted to enter characters until you enter a tab character.
+
 You can double-check that you aren't using disallowed keys by running the constraint-checking shell script: \\
 \texttt{./constraint-check.sh} \\
 Because you are allowed at most one \lstinline{if} statement in each function, you may see two lines with \lstinline{if} statements reported when the script checks for \textquotesingle f\textquotesingle.
