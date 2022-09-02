@@ -38,14 +38,14 @@ Even though the difference is a USB interface issue, it is resolved through the 
     \item \textit{Most} \developmentboard\ clones use the CH340 USB interface chip.
     Under the ``Tools'' menu, when choosing ``Processor'', select ``ATmega328P (Old Bootloader)''.
     (If you are using the Arduino IDE 1.8.4 and earlier, which don't have the ``(Old Bootloader)'' option, simply select ``ATmega328P'').
-    \item If you have an older \developmentboard\ that the ATmega168 processor, replace it with one that has an ATmega328P processor.
+    \item If you have an older \developmentboard\ that uses the ATmega168 processor, replace it with one that has an ATmega328P processor.
 \end{itemize}
 
 \subsubsection{Updating USB Driver if Necessary}
 
 We have seen some Windows computers without the CH340 USB driver.
 If you encounter this problem and the Device Manager shows you the warning in Figure~\ref{fig:usb-warning}, then the first thing to try is updating the driver.
-Right-click on USB2.0-Seri! (Figure~\ref{fig:update-driver}) and choose ``Update driver''.
+Right-click on USB2.0-Ser! (Figure~\ref{fig:update-driver}) and choose ``Update driver''.
 Then choose ``Search automatically for updated driver software''.
 
 \begin{figure}
@@ -70,5 +70,5 @@ however, we are not aware of any students needing to manually install the CH340 
 
 \subsubsection{No Driver Warning but Cannot Connect}
 
-Probably what happened is that your computer has the driver, but you're telling the IDE to connect to the wrong virtual COM port.
+If you see no warnings but your Windows computer still won't communicate with thhe \developmentboard\, then probably what happened is that your computer has the driver, but you're telling the IDE to connect to the wrong virtual COM port.
 The typical way to handle this is to disconnect the \developmentboard\ from your computer, go to the part of the menu where you connect to the COM port, connect the \developmentboard\ to your computer, and select whichever COM port appears after plugging in the \developmentboard.
