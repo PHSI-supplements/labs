@@ -95,9 +95,9 @@ char *ieee754_to_string(char *destination, ieee754_t number) {
         sprintf(destination + 12, "0.0");
     } else {
         // The number is either Normal or Subnormal
-        int integer_portion;
-        uint32_t fraction;
-        int exponent;
+        int integer_portion = 0;
+        uint32_t fraction = 0;
+        int exponent = 0;
         char fraction_string[40];   // Do not directly edit `fraction_string`
         /* DETERMINE THE INTEGER PORTION, THE FRACTION, AND THE EXPONENT */
 
@@ -157,7 +157,7 @@ unnormal_t adjust_exponent(unnormal_t number, int32_t amount) {
  * @return an `ieee754_t` bit vector representing the number's value
  */
 ieee754_t normalize(unnormal_t number) {
-    ieee754_t result;
+    ieee754_t result = 0;
     if (number.is_infinite) {
         result = INFINITY;
     } else if (number.is_nan) {

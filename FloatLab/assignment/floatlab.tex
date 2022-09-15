@@ -111,9 +111,9 @@
         \item[unnormal\_t] is a structure to hold the components of a floating point number that does not have to be in the IEEE~754 format.
             We expect that you will find the structure useful when performing arithmetic.
             The fields contain enough bits for you to produce exact results that can later be rounded to fit into the normal form.
-            While you are not required to do so, we recommend that you place the ``ones'' bit ($2^0$) of the integer portion in the least significant bit of the \lstinline{integer_portion} field, the ``halves'' bit ($2^{-1}$) of the fractional portion in the most significant bit of the \lstinline{fractional_portion} field.
+            While you are not required to do so, we recommend that you place the ``ones'' bit ($2^0$) of the integer portion in the least significant bit of the \lstinline{integer_portion} field, the ``halves'' bit ($2^{-1}$) of the fractional portion in the most significant bit of the \lstinline{fractional_portion} field, and the remaining fractional bits in their appropriate locations relative to the ``halves'' bit.
             We recommend that you store absolute values of the integer and fractional portions, using the 1-bit \lstinline{sign} field to indicate whether the value is positive or negative.
-            We further recommend that you use the \lstinline{exponent} field to store the integer as a two's complement integer and not as a biased integer.
+            We further recommend that you use the \lstinline{exponent} field to store the exponent as a two's complement integer and not as a biased integer.
             There are \lstinline{is_infinite} and \lstinline{is_nan} 1-bit fields available to indicate special values.
     \end{description}
     The header file also contains several function declarations.

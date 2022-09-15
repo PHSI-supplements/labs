@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "NOTE: Particular comments may generate false positives."
-echo "NOTE: Declaring and pointers pointers will generate false positives"
+echo "NOTE: Declaring and dereferencing pointers will generate false positives"
 echo
 
 for pattern in + - '\*' / %
