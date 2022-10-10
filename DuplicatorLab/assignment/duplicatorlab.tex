@@ -1,0 +1,529 @@
+%! suppress = MissingImport
+%%
+%% DuplicatorLab (c) 22 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\input{../../common/assignment.tex}
+\input{../../common/semester.tex}
+\input{../../common/storylines.tex}
+
+\renewcommand{\labnumber}{\duplicatorlabnumber}
+\renewcommand{\labname}{Race Condition Elimination Lab}
+\renewcommand{\shortlabname}{duplicatorlab}
+\renewcommand{\collaborationrules}{\duplicatorlabcollaboration}
+\renewcommand{\duedate}{\duplicatorlabdue}
+
+\pagelayout
+\begin{document}
+    \labidentifier
+
+    In this assignment, you will remove a race condition in concurrent code by using a mutual exclusion token.
+    There is only a small amount of design effort required for this lab assignment, and \textbf{you should be able to complete it during lab time.}
+
+    The instructions are written assuming you will edit and run the code on \runtimeenvironment.
+    If you wish, you may edit and run the code in a different environment;
+    be sure that your compiler suppresses no warnings, and that if you are using an IDE that it is configured for C and not C++.
+
+    \section*{Learning Objectives}
+
+    After successful completion of this assignment, students will be able to:
+    \begin{itemize}
+        \item Describe valid interleavings of concurrent systems
+        \item Explain how mutual exclusion techniques can prevent undesired interleavings
+        \item Manage a mutual exclusion token provided by the POSIX \texttt{pthreads} library
+    \end{itemize}
+
+    \subsection*{Continuing Forward}
+
+    Part of this lab assignment requires you to think about valid interleavings of a concurrent program.
+    This will help you with an exam question that will require you to think about valid interleavings.
+
+    We introduce a couple of concepts that aren't central this assignment's objectives that will re-appear in the input/output lab assignments.
+
+    Being able to think about how concurrent processes interleave, and how to constrain those interleavings, will be very valuable in later courses and in your future career.
+
+    \section*{During Lab Time}
+
+    During your lab period, the TAs will explain how the code is designed to work.
+    During the remaining time, the TAs will be available to answer questions.
+
+    \textbf{You should be able to complete this lab assignment during lab time};
+    however, it is not due until \duedate.
+
+%    \softwareengineeringfrontmatter
+
+
+    \section{Scenario}
+
+    \PickingUpNewmansProject
+
+
+    \section{Getting Started}
+
+    Download \textit{\shortlabname.zip} or \textit{\shortlabname.tar} from \filesource\ and copy it to \runtimeenvironment.
+    Once copied, unpackage the file.
+    Three of the seven files (\textit{duplicator.h}, \textit{duplicator.c}, and \textit{duplicatorlab.c}) contain the starter code for this assignment.
+    Two files (\textit{paleolama.txt} and \textit{threelines.txt}) are text files to use as inputs.
+    The \textit{answers.txt} file has a couple of questions (detailed in Sections~\ref{subsec:understandRace} and \ref{subsubsec:designMutex}) that you will need to answer.
+    The last file (\textit{Makefile}) tells the \texttt{make} utility how to compile the code.
+    To compile the program, type:
+
+    \texttt{make}
+
+    This will produce an executable file called \textit{duplicator}.
+    The \textit{duplicator} executable makes a copy of a text file.
+    It takes two command-line arguments, first the name of the file to be copied, and then the name of the new file that will be a copy of the first.
+    (This is not a replacement for the UNIX \textit{cp} command;
+    even after you get it working correctly, \textit{duplicator} will not accurately copy non-text files.\footnote{\textit{Duplicator} probably shouldn't be used to copy prehistoric animals' DNA, either.}
+    We designed \textit{duplicator} specifically for text files so that it's easier for you to see when it doesn't work right.)
+
+    For example, running the program with the command \texttt{\textbf{\textit{./duplicator}~paleolama.txt~copy.txt}} will create a new file, \textit{copy.txt} that is almost -- but not quite -- a copy of \textit{paleolama.txt}.
+    As a shortcut, you can run the command \texttt{\textbf{\textit{./duplicator}~paleolama.txt~copy.txt;~cat~copy.txt}} to display the contents of \textit{copy.txt} after creating it.
+    For reference, here are the contents of the original file:
+
+    \begin{verbatim}
+        % cat paleolama.txt
+          /)__/)
+        (o '' )
+           \  \
+            \  \
+             \  \____________
+             |              |\\
+             |__  _________ |
+             || ||      || ||
+             || ||      || ||
+    \end{verbatim}
+
+    Here is one possible result:
+
+    \begin{verbatim}
+        % ./duplicator paleolama.txt copy.txt; cat copy.txt
+          /)__/)
+           \  \
+           \  \
+            \  \
+             \  \____________
+             |              |\\
+             |__  _________ |
+             || ||      || ||
+             || ||      || ||
+    \end{verbatim}
+
+    Here is another:
+
+    \begin{verbatim}
+        % ./duplicator paleolama.txt copy.txt; cat copy.txt
+        (o '' )
+        (o '' )
+        (o '' )
+           \  \
+            \  \
+             \  \____________
+             |__  _________ |
+             |__  _________ |
+             || ||      || ||
+             || ||      || ||
+    \end{verbatim}
+
+    Clearly, neither of these outputs are accurate copies of the original file.
+    The problem is that there is a \textbf{race condition} in \textit{duplicator.c}.
+    After you have finished this assignment, you will have removed the race condition, and, the command \texttt{\textbf{\textit{./duplicator}~paleolama.txt~copy.txt}} will create \textit{copy.txt} that is a perfect copy of \textit{paleolama.txt}.
+
+    \section{Description of DuplicatorLab Files}
+
+    \subsection{duplicatorlab.c}
+
+    Do not edit \textit{duplicatorlab.c}.
+
+    This file contains the driver code for the lab.
+    It checks whether the source file exists, creates file pointers for the two files, and calls the \function{duplicate()} function (described below).
+
+
+    \subsection{duplicator.h}\label{subsec:duplicator.h}
+
+    Do not edit \textit{duplicator.h}.
+
+    This header file contains a named constant (\lstinline{BUFFER_SIZE}) and function declarations for the functions in \textit{duplicator.c}.
+
+
+    \subsection{duplicator.c}\label{subsec:duplicator.c}
+
+    This file contains the nearly-complete code that you will edit, as well as variables shared by the program's reading and writing threads.
+
+    The \function{duplicate()} function is called by \textit{duplicatorlab.c}'s \function{main()} function, launches \function{read_original()} and \function{write_copy()} in their own threads, and keeps the process alive until copying is complete.
+    The \function{read_original()} function continuously reads lines from the source file and writes them to the shared buffer, while the \function{write_copy()} function continuously reads from the shared buffer and writes those lines to the destination file.
+
+    \section{DuplicatorLab Tasks}
+
+    \subsection{Understand the Starter Code}
+
+    Before you can fix the code, you need to have an idea of how it works
+
+    \subsubsection{Shared State}
+
+%    \lstinputlisting[firstline=26, lastline=30, numbers=none]{../starter-code/duplicator.c}
+\begin{lstlisting}[language=c, numbers=none]
+volatile char shared_buffer[BUFFER_SIZE] = {0};
+volatile enum {
+    BUFFER_HAS_DATA, BUFFER_IS_EMPTY, FINISHED
+} status = BUFFER_IS_EMPTY;
+pthread_mutex_t mutex;
+\end{lstlisting}
+
+    We have three global variables.
+    The \lstinline{shared_buffer} is exactly what it says it is, an array that is used to pass strings from one thread to another.
+    The \lstinline{status} enumerated type is primarily used to communicate whether a new line from the source file has been placed in the shared buffer and whether the contents of the shared buffer have been written to the destination file.
+    The \lstinline{mutex} variable is a mutual exclusion token that you will use to eliminate the race condition.
+
+    Notice that \lstinline{shared_buffer} and \lstinline{status} are qualified with the keyword \lstinline{volatile}.
+    Like the \lstinline{const} qualifier, the \lstinline{volatile} qualifier is used to provide a hint to the compiler, but it does so for the opposite reason.
+    A \lstinline{const} variable will not vary, allowing the compiler to make optimizations based on that fact.
+    On the other hand, a \lstinline{volatile} variable not only can change, it can change spontaneously: the compiler must assume that something will cause the variable to change other than the code that it can see.
+
+    \subsubsection{Reading from the Source File}\label{subsubsec:understandReader}
+
+%    \lstinputlisting[firstline=38, lastline=56, numbers=left]{../starter-code/duplicator.c}
+\begin{lstlisting}[language=c, numbers=left, escapechar=`]
+void *read_original(void *arg) {
+    FILE *source_file = (FILE *) arg;
+    char local_buffer[BUFFER_SIZE];
+    bool copying = true;                                                    `\label{line:read_before_while}`
+    while (copying) {                                                       `\label{line:read_while}`
+        if (status == BUFFER_IS_EMPTY) {                                    `\label{line:read_status_check}`
+            status = BUFFER_HAS_DATA;                                       `\label{line:read_status_update}`
+            if (fgets(local_buffer, BUFFER_SIZE, source_file)) {            `\label{line:read_file}`
+                memcpy((char *) shared_buffer, local_buffer, BUFFER_SIZE);  `\label{line:read_access_buffer}`
+            } else {
+                status = FINISHED;                                          `\label{line:read_final_status_update}`
+                copying = false;                                            `\label{line:read_stop_looping}`
+            }
+        } else {                                                            `\label{line:read_empty_else}`
+            ;
+        }
+    }
+    return NULL;
+}
+\end{lstlisting}
+
+    The overall structure of this code is that the loop that starts on line~\ref{line:read_while} will continuously loop until the end of the source file is reached.
+    In each loop iteration, the value of the \lstinline{status} enum is checked (line~\ref{line:read_status_check}).
+    If the \lstinline{status} indicates that anything that the \function{read_original()} function previously put in the shared buffer has been copied, then the \lstinline{status} is changed (line~\ref{line:read_status_update}), and the next line from the source file is read (line~\ref{line:read_file}).
+    If there was no next line, then the program sets the loop's termination condition (line~\ref{line:read_stop_looping}).
+    But if there was a line in the file, then that line is copied from a local buffer into the shared buffer on line~\ref{line:read_access_buffer}.
+
+%    The use of a local buffer when reading the file, and then copying its contents to the shared buffer, probably has little performance impact in \function{read_original()}, but it nicely mirrors code in \function{write_copy()} where the local buffer can make a difference.
+    You probably haven't seen the \function{memcpy()} function before.
+    It is very similar to \function{strncpy()}, except for two differences:
+    \function{memcpy()} works on arbitrary memory and not just strings;
+    and \function{strncpy()} copies $\min\left(\mathtt{strlen(buffer)},\mathtt{BUFFER\_SIZE}\right)$ bytes, whereas \function{memcpy} copies exactly \lstinline{BUFFER_SIZE} bytes.
+
+    To give an idea of why declaring the shared variables to be \lstinline{volatile} is important, view \function{read_original()} from the compiler's perspective (the compiler typically looks at one function at a time when generating assembly code).
+    Clearly, \lstinline{copying} is true the first time that the program reaches line~\ref{line:read_while}, so the loop body will execute at least once.
+    If \lstinline{status} is not \lstinline{BUFFER_IS_EMPTY} then the compiler doesn't see any way for that to change, and the compiler would expect that case to result in an infinite, do-nothing loop.
+    If \lstinline{status} is \lstinline{BUFFER_IS_EMPTY} then \lstinline{status} will be changed;
+    depending on how the file read goes, the function will either return or enter into a infinite, do-nothing loop.
+    If the shared variables are not \lstinline{volatile}, and if optimizations are enabled, then the compiler is free to turn \function{read_original()} into this code that it thinks is functionally-equivalent (but isn't when viewed from the big-picture):
+
+    \begin{lstlisting}[language=c, numbers=none, basicstyle=\small\ttfamily]
+        void *goto_style_misoptimized_read_original(void *arg) {
+            FILE *source_file = (FILE *) arg;
+            char local_buffer[BUFFER_SIZE];
+            if (status != BUFFER_IS_EMPTY) goto loop;
+            if (fgets(local_buffer, BUFFER_SIZE, source_file)) goto update_buffer;
+            status = FINISHED;
+            return NULL;
+        update_buffer:
+            status = BUFFER_HAS_DATA;
+            memcpy((char *) shared_buffer, local_buffer, BUFFER_SIZE);
+        loop:
+            goto loop;
+        }
+    \end{lstlisting}
+
+    Clearly we don't want that to happen, and so we have declared the shared variables to be \lstinline{volatile}.%\footnote{The
+%    actual assembly code generated by gcc isn't quite as insightful but just as aggressive.
+%    This is its version of the infinite loop: \\
+%    \texttt{\phantom{xxxxxxxx}movl\phantom{xx}status(\%rip), \%eax} \\
+%    \texttt{.L5:} \\
+%    \texttt{\phantom{xxxxxxxx}cmpl\phantom{xx}\$1, \%eax} \\
+%    \texttt{\phantom{xxxxxxxx}jne\phantom{xxx}.L5} \\
+%    Recall that another thread cannot modify the reading thread's registers, so if \lstinline{\%eax} does not contain 1, it never will.
+%    }
+
+    \newpage
+    \subsubsection{Writing to the Destination File}\label{subsubsec:understandWriter}
+
+    \renewcommand*\thelstnumber{\Alph{lstnumber}}
+%    \lstinputlisting[firstline=65, lastline=81, numbers=left]{../starter-code/duplicator.c}
+\begin{lstlisting}[language=c, numbers=left, escapechar=`]
+void *write_copy(void *arg) {
+    FILE *destination_file = (FILE *) arg;
+    char local_buffer[BUFFER_SIZE];
+    bool copying = true;                                                    `\label{line:write_before_while}`
+    while (copying) {                                                       `\label{line:write_while}`
+        if (status == BUFFER_HAS_DATA) {                                    `\label{line:write_status_check}`
+            status = BUFFER_IS_EMPTY;                                       `\label{line:write_status_update}`
+            memcpy(local_buffer, (char *) shared_buffer, BUFFER_SIZE);      `\label{line:write_access_buffer}`
+            fputs(local_buffer, destination_file);                          `\label{line:write_file}`
+        } else if (status == FINISHED) {
+            copying = false;                                                `\label{line:write_stop_looping}`
+        } else {
+            ;
+        }
+    }
+    return NULL;
+}
+\end{lstlisting}
+
+    Much like \function{read_original()}, the \function{write_copy()} function loops until \function{read_original()} indicates that there are no more lines to by copied on line~\ref{line:read_final_status_update};
+    when this is detected, \function{write_copy()} sets its loop termination condition on line~\ref{line:write_stop_looping}.
+    In each iteration, if \lstinline{status} indicates that \function{read_original()} placed a line of text in \lstinline{shared_buffer} (line~\ref{line:write_status_check}), then \function{write_copy()} changes \lstinline{status} (line~\ref{line:write_status_update}).
+    The function then copies the contents of \lstinline{shared_buffer} into \lstinline{local_buffer} (line~\ref{line:write_access_buffer}) and then writes the contents of \lstinline{local_buffer} to the destination file on line~\ref{line:write_file}.
+
+    The shared buffer was a possible bottleneck.
+    If \function{read_original()} directly placed the source file's contents into \lstinline{shared_buffer} and \function{write_copy()} directly moved \lstinline{shared_buffer}'s contents into the destination file, then either one function would have to wait for the other to finish its file access or we'd risk both functions accessing the shared buffer at the same time.
+    By using local buffers when accessing files, one thread can safely access the shared buffer while the other is accessing a file.
+
+    \subsubsection{Thread Management}
+
+    \renewcommand*\thelstnumber{\roman{lstnumber}}
+%    \lstinputlisting[firstline=89, lastline=95, numbers=left]{../starter-code/duplicator.c}
+\begin{lstlisting}[language=c, numbers=left, escapechar=`]
+void duplicate(FILE *source_file, FILE *destination_file) {
+    pthread_t source_thread, destination_thread;
+    pthread_create(&source_thread, NULL, read_original, source_file);           `\label{line:source_thread_create}`
+    pthread_create(&destination_thread, NULL, write_copy, destination_file);    `\label{line:destination_thread_create}`
+    pthread_join(source_thread, NULL);                                          `\label{line:soure_thread_join}`
+    pthread_join(destination_thread, NULL);                                     `\label{line:destination_thread_join}`
+}
+\end{lstlisting}
+    \renewcommand*\thelstnumber{\arabic{lstnumber}}
+
+    The \function{duplicate()} function's job is to launch the reading and writing threads (lines~\ref{line:source_thread_create}--\ref{line:destination_thread_create}) and to prevent the process from terminating by blocking until both threads finish (lines~\ref{line:soure_thread_join}--\ref{line:destination_thread_join}).
+    Later you will also use this function to initialize and clean-up the mutual exclusion token.
+
+    \subsubsection{Discussion}
+
+    Clearly the code could have been written differently.
+    While the code might have been more concise, the more concise forms would have required you to rewrite the code to accommodate the mutual exclusion token.
+    Instead, we did that for you (except for introducing the mutual exclusion token).
+    Some very minor re-ordering of a couple of lines of code would decrease the likelihood of a visible error in the output but would not eliminate the race condition.
+    The ordering of the lines here is intended to maximize the chances of a visible error when using the small files that we provided with the starter code.
+
+    As you work on this assignment, \textbf{do not change any of the existing lines of code, and do not rearrange any of the existing lines of code!}
+
+    \subsection{Understand the Race Condition} \label{subsec:understandRace}
+
+    There is a file included with the starter code, \textit{threelines.txt} that contains three lines of text.
+    The race condition in the starter code that it can cause errors in the output even when copying only three lines:
+
+    \begin{verbatim}
+        % cat threelines.txt
+        first line
+        second line
+        third line
+        % ./duplicator threelines.txt copy.txt; cat copy.txt
+        second line
+        second line
+        second line
+        third line
+        % ./duplicator threelines.txt copy.txt; cat copy.txt
+        first line
+        third line
+        third line
+    \end{verbatim}
+
+    We can try to understand the race condition by thinking about the program's \textit{valid interleavings}.
+    Using the line numbering from Sections~\ref{subsubsec:understandReader} and \ref{subsubsec:understandWriter}, we can describe an interleaving that would produce the correct output:
+    \newpage
+    \setlength{\columnseprule}{1pt}
+    {\footnotesize\begin{multicols}{2} \phantom{foo} \\
+        2 \\
+        3 \\
+        4 \\
+        5   (read\_original enters loop) \\
+        \phantom{foobarbaz} B \\
+        \phantom{foobarbaz} C \\
+        \phantom{foobarbaz} D \\
+        \phantom{foobarbaz} E   (write\_copy enters loop) \\
+        6   (buffer is empty) \\
+        7   (status = BUFFER\_HAS\_DATA) \\
+        8 \\
+        9   (``first line'' placed in buffer) \\
+        \phantom{foobarbaz} F   (buffer has data) \\
+        \phantom{foobarbaz} G   (status = BUFFER\_IS\_EMPTY) \\
+        \phantom{foobarbaz} H   (``first line'' copied from buffer) \\
+        \phantom{foobarbaz} I \\
+        5 \\
+        6   (buffer is empty) \\
+        7   (status = BUFFER\_HAS\_DATA) \\
+        8 \\
+        9   (``second line'' placed in buffer) \\
+        5 \\
+        6   (buffer has data) \\
+        14 \\
+        \phantom{foobarbaz} E \\
+        \phantom{foobarbaz} F   (buffer has data) \\
+        \phantom{foobarbaz} G   (status = BUFFER\_IS\_EMPTY) \\
+        \phantom{foobarbaz} H   (``second line'' copied from buffer) \\
+        \phantom{foobarbaz} I \\
+        5 \\
+        \phantom{foobarbaz} E \\
+        \phantom{foobarbaz} F   (buffer is empty) \\
+        \phantom{foobarbaz} J   (buffer is empty) \\
+        \phantom{foobarbaz} M \\
+        6   (buffer is empty) \\
+        7   (status = BUFFER\_HAS\_DATA) \\
+        8 \\
+        9   (``third line'' placed in buffer) \\
+        \phantom{foobarbaz} E \\
+        \phantom{foobarbaz} F   (buffer has data) \\
+        \phantom{foobarbaz} G   (status == BUFFER\_IS\_EMPTY) \\
+        \phantom{foobarbaz} H   (``third line'' copied from buffer) \\
+        \phantom{foobarbaz} I \\
+        5 \\
+        6   (buffer is empty) \\
+        7   (status = BUFFER\_HAS\_DATA) \\
+        8   (fgets returns NULL) \\
+        11  (status = FINISHED) \\
+        12  (loop termination condition) \\
+        5 \\
+        18 \\
+        \phantom{foobarbaz} E \\
+        \phantom{foobarbaz} F   (finished) \\
+        \phantom{foobarbaz} J   (finished) \\
+        \phantom{foobarbaz} K   (loop termination condition) \\
+        \phantom{foobarbaz} E \\
+        \phantom{foobarbaz} P
+    \end{multicols}}
+
+    \textbf{Determine a valid interleaving that produces this output:}
+    \begin{verbatim}
+        % ./duplicator threelines.txt copy.txt; cat copy.txt
+        first line
+        third line
+        third line
+    \end{verbatim}
+
+    Place your answer in \textit{answers.txt}.
+    We recommend including parenthetical remarks because they may help you to think about the state of the system at various points in your proposed interleaving.
+
+    \subsection{Remove the Race Condition}
+
+    You will eliminate the race condition by using the \lstinline{mutex} mutual exclusion token.
+
+    \subsubsection{Initialize and Destroy the Mutex}
+
+    Before using a mutual exclusion token, you must first initialize it.
+    \textbf{Use \function{pthread_mutex_init()} to initialize the \lstinline{mutex} mutual exclusion token.}
+    We recommend that you do so in the \function{duplicate()} function, using the default attribute, before any threads are created.
+    The syntax is in Chapter~7 of the textbook.
+
+    As a matter of good code hygiene, you should destroy a mutual exclusion token when it is no longer required.
+    \textbf{Use \function{pthread_mutex_destroy()} to release the \lstinline{mutex} mutual exclusion token's resources.}
+    We recommend that you do so in the \function{duplicate()} function after all threads have been joined.
+    The syntax is in Chapter~7 of the textbook.
+
+    \subsubsection{Determine Where to Lock and Unlock the Mutex} \label{subsubsec:designMutex}
+
+    Recall from Chapter~7 that if a thread tries to lock a mutual exclusion token and the mutex is already locked, then the thread will \textit{block} until another thread unlocks the mutex.
+    You want to use the mutex to ensure that if a thread is accessing the shared state then no other threads can access the shared state.
+    You also want to make sure that no thread blocks indefinitely.
+
+    Suppose we were to lock the mutex between lines~\ref{line:read_before_while} and \ref{line:read_while}, and between lines~\ref{line:write_before_while} and \ref{line:write_while}, while unlocking the mutex immediately before each function returns.
+    Then one of the threads is certain to starve.
+    For example: \\ {\footnotesize
+    \phantom{foobarbaz} B \\
+    \phantom{foobarbaz} C \\
+    \phantom{foobarbaz} D \\
+    \phantom{foobarbaz} (mutex locked) \\
+    \phantom{foobarbaz} E   (write\_copy enters loop) \\
+    2 \\
+    3 \\
+    4 \\
+    (read\_original blocked for mutex) \\
+    \phantom{foobarbaz} F   (buffer is empty) \\
+    \phantom{foobarbaz} J   (buffer is empty) \\
+    \phantom{foobarbaz} M \\
+    \phantom{foobarbaz} E \\
+    \phantom{foobarbaz} F   (buffer is empty) \\
+    \phantom{foobarbaz} J   (buffer is empty) \\
+    \phantom{foobarbaz} M \\
+    \phantom{foobarbaz} E \\
+    \phantom{foobarbaz} \textit{et cetera}
+    }
+    \vspace{1cm}
+
+    \textbf{Think about where locking and unlocking the mutual exclusion token would prevent undesirable interleavings while still allowing desirable interleavings to occur.}
+    Make sure that it would not prevent the functionally-correct interleaving shown earlier.
+    In \textit{answers.txt}, using the line numbers identify where in the original code (using the line numbering from Sections~\ref{subsubsec:understandReader} and \ref{subsubsec:understandWriter}) the mutex should be locked and unlocked.
+
+    In \textit{answers.txt}, make a copy of the interleaving you provided for your answer to the first question and paste it into the space for your answer to the fourth question.
+    Introduce ``(mutex locked)'', ``(mutex unlocked)'', ``(read\_original blocked for mutex)'', and ``(write\_copy blocked for mutex)'' wherever appropriate to the interleaving in your fourth answer,
+    up to the point that a thread getting blocked will prevent the buffer containing ``second line'' from being overwritten prematurely.
+    You can delete the remaining portion of your interleaving in your fourth answer that occurs after that.
+
+
+    \subsubsection{Lock and Unlock the Mutex in the Code}
+
+    \textbf{Add calls to \function{pthread_mutex_lock()} and \function{pthread_mutex_unlock()}, as appropriate, in \function{read_original()} and \function{write_copy()} to lock and unlock the mutex.}
+    These locations should correspond to your answers to the second and third questions in \textit{answers.txt}.
+    The syntax is in Chapter~7 of the textbook.
+
+    Test your code!
+
+    Run the command \texttt{./duplicator threelines.txt copy.txt; cat copy.txt} a dozen times to make sure the file is copied correctly.
+    Then try \texttt{./duplicator paleolama.txt copy.txt; cat copy.txt} several times.
+
+    If you find that you are not producing identical copies of the originals, or if the program never terminates, then revisit Section~\ref{subsubsec:designMutex}.
+
+    You can test with larger files, using \texttt{diff} instead of \texttt{cat} to check for differences.
+    (If \texttt{diff} produces no output, then there is no difference between the files.)
+    For example: \texttt{./duplicator duplicator.c copy.c; diff duplicator.c copy.c} \\
+    or: \texttt{./duplicator answers. copy.txt; diff answers.txt copy.txt}
+
+
+    \section{Turn-in and Grading}
+
+    When you have completed this assignment, upload \textit{duplicator.c} to
+    \filesubmission.
+
+    This assignment is worth 10 points. \\
+
+    \begin{description}
+        \item[] In \textit{answers.txt}:
+        \rubricitem{1}{Provides a valid interleaving that produces the specified output}
+        \rubricitem{1}{Proposes reasonable locations to lock the mutex}
+        \rubricitem{1}{Proposes reasonable locations to unlock the mutex}
+        \rubricitem{1}{Demonstrates that the proposed changes would prevent the shared buffer from being prematurely overwritten}
+        \item[] In \textit{duplicator.c}:
+        \rubricitem{1}{Correctly initializes and destroys the mutex}
+        \rubricitem{1}{Correctly locks and unlocks the mutex in the locations that are identified in \textit{answers.txt}}
+        \rubricitem{2}{The duplicator makes correct copies}
+        \rubricitem{2}{No thread starves}
+    \end{description}
+
+    \textbf{Penalties}
+    \begin{description}
+        \penaltyitem{1}{for each line of code added other than calls to \function{pthread_mutex_init()}, \function{pthread_mutex_destroy()}, \function{pthread_mutex_lock()}, and \function{pthread_mutex_unlock()}}
+        \penaltyitem{1}{for each line of the starter code edited, moved, or deleted}
+    \end{description}
+
+
+    \section{Epilogue}
+
+    \WeNeedBetterSecurity
+
+    \textit{To be continued...}
+
+\end{document}

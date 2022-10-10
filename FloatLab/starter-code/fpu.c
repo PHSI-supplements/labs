@@ -249,7 +249,7 @@ ieee754_t multiply(ieee754_t multiplicand, ieee754_t multiplier) {
     if (is_nan(multiplicand) || is_nan(multiplier)) {
         return 0;
     }
-    if ((is_infinity(multiplicand) && is_zero(multiplier)) || (is_infinity(multiplier && is_zero(multiplicand)))) {
+    if ((is_infinity(multiplicand) && is_zero(multiplier)) || (is_infinity(multiplier) && is_zero(multiplicand))) {
         return 0;
     }
     if (is_infinity(multiplicand) || is_zero(multiplicand)) {
@@ -299,10 +299,10 @@ ieee754_t divide(ieee754_t dividend, ieee754_t divisor) {
     unnormal_t denormalized_dividend = denormalize(dividend);
     unnormal_t denormalized_divisor = denormalize(divisor);
     unnormal_t quotient = {
-            .sign = denormalized_dividend.sign ^ denormalized_divisor.sign,
-            .integer_portion = denormalized_dividend.integer_portion / denormalized_divisor.integer_portion,
+            .sign = 0,
+            .integer_portion = 0,
             .fractional_portion = 0,
-            .exponent = denormalized_dividend.exponent - denormalized_divisor.exponent,
+            .exponent = 0,
             .is_nan = 0,
             .is_infinite = 0};
     /* COMPUTE THE QUOTIENT */

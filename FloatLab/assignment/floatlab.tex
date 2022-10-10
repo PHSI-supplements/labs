@@ -159,16 +159,19 @@
 
     \begin{lstlisting}
 // The number is either Normal or Subnormal
-int integer_portion;
-uint32_t fraction;
-int exponent;
+int integer_portion = 0;
+uint32_t fraction = 0;
+int exponent = 0;
 char fraction_string[40];
 /* DETERMINE THE INTEGER PORTION, THE FRACTION, AND THE EXPONENT */
     \end{lstlisting}
 
     Assign the appropriate values to \lstinline{integer_portion}, \lstinline{fraction}, and \lstinline{exponent}.
+    The floating point value's sign is also the \lstinline{integer_portion}'s sign.
+    The \lstinline{fraction} is simply the fraction bits as they appear in the lstinline{number}.
+    The \lstinline{exponent} is the two's complement representation of the exponent that you get after removing the bias from the \lstinline{number}'s \texttt{E} field.
     Do not make any assignments to \lstinline{fraction_string} -- this is a buffer that will be used later.
-    The subsequent \function{printf()} call uses these variables to print the bit vector as a binary floating point value.
+    The subsequent \function{sprintf()} call uses these variables to print the bit vector as a binary floating point value.
 
     \paragraph*{Check Your Work}
 
