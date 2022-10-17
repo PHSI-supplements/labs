@@ -93,7 +93,7 @@
 
     \begin{verbatim}
         % cat paleolama.txt
-          /)__/)
+          (\__/)
         (o '' )
            \  \
             \  \
@@ -108,7 +108,7 @@
 
     \begin{verbatim}
         % ./duplicator paleolama.txt copy.txt; cat copy.txt
-          /)__/)
+          (\__/)
            \  \
            \  \
             \  \
@@ -167,7 +167,7 @@
 
     \subsection{Understand the Starter Code}
 
-    Before you can fix the code, you need to have an idea of how it works
+    Before you can fix the code, you need to have an idea of how it works.
 
     \subsubsection{Shared State}
 
@@ -325,7 +325,7 @@ void duplicate(FILE *source_file, FILE *destination_file) {
     \subsection{Understand the Race Condition} \label{subsec:understandRace}
 
     There is a file included with the starter code, \textit{threelines.txt} that contains three lines of text.
-    The race condition in the starter code that it can cause errors in the output even when copying only three lines:
+    The race condition in the starter code is so pronounced that it can cause errors in the output even when copying only three lines:
 
     \begin{verbatim}
         % cat threelines.txt
