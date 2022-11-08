@@ -9,7 +9,7 @@ EXEC = duplicator
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 duplicator: duplicator.o duplicatorlab.o
-	$(CC) -o $@ $^ $(CFLAGS)
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 all: $(EXEC)
 
