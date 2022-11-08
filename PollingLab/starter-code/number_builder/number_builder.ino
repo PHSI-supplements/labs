@@ -197,36 +197,52 @@ uint8_t get_keypress(void) {
     switch (key) {
       case '1':
         key_pressed = keys[0][0];
+        break;
       case '2':
         key_pressed = keys[0][1];
+        break;
       case '3':
         key_pressed = keys[0][2];
+        break;
       case 'A':
         key_pressed = keys[0][3];
+        break;
       case '4':
         key_pressed = keys[1][0];
+        break;
       case '5':
         key_pressed = keys[1][1];
+        break;
       case '6':
         key_pressed = keys[1][2];
+        break;
       case 'B':
         key_pressed = keys[1][3];
+        break;
       case '7':
         key_pressed = keys[2][0];
+        break;
       case '8':
         key_pressed = keys[2][1];
+        break;
       case '9':
         key_pressed = keys[2][2];
+        break;
       case 'C':
         key_pressed = keys[2][3];
+        break;
       case '*':
         key_pressed = keys[3][0];
+        break;
       case '0':
         key_pressed = keys[3][1];
+        break;
       case '#':
         key_pressed = keys[3][2];
+        break;
       case 'D':
         key_pressed = keys[3][3];
+        break;
       default:
         key_pressed = 0xFF;
     }
@@ -253,7 +269,8 @@ uint8_t get_keypress(void) {
  *      or part of a character (`false`)
  */
 void send_halfbyte(uint8_t halfbyte, bool is_command) {
-  ;
+  const uint8_t peripheral_address = 0x27;
+  // ...
 }
 
 
