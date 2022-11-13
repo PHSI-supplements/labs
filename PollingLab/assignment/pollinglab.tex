@@ -566,6 +566,7 @@ The code would look something like this:
 \begin{lstlisting}
     if ((now - last_keypress > BUTTON_NO_REPEAT_TIME) &&
         (...)) {
+      last_keypress = now;
       uint8_t keypress = get_keypress();
       ...
     }
@@ -577,7 +578,7 @@ The code would look something like this:
 Detecting presses of pushbuttons and determining which button was pressed are the same action: you know whether the right or left button was pressed by whether you detected the button press with \function{left_button_is_pressed()} or \function{right_button_is_pressed()}.
 Because you don't want to unnecessarily scan the keypad, you should only call \function{get_keypress()} \textit{after} determining that a key pas been pressed.
 
-As described in Section~1.2.1 of the Cow Pi datasheet, you can determine whether or not a key was pressed by examining the input pins connected to the keypad's columns (Adruino pins D14--D17).
+As described in Section~1.2.1 of the Cow Pi datasheet, you can determine whether or not a key was pressed by examining the input pins connected to the keypad's columns (Arduino pins D14--D17).
 If the values on all of these pins are 1, then no key is being pressed;
 on the other hand, if one of the pins has the value 0, then a key is being pressed.
 Once you have determined that a key is being pressed, you can call \function{get_keypress()}, knowing that it will return the value corresponding to one of the keys.
@@ -594,7 +595,7 @@ While the datasheet's Section~1.3 also describes shifting the display, there is 
 
 
 
-\section*{Turn-in and Grading}
+\section{Turn-in and Grading}
 
 When you have completed this assignment, upload \textit{PollingLab.ino} to
 \filesubmission.
@@ -641,9 +642,9 @@ Herb shakes his head, ``No, not quite yet. It should be ready in about a week.''
 
 \textit{To be continued...}
 
-\newpage
+\newpage\appendix
 
-\section*{Appendix: Lab Checkoff}
+\section{Appendix: Lab Checkoff}
 
 You are not required to have your assignment checked-off by a TA or the
 professor. If you do not do so, then we will perform a functional check
@@ -671,17 +672,17 @@ professor during office hours.
 \checkoffitem{Ensure that the \function{loop()} function calls \function{test_io()} and not \function{build_number()}. Upload \textit{number\_builder.ino} to your \nano.}
 \checkoffitem{Show that the display module is displaying the output. \\
     \textit{+8 The \function{send_halfbyte()} function is correctly implemented.}}
-\item [] (If the display module does not displaying the output, then the remainder of the memory-mapped I/O items can be checked on the serial monitor.)
+\item [] (If the display module does not display the output, then the remainder of the memory-mapped I/O items can be checked on the serial monitor.)
 \checkoffitem{Demonstrate that both pushbuttons' positions are correctly detected. \\
     \textit{+2 The \function{xx_button_is_pressed()} functions are correctly implemented.}}
-\checkoffitem{Demonstrate that both pushbuttons' positions are correctly detected. \\
+\checkoffitem{Demonstrate that both switches' positions are correctly detected. \\
     \textit{+2 The \function{xx_switch_in_xx_position()} functions are correctly implemented.}}
 \checkoffitem{Demonstrate that when and only when both pushbuttons are pressed, the left LED (the built-in LED) illuminates. Demonstrate that when and only when both switches are in the right position, the right LED (the external LED) illuminates. \\
     \textit{+2 The \function{set_xx_led()} functions are correctly implemented.}}
 \checkoffitem{Demonstrate that each of the keys on the keypad is correctly detected and that the absence of a keypress is also reported correctly. \\
     \textit{+8 The \function{get_keypress()} function is correctly implemented.}}
 \item [] \textbf{Number Builder}
-\precheckoffitem{If the display module does not displaying the output, then comment-out the line in \function{initalize_io()} that registers \function{send_halfbyte()} with the CowPi library.}
+\precheckoffitem{If the display module does not display the output, then comment-out the line in \function{initalize_io()} that registers \function{send_halfbyte()} with the CowPi library.}
 \precheckoffitem{Replace any other non-functioning I/O code with a call to the corresponding function from the CowPi library (see the starter code). \textit{Do NOT remove the debouncing code.}}
 \checkoffitem{Ensure that the \function{loop()} function calls \function{build_number()} and not \function{test_io()}. Upload \textit{number\_builder.ino} to your \nano.}
 \checkoffitem{Place both switches in the left position (left justified mode, decimal number base).}
