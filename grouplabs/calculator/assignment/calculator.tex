@@ -222,7 +222,7 @@ You may use any code written by you or your partner(s), including code that you 
 
 \item The \textbf{display module} shall display the decimal representation of \textit{operand1}'s value on the top row, right-justified, except when an error condition is present.
 \item If \textit{operand2} has a defined value (is being built) then the \textbf{display module} shall display the decimal representation of \textit{operand2}'s value on the bottom row, right-justified, except when an error condition is present. If \textit{operand2} does not have a defined value then the visual space for \textit{operand2}'s value shall be blank.
-\item If an operation is specified, then the character for that operation ($+, -, \times, \div$) shall be displayed in the lower-left corner of the \textbf{display module}. If no operation is specified, then the visual space for the operation's character shall be blank.
+\item \label{spec:displayOperation} If an operation is specified, then the character for that operation ($+, -, \times, \div$) shall be displayed in the lower-left corner of the \textbf{display module}. If no operation is specified, then the visual space for the operation's character shall be blank.
 
 \item Initially, \textit{operand1} shall hold the value 0, \textit{operand2}
     shall have no defined value, and no arithmetic operation shall be specified.
@@ -272,22 +272,22 @@ You may use any code written by you or your partner(s), including code that you 
     operation.
 \item Except as otherwise specified in requirement~\ref{spec:Wakening}, when
     the user presses the \texttt{\#} button, directing that the calculation is
-    to be executed, the \underline{previously}-specified operation shall be
+    to be executed, the previously-specified operation shall be
     performed, the resulting value shall become \textit{operand1} (and shall be
-    displayed), and there shall no longer be a valid \textit{operand2} (and thus cannot be displayed). If
+    displayed on the top row), and there shall no longer be a valid \textit{operand2} (and thus cannot be displayed) nor a specified operation (and thus cannot be displayed). If
     there was no previously-specified operation, then \textit{operand2} shall
     become \textit{operand1}, and there shall no longer be a valid
     \textit{operand2}.
 \item Except as otherwise specified in requirement~\ref{spec:Wakening}, when
     the user presses an operation button (\texttt{A}-\texttt{D}), the
     \underline{previously}-specified operation shall be performed, the
-    resulting value shall become \textit{operand1} (and shall be displayed),
+    resulting value shall become \textit{operand1} (and shall be displayed on the top row),
     there shall no longer be a valid \textit{operand2} (and thus cannot be displayed), and the \underline{next} operation
     to be performed shall be that which corresponds to the button pressed. If
     there was no previously-specified operation, then \textit{operand2} shall
     become \textit{operand1}, \textit{operand2} shall no longer have a defined
     value, and the \underline{next} operation to be performed shall be that
-    which corresponds to the button pressed.
+    which corresponds to the button pressed. In accordance with requirement~\ref{spec:displayOperation}, the \underline{next} operation shall be displayed.
     \begin{itemize}
     \item If the resulting value (\textit{operand1}) is too great to be
         displayed, the \textbf{display module} shall display
@@ -520,8 +520,6 @@ simply write 0 to the \lstinline{timer->counter} field.
 
 \section{Turn-in and Grading}\addcontentsline{toc}{section}{Rubric}
 
-\textbf{NOTE: this rubric still needs to be updated to reflect changes for the new display module. An updated rubric will be released soon.}
-
 When you have completed this assignment, upload \textit{CalculatorLab.ino} to
 \filesubmission.
 
@@ -529,47 +527,76 @@ This assignment is worth 50 points. \\
 
 Rubric:
 \begin{description}
-\rubricitem{9}{Timer interrupts configured such that, when combined with other
-    logic, the software is able to determine when exactly 5 seconds or exactly
-    30 seconds has passed since the last key press or button press.}
-\rubricitem{1}{Timer ISR is not excessively long.}
-\rubricitem{9}{Pushbutton presses are detected with an external interrupt, and
-    the handler, at a minimum, determines which button was pressed.}
+\rubricitem{2}{The source code is well-organized and is readable.}
+\item[Pushbutton Interrupts]
+\rubricitem{4}{Pushbutton presses are detected with an external interrupt.}
+\rubricitem{2}{The pushbuttons' interrupt handler determines which button was pressed.}
+% \rubricitem{4}{Pushbutton presses and releases are detected with an external
+%     interrupt.}
+% \rubricitem{2}{The pushbuttons' interrupt handler determines which button was
+%     released.}
+% \rubricitem{2}{The pushbuttons' interrupt handler determines whether the left
+%     button has been double-clicked.}
 \rubricitem{1}{Pushbutton interrupt handler is not excessively long.}
-\rubricitem{9}{Matrix keypad presses are detected with an external interrupt,
-    and the handler, at a minimum, determines which button was pressed.}
+\item[Matrix Keypad Interrupts]
+\rubricitem{4}{Matrix keypad presses are detected with an external interrupt.}
+\rubricitem{2}{The keypad's interrupt handler determines which key was pressed.}
 \rubricitem{1}{Keypad interrupt handler is not excessively long.}
+\item[Timer Interrupts]
+\rubricitem{2}{Timer interrupts for Timer1 or Timer2 are enabled and handled.}
+\rubricitem{4}{The timer interrupts configured such that, when combined with
+    other logic, the software is able to determine when exactly 7.5~seconds or
+    exactly 20~seconds have passed.}
+\rubricitem{1}{Timer ISR is not excessively long.}
+\item[Timeout Logic]
+% \rubricitem{2}{The system is able to determine when exactly 7.5~seconds have
+%     passed since the left button was double-clicked.}
+% \rubricitem{2}{The system is able to determine when exactly 20~seconds have
+%     passed since the left button was double-clicked.}
+\rubricitem{2}{The system is able to determine when exactly 7.5~seconds have
+    passed since a button or key was pressed.}
+\rubricitem{2}{The system is able to determine when exactly 20~seconds have
+    passed since a button or key was pressed.}
+\item[Normal Calculator Functionality]
 \rubricitem{1}{Operand is built in accordance with
     requirements~\ref{spec:BuildingValue}, \ref{spec:Negative},
     \ref{spec:Positive}, and \ref{spec:LeadingZeroes}.}
-\rubricitem{1}{After eight digits (or a negative sign and seven digits),
-    subsequent numeral presses are ignored (except for resetting the
-    display-blanking countdown).}
+% \rubricitem{1}{After eight digits (or a negative sign and seven digits),
+%     subsequent numeral presses are ignored (except for resetting the
+%     display-blanking countdown).}
+\rubricitem{1}{After nine digits, subsequent numeral presses are ignored (except for resetting the display-blanking countdown).}
 \rubricitem{2}{Addition performs correctly.}
 \rubricitem{2}{Subtraction performs correctly.}
 \rubricitem{2}{Multiplication performs correctly.}
 \rubricitem{2}{Division performs correctly.}
 \rubricitem{1}{The result of the previous arithmetic operation can be used as
     the first operand for the next arithmentic operation.}
-\rubricitem{1}{Too-great results cause {\dviiseg Error} to be displayed.}
 \rubricitem{1}{The ``clear'' button clears the operand being built and any
     specified operation.}
 \rubricitem{1}{If no operand is currently being built (the previous
     arithmetic's result is displayed) then the ``clear'' button clears the
     previous arithemtic's result and any specified operation.}
-\rubricitem{2}{The display goes blank after exactly 5 seconds or exactly 30
-    seconds of inactivity, depending on the position of the left switch.}
-\rubricitem{2}{When the display is blank, pressing any button or key causes the
-    display to resume\dots}
+\rubricitem{1}{The result of the previous operation is displayed on the top row (if there was no previous operation, then \display{0}).}
+\rubricitem{1}{The specified operation, if any, is displayed in the lower-left corner.}
+\rubricitem{1}{The operand being built, if any, is displayed on the bottom row.}
+\item[Other Calculator Functionality]
+\rubricitem{1}{Too-great results cause \display{Error} to be displayed.}
+% \rubricitem{2}{The display goes blank after exactly 7.5 seconds or exactly 20 seconds of inactivity, depending on the position of the left switch.}
+% \rubricitem{2}{When the display is blank, pressing any button or key causes the display to resume\dots}
+\rubricitem{2}{The display's backlight deluminates after exactly 7.5 seconds or exactly 20 seconds of inactivity, depending on the position of the left switch.}
+\rubricitem{2}{When the display is dim, pressing any button or key causes the backlight to illuminate\dots}
 \rubricitem{2}{\dots and has no other effect, allowing operation to resume where the user had left off before letting the display timeout.}
+\item[Bonus]
 % \bonusitem{5}{Fractional calculator is implemented.}
-\bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due.}% (Cannot get both bonuses.)}
-%\bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due. (Cannot get both bonuses.)}
+\bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due. (Cannot get both bonuses.)}
+\bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due. (Cannot get both bonuses.)}
 \end{description}
 
 \section*{Epilogue}
 
-After using your calculator to compute how many samples are still present in the lab, and establish that all samples are accounted for after Newman's attempted theft. Archie smiles and tells you that this was a job well done. With all of the excitement neatly wrapped-up and arriving at a satisfactory conclusion, you look forward to a boring career in which there's absolutely no screaming and running for your life.
+After using your calculator to compute how many specimens are still present in the lab, and establish that all specimens are accounted for after Newman's attempted theft.
+As reports come in of facilities getting secured with Cow Pi-based locks and passages being monitored with Cow Pi-based motion sensors, Archie smiles and tells you that this was a job well done.
+With all of the excitement neatly wrapped-up and arriving at a satisfactory conclusion, you look forward to a boring career in which there's absolutely no screaming and running for your life.
 
 \textit{The End...?}
 
