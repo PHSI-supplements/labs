@@ -14,17 +14,20 @@
 
 \input{../../../common/assignment.tex}
 \input{../../../common/semester.tex}
-\usepackage{graphicx}
-%\usepackage{media9}
-\usepackage{addfont}
-\addfont{OT1}{d7seg}{\dviiseg}
-% \addfont{OT1}{deseg}{\deseg}
-%\usepackage[normalem]{ulem}
-%\usepackage{subfig}
-\usepackage{wrapfig}
-%\usepackage{animate}
-% \usepackage{multicol}
-\usepackage{enumitem}
+% \usepackage{graphicx}
+% %\usepackage{media9}
+% \usepackage{addfont}
+% \addfont{OT1}{d7seg}{\dviiseg}
+% % \addfont{OT1}{deseg}{\deseg}
+% %\usepackage[normalem]{ulem}
+% %\usepackage{subfig}
+% \usepackage{wrapfig}
+% %\usepackage{animate}
+% % \usepackage{multicol}
+% \usepackage{enumitem}
+\usepackage{array,color,colortbl}
+\definecolor{LightGreen}{rgb}{0.88,1,0.88}
+\usepackage{calc}
 
 \renewcommand{\labnumber}{\capstonelabnumber}
 \renewcommand{\labname}{Implementing a 4-Function Calculator using Interrupts}
@@ -127,7 +130,7 @@ the button is pressed or released, nor even on \textit{detecting} that a button
 has been pressed or released; it is focused solely on \textit{what should happen}
 when the button is pressed or released.
 
-\subsection{Constraints}
+\subsection{Constraints} \label{sec:Constraints}
 
 % \section{Constraints}\label{sec:Constraints}
 
@@ -294,6 +297,7 @@ You may use any code written by you or your partner(s), including code that you 
         \display{Error}.
     \item If \textit{operand2} is 0 and the operation is division, the
         \textbf{display module} shall display \display{Error}.
+    \item If \textit{operand2} is undefined, then \textit{operand1} shall remain unchanged, the \underline{previously}-specified operation (if any) shall be replaced (it cannot be performed due to an absence of \textit{operand2}), and the \underline{next} operation to be performed shall be that which corresponds to the button pressed
     \end{itemize}
 \item The calculator shall not support scientific notation, neither for operand
     entry nor for displaying a result.
@@ -450,14 +454,14 @@ you only need to check the switch positions after something else has triggered s
 Don't forget to reset the 7.5\mbox{-}second / 20\mbox{-}second countdown so that your code doesn't blank the display too soon.
 
 Because we did not provide a hardware solution to switch bounce, you can expect
-both the pin input to both rise and fall a few times when a button or key is
+the pin input to both rise and fall a few times when a button or key is
 pressed and again when it is released -- but there is no guarantee that
 bouncing will occur. For this reason we recommend:
     \begin{itemize}
-    \item Use the \lstinline{CHANGE} mode, combined with software debouncing,
-        and use a variable to keep track of whether a key or button has been
-        pressed (toggle this variable whenever an interrupt occurs, and take
-        action based on whether a key or button has been pressed or released).
+    % \item Use the \lstinline{CHANGE} mode, combined with software debouncing,
+    %     and use a variable to keep track of whether a key or button has been
+    %     pressed (toggle this variable whenever an interrupt occurs, and take
+    %     action based on whether a key or button has been pressed or released).
     \item The software debouncing will look similar to what you used in
         PollingLab except that it only needs to be a few milliseconds instead
         of 500. Since we are not polling the buttons and keypad to detect
@@ -469,13 +473,7 @@ bouncing will occur. For this reason we recommend:
         \item As described in the PollingLab assignment sheet,
             \function{delay()} will leave your system unresponsive to anything
             except interrupts.
-        \item Including \function{delay()} calls in an interrupt handler is
-            particularly ill-advised since you may find yourself in a situation
-            in which you need to disable interrupts in the interrupt handler
-            and then re-enable interrupts before exiting the interrupt handler.
-            (I do not expect this to happen in this assignment, but I've been
-            wrong before.) The \function{delay()} function will never exit,
-            blocking forever, if interrupts are disabled.
+        \item Including \function{delay()} calls in an interrupt handler is particularly ill-advised since interrupts are disabled by default in the interrupt handler. The \function{delay()} function will never exit, blocking forever, if interrupts are disabled.
         \end{itemize}
     \end{itemize}
 If you arrive at a different solution that works, you may use your solution.
@@ -502,9 +500,7 @@ Use the equation in the datasheet's Section~6.2 to iterate through possible comp
         use these bits to generate the bit vector that you will assign to \lstinline{timer->control} in \function{setup()} on line 32
     \item Subtract 1 from the comparison value and assign that to \lstinline{timer->compareA} in \function{setup()} on line 33
     \item Use the address offset listed in Section~6.6 to assign the appropriate address to the \lstinline{timer_interrupt_masks} pointer in \function{setup()} on line 34
-    \item Create an ISR for the \texttt{TIMER\textit{n}\_COMPA\_vect} interrupt, where \texttt{n} is the timer number, using the \function{ISR()} macro as described in Section~5.2 of the datasheet;
-        for now, write very simple code, such as turning an LED on or off, in the ISR --
-        you will add useful code later
+    \item Create an ISR for the \texttt{TIMER\textit{n}\_COMPA\_vect} interrupt, where \texttt{n} is the timer number, using the \function{ISR()} macro as described in Section~5.2 of the datasheet; for now, write very simple code in the ISR, such as turning an LED on or off, or displaying/clearing ``timeout!'' -- you will add useful code later
     \item Index the \lstinline{timer_interrupt_masks} array with the timer number and enable the \texttt{TIMER\textit{n}\_COMPA\_vect} interrupt, where \texttt{n} is the timer number, in \function{setup()} on line 35
 \end{itemize}
 
@@ -586,10 +582,16 @@ Rubric:
 \rubricitem{2}{The display's backlight deluminates after exactly 7.5 seconds or exactly 20 seconds of inactivity, depending on the position of the left switch.}
 \rubricitem{2}{When the display is dim, pressing any button or key causes the backlight to illuminate\dots}
 \rubricitem{2}{\dots and has no other effect, allowing operation to resume where the user had left off before letting the display timeout.}
-\item[Bonus]
+\item[Bonus and Penalty]
 % \bonusitem{5}{Fractional calculator is implemented.}
 \bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due. (Cannot get both bonuses.)}
 \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due. (Cannot get both bonuses.)}
+\penaltyitem{7}{The pushbutton interrupt handler's implementation violates one or more constraints identified in Section~\ref{sec:Constraints}.}
+\penaltyitem{7}{The keypad interrupt handler's implementation violates one or more constraints identified in Section~\ref{sec:Constraints}.}
+\penaltyitem{7}{The timer ISR's implementation violates one or more constraints identified in Section~\ref{sec:Constraints}.}
+\penaltyitem{4}{The timeout logic violates one or more constraints identified in Section~\ref{sec:Constraints}.}
+\penaltyitem{23}{The remainder of the calculator's implementation violates one or more constraints identified in Section~\ref{sec:Constraints}.}
+\spaghetticodepenalties{1}
 \end{description}
 
 \section*{Epilogue}
@@ -619,188 +621,220 @@ professor during office hours.
 one team member is necessary for the check-off.}
 
 \begin{enumerate}
-\item (\ \ \ ) Establish that the code you are demonstrating is the code you
-    submitted to to \filesubmission.
+\precheckoffitem{Establish that the code you are demonstrating is the code you submitted to to \filesubmission.}
     \begin{itemize}
-    % \item If you are getting checked-off during lab time, show the TA that the
-    %     file was submitted before it was due.
-    \item Download the file into your PollingLab directory. If necessary,
-        rename it to \textit{CalculatorLab.ino}.
+    \item Download the file into your calculator directory. If necessary,
+        rename it to \textit{calculator.ino}.
     \end{itemize}
-\item (\ \ \ ) Upload \textit{CalculatorLab.ino} to your \nano.
-\item (\ \ \ ) If \textbf{Integer Calculator} then the display shows: \\
-    {\dviiseg \phantom{8888888}0} \\
-    % If \textbf{Fractional Calculator} then the display shows: \\
-    %     {\dviiseg \phantom{8888888}0.} \\
-    % \textit{Make a note of which calculator was implemented.}
-\item (\ \ \ ) Place the left switch in the right position.
-\item (\ \ \ ) Enter 123,456; the display shows: \\
-    {\dviiseg \phantom{88}123456}
-\item (\ \ \ ) \textbf{If you implemented display timeout:} Wait exactly five
-    seconds. The display goes blank.
-\item (\ \ \ ) \textbf{If you implemented display timeout:} Press 7. The display
-    resumes, showing what it previously showed: \\
-    {\dviiseg \phantom{88}123456}
-\item (\ \ \ ) Press 7. The display shows: \\
-    {\dviiseg \phantom{8}1234567}
-\item (\ \ \ ) Press \texttt{A} (addition). The display still shows: \\
-    {\dviiseg \phantom{8}1234567}
-\item (\ \ \ ) Enter 890. The display shows: \\
-    {\dviiseg \phantom{88888}890}
-\item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-    {\dviiseg \phantom{8}1235457} \hspace{1cm} \textit{or} \hspace{1cm}
-    {\dviiseg \phantom{8}1235457.}
-\item (\ \ \ ) Press the right pushbutton (clear). The display shows: \\
-    {\dviiseg \phantom{8888888}0} \hspace{1cm} \textit{or} \hspace{1cm}
-    {\dviiseg \phantom{8888888}0.}
-\item (\ \ \ ) Place the left switch in the left position.
-\item (\ \ \ ) Enter -1,234,567, using the left pushbutton for the negative
-    sign. The display shows: \\
-    {\dviiseg -1235457}
-\item (\ \ \ ) Press 8. The display still shows: \\
-    {\dviiseg -1235457}
-\item (\ \ \ ) Press \texttt{\#}. The display (still) shows: \\
-    {\dviiseg -1235457} \hspace{1cm} \textit{or} \hspace{1cm}
-    {\dviiseg -1234567.}
-\item (\ \ \ ) Enter 231. The display shows: \\
-    {\dviiseg \phantom{88888}231}
-\item (\ \ \ ) Press \texttt{B} (subtraction) and enter 321. The display shows: \\
-    {\dviiseg \phantom{88888}321}
-\item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-    {\dviiseg \phantom{88888}-90} \hspace{1cm} \textit{or} \hspace{1cm}
-    {\dviiseg \phantom{88888}-90.}
-\item (\ \ \ ) Press the right pushbutton (clear). The display shows: \\
-    {\dviiseg \phantom{8888888}0} \hspace{1cm} \textit{or} \hspace{1cm}
-    {\dviiseg \phantom{8888888}0.}
-\item (\ \ \ ) Press \texttt{C} (multiplication) and enter 12. The display
-    shows:\\
-    {\dviiseg \phantom{888888}12}
-\item (\ \ \ ) Press \texttt{\#}. The display shows:\\
-    {\dviiseg \phantom{8888888}0} \hspace{1cm} \textit{or} \hspace{1cm}
-    {\dviiseg \phantom{8888888}0.}
-\item (\ \ \ ) Enter 42. The display shows:\\
-    {\dviiseg \phantom{888888}42}
-\item (\ \ \ ) Press \texttt{D} (division) and enter 6. The display
-    shows:\\
-    {\dviiseg \phantom{8888888}6}
-\item (\ \ \ ) Press \texttt{\#}. The display shows:\\
-    {\dviiseg \phantom{8888888}7} \hspace{1cm} \textit{or} \hspace{1cm}
-    {\dviiseg \phantom{8888888}7.}
-\item (\ \ \ ) Press \texttt{C} (multiplication) and enter 73. The display
-    shows:\\
-    {\dviiseg \phantom{888888}73}
-\item (\ \ \ ) Press \texttt{\#}. The display shows:\\
-    {\dviiseg \phantom{88888}511} \hspace{1cm} \textit{or} \hspace{1cm}
-    {\dviiseg \phantom{88888}511.}
-\item (\ \ \ ) Press \texttt{C} (multiplication) and enter 200. The display
-    shows:\\
-    {\dviiseg \phantom{88888}200}
-\item (\ \ \ ) Press the right pushbutton (clear). The display shows: \\
-    {\dviiseg \phantom{88888}511} \hspace{1cm} \textit{or} \hspace{1cm}
-    {\dviiseg \phantom{88888}511.}
-\item (\ \ \ ) Press \texttt{C} (multiplication) and enter 200,000. The display
-    shows:\\
-    {\dviiseg \phantom{88}200000}
-\item (\ \ \ ) Press \texttt{\#}. The display shows:\\
-    {\dviiseg \phantom{88}Error}
-\item (\ \ \ ) \textbf{If you implemented display timeout:}
-    \begin{description}
-    \item [[ ]] Show the code in which you configured Timer1 or Timer2
-    \item [[ ]] Explain the calculation that you used to arrive at your
-        comparison value
-        \[comparison\_value = 16,000,000 \times interrupt\_period \div prescaler\]
-    \item [[ ]] Show and explain the Timer ISR
-    \item [[ ]] Show and explain any other code used to implement the display
-        timeou
-    \item [[ ]] Show and explain the Timer ISR.
-    \item [] \textit{If it is not clear to the TA how the display-timeout code
-        works, then the TA will:}
-    \item [[ ]] Prepare a stopwatch or another timepiece with a ``seconds''
-        display (or a ``seconds'' hand)
-    \item [[ ]] If necessary, re-activate the display by pressing a button or
-        key
-    \item [[ ]] Press a button or key on the system at the exact same time as
-        starting the stopwatch (or at the exact moment that the ``seconds''
-        display/hand hits \textit{00})
-    \item [[ ]] Note whether the display clears at exactly 30 seconds and not
-        at 30.7 seconds, 29.7 seconds, nor any other that would suggest that
-        \function{millis()} is used in the display timeout implementation
-    \end{description}
-\item (\ \ \ ) Show and explain the code used to register the external
-    interrupt handlers
-\item (\ \ \ ) Show and explain the pushbutton interrupt handler
-\item (\ \ \ ) Show and explain the keypad interrupt handler
-\item (\ \ \ ) Show the start of \textit{CalculatorLab.ino} to show the TA that the only \lstinline{#include}d header files are \textit{cowpi.h} and possibly the header file(s) from one or more of the Arduino standard libraries.
+\item[] \textbf{Code Examination}
+\checkoffitem{Show the TA that your code is well-organized and readable.} \\
+    \textit{+2 the source code is well-organized and readable} \\
+    {\tiny If you disagree with the TA's assessment of your code quality, you may appeal to the professor.} \\
+    {\tiny In addition to any appeals, the professor will also spot-check a random sample of the submissions and may increase or decrease the code quality scores.}
+\checkoffitem{Show in your code that you registered interrupt handlers for the pushbuttons and for the matrix keypad.}
+\checkoffitem{Show in your code your interrupt handlers for the pushbuttons and for the matrix keypad.} \\
+    \textit{+4 pushbutton presses are detected with an external interrupt} \\
+    \textit{+1 pushbutton interrupt handler is not excessively long} \\
+    \textit{+4 matrix keypad presses are detected with an external interrupt} \\
+    \textit{+1 keypad interrupt handler is not excessively long}
+\checkoffitem{Show and explain how you determined the comparison value and prescaler for your timer interrupts. Explain why the timer period you selected is appropriate.
+    \[comparison\_value = 16,000,000 \times interrupt\_period \div prescaler\]
+    }
+\checkoffitem{Show in your code that you had configured the timer to use those comparison and prescaler values and that you had configured the correct timer mode.} \\
+    \textit{+4 timer interrupts are configured such that, when combined with other logic, it is possible to determine when 7.5 seconds or 20 seconds have passed.}
+\checkoffitem{Show in your code that you enabled the correct timer.}
+\checkoffitem{Show in your code that you created an ISR for the correct
+    timer.} \\
+    \textit{+2 timer interrupts are enabled and handled} \\
+    \textit{+1 timer ISR is not excessively long}
+\checkoffitem{Upload \textit{CalculatorLab.ino} to your \nano.}
+\vspace{.5cm} \\
+\textit{If you did not implement the calculator, proceed to step~\ref{checkoff:interruptsOnly}.} \\
+\textit{If you did implement some or all of the calculator, jump to step~\ref{checkoff:calculator}.} \\ \\
+
+\item[] \textbf{Interrupt Handling without Calculator Functionality}
+\checkoffitem{Press the left button to show that the system responds to the left button, such as illuminating an LED.} \label{checkoff:interruptsOnly}
+\checkoffitem{Press the right button to show that the system responds to the right button differently, such as illuminating a different LED.} \\
+    \textit{+2 pushbutton interrupt handler determines which button was pressed.}
+\checkoffitem{Press a few keys on the keypad to show that something unique about each key (such as its face value) is displayed.} \\
+    \textit{+2 keypad interrupt handler determines which key was pressed.}
+\vspace{.5cm} \\
+\textit{If you did not implement the calculator, jump to step~\ref{checkoff:timeout}.} \\ \\
+
+\item[] \textbf{Calculator Functionality}
+\checkoffitem{The display shows:} \label{checkoff:calculator} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular}
+\checkoffitem{Place the left switch in the right position.}
+\checkoffitem{Enter 123,456. The display shows:} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{123456}
+    \end{tabular} \\
+    \textit{+.5 positive numbers} \\
+    \textit{+1 the operand being built shown on bottom row} \\
+    \textit{+2 keypad interrupt handler determines which key was pressed.}
+\checkoffitem{\textbf{If you implemented display timeout:} After a few seconds, he display goes blank.}
+\checkoffitem{\textbf{If you implemented display timeout:} Press 7. The display resumes, showing what it previously showed:} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{123456}
+    \end{tabular} \\
+    \textit{+2 button/key re-illuminates the backlight\dots} \\
+    \textit{+1 \dots without any other changes\dots}
+\checkoffitem{Press 7.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{1234567}
+    \end{tabular} \\
+    \textit{+1 \dots allowing user to resume where they left off}
+\checkoffitem{Press \texttt{A} (addition).} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{1234567} \\
+        \rowcolor{LightGreen}\display{+} & \display{ }
+    \end{tabular} \\
+    \textit{+1 the specified operation shown in lower-left corner}
+\checkoffitem{Enter 890.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{1234567} \\
+        \rowcolor{LightGreen}\display{+} & \display{890}
+    \end{tabular}
+\checkoffitem{Press \texttt{\#} (``='').} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{1235457} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular} \\
+    \textit{+2 addition works} \\
+    \textit{+1 result shown on top row}
+\checkoffitem{Press the right pushbutton (clear).} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular} \\
+    \textit{+1 clears operand1 when operand2 isn't being built}
+\checkoffitem{Place the left switch in the left position.}
+\checkoffitem{Enter -123,456,789, using the left pushbutton for the negative sign.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{-123545789}
+    \end{tabular} \\
+    \textit{+.5 negative numbers} \\
+    \textit{+2 pushbutton interrupt handler determines which key was pressed.}
+\checkoffitem{Press 0. The display is unchanged; it still shows:} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{-123545789}
+    \end{tabular} \\
+    \textit{+1 maximum of 9 digits entered}
+\checkoffitem{Press \texttt{\#}.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{-123545789} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular}
+\checkoffitem{Enter 231.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{-123545789} \\
+        \rowcolor{LightGreen}\display{ } & \display{231}
+    \end{tabular}
+\checkoffitem{Press \texttt{B} (subtraction) and enter 321.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{231} \\
+        \rowcolor{LightGreen}\display{-} & \display{321}
+    \end{tabular}
+\checkoffitem{Press \texttt{\#}.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{-90} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular} \\
+    \textit{+2 subtraction works}
+\checkoffitem{Press the right pushbutton (clear).} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular}
+\checkoffitem{Press \texttt{C} (multiplication) and enter 12.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{x} & \display{12}
+    \end{tabular}
+\checkoffitem{Press \texttt{\#}.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular}
+\checkoffitem{Enter 42.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{0} \\
+        \rowcolor{LightGreen}\display{ } & \display{42}
+    \end{tabular}
+\checkoffitem{Press \texttt{D} (division) and enter 6.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{42} \\
+        \rowcolor{LightGreen}\display{÷} & \display{6}
+    \end{tabular}
+\checkoffitem{Press \texttt{\#}.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{7} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular} \\
+    \textit{+2 division works}
+\checkoffitem{Press \texttt{C} (multiplication) and enter 73.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{7} \\
+        \rowcolor{LightGreen}\display{x} & \display{73}
+    \end{tabular}
+\checkoffitem{Press \texttt{\#}.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{511} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular} \\
+    \textit{+2 multiplication works} \\
+    \textit{+1 previous result can be used as operand}
+\checkoffitem{Press \texttt{C} (multiplication) and enter 200.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{511} \\
+        \rowcolor{LightGreen}\display{x} & \display{200}
+    \end{tabular}
+\checkoffitem{Press the right pushbutton (clear).}
+\checkoffitem{Press \texttt{C} (multiplication) and enter 200.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{511} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular} \\
+    \textit{+1 clears operand2 \& operator}
+\checkoffitem{Press \texttt{C} (multiplication) and enter 2,000,000.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{511} \\
+        \rowcolor{LightGreen}\display{ } & \display{2000000}
+    \end{tabular}
+\checkoffitem{Press \texttt{\#}.} \\
+    \begin{tabular}{>{\raggedright}p{.5cm}>{\raggedleft\arraybackslash}p{4cm}}
+        \rowcolor{LightGreen}\display{ } & \display{Error} \\
+        \rowcolor{LightGreen}\display{ } & \display{ }
+    \end{tabular} \\
+    \textit{+1 too-great results are an error} \\ \\
+
+\item[] \textbf{Display Timeout}
+\checkoffitem{Prepare a stopwatch or another timepiece with a ``seconds'' display (or a ``seconds'' hand)} \label{checkoff:timeout}
+\checkoffitem{Place the left switch in the right position.}
+\checkoffitem{If necessary, re-activate the backlight by pressing a button or key.}
+\checkoffitem{Press a button or key on the system at the exact same time as starting the stopwatch (or at the exact moment that the ``seconds'' display/hand hits \textit{00}).}
+\checkoffitem{Exactly 7.5~seconds later, the backlight deluminates.} \\
+    \textit{+2 System can determine when 7.5 seconds have passed} \\
+    \textit{+1 Backlight deluminates after 7.5 seconds of inactivity}
+\checkoffitem{Place the left switch in the left position.}
+\checkoffitem{Re-activate the backlight by pressing a button or key.}
+\checkoffitem{Press a button or key on the system at the exact same time as starting the stopwatch (or at the exact moment that the ``seconds'' display/hand hits \textit{00}).}
+\checkoffitem{Exactly 20~seconds later, the backlight deluminates.} \\
+    \textit{+2 System can determine when 20 seconds have passed} \\
+    \textit{+1 Backlight deluminates after 20 seconds of inactivity}
 \end{enumerate}
 
-% If you implemented \textbf{Integer Calculator}, then this concludes the
-% demonstration of your system's functionality. These steps are written to detect
-% constraint violations during the check-off; however, the TAs will later examine
-% your code for violations of the assignment's constraints.
-% \begin{itemize}
-% \item If we find that your display timeout uses Timer0 or uses code that uses
-% Timer0 (such as \function{millis()}, \function{micros()}, or
-% \function{delay()}) then you will lose any points that you received for the
-% display timeout functionality.
-% \item If we find that your code polls the pushbuttons to detect button presses
-% then you will lose any points that you received for implementing the pushbutton
-% handler.
-% \item If we find that your code polls the matrix keypad to detect key presses
-% then you will lose any points that you received for implementing the keypad
-% handler.
-% \item If we find that you used a third-party library then you will lose any
-% points that you received for functionality that made use of that library.
-% \end{itemize}
 
-% If you implemented \textbf{Fractional Calculator}:
-%
-% \begin{enumerate}[resume]
-% \item (\ \ \ ) Enter 3.5, using the \texttt{*} key for the decimal point. The
-%     display shows: \\
-%     {\dviiseg \phantom{888888}3.5}
-% \item (\ \ \ ) Press \texttt{B} (subtraction) and enter 2.8. The display shows: \\
-%     {\dviiseg \phantom{888888}2.8}
-% \item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-%     {\dviiseg \phantom{888888}0.7}
-% \item (\ \ \ ) Press \texttt{A} (addition) and enter 10.32. The display shows: \\
-%     {\dviiseg \phantom{8888}10.32}
-% \item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-%     {\dviiseg \phantom{8888}11.02}
-% \item (\ \ \ ) Press \texttt{C} (multiplication) and enter 23.9. The display shows: \\
-%     {\dviiseg \phantom{88888}23.9}
-% \item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-%     {\dviiseg \phantom{88}263.378}
-% \item (\ \ \ ) Press \texttt{A} (addition) and enter 100,000. The display
-%     shows: \\
-%     {\dviiseg \phantom{88}100000}
-% \item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-%     {\dviiseg 100263.38}
-% \item (\ \ \ ) Enter 22.9. The display shows: \\
-%     {\dviiseg \phantom{88888}22.9}
-% \item (\ \ \ ) Press \texttt{D} (division) and enter 5.4. The display shows: \\
-%     {\dviiseg \phantom{888888}5.4}
-% \item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-%     {\dviiseg 4.2407407}
-% \item (\ \ \ ) Enter 25.5. The display shows: \\
-%     {\dviiseg \phantom{88888}25.5}
-% \item (\ \ \ ) Press \texttt{D} (division) and enter 4. The display shows: \\
-%     {\dviiseg \phantom{8888888}4}
-% \item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-%     {\dviiseg \phantom{8888}6.375}
-% \item (\ \ \ ) Press \texttt{D} (division) and enter 100. The display shows: \\
-%     {\dviiseg \phantom{88888}100}
-% \item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-%     {\dviiseg \phantom{88}0.06375}
-% \item (\ \ \ ) Press \texttt{D} (division) and enter 10,000,000. The display
-%     shows: \\
-%     {\dviiseg 10000000}
-% \item (\ \ \ ) Press \texttt{\#}. The display shows: \\
-%     {\dviiseg \phantom{8888888}0.}
-% \end{enumerate}
-
-This concludes the demonstration of your system's functionality. These steps
-are written to detect constraint violations during the check-off; however, the
-TAs will later examine your code for violations of the assignment's constraints
-and deduct any unearned points accordingly.
+This concludes the demonstration of your system's functionality.
+The TAs will later examine your code for violations of the assignment's constraints and deduct any unearned points accordingly.
+If your code looks like it is tailored for this checklist, the TAs may re-grade using a different checklist.
 
 \end{document}
