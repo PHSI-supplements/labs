@@ -1,0 +1,51 @@
+When you have completed this assignment, upload \textit{basetwo.c} and \textit{alu.c} to \filesubmission.
+
+\policyforcodethatdoesnotcompile
+
+\integerlablatepolicy
+
+\subsection*{Rubric}
+
+This assignment is worth 40 points.
+\begin{description}
+    \rubricitem{1}{The \function{exponentiate()} function produces the correct powers of two.}
+    \rubricitem{1}{The \function{lg()} function produces the correct base-2 logarithms.}
+    \rubricitem{1}{The \function{is_negative()} function correctly determines whether its argument has a negative value when interpreted as a signed integer.}
+    \rubricitem{1}{The \function{equal()} function correctly determines whether its arguments are equal to each other.}
+    \rubricitem{1}{The \function{not_equal()} function correctly determines whether its arguments are not equal to each other.}
+    \rubricitem{1}{The \function{logical_not()} function correctly produces the logical inverse of its argument.}
+    \rubricitem{1}{The \function{logical_and()} function correctly produces the logical conjunction of its arguments.}
+    \rubricitem{1}{The \function{logical_or()} function correctly produces the logical disjunction of its arguments.}
+    \rubricitem{1}{The \function{one_bit_full_addition()} function correctly determines the \lstinline{sum} and \lstinline{c_out} bits for a 1-bit full adder.}
+    \rubricitem{5}{The \function{ripple_carry_addition()} function correctly implements a 32-bit ripple-carry adder.}
+    \rubricitem{2}{The \function{add()} function correctly performs 16-bit integer addition.}
+    \rubricitem{2}{The \function{add()} function correctly detects unsigned integer overflow and signed integer overflow.}
+    \rubricitem{3}{The \function{subtract()} function correctly performs 16-bit integer subtraction.}
+    \rubricitem{2}{The \function{subtract()} function correctly detects unsigned integer overflow and signed integer overflow.}
+    \rubricitem{1}{The \function{less_than()} function correctly determines whether its first argument is strictly less than its second argument.}
+    \rubricitem{1}{The \function{at_most()} function correctly determines whether its first argument is less than or equal to its second argument.}
+    \rubricitem{1}{The \function{at_least()} function correctly determines whether its first argument is greater than or equal to its second argument.}
+    \rubricitem{1}{The \function{greater_than()} function correctly determines whether its first argument is strictly greater than its second argument.}
+    \rubricitem{3}{The \function{multiply_by_power_of_two()} function correctly multiplies its first argument by its second argument when the second argument is 0 or is a power of two.}
+    \rubricitem{3}{The \function{unsigned_multiply()} function correctly provides the 16-bit product when it multiplies its first argument by its second argument when they are interpreted as unsigned integers.}
+    \rubricitem{2}{The \function{unsigned_multiply()} function correctly provides the 32-bit full product spread across the \lstinline{supplemental_result} and \lstinline{result} fields.}
+    \rubricitem{3}{The \function{unsigned_divide()} function correctly provides the 16-bit quotient when it divides its first argument by its second argument (or correctly reports division by zero) when they are interpreted as unsigned integers and the second argument is 0 or is a power of two.}
+    \rubricitem{2}{The \function{unsigned_divide()} function correctly provides the 16-bit remainder.}
+    \bonusitem{1}{The \function{signed_multiply()} function correctly performs signed integer multiplication by addressing the underlying reason that signed and unsigned multiplication need to be different.}
+    \bonusitem{1}{The \function{signed_divide()} function correctly performs signed integer division by addressing the underlying reason that signed and unsigned division need to be different.}
+    \item[Penalties]
+    \penaltyitem{1}{For each of these functions that violates an assignment constraint:
+        \function{exponentiate()}, \function{lg()}, \function{is_negative()}, \function{equal()}, \function{not_equal()},
+        \function{logical_not()}, \function{logical_and()}, \function{logical_or()},
+        \function{less_than()}, \function{at_most()}, \function{at_least()}, \function{greater_than()}.}
+    \penaltyitem{15}{If \function{one_bit_full_addition()} violates an assignment constraint.}
+    \penaltyitem{14}{If \function{one_bit_full_addition()} does not violate an assignment constraint but \function{ripple_carry_addition()} does.}
+    \penaltyitem{4}{If \function{one_bit_full_addition()} and \function{ripple_carry_addition()} do not violate an assignment constraint but \function{add()} does.}
+    \penaltyitem{5}{If \function{one_bit_full_addition()} and \function{ripple_carry_addition()} do not violate an assignment constraint but \function{subtract()} does.}
+    \penaltyitem{8}{If \function{multiply_by_power_of_two()} violates an assignment constraint.}
+    \penaltyitem{5}{If \function{multiply_by_power_of_two()} does not violate an assignment constraint but \function{unsigned_multiply()} does.}
+    \penaltyitem{5}{If \function{unsigned_divide()} violates an assignment constraint.}
+    \item[] \textit{Assignment constraint violations by helper functions will be assessed against the required function(s) that they help.}
+    \item[no bonus] If \function{signed_multiply()} or \function{signed_divide()} violate an assignment constraint or fail to address the underlying reason that the signed and unsigned implementations need to be different.
+    \spaghetticodepenalties{1}
+\end{description}

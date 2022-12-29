@@ -1,0 +1,28 @@
+In general, comparing two values to determine which (if either) is greater can be achieved with subtraction.
+Consider, for example, the less-than comparison.
+A simple application of algebra tells us that \[value1 < value2 \Leftrightarrow value1 - value2 < 0\]
+Similarly, \[value1 = value2 \Leftrightarrow value1 - value2 = 0\]
+
+As we noted in Section~\ref{subsec:negative}, real ALUs dedicate hardware to quickly compare values to 0.
+This is an example of why that is so.
+By performing this subtraction and determining the truth values of \function{is_zero()} and \function{is_negative()}, you have sufficient data to determine whether \lstinline{value1} is \function{less_than}, \function{at_most}, \function{at_least}, and/or \function{greater_than} \lstinline{value2}.
+Do so and implement the four inequality functions.
+
+
+\subsubsection*{Check your work}
+
+Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.
+For example:
+\begin{verbatim}
+    Enter ... a two-operand comparison expression ... or "quit": 4 < 5
+    expected: (4 < 5) = 1
+    actual:   (4 < 5) = 1
+
+    Enter ... a two-operand comparison expression ... or "quit": 4 >= 5
+    expected: (4 >= 5) = 0
+    actual:   (4 >= 5) = 0
+\end{verbatim}
+
+Check your code with other values, comparing your actual results with the expected results.
+Use positive and negative operands.
+Generate both \lstinline{true} and \lstinline{false} results for each of the four inequality functions.

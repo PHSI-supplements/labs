@@ -23,7 +23,8 @@
 % \setmainfont{Humor Sans}
 \usepackage{tikz}
 \usetikzlibrary{shadows}
-\usepackage{lipsum}
+\usepackage{lipsum}\usepackage{array,color,colortbl}
+\definecolor{LightGreen}{rgb}{0.88,1,0.88}
 
 \definecolor{myyellow}{RGB}{242,226,149}
 
@@ -364,9 +365,16 @@ receive full credit if your conclusions are reasonable, given your measurements.
 you decided to walk from your office at the Pleistocene Petting Zoo to Eclectic
 Electronics to personally give Herb your memory measurement data. As you
 approach Eclectic Electronics' labs, you notice that the lights are flickering,
-and sparks are dripping from the ceiling. You see that the new Cow Pi-based
+and sparks are dripping from the ceiling. You see that a new Cow Pi-based
 electronic lock is still holding the lab door shut squarely in its frame -- but
 the door frame has been torn from the wall and is laying askew in the hallway.
+On the floor is a Cow Pi-based calculator; the display reads: \\
+\begin{tabular}{>{\raggedleft}p{3.5cm}>{\raggedleft\arraybackslash}p{1cm}}
+    \rowcolor{LightGreen}\display{Robot Count:\phantom{xxxx}} & \display{12} \\
+    \rowcolor{LightGreen}\display{-} & \display{1}
+\end{tabular}
+
+
 Peeking into the lab, you see a platform, empty except for a note. The note says:
 
 \begin{center}\StickyNote[5cm]{\begin{center}
@@ -376,6 +384,8 @@ CAUTION! Stuck in ``Malevolent Sentience'' mode. \\ \phantom{x} \\
 Do \underline{\underline{not}} turn on until after
 troubleshooting the problem and uploading new software.
 \end{flushleft}}[7cm]\end{center}
+
+A Cow-Pi based motion alarm chirps as something enters its detection range.
 
 \textit{Cut to black.}
 

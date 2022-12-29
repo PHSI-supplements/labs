@@ -1,0 +1,60 @@
+You have the opportunity to earn a small amount of bonus credit.
+
+Addition uses the same assembly code instruction for both signed and unsigned integers, as does subtraction.
+Indeed, these instructions perform exact same actions regardless of whether the integers will be interpreted as signed or unsigned, which is why the overflow conditions for both are flagged.
+
+Multiplication and division, however, have separate instructions for signed and unsigned integers.
+This is because the logic for unsigned multiplication and division only produce correct results for positive numbers, and so the unsigned implementations cannot be used for negative integers.
+The signed implementations cannot be used for unsigned integers because they treat half of the possible unsigned integers as though they were negative, yielding incorrect results.
+
+A simple patch would be to keep track of which operands are negative, negate those operands so that they are positive, apply the unsigned implementation, and then negate the result as necessary.
+Using that patch technique will not earn you bonus credit.
+\textit{To earn bonus credit, you must address the underlying reason that the signed implementations need to be different.}
+
+\subsection{Signed Multiplication}
+
+If we only cared about the 16-bit product, the lower 16 bits of the full 32-bit product, then the unsigned implementation works for both signed and unsigned integers.
+The upper 16 bits, however, differ when \function{is_negative()} is true.
+For example:
+\begin{verbatim}
+    Enter ... a two-operand arithmetic expression... or "quit": -3 * 5
+    UNSIGNED MULTIPLICATION
+        expected result (hexadecimal): 0xFFFD * 0x0005 = 0x0004'FFF1
+        expected result (unsigned):    65533 * 5 = 65521 (327665)
+        ...
+    SIGNED MULTIPLICATION
+        expected result (hexadecimal): 0xFFFD * 0x0005 = 0xFFFF'FFF1
+        expected result (signed):      -3 * 5 = -15 (-15)
+        ...
+\end{verbatim}
+
+If you chose to implement signed multiplication then step through your unsigned multiplication to see if you can find where it breaks down for negative operands.
+Implement \function{signed_multiply()} to correctly handle negative numbers when the arguments are interpreted as signed integers.
+
+\textit{Reminder: you may not change the signatures of any functions declared in }alu.h\textit{; however, you may implement other helper functions if you wish.}
+
+Check your work with several values, both great and small.
+
+\subsection{Signed Division}
+
+Recall that the semantics of integer division are that the fractional portion of the quotient be truncated;
+that is, the quotient is rounded toward zero.
+The fast division technique for powers of two, however, has the effect of rounding toward negative infinity.
+This is fine for positive quotients, but it rounds negative quotients in the wrong direction.
+
+For example, if we used unsigned fast division for signed division then we would see this:
+\begin{small}\begin{verbatim}
+    Enter ... a two-operand arithmetic expression... or "quit": -14 / 4
+    ...
+    SIGNED DIVISION
+        expected result (hexadecimal): 0xFFF2 / 0x0004 = 0xFFFD    0xFFF2 % 0x0004 = 0xFFFE
+        expected result (signed):      -14 / 4 = -3    -14 % 4 = -2
+        actual result (hexadecimal):   0xFFF2 / 0x0004 = 0xFFFC    0xFFF2 % 0x0004 = 0x0002
+        actual result (signed):        -14 / 4 = -4    -14 % 4 = 2
+\end{verbatim}\end{small}
+
+If you chose to implement signed division then in your implementation of \function{signed_divide()}, whenever the dividend is negative you need to introduce a bias toward positive infinity.
+This bias needs to be sufficient so that when the fast division technique rounds non-integer quotients toward negative infinity, it ends up rounding to the correct quotient -- but do so without overcorrecting.
+The other precaution you need to take is to ensure that when you apply the fast division technique, you preserve the sign bit.
+
+Check your work with several values, both great and small.

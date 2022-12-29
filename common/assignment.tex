@@ -38,6 +38,7 @@
 \usepackage{wrapfig}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{amsmath}
 %\usepackage[dvipsnames]{xcolor}
 
 % These are placeholder commands and will be renewed in each lab
@@ -61,6 +62,32 @@
 \newcommand{\freecollaboration}{In addition to the professor and the TAs, you
     may freely seek help on this assignment from other students.}
 \newcommand{\collaborationrules}{}
+
+% Some students turn in code that doesn't compile
+
+\newcommand{\policyforcodethatdoesnotcompile}{  % Leave empty if you choose not to set a policy
+    \subsection*{No Credit for Uncompilable Code}
+    If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\footnote{
+        At the TA's discretion, if they can make your code compile with \textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\% penalty on the resulting score.
+        The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.
+        If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.
+    }
+    Before turning in your code, be sure that your code compiles on \runtimeenvironment\ with the original driver code, the original header file(s), and the original \textit{Makefile}.
+}
+
+% What is your late policy/policies?
+
+\newcommand{\defaultlatepolicy}{    % The one you will use for most assignments; leave empty if you choose not to set a policy
+    \subsection*{Late Submissions}
+    This assignment is due before the start of your lab section.
+    The due date in \filesubmission\ is five minutes after that, which is ample time for you to arrive to lab and then discover that you'd forgotten to turn in your work.
+    We will accept late turn-ins up to one hour late, assessing a 10\% penalty on these late submissions.
+    Any work turned in more than one hour late will not be graded.
+}
+
+% Some students need a little extra help breaking big problems into smaller problems
+
+\providebool{offerdecompositionhints}
 
 % Software engineering (if you care about that)
 

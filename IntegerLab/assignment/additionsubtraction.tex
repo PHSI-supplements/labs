@@ -1,0 +1,162 @@
+Now that you've warmed up to bitwise operations and implementing operations without using C's built-in operations, let us turn your attention to arithmetic.
+Before you can add two $n$-bit values, you must be able to add two 1-bit values.
+
+\subsection{One Bit Full Adder} \label{subsec:one-bit-full-adder}
+
+In the \function{one_bit_full_addition()} function, you will implement a 1-bit full adder;
+that is, an adder that takes two operand bits and a carry-in bit, and it produces a sum bit and a carry-out bit.
+
+The function takes one argument, a structure containing five fields.
+As described in Section~\ref{subsubsec:alu.h}, these five fields are the operand bits \lstinline{a} and \lstinline{b}, the carry-in bit \lstinline{c_in}, the sum bit \lstinline{sum}, and the carry-out bit \lstinline{c_out}.
+When the structure is passed in to the function, only \lstinline{a}, \lstinline{b}, and \lstinline{c_in} are populated.
+Your task is to populate the \lstinline{sum} and \lstinline{c_out} fields, and return the structure.
+
+Implement a 1-bit full adder using bitwise operations.
+Because the fields are guaranteed to be strictly 1 or 0, you do not need to apply any of the test functions to reduce them to 1 or 0.
+
+\subsubsection*{Check your work}
+
+Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying all possible values.
+When you enter the inputs for your 1-bit full adder, only the least significant bit of each operand will be used.
+For example:
+\begin{verbatim}
+    Enter ... "add1 <binary_value1> <binary_value2> <carry_in>" ...: add1 0 0 0
+    expected: 0 + 0 + 0 = 0 carry 0
+    actual:   0 + 0 + 0 = 0 carry 0
+
+    Enter ... "add1 <binary_value1> <binary_value2> <carry_in>" ...: add1 0 0 1
+    expected: 0 + 0 + 1 = 1 carry 0
+    actual:   0 + 0 + 1 = 1 carry 0
+\end{verbatim}
+
+Check your code with all eight possible inputs, comparing your actual results with the expected results.
+
+
+\subsection{Ripple-Carry Adder} \label{subsec:ripple-carry-adder}
+
+Use your 1-bit full adder to implement a 32-bit ripple-carry adder.
+As a reminder, in a ripple-carry adder, the carry-out bit from bit position $n$ becomes the carry-in bit for bit position $n+1$.
+
+Use whatever code that you need, that does not violate any of this assignment's constraints, to populate the input fields of a \lstinline{one_bit_adder_t} variable and pass that variable to \function{onez_bit_full_addition()}.
+Use the \lstinline{sum} field to contribute to the 32-bit sum and the \lstinline{c_out} bit as the \lstinline{c_in} bit of the next bit position.
+Repeatedly do this until you have added all 32-bit positions, resulting in the 32-bit sum.
+
+\subsubsection*{Check your work}
+
+Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.
+When you enter the inputs for your 32-bit adder, the operands will be interpreted as hexadecimal values even if you omit the leading ``0x'', and only the least-significant bit of the carry-in will be used.
+For example:
+\begin{verbatim}
+    Enter ... "add32 <hex_value1> <hex_value2> <carry_in>" ...: add32 0x1a 0x22 0
+    expected: 0x0000001A + 0x00000022 + 0 = 0x0000003C
+    actual:   0x0000001A + 0x00000022 + 0 = 0x0000003C
+
+    Enter ... "add32 <hex_value1> <hex_value2> <carry_in>" ...: add32 1a 22 1
+    expected: 0x0000001A + 0x00000022 + 1 = 0x0000003D
+    actual:   0x0000001A + 0x00000022 + 1 = 0x0000003D
+\end{verbatim}
+
+Check your code with other values, comparing your actual results with the expected results.
+
+
+\subsection{16-Bit Addition}
+
+The \function{add()} function, along with the other arithmetic functions, returns an \lstinline{alu_result_t} structure.
+
+Having implemented a 32-bit adder, you can use it for your 16-bit addition function.
+The 16-bit sum will be the lower 16 bits of the 32-bit adder's sum;
+place this sum in the \lstinline{alu_result_t} variable's \lstinline{result} field.
+
+Your remaining task for addition is to examine the 32-bit sum to determine whether your \textit{16-bit} addition overflowed.
+Assume that the operands are unsigned 16-bit integers and determine whether overflow occurred;
+set the \lstinline{alu_result_t} variable's \lstinline{unsigned_overflow} flag accordingly.
+Now assume that hte operands are signed 16-bit integers and determine whether overflow occurred;
+set the \lstinline{alu_result_t} variable's \lstinline{signed_overflow} flag accordingly.
+
+
+\subsubsection*{Check your work}
+
+Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.
+For example:
+\begin{verbatim}
+    Enter ... a two-operand arithmetic expression... or "quit": 3 + 15
+    UNSIGNED ADDITION
+        expected result (hexadecimal): 0x0003 + 0x000F = 0x0012
+        expected result (unsigned):    3 + 15 = 18	overflow: false
+        actual result (hexadecimal):   0x0003 + 0x000F = 0x0012
+        actual result (unsigned):      3 + 15 = 18	overflow: false
+    SIGNED ADDITION
+        expected result (hexadecimal): 0x0003 + 0x000F = 0x0012
+        expected result (signed):      3 + 15 = 18	overflow: false
+        actual result (hexadecimal):   0x0003 + 0x000F = 0x0012
+        actual result (signed):        3 + 15 = 18	overflow: false
+
+    Enter ... a two-operand arithmetic expression... or "quit": 0x6000 + 0x3000
+    UNSIGNED ADDITION
+        expected result (hexadecimal): 0x6000 + 0x3000 = 0x9000
+        expected result (unsigned):    24576 + 12288 = 36864	overflow: false
+        actual result (hexadecimal):   0x6000 + 0x3000 = 0x9000
+        actual result (unsigned):      24576 + 12288 = 36864	overflow: false
+    SIGNED ADDITION
+        expected result (hexadecimal): 0x6000 + 0x3000 = 0x9000
+        expected result (signed):      24576 + 12288 = -28672	overflow: true
+        actual result (hexadecimal):   0x6000 + 0x3000 = 0x9000
+        actual result (signed):        24576 + 12288 = -28672	overflow: true
+\end{verbatim}
+
+If you are performing this lab on \runtimeenvironment, then the expected overflow flags are obtained directly from flags set in the processor's ALU and are authoritative.\footnote{
+    If you are not performing this lab on \runtimeenvironment\ and receive the compile-time warning ``Some of the code to determine the *expected* supplemental\_result and *expected* flags is not yet defined'' then the expected overflow flags should not be trusted.
+}
+
+Check your code with other values, comparing your actual results with the expected results.
+Use positive and negative operands.
+Generate sums that produce signed overflow, sums that produce unsigned overflow, and sums that produce neither.
+
+
+\subsection{16-Bit Subtraction}
+
+Having implemented a 32-bit adder, you can use it for your 16-bit subtraction function.
+If you use the adder as discussed in Chapter~3 and in lecture, the 16-bit difference will be the lower 16 bits of the 32-bit adder's sum;
+place this difference in the \lstinline{alu_result_t} variable's \lstinline{result} field.
+
+Your challenges for this function will be using the ripple-carry adder to perform subtraction, and detecting signed- and unsigned overflow.
+Note that C will promote 16-bit operands to 32 bits when they're passed as arguments the 32-bit adder;
+this promotion includes extending the sign bit into the upper 16 bits.
+If you prevent this sign extension (that is, if you ensure the upper 16 bits are all 0s) then you will be able to apply the overflow rules discussed in Chapter~3 and in lecture.
+
+
+\subsubsection*{Check your work}
+
+Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.
+For example:
+\begin{verbatim}
+    Enter ... a two-operand arithmetic expression... or "quit": 15 - 25
+    UNSIGNED SUBTRACTION
+        expected result (hexadecimal): 0x000F - 0x0019 = 0xFFF6
+        expected result (unsigned):    15 - 25 = 65526	overflow: true
+        actual result (hexadecimal):   0x000F - 0x0019 = 0xFFF6
+        actual result (unsigned):      15 - 25 = 65526	overflow: true
+    SIGNED SUBTRACTION
+        expected result (hexadecimal): 0x000F - 0x0019 = 0xFFF6
+        expected result (signed):      15 - 25 = -10	overflow: false
+        actual result (hexadecimal):   0x000F - 0x0019 = 0xFFF6
+        actual result (signed):        15 - 25 = -10	overflow: false
+
+    Enter ... a two-operand arithmetic expression... or "quit": 0x100 - 0x7F
+    UNSIGNED SUBTRACTION
+        expected result (hexadecimal): 0x0100 - 0x007F = 0x0081
+        expected result (unsigned):    256 - 127 = 129	overflow: false
+        actual result (hexadecimal):   0x0100 - 0x007F = 0x0081
+        actual result (unsigned):      256 - 127 = 129	overflow: false
+    SIGNED SUBTRACTION
+        expected result (hexadecimal): 0x0100 - 0x007F = 0x0081
+        expected result (signed):      256 - 127 = 129	overflow: false
+        actual result (hexadecimal):   0x0100 - 0x007F = 0x0081
+        actual result (signed):        256 - 127 = 129	overflow: false
+\end{verbatim}
+
+As with addition, if you are performing this lab on \runtimeenvironment, then the expected overflow flags are obtained directly from flags set in the processor's ALU\@.
+
+Check your code with other values, comparing your actual results with the expected results.
+Use positive and negative operands.
+Generate differences that produce signed overflow, sums that produce unsigned overflow, and sums that produce neither.

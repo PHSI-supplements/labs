@@ -1,0 +1,79 @@
+In this assignment, you will implement a 16-bit ALU\@.
+You will implement logical boolean operations and arithmetic using only bitwise operations, bit shift operations, a small amount of starter code, and other code that you will write.
+Specifically, the ALU's functions are:
+\begin{itemize}
+    \item Logical NOT
+    \item Logical AND
+    \item Logical OR
+    \item Comparisons, both equality and inequality
+    \item Addition, both signed and unsigned values
+    \item Subtraction, both signed and unsigned values
+    \item Multiplication, unsigned values only
+    \item Division, unsigned values only, and only when the divisor is a power of two
+\end{itemize}
+The operands for the arithmetic and comparison functions will be 16-bit integers.
+The arguments for the logical boolean functions are declared to be 32-bit values because that may make some of your code easier to implement;
+however, we will only grade these functions with 16-bit operands.
+The utility and ``building block'' functions that you will implement along the way will have arguments sized according to the functions' needs.
+
+
+\subsection{Constraints}
+
+You may not use C's built-in arithmetic and logical boolean operations.
+Specifically, you may not use addition (+), increment (++), subtraction(-), decrement(-{}-), multiplication($*$), division(/), modulo (\%), logical NOT (!), logical AND (\&\&), or logical OR ($||$).
+You may not use C's comparators;
+specifically, you are not permitted to use equals (==), not-equals (!=), less-than ($<$), less-than-or-equal-to ($<=$), greater-than-or-equal-to ($>=$), or greater-than ($>$).
+You may not use floating-point operators as a substitute for integer operators.
+
+You may not use arrays as truth tables.
+You may not use inline assembly code.
+
+You may not use any libraries.
+This prohibition includes, but is not limited to, C's \textit{math} library.
+If you find yourself \lstinline{#include}ing any header files other than \textit{alu.h}, you are violating this constraint.
+
+The time-complexity of all operations must be polynomial in the number of bits required to represent the values.
+Superpolynomial solutions, such as (but not limited to) implementing multiplication by repeatedly adding the multiplicand to itself $multiplier$ times, or implementing division by repeatedly subtracting the divisor from the dividend, are prohibited.
+
+You may not change the signatures of any functions that you are required to complete for this assignment.
+If you write helper functions that are not required, then they may have any signature that you deem necessary
+(your helper functions must also comply with the assignment's constraints).
+
+You are permitted to use C's bitwise operations and bit shift operations, including bitwise complement ($\sim$), bitwise AND (\&), bitwise inclusive OR ($|$), bitwise XOR (\^{}), left shift ($<<$), and arithmetic and logical right shift ($>>$).
+You may cast between integer types.
+You may use loops, conditionals, function calls, structs, and (except as noted above) arrays.
+And, of course, you may use any of the provided starter code and any code that you write by yourself for this assignment.
+
+
+%\ifbool{offerdecompositionhints}{
+    \subsection{Problem Decomposition}
+
+    The logical operations offer little opportunity for decomposition: determine whether each operand should be interpreted as true or false, and find a way to return the appropriate boolean value.
+
+    Inequality comparison requires that you use a mathematical operation to deduce which operand is greater than the other.
+    Equality comparison can be decomposed either into using that mathematical operation and deducing that neither operand is greater than the other, or it can be decomposed into determining whether the two operands have the same bit pattern.
+
+    Arithmetic, however, is a little more complex.
+    Before you can add sixteen bit positions, you must be able to add one bit position.
+    By chaining the carry bits for each bit position, you can add an arbitrary number of bit positions.
+    You must also be able to detect both signed and unsigned overflow.
+    Finally, you must be able to use an adder to perform subtraction.
+
+    Before you can multiply arbitrary values together, you must be able to multiply a value by a power of two.
+    You must also be able to add those intermediate products together;
+    because the multiplicand and multiplier are 16-bit values, you need to be prepared to add 32-bit values as part of this multiplication.
+
+    Implementing division requires that you be able to determine whether the divisor is 0 and also that you be able to divide a value by a power of two.
+%}{}
+
+
+\subsection{Suggestion for Loops}
+
+Some of the functions in this assignment will require loops that execute a predetermined number of iterations.
+The obvious approach, the one that you were surely taught, is to set a loop counter to 0 and then increment the counter until it reaches the desired number of iterations.
+Because you cannot use C's arithmetic operations in this assignment, you cannot use this approach until \textit{after} you have implemented addition.
+
+An alternative that will work within this assignment's constraints is to use bit shifts.
+Notice that a 16-bit unsigned integer initially set to 1 will become 0 after it has been left-shifted 16 times.
+Similarly, a 32-bit unsigned integer initially set to 1 will become 0 after it has been left-shifted 32 times.
+If you need to iterate an arbitrary number of times, then an unsigned integer initially set to $2^{n-1}$ will become 0 after it has been right-shifted $n$ times, assuming that the integer type you use has at least $n$ bits.
