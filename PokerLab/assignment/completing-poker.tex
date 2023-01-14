@@ -43,6 +43,10 @@ The types of hands (from most desirable to least desirable) are:
 
 \subsection{Study the Code} \label{subsec:studythecode}
 
+When you provide your answers in \textit{answers.txt}, bear in mind that while it's good to know that you can read code, what we're really looking for is that you understand C's logical boolean operations.
+You will receive a half-point for demonstrating that you understand what the outputs of C's logical boolean operations are and what they mean,
+and you will receive a half-point for demonstrating that you fully understand how the inputs to C's logical boolean operations are interpreted.
+
 Look at the code for \function{is_pair()}.
 Notice that the parameter \lstinline{hand}'s type is \lstinline{card*}; that is, \lstinline{}{hand} is a pointer to a \lstinline{}{card}.
 In the code, though, we treat \lstinline{}{hand} as though it were an array.
@@ -50,18 +54,21 @@ This is because in C, arrays are pointers, and we can treat pointers as arrays.
 Now look at the rest of the code in \function{is_pair()}.
 Why does this return a \textbf{1} when the hand contains at least one pair?
 Why does it return a \textbf{0} when the hand contains no pairs?
-If you can't determine this on your own, you may talk it over with other students or the TA. Type your answer in \textit{answers.txt}.
+If you can't determine this on your own, you may talk it over with other students or the TA.
+Type your answer in \textit{answers.txt}.
 
 Look at the code for \function{is_flush()}.
 Why does this return a \textbf{1} when all cards in the hand have the same suit?
 Why does it return a \textbf{0} when at least two cards have different suits than each other?
-If you can't determine this on your own, you may talk it over with other students or the TA. Type your answer in \textit{answers.txt}.
+If you can't determine this on your own, you may talk it over with other students or the TA.
+Type your answer in \textit{answers.txt}.
 
 Look at the code for \function{is_straight()}.
 This is a little more challenging to understand than \function{is_pair()} and \function{is_flush()}.
 Why does it return a \textbf{1} when all cards in the hand are in sequence?
 Why does it return a \textbf{0} when they are not in sequence?
-If you can't determine this on your own, you may talk it over with other students or the TA. Type your answer in \textit{answers.txt}.
+If you can't determine this on your own, you may talk it over with other students or the TA.
+Type your answer in \textit{answers.txt}.
 
 Look at the code for \function{is_two_pair()}.
 Recall that in C, arrays are pointers.
@@ -80,3 +87,6 @@ Then have the program print out the five cards in the hand.
 Finally, by calling the \function{is...()} functions, determine the best-possible characterization of the hand and print out that information.
 
 Now write the code for \function{is_three_of_kind()}, \function{is_full_house()}, and \function{is_four_of_kind()}.
+
+You will receive half-credit for \function{main()}, \function{is_three_of_kind()}, \function{is_full_house()}, and \function{is_four_of_kind()} if you make a good-faith effort at implementing these functions as specified.
+You will receive full credit for these functions if you implement them correctly.

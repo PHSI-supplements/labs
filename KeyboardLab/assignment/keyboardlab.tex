@@ -1,5 +1,5 @@
 %%
-%% KeyboardLab (c) 2021-22 Christopher A. Bohn
+%% KeyboardLab (c) 2021-23 Christopher A. Bohn
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 %% limitations under the License.
 %%
 
-\input{../../common/assignment.tex}
-\input{../../common/semester.tex}
-\input{../../common/storylines.tex}
+\input{../../common/assignment}
+\input{../../common/semester}
+\input{../../common/storylines}
 
 \lstset{language=c, numbers=left, showstringspaces=false,
     moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
@@ -33,21 +33,23 @@
 \begin{document}
 \labidentifier
 
-\input{frontmatter}
+\pdfbookmark[1]{Frontmatter}{frontmatter}                                   \input{frontmatter}
 
 \softwareengineeringfrontmatter
 
-\section*{Scenario}                         \FirstDayOnTheJob
+\section*{Scenario}                                                         \FirstDayOnTheJob
 
-\section{Using the ASCII table}             \input{using-ascii-table}
+\section{Assignment Summary}                                                \input{assignmentsummary}
 
-\section{Treating Characters as Numbers}    \input{characters-as-numbers}
+\section{Using the ASCII table} \label{sec:asciiTable}                      \input{using-ascii-table}
 
-\section{Using Bitmasks and Shifting Bits}  \input{bit-operations}
+\section{Treating Characters as Numbers} \label{sec:charactersAsNumbers}    \input{characters-as-numbers}
 
-\section{Turn-in and Grading}               \input{grading}
+\section{Using Bitmasks and Shifting Bits} \label{sec:bitOps}               \input{bit-operations}
 
-\section*{Epilogue}                         \HasKeyboard
+\section{Turn-in and Grading}                                               \input{grading}
+
+\section*{Epilogue}                                                         \HasKeyboard
 
 \textit{To be continued...}
 

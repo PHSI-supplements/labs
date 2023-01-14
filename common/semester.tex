@@ -1,6 +1,6 @@
 %%
 %% labs/common/semester.tex
-%% (c) 2021-22 Christopher A. Bohn
+%% (c) 2021-23 Christopher A. Bohn
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -14,17 +14,9 @@
 %%
 
 
-% Customize the semester (or quarter) and the course number
+% Customize the semester (or quarter)
 
-\newcommand{\courseterm}{Fall 2022}
-\newcommand{\coursenumber}{CSCE 231}
-
-% Customize how a typical lab will be managed;
-% you can always use \renewcommand for one-offs
-
-\newcommand{\runtimeenvironment}{your account on the \textit{csce.unl.edu} Linux server}
-\newcommand{\filesource}{Canvas or {\footnotesize$\sim$}cse231 on \textit{csce.unl.edu}}
-\newcommand{\filesubmission}{Canvas}
+\newcommand{\courseterm}{Spring 2023}
 
 % Customize for the I/O lab hardware
 
@@ -38,15 +30,11 @@
 \setbool{usedisplayfont}{true}
 
 \newcommand{\obtaininghardware}{
-    The EE Shop has prepared ``class kits'' for CSCE 231; your class kit costs \$30.
+    The EE Shop has prepared ``class kits'' for \coursenumber; your class kit costs \$30.
     The EE Shop is located at 122 Scott Engineering Center and is open M-F 7am-4pm. You do not need an appointment.
     You may pay at the window with cash, with a personal check, or with your NCard.
     The EE shop does \textit{not} accept credit cards.
 }
-
-% Update to reflect the CS2 course(s) at your institute
-
-\newcommand{\cstwo}{CSCE~156, RAIK~184H, or SOFT~161}
 
 % Do your students need a little extra help breaking big problems into smaller problems?
 
@@ -60,67 +48,89 @@
 
 \newcommand{\pokerlabnumber}{1}
 \newcommand{\pokerlabcollaboration}{
-    Sections~\ref{sec:connecting}, \ref{sec:terminology}, \ref{sec:gettingstarted}, \ref{subsec:typesofpokerhands}, and~\ref{subsec:studythecode}: \freecollaboration
+    Sections~\ref{sec:connecting}, \ref{subsec:terminology}, \ref{sec:gettingstarted}, \ref{subsec:typesofpokerhands}, and~\ref{subsec:studythecode}: \freecollaboration
+
     Sections~\ref{sec:completingcard} and~\ref{subsec:completepoker}: \individualeffort
 }
-\newcommand{\pokerlabdue}{Week of August 29, before the start of your lab section}
+\newcommand{\pokerlabdue}{Week of January 30, before the start of your lab section}
+\newcommand{\pokerlablatepolicy}{\defaultlatepolicy}
 
-\newcommand{\keyboardlabnumber}{xx}
+\newcommand{\keyboardlabnumber}{2}
 \newcommand{\keyboardlabcollaboration}{\individualeffort}
-\newcommand{\keyboardlabdue}{soon}
+\newcommand{\keyboardlabdue}{Week of February 6, before the start of your lab section}
+\newcommand{\keyboardlablatepolicy}{\defaultlatepolicy}
 
-\newcommand{\pointerlabnumber}{xx}
+\newcommand{\pointerlabnumber}{3}
 \newcommand{\pointerlabcollaboration}{\individualeffort}
-\newcommand{\pointerlabdue}{soon}
+\newcommand{\pointerlabdue}{Week of February 13, before the start of your lab section}
+\newcommand{\pointerlablatepolicy}{\defaultlatepolicy}
 
-\newcommand{\keyboardpointerlabnumber}{2}
+\newcommand{\keyboardpointerlabnumber}{xx}
 \newcommand{\keyboardpointerlabcollaboration}{\individualeffort}
-\newcommand{\keyboardpointerlabdue}{Week of September 12, before the start of your lab section}
+\newcommand{\keyboardpointerlabdue}{soon}
+\newcommand{\keyboardpointerlablatepolicy}{\defaultlatepolicy}
 
-\newcommand{\integerlabnumber}{3}
+\newcommand{\integerlabnumber}{4}
 \newcommand{\integerlabcollaboration}{\individualeffort}
-\newcommand{\integerlabdue}{Week of September 19, before the start of your lab section}
+\newcommand{\integerlabdue}{Week of February 20, before the start of your lab section}
 \newcommand{\integerlablatepolicy}{\defaultlatepolicy}
 
-\newcommand{\floatlabnumber}{4}
+\newcommand{\floatlabnumber}{5}
 \newcommand{\floatlabcollaboration}{\individualeffort}
-\newcommand{\floatlabdue}{Week of September 26, before the start of your lab section}
+\newcommand{\floatlabdue}{Week of February 27, before the start of your lab section}
+\newcommand{\floatlablatepolicy}{\defaultlatepolicy}
 
-\newcommand{\addressinglabnumber}{5}
+\newcommand{\addressinglabnumber}{6}
 \newcommand{\addressinglabcollaboration}{\individualeffort}
-\newcommand{\addressinglabdue}{Week of October 3, before the start of your lab section}
+\newcommand{\addressinglabdue}{Week of March 6, before the start of your lab section}
+\newcommand{\addressinglablatepolicy}{\defaultlatepolicy}
 
-%bomblab: 6, due Oct 19/20/21
-%attacklab: 7, due Oct 26/31/Nov1
+%bomblab: 7, due mar 27
+%attacklab: 8, due apr 3
 
-\newcommand{\duplicatorlabnumber}{8}
+\newcommand{\duplicatorlabnumber}{9}
 \newcommand{\duplicatorlabcollaboration}{\individualeffort}
-\newcommand{\duplicatorlabdue}{Before the start of your lab section on November 2, 7, or 8}
+% \newcommand{\duplicatorlabdue}{Before the start of your lab section on November 2, 7, or 8}
+\newcommand{\duplicatorlabdue}{Week of April 10, before the start of your lab section}
+\newcommand{\duplicatorlablatepolicy}{\defaultlatepolicy}
 
-\newcommand{\pollinglabnumber}{9}
+\newcommand{\pollinglabnumber}{10}
 \newcommand{\pollinglabcollaboration}{\individualeffort}
-\newcommand{\pollinglabdue}{Before the start of your lab section on November 9, 14, or 15}
+% \newcommand{\pollinglabdue}{Before the start of your lab section on November 9, 14, or 15}
+\newcommand{\pollinglabdue}{Week of April 17, before the start of your lab section}
 \newcommand{\pollinglabenvironment}{your \developmentboard-based class hardware kit}
+\newcommand{\pollinglablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\ioprelabnumber}{\pollinglabnumber-prelab}
 \newcommand{\ioprelabcollaboration}{\freecollaboration}
-\newcommand{\ioprelabdue}{Before the start of your lab section on November 2, 7, or 8}
+\newcommand{\ioprelabdue}{\duplicatorlabdue}
+\newcommand{\ioprelablatepolicy}{\defaultlatepolicy}
 
-\newcommand{\interruptlabnumber}{10}
+\newcommand{\interruptlabnumber}{11}
 \newcommand{\interruptlabcollaboration}{\individualeffort}
-\newcommand{\interruptlabdue}{Before the start of your lab section on November 16, 21, or 22}
+% \newcommand{\interruptlabdue}{Before the start of your lab section on November 16, 21, or 22}
+\newcommand{\interruptlabdue}{Week of April 24, before the start of your lab section}
 \newcommand{\interruptlabenvironment}{your \developmentboard-based class hardware kit}
+\newcommand{\interruptlablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\capstonelab}{ComboLock}    % this will come into play when we generalize capstonelab
-\newcommand{\capstonelabnumber}{11}
+\newcommand{\capstonelabnumber}{12}
 \newcommand{\capstonelabcollaboration}{\teameffort}
-\newcommand{\capstonelabdue}{Before the start of your lab section on November 30, December 5, or December 6\footnote{See Piazza for the due dates of teams with students from different lab sections.}}
+% \newcommand{\capstonelabdue}{Before the start of your lab section on November 30, December 5, or December 6\footnote{See Piazza for the due dates of teams with students from different lab sections.}}
+\newcommand{\capstonelabdue}{Week of May 8, before the start of your lab section\footnote{See Piazza for the due dates of teams with students from different lab sections.}}
 \newcommand{\capstonelabenvironment}{your \developmentboard-based class hardware kit}
+\newcommand{\capstonelablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\memorylabnumber}{12}
 \newcommand{\memorylabcollaboration}{This is an individual-effort project. You may discuss the nature of memory technologies and of memory hierarchies with classmates, but you must draw your own conclusions.}
-\newcommand{\memorylabdue}{Week of December 5, at the end of your lab section}
+\newcommand{\memorylabdue}{Week of May 8, at the end of your lab section}
 \newcommand{\memorylabenvironment}{your \developmentboard-based class hardware kit and your account on the \textit{csce.unl.edu} Linux server}
+\newcommand{\memorylablatepolicy}{
+    This assignment is due at the end of your lab section.
+    The due date in \filesubmission\ is five minutes after that, which is ample time for you work for the full lab period and then turn in your work without \filesubmission\ reporting your work as having been turned in late.
+    We will accept late turn-ins up to one hour late, assessing a 10\% penalty on these late submissions.
+    Any work turned in more than one hour late will not be graded.
+}
 
 % Dead Labs
 

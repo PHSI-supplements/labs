@@ -1,0 +1,38 @@
+In this assignment, you will either re-familiarize yourself with the C programming language, or you will begin your initial familiarization with C\@.
+The syntax of C syntax is very similar to Java's syntax, which is to say that Sun Microsystems borrowed much of C's syntax when they created the Java language to give C developers something familiar.
+There are notable differences in the languages, as detailed in the textbook's first chapter.
+In this assignment you will encounter some of those differences, such as the absence of an explicit \textit{boolean} type, strings as arrays, arrays as pointers, explicitly allocating memory, and \lstinline{printf} format strings.
+
+One notable difference between Java and C is that Java's behavior is completely specified;
+the C standard explicitly identifies some parts of the language as having ``undefined behavior.''
+Undefined behavior means that the program might do something different if you change to a different compiler, operating system, version of either, processor, or optimization level.
+For this reason, each lab assignment specifies the runtime environment and provides specific instructions to build your program;
+\textbf{following those instructions and testing your code in the specified environment will ensure that we see the same behavior during grading that you saw during testing}.
+
+There are other differences beyond what we'll see in this course's labs;
+our coverage of the C language is necessarily focused on what you need for this course.
+We encourage you to learn more about the C language on your own.
+
+\subsection{Effort-Based Grade (mostly)}
+
+As with all lab assignments, you will get out of this lab what you put into it.
+In most of the lab assignments, your grade will reflect the learning that you demonstrated.
+In this lab assignment, part of your grade will reflect that you attempted the lab.
+
+The questions that you'll need to answer will be graded based on how well you demonstrate an understanding of C's conditional expressions.
+The code that you need to write will be graded half on whether you attempted the problem and half on how well you completed the problem.
+
+\subsection{Poker Terminology} \label{subsec:terminology}
+
+In case you care not familiar with the game of Poker and/or the cards used to play Poker:
+
+The standard 52-card deck of ``French'' playing cards\footnote{\url{https://en.wikipedia.org/wiki/Standard_52-card_deck}} consists of 52 cards.
+The cards are divided into 4 ``suits,'' clubs ($\clubsuit$), diamonds ($\diamondsuit$), hearts ($\heartsuit$), and spades ($\spadesuit$).
+Each suit consists of 13 cards: the number cards 2--10, the ``face cards'' (Jack, Queen, King), and the Ace.
+In most card games (including Poker), the Jack is greater in value than the 10, the Queen is greater in value than the Jack, and the King is greater in value than the Queen.
+In some games, the Ace is lesser in value than the 2, in other games it is greater in value than the King, and in some games, it can be either.
+
+Poker\footnote{\url{https://en.wikipedia.org/wiki/Poker}} is a game of chance and skill played with a standard deck of 52 playing cards, in which players attempt to construct the best ``hand'' they can.
+While there are many variations of the game, they all have this in common.
+A hand is a set of five cards, and it can be categorized into types of hands (described in Section~\ref{subsec:typesofpokerhands}), which are ranked according to the statistical likelihood of being able to construct such a hand.
+When completed, the code in this assignment will generate a random hand and evaluate what type of hand it is.

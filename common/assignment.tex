@@ -1,6 +1,6 @@
 %%
 %% labs/common/assignment.tex
-%% (c) 2021-22 Christopher A. Bohn
+%% (c) 2021-23 Christopher A. Bohn
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -41,27 +41,35 @@
 \usepackage{amsmath}
 %\usepackage[dvipsnames]{xcolor}
 
-% These are placeholder commands and will be renewed in each lab
+% Update to reflect the course number that you're using these labs for
 
-\newcommand{\labnumber}{}
-\newcommand{\labname}{Lab \labnumber\ Assignment}
-\newcommand{\shortlabname}{}
-\newcommand{\duedate}{}
+\newcommand{\coursenumber}{CSCE 231}
+
+% Update to reflect the CS2 course(s) at your institute
+
+\newcommand{\cstwo}{CSCE~156, RAIK~184H, or SOFT~161}
+
+% Customize how a typical lab will be managed;
+% you can always use \renewcommand for one-offs
+
+\newcommand{\runtimeenvironment}{your account on the \textit{csce.unl.edu} Linux server}
+\newcommand{\filesource}{Canvas or {\footnotesize$\sim$}cse231 on \textit{csce.unl.edu}}
+\newcommand{\filesubmission}{Canvas}
 
 % Individual or team effort
 
-\newcommand{\individualeffort}{This is an individual-effort project. You may
-    discuss concepts and syntax with other students, but you may discuss
-    solutions only with the professor and the TAs. Sharing code with or copying
-    code from another student or the internet is prohibited.}
-\newcommand{\teameffort}{This is a team-effort project. You may discuss concepts
-    and syntax with other students, but you may discuss solutions only with your
-    assigned partner(s), the professor, and the TAs. Sharing code with or
-    copying code from a student who is not on your team, or from the internet,
-    is prohibited.}
-\newcommand{\freecollaboration}{In addition to the professor and the TAs, you
-    may freely seek help on this assignment from other students.}
 \newcommand{\collaborationrules}{}
+\newcommand{\individualeffort}{This is an individual-effort project.
+    You may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.
+    Sharing code with or copying code from another student or the internet is prohibited.}
+\newcommand{\limitedteameffort}{This is an individual-effort project with a limited opportunity for collaboration.
+    During your scheduled lab time, you may discuss problem decomposition and solution design with your assigned partner.
+    After your scheduled lab time, you may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.
+    Sharing code with or copying code from another student or the internet is prohibited.}
+\newcommand{\teameffort}{This is a team-effort project.
+    You may discuss concepts and syntax with other students, but you may discuss solutions only with your assigned partner(s), the professor, and the TAs.
+    Sharing code with or copying code from a student who is not on your team, or from the internet, is prohibited.}
+\newcommand{\freecollaboration}{In addition to the professor and the TAs, you may freely seek help on this assignment from other students.}
 
 % Some students turn in code that doesn't compile
 
@@ -72,7 +80,19 @@
         The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.
         If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.
     }
-    Before turning in your code, be sure that your code compiles on \runtimeenvironment\ with the original driver code, the original header file(s), and the original \textit{Makefile}.
+    Before turning in your code, be sure to compile and test your code on \runtimeenvironment\ with the original driver code, the original header file(s), and the original \textit{Makefile}.
+}
+
+\newcommand{\introducepolicyforcodethatdoesnotcompile}{  % For the first lab, which includes some effort-based credit
+    \subsection*{Normally No Credit for Uncompilable Code}
+    If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
+    For most lab assignments, this would mean that you would earn very few, if any, points.\footnote{
+        At the TA's discretion, if they can make your code compile with \textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\% penalty on the resulting score.
+        The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.
+        If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.
+    }
+    For \textit{this} lab assignment, you will still receive the credit you earned for attempting the assignment, even if it does not compile.
+    Before turning in your code, be sure to compile and test your code on \runtimeenvironment\ without changing any files that you were instructed not to change.
 }
 
 % What is your late policy/policies?
@@ -80,14 +100,10 @@
 \newcommand{\defaultlatepolicy}{    % The one you will use for most assignments; leave empty if you choose not to set a policy
     \subsection*{Late Submissions}
     This assignment is due before the start of your lab section.
-    The due date in \filesubmission\ is five minutes after that, which is ample time for you to arrive to lab and then discover that you'd forgotten to turn in your work.
+    The due date in \filesubmission\ is five minutes after that, which is ample time for you to arrive to lab and then discover that you'd forgotten to turn in your work without \filesubmission\ reporting your work as having been turned in late.
     We will accept late turn-ins up to one hour late, assessing a 10\% penalty on these late submissions.
     Any work turned in more than one hour late will not be graded.
 }
-
-% Some students need a little extra help breaking big problems into smaller problems
-
-\providebool{offerdecompositionhints}
 
 % Software engineering (if you care about that)
 
@@ -112,6 +128,19 @@
             a loop.}
     }{}
 }
+
+% Some students need a little extra help
+% breaking big problems into smaller problems
+
+\providebool{offerdecompositionhints}
+
+% These are placeholder commands
+% that will be renewed in each lab
+
+\newcommand{\labnumber}{}
+\newcommand{\labname}{Lab \labnumber\ Assignment}
+\newcommand{\shortlabname}{}
+\newcommand{\duedate}{}
 
 % You shouldn't need to customize these,
 % but you can if you like
@@ -162,12 +191,12 @@
     }
 }
 
-% deprecated
-\newcommand{\startdocument}{
-    \pagelayout
-	\begin{document}
-	\labidentifier  % I'm not sure why clion doesn't like you, but you're going away soon, so I'm not going to try to fix you
-}
+% % deprecated
+% \newcommand{\startdocument}{
+%     \pagelayout
+% 	\begin{document}
+% 	\labidentifier  % I'm not sure why clion doesn't like you, but you're going away soon, so I'm not going to try to fix you
+% }
 
 \newcommand{\rubricitem}[2]{\item[\underline{\hspace{1cm}} +#1] #2}
 \newcommand{\bonusitem}[2]{\item[\underline{\hspace{1cm}} Bonus +#1] #2}

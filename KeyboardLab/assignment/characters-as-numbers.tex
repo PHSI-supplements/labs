@@ -22,3 +22,10 @@ You can double-check that you aren't using disallowed keys by running the constr
 \texttt{./constraint-check.sh} \\
 Because you are allowed at most one \lstinline{if} statement in each function, you may see two lines with \lstinline{if} statements reported when the script checks for \textquotesingle f\textquotesingle.
 %You may also see some comments reported when the script checks for \textquotesingle *\textquotesingle.
+
+The \function{iz_digit()} function is worth four points, two for correctly determining that a character is a digit and two for correctly determining that a character is not a digit.
+Partial credit is available for determining that a character is a digit but returning a non-zero value other than 1, and partial credit is available if you fail to determine that a non-printable character is not a digit.
+You will receive no credit if you simply hard-code a return value, such as \lstinline{return 0}.
+
+The \function{decapitalize()} function is worth four points, two for converting uppercase letters to lowercase, one for returning unmodified lowercase letters, and one for returning unmodified non-letter characters.
+You will receive no credit if you always return the original character, such as \lstinline{return character} or otherwise do not attempt the task.
