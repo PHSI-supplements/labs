@@ -1,0 +1,54 @@
+{
+  "targetFiles": [
+    "problem2.c"
+  ],
+  "commentDelimiters": {
+    "inlineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "codeBlockDelimiters": [
+    "{",
+    "}"
+  ],
+  "disallowedCalls": [],
+  "disallowedKeywords": [
+    "goto"
+  ],
+  "limitedLoopTerminations": {
+    "0": [
+      "break",
+      "continue",
+      "return"
+    ]
+  },
+  "limitedCharacters": {
+    "0": [
+      "W",
+      "w",
+      "\\",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "8",
+      "!",
+      "@",
+      "#",
+      "$",
+      "%",
+      "^",
+      "*",
+      "s",
+      "S",
+      "F"
+    ],
+    "2": [
+      "f"
+    ]
+  }
+}

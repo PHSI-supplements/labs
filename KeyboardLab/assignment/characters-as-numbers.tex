@@ -12,16 +12,13 @@ Edit \texttt{problem2.c} so that
 \end{itemize}
 You may not \lstinline{#include} any headers, you may not use any number keys other than the 0, 9, and 7 (which is also used for \textbf{\texttt{\&}}) keys, you may not use \lstinline{switch} statements, and you may use at most one \lstinline{if} statement in each function.
 
-Build the executable with the command: \texttt{make keyboardlab2} -- be sure to fix both errors and warnings.
+Build the executable with the command: \texttt{make} -- be sure to fix both errors and warnings.
 
-Run the executable with the command: \texttt{./keyboardlab2}.
+Run the executable with the command: \texttt{./keyboardlab} and select option 2 (``check problem 2'').
 You will be prompted to enter a character, and the program will use that character to compare the outputs of your functions to the reference functions from \texttt{ctype.h}.
-You will repeatedly be prompted to enter characters until you enter a tab character.
 
-You can double-check that you aren't using disallowed keys by running the constraint-checking shell script: \\
-\texttt{./constraint-check.sh} \\
-Because you are allowed at most one \lstinline{if} statement in each function, you may see two lines with \lstinline{if} statements reported when the script checks for \textquotesingle f\textquotesingle.
-%You may also see some comments reported when the script checks for \textquotesingle *\textquotesingle.
+You can double-check that you aren't using disallowed keys by running the constraint-checking Python script: \\
+\texttt{python constraint-check.py keyboardlab2.json}
 
 The \function{iz_digit()} function is worth four points, two for correctly determining that a character is a digit and two for correctly determining that a character is not a digit.
 Partial credit is available for determining that a character is a digit but returning a non-zero value other than 1, and partial credit is available if you fail to determine that a non-printable character is not a digit.

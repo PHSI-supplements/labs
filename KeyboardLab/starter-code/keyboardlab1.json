@@ -1,0 +1,34 @@
+{
+  "targetFiles": [
+    "problem1.c"
+  ],
+  "commentDelimiters": {
+    "inlineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "codeBlockDelimiters": [
+    "{",
+    "}"
+  ],
+  "disallowedCalls": [],
+  "disallowedKeywords": [
+    "goto"
+  ],
+  "limitedLoopTerminations": {
+    "0": [
+      "break",
+      "continue",
+      "return"
+    ]
+  },
+  "limitedCharacters": {
+    "0": [
+      "W",
+      "w",
+      "\\"
+    ]
+  }
+}

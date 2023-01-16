@@ -23,9 +23,9 @@ Hints:
     \item You can create an integer by producing its bit pattern through a series of bit operations
 \end{itemize}
 
-Build the executable with the command: \texttt{make keyboardlab3} -- be sure to fix both errors and warnings.
+Build the executable with the command: \texttt{make} -- be sure to fix both errors and warnings.
 
-Run the executable with the command: \texttt{./keyboardlab3}.
+Run the executable with the command: \texttt{./keyboardlab} and select option 3 (``check problem 3'').
 You will be prompted to enter a number.
 The program will then report whether or not it is even, and it will print the generated multiple of ten.
 Here are some test values you might try:
@@ -43,9 +43,8 @@ Here are some test values you might try:
     \end{tabular}
 \end{center}
 
-You can double-check that you aren't using disallowed keys by running the constraint-checking shell script: \\
-\texttt{./constraint-check.sh} \\
-%You may see some comments reported when the script checks for \textquotesingle /\textquotesingle.
+You can double-check that you aren't using disallowed keys by running the constraint-checking Python script: \\
+\texttt{python constraint-check.py keyboardlab3.json}
 
 The \function{is_even()} function is worth four points, two for correctly determining that an integer is even and  two for correctly determining that an integer is odd.
 Partial credit is available for determining that a character is odd but returning a non-zero value other than 1.

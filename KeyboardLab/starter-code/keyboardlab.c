@@ -20,6 +20,7 @@
  */
 
 #include <ctype.h>
+#include <errno.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -107,7 +108,7 @@ void check_problem1(void) {
                 i++;
             }
             printf("The strings differ at character %d\n", i);
-            printf("\t               ");
+            printf("                   ");
             int extra_spaces_needed =
                     ((isprint(buffer[i - 2]) || i < 2) ? 0 : 1) + ((isprint(buffer[i - 1]) || i < 1) ? 0 : 1);
             while (extra_spaces_needed) {
@@ -119,7 +120,7 @@ void check_problem1(void) {
             print_five_characters(buffer, i);
             printf("Desired message: ");
             print_five_characters(desired_message, i);
-            printf("\t               ");
+            printf("                   ");
             extra_spaces_needed =
                     ((isprint(buffer[i - 2]) || i < 2) ? 0 : 1) + ((isprint(buffer[i - 1]) || i < 1) ? 0 : 1);
             while (extra_spaces_needed) {
@@ -171,7 +172,13 @@ int main() {
         if (option < 0 || option > NUMBER_OF_PROBLEMS) {
             printf("Invalid choice %d. Please select a choice between 0 and %d.\n", option, NUMBER_OF_PROBLEMS);
         } else if (option == 0) {
-            running = false;
+            if (errno == EINVAL) {
+                printf("Invalid choice (%s). Please select a number between 0 and %d.\n", buffer, NUMBER_OF_PROBLEMS);
+                errno = 0;
+            } else {
+                printf("Goodbye.\n");
+                running = false;
+            }
         } else {
             problem_checkers[option]();
         }
