@@ -12,16 +12,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
+import functools
 import itertools
 import json
 import os
 import sys
 from numbers import Number
-from typing import Dict, Iterable, IO, List, Optional, Tuple, Union
-
-interesting_code_blocks = frozenset({'do', 'while', 'for', 'switch'})       # TODO: parameterize
-uninteresting_code_block_keywords = frozenset({'if', 'else', 'return'})     # TODO: parameterize
+from typing import Dict, Iterable, IO, List, Optional, Set, Tuple, Union
 
 
 def is_real_delimiter(delimiter: str, line: str) -> bool:
@@ -63,6 +60,42 @@ def keyword_is_present(keyword: str, line: str, code_block_start: str, code_bloc
     return found_keyword
 
 
+def operator_is_present(operator: str, line: str, all_operators: Iterable[str]) -> bool:
+    found_operator = False
+    if operator in line:
+        fragments = line.split(operator)
+        if len(fragments) > 1:
+            # is it part of a string or a literal character?
+            is_a_character = True
+            for i in range(1, len(fragments)):
+                number_of_quotes_to_left = functools.reduce(lambda x, y: x + y,
+                                                            [fragment.count('"') for fragment in fragments[:i]])
+                number_of_quotes_to_right = functools.reduce(lambda x, y: x+y,
+                                                             [fragment.count('"') for fragment in fragments[i:]])
+                character_to_left = ' ' if len(fragments[i - 1]) == 0 else fragments[i - 1][-1]
+                character_to_right = ' ' if len(fragments[i]) == 0 else fragments[i][0]
+                if not (character_to_left == '\'' and character_to_right == '\''
+                        or (number_of_quotes_to_left % 2 == 1) and (number_of_quotes_to_right % 2 == 1)):
+                    is_a_character = False
+            # TODO: is it really a pointer/reference?
+            part_of_a_pointer = False
+            pass
+            # is it really part of a different operator?
+            part_of_another_operator = False
+            possible_other_operators = {op for op in all_operators if operator in op and operator != op}
+            for other_operator in possible_other_operators:
+                # TODO: handle 3-character operators (not a problem for C)
+                assert len(operator) == 1 and len(other_operator) == 2
+                for i in range(1, len(fragments)):
+                    next_character = operator[0] if len(fragments[i]) == 0 else fragments[i][0]
+                    previous_character = operator[0] if len(fragments[i-1]) == 0 else fragments[i - 1][-1]
+                    if operator[0] == other_operator[0] and other_operator[1] == next_character \
+                            or operator[0] == other_operator[1] and other_operator[0] == previous_character:
+                        part_of_another_operator = True
+            found_operator = not is_a_character and not part_of_a_pointer and not part_of_another_operator
+    return found_operator
+
+
 def remove_comments(line: str, is_inside_comment_block: bool, block_comment_start: str,
                     block_comment_end: str, line_comment: str) -> Tuple[str, bool]:
     if is_inside_comment_block:
@@ -82,9 +115,10 @@ def remove_comments(line: str, is_inside_comment_block: bool, block_comment_star
     return line, is_inside_comment_block
 
 
-def track_code_blocks(code_block_stack: List[str], line: str, code_block_start: str, code_block_end: str) -> List[str]:
+def track_code_blocks(code_block_stack: List[str], interesting_code_blocks: Iterable[str], line: str,
+                      code_block_start: str, code_block_end: str) -> List[str]:
     # are we starting or ending a code block?
-    brace_has_been_processed: bool = False
+    delimiter_has_been_processed: bool = False
     possible_code_block: Optional[str] = None
     for keyword in interesting_code_blocks:
         if keyword in line:
@@ -96,33 +130,31 @@ def track_code_blocks(code_block_stack: List[str], line: str, code_block_start: 
                 if code_block_start in after:
                     code_block_stack.append(keyword)
                     possible_code_block = None
-                    brace_has_been_processed = True
-    if code_block_start in line and not brace_has_been_processed:
+                    delimiter_has_been_processed = True
+    if code_block_start in line and not delimiter_has_been_processed:
         if is_real_delimiter(code_block_start, line):
             if possible_code_block is not None:
                 code_block_stack.append(possible_code_block)
-                # possible_code_block = None
             else:
                 code_block_stack.append('OTHER')
     if code_block_end in line:
         if is_real_delimiter(code_block_end, line):
             code_block_stack.pop()
-    # # a few resets
-    # brace_has_been_processed = False
-    # for keyword in uninteresting_code_block_keywords:
-    #     if keyword_is_present(keyword, line, code_block_start, code_block_end):
-    #         possible_code_block = None
     return code_block_stack
 
 
 # noinspection PyUnusedLocal
 def hunt_for_violations(target_file: IO,
+                        loop_keywords: Iterable[str],
+                        benign_block_terminations: Dict[str, str],
                         comment_delimiters: Dict[str, Union[str, List[str]]],
                         code_block_delimiters: List[str],
-                        disallowed_calls: Iterable[str],                    # TODO: handle disallowed function calls
+                        all_operators: Iterable[str],
+                        disallowed_calls: Iterable[str],    # TODO: handle disallowed calls
                         disallowed_keywords: Iterable[str],
                         limited_loop_terminations: Dict[int, Iterable[str]],
-                        limited_characters: Dict[int, Iterable[str]]) -> List[str]:
+                        limited_characters: Dict[int, Iterable[str]],
+                        disallowed_operators: Iterable[str]) -> List[str]:
     violations: List[str] = []
     is_inside_comment_block: bool = False
     code_block_stack: List[str] = []
@@ -142,8 +174,13 @@ def hunt_for_violations(target_file: IO,
         # first some bookkeeping
         line, is_inside_comment_block = remove_comments(line, is_inside_comment_block,
                                                         block_comment_start, block_comment_end, line_comment)
-        code_block_stack = track_code_blocks(code_block_stack, line, code_block_start, code_block_end)
+        code_block_stack = track_code_blocks(code_block_stack,
+                                             set(loop_keywords).union(benign_block_terminations.values()),
+                                             line, code_block_start, code_block_end)
         # now let's look for violations
+        for operator in disallowed_operators:
+            if operator_is_present(operator, line, all_operators):
+                violations.append(f'`{operator}` in {target_file.name} on line {line_number}: {line}')
         for character in limited_character_occurrences.keys():
             number_of_occurrences: int = line.count(character)
             while number_of_occurrences > 0:
@@ -154,17 +191,20 @@ def hunt_for_violations(target_file: IO,
                 violations.append(f'`{keyword}` in {target_file.name} on line {line_number}: {line}')
         for keyword in disallowed_loop_terminations:
             if keyword_is_present(keyword, line, code_block_start, code_block_end):
-                if keyword == 'break' and code_block_stack[-1] == 'switch':
+                if keyword in benign_block_terminations.keys() \
+                        and code_block_stack[-1] == benign_block_terminations[keyword]:
                     pass
                 else:
                     block = None
+                    benign_code_blocks: Set[str] = set(benign_block_terminations.values())
+                    benign_code_blocks.add('OTHER')
                     for code_block in code_block_stack:
-                        if code_block not in {'switch', 'OTHER'}:
+                        if code_block not in benign_code_blocks:
                             block = code_block
                     if block is not None:
                         violations.append(f'`{keyword}` used to terminate `{block}` loop'
                                           f' in {target_file.name} on line {line_number}: {line}')
-    for character in limited_character_occurrences:
+    for character in limited_character_occurrences.keys():
         allowable_occurrences = list(filter(lambda i: character in limited_characters[i], limited_characters))[0]
         actual_occurrences = len(limited_character_occurrences[character])
         if actual_occurrences > allowable_occurrences:
@@ -173,7 +213,7 @@ def hunt_for_violations(target_file: IO,
                               f'in {target_file.name}')
             # we used a list to track the occurrences so that we could count them, but now
             # we'll convert that into a set so that we don't print a line with multiple occurrences multiple times
-            violations.extend({f'\t{detail}' for detail in limited_character_occurrences[character]})
+            violations.extend({f'\t{detail}' for detail in (limited_character_occurrences[character])})
     return [v.replace(os.linesep, '') for v in violations]
 
 
@@ -191,14 +231,18 @@ if __name__ == '__main__':
                 with open(filename, 'r') as source_code_file:
                     violations_in_file = hunt_for_violations(
                         target_file=source_code_file,
+                        loop_keywords=rules['codeBlockKeywords']['loops'],
+                        benign_block_terminations=rules['codeBlockKeywords']['benignBlockTerminations'],
                         comment_delimiters=rules['commentDelimiters'],
                         code_block_delimiters=rules['codeBlockDelimiters'],
+                        all_operators=rules['operators']['all'],
                         disallowed_calls=rules['disallowedCalls'],
                         disallowed_keywords=rules['disallowedKeywords'],
-                        limited_loop_terminations={int(limit): set(keywords) for limit, keywords in
-                                                   rules['limitedLoopTerminations'].items()},
-                        limited_characters={int(limit): set(characters) for limit, characters in
-                                            rules['limitedCharacters'].items()}
+                        limited_loop_terminations={int(limit): set(keywords)
+                                                   for limit, keywords in rules['limitedLoopTerminations'].items()},
+                        limited_characters={int(limit): set(characters)
+                                            for limit, characters in rules['limitedCharacters'].items()},
+                        disallowed_operators=rules['operators']['disallowed']
                     )
                     if len(violations_in_file) == 0:
                         report.append(f'constraint-check.py found no violations'

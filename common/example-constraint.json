@@ -1,0 +1,94 @@
+{
+  "targetFiles": [
+    "example-constraint-target.c"
+  ],
+  "commentDelimiters": {
+    "inlineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "codeBlockDelimiters": [
+    "{",
+    "}"
+  ],
+  "codeBlockKeywords": {
+    "loops": [
+      "do",
+      "while",
+      "for"
+    ],
+    "benignBlockTerminations": {
+      "break": "switch"
+    }
+  },
+  "operators": {
+    "all": [
+      "++",
+      "--",
+      ".",
+      "->",
+      "!",
+      "~",
+      "*",
+      "/",
+      "%",
+      "+",
+      "-",
+      "<<",
+      ">>",
+      "<",
+      "<=",
+      ">",
+      ">=",
+      "==",
+      "!=",
+      "&",
+      "^",
+      "|",
+      "&&",
+      "||",
+      "?",
+      "=",
+      "+=",
+      "-=",
+      "*=",
+      "/=",
+      "%=",
+      "<<=",
+      ">>=",
+      "&=",
+      "^=",
+      "|=",
+      ","
+    ],
+    "disallowed": [
+      "-",
+      "*",
+      "!="
+    ]
+  },
+  "disallowedCalls": [
+    "main"
+  ],
+  "disallowedKeywords": [
+    "goto"
+  ],
+  "limitedLoopTerminations": {
+    "0": [
+      "break",
+      "continue",
+      "return"
+    ]
+  },
+  "limitedCharacters": {
+    "0": [
+      "~"
+    ],
+    "2": [
+      "0",
+      "1"
+    ]
+  }
+}
