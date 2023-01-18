@@ -1,6 +1,7 @@
 {
   "targetFiles": [
-    "problem1.c"
+    "alu.c",
+    "basetwo.c"
   ],
   "commentDelimiters": {
     "inlineComment": "//",
@@ -63,7 +64,13 @@
       "|=",
       ","
     ],
-    "disallowed": []
+    "disallowed": [
+      "+",
+      "-",
+      "*",
+      "/",
+      "%"
+    ]
   },
   "disallowedCalls": [],
   "disallowedKeywords": [
@@ -77,10 +84,8 @@
     ]
   },
   "limitedCharacters": {
-    "0": [
-      "W",
-      "w",
-      "\\"
+    "1": [
+      "#"
     ]
   }
 }

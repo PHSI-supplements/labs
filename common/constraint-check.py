@@ -84,7 +84,7 @@ def operator_is_present(operator: str, line: str, all_operators: Iterable[str]) 
             part_of_another_operator = False
             possible_other_operators = {op for op in all_operators if operator in op and operator != op}
             for other_operator in possible_other_operators:
-                # TODO: handle 3-character operators (not a problem for C)
+                # TODO: handle 3-character operators
                 assert len(operator) == 1 and len(other_operator) == 2
                 for i in range(1, len(fragments)):
                     next_character = operator[0] if len(fragments[i]) == 0 else fragments[i][0]
