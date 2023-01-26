@@ -1,12 +1,16 @@
 %! suppress = MissingImport
 If you have not already done so, download \textit{CowPi.zip}.
 
-In the Arduino IDE's Sketch menu, install the CowPi library: \\
-\textit{Sketch} $\rightarrow$ \textit{Include Library} $\rightarrow$ \textit{Add .ZIP Library\dots}
-(see Figure~\ref{fig:add-library}).
-In the resulting popup window, navigate to your ``Downloads'' directory (or wherever you saved \textit{CowPi.zip} after downloading it), click on \textit{CowPi.zip}, and click on ``Open''.
-You should immediately get the message, ``Library Installed''.
-Close the Arduino IDE and then re-open the Arduino IDE\@.
+\begin{description}
+    \checkoffitem{In the Arduino IDE's Sketch menu, install the CowPi library: \\
+        \textit{Sketch} $\rightarrow$ \textit{Include Library} $\rightarrow$ \textit{Add .ZIP Library\dots}
+        (see Figure~\ref{fig:add-library}).}
+        \begin{itemize}
+            \item In the resulting popup window, navigate to your ``Downloads'' directory (or wherever you saved \textit{CowPi.zip} after downloading it), click on \textit{CowPi.zip}, and click on ``Open''.
+            \item You should immediately get the message, ``Library Installed''.
+        \end{itemize}
+    \checkoffitem{Close the Arduino IDE and then re-open the Arduino IDE\@.}
+\end{description}
 
 \begin{figure}
     \centering
@@ -17,7 +21,6 @@ Close the Arduino IDE and then re-open the Arduino IDE\@.
 From the Arduino IDE's File menu, you now have additional examples under the ``Examples from Custom Libraries'' heading: \\
 \textit{File} $\rightarrow$ \textit{Examples} $\rightarrow$ \textit{CowPi}
 (see Figure~\ref{fig:library-examples}).
-Open \textit{simple\_io\_test}.
 
 \begin{figure}
     \centering
@@ -25,29 +28,38 @@ Open \textit{simple\_io\_test}.
     \caption{Code examples for the class hardware kit are now available. \label{fig:library-examples}}
 \end{figure}
 
-Find these lines in the \function{setup()} function:
-
-\begin{lstlisting}[numbers=left, firstnumber=12]
+\begin{description}
+    \checkoffitem{Open \textit{simple\_io\_test}.}
+    \checkoffitem{Find these lines in the \function{setup()} function:}
+\begin{lstlisting}[numbers=left, firstnumber=13]
     cowpi_setup(SPI);
 //    cowpi_setup(I2C);
 \end{lstlisting}
+\end{description}
 
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{SPI}{
-    Make sure that the \lstinline{cowpi_setup(SPI)} line is uncommented and that the \lstinline{cowpi_setup(I2C)} line is commented-out.
-    The hardware kit is configured slightly differently, depending on which serial communication protocol is used with the display module, and this semester we will use the SPI protocol.
+    \begin{description}
+        \checkoffitem{Make sure that the \lstinline{cowpi_setup(SPI)} line is uncommented and that the \lstinline{cowpi_setup(I2C)} line is commented-out.}
+        \checkoffitem{The hardware kit is configured slightly differently, depending on which serial communication protocol is used with the display module, and this semester we will use the SPI protocol.}
+    \end{description}
 }{}
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{I2C}{
-    Comment-out the \lstinline{cowpi_setup(SPI)} line, and uncomment the \lstinline{cowpi_setup(I2C)} line.
-    The hardware kit is configured slightly differently depending on which serial communication protocol is used with the display module, and this semester we will use the I$^2$C protocol.
+    \begin{description}
+        \checkoffitem{Comment-out the \lstinline{cowpi_setup(SPI)} line, and uncomment the \lstinline{cowpi_setup(I2C)} line.}
+        \checkoffitem{The hardware kit is configured slightly differently depending on which serial communication protocol is used with the display module, and this semester we will use the I$^2$C protocol.}
+    \end{description}
 }{}
 
-Compile and upload \textit{simple\_io\_test.ino} to your \developmentboard\ in the same manner that you did for \textit{Blink.ino}.
-Open the Arduino IDE's Serial Monitor: Tools $\rightarrow$ Serial Monitor.
+\begin{description}
+    \checkoffitem{Compile and upload \textit{simple\_io\_test.ino} to your \developmentboard\ in the same manner that you did for \textit{Blink.ino}.}
+    \checkoffitem{Open the Arduino IDE's Serial Monitor: Tools $\rightarrow$ Serial Monitor.}
+\end{description}
 You will see the message:
 
 \begin{verbatim}
+    CowPi library version 0.4.0
     This demonstration makes no assumptions about your CowPi's display module,
         so your display module may display garbage -- that's okay.
     The `cowpi_setup` function will be called with either `SPI` or `I2C` so that
@@ -65,7 +77,7 @@ While the Enter key would be appropriate on a ``raw'' serial terminal, for the A
     \item[If you are running Arduino IDE 2.0 on MacOS] then place the cursor in the Serial Monitor's text-entry field and press Command-Enter.
 \end{description}
 
-Every half-second, the \developmentboard\ will send a message to the Serial Monitor:
+After you start the rest of the program, the \developmentboard\ will send a message to the Serial Monitor every half-second:
 
 \begin{verbatim}
     Keypad:               Column pins:  1111    Keypad NAND: 0

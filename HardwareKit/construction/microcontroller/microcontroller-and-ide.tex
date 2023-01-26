@@ -69,16 +69,18 @@ instead, the \microcontroller\ uses only physical addressing.
 
 \subsection{Breadboard Terminology}
 
-    If you are not familiar with solderless breadboards, read the
-    \href{https://learn.adafruit.com/breadboards-for-beginners?view=all}{Breadboards for Beginners} Guide at adafruit.com.
+    \begin{description}
+        \checkoffitem{If you are not familiar with solderless breadboards, read the
+        \href{https://learn.adafruit.com/breadboards-for-beginners?view=all}{Breadboards for Beginners} Guide at adafruit.com.}
+    \end{description}
 
     Even though breadboards are often viewed in ``landscape'' orientation (such as in the photo in Section~\ref{sec:inventory} and as seen in the diagram figures) instead of ``portrait'' orientation, the numbered sections are called rows and the lettered sections are called columns.
     In the interest of preserving common usage, we will use this terminology.
     We will refer to specific contact points using the letter-number combination.
 
-\subsection{Optional: Breadboard Templates}                    \input{breadboard-guides/guides.tex}
+\subsection{Optional: Breadboard Templates}                    \input{breadboard-guides/guides}
 
-\input{microcontroller/breadboard/nano-breadboard.tex}
+\input{microcontroller/breadboard/nano-breadboard}
 
 \subsection{Install Arduino IDE}
 
@@ -98,7 +100,7 @@ instead, the \microcontroller\ uses only physical addressing.
     \begin{lstlisting}
     int main() {
         setup();
-        while(1) {
+        while(true) {
             loop();
         }
     }
@@ -107,8 +109,10 @@ instead, the \microcontroller\ uses only physical addressing.
 
 \subsection{Connect to the \developmentboard}
 
-    Connect one end of the mini-USB cable to a lab computer or to your personal laptop.\footnote{You can connect it to a ``wall wart'' USB power supply to run the \developmentboard, but you need to connect it to a computer to upload a new sketch to the \developmentboard.}
-    Connect the mini-USB end of the cable to your \developmentboard.
+    \begin{itemize}
+        \item Connect one end of the mini-USB cable to a lab computer or to your personal laptop.\footnote{You can connect it to a ``wall wart'' USB power supply to run the \developmentboard, but you need to connect it to a computer to upload a new sketch to the \developmentboard.}
+        \item Connect the mini-USB end of the cable to your \developmentboard.
+    \end{itemize}
     The \texttt{PWR} LED will light up, and you may see the \texttt{L} LED repeatedly blink on-and-off.
     The \texttt{L} LED is connected to the \developmentboard's pin D13, and Arduino microcontroller boards typically leave the factory with \textit{Blink.ino} loaded, but it does not matter if yours does not have \textit{Blink.ino} pre-loaded.
 
@@ -128,21 +132,24 @@ instead, the \microcontroller\ uses only physical addressing.
     }
     \end{lstlisting}
 
-    Open the Arduino IDE on the computer that your \developmentboard\ is connected to.
-    Connect the Arduino IDE to the \developmentboard.
-    \input{microcontroller/ide/nano-ide.tex}
+    \begin{description}
+        \checkoffitem{Open the Arduino IDE on the computer that your \developmentboard\ is connected to.}
+        \checkoffitem{Connect the Arduino IDE to the \developmentboard.}
+    \end{description}
+    \input{microcontroller/ide/nano-ide}
 
 \subsection{Upload a New Sketch}
 
-    From the Arduino IDE's File menu, open the \textit{Blink.ino} example: \\
-    \textit{File} $\rightarrow$ \textit{Examples} $\rightarrow$ \textit{01.Basics} $\rightarrow$ \textit{Blink} \\
-    Select \textit{Save As...} and save the project as \textit{MyBlink}.
-
-    Edit the values in the \function{delay} calls to change the delays between the LED turning on, off, and on again.
-    Select values that will visibly have a difference, such as 250 or 2000.
-    Compile the program using the ``Verify'' checkmark in the IDE's toolbar and make corrections if the program doesn't compile.
-    Upload the program to your \developmentboard\ using the ``Upload'' arrow in the IDE's toolbar.
-    (If you forget to compile first, the IDE will compile your program before uploading, but I find it useful to find compile-time mistakes before attempting to upload the program.)
+    \begin{description}
+        \checkoffitem{From the Arduino IDE's File menu, open the \textit{Blink.ino} example:} \\
+            \textit{File} $\rightarrow$ \textit{Examples} $\rightarrow$ \textit{01.Basics} $\rightarrow$ \textit{Blink} \\
+            Select \textit{Save As...} and save the project as \textit{MyBlink}.
+        \checkoffitem{Edit the values in the \function{delay} calls to change the delays between the LED turning on, off, and on again.
+        Select values that will visibly have a difference, such as 250 or 2000.}
+        \checkoffitem{Compile the program using the ``Verify'' checkmark in the IDE's toolbar and make corrections if the program doesn't compile.}
+        \checkoffitem{Upload the program to your \developmentboard\ using the ``Upload'' arrow in the IDE's toolbar.
+            (If you forget to compile first, the IDE will compile your program before uploading, but I find it useful to find compile-time mistakes before attempting to upload the program.)}
+    \end{description}
 
     If you successfully uploaded \textit{MyBlink.ino} then you will see the following in the IDE's \textit{Output} window:
     \begin{quote}
@@ -173,7 +180,7 @@ instead, the \microcontroller\ uses only physical addressing.
         If you get an error when attempting to upload a sketch, try these corrective measures:
 
         \begin{enumerate}
-            \item Double-check that you have ``ATmega328P (Old Bootloader)'' selected (see Figure~\ref{fig:selecting-processor}).
+            \item Try selecting ``ATmega328P'' and try selecting ``ATmega328P (Old Bootloader)'' (see Figure~\ref{fig:selecting-processor}).
             \item Try uploading again (if you attempt to upload a sketch too soon after connecting your \developmentboard\ to your computer, the USB interface won't have finished its handshake).
             \item The \href{https://support.arduino.cc/hc/en-us/articles/4401874331410--Error-avrdude-when-uploading}{Troubleshooting Guide} recommends disconnecting your \developmentboard\ and reconnecting it, then selecting whichever COM port appears.
         \end{enumerate}
@@ -181,7 +188,7 @@ instead, the \microcontroller\ uses only physical addressing.
         If, instead of an error, your IDE ``hangs'' while collecting configuration data, try this corrective measure:
 
         \begin{itemize}
-        \item Press the \texttt{RESET} button in the middle of the \developmentboard; the IDE should begin uploading the sketch after you release the button.
+            \item Press the \texttt{RESET} button in the middle of the \developmentboard; the IDE should begin uploading the sketch after you release the button.
         \end{itemize}
 
     \begin{figure}

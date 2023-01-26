@@ -43,13 +43,14 @@ Figure~\ref{fig:keypad-diagram} shows a diagram of the wiring for the matrix key
 
 \disconnect\
 
-\prepunch{j\controlrow{0}--j\controlrow{7}}
-If your male-male header strip has more than eight pins, then pre-punch additional holes to the right (j\controlrow{8}, j\controlrow{9}, \dots) as needed.
+\begin{description}
+    \checkoffitem{\prepunch{j\controlrow{0}--j\controlrow{7}}
+        If your male-male header strip has more than eight pins, then pre-punch additional holes to the right (j\controlrow{8}, j\controlrow{9}, \dots) as needed.}
 
-If your 8-pin male-male header strip is not already inserted into the keypad's female connectors, insert it into the female connectors now.
-If your male-male header strip has more than eight pins, position the excess pins to the right of the column pins.
-Connect your keypad to your breadboard such that \texttt{row1} is in contact point j\controlrow{0}, and \texttt{columnA} is in contact point j\controlrow{7} (and any unused pins on the male-male header are in contact points j\controlrow{8}, j\controlrow{9}, etc.).
-\textbf{NOTE}: if you used 20cm wires to connect your slide-switches and/or pushbuttons to the \developmentboard, then you can use the matrix keypad's ribbon cable to pull these wires away from the circuit, reducing clutter near the controls (Figure~\ref{fig:keypad-pullingwires}).
+    \checkoffitem{If your 8-pin male-male header strip is not already inserted into the keypad's female connectors, insert it into the female connectors now.
+        If your male-male header strip has more than eight pins, position the excess pins to the right of the column pins.}
+    \checkoffitem{Connect your keypad to your breadboard such that \texttt{row1} is in contact point j\controlrow{0}, and \texttt{columnA} is in contact point j\controlrow{7} (and any unused pins on the male-male header are in contact points j\controlrow{8}, j\controlrow{9}, etc.).}
+    \item \textbf{NOTE}: if you used 20cm wires to connect your slide-switches and/or pushbuttons to the \developmentboard, then you can use the matrix keypad's ribbon cable to pull these wires away from the circuit, reducing clutter near the controls (Figure~\ref{fig:keypad-pullingwires}).
 
 \begin{figure}
     \centering
@@ -57,8 +58,8 @@ Connect your keypad to your breadboard such that \texttt{row1} is in contact poi
     \caption{The keypad's ribbon cable can be used to pull long wires out of the way. \label{fig:keypad-pullingwires}}
 \end{figure}
 
-Peel off three 4-conductor cables from the \rainbow (Figure~\ref{fig:keypad-cables}).
-While you \textit{can} use individual wires, having these 4-conductor cables will simplify keeping track of the wires.
+    \checkoffitem{Peel off three 4-conductor cables from the \rainbow (Figure~\ref{fig:keypad-cables}).}
+    \item While you \textit{can} use individual wires, having these 4-conductor cables will simplify keeping track of the wires.
 
 \begin{figure}
     \centering
@@ -66,19 +67,20 @@ While you \textit{can} use individual wires, having these 4-conductor cables wil
     \caption{Three 4-conductor cables. \label{fig:keypad-cables}}
 \end{figure}
 
-Insert one end of one of the 4-conductor cables in contact points h\controlrow{0}--h\controlrow{3}, in the same breadboard rows as the keypad's row pins.
-Insert the other end of the cable in contact points \mcukeypadrowonepoint--\mcukeypadrowstarpoint.
-You want the \developmentboard's \mcukeypadrowone\ pin to connect to the keypad's \texttt{row1} pin, \mcukeypadrowfour\ to \texttt{row4}, \mcukeypadrowseven\ to \texttt{row7}, and \mcukeypadrowstar\ to \texttt{row*};
-you can use the wires' colors to make sure that you do so.
+    \checkoffitem{Insert one end of one of the 4-conductor cables in contact points h\controlrow{0}--h\controlrow{3}, in the same breadboard rows as the keypad's row pins.}
+    \checkoffitem{Insert the other end of the cable in contact points \mcukeypadrowonepoint--\mcukeypadrowstarpoint.}
+    \item You want the \developmentboard's \mcukeypadrowone\ pin to connect to the keypad's \texttt{row1} pin, \mcukeypadrowfour\ to \texttt{row4}, \mcukeypadrowseven\ to \texttt{row7}, and \mcukeypadrowstar\ to \texttt{row*};
+        you can use the wires' colors to make sure that you do so.
 
-Insert one end of another 4-conductor cable in contact points h\controlrow{4}--h\controlrow{7}, in the same breadboard rows as the keypad's column pins.
-Insert the other end of the cable in contact points \nandlowerain, \nandlowerbin, \nandlowercin, and \nandlowerdin\ (electrically connected to the 74LS20's \texttt{A1}, \texttt{B1}, \texttt{C1}, and \texttt{D1}: pins 1, 2, 4, and 5).
-\textit{Notice that there are no wires in \nandlowernc} because, as you can see in Figure~\ref{fig:nand-pinout}, the 74LS20's pin 3 is not connected (``NC'') to anything.
+    \checkoffitem{Insert one end of another 4-conductor cable in contact points h\controlrow{4}--h\controlrow{7}, in the same breadboard rows as the keypad's column pins.}
+    \checkoffitem{Insert the other end of the cable in contact points \nandlowerain, \nandlowerbin, \nandlowercin, and \nandlowerdin\ (electrically connected to the 74LS20's \texttt{A1}, \texttt{B1}, \texttt{C1}, and \texttt{D1}: pins 1, 2, 4, and 5).}
+    \item \textit{Notice that there are no wires in \nandlowernc} because, as you can see in Figure~\ref{fig:nand-pinout}, the 74LS20's pin 3 is not connected (``NC'') to anything.
 
-Insert one end of the remaining 4-conductor cable in contact points \nandloweraout, \nandlowerbout, \nandlowercout, and \nandlowerdout.
-Insert the other end in contact points \mcukeypadcolonepoint--\mcukeypadcolApoint\ (electrically connected to the \developmentboard's \mcukeypadcolone--\mcukeypadcolA\ pins).
-You want the 74LS20's pin 1 to connect the \developmentboard's \mcukeypadcolone\ pin and the keypad's \texttt{column1} pin, the 74LS20's pin 2 to connect \mcukeypadcoltwo\ and \texttt{column2}, the 74LS20's pin 4 to connect \mcukeypadcolthree\ and \texttt{column3}, and the 74LS20's pin 5 to connect \mcukeypadcolA\ and \texttt{columnA};
-you can use the wires' colors to make sure that you do so.
+    \checkoffitem{Insert one end of the remaining 4-conductor cable in contact points \nandloweraout, \nandlowerbout, \nandlowercout, and \nandlowerdout.}
+    \checkoffitem{Insert the other end in contact points \mcukeypadcolonepoint--\mcukeypadcolApoint\ (electrically connected to the \developmentboard's \mcukeypadcolone--\mcukeypadcolA\ pins).}
+    \item You want the 74LS20's pin 1 to connect the \developmentboard's \mcukeypadcolone\ pin and the keypad's \texttt{column1} pin, the 74LS20's pin 2 to connect \mcukeypadcoltwo\ and \texttt{column2}, the 74LS20's pin 4 to connect \mcukeypadcolthree\ and \texttt{column3}, and the 74LS20's pin 5 to connect \mcukeypadcolA\ and \texttt{columnA};
+        you can use the wires' colors to make sure that you do so.
+\end{description}
 
 %\begin{figure}
 %    \centering
@@ -144,7 +146,7 @@ Your \developmentboard\ has some safety measures to prevent damage in that situa
 Connect your \developmentboard\ to the computer.
 In the IDE's Serial Monitor, notice that there is normally no character after \texttt{Keypad:}, that Column~pins is normally 1111, and that Keypad~NAND is normally 0.
 Press the 5 key on the matrix keypad.
-Notice that the first line of the message from the \developmentboard is now
+Notice that the first line of the message from the \developmentboard\ is now
 \begin{verbatim}
     Keypad:      5        Column pins:  1011    Keypad NAND: 1
 \end{verbatim}

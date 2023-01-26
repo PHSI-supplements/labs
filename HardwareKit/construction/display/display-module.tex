@@ -21,7 +21,7 @@
     \renewcommand{\displaytest}{lcd1602\_hello\_world}
     Examine the I$^2$C-LCD serial interface.
 }{}
-Notice that the header has \numberofserialpins pins (Figure~\ref{fig:display-module-header}): \texttt{VCC} (common collector voltage), \texttt{GND} (ground), \serialpins.
+Notice that the header has \numberofserialpins\ pins (Figure~\ref{fig:display-module-header}): \texttt{VCC} (common collector voltage), \texttt{GND} (ground), \serialpins.
 When the display module is oriented for viewing, these header pins will be on the left.
 
 Figure~\ref{fig:display-diagram} shows a diagram of the wiring to connect the display module to the breadboard.
@@ -51,35 +51,42 @@ Figure~\ref{fig:display-diagram} shows a diagram of the wiring to connect the di
 
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{I2C}{
-    \textbf{If your I$^2$C-LCD serial interface is \textit{not} attached to the LCD display module}, then you will use the breadboard to provide the electrical connections between the serial interface and the display module.
-    \prepunch{i\controlrow{22}--i\controlrow{37} and g\controlrow{22}--g\controlrow{37}}
-    If you are using a breadboard template then you can now remove the jumper wires from contact points a63 and j63.
-    Insert the LCD display module's sixteen pins into contact points g\controlrow{22}--g\controlrow{37}.
-    With the four header pins pointing to the left, insert the I$^2$C-LCD serial interface's sixteen downward-pointing pins into contact points i\controlrow{22}--i\controlrow{37}.
-
-    \textbf{If your I$^2$C-LCD serial interface \textit{is} attached to the LCD display module}, then the sixteen pins connecting the serial adapter to the display module do not need to be inserted into the breadboard.
+    \begin{itemize}
+        \item \textbf{If your I$^2$C-LCD serial interface is \textit{not} attached to the LCD display module}, then you will use the breadboard to provide the electrical connections between the serial interface and the display module.
+            \begin{description}
+                \checkoffitem{\prepunch{i\controlrow{22}--i\controlrow{37} and g\controlrow{22}--g\controlrow{37}}}
+                \checkoffitem{If you are using a breadboard template then you can now remove the jumper wires from contact points a63 and j63.}
+                \checkoffitem{Insert the LCD display module's sixteen pins into contact points g\controlrow{22}--g\controlrow{37}.}
+                \checkoffitem{With the four header pins pointing to the left, insert the I$^2$C-LCD serial interface's sixteen downward-pointing pins into contact points i\controlrow{22}--i\controlrow{37}.}
+            \end{description}
+        \item \textbf{If your I$^2$C-LCD serial interface \textit{is} attached to the LCD display module}, then the sixteen pins connecting the serial adapter to the display module do not need to be inserted into the breadboard.
+            \begin{description}
+                \checkoffitem{\textit{If you are using a breadboard template} then you can now remove the jumper wires from contact points a63 and j63, but you do not need to do so
+                    (you might use a jumper wire looped from a63 to j63 to prevent the display module from sliding around).}
+            \end{description}
+    \end{itemize}
 }{}
-\textit{If you are using a breadboard template} then you can now remove the jumper wires from contact points a63 and j63, but you do not need to do so
-(you might use a jumper wire looped from a63 to j63 to prevent the display module from sliding around).
 
-Take the \numeralofserialpins-conductor female-to-male rainbow cable and attach the \numberofserialpins\ female connectors to the display module's \numberofserialpins\ header pins.
+\begin{description}
+    \checkoffitem{Take the \numeralofserialpins-conductor female-to-male rainbow cable and attach the \numberofserialpins\ female connectors to the display module's \numberofserialpins\ header pins.}
 
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{SPI}{
     As you insert the male connectors into the breadboard, you may have to partially separate the wires at the male end.
     In the interest of keeping track of which wires are used for which purposes, do not fully separate the wires.
-    Identify the wire that is connected to the display module's \texttt{CLK} pin;
-    insert the male end of this wire in contact point \mcusckpoint (electrically connected to the \developmentboard's \mcusck pin).
-    Insert the male end of the \texttt{CS} wire into contact point \mcucspoint (electrically connected to the \developmentboard's \mcucs pin).
-    Insert the male end of the \texttt{DIN} wire into contact point \mcucopipoint (electrically connected to the \developmentboard's \mcucopi pin).
+    \checkoffitem{Identify the wire that is connected to the display module's \texttt{CLK} pin;
+    insert the male end of this wire in contact point \mcusckpoint (electrically connected to the \developmentboard's \mcusck pin).}
+    \checkoffitem{Insert the male end of the \texttt{CS} wire into contact point \mcucspoint (electrically connected to the \developmentboard's \mcucs pin).}
+    \checkoffitem{Insert the male end of the \texttt{DIN} wire into contact point \mcucopipoint (electrically connected to the \developmentboard's \mcucopi pin).}
 }{}
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{I2C}{
-    Identify the wire that is connected to the display module's \texttt{SCL} pin;
-    insert the male end of this wire in contact point \mcusclpoint\ (electrically connected to the \developmentboard's \mcuscl pin).
-    Insert the male end of the \texttt{SDA} wire into contact point \mcusdapoint\ (electrically connected to the \developmentboard's \mcusda pin).
+    \checkoffitem{Identify the wire that is connected to the display module's \texttt{SCL} pin;
+        insert the male end of this wire in contact point \mcusclpoint\ (electrically connected to the \developmentboard's \mcuscl pin).}
+    \checkoffitem{Insert the male end of the \texttt{SDA} wire into contact point \mcusdapoint\ (electrically connected to the \developmentboard's \mcusda pin).}
 }{}
-Insert the \texttt{GND} wire into the upper \ground, and the \texttt{VCC} wire into the upper \power.
+    \checkoffitem{Insert the \texttt{GND} wire into the upper \ground, and the \texttt{VCC} wire into the upper \power.}
+\end{description}
 
 %\begin{figure}
 %    \centering
@@ -121,8 +128,8 @@ When you have finished connecting the display module, there should be the electr
             \texttt{CLK}        & \mcusck   &               \\
             \texttt{CS}         & \mcucs    &               \\
             \texttt{DIN}        & \mcucopi  &               \\
-            \texttt{GND}        &           & Pulled Low    \\
-            \texttt{VCC}        &           & Pulled High   \\ \hline\hline
+            \texttt{GND}        &           & \ground\    \\
+            \texttt{VCC}        &           & \power\   \\ \hline\hline
         \end{tabular}\end{center}
     }{}
     \ifdefstring{\serialprotocol}{I2C}{
@@ -130,8 +137,8 @@ When you have finished connecting the display module, there should be the electr
             Display Module Pin  & \developmentboard\ pin    & Pulled High/Low \\ \hline
             \texttt{SCL}        & \mcuscl   &               \\
             \texttt{SDA}        & \mcusda   &               \\
-            \texttt{GND}        &           & Pulled Low    \\
-            \texttt{VCC}        &           & Pulled High   \\ \hline\hline
+            \texttt{GND}        &           & \ground\    \\
+            \texttt{VCC}        &           & \power\   \\ \hline\hline
         \end{tabular}\end{center}
     }{}
 \caption{Electrical Connections for External LED.\label{tab:display}}
@@ -139,10 +146,11 @@ When you have finished connecting the display module, there should be the electr
 
 \checkpoint{connected the display module to the breadboard}
 
-In the Arduino IDE, open the
-\textit{File} $\rightarrow$ \textit{Examples} $\rightarrow$ \textit{CowPi} $\rightarrow$ \textit{\displaytest}
-example.
-Find these lines in the \function{setup()} function:
+\begin{description}
+    \checkoffitem{In the Arduino IDE, open the
+        \textit{File} $\rightarrow$ \textit{Examples} $\rightarrow$ \textit{CowPi} $\rightarrow$ \textit{\displaytest}
+        example.}
+    \checkoffitem{Find these lines in the \function{setup()} function:}
 
 \begin{lstlisting}[numbers=left, firstnumber=9]
 //    protocol = SPI;
@@ -151,21 +159,21 @@ Find these lines in the \function{setup()} function:
 
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{I2C}{
-    Make sure that the \lstinline{protocol = I2C} line is uncommented and that the \lstinline{protocol = SPI} line is commented-out.
+    \checkoffitem{Make sure that the \lstinline{protocol = I2C} line is uncommented and that the \lstinline{protocol = SPI} line is commented-out.}
 }{}
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{SPI}{
-    Comment-out the \lstinline{protocol = I2C} line, and uncomment the \lstinline{protocol = SPI} line.
+    \checkoffitem{Comment-out the \lstinline{protocol = I2C} line, and uncomment the \lstinline{protocol = SPI} line.}
 }{}
 
-Compile the program and upload it to your \developmentboard.
+    \checkoffitem{Compile the program and upload it to your \developmentboard.}
 
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{I2C}{
     You should see the display module's backlight blink on and off.
     If so, then you have correctly connected the display module and serial adapter even if you don't see a message on the display module.
 
-    Using a screwdriver, turn the trim potentiometer on the serial adapter until you can see the message: \\
+    \checkoffitem{Using a screwdriver, turn the trim potentiometer on the serial adapter until you can see the message:} \\
     \display{
         Hello, world! \\
         i2c address=0x27
@@ -191,3 +199,4 @@ Compile the program and upload it to your \developmentboard.
         \caption{\textit{DisplayTest.ino} illuminates all segments on a digit, one digit at a time. \label{fig:display-test}}
     \end{figure}
 }{}
+\end{description}

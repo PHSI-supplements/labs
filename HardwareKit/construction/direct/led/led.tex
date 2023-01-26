@@ -20,15 +20,17 @@ Figure~\ref{fig:led-diagram} shows a diagram of the components you will install 
     \caption{Diagram of component assembly for LED output. \label{fig:led-diagram}}
 \end{figure}
 
-Take the 1k$\Omega$ resistor and place a right-angle bend in each lead about 0.4in (1cm) from the ends (we want the remaining length to be about 1.5in (3.8cm) -- you do not need to be exact;\footnote{If you want to try to be exact, you can use the breadboard's contact points to measure: they are 0.1in (2.54mm) apart.}
-the leads are flexible enough that you only need to be approximate) -- see Figure~\ref{fig:resistor-bent}.
-Insert one of the resistor's leads into contact point \resistorcontactpointone\ (electrically connected to the \developmentboard's \ledpin\ pin in g1) and the other into contact point \resistorcontactpointtwo.
-Gently press along the length of the resistor, causing the leads to deform slightly, until the resistor's height above the breadboard is about the same as the \developmentboard's printed circuit board.
-See Figure~\ref{fig:resistor-inserted}.
+\begin{description}
+    \checkoffitem{Take the 1k$\Omega$ resistor and place a right-angle bend in each lead about 0.4in (1cm) from the ends (we want the remaining length to be about 1.5in (3.8cm) -- you do not need to be exact;\footnote{If you want to try to be exact, you can use the breadboard's contact points to measure: they are 0.1in (2.54mm) apart.}
+        the leads are flexible enough that you only need to be approximate) -- see Figure~\ref{fig:resistor-bent}.}
+    \checkoffitem{Insert one of the resistor's leads into contact point \resistorcontactpointone\ (electrically connected to the \developmentboard's \ledpin\ pin in g1) and the other into contact point \resistorcontactpointtwo.}
+    \checkoffitem{Gently press along the length of the resistor, causing the leads to deform slightly, until the resistor's height above the breadboard is about the same as the \developmentboard's printed circuit board.
+        See Figure~\ref{fig:resistor-inserted}.}
 
-Take the LED and spread the leads apart slightly.
-Insert the longer lead (the anode) in contact point \ledanodecontactpoint, and the shorter lead (the cathode) in the upper \ground.
-See Figure~\ref{fig:led-inserted}.
+    \checkoffitem{Take the LED and spread the leads apart slightly.}
+    \checkoffitem{Insert the longer lead (the anode) in contact point \ledanodecontactpoint, and the shorter lead (the cathode) in the upper \ground.
+        See Figure~\ref{fig:led-inserted}.}
+\end{description}
 
 \begin{figure}
     \centering
@@ -51,12 +53,16 @@ See Figure~\ref{fig:led-inserted}.
 \end{figure}
 
 When you have finished installing the external LED, there should be the electrical connections described in Table~\ref{tab:led}.
+Read each of this and subsequent tables' rows as describing which electrical components are connected to which other components.
+For example, the LED's anode is connected to the resistor's right lead;
+the LED's cathode is connected to ground;
+and the resistor's left lead is connected to the Arduino's ``\ledpin'' pin.
 
 \begin{table}
     \begin{center}\begin{tabular}{||c|c|c|c||} \hline\hline
     LED lead    & Resistor lead & \developmentboard\ pin    & Pulled High/Low \\ \hline
     Anode       & Right         &           & \\
-    Cathode     &               &           & Pulled Low \\
+    Cathode     &               &           & \ground\ \\
                 & Left          & \ledpin\  & \\ \hline\hline
     \end{tabular}\end{center}
     \caption{Electrical Connections for External LED.\label{tab:led}}
@@ -64,23 +70,25 @@ When you have finished installing the external LED, there should be the electric
 
 \checkpoint{installed the LED and its current-limiting resistor}
 
-In the Arduino IDE, load \textit{MyBlink.ino}.
+\begin{description}
+    \checkoffitem{In the Arduino IDE, load \textit{MyBlink.ino}.}
 %TODO: figure out how to generalize MyBlink
-In the \function{pinMode} and the two \function{digitalWrite} calls, replace the \lstinline{LED_BUILTIN} argument with \lstinline{12}:
-\begin{lstlisting}
-void setup() {
-  pinMode(12, OUTPUT);
-}
+    \checkoffitem{In the \function{pinMode} and the two \function{digitalWrite} calls, replace the \lstinline{LED_BUILTIN} argument with \lstinline{12}:}
+        \begin{lstlisting}
+        void setup() {
+          pinMode(12, OUTPUT);
+        }
 
-void loop() {
-  digitalWrite(12, HIGH);
-  delay(250);   // or whatever value you used
-  digitalWrite(12, LOW);
-  delay(1500);  // or whatever value you used
-}
-\end{lstlisting}
-Re-connect the USB cable to your \developmentboard.
-Compile the sketch and upload it to your \developmentboard.
+        void loop() {
+          digitalWrite(12, HIGH);
+          delay(250);   // or whatever value you used
+          digitalWrite(12, LOW);
+          delay(1500);  // or whatever value you used
+        }
+        \end{lstlisting}
+    \checkoffitem{Re-connect the USB cable to your \developmentboard.}
+    \checkoffitem{Compile the sketch and upload it to your \developmentboard.}
+\end{description}
 Now, instead of the built-in LED, the external LED that you installed will blink (Figure~\ref{fig:revisedblink}).
 
 \begin{figure}

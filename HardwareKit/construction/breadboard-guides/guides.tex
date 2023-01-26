@@ -5,6 +5,9 @@ templates for the Cow Pi circuit %(one for each combination of pushbuttons (2-le
 Each dot (\tikz{\draw[white,fill=gray] (0,0) +(0,3pt) circle (1pt);}) represents a breadboard contact point.
 Each dot with a circle (\tikz{\drawtarget{0}{3pt} \draw[white,fill=gray] (0,0) +(0,3pt) circle (1pt);}) is a contact point in which you will insert a jumper lead.
 Attached to most of these circles is the contact point for the other end of the jumper wire (\tikz{\drawlabelledtarget{0}{0}{1}{k64} \draw[white,fill=gray] (0,0) circle (1pt);}).
+The font for these labels is unfortunately small;
+there is no avoiding this problem
+(you can use a magnifying glass or your mobile phone's camera on magnification if you have difficulty reading the labels).
 The footprints of several components are shown as light-gray outlines;
 resistors (\tikz{\ctikzset{bipoles/resistor/height=0.2}\ctikzset{bipoles/resistor/width=0.3}\draw (0,0) to[R] (1,0)}) and LEDs (\tikz{\ctikzset{bipoles/diode/height=0.2}\ctikzset{bipoles/diode/width=0.2}\draw (0,0) to[led] (1,0)}) are shown using their conventional symbols.
 Squares (\tikz{\draw[white,fill=gray] (0,0) +(2pt,3pt) circle (1pt); \draw (0,0) +(0,1pt) rectangle +(4pt,5pt);}) are where you'll insert component individual pins,
@@ -43,12 +46,17 @@ Finally, the four corners (\tikz{\draw[white,fill=gray] (0,0) +(2pt,3pt) circle 
     \caption{Templates to improve accuracy when constructing the Cow Pi circuit on a solderless breadboard.}\label{fig:templates}%\addcontentsline{toc}{section}{Breadboard Templates}
 \end{figure}
 
-\textit{Optionally}, print the page that has the template appropriate to your particular switches and pushbuttons.
-When (if) you do so, be sure to select ``Actual size'' (see Figure~\ref{fig:printmenu}).
-If you mistakenly select a different option, the template will not line up properly with your breadboard: even a tiny scaling factor will add-up over the length of the breadboard.
-Using the lead from a jumper wire, punch holes into the four $\times$s at the corners (contact points a1, j1, a63, and j63); see Figure~\ref{fig:punchingholes}.
-Place the lead from a jumper wire into each of the four holes, and insert the leads into the corresponding contact points on the breadboard, pinning the template to the breadboard.
-Confirm that the four jumpers are aligning the template to the breadboard by visually checking that the four leads are in the breadboard's contact points a1, j1, a63, and j63 (see Figure~\ref{fig:confirmalignment}).
+\underline{\textbf{\textit{Optionally}}:}
+\begin{description}
+    \checkoffitem{Print the page that has the template appropriate to your particular switches and pushbuttons.}
+        \begin{itemize}
+            \item When (if) you do so, be sure to select ``Actual size'' (see Figure~\ref{fig:printmenu}).
+            If you mistakenly select a different option, the template will not line up properly with your breadboard: even a tiny scaling factor will add-up over the length of the breadboard.
+        \end{itemize}
+    \checkoffitem{Using the lead from a jumper wire, punch holes into the four $\times$s at the corners (contact points a1, j1, a63, and j63); see Figure~\ref{fig:punchingholes}.}
+    \checkoffitem{Place the lead from a jumper wire into each of the four holes, and insert the leads into the corresponding contact points on the breadboard, pinning the template to the breadboard.}
+    \checkoffitem{Confirm that the four jumpers are aligning the template to the breadboard by visually checking that the four leads are in the breadboard's contact points a1, j1, a63, and j63 (see Figure~\ref{fig:confirmalignment}).}
+\end{description}
 
 \begin{figure}
     \centering

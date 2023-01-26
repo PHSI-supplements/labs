@@ -47,28 +47,30 @@ Figure~\ref{fig:pushbutton-diagram} shows a diagram of the wiring for the pushbu
 
 \disconnect\
 
-\prepunch{a\controlrow{11}, a\controlrow{13}, a\controlrow{15}, and a\controlrow{17}}
-If you have 4-prong pushbuttons, then also pre-punch holes into contact points d\controlrow{11}, d\controlrow{13}, d\controlrow{15}, and d\controlrow{17}.
+\begin{description}
+    \checkoffitem{\prepunch{a\controlrow{11}, a\controlrow{13}, a\controlrow{15}, and a\controlrow{17}}
+    If you have 4-prong pushbuttons, then also pre-punch holes into contact points d\controlrow{11}, d\controlrow{13}, d\controlrow{15}, and d\controlrow{17}.}
 
-If you have 2-lead pushbuttons:
-\begin{quote}
-    Insert the leads of one pushbutton into contact points a\controlrow{11} and a\controlrow{13}.
-    Insert the leads of the other pushbutton into contact points a\controlrow{15} and a\controlrow{17}.
-\end{quote}
+    \checkoffitem{If you have 2-lead pushbuttons:
+        \begin{quote}
+            Insert the leads of one pushbutton into contact points a\controlrow{11} and a\controlrow{13}.
+            Insert the leads of the other pushbutton into contact points a\controlrow{15} and a\controlrow{17}.
+        \end{quote}}
 
-If you have 4-prong pushbuttons:
-\begin{quote}
-    Insert the prongs of one pushbutton into contact points a\controlrow{11}, d\controlrow{11}, a\controlrow{13} and d\controlrow{13}.
-    Insert the prongs of the other pushbutton into contact points a\controlrow{15}, d\controlrow{15}, a\controlrow{17} and d\controlrow{17}.
-\end{quote}
+    \checkoffitem{If you have 4-prong pushbuttons:
+        \begin{quote}
+            Insert the prongs of one pushbutton into contact points a\controlrow{11}, d\controlrow{11}, a\controlrow{13} and d\controlrow{13}.
+            Insert the prongs of the other pushbutton into contact points a\controlrow{15}, d\controlrow{15}, a\controlrow{17} and d\controlrow{17}.
+        \end{quote}}
 
-Peel off one wire from the \rainbow, and use it to connect contact point e\controlrow{13} to the upper \ground.
-Peel off one wire from the \rainbow, and use it to connect contact point e\controlrow{17} to the upper \ground.
+    \checkoffitem{Peel off one wire from the \rainbow, and use it to connect contact point e\controlrow{13} to the upper \ground.}
+    \checkoffitem{Peel off one wire from the \rainbow, and use it to connect contact point e\controlrow{17} to the upper \ground.}
 
-Use two wires from the \rainbow to connect the ungrounded side of the left pushbutton to the 74LS20 and to the \developmentboard:
-connect e\controlrow{11} to \leftbuttontarget, and connect \mculeftbuttonfrom\ to \mculeftbuttonpoint.
-Now use another two wires from the \rainbow to connect the ungrounded side of the right pushbutton to the 74LS20 and to the \developmentboard:
-connect e\controlrow{15} to \rightbuttontarget, and connect \mcurightbuttonfrom\ to \mcurightbuttonpoint.
+    \checkoffitem{Use two wires from the \rainbow to connect the ungrounded side of the left pushbutton to the 74LS20 and to the \developmentboard:
+        connect e\controlrow{11} to \leftbuttontarget, and connect \mculeftbuttonfrom\ to \mculeftbuttonpoint.}
+    \checkoffitem{Now use another two wires from the \rainbow to connect the ungrounded side of the right pushbutton to the 74LS20 and to the \developmentboard:
+        connect e\controlrow{15} to \rightbuttontarget, and connect \mcurightbuttonfrom\ to \mcurightbuttonpoint.}
+\end{description}
 \textit{Notice that there are no wires in \nanduppernc} because, as you can see in Figure~\ref{fig:nand-pinout}, the 74LS20's pin 11 is not connected (``NC'') to anything.
 
 See Figure~\ref{fig:pushbutton-wired}.
@@ -97,12 +99,12 @@ When you have finished setting up the pushbuttons' wiring, there should be the e
 \begin{table}
     \begin{center}\begin{tabular}{||c|c|c|c||} \hline\hline
     Pushbutton                      & 74LS20                & \developmentboard\ pin    & Pulled High/Low \\ \hline
-    Left button's grounded lead     &                       &                   & Pulled Low    \\
+    Left button's grounded lead     &                       &                   & \ground\    \\
     Left button's ungrounded lead   & Upper NAND Input      & \mculeftbutton    &               \\
-    Right button's grounded lead    &                       &                   & Pulled Low    \\
+    Right button's grounded lead    &                       &                   & \ground\    \\
     Right button's ungrounded lead  & Upper NAND Input      & \mcurightbutton   &               \\
-                                    & Upper NAND Input      &                   & Pulled High   \\
-                                    & Upper NAND Input      &                   & Pulled High   \\
+                                    & Upper NAND Input      &                   & \ground\   \\
+                                    & Upper NAND Input      &                   & \ground\   \\
                                     & Upper NAND Output     & \mcubuttonnand    &               \\ \hline
                                     & pin 11 (\nanduppernc) & \multicolumn{2}{c||}{not connected / floating} \\ \hline\hline
     \end{tabular}\end{center}
@@ -118,7 +120,7 @@ Notice also that Button~NAND is normally 0, but it becomes 1 whenever you press 
 
 Notice that both Left~LED and Right~LED are normally OFF\@.
 Position both switches to the right.
-Notice than when (and only when) the left button is to the right and you're also pressing the left button, Left~LED becomes ON, and the LED labelled ``L'' on the \developmentboard illuminates.
+Notice than when (and only when) the left button is to the right and you're also pressing the left button, Left~LED becomes ON, and the LED labelled ``L'' on the \developmentboard\ illuminates.
 Similarly, when (and only when) the right button is to the right and you're also pressing the right button, Right~LED becomes ON, and the LED that you installed illuminates.
 (There may be a delay of about a half-second between you pressing a button and the LED illuminating, and between you releasing a button and the LED deluminating.
 We will look at why this happens and how to prevent it in an upcoming lab.)
