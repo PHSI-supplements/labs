@@ -14,10 +14,30 @@ Figure~\ref{fig:led-diagram} shows a diagram of the components you will install 
     \caption{The LED's longer lead connects to power; the shorter lead connects to ground.\label{fig:led-annotated}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
     \centering
     \includegraphics[width=0.9\textwidth]{fritzing_diagrams/led}
     \caption{Diagram of component assembly for LED output. \label{fig:led-diagram}}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[height=2cm]{direct/led/resistor-bent}
+    \caption{Bend the resistor's leads about 1cm from the ends.\label{fig:resistor-bent}}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \subfloat[The resistor run between contact points \resistorcontactpointone\ and \resistorcontactpointtwo.]{
+        \includegraphics[width=0.65\textwidth]{direct/led/resistor-inserted}
+        \label{fig:resistor-inserted}
+    }
+    \hfil
+    \subfloat[The LED's longer lead is in contact point \ledanodecontactpoint, and its shorter lead is in the \ground.]{
+        \includegraphics[width=0.25\textwidth]{direct/led/led-inserted}
+        \label{fig:led-inserted}
+    }
+    \caption{Constructing the LED assembly.}
 \end{figure}
 
 \begin{description}
@@ -31,26 +51,6 @@ Figure~\ref{fig:led-diagram} shows a diagram of the components you will install 
     \checkoffitem{Insert the longer lead (the anode) in contact point \ledanodecontactpoint, and the shorter lead (the cathode) in the upper \ground.
         See Figure~\ref{fig:led-inserted}.}
 \end{description}
-
-\begin{figure}
-    \centering
-    \includegraphics[height=2cm]{direct/led/resistor-bent}
-    \caption{Bend the resistor's leads about 1cm from the ends.\label{fig:resistor-bent}}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \subfloat[The resistor run between contact points \resistorcontactpointone\ and \resistorcontactpointtwo.]{
-        \includegraphics[width=0.65\textwidth]{direct/led/resistor-inserted}
-        \label{fig:resistor-inserted}
-    }
-    \hfil
-    \subfloat[The LED's longer lead is in contact point \ledanodecontactpoint, and its shorter lead is in the \ground.]{
-        \includegraphics[width=0.25\textwidth]{direct/led/led-inserted}
-        \label{fig:led-inserted}
-    }
-    \caption{Constructing the LED assembly.}
-\end{figure}
 
 When you have finished installing the external LED, there should be the electrical connections described in Table~\ref{tab:led}.
 Read each of this and subsequent tables' rows as describing which electrical components are connected to which other components.
