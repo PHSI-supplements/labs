@@ -64,3 +64,4 @@ int main() {
     printf("Response word: %s\n", respond(list, challenge_word));
     return 0;
 }
+

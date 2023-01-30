@@ -23,8 +23,6 @@ struct node {
     struct node *previous;
 };
 
-char decapitalize(char character);      // linked from problem2.c
-int is_even(int value);                 // linked from problem3.c
 struct node *create_node(const char *word);
 void insert_after(struct node *existing_node, struct node *new_node);
 void insert_before(struct node *existing_node, struct node *new_node);

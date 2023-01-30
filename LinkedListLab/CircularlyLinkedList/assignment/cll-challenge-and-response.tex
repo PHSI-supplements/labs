@@ -108,7 +108,7 @@ When one or both of the Strings are generated at runtime, such as from user inpu
 
 The reason for this is that when comparing objects (other than boxed types), Java's comparators compare the objects' references;
 that is, Java comparators compare the objects' memory addresses.
-Using \lstinline{==} operator to compare Strings evaluates to \lstinline{true} only when the two Strings occupy the same address;
+Using the \lstinline{==} operator to compare Strings evaluates to \lstinline{true} only when the two Strings occupy the same address;
 that is, they are both literally the same String object.
 This is why you were taught to use Java's \function{String.equals()} method to compare strings.
 
@@ -182,7 +182,7 @@ The system administrator later commented about the resources it consumed, ``You 
 
 \subsubsection{Idioms for Defining and Initializing \texttt{Struct} Types}
 
-In PokerLab, you worked with a struct that defined by \lstinline{typedef} as a new type.
+In PokerLab, you worked with a struct that was defined by \lstinline{typedef} as a new type.
 In this lab, you will work with a struct defined simply as a \lstinline{struct}, without a \lstinline{typedef}.
 There are compelling arguments for and against both approaches in different use cases.
 You should learn to be comfortable with both approaches.
@@ -200,7 +200,7 @@ You probably learned about linked lists in \cstwo; however, we will provide a re
 
 \subsubsection{Singly-Linked List} \label{subsubsec:singlylinkedlist}
 
-A \textit{linked list} is linear collection of data.
+A \textit{linked list} is a linear collection of data.
 Like an array, each element (or \textit{node}) has a particular position in the list, and when you iterate over the list, you always access the elements in the same order every time (unless you change or re-order the elements).
 
 In an array, the elements are contiguous in memory, and you can access a specific element by indexing the array (or, equivalently, performing pointer arithmetic).
@@ -350,12 +350,12 @@ After you have implemented \function{create_node()} and \function{insert_after()
 
 Build the executable with the command: \texttt{make}.
 Be sure to fix both errors and warnings.
-When the program compiles without generating any warnings or errors, run it with the command \texttt{./keyboardlab5}.
+When the program compiles without generating any warnings or errors, run it with the command \texttt{./pointerlab}.
 The output should indicate a list with the nodes in the order of ``first node,'' ``fourth node,'' ``second node,'' and ``third node.''
 
 \subsection{Change All Uppercase Letters to Lowercase}
 
-In Problem~2, you wrote code to convert uppercase letters to lowercase letters.
+%In Problem~2, you wrote code to convert uppercase letters to lowercase letters.
 Add code to \function{word_to_lowercase()} that calls that function to convert all letters in a word to lowercase letters.
 %\textbf{(Do not copy the \function{to_lowercase()} function into \textit{challenge-response.c};
 %we will link to the function in \textit{problem2.c})}.
@@ -398,7 +398,10 @@ Be sure that \textit{only} the word is placed in a node;
 specifically, do not include a newline character nor any other characters that are not part of the word.
 
 Note that when you are working with files whose contents are already sorted, you are guaranteed that every word read from the file (other than the first word) is either another instance of the previous word that was read, or it will appear in the list immediately after the previous word that was read.
-You might use this characteristic to simplify the code to build your list if you are not attempting any extra credit.
+%You might use this characteristic to simplify the code to build your list if you are not attempting any extra credit.
+You might use this characteristic to simplify the code to build your list for now.
+Later, in Section~\ref{subsubsec:insertionsort}, you will modify your code to work with unsorted files.
+For now, however, you can earn most of the assignment's points by working with the simplifying assumption of having pre-sorted files.
 
 Build the program and correct all warnings and errors.\ When the program compiles without generating any warnings or errors, run it.
 If your program requires more than a few seconds to build the list, there is a bug in your code.
@@ -490,7 +493,7 @@ If the word is found in its proper location in the sorted list, then update the 
 If the word is not present in its proper location in the sorted list, then insert a new node for that word at its proper location in the sorted list.
 If your program requires more than a few seconds to build the list, there is a bug in your code.
 
-Building a list and generating the correct response when the ``book'' file is unsorted is worth two points (regardless of whether the list is singly- or doubly-linked).
+Building a list of up to 200 words and generating the correct response when the ``book'' file is unsorted is worth two points (regardless of whether the list is singly- or doubly-linked).
 This would be a good time to make a backup copy of your code or to commit it to a private Git repository.
 
 \subsubsection{Inserting Words Revisited: Working with Large Files}
