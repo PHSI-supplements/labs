@@ -1,0 +1,15 @@
+\newcommand{\sllnode}[3]{
+    \draw[black,thick,rotate=#3] (#1,#2) +(-10,0) rectangle +(10,10);
+    \draw[rotate=#3] (#1,#2) +(0,5) node {\centering \rotatebox{#3}{Payload}};
+    \draw[black,thick,rotate=#3] (#1,#2) +(-10,0) rectangle +(10,-10);
+    \draw[rotate=#3] (#1,#2) +(0,-5) node {\centering \rotatebox{#3}{Next}};
+}
+
+\newcommand{\dllnode}[3]{
+    \draw[black,thick,rotate=#3] (#1,#2) +(-10,0) rectangle +(10,10);
+    \draw[rotate=#3] (#1,#2) +(0,5) node {\centering \rotatebox{#3}{Payload}};
+    \draw[black,thick,rotate=#3] (#1,#2) +(0,0) rectangle +(10,-10);
+    \draw[rotate=#3] (#1,#2) +(5,-5) node {\centering \rotatebox{#3}{Next}};
+    \draw[black,thick,rotate=#3] (#1,#2) +(-10,0) rectangle +(0,-10);
+    \draw[rotate=#3] (#1,#2) +(-5,-5) node {\centering \rotatebox{#3}{Prev}};
+}

@@ -90,8 +90,108 @@ for context, we can build the list for \textit{Frankenstein} in 1--2 seconds and
 We can locate a word (or determine the absence of a word) in the \textit{Frankenstein} list in under 0.5ms and in the \textit{The Lost World} list in under 0.9ms.
 Your code may take longer, but it should not take much longer.
 
-For full credit on the challenge-response portion of this lab, your code will need to work for sorted files of up to 200 words.
-Some bonus credit will is available for making your code work for unsorted lists, and some bonus credit will be available if, using files of up to 75,000 words, your code can generate a list and find a word in less than 15 seconds.
+You will earn most of the credit for this lab if your code works for pre-sorted files of up to 200 words.
+The remaining credit is for making your code work with unsorted files and, when using files of up to 80,000 words, your code can generate a list and find a word in fewer than 20 seconds.
+
+\subsection{Differences and Similarities between Java and C that are Relevant to this Assignment}
+
+In some regards, Java keeps things simple: every variable is a reference, except when it isn't.
+In other regards, C keeps things simple: you always know whether the variable you're using is a value or a pointer.
+
+\subsubsection{Comparing Strings}
+
+You probably learned that when comparing Java Strings, using the equality operator \lstinline{==} is error-prone.
+When comparing two String literals (or variables assigned to String literals), the equality operator usually acts as a naive programmer would expect:
+\lstinline{"abc" == "abc"} evaluates to \lstinline{true}.
+When one or both of the Strings are generated at runtime, such as from user input, then the equality operator rarely evaluates to \lstinline{true}:
+\lstinline{userInput == "abc"} will evaluate to \lstinline{false} even when the user entered ``abc''.
+
+The reason for this is that when comparing objects (other than boxed types), Java's comparators compare the objects' references;
+that is, Java comparators compare the objects' memory addresses.
+Using \lstinline{==} operator to compare Strings evaluates to \lstinline{true} only when the two Strings occupy the same address;
+that is, they are both literally the same String object.
+This is why you were taught to use Java's \function{String.equals()} method to compare strings.
+
+Comparing C strings' variables has the same pitfall:
+because the string variables are pointers to the first character in their respective strings, using arithmetic comparators will compare the strings' addresses.
+If you want to compare two C strings, you would use the \function{strcmp()}\footnote{See footnote~\ref{note:stringFunctions}.} function.
+The wrinkle is that \function{strcmp()} returns \lstinline{0} (\textit{i.e.}, \lstinline{false}) when the two strings are equal;
+you will often see the idiom \lstinline{if (!strcmp(string1, string2)) {}.
+
+The \function{strcmp(string1, string2)} function actually performs a lexicographic comparison of the strings, returning a negative value if \lstinline{string1} occurs alphabetically earlier than \lstinline{string2}, zero if every character in the two strings match, and a positive value if \lstinline{string1} occurs alphabetically later than \lstinline{string2}.
+In this regard, C's \function{strcmp()} function is more like Java's \function{String.compareTo()} method than \function{String.equals()}.
+
+\subsubsection{Copying Strings}
+
+Because Java Strings are immutable objects, you can safely copy a string by simply copying its reference (this is called \textit{aliasing}).
+You can safely write the statement \lstinline{string1 = string2;} without worrying about changes to \lstinline{string2} causing changes in \lstinline{string1}
+(if you were to make changes to \lstinline{string2}, it would result in a new String object being assigned to the \lstinline{string2} variable).
+
+For mutable objects, creating an alias (that is, copying the reference) results in the situation that changes made through one variable are visible through the other variable.
+For example, if you have the statements \lstinline{list1 = list2; list2.add(foo);} then \\ \lstinline{list1.size() == list2.size() && list1.contains(foo)} will evaluate to \lstinline{true}.
+If the object's class implements the \lstinline{Cloneable} interface then you can make a copy of an object without aliasing it.
+If you have the statements \lstinline{list1 = list2.clone(); list2.add(foo);} then \lstinline{list1.size() == list2.size()} will evaluate to \lstinline{false}.
+
+In general, C strings are mutable.\footnote{
+    The exceptions are string literals, which are immutable, and strings declared as a pointer to a constant, which if treated as mutable will result in undefined behavior.
+}
+This means that you generally don't want to create an alias.\footnote{
+    Sometimes you can't create an alias.
+    If the left-hand-side of an assignment is a constant pointer or is effectively a constant pointer -- such as an array inside a struct -- then it cannot be re-assigned.
+}
+Instead, use the \function{strcpy(destination, source)} or \function{strncpy(destination, source, n)}\footnote{See footnote~\ref{note:stringFunctions}.} function to copy the \lstinline{source} string into the memory pointed to by \lstinline{destination}.
+The \function{strcpy()} function will continue copying until encountering the terminating \lstinline{NUL} in the \lstinline{source} string -- this is very slightly faster (not enough that you'd notice) but is safe only if you can prove that \lstinline{destination} has enough memory allocated for the string.
+The \function{strncpy()} function will copy until encountering the terminating \lstinline{NUL} or until it has copied $n-1$ characters (after which it will append a terminating \lstinline{NUL}) -- this is safer because you can ensure that the string copied to \lstinline{destination} will fit within the space allocated for it.
+
+\subsubsection{Allocating and Deallocating Memory}
+
+As we'll note in Section~\ref{subsubsec:equivalentJava}, Java's \lstinline{new} keyword allocates space for the new object, inferring the amount of space needed based on the class's definition.
+In C, you use the \function{malloc()} function to allocate space\footnote{
+    There are a small handful of alternate functions, each with their own use cases, but \function{malloc()} is most-suitable for this lab.
+}, and you must be explicit about how much space you need.
+An idiom is to combine \function{malloc()} with the \function{sizeof()} function, as you saw in PokerLab, and as you'll see near the start of Section~\ref{subsubsec:cImplementation}.
+
+Java uses a \textit{garbage collector} to reclaim memory allocated for objects that are no longer in use.
+The unpredictability of when garbage collection happens makes an automatic garbage collector unsuitable for many of C's uses.
+For this reason (among others), the programmer is responsible for deallocating memory that is no longer needed.
+This is done with the \function{free()} function.
+
+While a variable will go out of scope at the end of the code block in which it was declared, memory allocated in that code block persists unless explicitly \function{free}d.
+Once the last pointer pointing to that memory goes out of scope, you no longer have a way to \function{free} that memory, resulting in a \textit{memory leak}.
+On the other hand, \function{free}ing memory while it is still being used by another pointer can result in undefined behavior.
+This requires careful thought to make sure that you \function{free} all memory that you allocated, but only after it is safe to do so.
+
+For many short-running programs, such as those you often write in school, you often can ignore the need to \function{free} allocated memory since all the program's memory will be reclaimed by the operating system when the program terminates.
+A member of the C Standard Committee recently described this as having a maid that will clean up your mess.\footnote{
+    \url{https://twitter.com/__phantomderp/status/1619322783162568705}, \\ \url{https://twitter.com/__phantomderp/status/1619323139665846273}
+}
+
+I advise you not to rely on that ``maid'' even for a ``short-running program,'' such as this one.
+In an earlier version of this lab, there were a dozen or so students whose code, when tested against a 75,000-word file, would quickly consume all the server's physical memory.
+As the first of these programs thrashed the virtual memory system, it prevented other services from working effectively, including the one that I had precautionarily introduced to kill a test after a couple of minutes.
+It consumed enough resources that the system administrator couldn't log in to determine why the server had slowed to a crawl.
+As I was already logged in, I was able to kill the process as the system administrator was preparing to disconnect the server from the power line.
+The system administrator later commented about the resources it consumed, ``You ought never to see a `T' in the memory column'' (Figure~\ref{fig:tooMuchMemoryUsed}).
+
+\begin{figure}
+    \center
+    \includegraphics{too-much-memory-used}
+    \caption{Screenshot showing a student's program consuming 0.022 terabytes of physical memory;
+    the allocated virtual memory is not visible in the image.\label{fig:tooMuchMemoryUsed}}
+\end{figure}
+
+\subsubsection{Idioms for Defining and Initializing \texttt{Struct} Types}
+
+In PokerLab, you worked with a struct that defined by \lstinline{typedef} as a new type.
+In this lab, you will work with a struct defined simply as a \lstinline{struct}, without a \lstinline{typedef}.
+There are compelling arguments for and against both approaches in different use cases.
+You should learn to be comfortable with both approaches.
+
+In this lab, the function that initializes a node is also responsible for allocating space for that node.
+In PokerLab, you saw the other idiom, in which the calling function is responsible for allocating space and passing the pointer to the initializer (this pointer is analogous to Java's implicit \lstinline{this} parameter).
+The approach of having the caller allocate space seems to be more common, but both approaches are common enough to be aware of both.
+(The third idiom is not to have a separate initializing function;
+I discourage this approach.)
 
 \subsection{Designing the Data Structure and Its Algorithms}
 
@@ -142,7 +242,8 @@ see Figure~\ref{fig:sll-insertion}.
 \end{figure}
 
 As with an array, you do need to maintain a variable that points to the list.
-Conventionally, this is a reference to the \textit{head} of the list. (Note that if a new node is inserted before the current head node, then the new node becomes the head of the list, and your \lstinline{head} variable would need to be updated.)
+Conventionally, this is a reference to the \textit{head} of the list.
+(Note that if a new node is inserted before the current head node, then the new node becomes the head of the list, and your \lstinline{head} variable would need to be updated.)
 It is not uncommon to also maintain a reference to the \textit{tail} of the list.
 
 \subsubsection{Circular Linked List} \label{subsubsec:circularlinkedlist}
@@ -170,7 +271,7 @@ see Figure~\ref{fig:circular-linked-list}.
 
 You still need to maintain a variable that points to \textit{some} node in the list.
 
-\subsubsection{Equivalent Java Code}
+\subsubsection{Equivalent Java Code} \label{subsubsec:equivalentJava}
 
 In Java, you probably wouldn't implement your own linked list;
 instead, you would use \lstinline{java.util.LinkedList}, which has been available since J2SE~1.2
@@ -215,7 +316,7 @@ The payload is the \lstinline{word} and how many \lstinline{occurrences} the wor
 
 Recall also that in Java, the \lstinline{new} keyword allocates space for the new object, and the constructor call -- \lstinline{Node("eggplant")} -- initializes the object.
 
-\subsubsection{C Implementation}
+\subsubsection{C Implementation} \label{subsubsec:cImplementation}
 
 In \textit{challenge-response.h}, you'll see a \lstinline{struct} with the same fields as our Java example:
 
@@ -245,9 +346,9 @@ Two notes:
 
 After you have implemented \function{create_node()} and \function{insert_after()}, go to the \function{main()} function in \textit{pointerlab.c} and un-comment the call to \function{test_linked_list_functions()}.
 
-\lstinputlisting[linerange=58-59, firstnumber=58]{../starter-code/problem5main.c}
+\lstinputlisting[linerange=58-59, firstnumber=58]{../starter-code/pointerlab.c}
 
-Build the executable with the command: \texttt{make keyboardlab5}.
+Build the executable with the command: \texttt{make}.
 Be sure to fix both errors and warnings.
 When the program compiles without generating any warnings or errors, run it with the command \texttt{./keyboardlab5}.
 The output should indicate a list with the nodes in the order of ``first node,'' ``fourth node,'' ``second node,'' and ``third node.''
@@ -256,23 +357,24 @@ The output should indicate a list with the nodes in the order of ``first node,''
 
 In Problem~2, you wrote code to convert uppercase letters to lowercase letters.
 Add code to \function{word_to_lowercase()} that calls that function to convert all letters in a word to lowercase letters.
-\textbf{(Do not copy the \function{to_lowercase()} function into \textit{challenge-response.c};
-we will link to the function in \textit{problem2.c})}.
+%\textbf{(Do not copy the \function{to_lowercase()} function into \textit{challenge-response.c};
+%we will link to the function in \textit{problem2.c})}.
+Unlike KeyboardLab, you may use C's \function{tolower()} function\footnote{See \S7.8.2 and \S{}B.2 of Kernighan \& Ritchie's \textit{The C Programming Language}, 2nd ed.} to convert uppercase letters to lowercase letters.
 
 \lstinputlisting[linerange=48-62, firstnumber=48]{../starter-code/challenge-response.c}
 
 The starter code includes a function to compare two words (you do not need to write this function) but it assumes that both words are completely lowercase.
 
-If you have not completed Problem~2, then place this code in your \textit{problem2.c} file so that you can work on Problem~5
-(note that this code violates Problem~2's constraints):
-
-\begin{lstlisting}
-#include <ctype.h>
-
-char decapitalize(char character) {
-    return tolower(character);
-}
-\end{lstlisting}
+%If you have not completed Problem~2, then place this code in your \textit{problem2.c} file so that you can work on Problem~5
+%(note that this code violates Problem~2's constraints):
+%
+%\begin{lstlisting}
+%#include <ctype.h>
+%
+%char decapitalize(char character) {
+%    return tolower(character);
+%}
+%\end{lstlisting}
 
 \subsection{Inserting Words} \label{subsec:inserting-words}
 
@@ -312,51 +414,29 @@ After the word list is complete (after you have inserted all words in the file),
 Add code to \function{respond()} that traverses the word list to find that word.
 If the word is not present in the list, return ``(word) is not present!'', where ``(word)'' is the challenge word.
 
-In Problem~3, you wrote code to determine whether an integer value is even.
+%In Problem~3, you wrote code to determine whether an integer value is even.
 Use the number of occurrences recorded in that the challenge word's node to find the response word as described in the challenge-and-response rules, and return that word.
-\textbf{(Do not copy the \function{is_even()} function into \textit{challenge-response.c};
-we will link to the function in \textit{problem3.c}.)}
-
-If you have not completed Problem~3, then place this code in your \textit{problem3.c} file
-(note that this code violates Problem~3's constraints):
-
-\begin{lstlisting}
-int is_even(int value) {
-    return !(value % 2);
-}
-\end{lstlisting}
+%\textbf{(Do not copy the \function{is_even()} function into \textit{challenge-response.c};
+%we will link to the function in \textit{problem3.c}.)}
+%
+%If you have not completed Problem~3, then place this code in your \textit{problem3.c} file
+%(note that this code violates Problem~3's constraints):
+%
+%\begin{lstlisting}
+%int is_even(int value) {
+%    return !(value % 2);
+%}
+%\end{lstlisting}
 
 If your program does not provide the response word nearly instantaneously, there is a bug in your code.
 
-\subsection{Extra Credit}
+\subsection{The Final Touches}
 
-You have now completed enough of the assignment to receive full credit.
-The next, optional steps are worth a small amount of extra credit.
-You can receive extra credit if your code works with unsorted files, and you can receive extra credit if your code works with large files.
-Since it will require modifying some of your code, this would be a good time to make a backup copy of your code or to commit it to a private Git repository.
+You have now completed enough of the assignment to receive at least 19 out of 25 points.
+The remaining steps will re-visit your earlier work to make improvements.
+Because you will be modifying your working code, this would be a good time to make a backup copy of your code or to commit it to a private Git repository.
 
-\subsubsection*{Working with Unsorted Files}
-
-In Section~\ref{subsec:inserting-words}, you had the option of simplifying your code by treating the last word added as the head of the list instead of traversing the list to find the correct location for a word.
-To work with unsorted files, you will need a way to build and maintain a sorted list -- the insertion sort algorithm is a good choice.
-You might also want to modify your code to create a circular doubly-linked list.
-
-\subsubsection{Insertion Sort}\label{subsec:insertionsort}
-
-While you probably learned about sorting in \cstwo, you may not have learned about \textit{Insertion Sort}.
-If you did learn about Insertion Sort, you probably learned that it's a $\mathcal{O}(n^2)$ algorithm that is less efficient than $\mathcal{O}(n \log n)$ sorting algorithms such as Merge Sort and Quick Sort.
-Insertion Sort has a particular advantage in that it can be applied \textit{as the list is built}, making for a much simpler and less error-prone implementation than a different sort that requires the list to already be built.
-
-The Insertion Sort algorithm reads an input and then traverses a sorted list to find the proper location in the sorted list for the input.
-The input is then inserted into the list at that location.
-
-Your current implementation of \function{insert_word()} might be based off of the assumption that the word is either another instance of the last word to be added to the list or is not present in the list.
-Update \function{insert_word()} so that it looks for the word in the sorted list.
-If the word is found, then update the number of occurrences as before.
-If the word is not present in its proper location in the sorted list, then insert a new node for that word at its proper location in the sorted list.
-If your program requires more than a few seconds to build the list, there is a bug in your code.
-
-\subsubsection{Doubly-Linked List} \label{subsec:doublylinkedlist}
+\subsubsection{Designing the Data Structure and Its Algorithms, Revisited: Doubly-Linked List} \label{subsubsec:doublylinkedlist}
 
 You may be able to produce small performance improvements if you can traverse the list forward and backward by creating a circular doubly-linked list instead of a circular singly-linked list.
 
@@ -384,11 +464,44 @@ Modify your \function{insert_after()} function to update not only the \lstinline
 Modify your \function{insert_after()} and \function{respond()} functions to take advantage of the \lstinline{previous} pointers.
 
 After the program compiles without warnings or errors, you may want to use \function{print_list} to confirm that the \lstinline{previous} pointers are updated correctly.
-
 If your program requires more than a few seconds to build the list, there is a bug in your code.
 
-\subsubsection*{Working with Large Files}
+Creating a circular doubly-linked list is worth another point.
+This would be a good time to make a backup copy of your code or to commit it to a private Git repository.
 
-You code may run briskly when working with smaller files of only a couple of hundred words but then become very sluggish when the number of words is in the thousands.
+\subsubsection{Inserting Words, Revisited: Working with Unsorted Files} \label{subsubsec:insertionsort}
+
+In Section~\ref{subsec:inserting-words}, you had the option of simplifying your code by treating the last word added as the head of the list instead of traversing the list to find the correct location for a word.
+To work with unsorted files, you will need a way to build and maintain a sorted list -- the insertion sort algorithm is a good choice.
+You might also want to modify your code to create a circular doubly-linked list.
+
+\paragraph{Insertion Sort}
+
+While you probably learned about sorting in \cstwo, you may not have learned about \textit{Insertion Sort}.
+If you did learn about Insertion Sort, you probably learned that it's a $\mathcal{O}(n^2)$ algorithm that is less efficient than $\mathcal{O}(n \log n)$ sorting algorithms such as Merge Sort and Quick Sort.
+Insertion Sort has a particular advantage in that it can be applied \textit{as the list is built}, making for a much simpler and less error-prone implementation than a different sort that requires the list to already be built.
+
+The Insertion Sort algorithm reads an input and then traverses a sorted list to find the proper location in the sorted list for the input.
+The input is then inserted into the list at that location.
+
+Your current implementation of \function{insert_word()} might be based off of the assumption that the word is either another instance of the last word to be added to the list or is not present in the list.
+Update \function{insert_word()} so that it looks for the word in the sorted list.
+If the word is found in its proper location in the sorted list, then update the number of occurrences as before.
+If the word is not present in its proper location in the sorted list, then insert a new node for that word at its proper location in the sorted list.
+If your program requires more than a few seconds to build the list, there is a bug in your code.
+
+Building a list and generating the correct response when the ``book'' file is unsorted is worth two points (regardless of whether the list is singly- or doubly-linked).
+This would be a good time to make a backup copy of your code or to commit it to a private Git repository.
+
+\subsubsection{Inserting Words Revisited: Working with Large Files}
+
+Your code might already be able to handle large files in just a few seconds, in which case you are finished.
+
+On the other hand, your code might run briskly when working with smaller files of only a couple of hundred words but then become very sluggish when the number of words is in the thousands.
 This tends to be due to one (or both) of two causes.
 Look for inefficient algorithms, and look for memory leaks.
+If you use the \texttt{top} utility while running your program, and you notice that your program is allocating more than 10MB, then you probably have a memory leak.
+If your program is allocating more than 1GB, then your program most certainly has a memory leak.
+
+Being able to generate a list from a file of up to 80,000 pre-sorted words and generating the correct response, all within 20 seconds, is worth two points.
+Being able to do so from a file of up to 80,000 unsorted words is worth another point.

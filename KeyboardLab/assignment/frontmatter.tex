@@ -22,6 +22,22 @@ Some of the functions you write in this lab will be used in the next lab.
 \section*{During Lab Time}
 
 During your lab period, the TAs will demonstrate how to read the ASCII table and will provide a refresher on bitwise AND, bitwise OR, and left- and right-shifts.
+This refresher will include a class discussion about why this code always outputs ``The number is 255.'' except when number is 0:
+\begin{lstlisting}
+#include <stdio.h>
+
+int main() {
+    int number;
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    if (number | 0xFF == number & 0xFF) {
+        printf("The number is 255.\n");
+    } else {
+        printf("The number is not 255.\n");
+    }
+    return 0;
+}
+\end{lstlisting}
 During the remaining time, the TAs will be available to answer questions.
 
 Before leaving lab, \textit{at a minimum} complete Section~\ref{sec:asciiTable} and the first function in Section~\ref{sec:charactersAsNumbers}.

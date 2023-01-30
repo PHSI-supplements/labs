@@ -1,5 +1,5 @@
 %%
-%% PointerLab (c) 2021 Christopher A. Bohn
+%% LinkedListLab (c) 2021-23 Christopher A. Bohn
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -15,11 +15,12 @@
 \input{../../../common/assignment}
 \input{../../../common/semester}
 \input{../../../common/storylines}
+\input{linked-list-nodes}
 
 \captionsetup{width=.8\linewidth}
 \lstset{language=c, alsolanguage=java, numbers=left, showstringspaces=false,
     moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
-    }
+}
 %%
 %%
 % Credit where credit is due. Skipping line numbers from
@@ -34,28 +35,30 @@
 %%
 
 \renewcommand{\labnumber}{\pointerlabnumber}
-\renewcommand{\labname}{Pointer Manipulation Lab}
-\renewcommand{\shortlabname}{pointerlab}
+\renewcommand{\labname}{Pointer Manipulation Lab \underline{(DRAFT)}}
+\renewcommand{\shortlabname}{linkedlistlab}
 \renewcommand{\collaborationrules}{\pointerlabcollaboration}
 \renewcommand{\duedate}{\pointerlabdue}
 \pagelayout
 \begin{document}
-\labidentifier
+    \labidentifier
 
-\input{frontmatter}
+    \pdfbookmark[1]{Frontmatter}{frontmatter}                       \input{frontmatter}
 
-\softwareengineeringfrontmatter
+    \softwareengineeringfrontmatter
 
-\section*{Scenario}                 \ArchieWroteSmellyCode
+    \section*{Scenario}                                             \ArchieWroteSmellyCode
 
-\section{Stray Values in Memory}    \input{archies-code}
+    \section{Assignment Summary}                                    \input{assignmentsummary}
 
-\section{Challenge and Response}    \input{full-challenge-and-response}
+    \section{Stray Values in Memory} \label{sec:archiesCode}        \input{archies-code}
 
-\section*{Turn-in and Grading}      \input{grading}
+    \section{Challenge and Response} \label{sec:challengeResponse}  \input{cll-challenge-and-response}
 
-\section*{Epilogue} \InsurancePreview
+    \section{Turn-in and Grading}                                   \input{grading}
 
-\textit{To be continued...}
+    \section*{Epilogue} \InsurancePreview
+
+    \textit{To be continued...}
 
 \end{document}

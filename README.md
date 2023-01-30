@@ -98,7 +98,7 @@ As part of the customization, you can decide which labs you want your students t
 -   **KeyboardLab** gets students used to the idea of data having an underlying representation, and gives them a taste of examining and manipulating that data at the bit level.
     KeyboardLab isn't specifically designed to be completed during lab time, but about half of the students do so.
     Something to watch out for is students who turn in more-general solutions than the assignment asks for -- for example, a student who is unable to use bit manipulation to subtract 1 from an odd number by setting the LSB to 0 (as instructed) is unlikely to have developed their own code to subtract 1 from any number (or subtract any number from any other number).
--   **PointerLab** encourages students to think about the difference between data and references to data.
+-   **LinkedListLab** (née **PointerLab**) encourages students to think about the difference between data and references to data.
     I'm working on reducing the scope without sacrificing learning objectives, as many students struggle with this lab.
 -   **IntegerLab** has students make use of bit manipulation to implement integer arithmetic.
     I recently redesigning the lab, as many students were copying an algorithm out of the textbook for the extra-credit portion of the previous assignment;
