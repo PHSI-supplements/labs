@@ -7,3 +7,9 @@ By understanding the mistakes that Archie made, we hope that you can avoid them 
 
 In Section~\ref{sec:challengeResponse}, you will build and use a linked list.
 This will require you to allocate space for the list's nodes and manipulate pointers that connect the nodes to each other.
+
+\ifboolexpe{not bool{allowspaghetticode}}{
+    There are no particular restrictions in this assignment other than those common to most lab assignments in this course.
+    You can check whether you're using a \lstinline{goto} or \lstinline{continue} statement, or whether you're using \lstinline{break} or \lstinline{return} to exit a loop, by running the constraint-checking Python script:
+    \texttt{python constraint-check.py linkedlistlab.json}
+}{}

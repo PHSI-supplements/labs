@@ -3,7 +3,7 @@
  *                                                                                                   */
 
 /*
- * PointerLab (c) 2021-22 Christopher A. Bohn
+ * LinkedListLab (c) 2021-22 Christopher A. Bohn
  */
 
 #include <stdio.h>
