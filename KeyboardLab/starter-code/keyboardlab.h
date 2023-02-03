@@ -25,7 +25,7 @@
 #include <stdlib.h>
 
 char *generate_email(char *destination, size_t destination_size);
-char iz_digit(char character);
+int iz_digit(char character);
 char decapitalize(char character);
 int is_even(int value);
 int produce_multiple_of_ten(int seed);
