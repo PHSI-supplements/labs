@@ -32,8 +32,8 @@ You may not use any libraries.
 This prohibition includes, but is not limited to, C's \textit{math} library.
 If you find yourself \lstinline{#include}ing any header files other than \textit{alu.h}, you are violating this constraint.
 
-The time-complexity of all operations must be polynomial in the number of bits required to represent the values.
-Superpolynomial solutions, such as (but not limited to) implementing multiplication by repeatedly adding the multiplicand to itself $multiplier$ times, or implementing division by repeatedly subtracting the divisor from the dividend, are prohibited.
+The time-complexity of all operations must be polynomial (or constant) in the number of bits required to represent the values.
+Inefficient solutions, such as (but not limited to) implementing multiplication by repeatedly adding the multiplicand to itself $multiplier$ times, or implementing division by repeatedly subtracting the divisor from the dividend, are prohibited.
 
 You may not change the signatures of any functions that you are required to complete for this assignment.
 If you write helper functions that are not required, then they may have any signature that you deem necessary
