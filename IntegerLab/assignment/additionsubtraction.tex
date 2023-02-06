@@ -37,7 +37,7 @@ Check your code with all eight possible inputs, comparing your actual results wi
 Use your 1-bit full adder to implement a 32-bit ripple-carry adder.
 As a reminder, in a ripple-carry adder, the carry-out bit from bit position $n$ becomes the carry-in bit for bit position $n+1$.
 
-Use whatever code that you need, that does not violate any of this assignment's constraints, to populate the input fields of a \lstinline{one_bit_adder_t} variable and pass that variable to \function{onez_bit_full_addition()}.
+Use whatever code that you need, that does not violate any of this assignment's constraints, to populate the input fields of a \lstinline{one_bit_adder_t} variable and pass that variable to \function{one_bit_full_addition()}.
 Use the \lstinline{sum} field to contribute to the 32-bit sum and the \lstinline{c_out} bit as the \lstinline{c_in} bit of the next bit position.
 Repeatedly do this until you have added all 32-bit positions, resulting in the 32-bit sum.
 
@@ -70,7 +70,7 @@ place this sum in the \lstinline{alu_result_t} variable's \lstinline{result} fie
 Your remaining task for addition is to examine the 32-bit sum to determine whether your \textit{16-bit} addition overflowed.
 Assume that the operands are unsigned 16-bit integers and determine whether overflow occurred;
 set the \lstinline{alu_result_t} variable's \lstinline{unsigned_overflow} flag accordingly.
-Now assume that hte operands are signed 16-bit integers and determine whether overflow occurred;
+Now assume that the operands are signed 16-bit integers and determine whether overflow occurred;
 set the \lstinline{alu_result_t} variable's \lstinline{signed_overflow} flag accordingly.
 
 

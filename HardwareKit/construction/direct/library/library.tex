@@ -49,14 +49,18 @@ From the Arduino IDE's File menu, you now have additional examples under the ``E
 \ifdefstring{\serialprotocol}{SPI}{
     \begin{description}
         \checkoffitem{Make sure that the \lstinline{cowpi_setup(SPI)} line is uncommented and that the \lstinline{cowpi_setup(I2C)} line is commented-out.}
-        \checkoffitem{The hardware kit is configured slightly differently, depending on which serial communication protocol is used with the display module, and this semester we will use the SPI protocol.}
+        \begin{itemize}
+            \item{The hardware kit is configured slightly differently, depending on which serial communication protocol is used with the display module, and this semester we will use the SPI protocol.}
+        \end{itemize}
     \end{description}
 }{}
 %! suppress = NonMatchingIf
 \ifdefstring{\serialprotocol}{I2C}{
     \begin{description}
         \checkoffitem{Comment-out the \lstinline{cowpi_setup(SPI)} line, and uncomment the \lstinline{cowpi_setup(I2C)} line.}
-        \checkoffitem{The hardware kit is configured slightly differently depending on which serial communication protocol is used with the display module, and this semester we will use the I$^2$C protocol.}
+        \begin{itemize}
+            \item{The hardware kit is configured slightly differently depending on which serial communication protocol is used with the display module, and this semester we will use the I$^2$C protocol.}
+        \end{itemize}
     \end{description}
 }{}
 
