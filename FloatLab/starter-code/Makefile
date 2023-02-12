@@ -1,14 +1,14 @@
 CC = gcc
 CFLAGS = -Og -std=c99 -Wall -g
-DEPS = fpu.h
+DEPS = fpu.h unnormal.h
 LIBS = -lm
-OBJ = floatlab.o fpu.o
+OBJ = floatlab.o fpu.o unnormal.o
 EXEC = floatlab
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-floatlab: floatlab.o fpu.o
+floatlab: $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean clear all

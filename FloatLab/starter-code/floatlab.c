@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * FloatLab (c) 2019-22 Christopher A. Bohn
+ * FloatLab (c) 2019-23 Christopher A. Bohn
  *
  * Assignment and starter code licensed under the Apache License,
  * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "fpu.h"
+#include "unnormal.h"
 
 union float_converter {
     uint32_t bit_vector;
@@ -81,20 +82,31 @@ bool read_evaluate_print() {
            "    \"renormalize <value> <change exponent amount>\",\n"
            "    or \"quit\": ");
     fgets(input_buffer, 72, stdin);
-    for (char *s = input_buffer; (*s = (char) tolower(*s)); s++) {}    // string to lowercase, to simplify a couple of the comparisons
+    for (char *s = input_buffer; (*s = (char) tolower(*s)); s++) {}    // string to lowercase, to simplify comparisons
     if (!strncmp(input_buffer, "quit", 4)) {
         return false;
-    } else if(!strncmp(input_buffer, "denormalize", 11)) {
+    } else if (!strncmp(input_buffer, "denormalize", 11)) {
         char *next = parse_operand(input_buffer + 11, &operand1);
-        int32_t amount = (int32_t)strtol(next, NULL, 10);
-        printf("%s\n", unnormal_to_string(output_buffer, adjust_exponent(denormalize(operand1.bit_vector), amount)));
+        int16_t amount = (int16_t) strtol(next, NULL, 10);
+        if (amount > 0) {
+            printf("%s\n", unnormal_to_string(output_buffer, shift_right(denormalize(operand1.bit_vector), amount)));
+        } else {
+            amount = (int16_t) (-amount);
+            printf("%s\n", unnormal_to_string(output_buffer, shift_left(denormalize(operand1.bit_vector), amount)));
+        }
         return true;
-    } else if(!strncmp(input_buffer, "renormalize", 11)) {
+    } else if (!strncmp(input_buffer, "renormalize", 11)) {
         char *next = parse_operand(input_buffer + 11, &operand1);
-        int32_t amount = (int32_t)strtol(next, NULL, 10);
+        int16_t amount = (int16_t) strtol(next, NULL, 10);
         printf("expected: %.10f_{10}\t", operand1.reference_value);
         printf("%s\n", ieee754_to_string(output_buffer, operand1.bit_vector));
-        unnormal_t number = adjust_exponent(denormalize(operand1.bit_vector), amount);
+        unnormal_t number;
+        if (amount > 0) {
+            number = shift_right(denormalize(operand1.bit_vector), amount);
+        } else {
+            amount = (int16_t) (-amount);
+            number = shift_left(denormalize(operand1.bit_vector), amount);
+        }
         ieee754_t renormalized_number = normalize(number);
         result.bit_vector = renormalized_number;
         printf("actual:   %.10f_{10}\t", result.reference_value);
@@ -169,14 +181,3 @@ char *bits_to_string(char *destination, uint64_t bits, int start_bit,
     return destination;
 }
 
-char *unnormal_to_string(char *destination, unnormal_t number) {
-    if (number.is_infinite) {
-        sprintf(destination, "%cInfinity", number.sign ? '-' : '+');
-    } else if (number.is_nan) {
-        sprintf(destination, "%cNot a Number", number.sign ? '-' : '+');
-    } else {
-        sprintf(destination, "%c%016llx.%016llx_{16} x 2^{%d}",
-               number.sign ? '-' : '+', number.integer_portion, number.fractional_portion, number.exponent);
-    }
-    return destination;
-}

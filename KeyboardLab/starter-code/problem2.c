@@ -26,7 +26,7 @@
  */
 int iz_digit(char character) {
     /* WRITE THIS FUNCTION */
-    return -9;
+    return -9/9;
 }
 
 /**

@@ -10,12 +10,12 @@
  ******************************************************************************/
 
 /*
- * FloatLab assignment and starter code (c) 2019-22 Christopher A. Bohn
+ * FloatLab assignment and starter code (c) 2019-23 Christopher A. Bohn
  * Floatlab solution (c) the above-named student
  */
 
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "fpu.h"
 
 /* BITMASKS TO EXTRACT SPECIFIC BITFIELDS */
@@ -103,9 +103,9 @@ char *ieee754_to_string(char *destination, ieee754_t number) {
 
 
         sprintf(destination + 12, "%d.%s_{2} x 2^{%d}",
-               integer_portion,
-               bits_to_string(fraction_string, fraction, NUMBER_OF_FRACTION_BITS - 1, 0, FROM_LEFT),
-               exponent);
+                integer_portion,
+                bits_to_string(fraction_string, fraction, NUMBER_OF_FRACTION_BITS - 1, 0, FROM_LEFT),
+                exponent);
     }
     return destination;
 }
@@ -116,39 +116,19 @@ char *ieee754_to_string(char *destination, ieee754_t number) {
  * @return an `unnormal_t` representation of the number's value
  */
 unnormal_t denormalize(ieee754_t number) {
-    unnormal_t result;
-    result.sign = number & SIGN_BIT_MASK ? 1 : 0;
-    result.is_infinite = 0;
-    result.is_nan = 0;
+    uint8_t sign = number & SIGN_BIT_MASK ? 1 : 0;
     if (is_infinity(number)) {
-        result.is_infinite = 1;
-    } else if (is_nan(number)) {
-        result.is_nan = 1;
-    } else {
-        /* DETERMINE THE INTEGER PORTION, THE FRACTION, AND THE EXPONENT */
-        result.fractional_portion = (uint64_t) (0);
-
-
+        return unnormal(.sign = sign, .is_infinite = true);
     }
-    return result;
-}
-
-/**
- * Adjusts the virtual binary point in an `unnormal_t` number by changing the
- * exponent and moving bits between the integer portion and the fractional
- * portion.
- *
- * @param number the number to be adjusted
- * @param amount the positive or negative amount by which the exponent should
- *      be adjusted
- * @return an `unnormal_t` variable that represents the number's value but with
- *      a different exponent and position of the virtual binary point
- */
-unnormal_t adjust_exponent(unnormal_t number, int32_t amount) {
-    /* IMPLEMENT THIS FUNCTION */
+    if (is_nan(number)) {
+        return unnormal(.sign = sign, .is_not_a_number = true);
+    }
+    /* DETERMINE THE INTEGER PORTION, THE FRACTION, AND THE EXPONENT */
+    uint64_t integer, fraction;
+    int32_t exponent;
 
 
-    return number;
+    return unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
 }
 
 /**
@@ -157,19 +137,19 @@ unnormal_t adjust_exponent(unnormal_t number, int32_t amount) {
  * @return an `ieee754_t` bit vector representing the number's value
  */
 ieee754_t normalize(unnormal_t number) {
-    ieee754_t result = 0;
-    if (number.is_infinite) {
+    ieee754_t result;
+    if (is_infinite(number)) {
         result = INFINITY;
-    } else if (number.is_nan) {
+    } else if (is_not_a_number(number)) {
         result = NAN;
-    } else if ((number.integer_portion == 0) && (number.fractional_portion == 0)) {
+    } else if ((get_integer(number) == 0) && (get_fraction(number) == 0)) {
         result = 0;
     } else {
         /* GENERATE THE APPROPRIATE BIT VECTOR */
 
 
     }
-    return result | (number.sign ? SIGN_BIT_MASK : 0);
+    return result | (get_sign(number) ? SIGN_BIT_MASK : 0);
 }
 
 /**
@@ -206,17 +186,13 @@ ieee754_t add(ieee754_t augend, ieee754_t addend) {
     }
     unnormal_t denormalized_augend = denormalize(augend);
     unnormal_t denormalized_addend = denormalize(addend);
-    unnormal_t sum = {
-            .sign = 0,
-            .integer_portion =0,
-            .fractional_portion = 0,
-            .exponent = 0,
-            .is_infinite = 0,
-            .is_nan = 0
-    };
     /* COMPUTE THE SUM */
+    uint8_t sign;
+    uint64_t integer, fraction;
+    int16_t exponent;
 
 
+    unnormal_t sum = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
     return normalize(sum);
 }
 
@@ -260,17 +236,13 @@ ieee754_t multiply(ieee754_t multiplicand, ieee754_t multiplier) {
     }
     unnormal_t denormalized_multiplicand = denormalize(multiplicand);
     unnormal_t denormalized_multiplier = denormalize(multiplier);
-    unnormal_t product = {
-            .sign = 0,
-            .integer_portion =0,
-            .fractional_portion = 0,
-            .exponent = 0,
-            .is_infinite = 0,
-            .is_nan = 0
-    };
     /* COMPUTE THE PRODUCT */
+    uint8_t sign;
+    uint64_t integer, fraction;
+    int16_t exponent;
 
 
+    unnormal_t product = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
     return normalize(product);
 }
 
@@ -298,15 +270,12 @@ ieee754_t divide(ieee754_t dividend, ieee754_t divisor) {
     }
     unnormal_t denormalized_dividend = denormalize(dividend);
     unnormal_t denormalized_divisor = denormalize(divisor);
-    unnormal_t quotient = {
-            .sign = 0,
-            .integer_portion = 0,
-            .fractional_portion = 0,
-            .exponent = 0,
-            .is_nan = 0,
-            .is_infinite = 0};
     /* COMPUTE THE QUOTIENT */
+    uint8_t sign;
+    uint64_t integer, fraction;
+    int16_t exponent;
 
 
+    unnormal_t quotient = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
     return normalize(quotient);
 }
