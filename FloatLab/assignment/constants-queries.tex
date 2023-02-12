@@ -1,0 +1,19 @@
+\subsection{Constants}
+
+There are seven named constants in \textit{fpu.c}.
+
+Assign the appropriate bit vectors to \lstinline{SIGN_BIT_MASK}, \lstinline{EXPONENT_BITS_MASK}, and \lstinline{FRACTION_BITS_MASK} so that you can use them to mask-off the sign bit, the exponent bits, and the fraction bits, respectively, in a \lstinline{ieee754_t} floating point value.
+Next, assign the single-precision exponent bias to \lstinline{EXPONENT_BIAS} and assign to \lstinline{NUMBER_OF_FRACTION_BITS} the number of bits used for the fraction bit field in a single-precision floating point number.
+Finally, assign to \lstinline{NAN} and \lstinline{INFINITY} the appropriate bit vectors for single-precision Infinity and Not-a-Number.
+
+These constants will not be graded directly;
+they exist solely to make your code more readable.
+You may define additional named constants as needed.
+
+\subsection{Query Functions}
+
+There are three functions to identify whether an \lstinline{ieee754_t} floating point value is Not-a-Number (\function{is_nan()}), is infinity (\function{is_infinity()}), or is zero (\function{is_zero()}).
+Implement these functions to correctly detect their special cases without regard to the value's sign.
+
+The remaining query function (\function{is_negative()}) determines whether an \lstinline{ieee754_t} floating point value is negative.
+Implement this function.

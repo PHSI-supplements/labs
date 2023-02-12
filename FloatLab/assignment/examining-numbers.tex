@@ -1,0 +1,94 @@
+    \subsection{Printing a IEEE~754-Compliant Value}
+
+    Examine the stub for \function{ieee754_to_string()}.
+    This function prints its \lstinline{ieee754_t} argument bit vector in hexadecimal, and then it is supposed to print the bit vector as a binary floating point value.
+    Making use of the query functions that you wrote, the stub prints the sign and handles the special cases.
+
+    Find this code:
+
+    \begin{lstlisting}
+// The number is either Normal or Subnormal
+int integer_portion = 0;
+uint32_t fraction = 0;
+int exponent = 0;
+char fraction_string[40];
+/* DETERMINE THE INTEGER PORTION, THE FRACTION, AND THE EXPONENT */
+    \end{lstlisting}
+
+    Assign the appropriate values to \lstinline{integer_portion}, \lstinline{fraction}, and \lstinline{exponent}.
+    The floating point value's sign is also the \lstinline{integer_portion}'s sign.
+    The \lstinline{fraction} is simply the fraction bits as they appear in the lstinline{number}.
+    The \lstinline{exponent} is the two's complement representation of the exponent that you get after removing the bias from the \lstinline{number}'s \texttt{E} field.
+    Do not make any assignments to \lstinline{fraction_string} -- this is a buffer that will be used later.
+    The subsequent \function{sprintf()} call uses these variables to print the bit vector as a binary floating point value.
+
+    \paragraph*{Check Your Work}
+
+    Compile and run \texttt{\textbf{\textit{./floatlab}}}, trying a few values, starting with values whose IEEE~754 representation are easy to check.
+    For example:
+
+    \begin{verbatim}
+        Enter a value, a two-operand arithmetic expression,
+            "denormalize <value> <change exponent amount>",
+            "renormalize <value> <change exponent amount>",
+            or "quit": 1
+        0x3f800000	+1.0000,0000,0000,0000,0000,000_{2} x 2^{0}
+
+        Enter a value, ... or "quit": .25
+        0x3e800000	+1.0000,0000,0000,0000,0000,000_{2} x 2^{-2}
+
+        Enter a value, ... or "quit": 15.625
+        0x417a0000	+1.1111,0100,0000,0000,0000,000_{2} x 2^{3}
+    \end{verbatim}
+
+    Try a few more on your own.
+    You can also try creating some bit vectors to see that the sign, significand, and exponent are all what you expect, based on your understanding of the IEEE~754 format.
+    For example:
+
+    \begin{verbatim}
+        Enter a value, ... or "quit": 0xF22AAAAA
+        0xf22aaaaa	-1.0101,0101,0101,0101,0101,010_{2} x 2^{101}
+    \end{verbatim}
+
+    Don't forget to check subnormal numbers, too.
+    For example:
+
+    \begin{verbatim}
+        Enter a value, ... or "quit": 5e-40
+        0x000571cc	+0.0000,1010,1110,0011,1001,100_{2} x 2^{-126}
+    \end{verbatim}
+
+    \subsection*{Normalizing and Denormalizing}
+
+    You have three functions to write to manipulate floating point representations.
+
+    \subsection{Denormalization}
+
+    The \function{denormalize()} function converts an IEEE~754-compliant \lstinline{ieee754_t} value into a format that facilitate arithmetic.
+    As described in Section~\ref{subsubsec:fpu.h}, the \lstinline{unnormal_t} structure that is returned by \function{denormalize()} has fields for the sign bit, the integer portion, the fractional portion, and the exponent.
+    It also has flags for Not-a-Number and for Infinity.
+    Unlike the IEEE~754 format, an \lstinline{unnormal_t} value can have more than one bit in its integer portion.
+
+    There is no strictly-correct transformation of an \lstinline{ieee754_t} variable into an \lstinline{unnormal_t} variable (and so \function{denormalize()} will not be graded directly).
+    The only requirement is that it be reversible;
+    that is, this expression must be true: \lstinline{value == normalize(denormalize(value))}.
+
+    We recommend that you place the ``ones'' bit ($2^0$) of the integer portion in the least significant bit of the \lstinline{integer_portion} field, the ``halves'' bit ($2^{-1}$) of the fractional portion in the most significant bit of the \lstinline{fractional_portion} field, as this will make it easier to adjust the exponent as needed.
+
+    \paragraph*{Check Your Work}
+
+    We have provided a function that will print a \lstinline{unnormal_t} value.
+    When you run \texttt{\textbf{\textit{./floatlab}}}, you can specify that you want to denormalize a value, such as \texttt{\textbf{\textit{denormalize 12.375}}}.
+    The program will then print the value, based on the \lstinline{unnormal_t} fields.
+    Because there are 64 bits available for the integer portion and another 64 bits for the fractional portion, the \lstinline{unnormal_t} value will be printed in base-16:
+
+    \begin{verbatim}
+        Enter a value, a two-operand arithmetic expression,
+            "denormalize <value> <change exponent amount>",
+            "renormalize <value> <change exponent amount>",
+            or "quit": denormalize 12.375
+        +0000000000000001.8c00000000000000_{16} x 2^{3}
+    \end{verbatim}
+
+    Because $12.375_{10} = 1.1000,11_{2} \times 2^3$, we can see that $1.8\mathrm{C}_{16} \times 2^3$ is correct.
+    (If you used the \lstinline{integer_portion} and/or \lstinline{fractional_portion} differently than we recommended, then your output will look different from this example).

@@ -1,0 +1,78 @@
+\subsection{Adjust\_Exponent}
+
+The \function{adjust_exponent()} function changes a \lstinline{unnormal_t} variable's exponent while preserving its value.
+For example, these values are all equal but have different exponents:
+\[
+    1.1000,11_{2} \times 2^3 = 1,1000.11_{2} \times 2^{-1} = 0.0011,0001,1_{2} \times 2^6
+\]
+
+Write \function{adjust_exponent()} such that:
+\begin{itemize}
+    \item A positive \lstinline{amount} causes the \lstinline{number}'s exponent to increase.
+        The virtual binary point moves to the left by \lstinline{amount} by taking that many least significant bit(s) from the integer portion (right-shifting the other integer bits) and making it/them the most significant bit(s) in the fractional portion (right-shifting the existing fractional bits).
+    \item A negative \lstinline{amount} causes the \lstinline{number}'s exponent to decrease.
+        The virtual binary point moves to the right by \lstinline{-amount} by taking that many most significant bit(s) from the fractional portion (left-shifting the other fractional bits) and making it/them the least significant bit(s) in the integer portion (left-shifting the existing fractional bits).
+\end{itemize}
+
+You can now use \function{adjust_exponent()} to cause two values to have the same exponent, or you can use the function to align the significant bits.
+The \function{adjust_exponent()} function will not be graded directly.
+
+\paragraph*{Check Your Work}
+
+When you run \texttt{\textbf{\textit{./floatlab}}} and specify that you want to denormalize a value, you can also specify the amount by which you want to change the exponent.
+(The amount must be an integer value.) For example:
+
+\begin{verbatim}
+    Enter ... "denormalize <value> <change exponent amount>", ...
+        or "quit": denormalize 12.375 -4
+    +0000000000000018.c000000000000000_{16} x 2^{-1}
+
+    Enter ... "denormalize <value> <change exponent amount>", ...
+        or "quit": denormalize 12.375 3
+    +0000000000000000.3180000000000000_{16} x 2^{6}
+\end{verbatim}
+
+\subsection{Normalize}
+
+The \function{normalize()} function converts an \lstinline{unnormal_t} value into an IEEE~754-compliant format.
+The function stub already handles zero and the flagged cases of Not-a-Number and Infinity.
+The stub also handles the sign bit.
+
+Your task is to handle:
+\begin{itemize}
+    \item Normal numbers, both those that already have exactly $1$ in the integer portion and those that need to be adjusted.
+    \item Subnormal numbers, both those that can be directly converted and those that need to be adjusted.
+    \item Cases that you will not be able to test until later:
+    \begin{itemize}
+        \item Numbers too great to be represented as normal numbers.
+        \item Numbers too small to be represented as subnormal numbers.
+        \item Rounding (when implemented, follow the IEEE~754 default of ``round-to-nearest-even.'')
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Check Your Work}
+
+When you run \texttt{\textbf{\textit{./floatlab}}}, you can specify that you want to renormalize a value, such as \texttt{\textbf{\textit{renormalize 12.375}}} and \texttt{\textbf{\textit{renormalize 12.375 6}}}.
+The program will first denormalize the value.
+It will then adjust the exponent by the specified amount (if an amount is specified).
+Then it will send the result to \function{normalize()}.
+Finally, it will print the original value and the \lstinline{ieee754_t} value returned by \function{normalize}.
+
+For example:
+
+\begin{verbatim}
+Enter ... "renormalize <value> <change exponent amount>", ...
+    or "quit": renormalize 12.375
+expected: 12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
+actual:   12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
+
+Enter ... "renormalize <value> <change exponent amount>", ...
+    or "quit": renormalize 12.375 6
+expected: 12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
+actual:   12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
+
+Enter ... "renormalize <value> <change exponent amount>", ...
+    or "quit": renormalize 0x00055000
+expected: 0.0000000000_{10}	0x00055000	+0.0000,1010,1010,0000,0000,000_{2} x 2^{-126}
+actual:   0.0000000000_{10}	0x00055000	+0.0000,1010,1010,0000,0000,000_{2} x 2^{-126}
+\end{verbatim}

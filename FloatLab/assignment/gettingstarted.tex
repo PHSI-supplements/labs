@@ -1,0 +1,56 @@
+Download \textit{\shortlabname.zip} or \textit{\shortlabname.tar} from \filesource\ and copy it to \runtimeenvironment.
+Once copied, unpackage the file.
+Three of the four files (\textit{fpu.h}, \textit{fpu.c}, and \textit{floatlab.c}) contain the starter code for this assignment.
+The last file (\textit{Makefile}) tells the \texttt{make} utility how to compile the code.
+To compile the program, type:
+
+\texttt{make}
+
+This will produce an executable file called \textit{floatlab}.
+
+When you run the program with the command \texttt{\textbf{\textit{./floatlab}}}, you will be prompted:
+
+\begin{verbatim}
+    Enter a value, a two-operand arithmetic expression,
+        "denormalize <value> <change exponent amount>",
+        "renormalize <value> <change exponent amount>",
+        or "quit":
+\end{verbatim}
+
+When you enter a value, if it is prepended with \texttt{\textbf{\textit{0x}}} then the parser will treat it as a bit vector;
+otherwise, the parser will treat it as a floating point value.
+
+For now, type \texttt{\textbf{\textit{quit}}} to exit the program.
+
+\subsection{Description of FloatLab Files}
+
+\subsubsection{floatlab.c}
+
+Do not edit \textit{floatlab.c}.
+
+This file contains the driver code for the lab, as well as a couple of helper functions.
+It parses your input, calls the appropriate arithmetic function, and displays the output.
+
+\subsubsection{fpu.h}\label{subsubsec:fpu.h}
+
+Do not edit \textit{fpu.h}.
+
+This header file contains two type definitions:
+\begin{description}
+    \item[ieee754\_t] is a 32-bit bit vector that represents a floating point number.
+    The bit vector is to be interpreted as though it were a single-precision floating point value in the IEEE~754 format.
+    The value may be in the normal form, in the subnormal form, or one of the special cases (NaN, infinity, or zero).
+    \item[unnormal\_t] is a structure to hold the components of a floating point number that does not have to be in the IEEE~754 format.
+    We expect that you will find the structure useful when performing arithmetic.
+    The fields contain enough bits for you to produce exact results that can later be rounded to fit into the normal form.
+    While you are not required to do so, we recommend that you place the ``ones'' bit ($2^0$) of the integer portion in the least significant bit of the \lstinline{integer_portion} field, the ``halves'' bit ($2^{-1}$) of the fractional portion in the most significant bit of the \lstinline{fractional_portion} field, and the remaining fractional bits in their appropriate locations relative to the ``halves'' bit.
+    We recommend that you store absolute values of the integer and fractional portions, using the 1-bit \lstinline{sign} field to indicate whether the value is positive or negative.
+    We further recommend that you use the \lstinline{exponent} field to store the exponent as a two's complement integer and not as a biased integer.
+    There are \lstinline{is_infinite} and \lstinline{is_nan} 1-bit fields available to indicate special values.
+\end{description}
+The header file also contains several function declarations.
+The requirements for these functions will be discussed later in this assignment.
+
+\subsubsection{fpu.c}
+
+This file contains stubs for constants and functions you need to create.
