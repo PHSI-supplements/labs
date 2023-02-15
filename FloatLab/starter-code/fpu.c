@@ -14,9 +14,11 @@
  * Floatlab solution (c) the above-named student
  */
 
+#include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include "fpu.h"
+#include "unnormal.h"
 
 /* BITMASKS TO EXTRACT SPECIFIC BITFIELDS */
 
@@ -95,15 +97,15 @@ char *ieee754_to_string(char *destination, ieee754_t number) {
         sprintf(destination + 12, "0.0");
     } else {
         // The number is either Normal or Subnormal
-        int integer_portion = 0;
+        unsigned int integer = 0;
         uint32_t fraction = 0;
         int exponent = 0;
         char fraction_string[40];   // Do not directly edit `fraction_string`
-        /* DETERMINE THE INTEGER PORTION, THE FRACTION, AND THE EXPONENT */
+        /* DETERMINE THE INTEGER, THE FRACTION, AND THE EXPONENT */
 
 
         sprintf(destination + 12, "%d.%s_{2} x 2^{%d}",
-                integer_portion,
+                integer,
                 bits_to_string(fraction_string, fraction, NUMBER_OF_FRACTION_BITS - 1, 0, FROM_LEFT),
                 exponent);
     }
@@ -125,10 +127,12 @@ unnormal_t denormalize(ieee754_t number) {
     }
     /* DETERMINE THE INTEGER PORTION, THE FRACTION, AND THE EXPONENT */
     uint64_t integer, fraction;
-    int32_t exponent;
+    int16_t exponent;
 
 
-    return unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
+    unnormal_t value = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
+    assert(!created_number_is_improbable(value));
+    return value;
 }
 
 /**
@@ -145,7 +149,7 @@ ieee754_t normalize(unnormal_t number) {
     } else if ((get_integer(number) == 0) && (get_fraction(number) == 0)) {
         result = 0;
     } else {
-        /* GENERATE THE APPROPRIATE BIT VECTOR */
+        /* GENERATE THE APPROPRIATE BIT VECTOR AND PLACE IT IN RESULT */
 
 
     }

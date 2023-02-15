@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 CFLAGS = -O0 -std=c99 -Wall -g	# with -Og, the compiler might still optimize-out the parameters for the functions that use only inline assembly
 DEPS = alu.h
 LIBS = -lm

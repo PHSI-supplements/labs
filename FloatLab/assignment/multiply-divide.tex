@@ -7,10 +7,9 @@ The \function{multiply()} stub identifies a handful of special cases that you ca
 After the guard clauses are handled, your task is to implement multiplication for two finite, non-zero numbers.
 
 While you have the option of performing integer multiplication without adjusting the denormalized operands (it would require only a little modification of your code from IntegerLab), we recommend that you adjust the denormalized operands so that you can use C's integer multiplication operator.
-Adjust the denormalized operands such that their significands are both fully in the integer portion or fully in the fractional portion.
-Because you do not need to give the two operands the same exponent, you do not need to worry about truncating bits.
-Instead, make sure that, regardless of which field you chose, all the significands' bits are in the lower 32 bits of that field -- this will leave enough bits for the full product.
-Multiply the two operands together using integer multiplication.
+Adjust the denormalized operands such that their significands are both fully in the integer portion.
+Because you do not need to give the two operands the same exponent, you do not need to worry about any further adjustment.
+Multiply the two operands together using integer arithmetic.
 
 \subsubsection*{Check Your Work}
 

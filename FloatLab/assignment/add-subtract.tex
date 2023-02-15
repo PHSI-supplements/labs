@@ -12,13 +12,33 @@ Start by adjusting one of the denormalized operands so that the two denormalized
 It is acceptable for the least significant bit (or even several less significant bits) to be truncated;
 however, \textit{you must take care that the most significant bit does not get truncated}!
 
-You now have two options:
-\begin{itemize}
-    \item Use integer addition to add the fractional portions, use integer addition to add the integer portions, detect whether the fractional portion overflowed, and carry that 1 into the integer portion if the fractional portion did overflow.
-    \item Adjust the two denormalized operands together until their significands are both fully in the integer portion or fully in the fractional portion.
-        Make sure that, regardless of which field you chose, that that field's most significant bit is 0 for both operands, leaving room for a carry bit.
-        Add the two operands together using integer addition.
-\end{itemize}
+You have two options to get the exponents to match, both of which are well-supported by the Unnormal functions (see Section~\ref{subsec:unnormal}):
+\begin{enumerate}
+    \item First place each operand's significand entirely in the integer portion.
+        Then whichever operand has the is greater exponent, shift that operand's significand to the left (decreasing the exponent, moving the binary point to the right) until the exponents match or until one more shift would make addition unreliable.
+        If the exponents still do not match, then shift the other operand's significand to the right (increasing the exponent, moving the binary point to the left) until the exponents match. \\ \textit{Or,}
+    \item Determine the difference between the operands' exponents and use the appropriate function to set one of the operands' exponent to match the other's.
+        \textit{Do \textbf{not} decrease either exponent by more than 62} or you run the risk of making addition unreliable and possibly causing the significand to overflow.
+        If you increase only one exponent, then you can increase it as much as you need to -- any bits lost to underflow will not affect the value after rounding.\footnote{
+            Prove the professor wrong bonus: if a counterexample exists, the first student to bring it to my attention will receive a 10-point bonus on this assignment.
+        }
+\end{enumerate}
+
+You can now add the two values using integer arithmetic.
+\ifbool{offerdecompositionhints}{
+    \textit{Hint:} if the two operands have the same sign, add the significands;
+    if the two operands have different signs, subtract the significands.
+}{}
+
+\begin{enumerate}
+    \item If you selected the first option above, you need only to add the integer portions, setting the fraction portion to 0.
+        If you shifted an operand's significand to the right only after the other operand is shifted as far to the left as is safe to do so, then any bits that were shifted into the fraction would be lost to rounding anyway.\footnote{
+            Prove the professor wrong bonus: if a counterexample exists, the first student to bring it to my attention will receive a 10-point bonus on this assignment.
+        }
+    \item If you selected the second option above, you will need to add both the integer and the fraction portions,
+        and you will need to check whether the fraction carries into (or borrows from) the integer portion;
+        if so, you will need to add 1 to (or subtract 1 from) the integer to account for this.
+\end{enumerate}
 
 \subsection{Negate}
 

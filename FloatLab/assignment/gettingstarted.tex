@@ -1,6 +1,6 @@
 Download \textit{\shortlabname.zip} or \textit{\shortlabname.tar} from \filesource\ and copy it to \runtimeenvironment.
 Once copied, unpackage the file.
-Three of the four files (\textit{fpu.h}, \textit{fpu.c}, and \textit{floatlab.c}) contain the starter code for this assignment.
+Five of the six files (\textit{fpu.h}, \textit{fpu.c}, \textit{unnormal.h}, \textit{unnormal.c} and \textit{floatlab.c}) contain the starter code for this assignment.
 The last file (\textit{Makefile}) tells the \texttt{make} utility how to compile the code.
 To compile the program, type:
 
@@ -35,22 +35,58 @@ It parses your input, calls the appropriate arithmetic function, and displays th
 
 Do not edit \textit{fpu.h}.
 
-This header file contains two type definitions:
-\begin{description}
-    \item[ieee754\_t] is a 32-bit bit vector that represents a floating point number.
-    The bit vector is to be interpreted as though it were a single-precision floating point value in the IEEE~754 format.
-    The value may be in the normal form, in the subnormal form, or one of the special cases (NaN, infinity, or zero).
-    \item[unnormal\_t] is a structure to hold the components of a floating point number that does not have to be in the IEEE~754 format.
-    We expect that you will find the structure useful when performing arithmetic.
-    The fields contain enough bits for you to produce exact results that can later be rounded to fit into the normal form.
-    While you are not required to do so, we recommend that you place the ``ones'' bit ($2^0$) of the integer portion in the least significant bit of the \lstinline{integer_portion} field, the ``halves'' bit ($2^{-1}$) of the fractional portion in the most significant bit of the \lstinline{fractional_portion} field, and the remaining fractional bits in their appropriate locations relative to the ``halves'' bit.
-    We recommend that you store absolute values of the integer and fractional portions, using the 1-bit \lstinline{sign} field to indicate whether the value is positive or negative.
-    We further recommend that you use the \lstinline{exponent} field to store the exponent as a two's complement integer and not as a biased integer.
-    There are \lstinline{is_infinite} and \lstinline{is_nan} 1-bit fields available to indicate special values.
-\end{description}
+This header file contains a type definition.
+\textbf{\texttt{ieee754\_t}} is a 32-bit bit vector that represents a floating point number.
+The bit vector is to be interpreted as though it were a single-precision floating point value in the IEEE~754 format.
+The value may be in the normal form, the subnormal form, or one of the special cases (NaN, infinity, or zero).
+
 The header file also contains several function declarations.
 The requirements for these functions will be discussed later in this assignment.
+
+\subsubsection{unnormal.h \& unnormal.c}
+
+Do not edit \textit{unnormal.h}.
+Do not edit \textit{unnormal.c}.
+
+These files provide an encapsulation of the \textbf{\texttt{unnormal\_t}} data type.
+The data type and its functions are described in Section~\ref{subsec:unnormal}.
 
 \subsubsection{fpu.c}
 
 This file contains stubs for constants and functions you need to create.
+\begin{itemize}
+    \item Constants
+    \begin{description}
+        \item[SIGN\_BIT\_MASK] can be used to determine whether an \lstinline{ieee754_t} value is positive or negative
+        \item[EXPONENT\_BITS\_MASK] can be used to isolate the bits used to encode the exponent in an \lstinline{ieee754_t} value
+        \item[FRACTION\_BITS\_MASK] can be used to isolate the bits used for the fraction in an \lstinline{ieee754_t} value
+        \item[EXPONENT\_BIAS] is the single-precision exponent bias
+        \item[NUMBER\_OF\_FRACTION\_BITS] is the number of bits used for the fraction field in a single-precision floating point number
+        \item[NAN] is a bit vector for an \lstinline{ieee754_t} value that is not a number
+        \item[INFINITY] is the bit vector for an \lstinline{ieee754_t} value that is too great to be represented with the available bits
+    \end{description}
+    \item Query functions
+    \begin{description}
+        \item[is\_infinity()] reports whether an \lstinline{ieee754_t} value is positive or negative infinity
+        \item[is\_nan()] reports whether an \lstinline{ieee754_t} value is a legal NaN bit vector
+        \item[is\_zero()] reports whether an \lstinline{ieee754_t} value is positive or negative zero
+        \item[is\_negative()] reports whether an \lstinline{ieee754_t} value is negative
+    \end{description}
+    \item Functions to examine \lstinline{ieee754_t} values
+    \begin{description}
+        \item[ieee754\_to\_string()] converts an \lstinline{ieee754_t} value into a meaningful string
+        \item[denormalize()] converts an \lstinline{ieee754_t} value into an \lstinline{unnormal_t} value
+    \end{description}
+    \item Function to normalize and round \lstinline{ieee754_t} values
+    \begin{description}
+        \item[denormalize()] converts an \lstinline{unnormal_t} value into an \lstinline{ieee754_t} value, applying rounding as necessary
+    \end{description}
+    \item Arithmetic functions
+    \begin{description}
+        \item[add()] adds two \lstinline{ieee754_t} values
+        \item[negate()] negates an \lstinline{ieee754_t} value
+        \item[subtract()] uses \function{add()} and \function{negate()} to subtract an \lstinline{ieee754_t} value from another (this is a one-line function provided for you)
+        \item[multiply()] multiplies two \lstinline{ieee754_t} values
+        \item[divide()] divides an \lstinline{ieee754_t} value by another, under a limited set of circumstances
+    \end{description}
+\end{itemize}
