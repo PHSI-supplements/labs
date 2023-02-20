@@ -14,7 +14,7 @@ You may define additional named constants as needed.
 
 There are three functions to identify whether an \lstinline{ieee754_t} floating point value is Not-a-Number (\function{is_nan()}), is infinity (\function{is_infinity()}), or is zero (\function{is_zero()}).
 Implement these functions to correctly detect their special cases without regard to the value's sign.
-(Note that \function{is_nan()} must return \lstinline{true} for \textit{all} valid NaN bit vectors and not just host that match your \lstinline{NAN} constant.)
+(Note that \function{is_nan()} must return \lstinline{true} for \textit{all} valid NaN bit vectors and not just those that match your \lstinline{NAN} constant.)
 
 The remaining query function (\function{is_negative()}) determines whether an \lstinline{ieee754_t} floating point value is negative.
 Implement this function.

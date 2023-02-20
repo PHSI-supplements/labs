@@ -38,16 +38,27 @@ struct authoritative_result {
 };
 
 bool read_evaluate_print();
+
 char *parse_operand(const char *buffer, uint32_t *operand);
+
 char *parse_operator(const char *buffer, char *operator);
+
 void evaluate_print_one_bit_adder(const char *input_buffer);
+
 void evaluate_print_thirty_two_bit_adder(const char *input_buffer);
+
 void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operand2);
+
 void evaluate_addition(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+
 void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+
 void evaluate_unsigned_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+
 void evaluate_unsigned_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+
 void evaluate_signed_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+
 void evaluate_signed_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
 
 int main() {
@@ -318,10 +329,10 @@ bool read_evaluate_print() {
                 break;
             case '<':
                 if (operator[1] == '\0') {
-                    printf("expected: (%d < %d) = %d\n", operand1, operand2, operand1 < operand2);
+                    printf("expected: (%d < %d) = %d\n", operand1, operand2, ((int32_t) operand1) < ((int32_t) operand2));
                     printf("actual:   (%d < %d) = %d\n", operand1, operand2, less_than(operand1, operand2));
                 } else if (operator[1] == '=') {
-                    printf("expected: (%d <= %d) = %d\n", operand1, operand2, operand1 <= operand2);
+                    printf("expected: (%d <= %d) = %d\n", operand1, operand2, ((int32_t) operand1) <= ((int32_t) operand2));
                     printf("actual:   (%d <= %d) = %d\n", operand1, operand2, at_most(operand1, operand2));
                 } else {
                     printf("Unknown operator: %s\n", operator);
@@ -329,10 +340,10 @@ bool read_evaluate_print() {
                 break;
             case '>':
                 if (operator[1] == '\0') {
-                    printf("expected: (%d > %d) = %d\n", operand1, operand2, operand1 > operand2);
+                    printf("expected: (%d > %d) = %d\n", operand1, operand2, ((int32_t) operand1) > ((int32_t) operand2));
                     printf("actual:   (%d > %d) = %d\n", operand1, operand2, greater_than(operand1, operand2));
                 } else if (operator[1] == '=') {
-                    printf("expected: (%d >= %d) = %d\n", operand1, operand2, operand1 >= operand2);
+                    printf("expected: (%d >= %d) = %d\n", operand1, operand2, ((int32_t) operand1) >= ((int32_t) operand2));
                     printf("actual:   (%d >= %d) = %d\n", operand1, operand2, at_least(operand1, operand2));
                 } else {
                     printf("Unknown operator: %s\n", operator);
@@ -447,7 +458,8 @@ void evaluate_signed_division(uint16_t operand1, uint16_t operand2, struct autho
             "movw %di, %ax\n"
             "movw $0, %dx\n"
             "testw %ax, %ax\n"
-            //            "cmovs $-1, %rdx\n"
+            // "cmovs $-1, %rdx\n"
+            // the next three instructions substitute for the cmov instruction
             "jns .Linline\n"
             "movw $-1, %dx\n"
             ".Linline:\n"

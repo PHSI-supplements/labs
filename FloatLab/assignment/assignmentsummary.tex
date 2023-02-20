@@ -45,6 +45,14 @@ You can check whether you're creating a floating point constant with a simple \t
 
 \ifbool{offerdecompositionhints}{
     \subsection{Problem Decomposition}
+    As was the case with IntegerLab -- as is the case for a great many problems -- FloatLab is best solved by decomposing it into smaller, manageable problems and then using the solutions to the smaller problems to solve the larger problem.
+    We start you with some bit masks that will allow you to examine specific bit fields within an IEEE~754 formatted value.
+    Then you will create some constants based on your understanding of IEEE~754.
+    You can then use some of the bit masks and your understanding of IEEE~754 to create some simple functions to test qualityies of an IEEE~754 formatted value.
 
-    \dots
+    With those small problems taken care of, you can use them to determine an IEEE~754 formatted value's mathematical value.
+    You'll first do this to be able to print a floating point value, and then you'll do this to convert a floating point number into a form that will make arithmetic easier.
+    Then you'll use your understanding of IEEE~754 to place a floating point value into the IEEE~754 format.
+
+    With those tasks complete, you have everything you need to apply your understanding of floating point arithmetic to implement the \function{add()}, \function{subtract()}, \function{multiply()}, and \function{divide()} functions.
 }{}
