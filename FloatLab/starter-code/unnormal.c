@@ -27,8 +27,8 @@
 static const uint64_t LSB = ((uint64_t) 0x1);
 static const uint64_t MSB = (((uint64_t) 0x1) << 63);
 static const uint64_t MSB_OF_LOWER_HALF = (((uint64_t) 0x1) << 31);
-static const uint64_t LOWER_THIRTY_TWO_BITS = (uint64_t) 0xFFFFFFFF;
-static const uint64_t UPPER_THIRTY_TWO_BITS = ~LOWER_THIRTY_TWO_BITS;
+// static const uint64_t LOWER_THIRTY_TWO_BITS = (uint64_t) 0xFFFFFFFF;
+static const uint64_t UPPER_THIRTY_TWO_BITS = (uint64_t) 0xFFFFFFFF00000000uL;
 static const uint64_t SIGNIFICANT_FRACTION_BITS = (uint64_t) 037777777;
 
 
@@ -75,7 +75,7 @@ char *unnormal_to_string(char *destination, unnormal_t number) {
     } else if (number.is_not_a_number) {
         sprintf(destination, "%cNot a Number", number.sign ? '-' : '+');
     } else {
-        sprintf(destination, "%c%016llx.%016llx_{16} x 2^{%d}",
+        sprintf(destination, "%c%016lx.%016lx_{16} x 2^{%d}",
                 number.sign ? '-' : '+', number.integer, number.fraction, number.exponent);
     }
     return destination;

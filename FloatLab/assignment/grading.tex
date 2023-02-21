@@ -37,11 +37,11 @@ This assignment is worth 35 points.
 \textbf{Penalties}
 \begin{description}
     \spaghetticodepenalties{1}
-    \penaltyitem{1 (each)}{\function{is_nan()}, \function{is_zero()}, \function{is_infinity()}, \function{is_negative()}, and/or \function{negate()} use \lstinline{float} or \lstinline{double} variables or constants, use C's floating point operations, and/or a function you did not write}
-    \penaltyitem{4}{\function{ieee754_to_string} uses \lstinline{float} or \lstinline{double} variables or constants, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
-    \penaltyitem{31}{\function{denormalize()}, \function{adjust_exponent()}, and/or \function{normalize()} use \lstinline{float} or \lstinline{double} variables or constants, use C's floating point operations, and/or a function you did not write}
-    \item[] If \function{denormalize()}, \function{adjust_exponent()}, and \function{normalize()} are not penalized:
-    \penaltyitem{9}{\function{add()} uses \lstinline{float} or \lstinline{double} variables or constants, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
-    \penaltyitem{9}{\function{multiply()} uses \lstinline{float} or \lstinline{double} variables or constants, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
-    \penaltyitem{3 (and no bonus)}{\function{divide()} uses \lstinline{float} or \lstinline{double} variables or constants, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+    \penaltyitem{1 (each)}{\function{is_nan()}, \function{is_zero()}, \function{is_infinity()}, \function{is_negative()}, and/or \function{negate()} use \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, use C's floating point operations, and/or a function you did not write}
+    \penaltyitem{4}{\function{ieee754_to_string()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and functions defined in the starter code)}
+    \penaltyitem{27}{\function{denormalize()} and/or \function{normalize()} use \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, use C's floating point operations, and/or a function you did not write}
+    \item[] If \function{denormalize()} and \function{normalize()} are not penalized:
+    \penaltyitem{8}{\function{add()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+    \penaltyitem{8}{\function{multiply()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+    \penaltyitem{3 (and no bonus)}{\function{divide()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
 \end{description}

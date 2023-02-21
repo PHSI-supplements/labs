@@ -8,7 +8,8 @@ EXEC = floatlab
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-floatlab: $(OBJS)
+#floatlab: $(OBJS)
+floatlab: floatlab.o fpu.o unnormal.o
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean clear all
