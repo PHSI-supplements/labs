@@ -1,6 +1,5 @@
-%! suppress = MissingImport
 %%
-%% DuplicatorLab (c) 22 Christopher A. Bohn
+%% DuplicatorLab (c) 2022-23 Christopher A. Bohn
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -28,7 +27,7 @@
     \labidentifier
 
     In this assignment, you will remove a race condition in concurrent code by using a mutual exclusion token.
-    There is only a small amount of design effort required for this lab assignment, and \textbf{you should be able to complete it during lab time.}
+    There is only a small amount of design effort required for this lab assignment, and \textbf{you should be able to complete much of it during lab time.}
 
     The instructions are written assuming you will edit and run the code on \runtimeenvironment.
     If you wish, you may edit and run the code in a different environment;
@@ -57,8 +56,11 @@
     During your lab period, the TAs will explain how the code is designed to work.
     During the remaining time, the TAs will be available to answer questions.
 
-    \textbf{You should be able to complete this lab assignment during lab time};
-    however, it is not due until \duedate.
+%    \textbf{You should be able to complete this lab assignment during lab time};
+%    however, it is not due until \duedate.
+
+    Before leaving lab, \textit{at a minimum} complete Section~\ref{subsec:understandRace}.
+    Also make sure that you understand the syntax and semantics of \function{pthread_mutex_init()}, \function{pthread_mutex_destroy()}, \function{pthread_mutex_lock()}, and \function{pthread_mutex_unlock()}.
 
 %    \softwareengineeringfrontmatter
 
@@ -498,19 +500,20 @@ void duplicate(FILE *source_file, FILE *destination_file) {
     When you have completed this assignment, upload \textit{duplicator.c} to
     \filesubmission.
 
-    This assignment is worth 10 points. \\
+    This assignment is worth 20 points. \\
 
     \begin{description}
         \item[] In \textit{answers.txt}:
-        \rubricitem{1}{Provides a valid interleaving that produces the specified output}
-        \rubricitem{1}{Proposes reasonable locations to lock the mutex}
-        \rubricitem{1}{Proposes reasonable locations to unlock the mutex}
-        \rubricitem{1}{Demonstrates that the proposed changes would prevent the shared buffer from being prematurely overwritten}
+        \rubricitem{3}{Provides a valid interleaving that produces the specified output}
+        \rubricitem{2}{Proposes reasonable locations to lock the mutex}
+        \rubricitem{2}{Proposes reasonable locations to unlock the mutex}
+        \rubricitem{2}{Demonstrates that the proposed changes would prevent the shared buffer from being prematurely overwritten}
         \item[] In \textit{duplicator.c}:
-        \rubricitem{1}{Correctly initializes and destroys the mutex}
-        \rubricitem{1}{Correctly locks and unlocks the mutex in the locations that are identified in \textit{answers.txt}}
-        \rubricitem{2}{The duplicator makes correct copies}
-        \rubricitem{2}{No thread starves}
+        \rubricitem{2}{Correctly initializes and destroys the mutex}
+        \rubricitem{2}{Correctly locks and unlocks the mutex\dots}
+        \rubricitem{1}{\dots and does so in the locations that are identified in \textit{answers.txt}}
+        \rubricitem{3}{The duplicator makes correct copies}
+        \rubricitem{3}{No thread starves}
     \end{description}
 
     \textbf{Penalties}
