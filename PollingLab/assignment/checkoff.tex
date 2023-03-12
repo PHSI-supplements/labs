@@ -1,0 +1,136 @@
+You are not required to have your assignment checked-off by a TA or the
+professor. If you do not do so, then we will perform a functional check
+ourselves. In the interest of making grading go faster, we are offering a small
+bonus to get your assignment checked-off at the start of your scheduled lab
+time immediately after it is due. Because checking off all students during lab
+would take up most of the lab time, we are offering a slightly larger bonus if
+you complete your assignment early and get it checked-off by a TA or the
+professor during office hours.
+
+\begin{enumerate}
+\precheckoffitem{Establish that the code you are demonstrating is the code
+    you submitted to to \filesubmission.}
+    \begin{itemize}
+    \item If you are getting checked-off during lab time, show the TA that the
+        file was submitted before it was due.
+    \item Download the file into your number\_builder directory. If necessary,
+        rename it to \textit{number\_builder.ino}.
+    \end{itemize}
+\checkoffitem{Show the TA your implementations of the Input/Output functions.}
+\item [] (TA make note of which functions are implemented using memory-mapped I/O and which are not. Do not award credit for functions that do not use memory-mapped I/O. Pay attention to the debouncing code, making sure that it is not implemented with calls to \function{delay()}.)
+\checkoffitem{Show that debouncing is correctly implemented. \\
+    \textit{+1 The inputs are debounced in software without using blocking calls.}}
+\item [] \textbf{Memory-Mapped Input/Output}
+\checkoffitem{Ensure that the \function{loop()} function calls \function{test_io()} and not \function{build_number()}. Upload \textit{number\_builder.ino} to your \nano.}
+\checkoffitem{Show that the display module is displaying the output. \\
+    \textit{+8 The \function{send_halfbyte()} function is correctly implemented.}}
+\item [] (If the display module does not display the output, then the remainder of the memory-mapped I/O items can be checked on the serial monitor.)
+\checkoffitem{Demonstrate that both pushbuttons' positions are correctly detected. \\
+    \textit{+2 The \function{xx_button_is_pressed()} functions are correctly implemented.}}
+\checkoffitem{Demonstrate that both switches' positions are correctly detected. \\
+    \textit{+2 The \function{xx_switch_in_xx_position()} functions are correctly implemented.}}
+\checkoffitem{Demonstrate that when and only when both pushbuttons are pressed, the left LED (the built-in LED) illuminates. Demonstrate that when and only when both switches are in the right position, the right LED (the external LED) illuminates. \\
+    \textit{+2 The \function{set_xx_led()} functions are correctly implemented.}}
+\checkoffitem{Demonstrate that each of the keys on the keypad is correctly detected and that the absence of a keypress is also reported correctly. \\
+    \textit{+8 The \function{get_keypress()} function is correctly implemented.}}
+\item [] \textbf{Number Builder}
+\precheckoffitem{If the display module does not display the output, then comment-out the line in \function{initalize_io()} that registers \function{send_halfbyte()} with the CowPi library.}
+\precheckoffitem{Replace any other non-functioning I/O code with a call to the corresponding function from the CowPi library (see the starter code). \textit{Do NOT remove the debouncing code.}}
+\checkoffitem{Ensure that the \function{loop()} function calls \function{build_number()} and not \function{test_io()}. Upload \textit{number\_builder.ino} to your \nano.}
+\checkoffitem{Place both switches in the left position (left justified mode, decimal number base).}
+\checkoffitem{Press 2, then 3. The right LED illuminates for \textonehalf\ second with each keypress. \\ Left-justified in the upper-left corner of the display module is shown: \\ \display{2} \\ and then: \\ \display{23} \\
+    \textit{+1 Right LED illumination occurs as specified.} \\
+    \textit{+1 Left justified mode is implemented correctly.} \\
+    \textit{+1 The first digit is displayed in the correct position in this mode, making a blank display no longer blank.} \\
+    \textit{+1 Subsequent digits update the number correctly in this mode.}}
+\checkoffitem{Press B. The display is unchanged. \\
+    \textit{+\textonehalf\ Decimal number base (positive values) is implemented correctly.}}
+\checkoffitem{Press the right pushbutton. The left LED lluminates for \textonehalf\ second. \\ Left-justified in the lower-left corner of the display module is shown: \\ \display{23} \\ One second later, the display clears. \\
+    \textit{+1 Left LED illumination occurs as specified.} \\
+    \textit{+1 The right pushbutton causes a copy of the number to be displayed on the bottom row.} \\
+    \textit{+1 The right pushbutton causes the display to clear after one second.}}
+\checkoffitem{Place both switches in the right position (right justified mode, hexadecimal number base).}
+\checkoffitem{Press 2, then 3. The right LED illuminates for \textonehalf\ second with each keypress. \\ Right-justified in the upper-right corner of the display module is shown: \\ \parbox{3cm}{\raggedleft\display{0x2} \\ and then: \\ \display{0x23}} \\
+    \textit{+1 Right justified mode is implemented correctly.} \\
+    \textit{+1 The first digit is displayed in the correct position in this mode, making a blank display no longer blank.} \\
+    \textit{+1 Subsequent digits update the number correctly in this mode.}}
+\checkoffitem{Press B. \\ \parbox{3cm}{\raggedleft\display{0x23B}} \\
+    \textit{+\textonehalf\ Hexadecimal number base (positive values) is implemented correctly.}}
+\checkoffitem{Press the left pushbutton. The left LED illuminates for  \textonehalf\ second. The display show, right-justified in the upper-right corner: \\
+    \parbox{3cm}{\raggedleft\display{0xFFFFFDC5}} \\
+    \textit{+\textonehalf\ The left pushbutton negates positive hexadecimal values.}}
+\checkoffitem{Press A. \\ \parbox{3cm}{\raggedleft\display{0xFFFFDC5A}} \\
+    \textit{+\textonehalf\ Hexadecimal number base (negative values) is implemented correctly.}}
+\checkoffitem{Press the left pushbutton. \\
+    \parbox{3cm}{\raggedleft\display{0x23A6}} \\
+    \textit{+\textonehalf\ The left pushbutton negates negative hexadecimal values.}}
+\checkoffitem{Press 7, 8, 9, C. \\
+    \parbox{3cm}{\raggedleft\display{0x23A67}} \\
+    \parbox{3cm}{\raggedleft\display{0x23A678}} \\
+    \parbox{3cm}{\raggedleft\display{0x23A6789}} \\
+    \parbox{3cm}{\raggedleft\display{0x23A6789C}}}
+\checkoffitem{Press D. The system displays: \\ \display{too big} \\
+    \textit{+\textonequarter\ Detects too-big positive hexadecimal numbers.} \\
+    \textit{+\textonehalf\ Displays the correct ``too big'' error message.}}
+\checkoffitem{Press the right pushbutton and wait for the display to clear.}
+\checkoffitem{Enter 9, 8, 7, 6, 5, 4, 3, 2. \\
+    \parbox{3cm}{\raggedleft\display{0x9}} \\
+    \parbox{3cm}{\raggedleft\display{0x98}} \\
+    \parbox{3cm}{\raggedleft\display{0x987}} \\
+    \parbox{3cm}{\raggedleft\display{0x9876}} \\
+    \parbox{3cm}{\raggedleft\display{0x9876}} \\
+    \parbox{3cm}{\raggedleft\display{0x98765}} \\
+    \parbox{3cm}{\raggedleft\display{0x987654}} \\
+    \parbox{3cm}{\raggedleft\display{0x9876543}} \\
+    \parbox{3cm}{\raggedleft\display{0x98765432}}}
+\checkoffitem{Press 1. \\ \display{too big} \\
+    \textit{+\textonequarter\ Detects too-big negative hexadecimal numbers.} \\
+    \textit{+\textonequarter\ No false ``too big'' detection of hexadecimal numbers.}}
+\checkoffitem{Press the right pushbutton and wait for the display to clear.}
+\checkoffitem{Place the right swtich in the left position (decimal number base).}
+\checkoffitem{Enter 1, 2, 3, 4, 5. \\
+    \parbox{3cm}{\raggedleft\display{1}} \\
+    \parbox{3cm}{\raggedleft\display{12}} \\
+    \parbox{3cm}{\raggedleft\display{123}} \\
+    \parbox{3cm}{\raggedleft\display{1234}} \\
+    \parbox{3cm}{\raggedleft\display{12345}}}
+\checkoffitem{Press the left pushbutton. \\
+    \parbox{3cm}{\raggedleft\display{-12345}} \\
+    \textit{+\textonehalf\ The left pushbutton negates positive decimal values.}}
+\checkoffitem{Enter 6, 7, 8, 9, 0. \\
+    \parbox{3cm}{\raggedleft\display{-123456}} \\
+    \parbox{3cm}{\raggedleft\display{-1234567}} \\
+    \parbox{3cm}{\raggedleft\display{-12345678}} \\
+    \parbox{3cm}{\raggedleft\display{-123456789}} \\
+    \parbox{3cm}{\raggedleft\display{-1234567890}} \\
+    \textit{+\textonehalf\ Decimal number base (negative values) is implemented correctly.}}
+\checkoffitem{Press the left pushbutton. \\
+    \parbox{3cm}{\raggedleft\display{1234567890}} \\
+    \textit{+\textonehalf\ The left pushbutton negates negative decimal values.}}
+\checkoffitem{Press 1. \\ \display{too big} \\
+    \textit{+\textonequarter\ Detects too-big positive decimal numbers.}}
+\checkoffitem{Enter 1, 2, 3, 4, 5, 6, 7, 8, 9, 0. \\
+    \parbox{3cm}{\raggedleft\display{1}} \\
+    \parbox{3cm}{\raggedleft\display{12}} \\
+    \parbox{3cm}{\raggedleft\display{123}} \\
+    \parbox{3cm}{\raggedleft\display{1234}} \\
+    \parbox{3cm}{\raggedleft\display{12345}} \\
+    \parbox{3cm}{\raggedleft\display{123456}} \\
+    \parbox{3cm}{\raggedleft\display{1234567}} \\
+    \parbox{3cm}{\raggedleft\display{12345678}} \\
+    \parbox{3cm}{\raggedleft\display{123456789}} \\
+    \parbox{3cm}{\raggedleft\display{1234567890}}}
+\checkoffitem{Press the left pushbutton. \\
+    \parbox{3cm}{\raggedleft\display{-1234567890}}}
+\checkoffitem{Press 0. \\ \display{too big} \\
+    \textit{+\textonequarter\ Detects too-big negative decimal numbers.} \\
+    \textit{+\textonequarter\ No false ``too big'' detection of decimal numbers.}}
+\item [] \textbf{Overall} \\
+    \textit{+\textonehalf\ Button presses lasting fewer than 500ms are treated as a single press.} \\
+    \textit{+\textonehalf\ Key presses lasting fewer than 500ms are treated as a single press.}
+\end{enumerate}
+
+This concludes the demonstration of your system's functionality. The TAs will
+later examine your code for violations of the assignment's constraints. If your
+code looks like it is tailored for this checklist, the TAs may re-grade using a
+different checklist\texttt{.}

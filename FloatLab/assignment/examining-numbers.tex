@@ -136,7 +136,7 @@ We summarize the functions here:
 
 \subsection{Denormalization}
 
-The \function{denormalize()} function converts an IEEE~754-compliant \lstinline{ieee754_t} value into a format that facilitate arithmetic.
+The \function{denormalize()} function converts an IEEE~754-compliant \lstinline{ieee754_t} value into a format that facilitates arithmetic.
 As described in Section~\ref{subsec:unnormal}, the \lstinline{unnormal_t} structure that is returned by \function{denormalize()} has fields for the sign bit, the integer portion, the fractional portion, and the exponent.
 It also has flags for Not-a-Number and for Infinity.
 Unlike the IEEE~754 format, an \lstinline{unnormal_t} value can have more than one bit in its integer portion.

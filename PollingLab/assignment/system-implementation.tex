@@ -1,0 +1,200 @@
+In this section you will implement a ``number builing tool'' that turns a sequence of inputs into a number.
+A notional use of this number builder would be to create the operands for a calculator.
+Section~\ref{sec:FunctionalSpecification} has the tool's specification.
+You should design your system using the I/O functions -- either the implementations from the starter code with the debouncing code added, or the implementations you wrote (or will write) from Section~\ref{sec:MemMapIO}.
+After the specification are a few suggestions for making good use of those functions.
+
+If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, you may want to make a backup copy of your program now.
+
+Make sure that \textit{number\_builder.ino}'s \function{loop()} function calls \function{build_number()} and not \function{test_io()}.
+
+
+\subsection{Number Builder Specification} \label{sec:FunctionalSpecification}
+
+\begin{enumerate}
+\item The tool shall have two alignment modes, \textit{left justified mode} and
+    \textit{right justified mode}. The \textbf{left switch} controls the alignment mode.
+    When the \textbf{left switch} is toggled to the left, the tool shall be in left justified mode.
+    When the \textbf{left switch} is toggled to the right, the tool shall be in right justified mode.
+\item The tool shall have two number bases, \textit{decimal} and
+    \textit{hexadecimal}. The \textbf{right switch} controls the number base.
+\item \label{spec:decimalExplained} When the \textbf{right switch} is toggled
+    to the left, the number builder will use the decimal number base. When the
+    user presses a button on the \textbf{matrix keypad} with a decimal numeral
+    (\textit{0-9}) then the number builder shall take the appropriate action as
+    specified in requirement \ref{spec:initialKeyPress} or
+    \ref{spec:BuildingValue}. Any other buttons on the keypad shall be ignored.
+\item \label{spec:hexadecimalExplained} When the \textbf{right switch} is
+    toggled to the right, the number builder will use the hexadecimal number
+    base. When the user presses a button on the \textbf{matrix keypad} then the
+    number builder shall take the appropriate action as specified in
+    requirement \ref{spec:initialKeyPress} or \ref{spec:BuildingValue}.
+    Buttons with decimal numerals (\textit{0-9}) or alphabetic letters
+    (\textit{A-D}) shall be interpreted as having the corresponding hexadecimal
+    numeral; the button with the octothorp (\#) shall be interpreted as having
+    the hexadecimal numeral \textit{E}; and the button with the asterisk (*)
+    shall be interpreted as having the hexadecimal numeral \textit{F}.
+\item Initially, the \textbf{display module} shall be blank.
+\item \label{spec:illuminateLED} Whenever the user presses a key on the
+    \textbf{matrix keypad}, the \textbf{right LED} (aka, the external LED) shall
+    illuminate for approximately one-half of a second. Whenever the user presses
+    one of the \textbf{pushbuttons}, the \textbf{left LED} (aka the internal LED)
+    shall illuminate for approximately one-half of a second.
+\item The \textbf{LEDs} shall not illuminate except as specified in
+    requirement~\ref{spec:illuminateLED}.
+    %Exception: the \textbf{left LED} may blink as a consequence of its pin being used as the SPI \texttt{SCK} signal.
+    There is no prohibition against the \developmentboard's \texttt{TX},
+    \texttt{RX}, and \texttt{PWR} LEDs illuminating.
+\item The system shall build numbers in response to user input:
+    \begin{enumerate}
+    \item The numbers' values shall be representable as 32-bit signed integers.
+    \item \label{spec:initialKeyPress} If the display is blank
+        (\textit{i.e.}, there is not yet a number being built), then whenever the
+        user presses a button on the \textbf{matrix keypad}, the corresponding
+        numeral shall be displayed on the \textbf{display module}'s top row,
+        either in the far-left column or the far-right column, depending on the
+        alignment mode. The numeral displayed shall follow the interpretations
+        specified in requirements \ref{spec:decimalExplained} and
+        \ref{spec:hexadecimalExplained}.
+    \item \label{spec:BuildingValue} If the display is not blank (\textit{i.e.},
+        there is a number being built), then whenever the user presses a button
+        on the \textbf{matrix keypad}, the corresponding numeral shall become
+        the least-significant digit of the number shown on the
+        \textbf{display module}; all pre-existing digits shall increase in
+        significance by one order of magnitude. For example, if \display{234} is
+        displayed and the user presses \texttt{5}, then \display{2345} shall be
+        displayed. The numeral displayed shall follow the interpretations
+        specified in requirements \ref{spec:decimalExplained} and
+        \ref{spec:hexadecimalExplained}.
+        \begin{enumerate}
+        \item There shall be no noticeable lag in updating the display.
+        \item The alignment mode shall be preserved. If in left justified mode,
+            then the most-significant digit shall remain in the leftmost column.
+            If in right justified mode, then the new least-significant digit
+            shall be in the rightmost column.
+        % \item \label{spec:printValueToConsole} The new value shall be printed
+        %     to the Serial Monitor in decimal or hexadecimal, depending on the
+        %     system's current number base.
+        \end{enumerate}
+    \item ``0x'' shall be displayed as part of a hexadecimal value.
+    % \item ``0x'' shall not be displayed as part of a hexadecimal value.
+    \item Whenever the user presses the \textbf{left pushbutton}, the value
+        being displayed shall be negated.
+        \begin{enumerate}
+        \item In the decimal number base, the presence or absence of negative
+            sign shall indicate whether or not a value is negative.
+        \item In the hexadecimal number base, 32-bit two's complement shall be
+            used.
+        \end{enumerate}
+    \item A positive sign shall not be displayed as part of a positive value.
+    \item If a negative decimal value is displayed, the negative sign shall
+        be displayed immediately to the left of the most-significant digit
+        being displayed. For example, \display{-456} is correctly
+        displayed, but \display{-\phantom{xxxx}456} is not correctly displayed.
+        \begin{enumerate}
+        \item If in left justified mode, the negative sign shall be in the
+            leftmost column, and the most-significant digit shall be in the
+            column immediately to the right of that.
+        \end{enumerate}
+    \item Leading 0s may be displayed but are discouraged. For example,
+        \display{782} is preferred, but \display{00000782} is allowed.
+    \item Digit separators are permitted but not required. For example, both
+        \display{12345} and \display{12,345} are acceptable, as are both
+        \display{0x6789A} and \display{0x6,789A}.
+    \item Whenever the user presses the \textbf{right pushbutton} while a number
+        is being built, the number that has been built shall be displayed on the
+        bottom row, aligned according to the alignment mode, for approximately
+        one second. After approximately one second, the number that has been
+        built shall reset to 0, and the \textbf{display module} shall be cleared.
+        % \item In no case shall the tool allow the user to input a value too
+        %     great to be displayed on the \textbf{display module}. If
+        %     the user attempts to enter a value greater than $0x7FFF,FFFF$ in
+        %     hexadecimal, less than $0x8000,0000$ in hexadecimal, greater than
+        %     $99,999,999$ in decimal, or less than $-9,999,999$ in decimal, then the
+        %     \textbf{display module} shall display \display{too big}.
+        \item In no case shall the tool allow the user to input a value too
+            great to be stored as a 32-bit signed integer. If the user attempts to
+            enter a value greater than $0x7FFF,FFFF$ in hexadecimal, less than
+            $0x8000,0000$ in hexadecimal, greater than $2,147,483,647$ in decimal, or
+            less than $-2,147,483,648$ in decimal, then the \textbf{display module}
+            shall display \display{too big}.
+            \begin{itemize}
+            \item \textit{n.b.}, in a hexadecimal 32-bit negative integer, an
+                \texttt{F} in the most-significant hex-digit might only be a sign
+                extension; in this scenario, if the user inputs another hex-digit
+                then it is still a valid number because it would not be less than
+                $0x8000,0000$. \\ \\
+                For example, adding another digit to the 32-bit integer
+                $0xF865,4321$ would \textit{not} produce a too-great value because
+                the 36-bit integer $0xF,8654,3210 = -2,041,302,512_{10}$, and the
+                32-bit integer $0x8654,3210 = -2,041,302,512_{10}$. Because
+                $0x8000,0000 = -2,147,483,648_{10} \leq -2,041,302,512_{10}$, adding
+                the \texttt{0} digit did not produce a ``too big'' value. \\ \\
+                On the other hand, adding another digit to the 32-bit integer
+                $0xF765,4321$ \textit{would} produce a too-great value because the
+                36-bit integer $0xF,7654,3210 = -2,309,737,968_{10}$, but the 32-bit
+                integer $0x8654,3210 = 1,985,229,328_{10}$. Because
+                $0x8000,0000 = -2,147,483,648_{10} > -2,309,737,968_{10}$, adding
+                the \texttt{0} digit did produce a ``too big'' value.
+            \end{itemize}
+    \end{enumerate}
+\item If the user toggles the \textbf{left switch} (\textit{i.e.}, changes
+    alignment mode): if no number is being displayed, then the system shall
+    seamlessly transition between alignment modes; otherwise, the system's
+    behavior is undefined.
+\item If the user toggles the \textbf{right switch} (\textit{i.e.}, changes
+    the number base): if no number is displayed, or if the number 0 is displayed,
+    then the system shall seamlessly transition between number bases; if a
+    non-zero number is being built then the system's behavior is undefined.
+\item \label{spec:singleKeypress} When the user presses a button for less than
+    approximately one-half of a second, regardless of whether it is one of the
+    \textbf{pushbuttons} or a key on the \textbf{matrix keypad}, it shall be treated
+    as a single press.
+\end{enumerate}
+
+
+\subsection{Using I/O Functions}
+
+The header comments for the I/O functions in the starter code amply describe the functions.
+Updating the LEDs and reading the switches' positions require no special handling;
+however, polling the momentary pushbuttons and the keypad keys requires some extra care.
+
+\subsection{Implementing Requirement~\ref{spec:singleKeypress}}
+
+When using interrupts to detect button presses or key presses, debouncing is sufficient to ensure that only one press is detected for each actual press.
+When polling the momentary pushbuttons or keypad keys, each time the \function{loop()} function executes, their position will be queried.
+The problem is that the control loop iterates much faster than a human can remove their finger, and so a single press of a button or key is detected many, many times.
+
+You can overcome this problem by keeping track of the last time that each pushbutton was pressed and the last time that a keypress was detected.
+Then add a guard to prevent polling a pushbutton or the keypad during the half-second after the last detection.
+The code would look something like this:
+
+\begin{lstlisting}
+    if ((now - last_keypress > BUTTON_NO_REPEAT_TIME) &&
+        (...)) {
+      last_keypress = now;
+      uint8_t keypress = get_keypress();
+      ...
+    }
+\end{lstlisting}
+
+
+\subsection{Detecting a Keypress}
+
+Detecting presses of pushbuttons and determining which button was pressed are the same action: you know whether the right or left button was pressed by whether you detected the button press with \function{left_button_is_pressed()} or \function{right_button_is_pressed()}.
+Because you don't want to unnecessarily scan the keypad, you should only call \function{get_keypress()} \textit{after} determining that a key pas been pressed.
+
+As described in Section~1.2.1 of the Cow Pi datasheet, you can determine whether or not a key was pressed by examining the input pins connected to the keypad's columns (Arduino pins D14--D17).
+If the values on all of these pins are 1, then no key is being pressed;
+on the other hand, if one of the pins has the value 0, then a key is being pressed.
+Once you have determined that a key is being pressed, you can call \function{get_keypress()}, knowing that it will return the value corresponding to one of the keys.
+
+
+\subsection{Outputting to the Display Module}
+
+You will not call \function{send_halfbyte()} directly.
+Instead, you will call one or more of the CowPi library's functions that work with the LCD1602 display module; these functions, in turn, will make use of \function{send_halfbyte()} after you have implemented and registered it.
+The functions are described in Section~2.5 of the Cow Pi datasheet.
+
+You will want to read Section~1.3 of the Cow Pi datasheet to understand the addresses used by the \function{cowpi_lcd1602_place_character()} and \function{cowpi_lcd1602_place_cursor()}.
+While the datasheet's Section~1.3 also describes shifting the display, there is no part of this lab assignment that calls for shifting the display.
