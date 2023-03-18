@@ -70,9 +70,10 @@ void initialize_io(void) {
  */
 bool key_movement_detected(void) {
   static bool key_was_pressed = false;
-  bool key_is_pressed = debounce_byte(digitalRead(3), KEYPAD);
-  bool change_detected = (key_is_pressed != key_was_pressed);
-  key_was_pressed = key_is_pressed;
+  bool key_is_pressed = digitalRead(3);
+  bool debounced_key_is_pressed = debounce_byte(key_is_pressed, KEYPAD);
+  bool change_detected = (debounced_key_is_pressed != key_was_pressed);
+  key_was_pressed = debounced_key_is_pressed;
   return change_detected;
 }
 
@@ -90,8 +91,7 @@ bool key_movement_detected(void) {
  * @return `true` if the button is pressed, `false` otherwise
  */
 bool left_button_is_pressed(void) {
-  bool button_is_pressed;
-  button_is_pressed = cowpi_left_button_is_pressed();
+  bool button_is_pressed = cowpi_left_button_is_pressed();
   return debounce_byte(button_is_pressed, LEFT_BUTTON);
 }
 
@@ -103,8 +103,7 @@ bool left_button_is_pressed(void) {
  * @return `true` if the button is pressed, `false` otherwise
  */
 bool right_button_is_pressed(void) {
-  bool button_is_pressed;
-  button_is_pressed = cowpi_right_button_is_pressed();
+  bool button_is_pressed = cowpi_right_button_is_pressed();
   return debounce_byte(button_is_pressed, RIGHT_BUTTON);
 }
 
@@ -127,8 +126,7 @@ bool left_switch_is_in_left_position(void) {
  * @return `true` if the switch is in the right position, `false` otherwise
  */
 bool left_switch_is_in_right_position(void) {
-  bool switch_in_position;
-  switch_in_position = cowpi_left_switch_is_in_right_position();
+  bool switch_in_position = cowpi_left_switch_is_in_right_position();
   return debounce_byte(switch_in_position, LEFT_SWITCH);
 }
 
@@ -151,8 +149,7 @@ bool right_switch_is_in_left_position(void) {
  * @return `true` if the switch is in the right position, `false` otherwise
  */
 bool right_switch_is_in_right_position(void) {
-  bool switch_in_position;
-  switch_in_position = cowpi_right_switch_is_in_right_position();
+  bool switch_in_position = cowpi_right_switch_is_in_right_position();
   return debounce_byte(switch_in_position, RIGHT_SWITCH);
 }
 

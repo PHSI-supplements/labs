@@ -39,7 +39,6 @@ void loop() {
   if (test_mode) {
     test_io();
   } else {
-    // build_number();
-    ;
+    build_number();
   }
 }
