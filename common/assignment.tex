@@ -41,9 +41,17 @@
 \usepackage{amsmath}
 %\usepackage[dvipsnames]{xcolor}
 
+% Update to relect the name of your institute
+
+\newcommand{\institutename}{University of Nebraska-Lincoln}
+
 % Update to reflect the course number that you're using these labs for
 
 \newcommand{\coursenumber}{CSCE 231}
+
+% Update to reflect the instructor's name for that course
+
+\newcommand{\instructorname}{Christopher A. Bohn}
 
 % Update to reflect the CS2 course(s) at your institute
 
@@ -150,6 +158,14 @@
 \setlength{\headsep}{0.7cm}
 \hypersetup{colorlinks=true}
 
+%% CREDIT WHERE CREDIT IS DUE: https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
+\newcommand\markerlessfootnote[1]{%
+    \begingroup
+    \renewcommand\thefootnote{}\footnote{#1}%
+    \addtocounter{footnote}{-1}%
+    \endgroup
+}
+
 \newcommand{\pagelayout}{
     \pagestyle{fancy}
     \fancyhf{}
@@ -166,6 +182,8 @@
     \maketitle
 
     \textit{\collaborationrules}
+%    \markerlessfootnote{\tiny{Original assignment and starter code \copyright\ Christopher A. Bohn, licensed under the Apache License, Version 2.0.}}
+%    \markerlessfootnote{\tiny{Configured for \coursenumber\ at \institutename\ by \instructorname.}}
 }
 
 % display module fonts for hardware kit

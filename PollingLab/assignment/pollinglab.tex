@@ -15,22 +15,13 @@
 \input{../../common/assignment}
 \input{../../common/semester}
 \input{../../common/storylines}
-\usepackage{enumitem}
-\usepackage{graphicx}
-\usepackage{addfont}
-\addfont{OT1}{d7seg}{\dviiseg}
-% \addfont{OT1}{deseg}{\deseg}
-\usepackage{subfig}
-% \usepackage{wrapfig}
-\usepackage{multicol}
-% \usepackage{caption}
+\usepackage{amsmath}
+
 % \captionsetup{width=.8\linewidth}
 
 % \lstset{language=c, numbers=left, showstringspaces=false,
 %     moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
 %     }
-
-
 
 \renewcommand{\labnumber}{\pollinglabnumber}
 \renewcommand{\labname}{Using Polling with Memory-Mapped Input/Output}
@@ -49,9 +40,11 @@
 
     \section*{Scenario}                                                             \IntroduceHardware
 
-    \section{Lab Overview}                                                          \input{assignmentsummary}
+    \section{Assignment Summary}                                                    \input{assignmentsummary}
 
-    \section{Populate the Keypad's Lookup Table} \label{sec:populateKeypad}         \input{warming-up-to-the-code}
+    \section{Getting Started} \label{sec:GettingStarted}                            \input{gettingstarted}
+
+    \section{Initial Changes to the Code} \label{sec:LabTime}                       \input{labtime}
 
     \section{Memory-Mapped Input/Output} \label{sec:MemMapIO}                       \input{memory-mapped-inputoutput}
 

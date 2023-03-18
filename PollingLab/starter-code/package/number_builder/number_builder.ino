@@ -1,11 +1,11 @@
 /**************************************************************************//**
  *
- * @file io_functions.c
+ * @file number_builder.ino
  *
  * @author (STUDENT -- TYPE YOUR NAME HERE)
  *
- * @brief Functions that students must re-implement using memory-mapped I/O,
- *      and a test function that students can use to test their implementations.
+ * @brief Code to demonstrate "building" a number by polling inputs,
+ *        and to demonstrate memory-mapped input/output.
  *
  ******************************************************************************/
 
@@ -16,7 +16,43 @@
 
 #include "CowPi.h"
 #include "io_functions.h"
-#include <stdio.h>
+
+#define BUTTON_NO_REPEAT_TIME 500u
+#define ILLUMINATION_TIME 500u
+#define NUMBER_ECHO_TIME 1000u
+
+void build_number(void);
+
+void setup() {
+  cowpi_stdio_setup(9600);
+  cowpi_set_display_i2c_address(0x27);
+  cowpi_setup(LCD1602 | I2C);
+  cowpi_lcd1602_set_backlight(true);
+  initialize_io();
+}
+
+void loop() {
+  test_io();
+  // build_number();
+}
+
+
+
+/*******************************/
+/***** NUMBER BUILDER CODE *****/
+/*******************************/
+
+
+
+void build_number(void) {
+  ;
+}
+
+
+
+/********************/
+/***** I/O CODE *****/
+/********************/
 
 
 
@@ -40,9 +76,9 @@ volatile cowpi_i2c_t *i2c;          // a pointer to the single set of I2C regist
  * @brief Assigns I/O register addresses to pointers and instructs CowPi library to use `send_halfbyte()`.
  */
 void initialize_io(void) {
-  ioports = (cowpi_ioport_t *)(cowpi_io_base + 0);
-  i2c = (cowpi_i2c_t *)(cowpi_io_base + 0);
-  cowpi_lcd1602_set_send_halfbyte_function(send_halfbyte);
+  // ioports = (cowpi_ioport_t *)(cowpi_io_base + 0);
+  // i2c = (cowpi_i2c_t *)(cowpi_io_base + 0);
+  // cowpi_lcd1602_set_send_halfbyte_function(send_halfbyte);
 }
 
 /**
@@ -152,43 +188,66 @@ void set_right_led(bool turn_on) {
  * @return hexadecimal value of the pressed key, or 0xFF if no key is pressed
  */
 uint8_t get_keypress(void) {
-  char key = cowpi_get_keypress();
-  switch (key) {
-    case '1':
-      return keys[0][0];
-    case '2':
-      return keys[0][1];
-    case '3':
-      return keys[0][2];
-    case 'A':
-      return keys[0][3];
-    case '4':
-      return keys[1][0];
-    case '5':
-      return keys[1][1];
-    case '6':
-      return keys[1][2];
-    case 'B':
-      return keys[1][3];
-    case '7':
-      return keys[2][0];
-    case '8':
-      return keys[2][1];
-    case '9':
-      return keys[2][2];
-    case 'C':
-      return keys[2][3];
-    case '*':
-      return keys[3][0];
-    case '0':
-      return keys[3][1];
-    case '#':
-      return keys[3][2];
-    case 'D':
-      return keys[3][3];
-    default:
-      return 0xFF;
+  static unsigned long last_keypress = 0uL;
+  static uint8_t key_pressed = 0xFF;
+  unsigned long now = millis();
+  if (now - last_keypress > DEBOUNCE_TIME) {
+    last_keypress = now;
+    char key = cowpi_get_keypress();
+    switch (key) {
+      case '1':
+        key_pressed = keys[0][0];
+        break;
+      case '2':
+        key_pressed = keys[0][1];
+        break;
+      case '3':
+        key_pressed = keys[0][2];
+        break;
+      case 'A':
+        key_pressed = keys[0][3];
+        break;
+      case '4':
+        key_pressed = keys[1][0];
+        break;
+      case '5':
+        key_pressed = keys[1][1];
+        break;
+      case '6':
+        key_pressed = keys[1][2];
+        break;
+      case 'B':
+        key_pressed = keys[1][3];
+        break;
+      case '7':
+        key_pressed = keys[2][0];
+        break;
+      case '8':
+        key_pressed = keys[2][1];
+        break;
+      case '9':
+        key_pressed = keys[2][2];
+        break;
+      case 'C':
+        key_pressed = keys[2][3];
+        break;
+      case '*':
+        key_pressed = keys[3][0];
+        break;
+      case '0':
+        key_pressed = keys[3][1];
+        break;
+      case '#':
+        key_pressed = keys[3][2];
+        break;
+      case 'D':
+        key_pressed = keys[3][3];
+        break;
+      default:
+        key_pressed = 0xFF;
+    }
   }
+  return key_pressed;
 }
 
 /**
@@ -209,10 +268,18 @@ uint8_t get_keypress(void) {
  * @param is_command indicates whether the data is part of a command (`true`)
  *      or part of a character (`false`)
  */
-
 void send_halfbyte(uint8_t halfbyte, bool is_command) {
-  ;
+  const uint8_t peripheral_address = 0x27;
+  // ...
 }
+
+
+
+/*********************/
+/***** TEST CODE *****/
+/*********************/
+
+
 
 const char test_io_header[] = "KEY   BTN   SW";
 
@@ -223,15 +290,21 @@ const char test_io_header[] = "KEY   BTN   SW";
  * the buttons and switches, and any key that is pressed. If both switches
  * are pressed, then the left LED illuminates; if both switches are to the
  * right, then the right LED illuminates.
+ *
+ * *** *** !!! DO NOT EDIT THIS FUNCTION !!! *** ***
  */
 void test_io(void) {
   // These variables preserve their values between calls to `test_io()`
-  static bool left_button_position = true, right_button_position = true,
-              left_switch_position = true, right_switch_position = true;
+  static bool left_button_position = true;
+  static bool right_button_position = true;
+  static bool left_switch_position = true;
+  static bool right_switch_position = true;
   static uint8_t key_pressed = 0xFF;
-  static unsigned long last_left_button_change = 0uL, last_right_button_change = 0uL,
-                       last_left_switch_change = 0uL, last_right_switch_change = 0uL,
-                       last_keypress = 0uL;
+  static unsigned long last_left_button_change = 0uL;
+  static unsigned long last_right_button_change = 0uL;
+  static unsigned long last_left_switch_change = 0uL;
+  static unsigned long last_right_switch_change = 0uL;
+  static unsigned long last_keypress = 0uL;
   // These variables do not
   bool change_is_present = false;
   unsigned long now = millis();
@@ -262,7 +335,7 @@ void test_io(void) {
   }
   uint8_t this_key;
   if ((now - last_keypress > BUTTON_NO_REPEAT_TIME) && 
-      (this_key = get_keypress() != key_pressed)) {
+      ((this_key = get_keypress()) != key_pressed)) {
     last_keypress = now;
     key_pressed = this_key;
     change_is_present = true;

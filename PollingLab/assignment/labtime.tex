@@ -1,0 +1,182 @@
+During your lab period, the TAs will guide the class through the first modifications to the starter code that you must make, described in this section.
+If you do not attend your lab period, then you must complete this section on your own.
+\textbf{\textit{Except during lab time, you may }not\textit{ discuss the solutions for this section with other students.}}
+
+
+
+
+\subsection{Populate the Keypad's Lookup Table} \label{subsec:populatekeypad}
+
+Locate the \lstinline{keys} $4 \times 4$ nested array on lines 20--25 of \textit{io\_functions.c}.
+This nested array serves as a lookup table to obtain the appropriate value when a key is pressed.
+\textit{Even the starter code depends on this nested array being populated correctly.}
+The element \lstinline{keys[0][0]} will correspond to the \texttt{1} key;
+\lstinline{keys[0][3]} will correspond to the \texttt{A} key;
+\lstinline{keys[3][0]} will correspond to the \texttt{*} key;
+and \lstinline{keys[3][3]} will correspond to the \texttt{D} key.
+
+We want the numerals \texttt{0}-\texttt{9} to produce their respective decimal (and hexadecimal) values.
+We want \texttt{A}-\texttt{D} to produce their respective hexadecimal values.
+We want \texttt{\#} to produce the hexadecimal value 0xE, and we want \texttt{*} to produce the hexadecimal value 0xF\@.
+
+\begin{itemize}
+    \item Populate \lstinline{keys}' nested array initializer so that the lookup table will produce the correct value for each row/column combination.
+\end{itemize}
+
+\subsubsection*{Test your code}
+
+You can confirm that you correctly populated the array's initializer by running the test code.
+Place the \textbf{left switch} in the \textit{right} position and upload your code.
+(Or, if you have already uploaded your code, place the \textbf{left switch} in the \textit{right} position and press the RESET button in the middle of the \developmentboard.)
+The test code will output on both the Serial Monitor and on the display module.
+The output will include the key that was pressed (if any), a hyphen if no key is being pressed, or a question mark if \function{get_keypress()} returns an invalid value.
+
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=399]
+    ...
+    char key_character;
+    if (key_pressed <= 9) {
+      key_character = key_pressed + '0';
+    } else if (0xA <= key_pressed && key_pressed <= 0xF) {
+      key_character = key_pressed - 0xA + 'A';
+    } else if (key_pressed == 0xFF) {
+      key_character = '-';
+    } else {
+      key_character = '?';
+    }
+    ...
+\end{lstlisting}
+
+Familiarize yourself with the test code's other outputs.
+The output will include the positions of the left and right buttons (``U'' for up and ``D'' for down) and of the left and right switches (``L'' for left position and ``R'' for right position).
+
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=418]
+    ...
+    left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
+    left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L'
+    ...
+\end{lstlisting}
+
+Finally, if both buttons are pressed then the left LED will illuminate, and if both switches are in the right position then the right LED will illuminate.
+
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=409]
+    ...
+    set_left_led(left_button_position && right_button_position);
+    set_right_led(left_switch_position && right_switch_position);
+    ...
+\end{lstlisting}
+
+
+\subsection{Determine the Base Addresses of Certain I/O Register Banks}
+
+In Sections~\ref{subsec:simpleIO}--\ref{subsec:ScannedInput}, you will use an array of \lstinline{cowpi_ioport_t} structures to access the memory-mapped I/O registers for the \developmentboard's external pins.
+In Section~\ref{subsec:DisplayModule}, you will use a single \lstinline{cowpi_i2c_t} structure to transmit data to the display module.
+
+Read Section~4.1 of the Cow Pi datasheet.
+(During the guided discussion in your lab period, the TAs may direct you to particular parts of the datasheet's Section~4.1,
+but be sure to go back and read the full section later.)
+After you have done so,
+\begin{itemize}
+    \item Uncomment the \lstinline{ioports = ...} line of the starter code's \function{initialize_io()} function, and
+    \item Assign the appropriate address to the \lstinline{ioports} pointer on that line.
+\end{itemize}
+
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=33]
+void initialize_io(void) {
+  // Uncomment these lines and set the offsets during lab time
+  // ioports = (cowpi_ioport_t *)(COWPI_IO_BASE + 0);
+  // i2c = (cowpi_i2c_t *)(COWPI_IO_BASE + 0);
+
+  // Uncomment this line when you are ready to implement the `send_halfbyte()` function
+  // cowpi_lcd1602_set_send_halfbyte_function(send_halfbyte);
+}
+\end{lstlisting}
+
+You can now use the \lstinline{ioports} pointer as an array of \lstinline{cowpi_ioport_t} structures, which you can index using the \lstinline{D0_D7}, \lstinline{D8_D13}, and \lstinline{D14_D19} named constants.
+
+Read Sections~4.2.1 of the Cow Pi datasheet.
+(You can wait to read the rest of the datasheet's Section~4.2 until you're working on the assignment's Section~\ref{subsec:DisplayModule}.)
+After you have done so,
+\begin{itemize}
+    \item Uncomment the \lstinline{i2c = ...} line of the starter code's \function{initialize_io()} function, and
+    \item Assign the appropriate address to the \lstinline{i2c} pointer on that line.
+\end{itemize}
+
+When you get to the assignment's Section~\ref{subsec:DisplayModule}, you will be able to use the \lstinline{i2c} pointer to access the memory-mapped registers to communicate with the display module.
+
+\textbf{Do \textit{not} uncomment the call to \function{cowpi_lcd1602_set_send_halfbyte_function()} until you get to the assignment's Section~\ref{subsec:DisplayModule}!}
+
+
+\subsection{Detect a Change on the Numeric Keypad}
+
+The final part of the group activity is detecting when someone presses (or releases) a key on the numeric keypad.
+The \function{key_movement_detected()} function in the starter code is:
+
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=51, escapechar=`]
+bool key_movement_detected(void) {
+  static bool key_was_pressed = false;
+  bool key_is_pressed = debounce_byte(digitalRead(3), KEYPAD);  `\label{code:readNAND}`
+  bool change_detected = (key_is_pressed != key_was_pressed);
+  key_was_pressed = key_is_pressed;
+  return change_detected;
+}
+\end{lstlisting}
+
+Line~\ref{code:readNAND} uses the Arduino function \function{digitalRead()} to read the value produced by the NAND gate connected to the numeric keypad's columns.
+When at least one key is pressed, the NAND's value is 1;
+when no keys are pressed, the NAND's value is 0.
+This line also debounces that reading (see Section~\ref{subsec:debouncing}).
+
+The remainder of the code compares the reading to the previous reading.
+If no key was pressed and there is still no key being pressed, the function returns \lstinline{false}.
+Similarly, if a key was pressed and is still being pressed, the function returns \lstinline{false}.
+On the other hand, if no key was pressed and there is now a key being pressed, or if a key was being pressed and there is now no key being pressed, then the function returns \lstinline{true}.
+
+The problem is that, as noted in Section~\ref{subsec:constraints}, the \function{digitalRead()} function is not one of the Arduino functions that can be used in this assignment.
+Now that you have the base address for the \lstinline{ioports} array, you can use memory-mapped I/O to replace the call to \function{digitalRead()}.
+(Do not remove the call to \function{debounce_byte()} -- your memory-mapped I/O code should be the first argument to \function{debounce_byte()}, replacing only the call to \function{digitalRead()}.)
+
+If you are currently in your lab period, then work with the other students in your lab period to determine the answers to these questions.
+If you are not attending your lab period, then work individually to determine the answers to these questions.
+Using the datasheet's Table~2:
+\begin{itemize}
+    \item What should you use to index the \lstinline{ioports} array to read from pin~3, the keypad's NAND value?
+    \item What field in that element should you use?
+    \item What bitmask should you use?
+    \item What should line~\ref{code:readNAND} look like?
+\end{itemize}
+
+You can use the keypad's NAND value that you read from pin~3 to determine when there's some key action.
+It is \textit{possible} that we will have you disconnect the NAND from the \developmentboard\ for the group project so that we can use pins~2 and/or 3 for a different use.
+Fortunately, there is another way to determine whether there is some key action.
+
+Read the datasheet's Section~1.2.1.
+(You can postpone reading the datasheet's Section~1.2.2 until you reach the assignment's Section~\ref{subsec:ScannedInput}.)
+If you are currently in your lab period, then work with the other students in your lab period to determine the answers to these questions.
+If you are not attending your lab period, then work individually to determine the answers to these questions.
+Using the information in the datasheet's Section~1.2.1 and the datasheet's Table~2:
+\begin{itemize}
+    \item What combination of pins (other than pin~3) can be used to detect that something has changed on the keypad?
+        Why?
+    \item What should you use to index the \lstinline{ioports} array to read from those pins?
+    \item What field in that element should you use?
+    \item What bitmask should you use?
+    \item What should line~\ref{code:readNAND} look like?
+\end{itemize}
+
+\subsubsection*{Test your code}
+
+You can confirm that you correctly detected a change on the keypad by running the test code.
+Place the \textbf{left switch} in the \textit{right} position and upload your code.
+(Or, if you have already uploaded your code, place the \textbf{left switch} in the \textit{right} position and press the RESET button in the middle of the \developmentboard.)
+The test code will output on both the Serial Monitor and on the display module.
+The output will include the key that was pressed (if any), a hyphen if no key is being pressed, or a question mark if \function{get_keypress()} returns an invalid value.
+
+
+\vspace{1cm}
+
+You are now ready to complete the remainder of this assignment on your own.
+Reminders:
+\begin{itemize}
+    \item You can complete Sections~\ref{sec:MemMapIO} and \ref{sec:SimpleSystem} in either order.
+    \item \collaborationrules
+\end{itemize}
