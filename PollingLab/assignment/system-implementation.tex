@@ -52,7 +52,7 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
                 %     to the Serial Monitor in decimal or hexadecimal, depending on the
                 %     system's current number base.
             \end{enumerate}
-        \item ``0x'' shall be displayed as part of a hexadecimal value.
+        \item ``0x'' shall be displayed as part of a hexadecimal value (``0x'' is optional when the value is 0).
         % \item ``0x'' shall not be displayed as part of a hexadecimal value.
         \item Whenever the user presses the \textbf{left pushbutton}, the value
             being displayed shall be negated.
@@ -187,7 +187,7 @@ The \function{display_string()} takes two arguments.
 The first argument is a string:
 the function's signature requires a string of at least 16 characters plus the terminal NUL;
 we recommend that the string have \textit{exactly} 16 characters plus the terminal NUL\@.
-The second argument uses an \lstinline{enum} to whether the string should be displayed on the display module's top row (\lstinline{TOP_ROW}) or bottom row (\lstinline{BOTTOM_ROW}).
+The second argument uses an \lstinline{enum} to indicate whether the string should be displayed on the display module's top row (\lstinline{TOP_ROW}) or bottom row (\lstinline{BOTTOM_ROW}).
 
 You are not required to use \function{display_string()}.
 If you choose to directly call the CowPi library's LCD1602 functions, you will find their descriptions in Section~2.5 of the Cow Pi datasheet.

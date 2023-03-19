@@ -17,6 +17,7 @@
  */
 
 #include <CowPi.h>
+#include <limits.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -24,6 +25,12 @@
 #include "number_builder.h"
 #include "io_functions.h"
 #include "supplement.h"
+
+
+void initialize_number_system(void) {
+  ;
+}
+
 
 void build_number(void) {
   ;

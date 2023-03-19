@@ -26,6 +26,7 @@
 extern "C" {
 #endif
 
+void initialize_number_system(void);
 void build_number(void);
 
 #ifdef __cplusplus

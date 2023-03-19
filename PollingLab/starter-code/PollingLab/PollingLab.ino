@@ -32,6 +32,7 @@ void setup() {
   cowpi_setup(LCD1602 | I2C);
   cowpi_lcd1602_set_backlight(true);
   initialize_io();
+  initialize_number_system();
   test_mode = digitalRead(11);   // Arduino function doesn't depend on correctness of student code
 }
 
