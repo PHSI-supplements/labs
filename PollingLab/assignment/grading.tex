@@ -1,28 +1,50 @@
 When you have completed this assignment, upload \textit{io\_functions.c} and \textit{number\_builder.c} to
 \filesubmission.
 
-This assignment is worth 40 points. \\
+%\policyforcodethatdoesnotcompile
+\subsection*{No Credit for Uncompilable Code}
+If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\footnote{
+    At the TA's discretion, if they can make your code compile with \textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\% penalty on the resulting score.
+    The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.
+    If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.
+}
+Before turning in your code, be sure to compile and test your code on \runtimeenvironment\ with the original driver code, the original header file(s), and using the Arduino IDE.
 
-Rubric:
+\floatlablatepolicy
+
+\subsection*{Rubric}
+
+This assignment is worth 40 points.
 \begin{description}
-\rubricitem{1}{The inputs are debounced in software in a fashion that permits other inputs to be handled as they arrive.}
-\item[Memory-Mapped Input/Output]
-\rubricitem{6}{The simple input/output functions are correctly implemented. (2 points for \function{xx_switch_in_xx_position()} functions; 2 points for \function{xx_button_is_pressed()} functions; 2 points for \function{set_xx_led()} functions)}
-\rubricitem{8}{The \function{get_keypress()} function is correctly implemented.}
-\rubricitem{8}{The \function{send_halfbyte()} function is correctly implemented.}
-\item[Implementing a Simple System using Polling]
-\rubricitem{2}{Left justified mode and right justified mode are implemented correctly.}
-\rubricitem{2}{Decimal and hexadecimal number bases are implemented correctly.}
-\rubricitem{2}{The LED illumination occurs as specified.}\rubricitem{2}{The first digit of a number is displayed in the correct position, making a blank display no longer blank, in accordance with requirements~\ref{spec:decimalExplained}, \ref{spec:hexadecimalExplained}, and \ref{spec:initialKeyPress}.}
-\rubricitem{2}{Subsequent digits update the number in accordance with requirements~\ref{spec:decimalExplained}, \ref{spec:hexadecimalExplained}, and \ref{spec:BuildingValue}.}
-\rubricitem{2}{The left pushbutton negates the number's value (\textonehalf\ point for each of: negating positive decimal values, negating negative decimal values, negating positive hexadecimal values, negating negative hexadecimal values)}
-\rubricitem{2}{Detects and displays correct message when the number being built is too big. (\textonequarter\ point for detecting too-big numbers for each of: positive decimal numbers, negative decimal numbers, positive hexadecimal numbers, negative hexadecimal numbers; \textonequarter\ point for no false detections among each of: decimal numbers, hexadecimal numbers; \textonehalf\ point for printing the correct message)}
-\rubricitem{2}{The right pushbutton causes a copy of the number to be displayed on the bottom row for one second, after which the display clears.}
-\rubricitem{1}{A button press or a key press that lasts fewer than 500ms is treated as a single press.}
-\bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due. (You cannot get both bonuses.)}
-\bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due. (Your code must be uploaded to \filesubmission\ \textit{before} it is due. You cannot get both bonuses.)}
-\item[Penalties]
-\penaltyitem{22}{The memory-mapped input/output functions' implementations violate one or more constraints identified in Section~\ref{subsec:constraints}.}
-\penaltyitem{17}{The simple system's implementation violates one or more constraints identified in Section~\ref{subsec:constraints}.}
-\spaghetticodepenalties{1}
+    \item[Initial Changes to the Code] % 5
+    \rubricitem{1}{The \lstinline{key} nested array is correctly populated}
+    \rubricitem{2}{The correct addresses are assigned to \lstinline{ioports} and \lstinline{i2c}}
+    \rubricitem{2}{The \function{key_movement_detected()} function is correctly implemented}
+
+    \item[Memory-Mapped Input/Output] % 18
+    \rubricitem{4}{The simple input/output functions are correctly implemented (1 point for \\ \function{xx_switch_is_in_right_position()} functions; 1 point for \function{xx_button_is_pressed()} functions; 2 points for \function{set_xx_led()} functions)}
+    \rubricitem{8}{The \function{get_keypress()} function is correctly implemented (\textonehalf\ point for each key)}
+    \rubricitem{6}{The \function{send_halfbyte()} function is correctly implemented (3 points for the I$^2$C protocol, 3 points for data sent to the LCD1602)}
+
+    \item[Implementing a Simple System using Polling] % 17
+    \rubricitem{2}{Left justified mode and right justified mode are implemented correctly}
+    \rubricitem{2}{Decimal and hexadecimal number bases are implemented correctly}
+    \rubricitem{2}{The LED illumination occurs as specified}
+    \rubricitem{2}{The first digit of a number is displayed in the correct position, making a blank display no longer blank, in accordance with requirements~\ref{spec:decimalExplained}, \ref{spec:hexadecimalExplained}, and \ref{spec:initialKeyPress}}
+    \rubricitem{2}{Subsequent digits update the number in accordance with requirements~\ref{spec:decimalExplained}, \ref{spec:hexadecimalExplained}, and \ref{spec:BuildingValue}}
+    \rubricitem{2}{The left pushbutton negates the number's value (\textonehalf\ point for each of: negating positive decimal values, negating negative decimal values, negating positive hexadecimal values, negating negative hexadecimal values)}
+    \rubricitem{2}{Detects and displays correct message when the number being built is too big (\textonequarter\ point for detecting too-big numbers for each of: positive decimal numbers, negative decimal numbers, positive hexadecimal numbers, negative hexadecimal numbers; \textonequarter\ point for no false detections among each of: decimal numbers, hexadecimal numbers; \textonehalf\ point for printing the correct message)}
+    \rubricitem{2}{The right pushbutton causes a copy of the number to be displayed on the bottom row for one second, after which the display clears}
+    \rubricitem{1}{A button press or a key press is treated as a single press}
+
+    \item[Bonuses]
+    \bonusitem{2}{Displays the numbers without making use of any functions in the \function{printf()} family (\function{printf()} and related functions appear only in \function{test_io()})}
+    \bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due (you cannot get both check-off bonuses)}
+    \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due (your code must be uploaded to \filesubmission\ \textit{before} it is due; you cannot get both bonuses)}
+
+    \item[Penalties]
+    \penaltyitem{2}{The \function{key_was_pressed()} function's implementation violates one or more constraints identified in Section~\ref{subsec:constraints}.}
+    \penaltyitem{18}{The other memory-mapped input/output functions' implementations violate one or more constraints identified in Section~\ref{subsec:constraints}.}
+    \penaltyitem{17}{The simple system's implementation violates one or more constraints identified in Section~\ref{subsec:constraints}.}
+    \spaghetticodepenalties{1}
 \end{description}

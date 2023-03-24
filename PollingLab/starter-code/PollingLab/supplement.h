@@ -23,7 +23,7 @@
  *
  ******************************************************************************/
 
-/* CowPi (c) 2021-22 Christopher A. Bohn
+/* CowPi (c) 2021-23 Christopher A. Bohn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,9 +77,9 @@ static inline uint8_t debounce_byte(uint8_t current_value, enum input_names inpu
   static uint8_t last_actual_value[NUMBER_OF_INPUTS] = { 0 };
   static uint8_t last_good_value[NUMBER_OF_INPUTS] = { 0 };
   static unsigned long last_change[NUMBER_OF_INPUTS] = {[0 ... (NUMBER_OF_INPUTS-1)] = 0x80000000};   // gcc extension
-  unsigned long now = (current_value == last_actual_value[input_name]) ? last_change[input_name] : millis();  // save a call to millis() if we don't need it
+  unsigned long now = millis();
   last_good_value[input_name] = (now - last_change[input_name] < DEBOUNCE_THRESHOLD) ? last_good_value[input_name] : current_value;
-  last_change[input_name] = now;   // if (current_value == last_actual_value) then this isn't actually a change
+  last_change[input_name] = (current_value == last_actual_value[input_name]) ? last_change[input_name] : now;
   last_actual_value[input_name] = current_value;
   return last_good_value[input_name];
 }

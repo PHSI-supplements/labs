@@ -119,8 +119,7 @@ A \lstinline{static} variable used in this way looks like a global variable -- i
 
 You can see examples of \lstinline{static} variables in the I/O test code in \textit{PollingLab.ino} and in the debouncing code in \textit{supplement.h}.
 
-A \lstinline{static} variable must be initialized.
-We recommend that you explicitly initialize a \lstinline{static} variable on the same line that it is declared.
+You should explicitly initialize a \lstinline{static} variable on the same line that it is declared.
 Such an initializer must be a syntactic constant.
 The variable will only be initialized once; it will \textit{not} be reinitialized each time the function is called.
 (If it were reinitialized, that would rather defeat the point of the variable preserving its value between function calls, right?)
@@ -138,35 +137,35 @@ The other use of the \lstinline{static} keyword can be seen in the first paramet
         enum row_names row
     )
 \end{lstlisting}
-A array function parameter is simply a pointer.
-It normally makes no difference whether we declare the parameter as
-\begin{lstlisting}
-    const char *string
-\end{lstlisting}
-as
-\begin{lstlisting}
-    const char string[]
-\end{lstlisting}
-or as
-\begin{lstlisting}
-    const char string[NUMBER_OF_DISPLAYABLE_COLUMNS+1]
-\end{lstlisting}
-In all three cases, it's simply a pointer to a constant array.
-Even in the last case, identifying the number of elements that we expect to be in the array has no effect on the generated assembly code.
-
-Of course, here the \lstinline{const} keyword isn't an enforced requirement (if the function modifies the string, the compiler will ``only'' issue a warning, and your program will probably not work right).
-The \lstinline{const} keyword tells the compiler that it can assume the string is constant and optimize the generated assembly code accordingly.
-It also tells anyone calling the function that they can assume that the function won't change the string's characters.
-
-The \lstinline{static} keyword in \textit{this} usage serves a similar purpose.
-\begin{lstlisting}
-    const char string[static (NUMBER_OF_DISPLAYABLE_COLUMNS+1)]
-\end{lstlisting}
+%A array function parameter is simply a pointer.
+%It normally makes no difference whether we declare the parameter as
+%\begin{lstlisting}
+%    const char *string
+%\end{lstlisting}
+%as
+%\begin{lstlisting}
+%    const char string[]
+%\end{lstlisting}
+%or as
+%\begin{lstlisting}
+%    const char string[NUMBER_OF_DISPLAYABLE_COLUMNS+1]
+%\end{lstlisting}
+%In all three cases, it's simply a pointer to a constant array.
+%Even in the last case, identifying the number of elements that we expect to be in the array has no effect on the generated assembly code.
+%
+%Of course, here the \lstinline{const} keyword isn't an enforced requirement (if the function modifies the string, the compiler will ``only'' issue a warning, and your program will probably not work right).
+%The \lstinline{const} keyword tells the compiler that it can assume the string is constant and optimize the generated assembly code accordingly.
+%It also tells anyone calling the function that they can assume that the function won't change the string's characters.
+%
+%The \lstinline{static} keyword in \textit{this} usage serves a similar purpose.
+%\begin{lstlisting}
+%    const char string[static (NUMBER_OF_DISPLAYABLE_COLUMNS+1)]
+%\end{lstlisting}
 The \lstinline{static} keyword as used here tells the compiler that it can assume that enough memory has been allocated for at least 17 characters (including the terminating NUL character).
-This is not an enforced requirement: if you do not allocate at least 17 bytes for the string then the program will still compile but probably won't work right.
-The \lstinline{static} keyword gives the compiler permission to make optimizations that assume at least a certain number of elements are in the array.
+%This is not an enforced requirement: if you do not allocate at least 17 bytes for the string then the program will still compile but probably won't work right.
+%The \lstinline{static} keyword gives the compiler permission to make optimizations that assume at least a certain number of elements are in the array.
 It also tells anyone calling the function that they should make sure that is the case.
-
+%
 We do not anticipate you needing to use the \lstinline{static} keyword in this fashion;
 however, because you will call \function{display_string()}, you should make sure that you call it only with strings that have at least 17 characters allocated.
 (This should make sense to you, since this function is used to display a 16-character row on the display module.)
@@ -184,28 +183,37 @@ This causes voltage to fluctuate for hundreds, often thousands, of microseconds 
 When this fluctuation is in the indeterminate region between the logical low and high thresholds, it can cause the logic level to ``bounce'' back-and-forth between high and low until settling into the final, correct logic level.
 This causes the digital circuitry or software to ``see'' multiple triggering events.
 
+%A traditional way to debounce is to introduce a simple low-pass filter using a resistor and a capacitor.
+%Other common hardware-based approaches use digital feedback circuits.
+
+%Hardware design can be simplified by solving a hardware problem with software, and so you will often see hobby projects with ``debouncing code'' such as \lstinline{delay(20);} that pauses execution between detecting the first change of the button's or switch's position and acting upon it for 20ms, which should be ample time for switch bounce to stabilize.
+%A problem (beyond \function{delay()} being disallowed in this lab) is that 20ms is a long time to leave your system completely non-responsive.
+%
+%A better solution is to continue to record the system time when a button is actually pressed or a switch is actually toggled and the device's position after that ``true action.''
+%When the button or switch is polled, if fewer than 20ms have passed then ignore the actual device and report the position that resulted from the last true action.
+%If more than 20ms have passed then check the device, then report the device's actual position (and also record the system time and the device's position).
+%This solution allows your system to continue to respond to other external events.
+%For example, you can press both buttons at very nearly the same time (or, unlikely, at the exact same time) and the software will react to both immediately.
+%
+%The non-blocking solution just described usually works.
+%Most switch bounce finishes in under a millisecond.
+%Switch bounce almost always finishes in under ten milliseconds.
+%Whether using a blocking or non-blocking solution, 20ms should be ample time for a device to stop bouncing.
+%We have found that some batches of the pushbuttons, slide-switches, and keypads that are included in the class kit are particularly ``dirty,'' and we have measured switch bounce sometimes lasting longer than 20ms, sometimes upwards of 150ms.
+%(This happens very rarely, but often enough that we're confident it wasn't a measurement error.)
+%
+%The \textit{supplement.h} file includes a \function{debounce_byte()} function that takes a more-elaborate approach of reporting an input device's last ``good value'' until 20ms after the last detected bounce.
+%No matter how long the device bounces, the ``time since last bounce'' resets.
+%In this manner, we can be sure that bouncing has stabilized before trusting a new value found on the device.
+%
+%The functions in \textit{io\_functions.c} make use of \function{debounce_byte()}.
+%When you modify these functions, as long as you preserve those \function{debounce_byte()} calls, you do not need to worry further about debouncing.
+
 A traditional way to debounce is to introduce a simple low-pass filter using a resistor and a capacitor.
 Other common hardware-based approaches use digital feedback circuits.
+Hardware design can be simplified, and manufacturing cost can be reduced, by solving a hardware problem with software.
+This, of course, transfers the design complexity to the software.
 
-Hardware design can be simplified by solving a hardware problem with software, and so you will often see hobby projects with ``debouncing code'' such as \lstinline{delay(20);} that pauses execution between detecting the first change of the button's or switch's position and acting upon it for 20ms, which should be ample time for switch bounce to stabilize.
-A problem (beyond \function{delay()} being disallowed in this lab) is that 20ms is a long time to leave your system completely non-responsive.
-
-A better solution is to continue to record the system time when a button is actually pressed or a switch is actually toggled and the device's position after that ``true action.''
-When the button or switch is polled, if fewer than 20ms have passed then ignore the actual device and report the position that resulted from the last true action.
-If more than 20ms have passed then check the device, then report the device's actual position (and also record the system time and the device's position).
-This solution allows your system to continue to respond to other external events.
-For example, you can press both buttons at very nearly the same time (or, unlikely, at the exact same time) and the software will react to both immediately.
-
-The non-blocking solution just described usually works.
-Most switch bounce finishes in under a millisecond.
-Switch bounce almost always finishes in under ten milliseconds.
-Whether using a blocking or non-blocking solution, 20ms should be ample time for a device to stop bouncing.
-We have found that some batches of the pushbuttons, slide-switches, and keypads that are included in the class kit are particularly ``dirty,'' and we have measured switch bounce sometimes lasting longer than 20ms, sometimes upwards of 150ms.
-(This happens very rarely, but often enough that we're confident it wasn't a measurement error.)
-
-The \textit{supplement.h} file includes a \function{debounce_byte()} function that takes a more-elaborate approach of reporting an input device's last ``good value'' until 20ms after the last detected bounce.
-No matter how long the device bounces, the ``time since last bounce'' resets.
-In this manner, we can be sure that bouncing has stabilized before trusting a new value found on the device.
-
+The \textit{supplement.h} file includes a \function{debounce_byte()} function that essentially implements a low-pass filter in software.
 The functions in \textit{io\_functions.c} make use of \function{debounce_byte()}.
 When you modify these functions, as long as you preserve those \function{debounce_byte()} calls, you do not need to worry further about debouncing.

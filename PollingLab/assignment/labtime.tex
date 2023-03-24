@@ -66,7 +66,7 @@ Finally, if both buttons are pressed then the left LED will illuminate, and if b
 \end{lstlisting}
 
 
-\subsection{Determine the Base Addresses of Certain I/O Register Banks}
+\subsection{Determine the Base Addresses of Certain I/O Register Banks} \label{subsec:baseAddresses}
 
 In Sections~\ref{subsec:simpleIO}--\ref{subsec:ScannedInput}, you will use an array of \lstinline{cowpi_ioport_t} structures to access the memory-mapped I/O registers for the \developmentboard's external pins.
 In Section~\ref{subsec:DisplayModule}, you will use a single \lstinline{cowpi_i2c_t} structure to transmit data to the display module.
@@ -106,7 +106,7 @@ When you get to the assignment's Section~\ref{subsec:DisplayModule}, you will be
 \textbf{Do \textit{not} uncomment the call to \function{cowpi_lcd1602_set_send_halfbyte_function()} until you get to the assignment's Section~\ref{subsec:DisplayModule}!}
 
 
-\subsection{Detect a Change on the Numeric Keypad}
+\subsection{Detect a Change on the Numeric Keypad} \label{subsec:detectKeyAction}
 
 The final part of the group activity is detecting when someone presses (or releases) a key on the numeric keypad.
 The \function{key_movement_detected()} function in the starter code is:
@@ -114,9 +114,10 @@ The \function{key_movement_detected()} function in the starter code is:
 \begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=51, escapechar=`]
 bool key_movement_detected(void) {
   static bool key_was_pressed = false;
-  bool key_is_pressed = debounce_byte(digitalRead(3), KEYPAD);  `\label{code:readNAND}`
-  bool change_detected = (key_is_pressed != key_was_pressed);
-  key_was_pressed = key_is_pressed;
+  bool key_is_pressed = digitalRead(3);     `\label{code:readNAND}`
+  bool debounced_key_is_pressed = debounce_byte(key_is_pressed, KEYPAD);
+  bool change_detected = (debounced_key_is_pressed != key_was_pressed);
+  key_was_pressed = debounced_key_is_pressed;
   return change_detected;
 }
 \end{lstlisting}
@@ -124,7 +125,7 @@ bool key_movement_detected(void) {
 Line~\ref{code:readNAND} uses the Arduino function \function{digitalRead()} to read the value produced by the NAND gate connected to the numeric keypad's columns.
 When at least one key is pressed, the NAND's value is 1;
 when no keys are pressed, the NAND's value is 0.
-This line also debounces that reading (see Section~\ref{subsec:debouncing}).
+The next line debounces that reading (see Section~\ref{subsec:debouncing}).
 
 The remainder of the code compares the reading to the previous reading.
 If no key was pressed and there is still no key being pressed, the function returns \lstinline{false}.
@@ -133,7 +134,7 @@ On the other hand, if no key was pressed and there is now a key being pressed, o
 
 The problem is that, as noted in Section~\ref{subsec:constraints}, the \function{digitalRead()} function is not one of the Arduino functions that can be used in this assignment.
 Now that you have the base address for the \lstinline{ioports} array, you can use memory-mapped I/O to replace the call to \function{digitalRead()}.
-(Do not remove the call to \function{debounce_byte()} -- your memory-mapped I/O code should be the first argument to \function{debounce_byte()}, replacing only the call to \function{digitalRead()}.)
+%(Do not remove the call to \function{debounce_byte()} -- your memory-mapped I/O code should be the first argument to \function{debounce_byte()}, replacing only the call to \function{digitalRead()}.)
 
 If you are currently in your lab period, then work with the other students in your lab period to determine the answers to these questions.
 If you are not attending your lab period, then work individually to determine the answers to these questions.

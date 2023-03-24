@@ -1,4 +1,5 @@
 In this section, you will use the data structures provided by the CowPi library to access the \developmentboard's memory-mapped I/O registers.
+All functions that you edit in this part of the assignment are in \textit{io\_functions.c}
 You will use the same test code from Section~\ref{sec:GettingStarted} to test your code.
 
 \textit{Remember that to start the I/O test code, the \textbf{left switch} must be in the \underline{right} position when the \developmentboard\ restarts.}
@@ -155,7 +156,7 @@ All of the functions in the CowPi library that send characters or commands to th
     Otherwise, only the basic bit vector is written to the control register.
 
     The first datum to transmit after the start bit is the serial adapter's address (properly shifted) so that the adapter knows the remaining transmissions are meant for it.
-    The serial adapater will pass the data all transmissions to the display module until it receives the stop bit.
+    The serial adapter will pass the data all transmissions to the display module until it receives the stop bit.
     Even though the pseudocode characterizes those transmissions as a loop over the data maent for the display module, it will be easier to implement sequentially.
     Two of the three bytes meant for the display module are identical, and the remaining byte differs only only in one bit.
     The first ensures the halfbyte, backlight, read/write, and command bits are at their correct values before a latching pulse starts.

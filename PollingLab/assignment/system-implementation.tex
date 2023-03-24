@@ -1,7 +1,8 @@
-In this section you will implement a ``number builing tool'' that turns a sequence of inputs into a number.
+In this section you will implement a ``number building tool'' that turns a sequence of inputs into a number.
 A notional use of this number builder would be to create the operands for a calculator.
 Section~\ref{subsec:functionalspecification} has the tool's specification.
 You should design your system using the I/O functions in \textit{io\_functions.c} -- either the implementations from the starter code, or the implementations you wrote (or will write) from Section~\ref{sec:MemMapIO}.
+All logic for your ``number building tool'' should go in \textit{number\_builder.c}.
 After the specification are a few suggestions for making good use of those functions.
 
 \textit{Remember that to start your simple embedded system, the \textbf{left switch} must be in the \underline{left} position when the \developmentboard\ restarts.}
@@ -159,9 +160,13 @@ You can overcome this problem by keeping track of the last input from a peripher
 If they are the same, then either the user is still pressing that button (in which case, per Requirement~\ref{spec:singleKeypress}, there is nothing to be done), or the user is still not pressing that button (in which case there is obviously nothing to be done).
 If the button previously was pressed but is now not pressed, then the user lifted their finger off the button.
 If the button previously was not pressed but is now pressed, then the user \textit{just} pressed the button.
+\ifbool{offerdecompositionhints}{
+    When you studied the I/O test code in Section~\ref{subsec:populatekeypad}, you may have noticed that it updates the display and the Serial Monitor only when a change is present.
+    The I/O test code achieves that in the same fashion described here.
+}{}
 
-Unlike \function{test_io()}, the specification for \textit{this} system, the number builder, does not require that you detect the exact moment that a toggle switch has been moved, and so there is no need to keep track of its last position.
-Indeed, the specification is written such that you don't even need to continuously poll the toggle switches' position;
+Unlike \function{test_io()}, the specification for \textit{this} system, the number builder, does not require that you detect the exact moment that a slide-switch has been moved, and so there is no need to keep track of its last position.
+Indeed, the specification is written such that you don't even need to continuously poll the slide-switches' position;
 however, you can do so if you find that simpler.
 
 
@@ -179,10 +184,9 @@ however, you can do so if you find that simpler.
 \subsection{Outputting to the Display Module}
 
 You will not call \function{send_halfbyte()} directly.
-Normally, instead, you would call one or more of the CowPi library's functions that work with the LCD1602 display module;
-these functions, in turn, make use of \function{send_halfbyte()} after you have implemented and registered it.
+Instead, the CowPi library's functions that work with the LCD1602 display module make use of \function{send_halfbyte()} after you have implemented and registered it.
 
-This semester, however, we are experimentally providing you with a function, \function{display_string()} in \textit{supplement.h}, that handles the calls to CowPi library's LCD1602 functions.
+This semester we are experimentally providing you with a function, \function{display_string()} in \textit{supplement.h}, that handles the calls to CowPi library's LCD1602 functions.
 The \function{display_string()} takes two arguments.
 The first argument is a string:
 the function's signature requires a string of at least 16 characters plus the terminal NUL;
@@ -203,7 +207,7 @@ The simplest way to do this is with \function{sprintf()}.
 As you saw in KeyboardLab, the \function{sprintf()}\footnote{\url{https://pubs.opengroup.org/onlinepubs/7908799/xsh/fprintf.html}} is essentially a version of \function{printf()} that ``prints'' to a string.
 The first argument is a pointer to the string to be printed to; the second argument is the format string (which would be \function{printf()}'s first argument), and any subsequent arguments are the variables that populate the placeholders in the format string.
 
-The following conversion specifiers may be useful (bearing in mind that on the 8-bit microcontroller, a 32-bit value is considered to be a long integer):
+The following conversion specifiers may be useful (because a 32-bit value is considered to be a long integer on an 8-bit microcontroller, these conversion specifiers include the lowercase letter `l'):
 \begin{description}
     \item[\%ld] Prints a decimal number
     \item[\%lx] Prints a hexadecimal number, with a--f in lowercase
@@ -230,11 +234,15 @@ Because of the \function{test_io()} code, your program is already includes the \
 
 The other consideration is the time budget.
 Processing a format string each time you need to update the display can be very time consuming.
-It's unlikely that you'll notice any impact on the your program's responsiveness, but in an embedded system with more-stringent timing requirements, it could be an issue.
+It's unlikely that you'll notice any impact on the your program's responsiveness,\footnote{
+    We measured \function{sprintf()} about a quarter of a millisecond to convert the 32-bit integer into a string.
+    As long as you only call \function{sprintf()} when there's a change, this will appear to be instantaneous.
+} but in an embedded system with more-stringent timing requirements, it could be an issue.
 
 You know more about how the program uses strings than \function{printf()} and \function{sprintf()} do.
-This knowledge will often allow you to generate and/or manipulate strings much, much faster.
-Indeed, the number builder's specification allows for some very fast string manipulations to be used instead of \function{sprintf()} to produce the strings you can send to \function{display_string()}.
+This knowledge will often allow you to generate and/or manipulate strings much faster.\footnote{
+    Our sample solution required about an eigth of the time that \function{sprintf()} required.
+} Indeed, the number builder's specification allows for some very fast string manipulations to be used instead of \function{sprintf()} to produce the strings you can send to \function{display_string()}.
 
 Using \function{sprintf()} will not affect your ability to earn full credit on this assignment.
 However, we are offering a small bonus if your number builder implementation produces the correct output without ever calling \function{printf()}, \function{sprintf()}, \function{snprintf()}, or \function{fprintf()}.
@@ -296,12 +304,14 @@ You can, however, use the Arduino \function{millis()} function to determine how 
 
     Because multiplication is involved, detecting overflow after-the-fact isn't as simple as checking ``if the result is less than in operands\dots''
     The surest way is to use more bits.
-    Using 64-bit arithmetic on an 8-bit microcontroller doesn't sound particularly appealing for our time budget and memory budget, but it is tremendously simple.
+    Using 64-bit arithmetic on an 8-bit microcontroller doesn't sound particularly appealing for the time budget and memory budget, but it is tremendously simple, and for this particular system you should have enough responsiveness and memory.\footnote{
+        In our sample solution using 64-bit arithmetic to detect that overflow has happened added about half of a kilobyte and took twice as long ($40\mu s$) as predicting overflow and using 32-bit arithmetic.
+    }
     You can cast the 32-bit value to \lstinline{int64_t}, perform the arithmetic, cast it back to \lstinline{int32_t} or \lstinline{long}\footnote{
         Remember: on an 8-bit processor, a \lstinline{long} only has 32 bits.
     } and see if the value is different than the 64-bit value.
 
-    If the combination of \function{sprintf()} and 64-bit arithmetic introduces no noticeable lag, then this is fine.
+%    If the combination of \function{sprintf()} and 64-bit arithmetic introduces no noticeable lag, then this is fine.
 
     \paragraph{Predicting that Overflow Will Happen}
 
@@ -314,7 +324,9 @@ You can, however, use the Arduino \function{millis()} function to determine how 
     \textit{Decimal}: If you know what $\frac{1}{10}$ of \lstinline{INT32_MAX} and $\frac{1}{10}$ of \lstinline{INT32_MIN} (found in \lstinline{<limits.h>}) are, then you can compare the ``old value'' to those, to determine if multiplying by 10 will overflow.
     If multiplication won't overflow, then multiply the old value by 10 and compare that product with \lstinline{INT32_MAX} and \lstinline{INT32_MIN} to determine if the difference is less than the value of the new digit.
 
-    \textit{Negation}: Normally, negation doesn't overflow.
+    \paragraph{Negation}
+
+    Normally, negation doesn't overflow.
     But what happens when you negate \lstinline{INT32_MIN}?
 
 }{}
