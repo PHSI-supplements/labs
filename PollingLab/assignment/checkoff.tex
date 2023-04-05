@@ -15,8 +15,8 @@ Because checking off all students during lab would take up most of the lab time,
 
     \checkoffitem{Show the TA your \lstinline{keys} nested array, your \function{initialize_io()} function, and your \function{key_movement_detected()} function. \\
         \textit{+1 The \lstinline{key} nested array is correctly populated} \\
-        \textit{+1 The correct address is assigned to \lstinline{ioports}} \\
-        \textit{+1 The correct address is assigned to \lstinline{i2c}} \\
+        \textit{+\textonehalf\ The correct address is assigned to \lstinline{ioports}} \\
+        \textit{+\textonehalf\ The correct address is assigned to \lstinline{i2c}} \\
         \textit{+2 The \function{key_movement_detected} function is correctly implemented}}
     \item [] (TA make note of whether the call to \function{cowpi_lcd1602_set_send_halfbyte_function()} at the end of \function{initialize_io()} is commented-out or not.)
     \checkoffitem{Show the TA your implementations of the Input/Output functions.}
@@ -37,7 +37,8 @@ Because checking off all students during lab would take up most of the lab time,
         \textit{+1 The \function{xx_switch_is_in_right_position()} functions are correctly implemented}}
     \checkoffitem{Demonstrate that when and only when both pushbuttons are pressed, the left LED (the built-in LED) illuminates.
         Demonstrate that when and only when both switches are in the right position, the right LED (the external LED) illuminates. \\
-        \textit{+2 The \function{set_xx_led()} functions are correctly implemented}}
+        \textit{+2 The \function{set_left_led()} functions are correctly implemented} \\
+        \textit{+1 The \function{set_right_led()} functions are correctly implemented}}
     \checkoffitem{Demonstrate that each of the keys on the keypad is correctly detected and that the absence of a keypress is also reported correctly. \\
         \textit{+8 The \function{get_keypress()} function is correctly implemented}}
 

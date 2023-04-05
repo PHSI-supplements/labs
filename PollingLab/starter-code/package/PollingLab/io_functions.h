@@ -8,13 +8,12 @@
  *
  * @author Christopher A. Bohn
  *
- * @brief Functions that students must re-implement using memory-mapped I/O,
- *      and debouncing constants.
+ * @brief Functions that students must re-implement using memory-mapped I/O.
  *
  ******************************************************************************/
 
 /*
- * PollingLab (c) 2021-22 Christopher A. Bohn
+ * PollingLab (c) 2021-23 Christopher A. Bohn
  *
  * Assignment and starter code licensed under the Apache License,
  * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
@@ -23,10 +22,15 @@
 #ifndef IO_FUNCTIONS_H
 #define IO_FUNCTIONS_H
 
+#include <stdbool.h>
+#include <stdint.h>
 
-#define DEBOUNCE_TIME 20u
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void initialize_io(void);
+bool key_movement_detected(void);
 bool left_button_is_pressed(void);
 bool right_button_is_pressed(void);
 bool left_switch_is_in_left_position(void);
@@ -38,5 +42,9 @@ void set_right_led(bool turn_on);
 uint8_t get_keypress(void);
 void send_halfbyte(uint8_t halfbyte, bool is_command);
 void test_io(void);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif //IO_FUNCTIONS_H

@@ -1,59 +1,34 @@
 /**************************************************************************//**
  *
- * @file number_builder.ino
+ * @file io_functions.c
  *
  * @author (STUDENT -- TYPE YOUR NAME HERE)
  *
- * @brief Code to demonstrate "building" a number by polling inputs,
- *        and to demonstrate memory-mapped input/output.
+ * @brief Functions that students must re-implement using memory-mapped I/O.
  *
  ******************************************************************************/
 
 /*
- * PollingLab assignment and starter code (c) 2021-22 Christopher A. Bohn
- * PollingLab solution (c) the above-named student
+ * PollingLab (c) 2021-23 Christopher A. Bohn
+ * Pollinglab solution (c) the above-named student
+ *
+ * Assignment and starter code licensed under the Apache License,
+ * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#include "CowPi.h"
+#include <CowPi.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 #include "io_functions.h"
-
-#define BUTTON_NO_REPEAT_TIME 500u
-#define ILLUMINATION_TIME 500u
-#define NUMBER_ECHO_TIME 1000u
-
-void build_number(void);
-
-void setup() {
-  cowpi_stdio_setup(9600);
-  cowpi_set_display_i2c_address(0x27);
-  cowpi_setup(LCD1602 | I2C);
-  cowpi_lcd1602_set_backlight(true);
-  initialize_io();
-}
-
-void loop() {
-  test_io();
-  // build_number();
-}
+#include "i2c_address.h"
+#include "supplement.h"
 
 
-
-/*******************************/
-/***** NUMBER BUILDER CODE *****/
-/*******************************/
-
-
-
-void build_number(void) {
-  ;
-}
-
-
-
-/********************/
-/***** I/O CODE *****/
-/********************/
-
+/****************************************************/
+/***** I/O CODE COMPLETED WITH YOUR LAB SECTION *****/
+/****************************************************/
 
 
 // Layout of Matrix Keypad
@@ -62,7 +37,7 @@ void build_number(void) {
 //        7 8 9 C
 //        * 0 # D
 // This array holds the values we want each keypad button to correspond to
-const uint8_t keys[4][4] = {
+static const uint8_t keys[4][4] = {
   {},
   {},
   {},
@@ -76,75 +51,30 @@ volatile cowpi_i2c_t *i2c;          // a pointer to the single set of I2C regist
  * @brief Assigns I/O register addresses to pointers and instructs CowPi library to use `send_halfbyte()`.
  */
 void initialize_io(void) {
-  // ioports = (cowpi_ioport_t *)(cowpi_io_base + 0);
-  // i2c = (cowpi_i2c_t *)(cowpi_io_base + 0);
+  // Uncomment these lines and set the offsets during lab time
+  // ioports = (cowpi_ioport_t *)(COWPI_IO_BASE + 0);
+  // i2c = (cowpi_i2c_t *)(COWPI_IO_BASE + 0);
+
+  // Uncomment this line when you are ready to implement the `send_halfbyte()` function
   // cowpi_lcd1602_set_send_halfbyte_function(send_halfbyte);
 }
 
 /**
- * @brief Reports whether the left button is pressed.
+ * @brief Detects whether a key -- *any* key -- on the numeric keypad is being pressed.
  *
- * A pressed button grounds a pulled-high input.
+ * If no key is being pressed, then all column inputs will be high, and the Keypad NAND will be low.
+ * On the other hand, if a key is being pressed, then one of the column inputs will be low, 
+ * and the Keypad NAND will be high.
  *
- * @return `true` if the button is pressed, `false` otherwise
+ * @return `true` if a key is pressed, `false` otherwise
  */
-bool left_button_is_pressed(void) {
-  return cowpi_left_button_is_pressed();
-}
-
-/**
- * @brief Reports whether the right button is pressed.
- *
- * A pressed button grounds a pulled-high input.
- *
- * @return `true` if the button is pressed, `false` otherwise
- */
-bool right_button_is_pressed(void) {
-  return cowpi_right_button_is_pressed();
-}
-
-/**
- * @brief Reports whether the left switch is in the left position.
- *
- * A switch in the left position grounds a pulled-high input.
- *
- * @return `true` if the switch is in the left position, `false` otherwise
- */
-bool left_switch_in_left_position(void) {
-  return cowpi_left_switch_in_left_position();
-}
-
-/**
- * @brief Reports whether the left switch is in the right position.
- *
- * A switch in the right position floats, allowing pulled-high input to remain high.
- *
- * @return `true` if the switch is in the right position, `false` otherwise
- */
-bool left_switch_in_right_position(void) {
-  return cowpi_left_switch_in_right_position();
-}
-
-/**
- * @brief Reports whether the right switch is in the left position.
- *
- * A switch in the left position grounds a pulled-high input.
- *
- * @return `true` if the switch is in the left position, `false` otherwise
- */
-bool right_switch_in_left_position(void) {
-  return cowpi_right_switch_in_left_position();
-}
-
-/**
- * @brief Reports whether the right switch is in the right position.
- *
- * A switch in the right position floats, allowing pulled-high input to remain high.
- *
- * @return `true` if the switch is in the right position, `false` otherwise
- */
-bool right_switch_in_right_position(void) {
-  return cowpi_right_switch_in_right_position();
+bool key_movement_detected(void) {
+  static bool key_was_pressed = false;
+  bool key_is_pressed = digitalRead(3);
+  bool debounced_key_is_pressed = debounce_byte(key_is_pressed, KEYPAD);
+  bool change_detected = (debounced_key_is_pressed != key_was_pressed);
+  key_was_pressed = debounced_key_is_pressed;
+  return change_detected;
 }
 
 /**
@@ -160,6 +90,82 @@ void set_left_led(bool turn_on) {
   } else {
     cowpi_deluminate_left_led();
   }
+}
+
+
+/******************************************/
+/***** I/O CODE COMPLETED ON YOUR OWN *****/
+/******************************************/
+
+
+/**
+ * @brief Reports whether the left button is pressed.
+ *
+ * A pressed button grounds a pulled-high input.
+ *
+ * @return `true` if the button is pressed, `false` otherwise
+ */
+bool left_button_is_pressed(void) {
+  bool button_is_pressed = cowpi_left_button_is_pressed();
+  return debounce_byte(button_is_pressed, LEFT_BUTTON);
+}
+
+/**
+ * @brief Reports whether the right button is pressed.
+ *
+ * A pressed button grounds a pulled-high input.
+ *
+ * @return `true` if the button is pressed, `false` otherwise
+ */
+bool right_button_is_pressed(void) {
+  bool button_is_pressed = cowpi_right_button_is_pressed();
+  return debounce_byte(button_is_pressed, RIGHT_BUTTON);
+}
+
+/**
+ * @brief Reports whether the left switch is in the left position.
+ *
+ * A switch in the left position grounds a pulled-high input.
+ *
+ * @return `true` if the switch is in the left position, `false` otherwise
+ */
+bool left_switch_is_in_left_position(void) {
+  return !left_switch_is_in_right_position();
+}
+
+/**
+ * @brief Reports whether the left switch is in the right position.
+ *
+ * A switch in the right position floats, allowing pulled-high input to remain high.
+ *
+ * @return `true` if the switch is in the right position, `false` otherwise
+ */
+bool left_switch_is_in_right_position(void) {
+  bool switch_in_position = cowpi_left_switch_is_in_right_position();
+  return debounce_byte(switch_in_position, LEFT_SWITCH);
+}
+
+/**
+ * @brief Reports whether the right switch is in the left position.
+ *
+ * A switch in the left position grounds a pulled-high input.
+ *
+ * @return `true` if the switch is in the left position, `false` otherwise
+ */
+bool right_switch_is_in_left_position(void) {
+  return !right_switch_is_in_right_position();
+}
+
+/**
+ * @brief Reports whether the right switch is in the right position.
+ *
+ * A switch in the right position floats, allowing pulled-high input to remain high.
+ *
+ * @return `true` if the switch is in the right position, `false` otherwise
+ */
+bool right_switch_is_in_right_position(void) {
+  bool switch_in_position = cowpi_right_switch_is_in_right_position();
+  return debounce_byte(switch_in_position, RIGHT_SWITCH);
 }
 
 /**
@@ -188,11 +194,8 @@ void set_right_led(bool turn_on) {
  * @return hexadecimal value of the pressed key, or 0xFF if no key is pressed
  */
 uint8_t get_keypress(void) {
-  static unsigned long last_keypress = 0uL;
   static uint8_t key_pressed = 0xFF;
-  unsigned long now = millis();
-  if (now - last_keypress > DEBOUNCE_TIME) {
-    last_keypress = now;
+  if (key_movement_detected()) {
     char key = cowpi_get_keypress();
     switch (key) {
       case '1':
@@ -269,19 +272,15 @@ uint8_t get_keypress(void) {
  *      or part of a character (`false`)
  */
 void send_halfbyte(uint8_t halfbyte, bool is_command) {
-  const uint8_t peripheral_address = 0x27;
+  const uint8_t peripheral_address = I2C_ADDRESS;
   // ...
 }
-
 
 
 /*********************/
 /***** TEST CODE *****/
 /*********************/
 
-
-
-const char test_io_header[] = "KEY   BTN   SW";
 
 /**
  * @brief Code to test the I/O functions.
@@ -300,46 +299,32 @@ void test_io(void) {
   static bool left_switch_position = true;
   static bool right_switch_position = true;
   static uint8_t key_pressed = 0xFF;
-  static unsigned long last_left_button_change = 0uL;
-  static unsigned long last_right_button_change = 0uL;
-  static unsigned long last_left_switch_change = 0uL;
-  static unsigned long last_right_switch_change = 0uL;
-  static unsigned long last_keypress = 0uL;
-  // These variables do not
+  // This variable does not
   bool change_is_present = false;
-  unsigned long now = millis();
+
   // Poll the inputs
-  if ((now - last_left_button_change > BUTTON_NO_REPEAT_TIME) &&
-      (left_button_is_pressed() != left_button_position)) {
-    last_left_button_change = now;
+  if (left_button_is_pressed() != left_button_position) {
     left_button_position = !left_button_position;
     change_is_present = true;
   }
-  if ((now - last_right_button_change > BUTTON_NO_REPEAT_TIME) &&
-      (right_button_is_pressed() != right_button_position)) {
-    last_right_button_change = now;
+  if (right_button_is_pressed() != right_button_position) {
     right_button_position = !right_button_position;
     change_is_present = true;
   }
-  if ((now - last_left_switch_change > DEBOUNCE_TIME) &&
-      (left_switch_in_right_position() != left_switch_position)) {
-    last_left_switch_change = now;
+  if (left_switch_is_in_right_position() != left_switch_position) {
     left_switch_position = !left_switch_position;
     change_is_present = true;
   }
-  if ((now - last_right_switch_change > DEBOUNCE_TIME) &&
-      (right_switch_in_right_position() != right_switch_position)) {
-    last_right_switch_change = now;
+  if (right_switch_is_in_right_position() != right_switch_position) {
     right_switch_position = !right_switch_position;
     change_is_present = true;
   }
   uint8_t this_key;
-  if ((now - last_keypress > BUTTON_NO_REPEAT_TIME) && 
-      ((this_key = get_keypress()) != key_pressed)) {
-    last_keypress = now;
+  if ((this_key = get_keypress()) != key_pressed) {
     key_pressed = this_key;
     change_is_present = true;
   }
+  
   // Show what we found
   if (change_is_present) {
     char key_character;
@@ -354,20 +339,30 @@ void test_io(void) {
     }
     set_left_led(left_button_position && right_button_position);
     set_right_led(left_switch_position && right_switch_position);
+
+    static const char test_io_header[] = "KEY   BTN   SW  ";
+    char test_io_data[17];
+
+    // We can use sprintf to create the string
+    sprintf(test_io_data, " %c    %c %c   %c %c ", 
+              key_character, 
+              left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U', 
+              left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
+
+    // Or we can directly edit the string
+    /*
+    test_io_data[1]  = key_character;
+    test_io_data[6]  = left_button_position  ? 'D' : 'U';
+    test_io_data[8]  = right_button_position ? 'D' : 'U';
+    test_io_data[12] = left_switch_position  ? 'R' : 'L';
+    test_io_data[14] = right_switch_position ? 'R' : 'L';
+    test_io_data[16] = '\0';
+    */
+
+    // Then we send the string to the console and the display module
     printf("%s\n", test_io_header);
-    printf(" %c    %c %c   %c %c\n\n", 
-            key_character, 
-            left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U', 
-            left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
-    cowpi_lcd1602_return_home();
-    const char *c = test_io_header;
-    while (*c != '\0') {
-      cowpi_lcd1602_send_character(*c++);
-    }
-    cowpi_lcd1602_place_character(0x41, key_character);
-    cowpi_lcd1602_place_character(0x46, left_button_position ? 'D' : 'U');
-    cowpi_lcd1602_place_character(0x48, right_button_position ? 'D' : 'U');
-    cowpi_lcd1602_place_character(0x4C, left_switch_position ? 'R' : 'L');
-    cowpi_lcd1602_place_character(0x4E, right_switch_position ? 'R' : 'L');
+    printf("%s\n\n", test_io_data);
+    display_string(test_io_header, TOP_ROW);
+    display_string(test_io_data, BOTTOM_ROW);
   }
 }

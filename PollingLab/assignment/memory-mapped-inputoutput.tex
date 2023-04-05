@@ -35,19 +35,19 @@ The output will include the positions of the left and right buttons (``U'' for u
 
 \subsubsection{Simple Outputs}
 
-Locate the \function{set_left_led()} and \function{set_right_led()} functions.
-In the starter code, these functions are implemented by calling functions in the CowPi library.
+Locate the \function{set_right_led()} function.
+In the starter code, this function is implemented by calling functions in the CowPi library.
 
 \begin{itemize}
-    \item Modify these two functions to replace the calls to CowPi library functions with code that uses the \lstinline{ioports} array to turn the LEDs on or off.
-    \item Use the read-modify-write pattern to do so, so that you do not change any pins that you do not intend to change.\footnote{Even on ``input'' pins, changing the ``output'' register has an effect.}
+    \item Modify this function to replace the calls to CowPi library functions with code that uses the \lstinline{ioports} array to turn the LED on or off.
+    \item Use the read-modify-write pattern to do so, so that you do not change any pins that you do not intend to change.
     \item No debouncing code is necessary because these functions do not read from mechanical switches.
 \end{itemize}
 
 \paragraph{Test your code}
 
 Place the left switch in the right position and upload the program to your \developmentboard.
-If both buttons are pressed then the left LED will illuminate, and if both switches are in the right position then the right LED will illuminate.
+If both switches are in the right position then the right LED will illuminate.
 
 \vspace{1cm}
 

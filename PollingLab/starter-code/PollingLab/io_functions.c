@@ -77,6 +77,21 @@ bool key_movement_detected(void) {
   return change_detected;
 }
 
+/**
+ * @brief Tuns the left LED on or off.
+ *
+ * An LED illuminates when the pin is placed high and deluminates when the pin is placed low.
+ *
+ * @param turn_on a boolean value indicating whether the led should be turn on (`true`) or off (`false`)
+ */
+void set_left_led(bool turn_on) {
+  if (turn_on) {
+    cowpi_illuminate_left_led();
+  } else {
+    cowpi_deluminate_left_led();
+  }
+}
+
 
 /******************************************/
 /***** I/O CODE COMPLETED ON YOUR OWN *****/
@@ -151,21 +166,6 @@ bool right_switch_is_in_left_position(void) {
 bool right_switch_is_in_right_position(void) {
   bool switch_in_position = cowpi_right_switch_is_in_right_position();
   return debounce_byte(switch_in_position, RIGHT_SWITCH);
-}
-
-/**
- * @brief Tuns the left LED on or off.
- *
- * An LED illuminates when the pin is placed high and deluminates when the pin is placed low.
- *
- * @param turn_on a boolean value indicating whether the led should be turn on (`true`) or off (`false`)
- */
-void set_left_led(bool turn_on) {
-  if (turn_on) {
-    cowpi_illuminate_left_led();
-  } else {
-    cowpi_deluminate_left_led();
-  }
 }
 
 /**

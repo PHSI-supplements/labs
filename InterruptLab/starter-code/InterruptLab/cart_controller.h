@@ -4,11 +4,12 @@
 
 /**************************************************************************//**
  *
- * @file InterruptLab.ino
+ * @file cart_controller.h
  *
  * @author Christopher A. Bohn
  *
- * @brief Driver code for InterruptLab.
+ * @brief An initialization function and main loop function for the
+ *    simulated control of a simulated cart.
  *
  ******************************************************************************/
 
@@ -19,20 +20,18 @@
  * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#include <CowPi.h>
-#include "i2c_address.h"
-#include "cart_controller.h"
-#include "turn_signals.h"
+#ifndef CART_CONTROLLER_H
+#define CART_CONTROLLER_H
 
-void setup() {
-  cowpi_stdio_setup(9600);
-  cowpi_set_display_i2c_address(I2C_ADDRESS);
-  cowpi_setup(LCD1602 | I2C);
-  cowpi_lcd1602_set_backlight(true);
-  initialize_turn_signals();
-  initialize_cart_system();
-}
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-void loop() {
-  control_cart();
-}
+void initialize_cart_system(void);
+void control_cart(void);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+#endif //CART_CONTROLLER_H

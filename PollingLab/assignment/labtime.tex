@@ -108,7 +108,7 @@ When you get to the assignment's Section~\ref{subsec:DisplayModule}, you will be
 
 \subsection{Detect a Change on the Numeric Keypad} \label{subsec:detectKeyAction}
 
-The final part of the group activity is detecting when someone presses (or releases) a key on the numeric keypad.
+The next part of the group activity is detecting when someone presses (or releases) a key on the numeric keypad.
 The \function{key_movement_detected()} function in the starter code is:
 
 \begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=51, escapechar=`]
@@ -171,6 +171,34 @@ Place the \textbf{left switch} in the \textit{right} position and upload your co
 (Or, if you have already uploaded your code, place the \textbf{left switch} in the \textit{right} position and press the RESET button in the middle of the \developmentboard.)
 The test code will output on both the Serial Monitor and on the display module.
 The output will include the key that was pressed (if any), a hyphen if no key is being pressed, or a question mark if \function{get_keypress()} returns an invalid value.
+
+
+\subsection{Controlling an LED}
+
+The final part of the group activity is illuminating and deluminating the built-in LED\@.
+Locate the \function{set_left_led()} function.
+In the starter code, this function is implemented by calling functions in the CowPi library.
+
+\begin{itemize}
+    \item Modify this function to replace the calls to CowPi library functions with code that uses the \lstinline{ioports} array to turn the LEDs on or off.
+        \begin{itemize}
+            \item What should you use to index the \lstinline{ioports} array to access the pin connected to that LED?
+                What field in that element should you use?
+        \end{itemize}
+    \item Use the read-modify-write pattern to do so, so that you do not change any pins that you do not intend to change.\footnote{Even on ``input'' pins, changing the ``output'' register has an effect.}
+    \begin{itemize}
+        \item When turning the LED on, what bitmask should you use?
+            What operation should you use?
+        \item When turning the LED off, what bitmask should you use?
+            What operation should you use?
+    \end{itemize}
+    \item No debouncing code is necessary because these functions do not read from mechanical switches.
+\end{itemize}
+
+\paragraph{Test your code}
+
+Place the left switch in the right position and upload the program to your \developmentboard.
+If both buttons are pressed then the left LED will illuminate.
 
 
 \vspace{1cm}
