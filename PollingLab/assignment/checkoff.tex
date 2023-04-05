@@ -214,3 +214,14 @@ Because checking off all students during lab would take up most of the lab time,
 This concludes the demonstration of your system's functionality.
 The TAs will later examine your code for violations of the assignment's constraints.
 If your code looks like it is tailored for this checklist, the TAs may re-grade using a different checklist.
+
+The TAs also will later check your code for the bonus points available for not using \function{sprintf()} or other functions in the \function{printf()} family.
+If \texttt{grep} indicates that such calls only occur in \function{test_io()} then you will receive that bonus: \\
+\begin{verbatim}
+    % grep printf PollingLab/*c
+    PollingLab/io_functions.c:    // We can use sprintf to create the string
+    PollingLab/io_functions.c:    sprintf(test_io_data, " %c    %c %c   %c %c ",
+    PollingLab/io_functions.c:    printf("%s\n", test_io_header);
+    PollingLab/io_functions.c:    printf("%s\n\n", test_io_data);
+    %
+\end{verbatim}

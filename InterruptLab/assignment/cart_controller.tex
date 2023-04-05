@@ -1,0 +1,247 @@
+\subsection{Examining the Starter Code}
+
+\subsubsection{Starter Code Functions and Variables}
+
+In \textit{cart\_controller.c} you'll see:
+\begin{itemize}
+    \item \function{initialize_cart_system()} where you'll put code to set variables' initial values and to configure interrupts
+    \item \function{control_cart()} where you'll put code that should repeated execute as part of the system's main loop
+    \item \function{handle_key_action()} where you'll put the code that should run whenever a key on the keypad is pressed or released
+    \item \function{ISR(TIMER2_COMPA_vect)} where you'll put the code that needs to run periodically
+\end{itemize}
+
+You may, of course, add other helper functions to \textit{cart\_controller.c} as you see fit.
+
+You will also see a global \lstinline{volatile} variable, \lstinline{display_needs_refreshed} that you can use as part of implementing Requirement~\ref{spec:displayRefreshRate}.
+There are also two \lstinline{const} variables, \lstinline{MU} and \lstinline{DEGREE} that can be used if you wish to include `\textmu' or `\textdegree' as part of your display (you are  not required to use these characters, but they are available if you wish to do so).
+
+Recall also that \textit{turn\_signals.h} has an \lstinline{extern} variable, \lstinline{indicated_turn_direction} that is shared between \textit{turn\_signals.c} and \textit{cart\_controller.c}.
+
+You \textit{will} need to add additional global variables to pass information between \function{control_cart()}, \function{handle_key_action()}, and \function{ISR(TIMER2_COMPA_vect)}.
+Be sure to declare any global variables that you introduce as \lstinline{volatile}.
+
+\subsubsection{Determining Your Display Module's ROM Code}
+
+You can skip this subsection if you will not use \lstinline{MU} or \lstinline{DEGREE}.
+
+The LCD1602's datasheet\footnote{
+    \url{https://www.sparkfun.com/datasheets/LCD/HD44780.pdf}
+} describes the character sets for two possible ROMs, coded ``A00'' and ``A02''.\footnote{
+    No, I don't know what happened to ROM A01.
+}
+Both character sets include the ASCII printable characters, but they have different characters for the non-ASCII values.
+Initially, the \function{initialize_cart_system()} function has this code:
+\begin{lstlisting}[basicstyle=\small]
+void initialize_cart_system(void) {
+  display_needs_refreshed = true;
+  /* USE THIS CODE TO DETERMINE WHICH ROM CODE YOUR DISPLAY MODULE HAS, AND
+     SET MU and DEGREE ACCORDINGLY ON LINE 55-61. THEN COMMENT-OUT THE NEXT
+     EIGHT LINES AFTER THIS COMMENT */
+  char label_string[] = "mu        degree";
+  char candidates_string[17] = {0};
+  if (display_needs_refreshed) {
+    sprintf(candidates_string, "0:%c 2:%c  0:%c 2:%c", (char)0xE4, (char)0xB5, (char)0xDF, (char)0xB0);
+    display_needs_refreshed = false;
+    display_string(label_string, TOP_ROW);
+    display_string(candidates_string, BOTTOM_ROW);
+  }
+  /* END OF CODE TO DETERMINE YOUR DISPLAY MODULE'S ROM CODE */
+
+}
+\end{lstlisting}
+Depending on which ROM your display module has, your display module will initially show either
+
+ROM Code 0 \\
+\texttt{
+    \colorbox{LightGreen}{mu\phantom{xxxxxxxxx}degree} \vspace{-1mm}\\
+    \colorbox{LightGreen}{0:\textmu\phantom{x}2:\begin{CJK*}{UTF8}{goth}ォ\end{CJK*}\phantom{xx}0:\textdegree\phantom{x}2:-}
+} \\
+or
+
+ROM Code 2 \\
+\texttt{
+    \colorbox{LightGreen}{mu\phantom{xxxxxxxxx}degree} \vspace{-1mm}\\
+    \colorbox{LightGreen}{0:{\"a}\phantom{x}2:\textmu\phantom{\small{xxx}}0:{\ss}\phantom{x}2:\textdegree}
+}
+
+If you have then display corresponding to ROM Code 0, then make sure that lines~57--58 are uncommented and that lines~60--61 are commented-out:
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=55]
+// A couple of handy non-ASCII characters if you want them for your display
+// ROM CODE 0
+const char MU = (char)0xE4;
+const char DEGREE = (char)0xDF;
+// ROM CODE 2
+// const char MU = (char)0xB5;
+// const char DEGREE = (char)0xB0;
+\end{lstlisting}
+On the other hand, if you have the display corresponding to ROM Code 2, then make sure that lines~57--58 are commented-out and that lines~60--61 are uncommented:
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=55]
+// A couple of handy non-ASCII characters if you want them for your display
+// ROM CODE 0
+// const char MU = (char)0xE4;
+// const char DEGREE = (char)0xDF;
+// ROM CODE 2
+const char MU = (char)0xB5;
+const char DEGREE = (char)0xB0;
+\end{lstlisting}
+If you have neither, then contact the professor for the code to create custom characters for `\textmu' and `\textdegree' (if you plan to use these characters on your display).
+
+After you have done so, comment-out the eight lines in \function{initialize_cart_system()} that generate that display.
+
+
+\subsection{Detecting Key Presses and Releases}
+
+Add code to \function{initialize_cart_system()} to register \function{handle_key_action()} as your handler for key presses and releases.
+Use the \function{attachInterrupt()} and \function{digitalPinToInterrupt()} functions, as described in Section~5.3 of the datasheet.
+Specify \lstinline{CHANGE} mode.
+
+The starter code for \function{handle_key_action()} has debouncing code similar to what you saw in \function{handle_button_action()}.
+After the busy-wait loop terminates, the \lstinline{key} variable will either hold a non-NUL character, which will tell you which key press triggered this interrupt,
+or \lstinline{key} will hold `\\0', in which case the \lstinline{last_key} variable will tell you which key release triggered this interrupt.
+
+\begin{lstlisting}[basicstyle=\small]
+void handle_key_action(void) {
+  debounce_interrupt({
+    static char last_key = 0xF0;
+    char key;
+    while ((key = cowpi_get_keypress()) == last_key) {}   // busy-wait through the race condition
+    /* Add code to respond to key presses and releases */
+
+    last_key = key;
+  });
+}
+\end{lstlisting}
+
+As described in Requirements~\ref{spec:dPad} and \ref{spec:diagnosticDisplays}, your system needs to respond to key presses for some (but not all) of the keys on the numeric keypad,
+and it needs to respond to key releases for only a few of the keys.
+Until you design the logic for your cart controller, you might simply print a message to the console when these particular actions happen.
+
+As a rule, you want your interrupt-handling code to run quickly.
+You certainly don't want to take the time to send a message across the slow UART connection to the Arduino IDE's Serial Monitor.
+When you introduce the logic for your cart controller, be sure to remove the print statements from your interrupt handler.
+
+\subsection{Detecting Time}
+
+You must use a timer interrupt, to implement Requirement~\ref{spec:dataRefreshRate}.
+Use that same timer interrupt\ifbool{offerdecompositionhints}{, along with a \lstinline{static} variable the ISR,}{} to determine when to set the \lstinline{display_needs_refreshed} variable.
+
+Requirement~\ref{spec:dataRefreshRate} identifies the timer period that you need.
+Use the equation in the datasheet's Section~6.2 to iterate through possible comparison values and prescalers until you arrive at a prescaler that is available for Timer2 and a comparison value that fits in the available counter bits for that timer.
+When you have done so, add code to \function{initialize_cart_system()}:
+\begin{itemize}
+    \item Create a \lstinline{cowpi_timer8bit_t} pointer (in the remaining steps, we will refer to this pointer as \lstinline{timer})
+    \item Use the address offset listed in the datasheet's Section~6.5 to assign the appropriate address to \lstinline{timer}
+    \item Use the datasheet's Tables~12--13 to select the WGM bits for ``Clear on Timer Compare'' mode and the CS bits for your prescaler;
+    use these bits and Table~11 to generate a bit vector and assign that bit vector to \lstinline{timer->control}
+    \item Subtract 1 from the comparison value and assign that to \lstinline{timer->compareA}
+    \item Create a \lstinline{uint8_t} pointer (which we will refer to as \lstinline{timer_interrupt_masks}), and use the address offset listed in the datasheet's Section~6.6 to assign the appropriate address to \lstinline{timer_interrupt_masks}
+    \item Treating the pointer as an array, index the \lstinline{timer_interrupt_masks} array with the timer number (2), and use the datasheet's Table~14 to assign the appropriate bit vector to enable the \texttt{TIMER\textit{n}\_COMPA\_vect} interrupt, where $n$ is the timer number
+%    \item Create an ISR for the \lstinline{TIMER1_COMPA_vect} interrupt using the \function{ISR()} macro as described in Section~5.2 of the datasheet
+\end{itemize}
+
+Until you design the logic for your cart controller, you might simply leave the ISR's body empty except for the code that updates \lstinline{display_needs_refreshed}.
+
+
+\subsection{Updating the Display}
+
+As a rule, you want your interrupt-handling code to run quickly.
+You certainly don't want to take the time to update the display module in your ISR\@.
+Instead, include in your ISR enough code to determine when 256 nanofortnights have passed,
+\ifbool{offerdecompositionhints}{
+    that is, when the timer interrupt has fired 256 times,
+}{}
+and set the \lstinline{display_needs_refreshed} when that has happened.
+
+Then, in the \function{control_cart()} function, find this code:
+\begin{lstlisting}[basicstyle=\small]
+  static char top_line[17];
+  static char bottom_line[17];
+  if (display_needs_refreshed) {
+    display_needs_refreshed = false;
+    /* Add to create the strings to be displayed */
+
+  }
+\end{lstlisting}
+
+Place inside that \lstinline{if} statement's body any code that should run whenever the display needs to be updated.
+
+
+\subsection{Controlling the Cart}
+
+Instead of hacking code together, you should first think about its design.
+You might not get the design perfect initially, but you will have much less backtracking if you give thought to it first.
+
+\subsubsection{Data Representations}
+
+Consider, for example, Requirement~\ref{spec:importantData}.
+Finding a suitable datatype for the speed should be straight-forward enough.
+What about the heading and distance?
+How can you maintain a precision of \textit{exactly} 0.000,001\textdegree and of \textit{exactly} 0.001~microfurlongs?
+
+\ifbool{offerdecompositionhints}{
+    An IEEE~754 binary floating point type will not allow you to maintain precisions of exactly 0.000,001\textdegree and 0.001~microfurlongs.
+    An attempt to approximate those precisions will result in the display frequently showing the incorrect distance travelled -- admittedly for only 256 nanofortnights each time this happens, but you can do better.
+    (Another problem is that, by default, \function{sprintf()} will not work with floating point values on microcontrollers, including the ATmega328P.
+    We can change this with a compiler argument, but the Arduino IDE doesn't make it easy to do that.)
+    \paragraph{Hint} Review your notes from the part of the floating point lecture in which we discussed how decimal currency is handled. \\
+}{}
+
+How will you keep track of whether the motor is engaged?
+How will you keep track of what direction (if any) the cart is turning?
+How will you keep track of which display should be displayed (see Requirement~\ref{spec:diagnosticDisplays})?
+
+\subsubsection{Design the Displays}
+
+Design the diagnostic displays that show the full variables you chose.
+Also design the ``normal'' display that shows the speed in furlongs per fortnight, the distance in microfurlongs, and the heading in degrees.
+Be sure to allow sufficient room on the ``normal'' display to show a speed up to 3,000~furlongs per fortnight, a distance up to 9,999~microfurlongs, and a heading up to 359\textdegree.
+
+Place the code to select the display in the \function{handle_key_action()} function, and the code to generate the displays and send them to the display module in the \function{control_cart()} function.
+
+\subsubsection{Speed}
+
+Now think about how you will change the speed.
+How will you handle the minimum and maximum speeds?
+How will you handle low and high gear?
+How will you handle the motor being engaged or not engaged?
+
+What has to happen when you press the `0' key to brake?
+What else has to happen when you press the brake?
+What has to happen when you release the brake?
+What else has to happen when you release the brake?
+
+\ifbool{offerdecompositionhints}{
+    \paragraph{Hint} The requirements state that the brake lights shall be illuminated while as the user is pressing the brake.
+    You can correctly infer that once the user presses the brake, they continue to do so until they release the brake. \\
+}{}
+
+Now that you've given thought to how to control the cart's speed, write the code for accelerating, decelerating, and braking.
+
+\subsubsection{Distance Travelled}
+
+Now that you can change the cart's speed, you can change the distance travelled.
+Add code to \function{ISR(TIMER2_COMPA_vect)} that will update the distance travelled whenever the timer interrupt fires.
+
+\ifbool{offerdecompositionhints}{
+    \paragraph{Hint} Assuming you designed the timer interrupt to fire every nanofortnight:
+    \begin{align*}
+        Change\_in\_distance    & = speed \times time \\
+                                & = \mathtt{speed\_variable}\ \frac{furlong}{fortnight} \times 1\ nanofortnight \\
+                                & = \mathtt{speed\_variable}\ nanofurlong \\
+                                & = \mathtt{speed\_variable} \times 0.001\ microfurlong
+    \end{align*}
+}{}
+
+\subsubsection{Turning}
+
+While activating a turn signal indicates the intention to turn a particular direction, actually turning requires using the ``D-pad'' to indicate the turn direction and forward motion to determine how much the direction changes.
+This means that the code for making turns will be spread across a couple of functions.
+
+Don't forget that the turn signal should stop blinking when the user ends the turn.
+
+\subsubsection{Final Review of Requirements}
+
+Look again over the requirements in Section~\ref{sec:spec}.
+Have you forgotten anything?
+
+Check to make sure that you've removed any long-running code, such as \function{display_string()} and \function{printf()} from your interrupt handlers / ISRs.

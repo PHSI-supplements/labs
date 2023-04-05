@@ -228,7 +228,7 @@ One significant consideration is the impact on your program's size: \function{pr
     Most of this is the code to generate the desired output/string, so eliminating only one of the functions doesn't save more than a few dozen bytes.
 }
 You may have noticed that only 30kB\footnote{
-    The ATmega328P has 32kB of flash memory for programs, but 2kB of that is used by the bootloader.
+    The ATmega328P has 32kB of flash memory  -- 30kB is available for programs, and 2kB set aside for data.
 } is available for your program in the \developmentboard's flash memory, so \function{printf()} and \function{sprintf()} take up 5.4\% of the total space available for your program!
 Because of the \function{test_io()} code, your program is already includes the \function{printf()} and \function{sprintf()} functions, so you won't see any memory penalties for using them in your number builder code.
 

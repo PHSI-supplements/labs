@@ -1,0 +1,126 @@
+%! suppress = LabelConvention
+\begin{enumerate}
+    \item \textit{Initial Conditions:} The cart shall initially be stationary (speed 0), facing north (heading 0\textdegree), with the wheels pointing forward, with the brake off, and with the motor disengaged.
+    \item \textit{No ``Reverse'' Gear:} The cart shall not be able to travel backwards: its speed must always be a non-negative value.
+    \item \textit{Maximum Speed:} The cart has a maximum speed of 3,000~furlongs per fortnight.\footnote{
+            A furlong is $\frac{1}{8}$ of a mile, approximately 200m. A fortnight is 14 days.
+        }
+        To prevent damage to the drivetrain, the system shall not allow the cart to attempt to go faster than that.
+    \item \textit{Newton's First Law:} When no keys are pressed, the car shall hold its speed and shall travel in a straight line if its speed is positive.
+    \item \label{spec:importantData} \textit{Important Data:} The system will keep track of the carts speed, heading, and distance travelled since the last system reset.
+        \begin{enumerate}
+            \item The speed will be tracked to a precision of 1~furlong per fortnight.
+            \item The heading will be tracked to a precision of 0.000,001\textdegree.
+                \begin{itemize}
+                    \item The heading is the traditional compass heading, with right turns increasing the heading and left turns decreasing the heading, modulo~360\textdegree.
+                \end{itemize}
+            \item The distance will be tracked to a precision of 0.001~microfurlongs.
+        \end{enumerate}
+    \item \label{spec:standardDisplay} \textit{Standard Display:} Under normal operation, the display module shall always display the current speed (in furlongs per fortnight), the current heading (in degrees), and the distance travelled (in microfurlongs) since the system was last reset.
+        While the system will store values more precisely, the displayed values shall be \textit{rounded down} to an integer.
+        For example, a cart that has travelled 456.4 microfurlongs and is currently travelling 123.0~furlongs per fortnight at a heading of 270.8\textdegree\ would show: \\
+        \display{
+            \colorbox{LightGreen}{Spd\phantom{x}123fpf\phantom{fxxx}Hdg} \vspace{-1mm}\\
+            \colorbox{LightGreen}{Odo\phantom{x}456\textmu fur\phantom{xx}270}
+        }
+        (This is an example only; no particular layout is specified.)
+        \begin{itemize}
+            \item The display must show all significant digits of the vehicle's speed, and the speed must be clearly indicated with a label and/or with units.
+            \item The display must display at least the lower four decimal digits of the rounded distance travelled, and the distance must be clearly indicated with a label and/or with units.
+                The odometer may ``roll over'' at 10,000 microfurlongs or at a greater value if space is available for more digits.
+                The odometer must never show a negative distance.
+            \item The display must show all significant digits of the vehicle's direction, and the direction must be clearly indicated with a label and/or with a ``degrees'' indicator (`\textdegree').
+        \end{itemize}
+    \item \label{spec:dPad} \textit{Controlling the Cart:} The \textbf{numeric keypad} shall serve as a \textit{directional pad}.
+    \begin{enumerate}
+        \item \label{spec:pressOnlyOneKey} The user will press at most one key at a time;
+            the user shall never press two or more keys at the same time.
+        \item When the user presses the `2' key, the cart shall accelerate if the motor is engaged.
+            The increase in speed is per-press.
+            Continuously holding the `2' key shall not increase the speed further;
+            the only way to increase the speed further is to press the `2' key again.
+            \begin{itemize}
+                \item The cart shall not accelerate when the motor is disengaged.
+                \item If the user attempts to accelerate to a speed faster than the maximum speed, then the speed shall be the maximum speed.
+            \end{itemize}
+        \item When the user presses the `8' key, the cart shall decelerate.
+            The decrease in speed is per-press.
+            Continuously holding the `8' key shall not decrease the speed further;
+            the only way to decrease the speed further is to press the `2' key again.
+            \begin{itemize}
+                \item If the user attempts to decelerate to a negative speed, then the speed shall be 0.
+            \end{itemize}
+        \item When the user presses the `0' key, the cart shall brake.
+            Braking results in the speed immediately being set to 0, and is also required to engage and disengage the motor.
+        \item \label{spec:turnLeft} When the user presses the `4' key, the cart shall turn left.
+            The cart shall continue to turn left while the user continues to press the `4' key.
+            The turn is complete when the user releases the `4' key.
+        \item \label{spec:turnRight} When the user presses the `6' key, the cart shall turn right.
+            The cart shall continue to turn right while the user continues to press the `6' key.
+            The turn is complete when the user releases the `6' key.
+        \item Pressing any other key shall have no effect.
+    \end{enumerate}
+    \item \textit{Engaging/Disengaging the Motor:} The \textbf{left switch} shall be used to engage and disengage the motor.
+        \begin{enumerate}
+            \item The motor shall only change between being engaged and being disengaged as a result of the left switch's position when the user releases the brake (the `0' key).
+            \item When the user releases the brake, if the left switch is in the \textit{left position} then the motor shall disengage.
+            \item When the user releases the brake, if the left switch is in the \textit{right position} then the motor shall engage.
+        \end{enumerate}
+    \item \textit{Gear Selector:} The \textbf{right switch} shall be used to change between \textit{low gear} and \textit{high gear}.
+        \begin{enumerate}
+            \item When the right switch is in the \textit{left position}, the cart shall be in \textit{low gear}.
+                Pressing the `2' button shall cause the cart to accelerate by 1~furlong per fortnight.
+                Pressing the `8' button shall cause the cart to decelerate by 1~furlong per fortnight.
+            \item When the right switch is in the \textit{right} position, the cart shall be in \textit{high gear}.
+                Pressing the `2' button shall cause the cart to accelerate by 3~furlongs per fortnight.
+                Pressing the `8' button shall cause the cart to decelerate by 3~furlongs per fortnight.
+        \end{enumerate}
+    \item \label{spec:TurnSignalControls} \textit{Turn Signal Controls:} The \textbf{pushbuttons} shall serve as turn signal selectors.
+        \begin{itemize}
+            \item The user shall indicate their preference to turn left by pressing the \textbf{left pushbutton};
+                the user shall indicate their preference to turn right by pressing the \textbf{right pushbutton}.
+        \end{itemize}
+    \item \label{spec:TurnSignals} \textit{Turn Signals:} One function of the \textbf{LEDs} is as turn signals.
+        \begin{enumerate}
+            \item If the user has indicated a preference to turn left, then the \textbf{left LED} shall blink;
+                if the user has indicated their preference to turn right, then the \textbf{right LED} shall blink.
+            \item \label{spec:blinkRate} The blink rate shall be repeating 750ms on, 750ms off.
+            \item The turn signal shall continue to blink until the user has completed the turn.
+                \begin{itemize}
+                    \item Per Requirements~\ref{spec:turnLeft}--\ref{spec:turnRight}, releasing the `4' or `6' key shall cause a blinking turn signal to stop blinking
+                \end{itemize}
+            \item An LED shall not blink when its turn signal has not been selected.
+        \end{enumerate}
+    \item \textit{Brake Lights:} The other function of the \textbf{LEDs} is as brake indicators.
+        \begin{enumerate}
+            \item If no turn signal has been selected, then both LEDs shall illuminate steadily for as long as the user is braking.
+            \item If a turn signal has been selected, then the corresponding LED shall blink, and the LED for the non-selected direction shall illuminate steadily.
+            \item If the user is not braking, then neither LED shall illuminate steadily.
+        \end{enumerate}
+    \item \textit{Turn Rate:} While the `4' or `6' key is pressed, the cart shall change its heading at the rate of $\pm$0.3\textdegree~per microfurlong.
+        \begin{itemize}
+            \item For example, if the cart is travelling at the rate of 500~furlongs per fortnight, then it travels 0.5~microfurlongs each nanofortnight, and so a right turn would result in a heading change of 0.15~degrees.
+            \item If the cart is stationary (the speed is 0), then pressing the `4' or `6' key would not cause the cart to change its heading.
+        \end{itemize}
+    \item \label{spec:dataRefreshRate} \textit{Data Refresh Rate:} Every nanofortnight,\footnote{
+            A nanofortnight is 1.2096ms. We will approximate this as \textbf{1.208ms}, an error under 0.15\%, resulting in a loss of fewer than 30 minutes over a fortnight.
+        } the system shall update the distance that the cart has travelled and its heading.
+    \item \label{spec:displayRefreshRate} \textit{Display Refresh Rate:} The system shall update the \textbf{display module} evey 256 nanofortnights.
+    \item \label{spec:diagnosticDisplays} \textit{Diagnostic Displays:} The letter keys can be used to show diagnostic data.
+        The display module shall be refreshed at the same rate specified in Requirement~\ref{spec:displayRefreshRate}.
+        \begin{enumerate}
+            \item When the user presses the `A' key, the system shall display the standard display described in Requirement~\ref{spec:standardDisplay}.
+            \item When the user presses the `B' key, the system shall display the full variable used to track the cart's speed.
+                Other diagnostic data may also be displayed.
+            \item When the user presses the `C' key, the system shall display the full variable used to track the cart's distance.
+                Other diagnostic data may also be displayed.
+            \item When the user presses teh `D' key, the system shall display the full variable used to track the cart's direction.
+                Other diagnostic data may also be displayed.
+        \end{enumerate}
+    \item \label{spec:responsive} The system shall always be responsive to user input.
+        \begin{itemize}
+            \item While one pushbutton is being pressed, the system does not need to respond to the other being pressed
+            \item As noted in Requirement~\ref{spec:pressOnlyOneKey}, the user will never press two keys at the same time
+            \item But for those exceptions, there shall be no noticeable lag when responding to an input
+        \end{itemize}
+\end{enumerate}

@@ -1,0 +1,65 @@
+When you have completed this assignment, upload \textit{turn\_signals.c} and \textit{cart\_controller.c} to
+\filesubmission.
+
+%\policyforcodethatdoesnotcompile
+\subsection*{No Credit for Uncompilable Code}
+If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\footnote{
+    At the TA's discretion, if they can make your code compile with \textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\% penalty on the resulting score.
+    The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.
+    If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.
+}
+Before turning in your code, be sure to compile and test your code on \runtimeenvironment\ with the original driver code, the original header file(s), and using the Arduino IDE\@.
+
+\interruptlablatepolicy
+
+\subsection*{Rubric}
+
+This assignment is worth 35 points.
+\begin{description}
+    \item[Turn Signals] % 8
+    \rubricitem{1}{Pushbutton presses are detected with an external interrupt}
+    \rubricitem{1}{The pushbuttons' interrupt handler determines which button was pressed}
+    \rubricitem{1}{Timer interrupts for Timer1 are handled}
+    \rubricitem{1}{Timer1 interrupts every 750ms}
+    \rubricitem{1}{There is no long-running code (including, but not limited to, \function{display_string()} and \function{printf()}) in the interrupt handlers / ISRs, \textit{except} where the inclusion of print statements is the only mechanism to demonstrate that the interrupt handler determines which button was pressed}
+    \rubricitem{1}{Pressing the left button activates the left turn signal, and pressing the right button activates the right turn signal}
+    \rubricitem{2}{When the left (right) turn signal is active, the left (right) LED blinks by illuminating for 750ms and deluminating for 750ms, and the left (right) LED does not blink}
+
+    \item[Controlling the Cart] % 27
+    \rubricitem{2}{Matrix keypad presses and releases are detected with an external interrupt}
+    \rubricitem{1}{The keypad's interrupt handler determines which key (if any) was pressed}
+    \rubricitem{1}{The keypad's interrupt handler determines which key (if any) was released}
+    \rubricitem{2}{Timer interrupts for Timer2 are handled}
+    \rubricitem{2}{Timer2 interrupts every 1.208ms}
+    \rubricitem{1}{There is no long-running code (including, but not limited to, \function{display_string()} and \function{printf()}) in the interrupt handlers / ISRs, \textit{except} where the inclusion of print statements is the only mechanism to demonstrate that the interrupt handler determines which key was pressed or released}
+    \rubricitem{1}{Pressing the `2' key increases the speed by 1 (or 3 if in high gear) if and only if the motor is engaged}
+    \rubricitem{1}{Pressing the `8' key decreases the speed by 1 (or 3 if in high gear)}
+    \rubricitem{1}{Pressing the `0' key sets the speed to 0 and activates the brake lights}
+    \rubricitem{1}{If neither turn signal is active, then both LEDs illuminate steadily while the brake lights are active; if a turn signal is active, then the turn signal's LED will continue to blink while the opposite LED illuminates steadily}
+    \rubricitem{1}{Releasing the `0' key deactivates the brake lights}
+    \rubricitem{1}{The right switch selects low gear (left position) and high gear (right position), having an effect only when pressing the `2' or `8' key}
+    \rubricitem{1}{The left switch disengages (left position) and engages (right position) the motor, having an effect only when releasing the `0' key}
+    \rubricitem{1}{Pressing the `4' (`6') key causes the cart to turn left (right) when and only when the cart is in motion}
+    \rubricitem{1}{Releasing the `4' or `6' key causes the turn to stop and deactivates the turn signal}
+    \rubricitem{1}{Pressing the `A', `B', `C', or `D' key causes the appropriate display to appear on the display module}
+    \rubricitem{\textonehalf}{Releasing `2', `8', `A', `B', `C', or `D' has no effect}
+    \rubricitem{\textonehalf}{Pressing or releasing `1', `3', `5', `7', `9', `*', or `\#' has no effect}
+    \rubricitem{1}{The speed is tracked at $1~fpf$; that is, the `A' display and the `B' display show the same speed value}
+    \rubricitem{1}{The distance is tracked at $0.001~\mu fur$; that is, the `C' display shows 3 decimal digits to the right of the $1~\mu fur$ position}
+    \rubricitem{1}{The direction is tracked at $0.000,001\degree$; that is, the `D' display shows 6 decimal digits to the right of the $1\degree$ position}
+    \rubricitem{1}{The speed is strictly limited to $0 \leq speed \leq 3,000~fpf$, and the direction is strictly limited to $0\degree \leq speed < 360\degree$}
+    \rubricitem{1}{When turning, the direction changes by $\pm 0.3\degree$ for each microfurlong travelled while turning (the sign of the change being determined by the turn direction)}
+    \rubricitem{1}{The distance and direction are updated every 1.208ms}
+    \rubricitem{1}{The display refreshes every $256 \times 1.208ms = 309.248ms$}
+
+    \item[Bonuses]
+    \bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due (you cannot get both check-off bonuses)}
+    \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due (your code must be uploaded to \filesubmission\ \textit{before} it is due; you cannot get both bonuses)}
+
+    \item[Penalties]
+    \penaltyitem{1}{The turn signals are set by means other than detecting button presses in an interrupt handler}
+    \penaltyitem{2}{The blink rate is set by means other than detecting a timer interrupt}
+    \penaltyitem{9}{The directional controls and display controls are managed by means other than detecting key presses/releases in an interrupt handler}
+    \penaltyitem{3}{The time to update distance and direction, and to refresh the display, is determined by means other than detecting a timer interrupt}
+    \spaghetticodepenalties{1}
+\end{description}

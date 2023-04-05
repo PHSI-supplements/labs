@@ -1,0 +1,71 @@
+Please familiarize yourself with the entire assignment before beginning.
+There are three parts to this assignment.
+
+%The first part, which is intended to be completed during lab time under the guidance of a TA, is to populate the keypad's lookup table (Section~\ref{subsec:populatekeypad}), determine the base addresses for the memory-mapped I/O register banks used in this assignment (Section~\ref{subsec:baseAddresses}), and introduce code to detect keypresses on the numeric keypad (Section~\ref{subsec:detectKeyAction}).
+%After that, there are two major parts to this assignment, and they can be completed in either order.
+%
+%\subsection{Memory-Mapped Input/Output}
+%
+%The starter code contains functions that provide access to the buttons, switches, keypad, LEDs, and display module.
+%Initially, these functions make use of functions available in the CowPi library.
+%In Section~\ref{sec:MemMapIO}, you will re-implement these functions using memory-mapped I/O\@.
+%
+%\subsection{Implementing a Simple System using Polling}
+%
+%In Section~\ref{sec:SimpleSystem}, you will implement a simple system that makes use of your hardware kit's buttons, switches, keypad, LEDs, and display module.
+%You will implement this system by polling inputs.
+%
+%\subsection{Separation of Concerns}
+%
+%The code that interfaces directly with the hardware is in one file (\textit{io\_functions.c}), and the logic to implement your simple embedded system is in another file (\textit{number\_builder.c}).
+%With embedded systems, it isn't always easy to have such a clean separation of concerns, but when you can, you should.
+%As you complete this assignment, place all of your system's logic in \textit{number\_builder.c},
+%and place all of the code that accesses the memory-mapped I/O registers in \textit{io\_functions.c}.
+%
+\subsection{Constraints} \label{subsec:constraints}
+
+You may use any features that are part of the C standard if they are supported by the compiler.
+You may use the constants and functions provided in the starter code.
+
+You may re-use your code that uses memory-mapped I/O registers,
+or you can use functions provided by the CowPi library to read from and write to pins.
+
+You may \textit{not} poll the matrix keypad nor the pushbuttons to determine if they have been pressed.
+You must use interrupts to determine if a key or button has been pressed.
+Once a press has been detected, you may scan the matrix keypad or read the pushbuttons to determine which key or button has been pressed.
+
+You may poll the left switch to determine if its position has changed;
+however, the specification has been written such that your code should only need to occasionally check the switch's position rather than polling it for changes.
+
+% While it is possible to configure the SPI hardware to generate an interrupt after the content of the SPI Data Register is transmitted,
+% you may use your \function{send_data()} function that polls the \texttt{SPIF} bit,
+% or you may use the Cow Pi library's default implementation.
+
+While it is possible to configure the I$^2$C hardware to generate an interrupt after the content of the TWI Data Register is transmitted,
+you may use your \function{send_halfbyte()} function that polls the \texttt{TWINT} bit,
+or you may use the Cow Pi library's default implementation.
+
+\subsubsection{Constraints on the Arduino core}
+
+You may use \function{attachInterrupt()} and \function{digitalPinToInterrupt()} to register interrupt handlers.
+You may (but are not required to) use \function{Serial.print()} and \function{Serial.println()} instead of \function{printf()} if you wish.
+If and only if you use your keypad scanner function from PollingLab, you may use the \function{delayMicroseconds()} function to introduce a 1--2$\mu$s delay in that function if necessary.
+
+You may not use any other libraries, functions, macros, types, or constants from the Arduino core.\footnote{
+    \url{https://www.arduino.cc/reference/en/}
+}
+
+\subsubsection{Constraints on AVR-libc}
+
+You may use any AVR-specific functions, macros, types, or constants of avr-libc.\footnote{
+    \url{https://www.nongnu.org/avr-libc/user-manual/index.html}
+}
+
+\subsubsection{Constraints on the CowPi library}
+
+You may use any functions that are described in Section~2 of the Cow Pi datasheet,
+and you may use any data structures provided by the CowPi library.
+
+\subsubsection{Constraints on other libraries}
+
+You may not use any libraries beyond those explicitly identified here.

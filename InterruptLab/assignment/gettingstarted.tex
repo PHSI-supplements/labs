@@ -1,0 +1,57 @@
+Download the zip file or tarball from \filesource.
+Once downloaded, unpackage the file and open the project in the Arduino IDE\@.
+
+If your display module's I$^2$C address is not 0x27, then edit \textit{i2c\_address.h}, and replace \lstinline{0x27} with the correct I$^2$C address for your display module.
+
+\subsection{Description of InterruptLab Files}
+
+\subsubsection{InterruptLab.ino}
+
+Do not edit \textit{InterruptLab.ino}.
+
+This file contains the code to configure your Cow Pi for this lab.
+
+\subsubsection{i2c\_address.h}
+
+This file exists solely to store the display module's I$^2$C address.
+You do not need to edit it further.
+
+\subsubsection{supplement.h}
+
+Do not edit \textit{supplement.h}.
+
+This file contains code that we hope will make it easier for you to focus on this assignment's learning objectives by taking care of a couple of the complexities.
+These functions are not yet in the CowPi library but soon may be, depending on how well they work for you.
+
+\subsubsection{turn\_signals.h \& turn\_signals.c}
+
+Do not edit \textit{turn\_signals.h}.
+
+The \textit{turn\_signals.c} file contains functions that you will edit in Section~\ref{sec:turnSignals}.
+
+\subsubsection{cart\_controller.h \& cart\_controller.c}
+
+Do not edit \textit{cart\_controller.h}.
+
+The \textit{cart\_controller.c} file contains functions that you will edit in Section~\ref{sec:cartController}.
+
+\subsection{Interrupt-Driven Input/Output -- A Different but Familiar Programming Paradigm}
+
+In PollingLab you used polling to determine when to respond to a pushbutton or a key on the keypad being pressed.
+In this lab, you will rely on interrupts to let your code know when it needs to respond to a pushbutton or a key on the keypad being pressed, and you will rely on interrupts to let your code know when a certain amount of time has passed.
+
+\vspace{.25cm}
+
+Most of the code you wrote in the earlier lab assignments for this course used imperative programming:
+you, the programmer, had full control over changes to the program state.
+In PollingLab, you stretched this model to something resembling shared-memory concurrent programming:
+you still had full control over changes to the program state of your program's flow of control,
+but your program periodically read variables (memory-mapped input registers) that could be changed by another flow of control (the physical world).
+
+In this lab assignment, you will write code that reacts to things happening in the physical world;
+your code program state will not change except in reaction to interrupts.
+Conceptually, this isn't very different from event-driven programming that you learned in \cstwo.
+While configuring the hardware timer is a little more complex than configuring a GUI framework's timer, handling a timer interrupt is very much like writing an \function{onTimeout()} event handler.
+Similarly, handling a change in a pushbutton's position is very much like writing an \function{onMouseClick} event handler.
+Your code is not focused on \textit{when} the button is pressed or released, nor even on \textit{detecting} that a button has been pressed or released;
+it is focused solely on \textit{what should happen} when the button is pressed or released.
