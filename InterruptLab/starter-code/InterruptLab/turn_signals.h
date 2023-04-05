@@ -4,11 +4,12 @@
 
 /**************************************************************************//**
  *
- * @file InterruptLab.ino
+ * @file turn_signals.h
  *
  * @author Christopher A. Bohn
  *
- * @brief Driver code for InterruptLab.
+ * @brief Definitions for the state machine reprsenting the turn signal
+ *    subsystem of a remote-controlled cart.
  *
  ******************************************************************************/
 
@@ -19,20 +20,25 @@
  * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#include <CowPi.h>
-#include "i2c_address.h"
-#include "cart_controller.h"
-#include "turn_signals.h"
+#ifndef TURN_SIGNALS_H
+#define TURN_SIGNALS_H
 
-void setup() {
-  cowpi_stdio_setup(9600);
-  cowpi_set_display_i2c_address(I2C_ADDRESS);
-  cowpi_setup(LCD1602 | I2C);
-  cowpi_lcd1602_set_backlight(true);
-  initialize_turn_signals();
-  initialize_cart_system();
-}
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-void loop() {
-  control_cart();
-}
+enum turn_directions {
+  NO_TURN,
+  LEFT_TURN,
+  RIGHT_TURN
+};
+
+extern volatile enum turn_directions indicated_turn_direction;
+
+void initialize_turn_signals(void);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+#endif //TURN_SIGNALS_H
