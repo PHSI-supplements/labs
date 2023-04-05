@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 /*
- * DuplicatorLab assignment and starter code (c) 2022 Christopher A. Bohn
+ * DuplicatorLab assignment and starter code (c) 2022-23 Christopher A. Bohn
  * DuplicatorLab solution (c) the above-named student
  */
 
@@ -45,13 +45,13 @@ void *read_original(void *arg) {
             if (fgets(local_buffer, BUFFER_SIZE, source_file)) {
                 memcpy((char *) shared_buffer, local_buffer, BUFFER_SIZE);
             } else {
+                status = FINISHED;
                 copying = false;
             }
         } else {
             ;
         }
     }
-    status = FINISHED;
     return NULL;
 }
 
