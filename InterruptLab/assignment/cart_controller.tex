@@ -64,7 +64,7 @@ ROM Code 2 \\
     \colorbox{LightGreen}{0:{\"a}\phantom{x}2:\textmu\phantom{\small{xxx}}0:{\ss}\phantom{x}2:\textdegree}
 }
 
-If you have then display corresponding to ROM Code 0, then make sure that lines~57--58 are uncommented and that lines~60--61 are commented-out:
+If you have the display corresponding to ROM Code 0, then make sure that lines~57--58 are uncommented and that lines~60--61 are commented-out:
 \begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=55]
 // A couple of handy non-ASCII characters if you want them for your display
 // ROM CODE 0
@@ -164,7 +164,8 @@ Then, in the \function{control_cart()} function, find this code:
 \end{lstlisting}
 
 Place inside that \lstinline{if} statement's body any code that should run whenever the display needs to be updated.
-
+You will probably want to use \function{sprintf()} to generate the strings to be displayed.
+See Appendix~\ref{sec:formatStrings} for some discussion.
 
 \subsection{Controlling the Cart}
 
@@ -183,7 +184,9 @@ How can you maintain a precision of \textit{exactly} 0.000,001\textdegree and of
     An attempt to approximate those precisions will result in the display frequently showing the incorrect distance travelled -- admittedly for only 256 nanofortnights each time this happens, but you can do better.
     (Another problem is that, by default, \function{sprintf()} will not work with floating point values on microcontrollers, including the ATmega328P.
     We can change this with a compiler argument, but the Arduino IDE doesn't make it easy to do that.)
-    \paragraph{Hint} Review your notes from the part of the floating point lecture in which we discussed how decimal currency is handled. \\
+    %\paragraph{Hint} Review your notes from the part of the floating point lecture in which we discussed how decimal currency is handled. \\
+    \paragraph{Hint} Review the ``Decimal Fixed Point Value Hack'' slides from the floating point lecture, and think about how to use integer types to represent 0.001~microfurlongs and 0.000,001\textdegree.
+    \paragraph{Hint} There are 1,000~nanofurlongs in a microfurlong, and there are 1,000,000~microdegrees in a degree. \\
 }{}
 
 How will you keep track of whether the motor is engaged?
