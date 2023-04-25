@@ -1,0 +1,46 @@
+Download the zip file or tarball from \filesource.
+Once downloaded, unpackage the file and open the project in the Arduino IDE\@.
+
+If your display module's I$^2$C address is not 0x27, then edit \textit{i2c\_address.h}, and replace \lstinline{0x27} with the correct I$^2$C address for your display module.
+
+\subsection{Description of RangeFinder Files}
+
+\subsubsection{RangeFinder.ino}
+
+Do not edit \textit{InterruptLab.ino}.
+
+This file contains the code to configure your Cow Pi for this lab.
+
+\subsubsection{i2c\_address.h}
+
+This file exists solely to store the display module's I$^2$C address.
+You do not need to edit it further.
+
+\subsubsection{supplement.h}
+
+Do not edit \textit{supplement.h}.
+
+This file contains code that we hope will make it easier for you to focus on this assignment's learning objectives by taking care of a couple of the complexities.
+These functions are not yet in the CowPi library but soon may be, depending on how well they work for you.
+
+\subsubsection{user\_controls.h \& user\_controls.c}
+
+Do not edit \textit{user\_controls.h}
+
+The \textit{user\_controls.c} file is where you will get inputs from the user.
+
+\subsubsection{sensor.h \& sensor.c}
+
+Do not edit \textit{sensor.h}
+
+The \textit{sensor.c} file is where you will control the ultrasonic echo sensor and compute any detected objects' distance and speed.
+
+\subsubsection{alarm.h \& alarm.c}
+
+Do not edit \textit{alarm.h}
+
+The \textit{alarm.c} file is where you will control the piezoelectric disc and manage the chirping and strobing of a proximity alarm.
+
+\subsubsection{shared\_variables.h}
+
+The \textit{shared\_variables.h} header file is where you will place any types that you define and where you will externalize any global variables that need to be used by more than one \textit{.c} file.

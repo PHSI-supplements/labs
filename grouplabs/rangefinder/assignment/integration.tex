@@ -1,0 +1,101 @@
+The remaining portion of this assignment integrates the work you put into Sections~\ref{sec:initialSoftware}, \ref{sec:distance}, and \ref{sec:sound}.
+
+If you and your partner worked on Sections~\ref{sec:distance} and \ref{sec:sound}, and if you're still waiting for your partner to finish their section, there is some work in this section that you can get started on.
+For example, the user interface portion of Section~\ref{subsubsec:obtainingThreshold} can be while waiting for your partner to finish; however, completing the Threshold Adjustment mode will require the ``distance'' variable from Section~\ref{subsec:distanceSinglePulseOperation}, and making use of the threshold range in Section~\ref{subsubsec:applyingThreshold} requires a working alarm from Section~\ref{subsec:soundSinglePulseOperation}.
+Similarly, if you have a working distance sensor, you can do Sections~\ref{subsubsec:repeatedPulses} and \ref{subsubsec:approachRate} without a working alarm, but you will need a working alarm for Section~\ref{subsubsec:repeatedAlarm}.
+
+\subsection{Single-Pulse Operation} \label{subsec:integrationSpeedSinglePulseOperation}
+
+Your distance sensor code responds to a ping request by initiating an ultrasonic pulse, which is what it should do.
+Your alarm code responds to a ping request by chirping the piezodisc and strobing the LEDs;
+however, the alarm should only sound if an object has been detected.
+There is another incompatibility between the two subsystems:
+both set the ping request variable to \lstinline{false} after responding, which means that only one can actually respond to the ping request.
+
+You can resolve this by introducing another shared variable that represents an alarm request.
+When an object is detected, the sensor subsystem should request an alarm.
+When an alarm is requested, the alarm subsystem should chirp the piezodisc, strobe the LEDs, and set the alarm request to \lstinline{false} (instead of the ping reqeust).
+
+\subsection{Threshold Adjustment}
+
+When in Single-Pulse Operation mode, the system now alarms once whenever an object is detected.
+Requirement~\ref{spec:singlePulseResponse}, however, says that the LEDs should strobe whenever an object is detected,
+but the piezodisc should chirp only when the detected object is closer than the threshold range.
+
+Introduce a shared variable to store the threshold range with an initial value of 400cm, the greatest valid threshold range.
+
+\subsubsection{Obtaining the Threshold Range} \label{subsubsec:obtainingThreshold}
+
+Requirement~\ref{spec:thresholdAdjustment} describes the user interaction for inputting the threshold range.
+Implement this requirement in \textit{user\_controls.c}.
+
+(Note: while you \textit{should} write your code to safely handle a user attempting to enter more than three digits, we will not attempt to do so during grading.)
+
+After the user has entered a valid threshold range, assign that value to the shared variable.
+
+\subsubsection{Applying the Threshold Range} \label{subsubsec:applyingThreshold}
+
+You now have the threshold range, externalized from \textit{user\_controls.c}, and the distance to an object, externalized from \textit{sensor.c}.
+Modify the alarm code so that, when in Single-Pulse Operation mode, the alarm strobes the LEDs whenever an object is detected, but it only chirps the piezodisc when the distance is no greater than the threshold range.
+
+\subsection{Normal Operation}
+
+You have now completed every operating mode except ``Normal Operations.''
+Look over Requirement~\ref{spec:normalOperation}.
+
+\subsubsection{Repeated Ultrasonic Pulses} \label{subsubsec:repeatedPulses}
+
+When in Normal Operation mode, the sensor does not wait for a ping request.
+Instead, it can (and should) send a ping whenever the sensor is in its ``ready'' state.
+
+Modify your sensor code so that, when the system is in Normal Operation mode, it initiates a pulse whenever the sensor is ``ready.''
+Re-compute the distance and update the display with each pulse.
+
+\subsubsection{Compute the Rate of Approach} \label{subsubsec:approachRate}
+
+Since the distance sensor cannot determine the change of direction to the detected object (indeed, it cannot determine the direction), you cannot calculate the object's speed.
+You can, however, calculate the longitudinal component of its speed -- that is, how fast it is approaching the sensor.
+Since the sensor does not detect doppler shift, you must calculate the rate of approach based on the difference between two distance measurements.
+There are two options to compute the rate of approach in centimeters per second.
+Choose one.
+(Or, if you can think of a third approach, you can choose it.)
+
+\begin{description}
+    \item[Compare two distances separated in time by 1~second] \phantom{ } \\
+        If you have a working alarm subsystem, then you have a timer interrupt firing every 100\textmu s.
+        For every 10,000 times that the TIMER2 ISR is triggered, 1~second has passed.
+        If you externalize the number of times that the ISR runs, then your code in \textit{sensor.c} can subtract the current distance from the distance calculated 1~second ago.
+        The specification does not require that the rate of approach be updated more frequently than once per second, so this is an acceptable approach.
+        The only complication is that you'll need to make sure that the user doesn't see an erroneous speed value in the second between obtaining the very first distance after detection and obtaining the second distance.
+
+    \item[Compare the pulse duration for two adjacent measurements] \phantom{ } \\ \textbf{\textit{\tiny NOTE: I'm still working on the sample solution for this approach. Make of that what you will.}} \\
+        Alternatively, you can update the speed every 65,536\textmu s.
+        The actual distance travelled will be too small to measure with an integer number of centimeters.
+        If you promote values to 64-bit integers for the duration of this calculation, then you can instead rely on the differences in the pulse durations.
+        If we assume that the wall-clock times of reflection are exactly 65,536\textmu s apart,\footnote{
+            If the object is moving, then the actual difference in the wall-clock times of reflection won't be 65,536\textmu s apart; however, the error resulting from this simplifying assumption is less than the rounding error.
+        } then:
+        \begin{align*}
+            speed & = \frac{\Delta distance}{time} = \frac{\left( \tau_2 \times \frac{18,025 cm}{2^{21}} - \tau_1 \times \frac{18,025 cm}{2^{21}} \right)}{65,536\mu s} = \frac{\left( \tau_2 - \tau_1 \right) \times 18,025 cm}{2^{21} \times 65,536\mu s} \\
+                  & \\
+                  & =  \left( \tau_2 - \tau_1 \right) \times 281,640,625 \div 2^{31} \ \frac{cm}{s}
+        \end{align*}
+        Since the time between the initial detection and the next measurement will be less than a tenth of a millisecond, the user is unlikely to notice the initially-erroneous speed.
+\end{description}
+
+Whenever you have calculated a new rate of approach, update the display with that rate of approach.
+
+
+\subsubsection{Repeated Alarm} \label{subsubsec:repeatedAlarm}
+
+Your remaining task is to repeatedly activate the alarm when in Normal Operations.
+You probably noticed the \lstinline{total_period} variable in \textit{alarm.c}, immediately below the \lstinline{on_period} variable.
+Just as \lstinline{on_period} is used to determine how long the piezodisc should emit its tone and the LEDs should be illuminated, the \lstinline{total_period} is used to determine how much time should transpire between activations of the alarm.
+(If you wish, you can imagine a \lstinline{off_period} variable whose value is always \lstinline{total_period} - \lstinline{on_period}.)
+
+\paragraph{Repeatedly activate the alarm}
+Add code so that, when an object is detected while the system is in Normal Operations mode, the alarm will repeatedly activate.
+We recommend that you use the \lstinline{total_period} variable as part of that solution.
+
+\paragraph{Vary the time between activations}
+Using Table~\ref{tab:alarmPeriods} and the distance to the detected object, change \lstinline{total_period}'s value so that the time between alarm activations is correct.

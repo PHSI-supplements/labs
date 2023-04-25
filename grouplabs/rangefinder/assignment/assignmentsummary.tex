@@ -1,0 +1,42 @@
+Please familiarize yourself with the entire assignment before beginning.
+There are multiple parts to this assignment.
+
+If one of the partners does not make an equitable contribution, we will adjust both partners' scores accordingly.
+
+The assignment is written so that if you and your partner decide to pair program, you can complete Sections~\ref{sec:hardwareMods}--\ref{sec:integration} in sequence.
+The assignment is also written so that you and your partner can work on Sections~\ref{sec:hardwareMods} and \ref{sec:initialSoftware} together, then split up with one student working on Section~\ref{sec:distance} and the other working on Section~\ref{sec:sound}, and then get back together again to work on Section~\ref{sec:integration}.
+
+If you are in the unfortunate position of having a partner who does not contribute to the project, we do not expect you to complete the full assignment by yourself and will take the circumstances into account when grading.
+In this situation, you should prioritize Section~\ref{sec:distance} over Section~\ref{sec:sound}, as you will be able to complete more of Section~\ref{sec:integration} with a working distance sensor but no alarm, than the other way around.
+
+\subsection{Constraints} \label{subsec:constraints}
+
+You may use the constants and functions provided in the starter code.
+You may use any features that are part of the C standard if they are supported by the compiler.
+You may use the constants and functions provided in the starter code.
+You may use code written by you and/or your partner.
+
+\subsubsection{Constraints on the Arduino core}
+
+You may use \function{attachInterrupt()} and \function{digitalPinToInterrupt()} to register interrupt handlers.
+You may use \function{digitalWrite()} to write to pins D2 and D9 (or you may use memory-mapped I/O).
+You may use the \function{delayMicroseconds()} function to introduce delays not to exceed $10\mu s$.
+
+You may not use any other libraries, functions, macros, types, or constants from the Arduino core.\footnote{
+    \url{https://www.arduino.cc/reference/en/}
+}
+This prohibition includes, but is not limited to, the \function{tone()}, \function{noTone()}, \function{pulseIn()}, and \function{pulseInLong()} functions.
+
+\subsubsection{Constraints on AVR-libc}
+
+You may use any AVR-specific functions, macros, types, or constants of avr-libc.\footnote{
+    \url{https://www.nongnu.org/avr-libc/user-manual/index.html}
+}
+
+\subsubsection{Constraints on the CowPi library}
+
+You may use any functions and data structures that are provided by the CowPi library.
+
+\subsubsection{Constraints on other libraries}
+
+You may not use any libraries beyond those explicitly identified here.

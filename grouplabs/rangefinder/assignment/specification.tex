@@ -1,0 +1,105 @@
+%! suppress = LabelConvention
+\begin{enumerate}
+    \item Definitions
+        \begin{description}
+            \item[Threshold Range] The distance at which a detected object will cause the system to produce an audible alarm
+            \item[Strobe] An illumination of an LED for 50ms
+            \item[Chirp] A 5kHz tone lasting 50ms
+        \end{description}
+    \item \label{spec:modes} The slide-switches shall control the mode of operation.
+        \begin{enumerate}
+            \item Both switches in the \textit{left position}: Normal Operation
+            \item The \textbf{left switch} in the \textit{right position} and the \textbf{right switch} in the \textit{left position}: Single-Pulse Operation
+            \item Both switches in the \textit{right position}: Threshold Adjustment
+            \item The \textbf{left switch} in the \textit{left position} and the \textbf{right switch} in the \textit{right position}: Continuous Tone
+        \end{enumerate}
+    \item \label{spec:continuousTone} When the range finder and alarm system is in \textbf{Continuous Tone} mode:
+        \begin{enumerate}
+            \item The system shall not detect the range of nearby objects: it shall neither emit nor detect ultrasound
+            \item The system shall not illuminate an LED
+            \item The system shall produce a continuous 5kHz audible tone
+        \end{enumerate}
+    \item \label{spec:thresholdAdjustment} When the range finder and alarm system is in \textbf{Threshold Adjustment} mode:
+        \begin{enumerate}
+            \item The system shall not detect the range of nearby objects: it shall neither emit nor detect ultrasound
+            \item The system shall not produce an audible tone
+            \item The system shall not illuminate an LED
+            \item The system shall prompt the user on the \textbf{display module} to enter the threshold range, in centimeters
+                \begin{itemize}
+                    \item You may assume that the user understands what the system does: the prompt must be \textit{meaningful}, but it may be \textit{succinct}
+                \end{itemize}
+            \item The user shall be able to enter the threshold range, in centimeters, using the numeric keypad
+                \begin{enumerate}
+                    \item The user will enter the range in decimal
+                    \item The system shall echo the user's input, digit-by-digit, on the \textbf{display module} as they type their input
+                    \item The user will indicate that they have finished entering their input by pressing the `\#' key
+                \end{enumerate}
+            \item After the user has completed their input, then any value less than 50cm or greater than 400cm shall be rejected as an invalid threshold;
+                the system shall display a helpful error message on the \textbf{display module} and re-prompt the user to enter the threshold range
+            \item After the user has completed their input, and if the input is valid, then the system shall display ``Threshold (value)cm'' on the \textbf{display module}, where ``(value)'' shall be the numeric threshold range in centimeters;
+                this shall be displayed until the user takes the system out of the Threshold Adjustment mode
+        \end{enumerate}
+    \item \label{spec:singlePulseOperation} When the range finder and alarm system is in \textbf{Single-Pulse Operation} mode: \\
+        {\footnotesize Note: the references here to ``the pushbutton'' refer to the Cow Pi's original \textbf{left pushbutton}}
+        \begin{enumerate}
+            \item The system shall neither emit nor receive ultrasound, shall not produce an audible tone, and shall not illuminate an LED, \textit{until} the pushbutton has been pressed
+            \item Whenever the user presses the \textbf{pushbutton}, the system shall emit one ultrasonic pulse
+            \item If the system does not receive that pulse's echo, the system shall resume waiting for the user to press the pushbutton
+            \item \label{spec:singlePulseResponse} If the system does receive that pulse's echo:
+                \begin{enumerate}
+                    \item The system shall strobe both LEDs once
+                    \item If the object's distance is less than the threshold range then the system shall emit one chirp
+                    \item The system shall then resume waiting for the user to press the pushbutton
+                \end{enumerate}
+        \end{enumerate}
+    \item \label{spec:normalOperation} When the range finder and alarm system is in \textbf{Normal Operation} mode, the system shall repeatedly:
+        \begin{enumerate}
+            \item \label{spec:emitUltrasound} Emit an ultrasonic pulse and take no further action until either the system receives an echo or the system can establish that it will not receive an echo
+            \item If the system can establish that it will not receive an echo:
+                \begin{enumerate}
+                    \item The system shall stop strobing the LEDs and chirping if it previously was doing so
+                    \item The system shall repeat the action in Requirement~\ref{spec:emitUltrasound}
+                        {\footnotesize
+                        \begin{itemize}
+                             \item Repeating the action may be postponed until after necessary quiescent periods
+                        \end{itemize}}
+                \end{enumerate}
+            \item If the system receives an echo:
+                \begin{enumerate}
+                    \item The system shall compute and display the object's distance, in centimeters
+                    \item The system shall compute and display the object's rate of approach, in centimeters per second
+                    \item The system shall strobe both LEDs at the rate described by Table~\ref{tab:alarmPeriods}
+                    \item If the object's distance is less than the threshold range, the system shall emit chirps at the rate described by Table~\ref{tab:alarmPeriods}
+                    \item After the system has completed the speed and distance calculations, it shall repeat the action in Requirement~\ref{spec:emitUltrasound}
+                        {\footnotesize
+                        \begin{itemize}
+                            \item Repeating the action may be postponed until after necessary quiescent periods
+                        \end{itemize}}
+                \end{enumerate}
+        \end{enumerate}
+    \item All mechanical inputs shall be properly debounced
+    \item The system shall always be responsive to user input
+        \begin{itemize}
+            \item The user will never press two keys on the numeric keypad at the same time
+            \item The system may ignore changes to the slide-switches while the user enters a new threshold range
+            \item The system may block while displaying an error message
+            \item But for those exceptions, there shall be no noticeable lag when responding to an input
+        \end{itemize}
+\end{enumerate}
+
+\begin{table}
+    \centering
+    \begin{tabular}{||c|c|c|c||} \hline\hline
+        \multirow{2}{*}{distance}   & LEDs on /         & LED off /         & total     \\
+                                    & Piezo sounding    & Piezo silent      & period    \\ \hline\hline
+        $distance \geq 250cm$          & $50ms$            & $2450ms$          & $2500ms$  \\ \hline
+        $200cm \leq distance < 250cm$  & $50ms$            & $1950ms$          & $2000ms$  \\ \hline
+        $150cm \leq distance < 200cm$  & $50ms$            & $1450ms$          & $1500ms$  \\ \hline
+        $100cm \leq distance < 150cm$  & $50ms$            & $ 950ms$          & $1000ms$  \\ \hline
+        $ 50cm \leq distance < 100cm$  & $50ms$            & $ 700ms$          & $ 750ms$  \\ \hline
+        $ 25cm \leq distance <  50cm$  & $50ms$            & $ 450ms$          & $ 500ms$  \\ \hline
+        $ 10cm \leq distance <  25cm$  & $50ms$            & $ 200ms$          & $ 250ms$  \\ \hline
+        $distance < 10cm$           & $50ms$            & $  75ms$          & $ 125ms$  \\ \hline\hline
+    \end{tabular}
+    \caption{Strobe and Chirp periods for various distances to an object}\label{tab:alarmPeriods}
+\end{table}

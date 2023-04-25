@@ -1,0 +1,85 @@
+%%
+%% RangeFinder GroupLab (c) 2021-23 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\input{../../../common/assignment}
+\input{../../../common/semester}
+\input{../../../common/storylines}
+\usepackage{amsmath}
+%\usepackage{array,color,colortbl}
+\definecolor{LightGreen}{rgb}{0.88,1,0.88}
+\usepackage{multicol}
+\usepackage{CJKutf8}
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage{multirow}
+\setlength{\columnsep}{2cm}
+\newcommand{\power}{power~({\color{red}\textbf{+}}) rail}
+\newcommand{\ground}{ground~({\color{blue}\textbf{--}}) rail}
+
+
+
+% \captionsetup{width=.8\linewidth}
+
+% \lstset{language=c, numbers=left, showstringspaces=false,
+%     moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+%     }
+
+\renewcommand{\labnumber}{\capstonelabnumber}
+\renewcommand{\labname}{Implementing a Range Finder and Alarm}
+\renewcommand{\shortlabname}{rangefinder -- grouplab}
+\renewcommand{\collaborationrules}{\capstonelabcollaboration}
+\renewcommand{\duedate}{\capstonelabdue}
+\newcommand{\nano}{\developmentboard} % TODO: replace \nano with \developmentboard
+\renewcommand{\runtimeenvironment}{\capstonelabenvironment}
+\pagelayout
+\begin{document}
+    \labidentifier
+
+    \pdfbookmark[1]{Frontmatter}{frontmatter}                           \input{frontmatter}
+
+    \softwareengineeringfrontmatter
+
+    \section*{Scenario}                                                 \RangeFinderNeeded
+
+    \section{Assignment Summary}                                        \input{assignmentsummary}
+
+    \section{Getting Started} \label{sec:GettingStarted}                \input{gettingstarted}
+
+    \section{Modifying the Hardware Circuit} \label{sec:hardwareMods}   \input{hardware_changes}
+
+    \section{System Specification} \label{sec:spec}                     \input{specification}
+
+    \section{Initial Software Changes} \label{sec:initialSoftware}      \input{read_inputs}
+
+%    \section{Measuring Distance and Speed} \label{sec:distanceAndSpeed} \input{distance_speed}
+
+    \section{Measuring Distance} \label{sec:distance}                   \input{distance}
+
+    \section{Generating Sound} \label{sec:sound}                        \input{sound}
+
+    \section{Putting it all Together} \label{sec:integration}           \input{integration}
+
+    \section{Turn-in and Grading}                                       \input{Ygrading}
+
+    \section*{Epilogue}                                                 \RangeFinderDetecting
+
+    \textit{The end...?}
+
+%    \newpage\appendix
+    \appendix
+
+    \section{Appendix: Lab Checkoff}                                    %\input{Xcheckoff}
+        \textbf{\textit{We are still preparing the grading checklist.}}
+
+\end{document}
