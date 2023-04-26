@@ -1,0 +1,108 @@
+You are not required to have your assignment checked-off by a TA or the professor.
+If you do not do so, then we will perform a functional check ourselves.
+In the interest of making grading go faster, we are offering a small bonus to get your assignment checked-off at the start of your scheduled lab time immediately after it is due.
+Because checking off all students during lab would take up most of the lab time, we are offering a slightly larger bonus if you complete your assignment early and get it checked-off by a TA or the professor during office hours.
+
+\begin{enumerate}
+    \precheckoffitem{Position the Cow Pi a little more than 1~meter from a wall, or position an upright book (or other object) a little more than 1~meter from the Cow Pi.}
+    \precheckoffitem{Place both switches in the left position.}
+    \precheckoffitem{Upload your code to your \developmentboard, and leave your code open in the IDE.}
+    \precheckoffitem{Confirm that the system detects the wall (or book or other object) and not something closer (such as a computer or the table surface).}
+
+    \checkoffitem{Show and explain to the TA how your code generates a tone with a frequency of 5kHz; that is, it has a period of 200\textmu s.}
+    \checkoffitem{Place the right switch in the right position, putting the system in Continuous Tone mode.
+        The system generates a continuous 5kHz tone.}
+    \item[] (TA, confirm that the tone is 5kHz by code inspection and by ear; confirm with the HuskerScope spectrum analyzer if you aren't sure.) \\
+        \textit{+1 There is code to generate an audible tone} \\
+        \textit{+1 The system continuously generates the tone when in Continuous Tone mode} \\
+        \textit{+2 The audible tone has a frequency of 5kHz}
+
+    \checkoffitem{Place the left switch in the right position, putting the system in Threshold Adjustment mode.
+        The system prompts for a new threshold range. \\
+        \textit{+1 The user is prompted to enter a new threshold range when the system is in Threshold Adjustment mode}}
+    \checkoffitem{Enter a range of 25, using the `\#' key to indidicate that you have fininished entering the value.
+        The system displays a helpful error message explaining that this is not a valid threshold range.
+        The system then prompts the user for a new threshold range. \\
+        \textit{+1 The user is given a helpful error message after entering an invalid threshold range} \\
+        \textit{+1 The user is re-prompted to enter a threshold range after entering an invalid threshold range}}
+    \checkoffitem{Enter a range of 450, using the `\#' key to indidicate that you have fininished entering the value.
+        The system displays a helpful error message explaining that this is not a valid threshold range.
+        The system then prompts the user for a new threshold range.}
+    \checkoffitem{Enter a range of 75, using the `\#' key to indidicate that you have fininished entering the value.
+        The system displays a message confirming the new threshold range. \\
+        \textit{+2 Valid threshold ranges are those between 50cm and 400cm, inclusive} \\
+        \textit{+1 The user is shown a confirmation message after entering a valid threshold range} \\
+        \textit{+2 The user can enter a new threshold range when the system is in Threshold Adjustment mode}}
+
+    \checkoffitem{Place the right switch in the left position, putting the system in Single Pulse mode.
+        The system might indicate that no object has been detected yet; however, this is not required information before initiating a ping.}
+    \checkoffitem{Show and explain to the TA how your code initiates a pulse.}
+    \checkoffitem{Show and explain to the TA how your code measures the length of a pulse.}
+    \checkoffitem{Show and explain to the TA how your code achieves the required precision (no greater than 1\textmu s) and accuracy (immediately detect pulse edges without waiting for code in the main loop to poll the pin).}
+    \checkoffitem{Press the pushbutton to initiate a pulse.
+        The LEDs strobe once.
+        The piezodisc does not chirp.
+        The system displays the correct distance to the wall (or book or other object). \\
+        \textit{+2 There is code to initiate an ultrasound pulse} \\
+        \textit{+3 There is code to detect the length of the pulse} \\
+        \textit{+3 The pulse's length is measured to a precision of no greater than 1\textmu s} \\
+        \textit{+3 The pulse's length is measured as accurately as possible} \\
+        \textit{+2 The user can request a ping when the system is in Single Pulse mode} \\
+        \textit{+2 The distance to an object is correctly calculated from the pulse's length} \\
+        \textit{+2 When an object is detected, the system displays the distance to the object} \\
+        \textit{+2 When an object is detected in Single-Pulse mode, the system generates exactly one alarm} \\
+        \textit{+2 A strobe is an illumination of both LEDs for 50ms} \\
+        \textit{+2 A strobe occurs for any detected object}}
+    \checkoffitem{Slightly change the distance between the Cow Pi and the target object.
+        Press the pushbutton to initiate a pulse.
+        The LEDs strobe once.
+        The piezodisc does not chirp.
+        The system displays the new distance to the wall (or book or other object). \\
+        \textit{+2 The user can request another ping when the system is in Single Pulse mode}}
+
+    \checkoffitem{Place the left switch in the left position, putting the system in Normal Operation mode.
+        The system displays the distance to the target object, and it displays an approach rate of 0cm/s.
+        The LEDs strobe once per seccond (100ms), but the piezodisc does not chirp. \\
+        \textit{+1 The switches control the mode of operation as specified} \\
+        \textit{+2 When an object is detected in Normal Operation mode, the system repeatedly generates alarms}}
+    \checkoffitem{Slowly move the Cow Pi closer to the wall, or slowly move the book (or other object) closer to the Cow Pi.
+        As you do so, vary the rate of approach slighly to demonstrate that the rate of approach updates.
+        The displayed distance changes with the decreasing distance to the target object.
+        The system displays a plausible, positive rate of approach that updates at least once every second. \\
+        \textit{+2 When an object is detected in Normal Operation mode the rate of approach is displayed} \\
+        \textit{+2 When an object is detected in Normal Operation mode, the rate of approach is updated at least once every second}}
+    \checkoffitem{As the distance between the Cow Pi and the target object decreases, note that:
+        \begin{description}
+            \item[When the distance falls below 100cm] the LEDs strobe more frequently, once every 750ms (\textthreequarters sec)
+            \item[When the distance falls below 75cm] the piezodisc chirps every 750ms
+            \item[When the distance falls below 50cm] the LEDs strobe, and the piezodisc chirps, every 500ms (\textonehalf sec)
+            \item[When the distance falls below 25cm] the LEDs strobe, and the piezodisc chirps, every 250ms (\textonequarter sec)
+            \item[When the distance falls below 10cm] the LEDs strobe, and the piezodisc chirps, every 125ms ($\frac{1}{8}$ sec)
+        \end{description}
+        \textit{+2 A strobe is an illumination of both LEDs for 50ms} \\
+        \textit{+2 When the system repeatedly generates alarms, the time between alarms is as specified}}
+
+    \checkoffitem{Place the both switches in the right position, putting the system in Threshold Adjustment mode.
+        The system prompts for a new threshold range.}
+    \checkoffitem{Enter a range of 55.
+        The system displays a message confirming the new threshold range.}
+    \checkoffitem{Place the both switches in the left position, putting the system in Normal Operation mode.
+        The system displays the distance to the target object, and it displays an approach rate of 0cm/s.}
+    \checkoffitem{Slowly move the Cow Pi away from the wall, or slowly move the book (or other object) away from the Cow Pi.
+        The displayed distance changes with the decreasing distance to the target object.
+        The system displays a plausible, negative rate of approach.}
+    \checkoffitem{As the distance between the Cow Pi and the target object decreases, the alarms become less urgent.
+        Note that as the distance increases above 55cm, the piezodisc stops chirping but the LEDs continue to strobe. \\
+        \textit{+2 A chirp occurs for a detected object that is closer than the threshold range} \\
+        \textit{+2 A chirp only occurs for a detected object that is closer than the threshold range}}
+
+    \checkoffitem{Reorient the Cow Pi, or remove the book (or other object) so that there are no in-range objects to detect.
+        The system displays a message indicating that no object is detected.
+        The LEDs do not strobe, and the piezodisc does not chirp.\\
+        \textit{+3 The code correctly recognizes the that no object has been detected, if no object reflects the ultrasound pulse} \\
+        \textit{+2 When there is no in-range object, the system displays a message to that effect} \\
+        \textit{+2 A strobe only occurs for a detected object}}
+
+    \checkoffitem{Show the TA any code they have not yet examined. \\
+        \textit{+1 The code is clean, well-organized, has good variable and function names, and is otherwise understandable}}
+\end{enumerate}

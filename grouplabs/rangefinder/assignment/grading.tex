@@ -1,0 +1,71 @@
+When you have completed this assignment, upload \textit{alarm.c}, \textit{sensor.c}, \textit{user\_controls.c}, and \textit{shared\_variables.h} to \filesubmission.
+
+%\policyforcodethatdoesnotcompile
+\subsection*{No Credit for Uncompilable Code}
+If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\footnote{
+    At the TA's discretion, if they can make your code compile with \textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\% penalty on the resulting score.
+    The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.
+    If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.
+}
+Before turning in your code, be sure to compile and test your code on \runtimeenvironment\ with the original driver code, the original header file(s), and using the Arduino IDE\@.
+
+\interruptlablatepolicy
+
+\subsection*{Rubric}
+
+This assignment is worth 60 points.
+
+\begin{description}
+    \item[User Controls] %13
+    \rubricitem{1}{The switches control the mode of operation as specified}
+    \rubricitem{2}{The user can request a ping when the system is in Single Pulse mode}
+    \rubricitem{2}{The user can request another ping when the system is in Single Pulse mode}
+    \rubricitem{1}{The user is prompted to enter a new threshold range when the system is in Threshold Adjustment mode}
+    \rubricitem{2}{The user can enter a new threshold range when the system is in Threshold Adjustment mode}
+    \rubricitem{2}{Valid threshold ranges are those between 50cm and 400cm, inclusive}
+    \rubricitem{1}{The user is given a helpful error message after entering an invalid threshold range}
+    \rubricitem{1}{The user is re-prompted to enter a threshold range after entering an invalid threshold range}
+    \rubricitem{1}{The user is shown a confirmation message after entering a valid threshold range}
+
+    \item[Sensor] %16
+    \rubricitem{2}{There is code to initiate an ultrasound pulse}
+    \rubricitem{3}{There is code to detect the length of the pulse}
+    \rubricitem{3}{The pulse's length is measured to a precision of no greater than 1\textmu s\footnote{
+        The assignment describes obtaining a precision of \textonehalf\textmu s, which is, of course, acceptable. The 4\textmu s precision offered by the Arduino \function{micros()} function is \textit{not} acceptable.
+    }}
+    \rubricitem{3}{The pulse's length is measured as accurately as possible\footnote{
+        This means you use interrupts to detect the rising and falling edges of the pulse.
+    }}
+    \rubricitem{3}{The code correctly recognizes the that no object has been detected, if no object reflects the ultrasound pulse}
+    \rubricitem{2}{The distance to an object is correctly calculated from the pulse's length}
+    \penaltyitem{16}{The Arduino \function{pulseIn()} and/or \function{pulseInLong()} function, or a third-party library, is used to time the ultrasonic echo sensor's pulse.}
+
+    \item[Alarm] %16
+    \rubricitem{1}{There is code to generate an audible tone}
+    \rubricitem{1}{The system continuously generates the tone when in Continuous Tone mode}
+    \rubricitem{2}{The audible tone has a frequency of 5kHz}
+    \rubricitem{2}{A chirp is an audible tone lasting 50ms}
+    \rubricitem{2}{A chirp occurs for a detected object that is closer than the threshold range}
+    \rubricitem{2}{A chirp only occurs for a detected object that is closer than the threshold range}
+    \rubricitem{2}{A strobe is an illumination of both LEDs for 50ms}
+    \rubricitem{2}{A strobe occurs for any detected object}
+    \rubricitem{2}{A strobe only occurs for a detected object}
+    \penaltyitem{16}{The Arduino \function{tone()} and/or \function{noTone()} function, or a third-party library, is used to generate tones on the piezoelectric disc.}
+
+    \item[Object Detection] %14
+    \rubricitem{2}{When there is no in-range object, the system displays a message to that effect}
+    \rubricitem{2}{When an object is detected (in Single-Pulse mode or Normal Operation mode), the system displays the distance to the object}
+    \rubricitem{2}{When an object is detected in Normal Operation mode the rate of approach is displayed}
+    \rubricitem{2}{When an object is detected in Normal Operation mode, the rate of approach is updated at least once every second}
+    \rubricitem{2}{When an object is detected in Single-Pulse mode, the system generates exactly one alarm}
+    \rubricitem{2}{When an object is detected in Normal Operation mode, the system repeatedly generates alarms}
+    \rubricitem{2}{When the system repeatedly generates alarms, the time between alarms is as specified in Table~\ref{tab:alarmPeriods}}
+
+    \item[Code Quality]
+    \rubricitem{1}{The code is clean, well-organized, has good variable and function names, and is otherwise understandable}
+    \spaghetticodepenalties{1}
+
+    \item[Bonuses]
+    \bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due (you cannot get both check-off bonuses)}
+    \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due (your code must be uploaded to \filesubmission\ \textit{before} it is due; you cannot get both bonuses)}
+\end{description}

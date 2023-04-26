@@ -55,6 +55,7 @@ Re-compute the distance and update the display with each pulse.
 
 Since the distance sensor cannot determine the change of direction to the detected object (indeed, it cannot determine the direction), you cannot calculate the object's speed.
 You can, however, calculate the longitudinal component of its speed -- that is, how fast it is approaching the sensor.
+(A retreating object would, of course, have a negative rate of approach.)
 Since the sensor does not detect doppler shift, you must calculate the rate of approach based on the difference between two distance measurements.
 There are two options to compute the rate of approach in centimeters per second.
 Choose one.
