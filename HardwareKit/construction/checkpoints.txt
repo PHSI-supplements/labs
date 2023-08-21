@@ -25,27 +25,22 @@ CHECKPOINT 4: LED and resistor are positioned correctly on the breadboard.
     Date/Time:  
 
 
-CHECKPOINT 5: 74LS20 is positioned correctly and is wired correctly.
+CHECKPOINT 5: Slider switches are positioned correctly and are wired correctly.
     Verified by: 
     Date/Time:   
 
 
-CHECKPOINT 6: Slider switches are positioned correctly and are wired correctly.
+CHECKPOINT 6: Pushbuttons are positioned correctly and are wired correctly.
     Verified by: 
     Date/Time:   
 
 
-CHECKPOINT 7: Pushbuttons are positioned correctly and are wired correctly.
+CHECKPOINT 7: Matrix keypad is positioned correctly and is wired correctly.
     Verified by: 
     Date/Time:   
 
 
-CHECKPOINT 8: Matrix keypad is positioned correctly and is wired correctly.
-    Verified by: 
-    Date/Time:   
-
-
-CHECKPOINT 9: Display module is correctly connected to the breadboard.
+CHECKPOINT 8: Display module is correctly connected to the breadboard.
     Verified by: 
     Date/Time:    
 
