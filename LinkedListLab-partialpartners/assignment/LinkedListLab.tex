@@ -1,0 +1,64 @@
+%%
+%% LinkedListLab (c) 2021-23 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\input{../../common/assignment}
+\input{../../common/semester}
+\input{../../common/storylines}
+\input{linked-list-nodes}
+
+\captionsetup{width=.8\linewidth}
+\lstset{language=c, alsolanguage=java, numbers=left, showstringspaces=false,
+    moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+}
+%%
+%%
+% Credit where credit is due. Skipping line numbers from
+% https://tex.stackexchange.com/questions/476100/lstlisting-line-number-gaps
+\makeatletter
+\let\orig@lstnumber=\thelstnumber
+
+\newcommand\lstsetnumber[1]{\gdef\thelstnumber{#1}}
+\newcommand\lstresetnumber{\global\let\thelstnumber=\orig@lstnumber}
+\makeatother
+%%
+%%
+
+\renewcommand{\labnumber}{\pointerlabnumber}
+\renewcommand{\labname}{Pointer Manipulation Lab}
+\renewcommand{\shortlabname}{linkedlistlab}
+\renewcommand{\collaborationrules}{\pointerlabcollaboration}
+\renewcommand{\duedate}{\pointerlabdue}
+\pagelayout
+\begin{document}
+    \labidentifier
+
+    \pdfbookmark[1]{Frontmatter}{frontmatter}                       \input{frontmatter}
+
+    \softwareengineeringfrontmatter
+
+    \section*{Scenario}                                             \ArchieWroteSmellyCode
+
+    \section{Assignment Summary}                                    \input{assignmentsummary}
+
+    \section{Stray Values in Memory} \label{sec:archiesCode}        \input{archies-code}
+
+    \section{Challenge and Response} \label{sec:challengeResponse}  \input{cll-challenge-and-response}
+
+    \section{Turn-in and Grading}                                   \input{grading}
+
+    \section*{Epilogue} \InsurancePreview
+
+    \textit{To be continued...}
+
+\end{document}
