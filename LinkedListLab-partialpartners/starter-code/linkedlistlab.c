@@ -3,7 +3,7 @@
  *                                                                                                   */
 
 /*
- * LinkedListLab (c) 2021-22 Christopher A. Bohn *
+ * LinkedListLab (c) 2021-23 Christopher A. Bohn *
  *
  * Assignment and starter code licensed under the Apache License,
  * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
@@ -28,7 +28,13 @@ void print_list(const struct node *head) {
                    current_node->previous, current_node->previous == NULL ? " " : current_node->previous->word,
                    current_node->next, current_node->next == NULL ? " " : current_node->next->word);
             current_node = current_node->next;
-        } while (current_node != head);
+            if (current_node == head) {
+                printf("List is a circular list.\n")
+            }
+            if (current_node == NULL) {
+                printf("List is not a circular list.\n")
+            }
+        } while ((current_node != head) && (current_node != NULL));
     }
 }
 
