@@ -5,10 +5,33 @@ Before you can multiply arbitrary values, you must be able to multiply by a powe
 Strictly speaking, the \function{multiply_by_power_of_two()} function needs to do a little bit more than multiplying by a power of two.
 If the \lstinline{power_of_two} argument is 0, then the function should return 0.
 Otherwise, assume that it is a power of two and apply the fast multiplication technique for powers of two discussed in Chapter~3 and in lecture.
+
+Note that the second argument is the power of two value, such as 0x0040 ($64_{10}$) or 0x2000 ($8192_{10}$) and \textit{not} the exponent of two, such as 6 or 13.
 Be sure to remember that \function{multiply_by_power_of_two()} returns a 32-bit value.
 
 \textit{Your solution for \function{multiply_by_power_of_two()} should be a constant-time solution.}
 If your solution includes a loop or recursion, please review the Chapter~3 material.
+
+\subsubsection*{Check your work}
+
+Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.
+When you enter the inputs for your power-of-two multiplier, the operands will be interpreted as hexadecimal values even if you omit the leading ``0x''.
+For example:
+\begin{verbatim}
+    Enter ... "mul2 <hex_value> <hex_power_of_two>" ...:  mul2 5 4
+    expected: 0x0005 * 0x0004 = 0x00000014
+    actual:   0x0005 * 0x0004 = 0x00000014
+
+    Enter ... "mul2 <hex_value> <hex_power_of_two>" ...:  mul2 5 0
+    expected: 0x0005 * 0x0000 = 0x00000000
+    actual:   0x0005 * 0x0000 = 0x00000000
+
+    Enter ... "mul2 <hex_value> <hex_power_of_two>" ...:  mul2 5 0
+    expected: 0xFFFF * 0x8000 = 0x7FFF8000
+    actual:   0xFFFF * 0x8000 = 0x7FFF8000
+\end{verbatim}
+
+Check your code with other values, comparing your actual results with the expected results.
 
 
 \subsection{General Unsigned Multiplication}

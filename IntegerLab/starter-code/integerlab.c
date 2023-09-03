@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * IntegerLab (c) 2018-22 Christopher A. Bohn
+ * IntegerLab (c) 2018-23 Christopher A. Bohn
  *
  * Assignment and starter code licensed under the Apache License,
  * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
@@ -38,27 +38,17 @@ struct authoritative_result {
 };
 
 bool read_evaluate_print();
-
 char *parse_operand(const char *buffer, uint32_t *operand);
-
 char *parse_operator(const char *buffer, char *operator);
-
 void evaluate_print_one_bit_adder(const char *input_buffer);
-
 void evaluate_print_thirty_two_bit_adder(const char *input_buffer);
-
+void evaluate_print_power_of_two_multiplier(const char *input_buffer);
 void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operand2);
-
 void evaluate_addition(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-
 void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-
 void evaluate_unsigned_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-
 void evaluate_unsigned_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-
 void evaluate_signed_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-
 void evaluate_signed_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
 
 int main() {
@@ -124,6 +114,19 @@ void evaluate_print_thirty_two_bit_adder(const char *input_buffer) {
     uint32_t actual_result = ripple_carry_addition(operand1, operand2, (uint8_t) carry_in);
     printf("expected: 0x%08X + 0x%08X + %d = 0x%08X\n", operand1, operand2, (carry_in & 0x1), expected_result);
     printf("actual:   0x%08X + 0x%08X + %d = 0x%08X\n", operand1, operand2, (carry_in & 0x1), actual_result);
+}
+
+void evaluate_print_power_of_two_multiplier(const char *input_buffer) {
+    uint16_t operand1, operand2;
+    sscanf(input_buffer + 5, "%hx %hx", &operand1, &operand2); // NOLINT(*-err34-c)
+    uint32_t expected_result = (int32_t) operand1 * (int32_t) operand2;
+    uint32_t actual_result = multiply_by_power_of_two(operand1, operand2);
+    if ((operand2 == 0) || (__builtin_popcount(operand2) == 1)) {       // when we migrate to C23, we'll change this to stdc_popcount()
+        printf("expected: 0x%04X * 0x%04X = 0x%08X\n", operand1, operand2, expected_result);
+    } else {
+        printf("WARNING:  0x%04X is not a power of two!\n", operand2);
+    }
+    printf("actual:   0x%04X * 0x%04X = 0x%08X\n", operand1, operand2, actual_result);
 }
 
 void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operand2) {
@@ -257,6 +260,7 @@ bool read_evaluate_print() {
            "    \"is_negative <value>\" to determine if 2's complement value is negative,\n"
            "    \"add1 <binary_value1> <binary_value2> <carry_in>\" for 1-bit full adder,\n"
            "    \"add32 <hex_value1> <hex_value2> <carry_in>\" for 32-bit ripple-carry adder,\n"
+           "    \"mul2 <hex_value> <hex_power_of_two>\" for power-of-two multiplier,\n"
            "    or \"quit\": ");
     fgets(input_buffer, 72, stdin);
     // string to lowercase, to simplify a couple of the comparisons
@@ -286,6 +290,8 @@ bool read_evaluate_print() {
         evaluate_print_one_bit_adder(input_buffer);
     } else if (!strncmp(input_buffer, "add32", 5)) {
         evaluate_print_thirty_two_bit_adder(input_buffer);
+    } else if (!strncmp(input_buffer, "mul2", 4)) {
+        evaluate_print_power_of_two_multiplier(input_buffer);
     } else {
         char *next;
         if (isdigit(input_buffer[0]) || input_buffer[0] == '-') {
@@ -373,23 +379,23 @@ bool read_evaluate_print() {
 
 void evaluate_addition(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) {
     __asm__(
-            "addw %si, %di\n"
-            "setz 4(%rdx)\n"
-            "sets 5(%rdx)\n"
-            "seto 6(%rdx)\n"
-            "setc 7(%rdx)\n"
-            "movw %di, (%rdx)\n"
+            "addw %si, %di\n\t"
+            "setz 4(%rdx)\n\t"
+            "sets 5(%rdx)\n\t"
+            "seto 6(%rdx)\n\t"
+            "setc 7(%rdx)\n\t"
+            "movw %di, (%rdx)\n\t"
             );
 }
 
 void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) {
     __asm__(
-            "subw %si, %di\n"
-            "sete 4(%rdx)        # z_flag = ZF\n"
-            "sets 5(%rdx)        # s_flag = SF\n"
-            "setl 6(%rdx)        # o_flag = SF ^ OF\n"
-            "setb 7(%rdx)        # c_flag = CF\n"
-            "movw %di, (%rdx)\n"
+            "subw %si, %di\n\t"
+            "sete 4(%rdx)        # z_flag = ZF\n\t"
+            "sets 5(%rdx)        # s_flag = SF\n\t"
+            "setl 6(%rdx)        # o_flag = SF ^ OF\n\t"
+            "setb 7(%rdx)        # c_flag = CF\n\t"
+            "movw %di, (%rdx)\n\t"
             );
     // right now, result->o_flag has SF^OF, and result->s_flag has SF
     // we can make result->o_flag have OF by noting that (SF^OF)^SF == OF
@@ -398,82 +404,82 @@ void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authorita
 
 void evaluate_unsigned_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) {
     __asm__(
-            "pushq %rax\n"
-            "pushq %rdx\n"
-            "movw %di, %ax\n"
-            "mulw %si\n"
-            "movw %dx, %di\n"
-            "popq %rdx\n"
-            "setz 4(%rdx)\n"
-            "sets 5(%rdx)\n"
-            "seto 6(%rdx)\n"
-            "setc 7(%rdx)\n"
-            "movw %ax, (%rdx)\n"
-            "movw %di, 2(%rdx)\n"
-            "popq %rax\n"
+            "pushq %rax\n\t"
+            "pushq %rdx\n\t"
+            "movw %di, %ax\n\t"
+            "mulw %si\n\t"
+            "movw %dx, %di\n\t"
+            "popq %rdx\n\t"
+            "setz 4(%rdx)\n\t"
+            "sets 5(%rdx)\n\t"
+            "seto 6(%rdx)\n\t"
+            "setc 7(%rdx)\n\t"
+            "movw %ax, (%rdx)\n\t"
+            "movw %di, 2(%rdx)\n\t"
+            "popq %rax\n\t"
             );
 }
 
 void evaluate_unsigned_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) {
     __asm__(
-            "pushq %rax\n"
-            "pushq %rdx\n"
-            "movw %di, %ax\n"
-            "movw $0, %dx\n"
-            "divw %si\n"
-            "movw %dx, %di\n"
-            "popq %rdx\n"
-            "setz 4(%rdx)\n"
-            "sets 5(%rdx)\n"
-            "seto 6(%rdx)\n"
-            "setc 7(%rdx)\n"
-            "movw %ax, (%rdx)\n"
-            "movw %di, 2(%rdx)\n"
-            "popq %rax\n"
+            "pushq %rax\n\t"
+            "pushq %rdx\n\t"
+            "movw %di, %ax\n\t"
+            "movw $0, %dx\n\t"
+            "divw %si\n\t"
+            "movw %dx, %di\n\t"
+            "popq %rdx\n\t"
+            "setz 4(%rdx)\n\t"
+            "sets 5(%rdx)\n\t"
+            "seto 6(%rdx)\n\t"
+            "setc 7(%rdx)\n\t"
+            "movw %ax, (%rdx)\n\t"
+            "movw %di, 2(%rdx)\n\t"
+            "popq %rax\n\t"
             );
 }
 
 void evaluate_signed_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) {
     __asm__(
-            "pushq %rax\n"
-            "pushq %rdx\n"
-            "movw %di, %ax\n"
-            "imulw %si\n"
-            "movw %dx, %di\n"
-            "popq %rdx\n"
-            "setz 4(%rdx)\n"
-            "sets 5(%rdx)\n"
-            "seto 6(%rdx)\n"
-            "setc 7(%rdx)\n"
-            "movw %ax, (%rdx)\n"
-            "movw %di, 2(%rdx)\n"
-            "popq %rax\n"
+            "pushq %rax\n\t"
+            "pushq %rdx\n\t"
+            "movw %di, %ax\n\t"
+            "imulw %si\n\t"
+            "movw %dx, %di\n\t"
+            "popq %rdx\n\t"
+            "setz 4(%rdx)\n\t"
+            "sets 5(%rdx)\n\t"
+            "seto 6(%rdx)\n\t"
+            "setc 7(%rdx)\n\t"
+            "movw %ax, (%rdx)\n\t"
+            "movw %di, 2(%rdx)\n\t"
+            "popq %rax\n\t"
             );
 }
 
 void evaluate_signed_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) {
     __asm__(
-            "pushq %rax\n"
-            "pushq %rdx\n"
-            "movw %di, %ax\n"
-            "movw $0, %dx\n"
-            "testw %ax, %ax\n"
-            // "cmovs $-1, %rdx\n"
+            "pushq %rax\n\t"
+            "pushq %rdx\n\t"
+            "movw %di, %ax\n\t"
+            "movw $0, %dx\n\t"
+            "testw %ax, %ax\n\t"
+            // "cmovs $-1, %rdx\n\t"
             // the next three instructions substitute for the cmov instruction
-            "jns .Linline\n"
-            "movw $-1, %dx\n"
-            ".Linline:\n"
+            "jns .Linline\n\t"
+            "movw $-1, %dx\n\t"
+            ".Linline:\n\t"
             // the previous three instructions substitute for the cmov instruction
-            "idivw %si\n"
-            "movw %dx, %di\n"
-            "popq %rdx\n"
-            "setz 4(%rdx)\n"
-            "sets 5(%rdx)\n"
-            "seto 6(%rdx)\n"
-            "setc 7(%rdx)\n"
-            "movw %ax, (%rdx)\n"
-            "movw %di, 2(%rdx)\n"
-            "popq %rax\n"
+            "idivw %si\n\t"
+            "movw %dx, %di\n\t"
+            "popq %rdx\n\t"
+            "setz 4(%rdx)\n\t"
+            "sets 5(%rdx)\n\t"
+            "seto 6(%rdx)\n\t"
+            "setc 7(%rdx)\n\t"
+            "movw %ax, (%rdx)\n\t"
+            "movw %di, 2(%rdx)\n\t"
+            "popq %rax\n\t"
             );
 }
 
