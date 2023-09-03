@@ -282,10 +282,10 @@ bool read_evaluate_print() {
                || !strncmp(input_buffer, "is negative", 11)
                || !strncmp(input_buffer, "isnegative", 10)) {
         parse_operand(input_buffer + 11, &operand1);
-        printf("expected: %d (0x%04X) %s negative\n",
+        printf("expected: %hd (0x%04hX) %s negative\n",
                (int16_t) operand1, (uint16_t) operand1, ((int16_t) operand1 < 0 ? "is" : "is not"));
-        printf("actual:   %d (0x%04X) %s negative\n",
-               (int16_t) operand1, (uint16_t)operand1, (is_negative(operand1) ? "is" : "is not"));
+        printf("actual:   %hd (0x%04hX) %s negative\n",
+               (int16_t) operand1, (uint16_t) operand1, (is_negative((uint16_t) operand1) ? "is" : "is not"));
     } else if (!strncmp(input_buffer, "add1", 4)) {
         evaluate_print_one_bit_adder(input_buffer);
     } else if (!strncmp(input_buffer, "add32", 5)) {
@@ -308,15 +308,19 @@ bool read_evaluate_print() {
             case '*':
             case '/':
             case '%':
-                evaluate_print_arithmetic(operand1, operator[0], operand2);
+                evaluate_print_arithmetic((uint16_t) operand1, operator[0], (uint16_t) operand2);
                 break;
             case '!':
                 if (operator[1] == '\0') {
                     printf("expected: !%d = %d\n", operand2, !operand2);
                     printf("actual:   !%d = %d\n", operand2, logical_not(operand2));
                 } else if (operator[1] == '=') {
-                    printf("expected: (%d != %d) = %d\n", operand1, operand2, operand1 != operand2);
-                    printf("actual:   (%d != %d) = %d\n", operand1, operand2, not_equal(operand1, operand2));
+                    printf("expected: (%hd != %hd) = %d\n",
+                           (uint16_t) operand1, (uint16_t) operand2,
+                           (uint16_t) operand1 != (uint16_t) operand2);
+                    printf("actual:   (%hd != %hd) = %d\n",
+                           (uint16_t) operand1, (uint16_t) operand2,
+                           not_equal((uint16_t) operand1, (uint16_t) operand2));
                 } else {
                     printf("Unknown operator: %s\n", operator);
                 }
@@ -330,27 +334,47 @@ bool read_evaluate_print() {
                 printf("actual:   %d || %d = %d\n", operand1, operand2, logical_or(operand1, operand2));
                 break;
             case '=':
-                printf("expected: (%d == %d) = %d\n", operand1, operand2, operand1 == operand2);
-                printf("actual:   (%d == %d) = %d\n", operand1, operand2, equal(operand1, operand2));
+                printf("expected: (%hd == %hd) = %d\n",
+                       (uint16_t) operand1, (uint16_t) operand2,
+                       (uint16_t) operand1 == (uint16_t) operand2);
+                printf("actual:   (%hd == %hd) = %d\n",
+                       (uint16_t) operand1, (uint16_t) operand2,
+                       equal((uint16_t) operand1, (uint16_t) operand2));
                 break;
             case '<':
                 if (operator[1] == '\0') {
-                    printf("expected: (%d < %d) = %d\n", operand1, operand2, ((int32_t) operand1) < ((int32_t) operand2));
-                    printf("actual:   (%d < %d) = %d\n", operand1, operand2, less_than(operand1, operand2));
+                    printf("expected: (%hd < %hd) = %d\n",
+                           (int16_t) operand1, (int16_t) operand2,
+                           ((int16_t) operand1) < ((int16_t) operand2));
+                    printf("actual:   (%hd < %hd) = %d\n",
+                           (int16_t) operand1, (int16_t) operand2,
+                           less_than((uint16_t) operand1, (uint16_t) operand2));
                 } else if (operator[1] == '=') {
-                    printf("expected: (%d <= %d) = %d\n", operand1, operand2, ((int32_t) operand1) <= ((int32_t) operand2));
-                    printf("actual:   (%d <= %d) = %d\n", operand1, operand2, at_most(operand1, operand2));
+                    printf("expected: (%hd <= %hd) = %d\n",
+                           (int16_t) operand1, (int16_t) operand2,
+                           ((int16_t) operand1) <= ((int16_t) operand2));
+                    printf("actual:   (%hd <= %hd) = %d\n",
+                           (int16_t) operand1, (int16_t) operand2,
+                           at_most((uint16_t) operand1, (uint16_t) operand2));
                 } else {
                     printf("Unknown operator: %s\n", operator);
                 }
                 break;
             case '>':
                 if (operator[1] == '\0') {
-                    printf("expected: (%d > %d) = %d\n", operand1, operand2, ((int32_t) operand1) > ((int32_t) operand2));
-                    printf("actual:   (%d > %d) = %d\n", operand1, operand2, greater_than(operand1, operand2));
+                    printf("expected: (%hd > %hd) = %d\n",
+                           (int16_t) operand1, (int16_t) operand2,
+                           ((int16_t) operand1) > ((int16_t) operand2));
+                    printf("actual:   (%hd > %hd) = %d\n",
+                           (int16_t) operand1, (int16_t) operand2,
+                           greater_than((uint16_t) operand1, (uint16_t) operand2));
                 } else if (operator[1] == '=') {
-                    printf("expected: (%d >= %d) = %d\n", operand1, operand2, ((int32_t) operand1) >= ((int32_t) operand2));
-                    printf("actual:   (%d >= %d) = %d\n", operand1, operand2, at_least(operand1, operand2));
+                    printf("expected: (%hd >= %hd) = %d\n",
+                           (int16_t) operand1, (int16_t) operand2,
+                           ((int16_t) operand1) >= ((int16_t) operand2));
+                    printf("actual:   (%hd >= %hd) = %d\n",
+                           (int16_t) operand1, (int16_t) operand2,
+                           at_least((uint16_t) operand1, (uint16_t) operand2));
                 } else {
                     printf("Unknown operator: %s\n", operator);
                 }
