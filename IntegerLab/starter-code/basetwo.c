@@ -2,7 +2,8 @@
  *
  * @file basetwo.c
  *
- * @author Christopher A. Bohn
+ * @author (TYPE YOUR NAME HERE)
+ * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions that students must implement for IntegerLab to demonstrate
  * understanding of base two exponentiation and logarithms.
@@ -10,10 +11,8 @@
  ******************************************************************************/
 
 /*
- * IntegerLab (c) 2018-22 Christopher A. Bohn
- *
- * Assignment and starter code licensed under the Apache License,
- * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+ * IntegerLab assignment and starter code (c) 2018-22 Christopher A. Bohn
+ * IntegerLab solution (c) the above-named student(s)
  */
 
 #include "alu.h"

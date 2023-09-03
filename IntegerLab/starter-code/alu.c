@@ -2,7 +2,8 @@
  *
  * @file alu.c
  *
- * @author (STUDENT -- TYPE YOUR NAME HERE)
+ * @author (TYPE YOUR NAME HERE)
+ * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions that students must implement for IntegerLab to demonstrate
  * understanding of boolean logic and bit-limited integer arithmetic.
@@ -11,7 +12,7 @@
 
 /*
  * IntegerLab assignment and starter code (c) 2018-22 Christopher A. Bohn
- * Integerlab solution (c) the above-named student
+ * Integerlab solution (c) the above-named student(s)
  */
 
 #include "alu.h"

@@ -2,11 +2,17 @@
  *
  * @file unsigned-comparisons.c
  *
- * @author (STUDENT -- TYPE YOUR NAME HERE)
+ * @author (TYPE YOUR NAME HERE)
+ * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions that perform unsigned comparisons between integers.
  *
  ******************************************************************************/
+
+/*
+ * IntegerLab assignment and starter code (c) 2018-23 Christopher A. Bohn
+ * Integerlab solution (c) the above-named student(s)
+ */
 
 
 #include <stdbool.h>
