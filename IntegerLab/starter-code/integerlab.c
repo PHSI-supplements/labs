@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "alu.h"
+#include "profiler.h"
 
 struct authoritative_result {
     uint16_t result;
@@ -37,19 +38,19 @@ struct authoritative_result {
     uint8_t c_flag;
 };
 
-bool read_evaluate_print();
-char *parse_operand(const char *buffer, uint32_t *operand);
-char *parse_operator(const char *buffer, char *operator);
-void evaluate_print_one_bit_adder(const char *input_buffer);
-void evaluate_print_thirty_two_bit_adder(const char *input_buffer);
-void evaluate_print_power_of_two_multiplier(const char *input_buffer);
-void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operand2);
-void evaluate_addition(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-void evaluate_unsigned_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-void evaluate_unsigned_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-void evaluate_signed_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-void evaluate_signed_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+bool read_evaluate_print() __attribute__ ((no_instrument_function));
+char *parse_operand(const char *buffer, uint32_t *operand) __attribute__ ((no_instrument_function));
+char *parse_operator(const char *buffer, char *operator) __attribute__ ((no_instrument_function));
+void evaluate_print_one_bit_adder(const char *input_buffer) __attribute__ ((no_instrument_function));
+void evaluate_print_thirty_two_bit_adder(const char *input_buffer) __attribute__ ((no_instrument_function));
+void evaluate_print_power_of_two_multiplier(const char *input_buffer) __attribute__ ((no_instrument_function));
+void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operand2) __attribute__ ((no_instrument_function));
+void evaluate_addition(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) __attribute__ ((no_instrument_function));
+void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) __attribute__ ((no_instrument_function));
+void evaluate_unsigned_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) __attribute__ ((no_instrument_function));
+void evaluate_unsigned_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) __attribute__ ((no_instrument_function));
+void evaluate_signed_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) __attribute__ ((no_instrument_function));
+void evaluate_signed_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result) __attribute__ ((no_instrument_function));
 
 int main() {
     bool running = true;
@@ -107,6 +108,7 @@ void evaluate_print_one_bit_adder(const char *input_buffer) {
 }
 
 void evaluate_print_thirty_two_bit_adder(const char *input_buffer) {
+    reset_call_counts();
     uint32_t operand1, operand2;
     int carry_in;
     sscanf(input_buffer + 6, "%x %x %d", &operand1, &operand2, &carry_in); // NOLINT(cert-err34-c)
@@ -114,6 +116,7 @@ void evaluate_print_thirty_two_bit_adder(const char *input_buffer) {
     uint32_t actual_result = ripple_carry_addition(operand1, operand2, (uint8_t) carry_in);
     printf("expected: 0x%08X + 0x%08X + %d = 0x%08X\n", operand1, operand2, (carry_in & 0x1), expected_result);
     printf("actual:   0x%08X + 0x%08X + %d = 0x%08X\n", operand1, operand2, (carry_in & 0x1), actual_result);
+    printf("\t\tNumber of calls to one_bit_full_addition:    %d\n", get_call_counts(one_bit_full_addition));
 }
 
 void evaluate_print_power_of_two_multiplier(const char *input_buffer) {
@@ -124,12 +127,13 @@ void evaluate_print_power_of_two_multiplier(const char *input_buffer) {
     if ((operand2 == 0) || (__builtin_popcount(operand2) == 1)) {       // when we migrate to C23, we'll change this to stdc_popcount()
         printf("expected: 0x%04X * 0x%04X = 0x%08X\n", operand1, operand2, expected_result);
     } else {
-        printf("WARNING:  0x%04X is not a power of two!\n", operand2);
+        printf("[WARNING] 0x%04X is not a power of two!\n", operand2);
     }
     printf("actual:   0x%04X * 0x%04X = 0x%08X\n", operand1, operand2, actual_result);
 }
 
 void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operand2) {
+    reset_call_counts();
     alu_result_t actual_result;
     struct authoritative_result *expected_result = malloc(sizeof(struct authoritative_result));
     switch (operator) {
@@ -164,6 +168,7 @@ void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operan
             printf("\tactual result (signed):        %d %c %d = %d\toverflow: %s\n",
                    (int16_t) operand1, operator, (int16_t) operand2, (int16_t) actual_result.result,
                    actual_result.signed_overflow ? "true" : "false");
+            printf("\t\tNumber of calls to ripple_carry_addition:    %d\n", get_call_counts(ripple_carry_addition));
             break;
         case '*':
             printf("UNSIGNED MULTIPLICATION\n");
@@ -190,6 +195,8 @@ void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operan
             printf("\tactual result (signed):        %d * %d = %d (%d)\n",
                    (int16_t) operand1, (int16_t) operand2, (int16_t) actual_result.result,
                    (int32_t) (((uint32_t) actual_result.supplemental_result << 16) | actual_result.result));
+            printf("\t\tNumber of calls to ripple_carry_addition:    %d\n", get_call_counts(ripple_carry_addition));
+            printf("\t\tNumber of calls to multiply_by_power_of_two: %d\n", get_call_counts(multiply_by_power_of_two));
             break;
         case '/':
         case '%':
@@ -198,6 +205,7 @@ void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operan
                        operand2);
             }
             printf("UNSIGNED DIVISION\n");
+            reset_call_counts();
             if (operand2 == 0) {
                 printf("expected result: divide-by-zero\n");
             } else {
@@ -220,7 +228,10 @@ void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operan
                        operand1, operand2, actual_result.result,
                        operand1, operand2, actual_result.supplemental_result);
             }
+            printf("\t\tNumber of calls to ripple_carry_addition:    %d\n", get_call_counts(ripple_carry_addition));
+            printf("\t\tNumber of calls to multiply_by_power_of_two: %d\n", get_call_counts(multiply_by_power_of_two));
             printf("SIGNED DIVISION\n");
+            reset_call_counts();
             if (operand2 == 0) {
                 printf("expected result: divide-by-zero\n");
             } else {
@@ -243,6 +254,8 @@ void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operan
                        (int16_t) operand1, (int16_t) operand2, (int16_t) actual_result.result,
                        (int16_t) operand1, (int16_t) operand2, (int16_t) actual_result.supplemental_result);
             }
+            printf("\t\tNumber of calls to ripple_carry_addition:    %d\n", get_call_counts(ripple_carry_addition));
+            printf("\t\tNumber of calls to multiply_by_power_of_two: %d\n", get_call_counts(multiply_by_power_of_two));
             break;
         default:
             printf("Unknown operator: %c\n", operator);
@@ -262,7 +275,10 @@ bool read_evaluate_print() {
            "    \"add32 <hex_value1> <hex_value2> <carry_in>\" for 32-bit ripple-carry adder,\n"
            "    \"mul2 <hex_value> <hex_power_of_two>\" for power-of-two multiplier,\n"
            "    or \"quit\": ");
-    fgets(input_buffer, 72, stdin);
+    if (!fgets(input_buffer, 72, stdin)) {
+        printf("Failed to read input.\n");
+        input_buffer[0] = '\0';
+    };
     // string to lowercase, to simplify a couple of the comparisons
     for (char *s = input_buffer; (*s = (char) tolower(*s)); s++) {}
     if (!strncmp(input_buffer, "quit", 4)) {
