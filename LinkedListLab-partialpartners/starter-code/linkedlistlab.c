@@ -29,10 +29,10 @@ void print_list(const struct node *head) {
                    current_node->next, current_node->next == NULL ? " " : current_node->next->word);
             current_node = current_node->next;
             if (current_node == head) {
-                printf("List is a circular list.\n")
+                printf("List is a circular list.\n");
             }
             if (current_node == NULL) {
-                printf("List is not a circular list.\n")
+                printf("List is not a circular list.\n");
             }
         } while ((current_node != head) && (current_node != NULL));
     }
