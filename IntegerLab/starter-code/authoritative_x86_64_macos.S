@@ -28,8 +28,6 @@
 
 #if defined X86_64_MACOS
 
-#warning I'm in the MacOS assembly code
-
 	.section	__TEXT,__text,regular,pure_instructions
 	.build_version macos, 12, 0	sdk_version 13, 1
 	.globl	_evaluate_addition              ## -- Begin function evaluate_addition

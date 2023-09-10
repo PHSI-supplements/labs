@@ -28,8 +28,6 @@
 
 #if defined X86_64_LINUX
 
-#warning I'm in the Linux assembly code
-
 	.text
 	.file	"actual_alu.c"
 	.globl	evaluate_addition               # -- Begin function evaluate_addition
