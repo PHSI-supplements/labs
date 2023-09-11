@@ -147,6 +147,33 @@ but in \function{denormalize()} you will need to left-shift the \lstinline{fract
 This is because the \function{unnormal()} function call expects the \lstinline{.fraction} named field to be the numerator of
 \[\frac{.fraction\ argument}{2^{64}}\]
 
+\subsubsection*{Examples}
+
+Suppose that the number is $68588.0_{10} = 1.0000,1011,1110,11_{2} \times 2^{16}$.
+In the IEEE~754 normal form, this is 0x4785'F600 = 0b0\underline{100'0111'1}000'0101'1111'0110'0000'0000 (we have underlined the $E$ field to help you follow the discussion).
+
+In the \lstinline{unnormal_t} data structure, the \lstinline{.integer} is 1, the \lstinline{.exponent} is 16, and the \lstinline{.fraction} is 0x0BEC'0000'0000'0000.
+Mathematically, that is the \lstinline{.fraction} field because the fraction field needs to be the numerator of
+\[\frac{BEC,0000,0000,0000_{16}}{1,0000,0000,0000,0000_{16}}\]
+That is why you need to left-shift the \lstinline{fraction} by several places (so that the $2^{-1}$ bit is in the most-significant bit) before passing it to the \function{denormalize()}'s function.
+
+To see this from a practical perspective, let us consider some of the functions defined for \lstinline{unnormal_t}.
+In these examples, assume that all numbers are stored in \lstinline{unnormal_t} data structures.
+\begin{itemize}
+    \item \textbf{\texttt{shift\_left\_once($1.0000,1011,1110,11_{2} \times 2^{16}$)}} will return a \textit{copy} of the original \lstinline{unnormal_t} data structure, except that the significand's bits have been left-shifted by one, and the fraction has been decreased by one;
+        specifically, it will return \\ $10.0001,0111,1101,1_{2} \times 2^{15}$.
+        (The original data structure will be unchanged.)
+    \item \textbf{\texttt{shift\_right($10.0001,0111,1101,1_{2} \times 2^{15}$), 4}} will return \\
+        $0.0010,0001,0111,1101,1_{2} \times 2^{19}$: the significand's bits have been right-shifted by four, and the fraction has increased by four.
+    \item \textbf{\texttt{place\_all\_bits\_in\_integer($0.0010,0001,0111,1101,1_{2} \times 2^{19}$)}} will return \\
+        $100,0010,1111,1011.0_{2} \times 2^{2}$.
+    \item \textbf{\texttt{set\_exponent($100,0010,1111,1011.0_{2} \times 2^{2}$, 0)}} will return  \\
+        $1,0000,1011,1110,1100.0_{2} \times 2^{0}$.
+    \item \textbf{\texttt{set\_integer($1,0000,1011,1110,1100.0_{2} \times 2^{0}$, 1)}} will return  \\
+        $1.0000,1011,1110,11_{2} \times 2^{16}$.
+\end{itemize}
+
+
 \paragraph*{Check Your Work}
 
 We have provided a function that will print a \lstinline{unnormal_t} value.
