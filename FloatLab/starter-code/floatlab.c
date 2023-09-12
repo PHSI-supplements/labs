@@ -78,8 +78,11 @@ bool read_evaluate_print() {
     union float_converter operand1, operand2, result;
     char operator;
     printf("Enter a value, a two-operand arithmetic expression,\n"
-           "    \"denormalize <value> <change exponent amount>\",\n"
-           "    \"renormalize <value> <change exponent amount>\",\n"
+//           "    \"denormalize <value> <change exponent amount>\",\n"
+//           "    \"renormalize <value> <change exponent amount>\",\n"
+        // for now, we'll hide the option to specify the exponent shift amount, but leave the code to look for it
+        // if no exponent shift amount is specified, `strtol` will produce 0, which is exactly what we want.
+           "    \"denormalize <value>\", \"renormalize <value>\",\n"
            "    or \"quit\": ");
     fgets(input_buffer, 72, stdin);
     for (char *s = input_buffer; (*s = (char) tolower(*s)); s++) {}    // string to lowercase, to simplify comparisons

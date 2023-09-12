@@ -149,6 +149,10 @@ ieee754_t normalize(unnormal_t number) {
     } else if ((get_integer(number) == 0) && (get_fraction(number) == 0)) {
         result = 0;
     } else {
+        number = set_integer(number, 1);
+        assert(!shift_underflowed(number));
+        assert(!shift_overflowed(number));
+        assert(!operation_was_not_performed(number));
         /* GENERATE THE APPROPRIATE BIT VECTOR AND PLACE IT IN RESULT */
 
 

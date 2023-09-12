@@ -16,7 +16,10 @@ Your task is to handle:
     \end{itemize}
 \end{itemize}
 
-For the first two tasks, you will probably make use of \lstinline{unnormal_t}'s \function{set_integer()} and \function{set_exponent()} functions in addition to the functions that access the structure's fields.
+%For the first two tasks, you will probably make use of \lstinline{unnormal_t}'s \function{set_integer()} and \function{set_exponent()} functions in addition to the functions that access the structure's fields.
+For the first task, the starter code already calls \function{set_integer(1)} for you, placing exactly \lstinline{1} to the left of the binary point.
+For the second task, you will probably make use of \lstinline{unnormal_t}'s \function{set_exponent()} function.
+For both of the first two tasks, you will also need to use \lstinline{unnormal_t}'s functions that access the structure's fields.
 Don't forget that the bit vector returned by \function{get_fraction()} is the numerator of $\frac{get\_fraction()}{2^{64}}$ and that \function{get_exponent()} returns the two's complement representation of the exponent.
 
 \ifbool{offerdecompositionhints}{
@@ -46,18 +49,15 @@ Finally, it will print the original value and the \lstinline{ieee754_t} value re
 For example:
 
 \begin{verbatim}
-Enter ... "renormalize <value> <change exponent amount>", ...
+Enter ... "renormalize <value>",
     or "quit": renormalize 12.375
 expected: 12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
 actual:   12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
 
-Enter ... "renormalize <value> <change exponent amount>", ...
-    or "quit": renormalize 12.375 6
-expected: 12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
-actual:   12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
-
-Enter ... "renormalize <value> <change exponent amount>", ...
+Enter ... "renormalize <value>",
     or "quit": renormalize 0x00055000
 expected: 0.0000000000_{10}	0x00055000	+0.0000,1010,1010,0000,0000,000_{2} x 2^{-126}
 actual:   0.0000000000_{10}	0x00055000	+0.0000,1010,1010,0000,0000,000_{2} x 2^{-126}
 \end{verbatim}
+
+Try some other numbers to check that your \function{normalize()} function correctly encodes the value that's in an \lstinline{unnormal_t} data structure.

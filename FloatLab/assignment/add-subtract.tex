@@ -21,6 +21,8 @@ You have two options to get the exponents to match, both of which are well-suppo
         \textit{Do \textbf{not} decrease either exponent by more than 62} or you run the risk of making addition unreliable and possibly causing the significand to overflow.
         If you increase only one exponent, then you can increase it as much as you need to -- any bits lost to underflow will not affect the value after rounding.\footnote{
             Prove the professor wrong bonus: if a counterexample exists, the first student to bring it to my attention will receive a 10-point bonus on this assignment.
+        }$^{,}$\footnote{
+            This bonus has not yet been claimed.
         }
 \end{enumerate}
 
@@ -34,6 +36,8 @@ You can now add the two values using integer arithmetic.
     \item If you selected the first option above, you need only to add the integer portions, setting the fraction portion to 0.
         If you shifted an operand's significand to the right only after the other operand is shifted as far to the left as is safe to do so, then any bits that were shifted into the fraction would be lost to rounding anyway.\footnote{
             Prove the professor wrong bonus: if a counterexample exists, the first student to bring it to my attention will receive a 10-point bonus on this assignment.
+        }$^{,}$\footnote{
+            This bonus has not yet been claimed.
         }
     \item If you selected the second option above, you will need to add both the integer and the fraction portions,
         and you will need to check whether the fraction carries into (or borrows from) the integer portion;
@@ -52,8 +56,7 @@ otherwise, the parser will treat it as a floating point value.
 
 \begin{verbatim}
 Enter a value, a two-operand arithmetic expression,
-    "denormalize <value> <change exponent amount>",
-    "renormalize <value> <change exponent amount>",
+    "denormalize <value>", "renormalize <value>",
     or "quit": 1 + 2
 0x3f800000	+1.0000,0000,0000,0000,0000,000_{2} x 2^{0}
 +
