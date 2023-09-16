@@ -117,7 +117,7 @@ char *ieee754_to_string(char *destination, ieee754_t number) {
  * @param number The number to be made "unnormal"
  * @return an `unnormal_t` representation of the number's value
  */
-unnormal_t denormalize(ieee754_t number) {
+unnormal_t decode(ieee754_t number) {
     uint8_t sign = number & SIGN_BIT_MASK ? 1 : 0;
     if (is_infinity(number)) {
         return unnormal(.sign = sign, .is_infinite = true);
@@ -140,7 +140,7 @@ unnormal_t denormalize(ieee754_t number) {
  * @param number the number to be made IEEE 754-compliant
  * @return an `ieee754_t` bit vector representing the number's value
  */
-ieee754_t normalize(unnormal_t number) {
+ieee754_t encode(unnormal_t number) {
     ieee754_t result;
     if (is_infinite(number)) {
         result = INFINITY;
@@ -192,8 +192,8 @@ ieee754_t add(ieee754_t augend, ieee754_t addend) {
     if (is_zero(addend)) {
         return 0;
     }
-    unnormal_t denormalized_augend = denormalize(augend);
-    unnormal_t denormalized_addend = denormalize(addend);
+    unnormal_t decoded_augend = decode(augend);
+    unnormal_t decoded_addend = decode(addend);
     /* COMPUTE THE SUM */
     uint8_t sign;
     uint64_t integer, fraction;
@@ -201,7 +201,7 @@ ieee754_t add(ieee754_t augend, ieee754_t addend) {
 
 
     unnormal_t sum = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
-    return normalize(sum);
+    return encode(sum);
 }
 
 /**
@@ -242,8 +242,8 @@ ieee754_t multiply(ieee754_t multiplicand, ieee754_t multiplier) {
     if (is_infinity(multiplier) || is_zero(multiplier)) {
         return 0;
     }
-    unnormal_t denormalized_multiplicand = denormalize(multiplicand);
-    unnormal_t denormalized_multiplier = denormalize(multiplier);
+    unnormal_t decoded_multiplicand = decode(multiplicand);
+    unnormal_t decoded_multiplier = decode(multiplier);
     /* COMPUTE THE PRODUCT */
     uint8_t sign;
     uint64_t integer, fraction;
@@ -251,7 +251,7 @@ ieee754_t multiply(ieee754_t multiplicand, ieee754_t multiplier) {
 
 
     unnormal_t product = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
-    return normalize(product);
+    return encode(product);
 }
 
 /**
@@ -276,8 +276,8 @@ ieee754_t divide(ieee754_t dividend, ieee754_t divisor) {
     if (is_infinity(dividend) || is_zero(divisor)) {
         return 0;
     }
-    unnormal_t denormalized_dividend = denormalize(dividend);
-    unnormal_t denormalized_divisor = denormalize(divisor);
+    unnormal_t decoded_dividend = decode(dividend);
+    unnormal_t decoded_divisor = decode(divisor);
     /* COMPUTE THE QUOTIENT */
     uint8_t sign;
     uint64_t integer, fraction;
@@ -285,5 +285,5 @@ ieee754_t divide(ieee754_t dividend, ieee754_t divisor) {
 
 
     unnormal_t quotient = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
-    return normalize(quotient);
+    return encode(quotient);
 }

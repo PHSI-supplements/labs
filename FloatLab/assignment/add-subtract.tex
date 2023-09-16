@@ -8,7 +8,7 @@ After the guard clauses are handled, your task is to implement addition for two 
 
 Recall that for any number base, $b$, adding two floating point values $m_1 \times b^{e_1} + m_2 \times b^{e_2}$ is simplified when $e_1 = e_2$.
 
-Start by adjusting one of the denormalized operands so that the two denormalized operands have the same exponent.
+Start by adjusting one of the decoded operands so that the two decoded operands have the same exponent.
 It is acceptable for the least significant bit (or even several less significant bits) to be truncated;
 however, \textit{you must take care that the most significant bit does not get truncated}!
 
@@ -56,7 +56,7 @@ otherwise, the parser will treat it as a floating point value.
 
 \begin{verbatim}
 Enter a value, a two-operand arithmetic expression,
-    "denormalize <value>", "renormalize <value>",
+    "decode <value>", "recode <value>",
     or "quit": 1 + 2
 0x3f800000	+1.0000,0000,0000,0000,0000,000_{2} x 2^{0}
 +
@@ -117,7 +117,7 @@ Be sure to check:
 
 \subsubsection*{Rounding}
 
-You can now check the rounding code in your \function{normalize()} implementation.
+You can now check the rounding code in your \function{encode()} implementation.
 
 \begin{itemize}
     \item When the rounded-off portion is less than halfway, you always round down

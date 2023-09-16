@@ -40,8 +40,8 @@ char *bits_to_string(char *destination, uint64_t bits, int start_bit,
                      int end_bit, enum bit_divider_direction bit_dividers);
 char *ieee754_to_string(char *destination, ieee754_t number);
 
-ieee754_t normalize(unnormal_t number);
-unnormal_t denormalize(ieee754_t number);
+ieee754_t encode(unnormal_t number);
+unnormal_t decode(ieee754_t number);
 
 ieee754_t negate(ieee754_t number);
 ieee754_t add(ieee754_t augend, ieee754_t addend);

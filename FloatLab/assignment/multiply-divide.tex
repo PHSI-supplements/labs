@@ -6,8 +6,8 @@ Similarly, dividing the two floating point values yields $\frac{m_1}{m_2} \times
 The \function{multiply()} stub identifies a handful of special cases that you can easily handle.
 After the guard clauses are handled, your task is to implement multiplication for two finite, non-zero numbers.
 
-While you have the option of performing integer multiplication without adjusting the denormalized operands (it would require only a little modification of your code from IntegerLab), we recommend that you adjust the denormalized operands so that you can use C's integer multiplication operator.
-Adjust the denormalized operands such that their significands are both fully in the integer portion.
+While you have the option of performing integer multiplication without adjusting the decoded operands (it would require only a little modification of your code from IntegerLab), we recommend that you adjust the decoded operands so that you can use C's integer multiplication operator.
+Adjust the decoded operands such that their significands are both fully in the integer portion.
 Because you do not need to give the two operands the same exponent, you do not need to worry about any further adjustment.
 Multiply the two operands together using integer arithmetic.
 

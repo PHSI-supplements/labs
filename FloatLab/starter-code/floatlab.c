@@ -78,42 +78,42 @@ bool read_evaluate_print() {
     union float_converter operand1, operand2, result;
     char operator;
     printf("Enter a value, a two-operand arithmetic expression,\n"
-//           "    \"denormalize <value> <change exponent amount>\",\n"
-//           "    \"renormalize <value> <change exponent amount>\",\n"
+//           "    \"decode <value> <change exponent amount>\",\n"
+//           "    \"recode <value> <change exponent amount>\",\n"
         // for now, we'll hide the option to specify the exponent shift amount, but leave the code to look for it
         // if no exponent shift amount is specified, `strtol` will produce 0, which is exactly what we want.
-           "    \"denormalize <value>\", \"renormalize <value>\",\n"
+           "    \"decode <value>\", \"recode <value>\",\n"
            "    or \"quit\": ");
     fgets(input_buffer, 72, stdin);
     for (char *s = input_buffer; (*s = (char) tolower(*s)); s++) {}    // string to lowercase, to simplify comparisons
     if (!strncmp(input_buffer, "quit", 4)) {
         return false;
-    } else if (!strncmp(input_buffer, "denormalize", 11)) {
-        char *next = parse_operand(input_buffer + 11, &operand1);
+    } else if (!strncmp(input_buffer, "decode", 6)) {
+        char *next = parse_operand(input_buffer + 6, &operand1);
         int16_t amount = (int16_t) strtol(next, NULL, 10);
         if (amount > 0) {
-            printf("%s\n", unnormal_to_string(output_buffer, shift_right(denormalize(operand1.bit_vector), amount)));
+            printf("%s\n", unnormal_to_string(output_buffer, shift_right(decode(operand1.bit_vector), amount)));
         } else {
             amount = (int16_t) (-amount);
-            printf("%s\n", unnormal_to_string(output_buffer, shift_left(denormalize(operand1.bit_vector), amount)));
+            printf("%s\n", unnormal_to_string(output_buffer, shift_left(decode(operand1.bit_vector), amount)));
         }
         return true;
-    } else if (!strncmp(input_buffer, "renormalize", 11)) {
-        char *next = parse_operand(input_buffer + 11, &operand1);
+    } else if (!strncmp(input_buffer, "recode", 6)) {
+        char *next = parse_operand(input_buffer + 6, &operand1);
         int16_t amount = (int16_t) strtol(next, NULL, 10);
         printf("expected: %.10f_{10}\t", operand1.reference_value);
         printf("%s\n", ieee754_to_string(output_buffer, operand1.bit_vector));
         unnormal_t number;
         if (amount > 0) {
-            number = shift_right(denormalize(operand1.bit_vector), amount);
+            number = shift_right(decode(operand1.bit_vector), amount);
         } else {
             amount = (int16_t) (-amount);
-            number = shift_left(denormalize(operand1.bit_vector), amount);
+            number = shift_left(decode(operand1.bit_vector), amount);
         }
-        ieee754_t renormalized_number = normalize(number);
-        result.bit_vector = renormalized_number;
+        ieee754_t recoded_number = encode(number);
+        result.bit_vector = recoded_number;
         printf("actual:   %.10f_{10}\t", result.reference_value);
-        printf("%s\n", ieee754_to_string(output_buffer, renormalized_number));
+        printf("%s\n", ieee754_to_string(output_buffer, recoded_number));
         return true;
     } else {
         char *next = parse_operand(input_buffer, &operand1);

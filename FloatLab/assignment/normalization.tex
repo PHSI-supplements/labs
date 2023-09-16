@@ -1,6 +1,6 @@
-\subsection*{Normalize}
+\subsection*{Encode}
 
-The \function{normalize()} function converts an \lstinline{unnormal_t} value into an IEEE~754-compliant format.
+The \function{encode()} function converts an \lstinline{unnormal_t} value into an IEEE~754-compliant format.
 The function stub already handles zero and the flagged cases of Not-a-Number and Infinity.
 The stub also handles the sign bit.
 
@@ -24,7 +24,7 @@ Don't forget that the bit vector returned by \function{get_fraction()} is the nu
 
 \ifbool{offerdecompositionhints}{
     \paragraph{Hint}
-    In the \function{normalize()} function, when your program reaches \\
+    In the \function{encode()} function, when your program reaches \\
     \lstinline{/* GENERATE THE APPROPRIATE BIT VECTOR AND PLACE IT IN RESULT */} \\
     then you know that \lstinline{number}'s ``true value'' is a non-zero, finite number.
 
@@ -40,24 +40,24 @@ Don't forget that the bit vector returned by \function{get_fraction()} is the nu
 
 \subsubsection*{Check Your Work}
 
-When you run \texttt{\textbf{\textit{./floatlab}}}, you can specify that you want to renormalize a value, such as \texttt{\textbf{\textit{renormalize 12.375}}} and \texttt{\textbf{\textit{renormalize 12.375 6}}}.
-The program will first denormalize the value.
+When you run \texttt{\textbf{\textit{./floatlab}}}, you can specify that you want to recode a value, such as \texttt{\textbf{\textit{recode 12.375}}} and \texttt{\textbf{\textit{recode 12.375 6}}}.
+The program will first decode the value.
 It will then adjust the exponent by the specified amount (if an amount is specified).
-Then it will send the result to \function{normalize()}.
-Finally, it will print the original value and the \lstinline{ieee754_t} value returned by \function{normalize}.
+Then it will send the result to \function{encode()}.
+Finally, it will print the original value and the \lstinline{ieee754_t} value returned by \function{encode}.
 
 For example:
 
 \begin{verbatim}
-Enter ... "renormalize <value>",
-    or "quit": renormalize 12.375
+Enter ... "recode <value>",
+    or "quit": recode 12.375
 expected: 12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
 actual:   12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
 
-Enter ... "renormalize <value>",
-    or "quit": renormalize 0x00055000
+Enter ... "recode <value>",
+    or "quit": recode 0x00055000
 expected: 0.0000000000_{10}	0x00055000	+0.0000,1010,1010,0000,0000,000_{2} x 2^{-126}
 actual:   0.0000000000_{10}	0x00055000	+0.0000,1010,1010,0000,0000,000_{2} x 2^{-126}
 \end{verbatim}
 
-Try some other numbers to check that your \function{normalize()} function correctly encodes the value that's in an \lstinline{unnormal_t} data structure.
+Try some other numbers to check that your \function{encode()} function correctly encodes the value that's in an \lstinline{unnormal_t} data structure.

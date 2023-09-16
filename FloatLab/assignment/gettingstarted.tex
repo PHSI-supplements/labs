@@ -12,7 +12,7 @@ When you run the program with the command \texttt{\textbf{\textit{./floatlab}}},
 
 \begin{verbatim}
     Enter a value, a two-operand arithmetic expression,
-        "denormalize <value>", "renormalize <value>",
+        "decode <value>", "recode <value>",
         or "quit":
 \end{verbatim}
 
@@ -74,11 +74,11 @@ This file contains stubs for constants and functions you need to create.
     \item Functions to examine \lstinline{ieee754_t} values
     \begin{description}
         \item[ieee754\_to\_string()] converts an \lstinline{ieee754_t} value into a meaningful string
-        \item[denormalize()] converts an \lstinline{ieee754_t} value into an \lstinline{unnormal_t} value
+        \item[decode()] converts an \lstinline{ieee754_t} value into an \lstinline{unnormal_t} value
     \end{description}
-    \item Function to normalize and round \lstinline{ieee754_t} values
+    \item Function to encode and round \lstinline{ieee754_t} values
     \begin{description}
-        \item[normalize()] converts an \lstinline{unnormal_t} value into an \lstinline{ieee754_t} value, applying rounding as necessary
+        \item[encode()] converts an \lstinline{unnormal_t} value into an \lstinline{ieee754_t} value, applying rounding as necessary
     \end{description}
     \item Arithmetic functions
     \begin{description}

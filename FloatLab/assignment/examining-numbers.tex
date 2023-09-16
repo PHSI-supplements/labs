@@ -29,7 +29,7 @@ For example:
 
 \begin{verbatim}
         Enter a value, a two-operand arithmetic expression,
-            "denormalize <value>", "renormalize <value>",
+            "decode <value>", "recode <value>",
             or "quit": 1
         0x3f800000	+1.0000,0000,0000,0000,0000,000_{2} x 2^{0}
 
@@ -133,16 +133,16 @@ We summarize the functions here:
     \end{description}
 \end{itemize}
 
-\subsection{Denormalization}
+\subsection{Decoding Numbers from the IEEE 754 Format into \texttt{unnormal\_t}}
 
-The \function{denormalize()} function converts an IEEE~754-compliant \lstinline{ieee754_t} value into a format that facilitates arithmetic.
-As described in Section~\ref{subsec:unnormal}, the \lstinline{unnormal_t} structure that is returned by \function{denormalize()} has fields for the sign bit, the integer portion, the fractional portion, and the exponent.
+The \function{decode()} function converts an IEEE~754-compliant \lstinline{ieee754_t} value into a format that facilitates arithmetic.
+As described in Section~\ref{subsec:unnormal}, the \lstinline{unnormal_t} structure that is returned by \function{decode()} has fields for the sign bit, the integer portion, the fractional portion, and the exponent.
 It also has flags for Not-a-Number and for Infinity.
 Unlike the IEEE~754 format, an \lstinline{unnormal_t} value can have more than one bit in its integer portion.
 
 In general, you can use code very similar to the code you wrote for \function{ieee754_to_string()} to extract the \lstinline{ieee754_t} value's bit fields.
 The principal difference is that \function{ieee754_to_string()} expected you to use the \lstinline{fraction} exactly as you found it in the \lstinline{ieee754_t} value,
-but in \function{denormalize()} you will need to left-shift the \lstinline{fraction} by several places such that the $2^{-1}$ bit is in $bit_{63}$ (the most-significant bit) of an \lstinline{uint64_t} bit vector, the $2^{-2}$ bit is in $bit_{62}$, and so on.
+but in \function{decode()} you will need to left-shift the \lstinline{fraction} by several places such that the $2^{-1}$ bit is in $bit_{63}$ (the most-significant bit) of an \lstinline{uint64_t} bit vector, the $2^{-2}$ bit is in $bit_{62}$, and so on.
 This is because the \function{unnormal()} function call expects the \lstinline{.fraction} named field to be the numerator of
 \[\frac{.fraction\ argument}{2^{64}}\]
 
@@ -154,7 +154,7 @@ In the IEEE~754 normal form, this is 0x4785'F600 = 0b0\underline{100'0111'1}000'
 In the \lstinline{unnormal_t} data structure, the \lstinline{.integer} is 1, the \lstinline{.exponent} is 16, and the \lstinline{.fraction} is 0x0BEC'0000'0000'0000.
 Mathematically, that is the \lstinline{.fraction} field because the fraction field needs to be the numerator of
 \[\frac{BEC,0000,0000,0000_{16}}{1,0000,0000,0000,0000_{16}}\]
-That is why you need to left-shift the \lstinline{fraction} by several places (so that the $2^{-1}$ bit is in the most-significant bit) before passing it to the \function{denormalize()}'s function.
+That is why you need to left-shift the \lstinline{fraction} by several places (so that the $2^{-1}$ bit is in the most-significant bit) before passing it to the \function{decode()}'s function.
 
 To see this from a practical perspective, let us consider some of the functions defined for \lstinline{unnormal_t}.
 In these examples, assume that all numbers are stored in \lstinline{unnormal_t} data structures.
@@ -176,14 +176,14 @@ In these examples, assume that all numbers are stored in \lstinline{unnormal_t} 
 \paragraph*{Check Your Work}
 
 We have provided a function that will print a \lstinline{unnormal_t} value.
-When you run \texttt{\textbf{\textit{./floatlab}}}, you can specify that you want to denormalize a value, such as \texttt{\textbf{\textit{denormalize 12.375}}}.
+When you run \texttt{\textbf{\textit{./floatlab}}}, you can specify that you want to decode a value, such as \texttt{\textbf{\textit{decode 12.375}}}.
 The program will then print the value, based on the \lstinline{unnormal_t} fields.
 Because there are 64 bits available for the integer portion and another 64 bits for the fractional portion, the \lstinline{unnormal_t} value will be printed in base-16:
 
 \begin{verbatim}
         Enter a value, a two-operand arithmetic expression,
-            "denormalize <value>", "renormalize <value>",
-            or "quit": denormalize 12.375
+            "decode <value>", "recode <value>",
+            or "quit": decode 12.375
         +0000000000000001.8c00000000000000_{16} x 2^{3}
 \end{verbatim}
 
@@ -193,16 +193,16 @@ Because $12.375_{10} = 1.1000,11_{2} \times 2^3$, we can see that $1.8\mathrm{C}
 %For example:
 %
 %\begin{verbatim}
-%    Enter ... "denormalize <value> <change exponent amount>", ...
-%        or "quit": denormalize 12.375 -4
+%    Enter ... "decode <value> <change exponent amount>", ...
+%        or "quit": decode 12.375 -4
 %    +0000000000000018.c000000000000000_{16} x 2^{-1}
 %
-%    Enter ... "denormalize <value> <change exponent amount>", ...
-%        or "quit": denormalize 12.375 3
+%    Enter ... "decode <value> <change exponent amount>", ...
+%        or "quit": decode 12.375 3
 %    +0000000000000000.3180000000000000_{16} x 2^{6}
 %\end{verbatim}
 %
-%If your \function{denormalize()} function works correctly without the exponent adjustment, then it will work with the exponent adjustment.
-%This feature is not useful to you \textit{now}, but you may find it useful if you need to debug your \function{normalize()} function.
+%If your \function{decode()} function works correctly without the exponent adjustment, then it will work with the exponent adjustment.
+%This feature is not useful to you \textit{now}, but you may find it useful if you need to debug your \function{encode()} function.
 
-Try some other numbers that you can easily convert to base-two by hand, and see if your \function{denormalize()} function correctly unpacks their IEEE~754 representation and correctly sets the \lstinline{unnormal_t} fields.
+Try some other numbers that you can easily convert to base-two by hand, and see if your \function{decode()} function correctly unpacks their IEEE~754 representation and correctly sets the \lstinline{unnormal_t} fields.
