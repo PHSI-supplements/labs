@@ -27,11 +27,14 @@
     \labidentifier
 
     In this assignment, you will remove a race condition in concurrent code by using a mutual exclusion token.
-    There is only a small amount of design effort required for this lab assignment, and \textbf{you should be able to complete much of it during lab time.}
+    There is only a small amount of design effort required for this lab assignment, and you should be able to complete much of it during lab time.
+    \textbf{At a minimum, complete Sections~4.1 \& 4.2 during lab time.}
 
     The instructions are written assuming you will edit and run the code on \runtimeenvironment.
     If you wish, you may edit and run the code in a different environment;
     be sure that your compiler suppresses no warnings, and that if you are using an IDE that it is configured for C and not C++.
+
+\tableofcontents
 
     \section*{Learning Objectives}
 
@@ -92,7 +95,7 @@
     For example, running the program with the command \texttt{\textbf{\textit{./duplicator}~paleolama.txt~copy.txt}} will create a new file, \textit{copy.txt} that is almost -- but not quite -- a copy of \textit{paleolama.txt}.
     As a shortcut, you can run the command \texttt{\textbf{\textit{./duplicator}~paleolama.txt~copy.txt;~cat~copy.txt}} to display the contents of \textit{copy.txt} after creating it.
     For reference, here are the contents of the original file:
-
+\newpage
     \begin{verbatim}
         % cat paleolama.txt
           (\__/)
@@ -139,7 +142,7 @@
 
     Clearly, neither of these outputs are accurate copies of the original file.
     The problem is that there is a \textbf{race condition} in \textit{duplicator.c}.
-    After you have finished this assignment, you will have removed the race condition, and, the command \texttt{\textbf{\textit{./duplicator}~paleolama.txt~copy.txt}} will create \textit{copy.txt} that is a perfect copy of \textit{paleolama.txt}.
+    After you have finished this assignment, you will have removed the race condition, and the command \texttt{\textbf{\textit{./duplicator}~paleolama.txt~copy.txt}} will create \textit{copy.txt} that is a perfect copy of \textit{paleolama.txt}.
 
     \section{Description of DuplicatorLab Files}
 
@@ -492,7 +495,7 @@ void duplicate(FILE *source_file, FILE *destination_file) {
     You can test with larger files, using \texttt{diff} instead of \texttt{cat} to check for differences.
     (If \texttt{diff} produces no output, then there is no difference between the files.)
     For example: \texttt{./duplicator duplicator.c copy.c; diff duplicator.c copy.c} \\
-    or: \texttt{./duplicator answers. copy.txt; diff answers.txt copy.txt}
+    or: \texttt{./duplicator answers.txt copy.txt; diff answers.txt copy.txt}
 
 
     \section{Turn-in and Grading}
@@ -525,7 +528,7 @@ void duplicate(FILE *source_file, FILE *destination_file) {
 
     \section{Epilogue}
 
-    \WeNeedBetterSecurity
+    \WeNeedBetterLocks
 
     \textit{To be continued...}
 

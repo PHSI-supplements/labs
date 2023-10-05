@@ -4,7 +4,7 @@
 
 ###############################################################################
 #
-# @file authoritative_x86_64_unix.s
+# @file authoritative_x86_64_unix.S
 #
 # @author Christopher A. Bohn
 #

@@ -4,7 +4,7 @@
 
 ###############################################################################
 #
-# @file authoritative_x86_64_macos.s
+# @file authoritative_x86_64_macos.S
 #
 # @author Christopher A. Bohn
 #
