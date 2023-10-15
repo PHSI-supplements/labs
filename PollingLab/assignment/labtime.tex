@@ -7,7 +7,7 @@ If you do not attend your lab period, then you must complete this section on you
 
 \subsection{Populate the Keypad's Lookup Table} \label{subsec:populatekeypad}
 
-Locate the \lstinline{keys} $4 \times 4$ nested array on lines 20--25 of \textit{io\_functions.c}.
+Locate the \lstinline{keys} $4 \times 4$ nested array on lines 37--42 of \textit{io\_functions.c}.
 This nested array serves as a lookup table to obtain the appropriate value when a key is pressed.
 \textit{Even the starter code depends on this nested array being populated correctly.}
 The element \lstinline{keys[0][0]} will correspond to the \texttt{1} key;
@@ -15,8 +15,8 @@ The element \lstinline{keys[0][0]} will correspond to the \texttt{1} key;
 \lstinline{keys[3][0]} will correspond to the \texttt{*} key;
 and \lstinline{keys[3][3]} will correspond to the \texttt{D} key.
 
-We want the numerals \texttt{0}-\texttt{9} to produce their respective decimal (and hexadecimal) values.
-We want \texttt{A}-\texttt{D} to produce their respective hexadecimal values.
+We want the numerals \texttt{0}--\texttt{9} to produce their respective decimal (and hexadecimal) values.
+We want \texttt{A}--\texttt{D} to produce their respective hexadecimal values.
 We want \texttt{\#} to produce the hexadecimal value 0xE, and we want \texttt{*} to produce the hexadecimal value 0xF\@.
 
 \begin{itemize}
@@ -28,8 +28,10 @@ We want \texttt{\#} to produce the hexadecimal value 0xE, and we want \texttt{*}
 You can confirm that you correctly populated the array's initializer by running the test code.
 Place the \textbf{left switch} in the \textit{right} position and upload your code.
 (Or, if you have already uploaded your code, place the \textbf{left switch} in the \textit{right} position and press the RESET button in the middle of the \developmentboard.)
-The test code will output on both the Serial Monitor and on the display module.
+The test code will output on the display module.
 The output will include the key that was pressed (if any), a hyphen if no key is being pressed, or a question mark if \function{get_keypress()} returns an invalid value.
+
+{\color{red}TODO: change this to the new code}
 
 \begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=399]
     ...
@@ -71,14 +73,16 @@ Finally, if both buttons are pressed then the left LED will illuminate, and if b
 In Sections~\ref{subsec:simpleIO}--\ref{subsec:ScannedInput}, you will use an array of \lstinline{cowpi_ioport_t} structures to access the memory-mapped I/O registers for the \developmentboard's external pins.
 In Section~\ref{subsec:DisplayModule}, you will use a single \lstinline{cowpi_i2c_t} structure to transmit data to the display module.
 
-Read Section~4.1 of the Cow Pi datasheet.
-(During the guided discussion in your lab period, the TAs may direct you to particular parts of the datasheet's Section~4.1,
-but be sure to go back and read the full section later.)
+Read the section of the Cow~Pi datasheet that \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#structure-for-memory-mapped-input-output}{discusses the \lstinline{cowpi_ioport_t} structure}.
+(During the guided discussion in your lab period, the TAs may direct you to particular parts of that section of the datasheet,
+but be sure to go back and read the full section covering \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#external-pins-input-output}{input/output pins} later.)
 After you have done so,
 \begin{itemize}
     \item Uncomment the \lstinline{ioports = ...} line of the starter code's \function{initialize_io()} function, and
     \item Assign the appropriate address to the \lstinline{ioports} pointer on that line.
 \end{itemize}
+
+{\color{red}TODO: change this to the new code}
 
 \begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=33]
 void initialize_io(void) {
@@ -93,8 +97,8 @@ void initialize_io(void) {
 
 You can now use the \lstinline{ioports} pointer as an array of \lstinline{cowpi_ioport_t} structures, which you can index using the \lstinline{D0_D7}, \lstinline{D8_D13}, and \lstinline{D14_D19} named constants.
 
-Read Sections~4.2.1 of the Cow Pi datasheet.
-(You can wait to read the rest of the datasheet's Section~4.2 until you're working on the assignment's Section~\ref{subsec:DisplayModule}.)
+Read the section of the Cow~Pi datasheet that \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#atmega328ptwistruct}{discusses the \lstinline{cowpi_i2c_t} structure}.
+(You can wait to read the rest of the datasheet's Section that discusses the Inter-Integrated Circuit Protocol until you're working on the assignment's Section~\ref{subsec:DisplayModule}.)
 After you have done so,
 \begin{itemize}
     \item Uncomment the \lstinline{i2c = ...} line of the starter code's \function{initialize_io()} function, and
@@ -103,13 +107,15 @@ After you have done so,
 
 When you get to the assignment's Section~\ref{subsec:DisplayModule}, you will be able to use the \lstinline{i2c} pointer to access the memory-mapped registers to communicate with the display module.
 
-\textbf{Do \textit{not} uncomment the call to \function{cowpi_lcd1602_set_send_halfbyte_function()} until you get to the assignment's Section~\ref{subsec:DisplayModule}!}
+\textbf{Do \textit{not} uncomment the assignment to \function{cowpi_hd44780_send_halfbyte} until you get to the assignment's Section~\ref{subsec:DisplayModule}!}
 
 
 \subsection{Detect a Change on the Numeric Keypad} \label{subsec:detectKeyAction}
 
 The next part of the group activity is detecting when someone presses (or releases) a key on the numeric keypad.
 The \function{key_movement_detected()} function in the starter code is:
+
+{\color{red}TODO: change this to the new code}
 
 \begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=51, escapechar=`]
 bool key_movement_detected(void) {

@@ -38,7 +38,6 @@ All of your system's logic code must go in \textit{number\_builder.c}.
 
 You may use the \function{delayMicroseconds()} function to introduce a 1--2$\mu$s delay in \function{get_keypress()} and to introduce a 1$\mu$s delay in \function{send_halfbyte()}.
 You may use the \function{millis()} function to determine how much time (in milliseconds) has elapsed.
-You may (but are not required to) use \function{Serial.print()} and \function{Serial.println()} instead of \function{printf()} if you wish.
 
 You may not use any other libraries, functions, macros, types, or constants from the Arduino core.\footnote{\url{https://www.arduino.cc/reference/en/}}
 
@@ -50,12 +49,14 @@ You may not use any AVR-specific functions, macros, types, or constants of avr-l
 
 To receive credit for the memory-mapped I/O portion of this lab, all input and
 output must be accomplished using the memory-mapped I/O registers.
-You may not use the functions described in Sections~2.2--2.4 of the Cow Pi datasheet.
+The starter code calls \function{cowpi_setup()} for you.
+You also may use \href{https://cow-pi.readthedocs.io/en/latest/CowPi/inputs.html#debouncing}{\function{cowpi_debounce_byte()}}.
+You may not use any other functions described in the \href{https://cow-pi.readthedocs.io/en/latest/library.html}{CowPi Library} portion of the Cow~Pi datasheet.
 
-You may use any functions that send characters or commands to the display module that are described in Section~2.5 of the Cow Pi datasheet.\footnote{
-    Because of the \function{display_string()} function provided in \textit{supplement.h}, the only CowPi library function you will need to use in your code is \function{cowpi_lcd1602_set_send_halfbyte()}.
-}
-Your \function{send_halfbyte()} function, however, must be implemented using memory-mapped I/O registers.
+You may use any functions that send characters or commands to the display module that are described in the \href{https://cow-pi.readthedocs.io/en/latest/library.html}{Functions for Direct Control of HD44780-Controlled Display Modules} portion of the Cow~Pi datasheet;
+however, we very strongly advise against doing so.
+We expect that you will find that using \function{fprintf()} is less error-prone.
+Regardless, your \function{send_halfbyte()} function must be implemented using memory-mapped I/O registers.
 
 \subsubsection{Constraints on other libraries}
 

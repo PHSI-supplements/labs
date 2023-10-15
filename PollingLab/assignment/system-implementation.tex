@@ -19,17 +19,28 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
     \item The tool shall have two alignment modes, \textit{left justified mode} and \textit{right justified mode}. The \textbf{left switch} controls the alignment mode.
         When the \textbf{left switch} is toggled to the left, the tool shall be in left justified mode.
         When the \textbf{left switch} is toggled to the right, the tool shall be in right justified mode.
+    \item If the user toggles the \textbf{left switch} (\textit{i.e.}, changes alignment mode):
+        if no number is being displayed, then the system shall seamlessly transition between alignment modes;
+        otherwise, the system's behavior is undefined.
     \item The tool shall have two number bases, \textit{decimal} and \textit{hexadecimal}.
-        The \textbf{right switch} controls the number base.
-    \item \label{spec:decimalExplained} When the \textbf{right switch} is toggled to the left, the number builder will use the decimal number base.
+        While the number shall be displayed in both number bases (requirement~\ref{spec:displayFormat}),
+        the \textbf{right switch} controls which number base is used to build the number.
+    \item \label{spec:decimalExplained} When the \textbf{right switch} is toggled to the left, the number builder will use the decimal number base for inputs.
         When the user presses a button on the \textbf{matrix keypad} with a decimal numeral (\textit{0-9}) then the number builder shall take the appropriate action as specified in requirement~\ref{spec:initialKeyPress} or \ref{spec:BuildingValue}.
         Any other buttons on the keypad shall be ignored.
-    \item \label{spec:hexadecimalExplained} When the \textbf{right switch} is toggled to the right, the number builder will use the hexadecimal number base.
+    \item \label{spec:hexadecimalExplained} When the \textbf{right switch} is toggled to the right, the number builder will use the hexadecimal number base for inputs.
         When the user presses a button on the \textbf{matrix keypad} then the number builder shall take the appropriate action as specified in requirement~\ref{spec:initialKeyPress} or \ref{spec:BuildingValue}.
         Buttons with decimal numerals (\textit{0-9}) or alphabetic letters (\textit{A-D}) shall be interpreted as having the corresponding hexadecimal numeral;
         the button with the octothorp (\#) shall be interpreted as having the hexadecimal numeral \textit{E};
         and the button with the asterisk (*) shall be interpreted as having the hexadecimal numeral \textit{F}.
+    \item If the user toggles the \textbf{right switch} (\textit{i.e.}, changes the number base):
+        if no number is displayed, or if the number 0 is displayed, then the system shall seamlessly transition between number bases;
+        if a non-zero number is being built then the system's behavior is undefined.
     \item Initially, the \textbf{display module} shall be blank.
+    \item \label{spec:displayFormat} When the \textbf{display module} is non-blank (\textit{i.e.}, a number is being built):
+        the number's decimal representation shall be on the \textbf{display module}'s top row,
+        and the number's hexadecimal representation shall be on the \textbf{display module}'s bottom row.
+        These representations shall be aligned to the left side or to the right side of the \textbf{display module}, in accordance with the tool's alignment mode.
     \item \label{spec:illuminateLED} Whenever the user presses a key on the \textbf{matrix keypad}, the \textbf{right LED} (aka, the external LED) shall illuminate for approximately one-half of a second.
         Whenever the user presses one of the \textbf{pushbuttons}, the \textbf{left LED} (aka the internal LED) shall illuminate for approximately one-half of a second.
     \item \label{spec:LEDoffWhenOtherwise} The \textbf{LEDs} shall not illuminate except as specified in requirement~\ref{spec:illuminateLED}.
@@ -40,9 +51,35 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
         \item \label{spec:32bits} The numbers' values shall be representable as 32-bit signed integers.
         \item \label{spec:initialKeyPress} If the display is blank (\textit{i.e.}, there is not yet a number being built), then whenever the user presses a button on the \textbf{matrix keypad}, the corresponding numeral shall be displayed on the \textbf{display module}'s top row, either in the far-left column or the far-right column, depending on the alignment mode.
             The numeral displayed shall follow the interpretations specified in requirements~\ref{spec:decimalExplained} and \ref{spec:hexadecimalExplained}.
-        \item \label{spec:BuildingValue} If the display is not blank (\textit{i.e.}, there is a number being built), then whenever the user presses a button on the \textbf{matrix keypad}, the corresponding numeral shall become the least-significant digit of the number shown on the \textbf{display module};
-            all pre-existing digits shall increase in significance by one order of magnitude.
-            For example, if \display{234} is displayed and the user presses \texttt{5}, then \display{2345} shall be displayed.
+            \begin{itemize}
+                \item \textit{Note:} In accordance with requirement~\ref{spec:displayFormat}, the number shall be displayed in both decimal and in hexadecimal.
+                    If the tool is receiving inputs in the hexadecimal number base, and if the first digit is in the inclusive range $A--F$, then the decimal representation will necessarily require more than one decimal digit.
+            \end{itemize}
+        \item \label{spec:BuildingValue} If the display is not blank (\textit{i.e.}, there is a number being built), then whenever the user presses a button on the \textbf{matrix keypad}, then the number's value shall change:
+            \begin{itemize}
+                \item The digits in the representation corresponding to the input number base shall increase in significance by 1, and the newly-input digit shall become that number base's least significant digit.
+                \item The representation in the other number base shall also update to reflect the new value.
+            \end{itemize}
+            For example, if the display shows \\
+            \display{
+                \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxx}234} \vspace{-1mm}\\
+                \colorbox{LightGreen}{\phantom{xxxxxxxxxxxx}0xEA}
+            } \\
+            and the user presses \texttt{5} while the input number base is decimal, then the display shall update to \\
+            \display{
+                \colorbox{LightGreen}{\phantom{xxxxxxxxxxxx}2345} \vspace{-1mm}\\
+                \colorbox{LightGreen}{\phantom{xxxxxxxxxxx}0x929}
+            } \\
+            Similarly, if the display shows \\
+            \display{
+                \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxx}564} \vspace{-1mm}\\
+                \colorbox{LightGreen}{\phantom{xxxxxxxxxxx}0x234}
+            } \\
+            and the user presses \texttt{5} while the input number base is hexadecimal, then the display shall update to \\
+            \display{
+                \colorbox{LightGreen}{\phantom{xxxxxxxxxxxx}9029} \vspace{-1mm}\\
+                \colorbox{LightGreen}{\phantom{xxxxxxxxxx}0x2345}
+            } \\
             The numeral displayed shall follow the interpretations specified in requirements~\ref{spec:decimalExplained} and \ref{spec:hexadecimalExplained}.
             \begin{enumerate}
                 \item There shall be no noticeable lag in updating the display.
@@ -53,26 +90,26 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
                 %     to the Serial Monitor in decimal or hexadecimal, depending on the
                 %     system's current number base.
             \end{enumerate}
-        \item ``0x'' shall be displayed as part of a hexadecimal value (``0x'' is optional when the value is 0).
+        \item ``0x'' or ``0X'' shall be displayed as part of a hexadecimal value (``0x'' is optional when the value is 0).
         % \item ``0x'' shall not be displayed as part of a hexadecimal value.
-        \item Whenever the user presses the \textbf{left pushbutton}, the value
-            being displayed shall be negated.
+        \item Whenever the user presses the \textbf{left pushbutton}, the value being displayed shall be negated.
             \begin{enumerate}
-                \item In the decimal number base, the presence or absence of negative sign shall indicate whether or not a value is negative.
-                \item In the hexadecimal number base, 32-bit two's complement shall be used.
+                \item In the decimal representation, the presence or absence of negative sign shall indicate whether or not a value is negative.
+                \item In the hexadecimal representation, 32-bit two's complement shall be used.
             \end{enumerate}
         \item A positive sign shall not be displayed as part of a positive value.
-        \item If a negative decimal value is displayed, the negative sign shall be displayed immediately to the left of the most-significant digit being displayed.
-            For example, \display{-456} is correctly displayed, but \display{-\phantom{xxxx}456} is not correctly displayed.
+        \item When a negative decimal value is displayed, the negative sign shall be displayed immediately to the left of the most-significant digit being displayed.
+            For example, \display{\colorbox{LightGreen}{\phantom{xxxxxxxxxxxx}-456}} is correctly displayed, but \display{\colorbox{LightGreen}{\phantom{xxxxxxxx}-\phantom{xxxx}456}} is not correctly displayed.
             \begin{enumerate}
                 \item If in left justified mode, the negative sign shall be in the leftmost column, and the most-significant digit shall be in the column immediately to the right of that.
             \end{enumerate}
         \item Leading 0s may be displayed but are discouraged.
-            For example, \display{782} is preferred, but \display{00000782} is allowed.
+            For example, \display{\colorbox{LightGreen}{782}} is preferred, but \display{\colorbox{LightGreen}{00000782}} is allowed.
         \item Digit separators are permitted but not required.
-            For example, both \display{12345} and \display{12,345} are acceptable, as are both \display{0x6789A} and \display{0x6,789A}.
-        \item \label{spec:clearNumber} Whenever the user presses the \textbf{right pushbutton} while a number is being built, the number that has been built shall be displayed on the bottom row, aligned according to the alignment mode, for approximately one second.
-            After approximately one second, the number that has been built shall reset to 0, and the \textbf{display module} shall be cleared.
+            For example, both \display{\colorbox{LightGreen}{12345}} and \display{\colorbox{LightGreen}{12,345}} are acceptable, as are both \display{\colorbox{LightGreen}{0x6789A}} and \display{\colorbox{LightGreen}{0x6'789A}}.
+        \item \label{spec:clearNumber} Whenever the user presses the \textbf{right pushbutton} while a number is being built, the number that has been built shall reset to 0, and the \textbf{display module} shall be cleared.
+%        \item \label{spec:clearNumber} Whenever the user presses the \textbf{right pushbutton} while a number is being built, the number that has been built shall be displayed on the bottom row, aligned according to the alignment mode, for approximately one second.
+%            After approximately one second, the number that has been built shall reset to 0, and the \textbf{display module} shall be cleared.
         % \item In no case shall the tool allow the user to input a value too
         %     great to be displayed on the \textbf{display module}. If
         %     the user attempts to enter a value greater than $0x7FFF,FFFF$ in
@@ -90,12 +127,6 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
                 Because $0x8000,0000 = -2,147,483,648_{10} > -2,309,737,968_{10}$, adding the \texttt{0} digit did produce a ``too big'' value.
             \end{itemize}
         \end{enumerate}
-    \item If the user toggles the \textbf{left switch} (\textit{i.e.}, changes alignment mode):
-        if no number is being displayed, then the system shall seamlessly transition between alignment modes;
-        otherwise, the system's behavior is undefined.
-    \item If the user toggles the \textbf{right switch} (\textit{i.e.}, changes the number base):
-        if no number is displayed, or if the number 0 is displayed, then the system shall seamlessly transition between number bases;
-        if a non-zero number is being built then the system's behavior is undefined.
     %\item \label{spec:singleKeypress} When the user presses a button for less than
     %    approximately one-half of a second, regardless of whether it is one of the
     %    \textbf{pushbuttons} or a key on the \textbf{matrix keypad}, it shall be treated
@@ -112,12 +143,60 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
                 \end{itemize}
             \item In general, the system shall not block except as necessary for an accurate scan of the keypad and for sending data to the display module.
         \end{itemize}
-        Exceptions to Requirement~\ref{spec:responsive}:
+        Exception to Requirement~\ref{spec:responsive}:
         \begin{itemize}
             \item There is no requirement to detect that the user is simultaneously pressing multiple keys on the keypad.
-            \item During the second that a number is displayed on the bottom row before the display clears (Requirement~\ref{spec:clearNumber}), if the user presses a button or key then the appropriate LED shall illuminate in accordance with Requirement~\ref{spec:illuminateLED}, but no other action is required.
+%            \item During the second that a number is displayed on the bottom row before the display clears (Requirement~\ref{spec:clearNumber}), if the user presses a button or key then the appropriate LED shall illuminate in accordance with Requirement~\ref{spec:illuminateLED}, but no other action is required.
         \end{itemize}
 \end{enumerate}
+
+
+\subsection{Simplified State Diagram}
+
+This state diagram doesn't fully capture all of the system's requirements,
+but it characterizes the basic handling of inputs.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \node[state,initial](blank){Blank Display};
+        \node[state] at (-4, -3)  (decimalUpdate){Update Number};
+        \node[state] at (4, -3)   (hexadecimalUpdate){Update Number};
+        \node[state] at (-3, -7) (decimalDisplay){Display Number};
+        \node[state] at (3, -7)  (hexadecimalDisplay){Display Number};
+        \draw   (blank) edge[-Latex, left=1] node{decimal mode; 0--9 pressed} (decimalUpdate)
+        (blank) edge[-Latex, right=1] node{hexadecimal mode; 0--F pressed} (hexadecimalUpdate)
+        (decimalUpdate) edge[-Latex, bend left, below] node{} (decimalDisplay)
+        (hexadecimalUpdate) edge[-Latex, bend right, below] node{} (hexadecimalDisplay)
+        (decimalDisplay) edge[-Latex, bend left, above] node{--, 0--9 pressed} (decimalUpdate)
+        (hexadecimalDisplay) edge[-Latex, bend right, above] node{--, 0--F pressed} (hexadecimalUpdate)
+        (decimalDisplay) edge[-Latex, bend right] node{clear pressed} (blank)
+        (hexadecimalDisplay) edge[-Latex, bend left] node{} (blank);
+    \end{tikzpicture}
+    \caption{Simplified state diagram for building numbers.}
+\end{figure}
+
+%\begin{figure}[h]
+%    \centering
+%    \begin{tikzpicture}
+%        \umlstateinitial[y=3, name=initial]
+%        \umlbasicstate[name=blank]{Blank Display}
+%        \begin{umlstate}[x=-4, y=-5, name=decimalInput, do={$number = 10 \times number + digit$}]{Update Number}\end{umlstate}
+%        \begin{umlstate}[x=4, y=-5, name=hexadecimalInput, do={$number = 16 \times number + digit$}]{Update Number}\end{umlstate}
+%        \umlbasicstate[x=-4, y=-8, name=decimalDisplay]{Display Number}
+%        \umlbasicstate[x=4, y=-8, name=hexadecimalDisplay]{Display Number}
+%        \umltrans{initial}{blank}
+%        \umltrans[arg={decimal mode}, mult={0--9 pressed}, align=left]{blank}{decimalInput}
+%        \umltrans[arg={hexadecimal mode}, mult={0--F pressed}, align=left]{blank}{hexadecimalInput}
+%        \umlHVHtrans[arm1=-4, arg={0--9 or - pressed}]{decimalDisplay}{decimalInput}
+%        \umlHVHtrans[arm1=4, arg={0--F or - pressed}]{hexadecimalDisplay}{hexadecimalInput}
+%        \umltrans{decimalInput}{decimalDisplay}
+%        \umltrans{hexadecimalInput}{hexadecimalDisplay}
+%        \umlHVtrans{decimalDisplay}{blank}
+%        \umlHVtrans[arg={clear pressed}]{hexadecimalDisplay}{blank}
+%    \end{tikzpicture}
+%    \caption{Simplified state diagram for building numbers.}
+%\end{figure}
 
 
 \subsection{Using I/O Functions for Polling}
@@ -161,7 +240,7 @@ If they are the same, then either the user is still pressing that button (in whi
 If the button previously was pressed but is now not pressed, then the user lifted their finger off the button.
 If the button previously was not pressed but is now pressed, then the user \textit{just} pressed the button.
 \ifbool{offerdecompositionhints}{
-    When you studied the I/O test code in Section~\ref{subsec:populatekeypad}, you may have noticed that it updates the display and the Serial Monitor only when a change is present.
+    When you studied the I/O test code in Section~\ref{subsec:populatekeypad}, you may have noticed that it updates the display only when a change is present.
     The I/O test code achieves that in the same fashion described here.
 }{}
 
@@ -184,28 +263,15 @@ however, you can do so if you find that simpler.
 \subsection{Outputting to the Display Module}
 
 You will not call \function{send_halfbyte()} directly.
-Instead, the CowPi library's functions that work with the LCD1602 display module make use of \function{send_halfbyte()} after you have implemented and registered it.
+Instead, the CowPi\_stdio library's functions that work with the display module make use of \function{send_halfbyte()} after you have implemented and uncommented the assignment to \lstinline{cowpi_hd44780_send_halfbyte}.
 
-This semester we are experimentally providing you with a function, \function{display_string()} in \textit{supplement.h}, that handles the calls to CowPi library's LCD1602 functions.
-The \function{display_string()} takes two arguments.
-The first argument is a string:
-the function's signature requires a string of at least 16 characters plus the terminal NUL;
-we recommend that the string have \textit{exactly} 16 characters plus the terminal NUL\@.
-The second argument uses an \lstinline{enum} to indicate whether the string should be displayed on the display module's top row (\lstinline{TOP_ROW}) or bottom row (\lstinline{BOTTOM_ROW}).
+The \function{fprintf()}\footnote{\url{https://pubs.opengroup.org/onlinepubs/7908799/xsh/fprintf.html}} function is essentially a version of \function{printf()} that ``prints'' to an arbitrary file stream,
+and nearly everything outside of the program is considered to be a file.
+Indeed, \function{printf(...)} is equivalent to \function{fprintf(stdout, ...)} because \lstinline{stdout} is the file stream to the standard output.
+The first argument is a pointer to the file stream; the second argument is the format string (which would be \function{printf()}'s first argument), and any subsequent arguments are the variables that populate the placeholders in the format string.
 
-You are not required to use \function{display_string()}.
-If you choose to directly call the CowPi library's LCD1602 functions, you will find their descriptions in Section~2.5 of the Cow Pi datasheet.
-You will want to read Section~1.3 of the Cow Pi datasheet to understand the addresses used by the \function{cowpi_lcd1602_place_character()} and \function{cowpi_lcd1602_place_cursor()}.
-While the datasheet's Section~1.3 also describes shifting the display, there is no part of this lab assignment that calls for shifting the display.
-
-\subsubsection{Creating the Strings to Display Using sprintf()}
-
-If you do not use \function{display_string()} then you are not required to create any strings, but you may.
-If you do use \function{display_string()} then you obviously must create the strings that are passed to it.
-The simplest way to do this is with \function{sprintf()}.
-
-As you saw in KeyboardLab, the \function{sprintf()}\footnote{\url{https://pubs.opengroup.org/onlinepubs/7908799/xsh/fprintf.html}} is essentially a version of \function{printf()} that ``prints'' to a string.
-The first argument is a pointer to the string to be printed to; the second argument is the format string (which would be \function{printf()}'s first argument), and any subsequent arguments are the variables that populate the placeholders in the format string.
+You can print to the display module using \function{fprintf()} with the \lstinline{display} file stream;
+look at the end of the \function{test_io()} function in \textit{io\_functions.c} for examples of printing to the display module.
 
 The following conversion specifiers may be useful (because a 32-bit value is considered to be a long integer on an 8-bit microcontroller, these conversion specifiers include the lowercase letter `l'):
 \begin{description}
@@ -221,37 +287,10 @@ The following conversion specifiers may be useful (because a 32-bit value is con
         The number is left-justified, and any unused space to the right is left blank.
 \end{description}
 
-\subsubsection{Creating the Strings Without Using sprintf()}
-
-Normally, using \function{printf()} and \function{sprintf()} in embedded systems is not a good idea.
-One significant consideration is the impact on your program's size: \function{printf()} and \function{sprintf()} add a little over 1.5kB to the program.\footnote{
-    Most of this is the code to generate the desired output/string, so eliminating only one of the functions doesn't save more than a few dozen bytes.
-}
-You may have noticed that only 30kB\footnote{
-    The ATmega328P has 32kB of flash memory  -- 30kB is available for programs, and 2kB set aside for data.
-} is available for your program in the \developmentboard's flash memory, so \function{printf()} and \function{sprintf()} take up 5.4\% of the total space available for your program!
-Because of the \function{test_io()} code, your program is already includes the \function{printf()} and \function{sprintf()} functions, so you won't see any memory penalties for using them in your number builder code.
-
-The other consideration is the time budget.
-Processing a format string each time you need to update the display can be very time consuming.
-It's unlikely that you'll notice any impact on the your program's responsiveness,\footnote{
-    We measured \function{sprintf()} about a quarter of a millisecond to convert the 32-bit integer into a string.
-    As long as you only call \function{sprintf()} when there's a change, this will appear to be instantaneous.
-} but in an embedded system with more-stringent timing requirements, it could be an issue.
-
-You know more about how the program uses strings than \function{printf()} and \function{sprintf()} do.
-This knowledge will often allow you to generate and/or manipulate strings much faster.\footnote{
-    Our sample solution required about an eigth of the time that \function{sprintf()} required.
-} Indeed, the number builder's specification allows for some very fast string manipulations to be used instead of \function{sprintf()} to produce the strings you can send to \function{display_string()}.
-
-Using \function{sprintf()} will not affect your ability to earn full credit on this assignment.
-However, we are offering a small bonus if your number builder implementation produces the correct output without ever calling \function{printf()}, \function{sprintf()}, \function{snprintf()}, or \function{fprintf()}.
-
 
 \subsection{Measuring the Passage of Time}
 
 Requirement~\ref{spec:illuminateLED} requires that LEDs be illuminated for 500ms after button presses or key presses.
-Requirement~\ref{spec:clearNumber} requires that the number be displayed on the bottom row for 1000ms before the display is completely cleared.
 You cannot use the Arduino \function{delay()} function because that would violate one of this assignment's constraints.
 The \function{delay()} function and other blocking solutions are also contrary to Requirement~\ref{spec:responsive}.
 You can, however, use the Arduino \function{millis()} function to determine how long, in milliseconds, your program has been running and implement a non-blocking solution to these requirements.
@@ -265,8 +304,6 @@ You can, however, use the Arduino \function{millis()} function to determine how 
     You do not even need to check whether the LED is already illuminated:
     calling \lstinline{set_xx_led(true)} will illuminate that LED if it is not illuminated and will leave it illuminated if it already is.
     Similarly, calling \lstinline{set_xx_led(false)} will deluminate that LED if it is illuminated and will leave it deluminated if it is already off.
-
-    The idea is similar for Requirement~\ref{spec:clearNumber}.
 }{}
 
 
@@ -279,13 +316,16 @@ You can, however, use the Arduino \function{millis()} function to determine how 
 
     Let us consider the case where you're building a decimal number.
     Viewed as a weighted sum, an $n$-digit number $d_{n-1}d_{n-2}{\dots}d_2d_1d_0$ has the value
-    \[\sum_{i=0}^{n-1}d_i \times 10^i\]
+    \[number = \sum_{i=0}^{n-1}d_i \times 10^i\]
 
     Requirement~\ref{spec:BuildingValue} states than when you introduce a new digit, $d_{new}$, it will be the least-significant digit (that is, its weight will be ``times 1''), and all pre-existing digits will increase in significance by one order of magnitude.
     So the new value is
-    \[\left(\sum_{i=0}^{n-1}d_i \times 10^{i+1}\right) + d_{new} \times 1
-    = \left(\sum_{i=0}^{n-1}d_i \times 10^i \times 10\right) + d_{new}
-    = \left(10 \times \sum_{i=0}^{n-1}d_i \times 10^i\right) + d_{new}\]
+    \begin{align*}
+          \left(\sum_{i=0}^{n-1}d_i \times 10^{i+1}\right) + \left(d_{new} \times 1\right)
+            & = \left(\sum_{i=0}^{n-1}d_i \times 10^i \times 10\right) + d_{new} \\
+            & = \left(10 \times \sum_{i=0}^{n-1}d_i \times 10^i\right) + d_{new} \\
+            & = 10 \times number + d_{new}
+    \end{align*}
 
     So, if you're building a positive decimal number, you update the number by multiplying the old value by 10 and adding the new digit.
 
@@ -302,7 +342,7 @@ You can, however, use the Arduino \function{millis()} function to determine how 
 
     \paragraph{Detecting that Overflow Has Happened}
 
-    Because multiplication is involved, detecting overflow after-the-fact isn't as simple as checking ``if the result is less than in operands\dots''
+    Because multiplication is involved, detecting overflow after-the-fact isn't as simple as checking ``if the result is less than the operands\dots''
     The surest way is to use more bits.
     Using 64-bit arithmetic on an 8-bit microcontroller doesn't sound particularly appealing for the time budget and memory budget, but it is tremendously simple, and for this particular system you should have enough responsiveness and memory.\footnote{
         In our sample solution using 64-bit arithmetic to detect that overflow has happened added about half of a kilobyte and took twice as long ($40\mu s$) as predicting overflow and using 32-bit arithmetic.
@@ -319,7 +359,8 @@ You can, however, use the Arduino \function{millis()} function to determine how 
 
     \textit{Hexadecimal}: What is in bits~31..28 (the most-significant half-byte) of the ``old value'' (before updating it with the new digit)?
     If it's anything other than \lstinline{0x0} or \lstinline{0xF}, overflow will happen.
-    If it's \lstinline{0xF} then overflow may happen, depending on the value of bit~27.
+    If it's \lstinline{0x0} then overflow won't happen.
+    If it's \lstinline{0xF} then overflow might happen, depending on the value of bit~27.
 
     \textit{Decimal}: If you know what $\frac{1}{10}$ of \lstinline{INT32_MAX} and $\frac{1}{10}$ of \lstinline{INT32_MIN} (found in \lstinline{<limits.h>}) are, then you can compare the ``old value'' to those, to determine if multiplying by 10 will overflow.
     If multiplication won't overflow, then multiply the old value by 10 and compare that product with \lstinline{INT32_MAX} and \lstinline{INT32_MIN} to determine if the difference is less than the value of the new digit.

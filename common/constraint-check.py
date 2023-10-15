@@ -48,7 +48,7 @@ def keyword_is_present(keyword: str, line: str, code_block_start: str, code_bloc
     if keyword in line:
         before, during, after = line.strip().partition(keyword)
         # determine if this is truly a keyword and not part of an identifier
-        if (before == '' or before[-1] in {' ', '\t', ')', code_block_end}) and \
+        if (before == '' or before[-1] in {' ', '\t', '(', ')', '!', code_block_end}) and \
                 (after == '' or after[0] in {' ', '\t', '(', ';', code_block_start}):
             found_keyword = True
         # determine if it is part of a string
