@@ -2,7 +2,8 @@
  *
  * @file duplicator.c
  *
- * @author (STUDENT -- TYPE YOUR NAME HERE)
+ * @author (TYPE YOUR NAME HERE)
+ * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions that students must modify for DuplicatorLab to eliminate
  * race conditions without starving a thread.
