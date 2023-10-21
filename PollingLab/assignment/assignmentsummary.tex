@@ -36,7 +36,8 @@ All of your system's logic code must go in \textit{number\_builder.c}.
 
 \subsubsection{Constraints on the Arduino core}
 
-You may use the \function{delayMicroseconds()} function to introduce a 1--2$\mu$s delay in \function{get_keypress()} and to introduce a 1$\mu$s delay in \function{send_halfbyte()}.
+You may use the \function{delayMicroseconds()} function to introduce a 1--2$\mu$s delay in \function{get_keypress()} and to introduce a 1$\mu$s delay in \function{send_halfbyte()};
+you may not use \function{delayMicroseconds()} for any other purpose.
 You may use the \function{millis()} function to determine how much time (in milliseconds) has elapsed.
 
 You may not use any other libraries, functions, macros, types, or constants from the Arduino core.\footnote{\url{https://www.arduino.cc/reference/en/}}

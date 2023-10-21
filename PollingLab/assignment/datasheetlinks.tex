@@ -1,15 +1,16 @@
-%! Author = cabohn
-%! Date = 10/15/23
+The links in this appendix are also provided in the regular sections of the assignment sheet.
+However, as a convenience, this appendix summarizes the links to the Cow~Pi datasheet that you may find useful for this assignment.
 
-% Preamble
-\documentclass[11pt]{article}
+\hspace{1cm}
 
-% Packages
-\usepackage{amsmath}
-
-% Document
-\begin{document}
-
-
-
-\end{document}
+\begin{footnotesize}\begin{tabular}[h]{p{4cm}ll}
+    Datasheet Section                                                           & URL (https://cow-pi.readthedocs.io/en/latest/\dots)                                                                                                                           & Useful when working on\dots                                                               \\ \hline\hline
+    Matrix Keypad                                                               & \href{https://cow-pi.readthedocs.io/en/latest/hardware/inputs.html#matrix-keypad}{hardware/inputs.html\#matrix-keypad}                                                        & Sections~\ref{subsec:populatekeypad} \& \ref{subsec:ScannedInput}                         \\ \hline
+    \raggedright{HD44780-driven LCD Character Display}                          & \href{https://cow-pi.readthedocs.io/en/latest/hardware/outputs.html#hd44780-driven-lcd-character-display}{hardware/outputs.html\#hd44780-driven-lcd-character-display}        & Section~\ref{subsec:baseAddresses} \& \ref{subsec:DisplayModule}                          \\ \hline
+    \raggedright{Structure for Memory-Mapped Input/Output (for external pins)}  & \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#structure-for-memory-mapped-input-output}{microcontroller.html\#structure-for-memory-mapped-input-output}  & Sections~\ref{subsec:baseAddresses}--\ref{subsec:controlLED} \& \ref{subsec:simpleIO}     \\ \hline
+    Table 8                                                                     & \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#id9}{microcontroller.html\#id9}                                                                            & Sections~\ref{subsec:detectKeyAction}--\ref{subsec:controlLED} \& \ref{subsec:simpleIO}   \\ \hline
+    \raggedright{Structure for Memory-Mapped Input/Output (for I$^2$C)}         & \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#atmega328ptwistruct}{microcontroller.html\#atmega328ptwistruct}                                            & Section~\ref{subsec:DisplayModule}                                                        \\ \hline
+    \raggedright{I$^2$C Controller Transmitter Sequence}                        & \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#controller-transmitter-sequence}{microcontroller.html\#controller-transmitter-sequence}                    & Section~\ref{subsec:DisplayModule}                                                        \\ \hline
+    \raggedright{Custom Transmission Function (for display module)}             & \href{https://cow-pi.readthedocs.io/en/latest/CowPi_stdio/lcd_character.html#custom-transmission-function}{CowPi\_stdio/lcd\_character.html\#custom-transmission-function}    & Section~\ref{subsec:DisplayModule}                                                        \\ \hline
+    \raggedright{ASCII Control Characters (for display module)}                 & \href{https://cow-pi.readthedocs.io/en/latest/CowPi_stdio/lcd_character.html#ascii-control-characters}{CowPi\_stdio/lcd\_character.html\#ascii-control-characters}            & Section~\ref{subsec:numberBuilderOutput}                                                  \\ \hline
+\end{tabular}\end{footnotesize}

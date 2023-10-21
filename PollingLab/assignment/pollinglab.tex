@@ -20,6 +20,7 @@
 \definecolor{LightGreen}{rgb}{0.88,1,0.88}
 \usepackage{multicol}
 \setlength{\columnsep}{2cm}
+\usepackage{pdflscape}
 
 
 % \captionsetup{width=.8\linewidth}
@@ -61,9 +62,19 @@
 
     \textit{To be continued...}
 
-%    \newpage\appendix
-    \appendix
+    \newpage\appendix
+%    \appendix
 
     \section{Appendix: Lab Checkoff}                                                \input{checkoff}
+
+%    \newpage
+
+    \section{Appendix: C Syntax Notes}                                              \input{c-syntax-notes}
+
+    \newpage
+
+    \begin{landscape}
+        \section{Appendix: Links to Cow Pi Datasheet}                               \input{datasheetlinks}
+    \end{landscape}
 
 \end{document}

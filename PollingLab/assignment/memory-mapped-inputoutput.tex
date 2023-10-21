@@ -1,6 +1,6 @@
 In this section, you will use the data structures provided by the CowPi library to access the \developmentboard's memory-mapped I/O registers.
 All functions that you edit in this part of the assignment are in \textit{io\_functions.c}
-You will use the same test code from Section~\ref{sec:GettingStarted} to test your code.
+You will use the same test code from Section~\ref{sec:LabTime} to test your code.
 
 \textit{Remember that to start the I/O test code, the \textbf{left switch} must be in the \underline{right} position when the \developmentboard\ restarts.}
 
@@ -15,7 +15,7 @@ Because you have already completed Section~\ref{sec:LabTime}, you can use the \l
 Use the \lstinline{.input} field with bitmasks to read inputs.
 Use the \lstinline{.output} field with bitmasks and the read-modify-write pattern to write outputs.
 During lab, the TAs covered reading from inputs and using the read-modify-write pattern to write outputs;
-however, if you missed lab or have forgotten, you can find examples in Section~4.1.1 of the Cow Pi datasheet.
+however, if you missed lab or have forgotten, you can find examples in the section of the Cow~Pi datasheet that \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#structure-for-memory-mapped-input-output}{discusses the \lstinline{cowpi_ioport_t} structure}.
 
 \subsubsection{Simple Inputs}
 
@@ -56,19 +56,21 @@ This would be a good time to make a backup copy of your program.
 
 \subsection{Scanned Input} \label{subsec:ScannedInput}
 
+Now that you have some practice with using memory-mapped I/O to read from and write to external pins, you can demonstrate your understanding by combining reads and writes to deduce which key (if any) on the keypad is being pressed.
+
 Locate the \function{get_keypress()} function.
 The implementation in the starter code determines whether there has been a change on the keypad.
 If so, it calls the CowPi library's \function{cowpi_get_keypress()} function.
 The \function{cowpi_get_keypress()} function returns a \lstinline{char} corresponding to the character on the pressed key,
 but the \function{get_keypress()} function is supposed to return a \lstinline{uint8_t} that has the hexadecimal value of the pressed key (considering \# as 0xE and * as 0xF).
-Because of this, the rest of the implementation is a \lstinline{switch} statement to obtain the correct value from the \function{keys} nested array.
+Because of this, the rest of the implementation is a pair of \lstinline{switch} statements to obtain the correct value from the \function{keys} nested array.
 
-Read Section~1.2 of the Cow Pi datasheet.
+Read the section of the Cow Pi datasheet that \href{https://cow-pi.readthedocs.io/en/latest/hardware/inputs.html#matrix-keypad}{discusses the matrix keypad}.
 After you have done so:
 
 \begin{itemize}
     \item Preserve the debouncing code in \function{get_keypress()}, and
-    \item Replace the starter code's call to \function{cowpi_get_keypress()} and \lstinline{switch} statement with code that scans the keyboard.
+    \item Replace the starter code's call to \function{cowpi_get_keypress()} and its \lstinline{switch} statements with code that scans the keyboard.
         \begin{itemize}
             \item Use the \lstinline{ioports} array to read from and write to the appropriate pins,
             \item Use \lstinline{delayMicroseconds(1)} for the delay shown on line 4 of the pseudocode in Section~1.2.2 of the datasheet, and
@@ -78,7 +80,10 @@ After you have done so:
 
 \ifbool{offerdecompositionhints}{
     \subsubsection*{Suggestions}
-    Look at the pseudocode in the datasheet's Section~1.2.2 and relate it to the ``theory of operation'' in the datasheet's Section~1.2.1.
+    Look at the pseudocode\footnote{
+        Note that the pseudocode uses the ``walrus operator'' (\texttt{:=}) for assignments and the ``equal sign'' (\texttt{=}) for equality comparisons, as is common in ALGOL-inspired languages.
+        This is in contrast to C-inspired languages that use the ``equal sign'' for assignment and the ``double equal sign'' for equality comparisons.
+    } in the datasheet and relate it to the ``theory of operation.''
     Even though the pseudocode is expressed as nested loops, you do not need to implement it that way.
     We have seen implementations that have an outer loop for the rows and an inner loop for the columns,
     and we have seen implementations that have a loop for the rows but use a \lstinline{switch} statement or chained \lstinline{if} statements to enumerate the possibilities for the columns.
@@ -115,49 +120,68 @@ This would be a good time to make a backup copy of your program.
 You will use a pointer to a \lstinline{cowpi_i2c_t} structure to access the memory-mapped I/O registers for the \developmentboard's I$^2$C (aka ``TWI'') hardware,
 and you will use those registers to send data to the display module.
 
-Read Section~1.3 of the Cow Pi datasheet to familiarize yourself with the physical characteristics of the display module.
-Read the datasheet's Section~4.2 to familiarize yourself with the I$^2$C registers (Sections~4.2.1--4.2.2), with the I$^2$C handshake and transmission sequence (Section~4.2.3), and with the data format and the steps required by the display module itself (Section~4.2.4). After you have done so:
+Read the datasheet's sections that discuss
+the \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#atmega328ptwistruct}{I$^2$C registers},
+the \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#controller-transmitter-sequence}{I$^2$C Controller Transmitter Sequence},
+the \href{https://cow-pi.readthedocs.io/en/latest/hardware/outputs.html#data-byte-for-lcd1602-display-module}{data format for bytes sent to the display module},
+and the \href{https://cow-pi.readthedocs.io/en/latest/hardware/outputs.html#hd44780-driven-lcd-character-display}{steps required by the display module itself}.
+After you have done so, review the starter code for
+
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=285, basicstyle=\ttfamily\small, escapechar=`]
+    void send_halfbyte(const cowpi_display_module_protocol_t *configuration, uint8_t halfbyte, bool is_command) {
+        // contact the peripheral by transmitting a start bit followed by the desired peripheral's address
+        cowpi_i2c_initialize(configuration);    `\label{code:i2cInitialize}`
+        // (you do not need to make further use of the `configuration` argument)
+
+        // transmit one or more data bytes
+        // (your code goes here)                `\label{code:i2cData}`
+
+        // transmit a stop bit
+        cowpi_i2c_finalize();                   `\label{code:i2cFinalize}`
+    }
+\end{lstlisting}
+
+Of the \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#controller-transmitter-sequence}{three steps} in the I$^2$C Controller Transmitter Sequence, the first step of contacting the display module is handled in line~\ref{code:i2cInitialize},
+and the third step of transmitting a STOP bit is handled in line~\ref{code:i2cFinalize}.
+Your task is to implement the second step of transmitting one or more data bytes, starting at line line~\ref{code:i2cData}.
+These are \href{https://cow-pi.readthedocs.io/en/latest/hardware/outputs.html#hd44780-driven-lcd-character-display}{the bytes and the requisite delay} required by the display module.
+
+If you have not already done so:
 
 \begin{itemize}
     \item Uncomment the second line of the starter code's \function{initialize_io()} function, and
     \item Assign the appropriate address to the \lstinline{i2c} pointer on that line.
 \end{itemize}
 
-You can now use the \lstinline{i2c} pointer to operate the I$^2$C hardware.
-Now locate the \function{send_halfbyte()} function.
+Then, starting at line line~\ref{code:i2cData}:
 
 \begin{itemize}
-    \item Implement the pseudocode from the datasheet's Section~4.2.3, to
-    \item Send the three bytes of data described in the datasheet's Section~4.2.4.
+    \item Implement the pseudocode from the I$^2$C Controller Transmitter Sequence's ``transmit one or more data bytes'' step, to
+    \item Send the three bytes of data required by the display module.
         \begin{itemize}
             % \item You may handle the error conditions show in the pseudocode in whatever manner you see fit; it would be best to do so in a manner that allows you to determine \textit{which} error is occurring.
-            \item Use \lstinline{delayMicroseconds(1)} to implement the pulse described in Section~4.2.4 of the datasheet.
+            \item Use \lstinline{delayMicroseconds(1)} to implement the pulse described in the \href{https://cow-pi.readthedocs.io/en/latest/hardware/outputs.html#data-byte-sequence}{data byte sequence}.
         \end{itemize}
 \end{itemize}
 
 After you are satisfied that you have implemented the \function{send_halfbyte()} function correctly:
 
 \begin{itemize}
-    \item Uncomment the last line of the starter code's \function{initialize_io()} function to register \function{send_halfbyte()} with the CowPi library's LCD1602 code.
+    \item Uncomment the last line of the starter code's \function{initialize_io()} function to register \function{send_halfbyte()} with the CowPi\_stdio library.
 \end{itemize}
 
 All of the functions in the CowPi library that send characters or commands to the display module will now make use of your \function{send_halfbyte()} function.
 
 \ifbool{offerdecompositionhints}{
     \subsubsection*{Suggestions}
-    Altogether, you will make six transmissions in the \function{send_halfbyte()} function: the start bit, the serial adapter's address, three bytes meant for the display module itself, and the stop bit.
-    The start and stop bits don't have data associated with them, but the other four transmissions do.
-    After each transmission (except the stop bit), you need to wait until the transmission is complete before initiating the next transmission;
+    Altogether, your code will make three transmissions in the \function{send_halfbyte()} function.
+    After each transmission, you need to wait until the transmission is complete before initiating the next transmission;
     you can achieve this with a \textit{busy wait}.
     As discussed in lecture, a busy wait is simply a do-nothing loop that blocks the program while some condition holds.
 
-    The bit vector created in line~6 of the the pseudocode in the datasheet's Section~4.2.3 consists of bits that must be set to 1 in the control register for all of these transmissions.
-    When transmitting the start and stop bits, the relevant bit is also set to 1 in the control register (pseudocode line~9 and 29).
-    Otherwise, only the basic bit vector is written to the control register.
+    The bit vector created in line~6 of the the Controller Transmitter Sequence's pseudocode consists of bits that must be set to 1 in the control register for all of these transmissions.
 
-    The first datum to transmit after the start bit is the serial adapter's address (properly shifted) so that the adapter knows the remaining transmissions are meant for it.
-    The serial adapter will pass the data all transmissions to the display module until it receives the stop bit.
-    Even though the pseudocode characterizes those transmissions as a loop over the data maent for the display module, it will be easier to implement sequentially.
+    Even though the pseudocode might appear to characterize those transmissions as a loop over the data meant for the display module, the \texttt{for each} statement should be understood to mean $\forall$ -- indeed, it will be easier to implement the byte sequence sequentially.
     Two of the three bytes meant for the display module are identical, and the remaining byte differs only only in one bit.
     The first ensures the halfbyte, backlight, read/write, and command bits are at their correct values before a latching pulse starts.
     The second maintains those values and creates the latching pulse; a \function{delayMicroseconds()} call holds the pulse.
@@ -176,11 +200,11 @@ All of the functions in the CowPi library that send characters or commands to th
             \begin{itemize}
                 \item ``Not much data'' is not the same as ``no data''
                     \begin{itemize}
-                        \item If a busy-wait doesn't terminate, the problem is probably with your implementation of the I$^2$C protocol -- double-check the bit vectors placed in the control register, and possibly the bit vector placed in the data register when you transmit the serial adapter's address
+                        \item If a busy-wait doesn't terminate, the problem is probably with your implementation of the I$^2$C protocol -- double-check the bit vectors placed in the control register%, and possibly the bit vector placed in the data register when you transmit the serial adapter's address
                         \item If the function terminates but the display module doesn't update, the problem is probably with the bit vectors placed in the data register that the serial adapter will pass along to the display module, or with the ``latch'' pulse
                     \end{itemize}
-                \item You can always get help from the professor or a TA with any aspect of this assignment, and you can discuss \textit{concepts and syntax} with other students;
-                    \textit{without showing other students your code}, asking other students questions like these, and answering them, is acceptable:
+                \item You can always get help from the professor or a TA with any aspect of this assignment, and you can discuss \textit{concepts and syntax} with other students.
+                    \textit{Without showing other students your code}, asking other students questions like these, and answering them, is acceptable:
                     \begin{itemize}
                         \item ``The datasheet says we want a `1' in bit 7, a `1' in bit 2, and `0's in the other bits; that looks like this, right?'' and then write a binary or hexadecimal bit vector on paper or a whiteboard
                         \item ``The datasheet says to shift a `1' seven places to the left, and then shift a `1' two places to the left, and then take those two results and bitwise-OR them together; would you help me remember how to do a left-shift?''
@@ -193,8 +217,8 @@ All of the functions in the CowPi library that send characters or commands to th
 
 Place the left switch in the right position and upload the program to your \developmentboard.
 If the test code displays its outputs on the display module, then you implemented \function{send_halfbyte()} correctly.
-If the test code displays its outputs on the Serial Monitor but not the display module, or if the test code does not run at all, then there is an error in your code.
+If the test code does not display its output one the display module, or if the test code does not run at all, then there is an error in your code.
 
 \vspace{1cm}
 
-If you decide to work on other parts of the assignment before finishing \function{send_halfbyte()} then comment-out the call to \function{cowpi_lcd1602_set_send_halfbyte_function()} in \function{initialize_io()}.
+If you decide to work on other parts of the assignment before finishing \function{send_halfbyte()} then comment-out the assignment to \lstinline{cowpi_hd44780_send_halfbyte} in \function{initialize_io()}.

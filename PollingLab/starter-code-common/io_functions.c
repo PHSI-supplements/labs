@@ -283,7 +283,7 @@ uint8_t get_keypress(void) {
  *      or part of a character (`false`)
  */
 void send_halfbyte(const cowpi_display_module_protocol_t *configuration, uint8_t halfbyte, bool is_command) {
-    // contact the peripheral by transmitting a start bit followed by the desired peripheral’s address
+    // contact the peripheral by transmitting a start bit followed by the desired peripheral's address
     cowpi_i2c_initialize(configuration);
     // (you do not need to make further use of the `configuration` argument)
 

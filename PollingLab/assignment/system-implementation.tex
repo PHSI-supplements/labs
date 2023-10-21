@@ -49,7 +49,10 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
     \item The system shall build numbers in response to user input:
         \begin{enumerate}
         \item \label{spec:32bits} The numbers' values shall be representable as 32-bit signed integers.
-        \item \label{spec:initialKeyPress} If the display is blank (\textit{i.e.}, there is not yet a number being built), then whenever the user presses a button on the \textbf{matrix keypad}, the corresponding numeral shall be displayed on the \textbf{display module}'s top row, either in the far-left column or the far-right column, depending on the alignment mode.
+        \item \label{spec:initialKeyPress} If the display is blank (\textit{i.e.}, there is not yet a number being built), then whenever the user presses a button on the \textbf{matrix keypad}, the corresponding numeral shall be displayed on the \textbf{display module}, either in the far-left column or the far-right column, depending on the alignment mode.
+            If decimal input mode is used, then both the decimal and hexadecimal representations shall display the numeral.
+            If hexadecimal input mode is used, then the hexadecimal representation shall display the numeral,
+            and the decimal representation shall display the corresponding decimal value.
             The numeral displayed shall follow the interpretations specified in requirements~\ref{spec:decimalExplained} and \ref{spec:hexadecimalExplained}.
             \begin{itemize}
                 \item \textit{Note:} In accordance with requirement~\ref{spec:displayFormat}, the number shall be displayed in both decimal and in hexadecimal.
@@ -99,10 +102,8 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
             \end{enumerate}
         \item A positive sign shall not be displayed as part of a positive value.
         \item When a negative decimal value is displayed, the negative sign shall be displayed immediately to the left of the most-significant digit being displayed.
-            For example, \display{\colorbox{LightGreen}{\phantom{xxxxxxxxxxxx}-456}} is correctly displayed, but \display{\colorbox{LightGreen}{\phantom{xxxxxxxx}-\phantom{xxxx}456}} is not correctly displayed.
-            \begin{enumerate}
-                \item If in left justified mode, the negative sign shall be in the leftmost column, and the most-significant digit shall be in the column immediately to the right of that.
-            \end{enumerate}
+            If in left justified mode, the negative sign shall be in the leftmost column, and the most-significant digit shall be in the column immediately to the right of that.
+            For example, \\ \display{\colorbox{LightGreen}{\phantom{xxxxxxxxxxxx}-456}} \hspace{5mm} \display{\colorbox{LightGreen}{-456\phantom{xxxxxxxxxxxx}}} are correctly displayed, but \\ \display{\colorbox{LightGreen}{\phantom{xxxxxxxx}-\phantom{xxxx}456}} \hspace{5mm} \display{\colorbox{LightGreen}{-\phantom{xxxx}456\phantom{xxxxxxxx}}} \hspace{5mm} \display{\colorbox{LightGreen}{-\phantom{xxxxxxxxxxxx}456}} are not correctly displayed.
         \item Leading 0s may be displayed but are discouraged.
             For example, \display{\colorbox{LightGreen}{782}} is preferred, but \display{\colorbox{LightGreen}{00000782}} is allowed.
         \item Digit separators are permitted but not required.
@@ -117,8 +118,12 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
         %     $99,999,999$ in decimal, or less than $-9,999,999$ in decimal, then the
         %     \textbf{display module} shall display \display{too big}.
         \item \label{spec:tooBig} In no case shall the tool allow the user to input a value too great to be stored as a 32-bit signed integer.
-            If the user attempts to enter a value greater than $0x7FFF,FFFF$ in hexadecimal, less than $0x8000,0000$ in hexadecimal, greater than $2,147,483,647$ in decimal, or less than $-2,147,483,648$ in decimal, then the \textbf{display module} shall display \display{too big}.
-            \begin{itemize}
+            If the user attempts to enter a value greater than $0x7FFF,FFFF$ in hexadecimal, less than $0x8000,0000$ in hexadecimal, greater than $2,147,483,647$ in decimal, or less than $-2,147,483,648$ in decimal, then the \textbf{display module} shall display \\
+            \display{
+                \colorbox{LightGreen}{\phantom{xxxxxx}TOO\phantom{xxxxxx}} \vspace{-1mm}\\
+                \colorbox{LightGreen}{\phantom{xxxxxx}BIG!\phantom{xxxxxx}}
+            } \\
+        \begin{itemize}
             \item \textit{n.b.}, in a hexadecimal 32-bit negative integer, an \texttt{F} in the most-significant hex-digit might only be a sign extension;
                 in this scenario, if the user inputs another hex-digit then it is still a valid number because it would not be less than $0x8000,0000$. \\ \\
                 For example, adding another digit to the 32-bit integer $0xF865,4321$ would \textit{not} produce a too-great value because the 36-bit integer $0xF,8654,3210 = -2,041,302,512_{10}$, and also the 32-bit integer $0x8654,3210 = -2,041,302,512_{10}$.
@@ -260,7 +265,7 @@ however, you can do so if you find that simpler.
 %Once you have determined that a key is being pressed, you can call \function{get_keypress()}, knowing that it will return the value corresponding to one of the keys.
 
 
-\subsection{Outputting to the Display Module}
+\subsection{Outputting to the Display Module} \label{subsec:numberBuilderOutput}
 
 You will not call \function{send_halfbyte()} directly.
 Instead, the CowPi\_stdio library's functions that work with the display module make use of \function{send_halfbyte()} after you have implemented and uncommented the assignment to \lstinline{cowpi_hd44780_send_halfbyte}.
@@ -273,19 +278,9 @@ The first argument is a pointer to the file stream; the second argument is the f
 You can print to the display module using \function{fprintf()} with the \lstinline{display} file stream;
 look at the end of the \function{test_io()} function in \textit{io\_functions.c} for examples of printing to the display module.
 
-The following conversion specifiers may be useful (because a 32-bit value is considered to be a long integer on an 8-bit microcontroller, these conversion specifiers include the lowercase letter `l'):
-\begin{description}
-    \item[\%ld] Prints a decimal number
-    \item[\%lx] Prints a hexadecimal number, with a--f in lowercase
-    \item[\%lX] Prints a hexadecimal number, with A--F in uppercase
-    \item[\%\#lx and \%\#lX] Prints a hexadecimal number, with a leading \lstinline{0x} or \lstinline{0X}.
-    \item[\%nnld \%nnlx \%nnlX \%\#nnlx \%\#nnlX] ($nn$ represents some constant integer) Dedicates $nn$ spaces in the string for the number, including a minus sign or a leading \lstinline{0x}/\lstinline{0X} if present.
-        The number is right-justified, and any unused space to the left is left blank.
-    \item[\%0nnld \%0nnlx \%0nnlX \%\#0nnlx \%\#0nnlX] ($nn$ represents some constant integer) Dedicates $nn$ spaces in the string for the number, including a minus sign or a leading \lstinline{0x}/\lstinline{0X} if present.
-        The number is right-justified, and any unused space to the left is filled with \lstinline{0}s.
-    \item[\%-nnld \%-nnlx \%-nnlX \%\#-nnlx \%\#-nnlX] ($nn$ represents some constant integer) Dedicates $nn$ spaces in the string for the number, including a minus sign or a leading \lstinline{0x}/\lstinline{0X} if present.
-        The number is left-justified, and any unused space to the right is left blank.
-\end{description}
+We recommend that you review the \function{printf}/\function{fprintf} conversion specifiers in Section~\ref{subsec:conversionSpecifiers}
+and also the \href{https://cow-pi.readthedocs.io/en/latest/CowPi_stdio/lcd_character.html#ascii-control-characters}{behavior associated with ASCII control characters} for the display module.
+(Besides the description of the control codes' behaviors, you may want to scroll up on that webpage to look at the gif demonstrating the behaviors.)
 
 
 \subsection{Measuring the Passage of Time}
@@ -314,7 +309,7 @@ You can, however, use the Arduino \function{millis()} function to determine how 
 
     Some students in the past had difficulty implementing Requirement~\ref{spec:BuildingValue}.
 
-    Let us consider the case where you're building a decimal number.
+    Let us consider the case where you're providing decimal inputs.
     Viewed as a weighted sum, an $n$-digit number $d_{n-1}d_{n-2}{\dots}d_2d_1d_0$ has the value
     \[number = \sum_{i=0}^{n-1}d_i \times 10^i\]
 

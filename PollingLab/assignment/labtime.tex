@@ -7,7 +7,7 @@ If you do not attend your lab period, then you must complete this section on you
 
 \subsection{Populate the Keypad's Lookup Table} \label{subsec:populatekeypad}
 
-Locate the \lstinline{keys} $4 \times 4$ nested array on lines 37--42 of \textit{io\_functions.c}.
+Locate the \lstinline{keys} $4 \times 4$ nested array on lines 29--34 of \textit{io\_functions.c}.
 This nested array serves as a lookup table to obtain the appropriate value when a key is pressed.
 \textit{Even the starter code depends on this nested array being populated correctly.}
 The element \lstinline{keys[0][0]} will correspond to the \texttt{1} key;
@@ -31,19 +31,18 @@ Place the \textbf{left switch} in the \textit{right} position and upload your co
 The test code will output on the display module.
 The output will include the key that was pressed (if any), a hyphen if no key is being pressed, or a question mark if \function{get_keypress()} returns an invalid value.
 
-{\color{red}TODO: change this to the new code}
-
-\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=399]
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=351, basicstyle=\ttfamily\small]
     ...
-    char key_character;
-    if (key_pressed <= 9) {
-      key_character = key_pressed + '0';
-    } else if (0xA <= key_pressed && key_pressed <= 0xF) {
-      key_character = key_pressed - 0xA + 'A';
-    } else if (key_pressed == 0xFF) {
-      key_character = '-';
+    if (0x00 <= key_pressed && key_pressed <= 0x0F) {
+        fprintf(display, "%2X%5c%2c%4c%2c\f",
+                key_pressed,
+                left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
+                left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
     } else {
-      key_character = '?';
+        fprintf(display, "%2c%5c%2c%4c%2c\f",
+                key_pressed == 0xFF ? '-' : '?',
+                left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
+                left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
     }
     ...
 \end{lstlisting}
@@ -51,16 +50,9 @@ The output will include the key that was pressed (if any), a hyphen if no key is
 Familiarize yourself with the test code's other outputs.
 The output will include the positions of the left and right buttons (``U'' for up and ``D'' for down) and of the left and right switches (``L'' for left position and ``R'' for right position).
 
-\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=418]
-    ...
-    left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
-    left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L'
-    ...
-\end{lstlisting}
-
 Finally, if both buttons are pressed then the left LED will illuminate, and if both switches are in the right position then the right LED will illuminate.
 
-\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=409]
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=347]
     ...
     set_left_led(left_button_position && right_button_position);
     set_right_led(left_switch_position && right_switch_position);
@@ -82,17 +74,15 @@ After you have done so,
     \item Assign the appropriate address to the \lstinline{ioports} pointer on that line.
 \end{itemize}
 
-{\color{red}TODO: change this to the new code}
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=48]
+    void initialize_io(void) {
+        // Uncomment these lines and set the correct addresses during lab time
+        // ioports = (cowpi_ioport_t *)(0x00);
+        // i2c = (cowpi_i2c_t *)(0x00);
 
-\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=33]
-void initialize_io(void) {
-  // Uncomment these lines and set the offsets during lab time
-  // ioports = (cowpi_ioport_t *)(COWPI_IO_BASE + 0);
-  // i2c = (cowpi_i2c_t *)(COWPI_IO_BASE + 0);
-
-  // Uncomment this line when you are ready to implement the `send_halfbyte()` function
-  // cowpi_lcd1602_set_send_halfbyte_function(send_halfbyte);
-}
+        // Uncomment this line when you are ready to implement the `send_halfbyte()` function
+        // cowpi_hd44780_send_halfbyte = send_halfbyte;
+    }
 \end{lstlisting}
 
 You can now use the \lstinline{ioports} pointer as an array of \lstinline{cowpi_ioport_t} structures, which you can index using the \lstinline{D0_D7}, \lstinline{D8_D13}, and \lstinline{D14_D19} named constants.
@@ -115,22 +105,20 @@ When you get to the assignment's Section~\ref{subsec:DisplayModule}, you will be
 The next part of the group activity is detecting when someone presses (or releases) a key on the numeric keypad.
 The \function{key_movement_detected()} function in the starter code is:
 
-{\color{red}TODO: change this to the new code}
-
-\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=51, escapechar=`]
-bool key_movement_detected(void) {
-  static bool key_was_pressed = false;
-  bool key_is_pressed = digitalRead(3);     `\label{code:readNAND}`
-  bool debounced_key_is_pressed = debounce_byte(key_is_pressed, KEYPAD);
-  bool change_detected = (debounced_key_is_pressed != key_was_pressed);
-  key_was_pressed = debounced_key_is_pressed;
-  return change_detected;
-}
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=69, escapechar=`]
+    static bool key_movement_detected(void) {
+        static bool key_was_pressed = false;
+        // this is four distinct reads to figure out if any of the column pins has a 0 on it -- can you do it in one read?
+        bool key_is_pressed = !(digitalRead(14) && digitalRead(15) && digitalRead(16) && digitalRead(17));  `\label{code:readColumns}`
+        bool debounced_key_is_pressed = cowpi_debounce_byte(key_is_pressed, KEYPAD);
+        bool change_detected = (debounced_key_is_pressed != key_was_pressed);
+        key_was_pressed = debounced_key_is_pressed;
+        return change_detected;
+    }
 \end{lstlisting}
 
-Line~\ref{code:readNAND} uses the Arduino function \function{digitalRead()} to read the value produced by the NAND gate connected to the numeric keypad's columns.
-When at least one key is pressed, the NAND's value is 1;
-when no keys are pressed, the NAND's value is 0.
+Line~\ref{code:readColumns} uses the Arduino function \function{digitalRead()} to read the values on the four pins attached to the keypad's columns.
+If any of those pins has a 0 on it, then a key has been pressed (see Section~\ref{subsec:ScannedInput}).
 The next line debounces that reading (see Section~\ref{subsec:debouncing}).
 
 The remainder of the code compares the reading to the previous reading.
@@ -138,37 +126,21 @@ If no key was pressed and there is still no key being pressed, the function retu
 Similarly, if a key was pressed and is still being pressed, the function returns \lstinline{false}.
 On the other hand, if no key was pressed and there is now a key being pressed, or if a key was being pressed and there is now no key being pressed, then the function returns \lstinline{true}.
 
-The problem is that, as noted in Section~\ref{subsec:constraints}, the \function{digitalRead()} function is not one of the Arduino functions that can be used in this assignment.
-Now that you have the base address for the \lstinline{ioports} array, you can use memory-mapped I/O to replace the call to \function{digitalRead()}.
-%(Do not remove the call to \function{debounce_byte()} -- your memory-mapped I/O code should be the first argument to \function{debounce_byte()}, replacing only the call to \function{digitalRead()}.)
+One problem is that, as noted in Section~\ref{subsec:constraints}, the \function{digitalRead()} function is not one of the Arduino functions that can be used in this assignment.
+The other problem is that the \function{digitalRead()} function can read only one pin at a time, and so there are four distinct reads.
+Now that you have the base address for the \lstinline{ioports} array, you can use memory-mapped I/O to replace the call to \function{digitalRead()},
+and you can do so in a manner that obtains the values on all four pins at the same time.
 
 If you are currently in your lab period, then work with the other students in your lab period to determine the answers to these questions.
 If you are not attending your lab period, then work individually to determine the answers to these questions.
-Using the datasheet's Table~2:
+Using the datasheet's \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#id9}{Table~8}:
 \begin{itemize}
-    \item What should you use to index the \lstinline{ioports} array to read from pin~3, the keypad's NAND value?
+    \item What should you use to index the \lstinline{ioports} array to read from pins~14--17, the pins connected to the keypad's columns?
     \item What field in that element should you use?
     \item What bitmask should you use?
-    \item What should line~\ref{code:readNAND} look like?
+    \item What should line~\ref{code:readColumns} look like?
 \end{itemize}
 
-You can use the keypad's NAND value that you read from pin~3 to determine when there's some key action.
-It is \textit{possible} that we will have you disconnect the NAND from the \developmentboard\ for the group project so that we can use pins~2 and/or 3 for a different use.
-Fortunately, there is another way to determine whether there is some key action.
-
-Read the datasheet's Section~1.2.1.
-(You can postpone reading the datasheet's Section~1.2.2 until you reach the assignment's Section~\ref{subsec:ScannedInput}.)
-If you are currently in your lab period, then work with the other students in your lab period to determine the answers to these questions.
-If you are not attending your lab period, then work individually to determine the answers to these questions.
-Using the information in the datasheet's Section~1.2.1 and the datasheet's Table~2:
-\begin{itemize}
-    \item What combination of pins (other than pin~3) can be used to detect that something has changed on the keypad?
-        Why?
-    \item What should you use to index the \lstinline{ioports} array to read from those pins?
-    \item What field in that element should you use?
-    \item What bitmask should you use?
-    \item What should line~\ref{code:readNAND} look like?
-\end{itemize}
 
 \subsubsection*{Test your code}
 
@@ -179,7 +151,7 @@ The test code will output on both the Serial Monitor and on the display module.
 The output will include the key that was pressed (if any), a hyphen if no key is being pressed, or a question mark if \function{get_keypress()} returns an invalid value.
 
 
-\subsection{Controlling an LED}
+\subsection{Controlling an LED} \label{subsec:controlLED}
 
 The final part of the group activity is illuminating and deluminating the built-in LED\@.
 Locate the \function{set_left_led()} function.

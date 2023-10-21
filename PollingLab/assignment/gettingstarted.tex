@@ -3,19 +3,24 @@ If you are using the VS Code with PlatformIO, use \textit{pollinglab-platformio.
 Download the zip file or tarball from \filesource.
 Once you have downloaded the file, close any existing projects in your IDE, unpackage the file, and open the project in your IDE\@.
 
+\textcolor{red}{\textbf{Important}} If you are using the Arduino~IDE, go into the Arduino~IDE's Library Manager to see if you need to update the CowPi library to version 0.6.1.
+(PlatformIO on VS~Code will automatically update the library when it reads the project's \textit{platformio.ini} file.)
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[height=5cm]{libraryUpgrade}
+\end{figure}
+
+\vspace{1cm}
+
 Position both of your Cow Pi's switches in the \textit{right} position.
 Connect your computer to your Cow Pi and upload the program to your Cow Pi.
 The display module will show: \\
 \display{
-    KEY\phantom{xxx}BTN\phantom{xxx}SW \\
-    \phantom{x}-\phantom{xxxx}U\phantom{x}U\phantom{xxx}R\phantom{x}R
+    \colorbox{LightGreen}{KEY\phantom{xxx}BTN\phantom{xxx}SW\phantom{x}} \vspace{-1mm}\\
+    \colorbox{LightGreen}{\phantom{x}-\phantom{xxxx}U\phantom{x}U\phantom{xxx}R\phantom{x}R}
 } \\
 and the right LED (the external LED) will be illuminated.
-If you have your IDE's Serial Monitor open, the Serial Monitor will also show: \\
-\texttt{
-    KEY\phantom{xxx}BTN\phantom{xxx}SW \\
-    \phantom{x}-\phantom{xxxx}U\phantom{x}U\phantom{xxx}R\phantom{x}R
-}
 
 If you forgot to place the \textbf{left switch} in the \textit{right} position, you will not have that output.
 Toggle the left switch to the right and press the RESET button in the middle of the \developmentboard.
@@ -64,121 +69,6 @@ Do not edit \textit{number\_builder.h}.
 The \textit{number\_builder.c} file contains a function, \function{build_number()}, that the driver code will call when you are not running the I/O test.
 Right now that function is only a stub.
 In Section~\ref{sec:SimpleSystem}, you will write code in \function{build_number()} (and in helper functions of your devising) to implement a simple system's specification.
-
-
-\subsection{Variable Modifiers}
-
-C has some keywords that can be used to modify variables.
-In some cases, these keywords define scoping rules;
-in other cases, these keywords provide information to the compiler that it can use when optimizing the resulting assembly code.
-
-\subsubsection{const}
-
-In LinkedListLab, you encountered the \lstinline{const} keyword.
-When used as part of an ordinary variable declaration, it prevents the variable from being modified after it has been initialized.
-(Much to some peoples' surprise, this does not actually make it a constant as far as C's syntax rules are concerned.)
-
-When used with a pointer, the \lstinline{const} keyword tells the compiler that it can make optimizations under the assumption that whatever the pointer points to will not change.
-Code that breaks this promise will have compile-time warnings, but it will compile and run -- but it often will have runtime errors.
-(There is another way to use \lstinline{const} with a pointer that declares the pointer itself to be unchanging.)
-
-\subsubsection{volatile}
-
-In DuplicatorLab, you encountered the \lstinline{volatile} keyword.
-A \lstinline{volatile} variable is the opposite of a \lstinline{const} variable:
-not only can it change, it can spontaneously change.
-The \lstinline{volatile} keyword tells the compiler that it cannot optimize-away a variable that is never written to.
-It also tells the compiler that it cannot optimize-away a variable that is never read.
-
-With threaded code such as what you saw in DuplicatorLab, it's tempting to believe that a sufficiently thorough static analysis of the code will reveal that a variable is being written to and/or read from multiple threads.
-When working with memory-mapped input/output registers in this lab, you will read from variables that do not have a single line of code \textit{anywhere} changing their values, and yet their values will change.
-Similarly, you will write to variables that do not have a single line of code anywhere that reads from them, and yet it is important that those variables be updated.
-
-\subsubsection{extern}
-
-You will typically see externalized variables in header files, and you can see one in \textit{io\_functions.h}.
-The when a variable is declared with the \lstinline{extern} modifier, it does not define a new variable.
-Instead, it allows functions in one \texttt{.c} file to access global variables that are defined in another \texttt{.c} file.
-That is, it makes a global variable even more global.
-
-\subsubsection{static}
-
-The other modifier you will see in this lab is the \lstinline{static} keyword.
-If you've programmed in Java, beware that C's \lstinline{static} keyword is not the same as Java's \lstinline{static} keyword.\footnote{
-    Nor can it be.
-    Java's \lstinline{static} keyword declares a field to belong to the whole class;
-    C does not have classes.
-}
-
-\paragraph{Static global variables}
-
-When used with a global variable, the \lstinline{static} keyword limits that variable's scope to code to the \texttt{.c} file it's defined in (or to the \texttt{.c} file that \lstinline{#include}s the \texttt{.h} file it's defined in).
-This allows other code in \textit{other} files to have static global variables with the same name without a naming collision.
-That is, it makes a global variable a little less global.
-
-Similarly, the \lstinline{static} keyword can limit a function's scope.
-
-\paragraph{Static local variables}
-
-When used with a scope-limited variable, such as a variable declared in a function, the variable becomes something of a hybrid variable.
-Unlike a normal function-local variable, which is allocated on the program stack, these \lstinline{static} variables are allocated on the heap.
-When a function returns, normal function-local variables are deallocated because the function's stack frame is popped.
-A \lstinline{static} variable, however, is \textit{not} deallocated when its function returns.
-That means that its last value is still available the next time that the function is called.
-A \lstinline{static} variable used in this way looks like a global variable -- its value is preserved between function calls -- but it is still scope-limited to the function it's declared in.
-
-You can see examples of \lstinline{static} variables in the I/O test code.
-
-You should explicitly initialize a \lstinline{static} variable on the same line that it is declared.
-Such an initializer must be a syntactic constant.
-The variable will only be initialized once; it will \textit{not} be reinitialized each time the function is called.
-(If it were reinitialized, that would rather defeat the point of the variable preserving its value between function calls, right?)
-If you do not explicitly initialize the variable then, unlike ordinary function-local variables, a \lstinline{static} variable will automatically be initialized to 0.
-
-If you have questions about \lstinline{static} variables, please ask the professor or a TA\@.
-You are not \textit{required} to use \lstinline{static} variables, but it is a good idea to do so because the alternative is introducing more global variables than you might otherwise need.
-
-%\paragraph{Static array sizes}
-%
-%The other use of the \lstinline{static} keyword can be seen in the first parameter for \function{display_string()} function in \textit{supplement.h}.
-%\begin{lstlisting}
-%    static inline void display_string(
-%        const char string[static (NUMBER_OF_DISPLAYABLE_COLUMNS+1)],
-%        enum row_names row
-%    )
-%\end{lstlisting}
-%%A array function parameter is simply a pointer.
-%%It normally makes no difference whether we declare the parameter as
-%%\begin{lstlisting}
-%%    const char *string
-%%\end{lstlisting}
-%%as
-%%\begin{lstlisting}
-%%    const char string[]
-%%\end{lstlisting}
-%%or as
-%%\begin{lstlisting}
-%%    const char string[NUMBER_OF_DISPLAYABLE_COLUMNS+1]
-%%\end{lstlisting}
-%%In all three cases, it's simply a pointer to a constant array.
-%%Even in the last case, identifying the number of elements that we expect to be in the array has no effect on the generated assembly code.
-%%
-%%Of course, here the \lstinline{const} keyword isn't an enforced requirement (if the function modifies the string, the compiler will ``only'' issue a warning, and your program will probably not work right).
-%%The \lstinline{const} keyword tells the compiler that it can assume the string is constant and optimize the generated assembly code accordingly.
-%%It also tells anyone calling the function that they can assume that the function won't change the string's characters.
-%%
-%%The \lstinline{static} keyword in \textit{this} usage serves a similar purpose.
-%%\begin{lstlisting}
-%%    const char string[static (NUMBER_OF_DISPLAYABLE_COLUMNS+1)]
-%%\end{lstlisting}
-%The \lstinline{static} keyword as used here tells the compiler that it can assume that enough memory has been allocated for at least 17 characters (including the terminating NUL character).
-%%This is not an enforced requirement: if you do not allocate at least 17 bytes for the string then the program will still compile but probably won't work right.
-%%The \lstinline{static} keyword gives the compiler permission to make optimizations that assume at least a certain number of elements are in the array.
-%It also tells anyone calling the function that they should make sure that is the case.
-%%
-%We do not anticipate you needing to use the \lstinline{static} keyword in this fashion;
-%however, because you will call \function{display_string()}, you should make sure that you call it only with strings that have at least 17 characters allocated.
-%(This should make sense to you, since this function is used to display a 16-character row on the display module.)
 
 
 \subsection{Debouncing} \label{subsec:debouncing}
