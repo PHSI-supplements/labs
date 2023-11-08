@@ -1,0 +1,71 @@
+When you have completed this assignment, upload \textit{inputs.c}, \textit{character\_selector.c} and \textit{message\_editor.c} to
+\filesubmission.
+
+%\policyforcodethatdoesnotcompile
+\subsection*{No Credit for Uncompilable Code}
+If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\footnote{
+    At the TA's discretion, if they can make your code compile with \textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\% penalty on the resulting score.
+    The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.
+    If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.
+}
+Before turning in your code, be sure to compile and test your code on \runtimeenvironment\ with the original driver code and the original header file(s).
+
+\interruptlablatepolicy
+
+\subsection*{Rubric}
+
+This assignment is worth 30 points.
+\begin{description}
+    \item[Interrupts] % 12
+    \rubricitem{1}{Matrix keypad presses and releases are detected with a pin change interrupt}
+    \rubricitem{2}{The right pushbutton's presses are detected with a pin change interrupt}
+    \rubricitem{2}{The left pushbutton's presses are detected with a pin change interrupt}
+    \rubricitem{1}{Timer interrupts for TIMER2 are handled}
+    \rubricitem{1}{TIMER2's interrupt period, when combined with logic that uses \lstinline{supplemental_counter}, causes the right LED to illuminate for exactly 256ms\dots}
+    \rubricitem{1}{\dots and that logic is implemented}
+    \rubricitem{2}{Timer interrupts for TIMER1 are handled}
+    \rubricitem{2}{TIMER1's interrupt period is exactly 2000ms}
+%    \rubricitem{1}{There is no long-running code (including, but not limited to, \function{display_string()} and \function{printf()}) in the interrupt handlers / ISRs, \textit{except} where the inclusion of print statements is the only mechanism to demonstrate that the interrupt handler determines which button was pressed}
+
+    \item[System Implementation] % 18
+        % 3 for display
+    \rubricitem{1}{The cursor is always below the character being created}
+    \rubricitem{1}{A message with fewer than 16 chracters is displayed in full}
+    \rubricitem{1}{A message with more than 15 characters is displayed as the last 15 characters plus the character being created}
+        % 2 for right bound
+    \rubricitem{1}{A message with 63 characters can be created\dots}
+    \rubricitem{1}{\dots but not a message with 64 characters}
+        % 1 for LED
+    \rubricitem{1}{Pressing a key causes the right LED to illuminate for about \textonequarter\ second}
+        % 3 for character sequencing
+    \rubricitem{1}{Starting with a blank character, pressing a number key initiates the character sequence shown in Figure~\ref{fig:keypad}}
+    \rubricitem{2}{Repeated presses of the same number key cycles through the character sequence shown in Figure~\ref{fig:keypad}}
+        % 3 for finalize
+    \rubricitem{1}{Pressing a different key finalizes the character, advances the cursor, and initiates the appropriate character sequence for the next character}
+    \rubricitem{1}{Pressing the right pushbutton finalizes the character and advances the cursor but leaves a blank character above the cursor}
+    \rubricitem{1}{Pressing no buttons or keys for 2 seconds causes the system to finalize the character and to advance the cursor, leaveing a blank character above the cursor}
+        % 3 for delete (including left bound)
+    \rubricitem{1}{If a character is being created, then pressing the left pushbutton deletes the character being created and leaves the cursor under a blank space}
+    \rubricitem{1}{If a character is not being created, the pressing the left pushbutton moves the character back one position and deletes the message's last character, leaving the cursor under a blank space\dots}
+    \rubricitem{1}{\dots except that the cursor cannot retreat to a position earlier than start of the message buffer}
+        % 3 for transmit
+    \rubricitem{1}{Pressing the \texttt{D} key causes the message to be printed on the Serial Monitor\dots}
+    \rubricitem{\textonehalf}{\dots and the message to be cleared from the display\dots}
+    \rubricitem{\textonehalf}{\dots with the cursor in the left position\dots}
+    \rubricitem{1}{\dots and another message can be created and ``transmitted''}
+        % 0 for extraneous inputs
+%    \rubricitem{0}{The \texttt{A}, \texttt{B}, \texttt{C}, \texttt{\#}, and \texttt{*} keys, and the switches, have no effect}
+
+    \item[Bonuses]
+    \bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due (you cannot get both check-off bonuses)}
+    \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due (your code must be uploaded to \filesubmission\ \textit{before} it is due; you cannot get both bonuses)}
+
+    \item[Penalties]
+    \penaltyitem{4}{Number key presses are detected by means other than a pin change interrupt}
+    \penaltyitem{3}{Pressing the \texttt{D} key is detected by means other than a pin change interrupt}
+    \penaltyitem{1}{Pressing the right button is detected by means other than a pin change interrupt}
+    \penaltyitem{3}{Pressing the left button is detected by means other than a pin change interrupt}
+    \penaltyitem{1}{Blinking the LED is accomlished by means other than a timer interrupt}
+    \penaltyitem{1}{Timing-out character generation is accomlished by means other than a timer interrupt}
+    \spaghetticodepenalties{1}
+\end{description}

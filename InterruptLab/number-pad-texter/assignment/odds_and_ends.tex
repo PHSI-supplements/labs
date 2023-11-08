@@ -1,0 +1,44 @@
+Your test messager system now has a minimal amount of functionality: you can create a short message that fits on the display module.
+Your remaining tasks are to be able to delete a character in case you make a mistake when drafting the message, to be able to create messages longer than what fits on the display module (but not so long as to overflow the buffer), and sending the message to the display module.
+
+\subsection{Deleting a Character}
+
+Requirement~\ref{spec:deleteCharacter} describes which character should be deleted when the left pushbutton is pressed.
+
+In \textit{inputs.c}:
+\begin{itemize}
+    \item Register \function{handle_left_button()} as the interrupt service routine for the left pushbutton.
+    \item Place the appropriate code in \function{handle_left_button()}.
+\end{itemize}
+
+In \textit{message\_editor.c}:
+\begin{itemize}
+    \item Write \function{retreat_cursor()} as the inverse of \function{advance_cursor()}.
+    \item Write \function{delete_character()} to handle both cases described in Requirement~\ref{spec:deleteCharacter}.
+\end{itemize}
+
+Test your code.
+
+\subsection{Bounds Checking}
+
+Look over your code to make sure that you cannot modify \lstinline{message[-1]}, \lstinline{message[BUFFER_LENGTH]}, nor any other out-of-bounds ``elements.''
+You should also make sure that you never let \lstinline{message[BUFFER_LENGTH - 1]} be anything other than \lstinline{'\0'}.
+
+\subsection{Displaying Messages Longer Than the Display Module's Width}
+
+The last part of Requirement~\ref{spec:topRow} states that when the message is too long to display on the display module, then only the end of the message should be displayed.
+It is no accident that \textit{message\_editor.c} includes a \lstinline{display_start} pointer that up until now has pointed to the start of the message.
+\begin{itemize}
+    \item Add code to \function{advance_cursor()} and \function{retreat_cursor()} to update \lstinline{display_start} such that the last 15 fixed characters plus the character being selected are displayed.
+\end{itemize}
+
+Test your code.
+
+\subsection{``Transmitting'' the Message}
+
+\begin{itemize}
+    \item Add code to \function{handle_keypress()} in \textit{inputs.c} that instructs the message editor to send the message to the output whenever the \texttt{D} key is pressed.
+    \item Add code to \function{send_message_to_output()} in \textit{message\_editor.c} that sends the message to the output and resets the message.
+\end{itemize}
+
+Test your code.

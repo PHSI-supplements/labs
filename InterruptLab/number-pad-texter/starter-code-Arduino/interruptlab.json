@@ -1,0 +1,93 @@
+{
+  "targetFiles": [
+    "InterruptLab/inputs.c",
+    "InterruptLab/character_selector.c",
+    "InterruptLab/message_editor.c"
+  ],
+  "commentDelimiters": {
+    "inlineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "codeBlockDelimiters": [
+    "{",
+    "}"
+  ],
+  "codeBlockKeywords": {
+    "loops": [
+      "do",
+      "while",
+      "for"
+    ],
+    "benignBlockTerminations": {
+      "break": "switch"
+    }
+  },
+  "operators": {
+    "all": [
+      "++",
+      "--",
+      ".",
+      "->",
+      "!",
+      "~",
+      "*",
+      "/",
+      "%",
+      "+",
+      "-",
+      "<<",
+      ">>",
+      "<",
+      "<=",
+      ">",
+      ">=",
+      "==",
+      "!=",
+      "&",
+      "^",
+      "|",
+      "&&",
+      "||",
+      "?",
+      "=",
+      "+=",
+      "-=",
+      "*=",
+      "/=",
+      "%=",
+      "<<=",
+      ">>=",
+      "&=",
+      "^=",
+      "|=",
+      ","
+    ],
+    "disallowed": []
+  },
+  "disallowedCalls": [],
+  "disallowedKeywords": [
+    "goto",
+    "digitalRead",
+    "digitalWrite",
+    "delay",
+    "delayMicroseconds",
+    "bit",
+    "bitClear",
+    "bitRead",
+    "bitSet",
+    "bitWrite",
+    "highByte",
+    "lowByte"
+  ],
+  "limitedLoopTerminations": {
+    "0": [
+      "break",
+      "continue",
+      "return"
+    ]
+  },
+  "limitedCharacters": {}
+}

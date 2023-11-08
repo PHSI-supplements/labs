@@ -1,0 +1,143 @@
+You are not required to have your assignment checked-off by a TA or the professor.
+If you do not do so, then we will perform a functional check ourselves.
+In the interest of making grading go faster, we are offering a small bonus to get your assignment checked-off at the start of your scheduled lab time immediately after it is due.
+Because checking off all students during lab would take up most of the lab time, we are offering a slightly larger bonus if you complete your assignment early and get it checked-off by a TA or the professor during office hours.
+
+(The checklist is forthcoming.)
+
+%\begin{enumerate}
+%    \precheckoffitem{Place both switches in the left position, upload your code to your \developmentboard, and leave your code open in the IDE.}
+%
+%    % turn signals, 8 points
+%    \checkoffitem{Show the TA your \function{initialize_turn_signals()} function, pointing out that you registered an interrupt handler for the pin that reads the pushbuttons' NAND value. \\
+%        \textit{+1 Pushbutton presses are detected with an external interrupt}}
+%    \checkoffitem{In your \function{initialize_turn_signals()} function, point out the code that configures the interrupt timer;
+%        explain how you arrived at each of the values assigned to the timer's registers \\
+%        \textit{+1 Timer interrupts for Timer1 are handled} \\
+%        \textit{+1 Timer1 interrupts every 750ms}}
+%    \checkoffitem{Show the TA your \function{handle_button_action()} and \function{ISR(TIMER1_COMPA_vect)}, pointing out the absence of long-running code \\
+%        \textit{+1 There is no long-running code in the interrupt handlers / ISRs in \textit{turn\_signals.c}}}
+%    \item [] (TA, if \function{handle_button_action()} prints to the console to show which button was pushed but takes no other action, then do not penalize the student for the long-running code; instead, penalize the student for the missing behavior)
+%    \checkoffitem{Press the left pushbutton.
+%        The left (internal) LED blinks 750ms on, 750ms off, and the right (external) LED does not.}
+%    \checkoffitem{Press the right pushbutton.
+%        The right (external) LED blinks 750ms on, 750ms off, and the left (internal) LED does not. \\
+%        \textit{+1 The pushbuttons' interrupt handler determines which button was pressed} \\
+%            \phantom{xxxxx}{\footnotesize(Award this point for \textit{any} indication that a determination is made)} \\
+%        \textit{+1 The LED corresponding to the pressed button blinks} \\
+%        \textit{+1 The other LED does not blink}\footnote{
+%            When the left LED is blinking and you press the right pushbutton, it is acceptable for the left LED to go dim or to stay lit, so long as the right LED starts blinking and the left LED stops blinking.
+%            On a \textit{real} cart, we'd want the left LED to go dim in this scenario, but guaranteeing that it does so while also making sure the brake lights work correctly is more complicated than I want you to worry about for this lab.
+%        } \\
+%        \textit{+1 The blink pattern is 750ms on, 750ms off}}
+%
+%    % controlling the cart, 27 points
+%    \checkoffitem{Show the TA your \function{initialize_cart_system()} function, pointing out that you registered an interrupt handler for the pin that reads the matrix keypad's NAND value. \\
+%        \textit{+2 Matrix keypad presses and releases are detected with an external interrupt}}
+%    \checkoffitem{In your \function{initialize_cart_system()} function, point out the code that configures the interrupt timer;
+%        explain how you arrived at each of the values assigned to the timer's registers \\
+%        \textit{+2 Timer interrupts for Timer2 are handled} \\
+%        \textit{+2 Timer2 interrupts every 1.208ms}}
+%    \checkoffitem{Show the TA your \function{handle_key_action()} and \function{ISR(TIMER2_COMPA_vect)} (and any helper functions they call), pointing out the absence of long-running code \\
+%        \textit{+1 There is no long-running code in the interrupt handlers / ISRs in \textit{cart\_controller.c}}}
+%    \item [] (TA, if \function{handle_key_action()} (or one of its helper functions) prints to the console to show which key was pressed/released but takes no other action, then do not penalize the student for the long-running code; instead, penalize the student for the missing behavior)
+%    \checkoffitem{Show the TA the code to update the distance and direction every 1.208ms.
+%        Explain how you achieve a precision of exactly 1~nanofurlong (0.001~microfurlongs).
+%        Explain how you achieve a precision of exactly 1~microdegree (0.000,001\textdegree).
+%        Point out the calculation that changes the direction by $\pm 0.3\degree$ for each microfurlong travelled while turning. \\
+%        \textit{+1 The distance and direction are updated every 1.208ms} \\
+%        \textit{+1 The distance is tracked at 0.001~microfurlongs} \\
+%        \textit{+1 the direction is tracked at 0.000,001\textdegree} \\
+%        \textit{+1 The direction changes by $\pm 0.3\degree$ for each microfurlong travelled while turning}}
+%    \checkoffitem{Show the TA the code to refresh the display every $256 \times 1.208ms$. \\
+%        \textit{+1 The display refreshes every 309.248ms}}
+%    \checkoffitem{Show the TA the code ensure the speed stays strictly between $0 \leq speed \leq 3000~fpf$. \\
+%        \textit{+\textonehalf\ The speed is strictly limited to $0 \leq speed \leq 3000~fpf$}}
+%    \item [] (TA, examine \function{control_cart()} and any helper functions it calls to establish that key presses and releases are not detected through polling.)
+%
+%    \checkoffitem{Press the `0' key.
+%        The left LED steadily illuminates; the right LED continues to blink. \\
+%        \textit{+\textonehalf\ If a turn signal is active then the turn signal's LED will continue to blink while the opposite LED illuminates steadily.}}
+%    \checkoffitem{Release the `0' key.
+%        The left LED deluminates; the right LED continues to blink.}
+%    \checkoffitem{Press the `6' key.
+%        Nothing changes. \\
+%        \textit{+1 The keypad's interrupt handler determines which key (if any) was pressed} \\
+%            \phantom{xxxxx}{\footnotesize(Award this point for \textit{any} indication that a determination is made)}}
+%    \checkoffitem{Release the `6' key.
+%        The right LED stops blinking. \\
+%        \textit{+1 The keypad's interrupt handler determines which key (if any) was released} \\
+%            \phantom{xxxxx}{\footnotesize(Award this point for \textit{any} indication that a determination is made)}}
+%    \checkoffitem{Press the `0' key.
+%        Both LEDs illuminate. \\
+%        \textit{+\textonehalf\ If neither turn signal is active, then both LEDs illuminate steadily while the brake lights are active} \\
+%        \textit{+\textonehalf\ Pressing the `0' key activates the brake lights}}
+%    \checkoffitem{Release the `0' key.
+%        Both LEDs deluminate. \\
+%        \textit{+1 Releasing the `0' key deactivates the brake lights}}
+%
+%    \checkoffitem{Press and release the `2' key.
+%        Nothing changes.}
+%    \checkoffitem{Place the left switch in the right position.}
+%    \checkoffitem{Press and release the `2' key.
+%        Nothing changes.}
+%    \checkoffitem{Press and release the `0' key.}
+%    \checkoffitem{Press and release the `2' key.
+%        The display indicates that the speed is 1~furlong per fortnight.
+%        The distance slowly increases. \\
+%        \textit{+1 Pressing the `2' key increases the speed if and only if the motor is engaged}}
+%    \checkoffitem{Place the left switch in the left position.}
+%    \checkoffitem{Press and release the `2' key.
+%        The display indicates that the speed is 2~furlongs per fortnight.
+%        The distance continues to increase, faster than before.}
+%    \checkoffitem{Press and release the `0' key.
+%        The speed is 0.
+%        The distance is unchanged: it is non-zero but is no longer increasing. \\
+%        \textit{\textonehalf\ Pressing the `0' key sets the speed to 0}}
+%    \checkoffitem{Press and release the `2' key.
+%        Nothing changes. \\
+%        \textit{\textonehalf\ The left switch engages/disengages the motor} \\
+%        \textit{\textonehalf\ The left switch has no effect except when releasing the `0' key}}
+%
+%    \checkoffitem{Place both switches in the right position.}
+%    \checkoffitem{Press and release the `2' key.
+%        The display indicates that the speed is 3~furlongs per fortnight.
+%        The distance steadily increases. \\
+%        \textit{+1 The right switch selects low/high gear}}
+%    \checkoffitem{Press and release the `2' key.
+%        The display indicates that the speed is 6~furlongs per fortnight.}
+%    \checkoffitem{Press and release the `8' key.
+%        The display indicates that the speed is 3~furlongs per fortnight. \\
+%        \textit{+1 Pressing the `8' key decreases the speed}}
+%
+%    \checkoffitem{Press and release the `B' key.
+%        The speed-only display shows the same value as the ``normal'' display (3~fpf) \\
+%        \textit{+1 The speed is tracked at 1~furlong per fortnight}}
+%    \checkoffitem{Press and release the `C' key.
+%        The distance-only display shows a rapidly-increasing value three orders of magnitude greater than that on ``normal'' display (the display shows nanofurlongs instead of microfurlongs)}
+%    \checkoffitem{Press and release the `D' key.
+%        The direction-only display shows 0~microdegrees.}
+%    \checkoffitem{Press and hold the `6' key.
+%        The direction rapidly increases.
+%        Continue to hold the `6' key until the direction is over 2,000,000~microdegrees. \\
+%        \textit{+\textonehalf\ Pressing the `6' key causes the cart to turn right}}
+%    \checkoffitem{Release the `6' key.
+%        The direction stops changing. \\
+%        \textit{+\textonehalf\ Releasing the `6' key causes the cart to stop turning}}
+%    \checkoffitem{Press and release the `A' key.
+%        The ``normal'' display shows a the direction is 2\textdegree. \\
+%        \textit{+1 Pressing the `A', `B', `C', or `D' key causes the appropriate display to appear on the display module}}
+%    \checkoffitem{Press and hold the `4' key.
+%        After a brief amount of time, the direction changes to 1\textdegree. \\
+%        \textit{+\textonehalf\ Pressing the `4' key causes the cart to turn left}}
+%    \checkoffitem{Continue to hold the `4' key as the direction changes to 0\textdegree, 359\textdegree, and then 358\textdegree.}
+%    \checkoffitem{Release the `4' key.
+%        The direction stops changing. \\
+%        \textit{+\textonehalf\ Releasing the `4' key causes the cart to stop turning}}
+%    \checkoffitem{Press and hold the `6' key as the direction changes to 359\textdegree, 0\textdegree, and then 1\textdegree.
+%        Release the `6' key.
+%        \textit{+\textonehalf\ The direction is strictly limited to $0\degree \leq speed < 360\degree$}}
+%
+%    \checkoffitem{Press and release, in turn, `1', `3', `5', `7', `9', `*', and `\#'. \\
+%        \textit{+1 The remaining keys have no effect}}
+%\end{enumerate}

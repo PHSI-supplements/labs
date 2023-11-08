@@ -1,0 +1,53 @@
+Please familiarize yourself with the entire assignment before beginning.
+There are three parts to this assignment.
+
+\subsection{Why are There Letters on Telephone Keypads?}
+
+Once upon a time, telephone exchanges were staffed by operators who would use patch cords on a switchboard to connect callers.
+If you needed to make a local-area call to someone whose phone was serviced by a different exchange, then you needed to tell your operator which exchange to connect to.
+Letters were assigned to digits so that easy-to-remember -- and audibly-distinctive -- mnemonics could be formed such that the first two letters of the mnemonic that correspond to the 2-digit exchange identifier.
+For example, the 86 exchange would use a mnemonic that started with a `T', `U', or `V' and that has as a second letter an `M', `N', or `O' --
+so 867--5309 might be ``University 7--5309''.
+
+The presence of letters on telephone dials and (later) telephone keypads allowed for custom phone numbers that used words formed by the available letters.
+For example, a bank's phone number might be 472--2265, aka 472--BANK.
+Less fictionally, 1--800--FLOWERS was used by a company that partnered with florists to allow people to have bouquets delivered anywhere in the U.S\@.
+
+When the Short Message Service protocol was introduced to allow text-based communication by taking advantage of unused bytes in the handshake between cellular phones and the cell network, naturally the letters that were already present on the keypad were used to tap out messages.
+
+While QWERTY keyboards on smartphones have largely replaced the 10-digit keypad for text entry, the letters remain, waiting for the next clever use\dots
+
+\subsection{Constraints} \label{subsec:constraints}
+
+You may \textit{not} poll the matrix keypad nor the pushbuttons to determine if they have been pressed.
+You must use interrupts to determine if a key or button has been pressed.
+Once an interrupt has fired, you may scan the matrix keypad or read the pushbuttons to determine which key has been pressed or whether the button has been pressed or released.
+
+You may use any features that are part of the C standard if they are supported by the compiler.
+You may use the constants and functions provided in the starter code.
+
+\subsubsection{Constraints on the Arduino core}
+
+You may \textit{not} use any libraries, functions, macros, types, or constants from the Arduino core.
+
+\subsubsection{Constraints on AVR-libc}
+
+You may use any AVR-specific functions, macros, types, or constants of avr-libc.\footnote{
+    \url{https://www.nongnu.org/avr-libc/user-manual/index.html}
+}
+
+\subsubsection{Constraints on the CowPi library}
+
+You may use any functions provided by the CowPi\footnote{
+    \url{https://cow-pi.readthedocs.io/en/latest/library.html}
+}
+and the CowPi\_stdio\footnote{
+    \url{https://cow-pi.readthedocs.io/en/latest/stdio.html}
+} libraries,
+and you may use any data structures\footnote{
+    \url{https://cow-pi.readthedocs.io/en/latest/microcontroller.html}
+} provided by the CowPi library.
+
+\subsubsection{Constraints on other libraries}
+
+You may \textit{not} use any libraries beyond those explicitly identified here.

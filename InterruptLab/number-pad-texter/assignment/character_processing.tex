@@ -1,0 +1,76 @@
+So far, your always produces the first character in a key's sequence, and it doesn't advance the cursor.
+In this section, you will change that.
+
+\subsection{Repeated Number Key Presses} \label{subsec:characterSequencing}
+
+In Section~\ref{subsubsec:logic}, you wrote code that always generates the first character of a key's character sequence.
+Requirement~\ref{spec:multiplePresses} states that when a key is pressed multiple times, the character being generated should cycle through that key's possible characters.
+
+In the \function{update_character()} function in \textit{character\_selector.c}:
+\begin{itemize}
+    \item Update your code so that each press of the same key will advance the character being generated to the next character in the key's sequence (or the first in the sequence after the last character in the sequence)
+\end{itemize}
+
+Test your code.
+
+
+\subsection{Fixing a Character} \label{subsec:finalizeCharacter}
+
+According to Requirement~\ref{spec:finalizeCharacter}, a character becomes a fixed part of the message if the user uses with a different key than they had been using, if the user presses the right pushbutton, or if 2~seconds have passed since the user last took action.
+In each of these three cases, the character selector resets, and the message editor's cursor advances.
+In only the first case, the character selector starts a new character selection.
+
+\paragraph{Note} If the character selector is not working on a character -- that is, if the character is blank -- then finalizing a character should have no effect (because there is no character to finalize). \\
+
+\begin{itemize}
+    \item In \textit{character\_selector.c}, add code to \function{finalize_character()} that takes care of the behavior common to all three cases: resetting the character selector, and instructing the message editor to advance the cursor.
+    \item In \textit{message\_editor.c}, add code to \function{advance_cursor()} that updates the editor so that the message's next element will be the location for the character selector's next character.
+        For now, assume that the message consists of fewer than 16 characters.
+        Be sure to update the display so that the user can see the change.
+\end{itemize}
+
+\subsubsection{Right Pushbutton}
+
+In \textit{inputs.c}:
+\begin{itemize}
+    \item Register \function{handle_right_button()} as the interrupt service routine that should be invoked whenever the right pushbutton is pressed or released.
+    \item Add code to \function{handle_right_button()} to finalize the character and reset the timers whenever the right pushbutton is pressed.
+\end{itemize}
+
+Test your code.
+
+\subsubsection{Keypad}
+
+In the \function{update_character()} function in \textit{character\_selector.c}:
+\begin{itemize}
+    \item Add code to detect whether the previous key was blank, was different from the new key, or is the same as the new key.
+    \item Modify your previous code to work within this new structure.
+    \item Add code to finalize the character and start a new character selection when the new key is different from the previous key.
+\end{itemize}
+
+Test your code.
+
+\subsubsection{Timer}
+
+In the \function{initialize_interrupts()} function in \textit{inputs.c}:
+\begin{itemize}
+    \item Point the \lstinline{character_timer} pointer to the base address of TIMER1's registers.
+    \item User \lstinline{character_timer} to configure TIMER1 for CTC mode, generating a comparison interrupt every 2~seconds, using the ``A'' comparison register.
+    \item Enable the \lstinline{TIMER1_COMPA_vect} interrupt vector.
+        \begin{description}
+            \item[Important] Do not run your program with \lstinline{TIMER1_COMPA_vect} enabled until you have prepared an ISR for \lstinline{TIMER1_COMPA_vect}!
+        \end{description}
+\end{itemize}
+
+In the \function{reset_timers()} function in \textit{inputs.c}:
+\begin{itemize}
+    \item Uncomment \lstinline{character_timer->counter = 0;}
+\end{itemize}
+
+Outside any function in \textit{inputs.c}:
+\begin{itemize}
+    \item Use the \function{ISR()} macro to create an ISR for \lstinline{TIMER1_COMPA_vect}.
+    \item In this ISR, add code to finalize the character.
+\end{itemize}
+
+Test your code.

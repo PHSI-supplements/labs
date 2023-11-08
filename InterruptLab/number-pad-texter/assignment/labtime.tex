@@ -1,0 +1,176 @@
+During your lab period, the TAs will guide the class through the first modifications to the starter code that you must make, described in this section.
+If you do not attend your lab period, then you must complete this section on your own.
+\textbf{\textit{Except during lab time, you may }not\textit{ discuss the solutions for this section with other students.}}
+
+
+\subsection{Reviewing the Datasheet}
+
+Read the Datasheet sections that discuss \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#interrupts}{Interrupts} and \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#timers}{Timers}.
+
+You can skip over the section that covers registering external interrupt handlers using \function{attachInterrupt()}, as we will use pin change interrupts.
+You can skip over the section that covers the timers ``Normal'' mode, as we will use ``Clear Timer on Compare'' (CTC) mode.
+You can skip over the section that covers configuring TIMER0, as we will use only TIMER1 and TIMER2.
+
+\subsection{Examining the Starter Code}
+
+Familiarize yourself with the functions in \textit{character\_selector} and \textit{message\_editor} and the header comments that describe what the functions will do.
+
+\subsection{Debouncing} \label{subsec:debouncing}
+
+When you place your code that responds to key presses and button presses in the interrupt handlers, place it inside the braces for the \function{debounce_interrupt()} macro.
+Just as the \function{cowpi_debounce_byte()} function took care of debouncing when polling mechanical inputs, the \function{debounce_interrupt()} macro defined in \textit{inputs.h} takes care of (most of) the debouncing when mechanical inputs generate interrupts.
+There are two catches.
+
+The first catch is that \function{debounce_interrupt()} only works when the interrupt handler responds to both the rising and falling edges of the input.
+This isn't such a terrible limitation, as a pin change interrupt is fired whenever there is a change on a pin.
+That is, your ISR will be invoked whenever there is a key/button press \textit{or} release --
+so you already have to be able to handle both presses and releases.
+If the interrupt is due to a press, then take the appropriate actions;
+if the interrupt is due to a release, then do nothing.
+
+The second catch is that \function{debounce_interrupt()} works by ignoring interrupts that are generated due to switchbounce.
+It does not -- it cannot -- ignore switchbounce that occurs while the interrupt handler is executing.
+Consider this scenario: the user presses a button, closing the contacts, triggering an interrupt, and the interrupt handler launches.
+Before reaching the code that reads the inputs to determine which key was pressed (or whether a button was pressed or released), the switch bounces, temporarily re-opening the contacts;
+when the code reads the inputs, the wrong condition is detected!
+The fix is to introduce a loop that iterates until a sensible input reading is found.
+This busy-wait loop is already in the starter code.
+
+
+\subsection{Handling Key Presses}
+
+\subsubsection{The Interrupt Service Routine}
+
+In \textit{inputs.c}, locate the \function{initialize_interrupts()} function.
+In this function:
+\begin{itemize}
+    \item Use \function{cowpi_register_pin_ISR()} to register \function{handle_keypress()} as the interrupt service routine that should be invoked whenever there is key movement on the keypad.
+\end{itemize}
+
+\paragraph{Hint} Which microcontroller pins did you use to detect key movement in PollingLab? \\
+
+Locate the \function{handle_keypress()} function.
+
+After the busy-wait loop terminates, the \lstinline{key} variable holds the character corresponding to the key that was pressed, or \lstinline{'\0'} if no key was pressed (\textit{i.e.}, a key was released).
+\begin{itemize}
+    \item Add code that will call the \function{update_character()} function if a key was pressed.
+\end{itemize}
+
+\subsubsection{The Logic} \label{subsubsec:logic}
+
+In \textit{character\_selector.c}, locate the \lstinline{characters} and \lstinline{key_modulus} arrays.
+The \lstinline{characters} nested array describes the characters that can be produced by cycling through each of the numeric keys on the keypad.\footnote{
+    A ``box'' character is used in place of a space character so that it's more clear on the display module whether a blank at the end of the message is meant to be a space or is merely an empty blank.
+}
+The \lstinline{key_modules} array describes how many useful characters are in each of \lstinline{characters}' rows.\footnote{
+    Because \lstinline{characters} is a nested array, all rows occupy 5 bytes, even though most rows don't have five useful characters.
+}
+
+The \lstinline{working_key} global variable selects the \lstinline{characters} row, and the \lstinline{character_index} global variable selects the column.
+The \function{reset_selector()} function sets both of these variables to -1, using named constants to provide meaning to these special values.
+
+Locate the \function{update_character()} function.
+In this function:
+\begin{itemize}
+    \item Determine if the input is valid.
+    \item If so, determine what the first character should be, according to Requirements~\ref{spec:keypad} and \ref{spec:firstPress},
+        and send that character to the message editor using the \function{replace_character()} function.
+\end{itemize}
+(The \function{update_character()} function will have more responsibility later,
+but for now, just focus on sending a character to the message editor.)
+
+\subsubsection{Test Your Code}
+
+At this point, all characters are placed at the start of the message, but you can still check:
+\begin{itemize}
+%    \item Does your code cycle through the characters for each key?
+    \item Does your code produce the first character from each number key's character sequence?
+    \item Does your code produce characters for all the number keys?
+    \item Does your code produce characters for only the number keys?
+\end{itemize}
+
+
+\subsection{Blinking the LED} \label{subsec:blinking}
+
+According to Requirement~\ref{spec:pressIndicator}, the right LED needs to blink for approximately \textonequarter second whenever the user presses a key.
+
+In \textit{inputs.c}, locate the \lstinline{led_timer} pointer and the \lstinline{supplemental_counter} variable.
+The \lstinline{led_timer} pointer is a pointer to a structure for an 8-bit timer;
+we will have it point to the memory-mapped I/O registers for TIMER2.
+Unfortunately, the greatest interrupt period possible for TIMER2 is 16.384ms, well short of \textonequarter second.
+Our solution to this is to use \lstinline{supplemental_counter} to count the number of times that TIMER2 fires an interrupt,
+and take further action only when \lstinline{supplemental_counter}'s value indicates that approximately \textonequarter second has passed.
+
+\subsubsection{Configuring the Timer}
+
+We will approximate \textonequarter second as 256ms.
+The reason for this is that we want our ISRs to execute as fast as possible, and if we tried to take action after exactly 250ms, we will have to resort to division, which takes hundreds of cycles on the ATmega328P microcontroller.
+If we choose to take action after 256ms, then we can select a power-of-two, $n$ such that the ISR takes action once every $n$ times that the ISR runs.
+Now, we can determine when the ISR has run $ISR$ times by adding 1 to \lstinline{supplemental_counter} each time the ISR runs and then applying a bitmask ($n-1$).
+This effectively will cause overflow every 16, 32, 64, 128, or 256 increments.
+Now, the desired interrupt period is $\frac{256}{n}ms$.
+
+In \function{initialize_interrupts()}:
+\begin{itemize}
+    \item Consulting the Datasheet's \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#configuring-timer2}{Configuring TIMER2} section.
+        Assign the base address for TIMER2's registers to \lstinline{led_timer}.
+    \item Using the equation in the Datasheet's \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#clear-timer-on-compare-mode}{Clear Timer on Compare Mode} section,
+        select a prescaler such that the resulting comparison value is at most $2^8$.
+    \item Using the Datasheet's Tables 17--19, construct a bit vector for TIMER2's control register for ``CTC'' mode with your chosen prescaler.
+        Assign this bit vector to \lstinline{led_timer}'s \lstinline{control} field.
+    \item Subtract 1 from your calculated comparison value, and assign the result to \lstinline{led_timer}'s \lstinline{compareA} field.
+    \item Consulting the Datasheet's \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#timer-interrupts}{Timer Interrupts} section, enable the \lstinline{TIMER2_COMPA_vect} interrupt vector by setting the \lstinline{OCIE2A} bit to 1.
+\end{itemize}
+
+In \function{reset_timers()}:
+
+\begin{itemize}
+    \item Uncomment \lstinline{led_timer->counter = 0;}
+\end{itemize}
+
+\subsubsection{Turning the LED On and Off}
+
+According to Requirement~\ref{spec:pressIndicator}, the right LED shall illuminate when the user presses a key.
+\begin{itemize}
+    \item Add a call to \function{cowpi_illuminate_right_led()} in the part of \lstinline{inputs.c} that will run when a key has been pressed.
+    \item Immediately after that, reset the timers' counters and the supplemental counter to zero.
+\end{itemize}
+
+According to Requirement~\ref{spec:pressIndicator}, the right LED needs to deluminate after approximately \textonequarter second, which we are approximating as 256ms.
+Locate the code in \textit{inputs.c} that looks like this:
+
+\begin{lstlisting}
+    ISR(TIMER2_COMPA_vect) {
+        ;
+    }
+\end{lstlisting}
+
+\begin{itemize}
+    \item Add code to that block to increment \lstinline{supplemental_counter} and to cause it to overflow after the requisite number of increments.
+    \item Add code to that block that will call \function{cowpi_deluminate_right_led()} whenever \lstinline{supplemental_counter} overflows.
+\end{itemize}
+
+You should take the time to convince yourself that the LED will turn off exactly 256ms after a key is pressed.
+You should take the time to convince yourself that there will be no observable effect when \lstinline{supplemental_counter} overflows while the LED is off.
+
+
+\subsubsection{Test Your Code}
+
+The easy part of testing this code is: when you press a key, does the right LED turn on and then off again?
+
+Testing that the LED illuminates for exactly 256ms is a bit harder to do on a human scale, but you can give yourself a sanity check.
+Briefly practice pressing a key repeatedly, and try to get the cadence of pressing a key such that it re-illuminates almost the instant that it starts to dim.
+Have a friend or lab partner open the stopwatch app on their smartphone.
+Have them give you a ``ready, set, go!'' lead-in, and then call time five seconds later.
+When your friend or lab partner tells you to go, start pressing a key with that cadence -- \textbf{\textit{count the number of presses until they call time}}.
+If you counted 18 or 19 key presses, then your illumination time is in the right ballpark.
+
+\vspace{1cm}
+
+You are now ready to complete the remainder of this assignment on your own.
+Reminders:
+\begin{itemize}
+    \item You can complete Sections~\ref{sec:characterGeneration} and \ref{sec:oddsAndEnds}.
+    \item \collaborationrules
+\end{itemize}
+
