@@ -59,12 +59,18 @@ In the \function{initialize_interrupts()} function in \textit{inputs.c}:
     \item Enable the \lstinline{TIMER1_COMPA_vect} interrupt vector.
         \begin{description}
             \item[Important] Do not run your program with \lstinline{TIMER1_COMPA_vect} enabled until you have prepared an ISR for \lstinline{TIMER1_COMPA_vect}!
+            \item[Important] The assignment to the \lstinline{compareA} field must occur \textit{after} the assignment to the \lstinline{control} register.
         \end{description}
 \end{itemize}
 
 In the \function{reset_timers()} function in \textit{inputs.c}:
 \begin{itemize}
     \item Uncomment \lstinline{character_timer->counter = 0;}
+\end{itemize}
+
+In the \function{handle_keypad()} function in \textit{inputs.c}:
+\begin{itemize}
+    \item Add code to reset the timers' counters after a keypress.
 \end{itemize}
 
 Outside any function in \textit{inputs.c}:

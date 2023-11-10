@@ -69,7 +69,7 @@ The \lstinline{key_modules} array describes how many useful characters are in ea
 The \lstinline{working_key} global variable selects the \lstinline{characters} row, and the \lstinline{character_index} global variable selects the column.
 The \function{reset_selector()} function sets both of these variables to -1, using named constants to provide meaning to these special values.
 
-Locate the \function{update_character()} function.
+Locate the \function{update_character()} function in \textit{character\_selector.c}.
 In this function:
 \begin{itemize}
     \item Determine if the input is valid.
@@ -78,6 +78,20 @@ In this function:
 \end{itemize}
 (The \function{update_character()} function will have more responsibility later,
 but for now, just focus on sending a character to the message editor.)
+
+In \textit{message\_editor.c}, locate the \lstinline{message} array and related variables.
+The \lstinline{message} array is a buffer to store the message being edited,
+and \lstinline{message_index} is used to track the end of the message.
+The \lstinline{display_start} pointer is used to indicate the start of the substring that will be displayed on the display module.
+
+Locate the \function{replace_character()} function in \textit{message\_editor.c}.
+In this function:
+\begin{itemize}
+    \item Add code to place the character in the \lstinline{message} buffer at \lstinline{message_index}.
+        Do \textit{not} update \lstinline{message_index}.
+\end{itemize}
+(You will make further changes to the \function{replace_character()} function later,
+but for now, just focus placing the character at the end of the string.)
 
 \subsubsection{Test Your Code}
 
@@ -118,7 +132,8 @@ In \function{initialize_interrupts()}:
         select a prescaler such that the resulting comparison value is at most $2^8$.
     \item Using the Datasheet's Tables 17--19, construct a bit vector for TIMER2's control register for ``CTC'' mode with your chosen prescaler.
         Assign this bit vector to \lstinline{led_timer}'s \lstinline{control} field.
-    \item Subtract 1 from your calculated comparison value, and assign the result to \lstinline{led_timer}'s \lstinline{compareA} field.
+    \item Subtract 1 from your calculated comparison value, and assign the result to \lstinline{led_timer}'s \lstinline{compareA} field. \\
+        \textcolor{red}{IMPORTANT! The assignment to the \lstinline{compareA} field must occur \textit{after} the assignment to the \lstinline{control} register.}
     \item Consulting the Datasheet's \href{https://cow-pi.readthedocs.io/en/latest/microcontroller.html#timer-interrupts}{Timer Interrupts} section, enable the \lstinline{TIMER2_COMPA_vect} interrupt vector by setting the \lstinline{OCIE2A} bit to 1.
 \end{itemize}
 

@@ -5,139 +5,351 @@ Because checking off all students during lab would take up most of the lab time,
 
 (The checklist is forthcoming.)
 
-%\begin{enumerate}
-%    \precheckoffitem{Place both switches in the left position, upload your code to your \developmentboard, and leave your code open in the IDE.}
-%
-%    % turn signals, 8 points
-%    \checkoffitem{Show the TA your \function{initialize_turn_signals()} function, pointing out that you registered an interrupt handler for the pin that reads the pushbuttons' NAND value. \\
-%        \textit{+1 Pushbutton presses are detected with an external interrupt}}
-%    \checkoffitem{In your \function{initialize_turn_signals()} function, point out the code that configures the interrupt timer;
-%        explain how you arrived at each of the values assigned to the timer's registers \\
-%        \textit{+1 Timer interrupts for Timer1 are handled} \\
-%        \textit{+1 Timer1 interrupts every 750ms}}
-%    \checkoffitem{Show the TA your \function{handle_button_action()} and \function{ISR(TIMER1_COMPA_vect)}, pointing out the absence of long-running code \\
-%        \textit{+1 There is no long-running code in the interrupt handlers / ISRs in \textit{turn\_signals.c}}}
-%    \item [] (TA, if \function{handle_button_action()} prints to the console to show which button was pushed but takes no other action, then do not penalize the student for the long-running code; instead, penalize the student for the missing behavior)
-%    \checkoffitem{Press the left pushbutton.
-%        The left (internal) LED blinks 750ms on, 750ms off, and the right (external) LED does not.}
-%    \checkoffitem{Press the right pushbutton.
-%        The right (external) LED blinks 750ms on, 750ms off, and the left (internal) LED does not. \\
-%        \textit{+1 The pushbuttons' interrupt handler determines which button was pressed} \\
-%            \phantom{xxxxx}{\footnotesize(Award this point for \textit{any} indication that a determination is made)} \\
-%        \textit{+1 The LED corresponding to the pressed button blinks} \\
-%        \textit{+1 The other LED does not blink}\footnote{
-%            When the left LED is blinking and you press the right pushbutton, it is acceptable for the left LED to go dim or to stay lit, so long as the right LED starts blinking and the left LED stops blinking.
-%            On a \textit{real} cart, we'd want the left LED to go dim in this scenario, but guaranteeing that it does so while also making sure the brake lights work correctly is more complicated than I want you to worry about for this lab.
-%        } \\
-%        \textit{+1 The blink pattern is 750ms on, 750ms off}}
-%
-%    % controlling the cart, 27 points
-%    \checkoffitem{Show the TA your \function{initialize_cart_system()} function, pointing out that you registered an interrupt handler for the pin that reads the matrix keypad's NAND value. \\
-%        \textit{+2 Matrix keypad presses and releases are detected with an external interrupt}}
-%    \checkoffitem{In your \function{initialize_cart_system()} function, point out the code that configures the interrupt timer;
-%        explain how you arrived at each of the values assigned to the timer's registers \\
-%        \textit{+2 Timer interrupts for Timer2 are handled} \\
-%        \textit{+2 Timer2 interrupts every 1.208ms}}
-%    \checkoffitem{Show the TA your \function{handle_key_action()} and \function{ISR(TIMER2_COMPA_vect)} (and any helper functions they call), pointing out the absence of long-running code \\
-%        \textit{+1 There is no long-running code in the interrupt handlers / ISRs in \textit{cart\_controller.c}}}
-%    \item [] (TA, if \function{handle_key_action()} (or one of its helper functions) prints to the console to show which key was pressed/released but takes no other action, then do not penalize the student for the long-running code; instead, penalize the student for the missing behavior)
-%    \checkoffitem{Show the TA the code to update the distance and direction every 1.208ms.
-%        Explain how you achieve a precision of exactly 1~nanofurlong (0.001~microfurlongs).
-%        Explain how you achieve a precision of exactly 1~microdegree (0.000,001\textdegree).
-%        Point out the calculation that changes the direction by $\pm 0.3\degree$ for each microfurlong travelled while turning. \\
-%        \textit{+1 The distance and direction are updated every 1.208ms} \\
-%        \textit{+1 The distance is tracked at 0.001~microfurlongs} \\
-%        \textit{+1 the direction is tracked at 0.000,001\textdegree} \\
-%        \textit{+1 The direction changes by $\pm 0.3\degree$ for each microfurlong travelled while turning}}
-%    \checkoffitem{Show the TA the code to refresh the display every $256 \times 1.208ms$. \\
-%        \textit{+1 The display refreshes every 309.248ms}}
-%    \checkoffitem{Show the TA the code ensure the speed stays strictly between $0 \leq speed \leq 3000~fpf$. \\
-%        \textit{+\textonehalf\ The speed is strictly limited to $0 \leq speed \leq 3000~fpf$}}
-%    \item [] (TA, examine \function{control_cart()} and any helper functions it calls to establish that key presses and releases are not detected through polling.)
-%
-%    \checkoffitem{Press the `0' key.
-%        The left LED steadily illuminates; the right LED continues to blink. \\
-%        \textit{+\textonehalf\ If a turn signal is active then the turn signal's LED will continue to blink while the opposite LED illuminates steadily.}}
-%    \checkoffitem{Release the `0' key.
-%        The left LED deluminates; the right LED continues to blink.}
-%    \checkoffitem{Press the `6' key.
-%        Nothing changes. \\
-%        \textit{+1 The keypad's interrupt handler determines which key (if any) was pressed} \\
-%            \phantom{xxxxx}{\footnotesize(Award this point for \textit{any} indication that a determination is made)}}
-%    \checkoffitem{Release the `6' key.
-%        The right LED stops blinking. \\
-%        \textit{+1 The keypad's interrupt handler determines which key (if any) was released} \\
-%            \phantom{xxxxx}{\footnotesize(Award this point for \textit{any} indication that a determination is made)}}
-%    \checkoffitem{Press the `0' key.
-%        Both LEDs illuminate. \\
-%        \textit{+\textonehalf\ If neither turn signal is active, then both LEDs illuminate steadily while the brake lights are active} \\
-%        \textit{+\textonehalf\ Pressing the `0' key activates the brake lights}}
-%    \checkoffitem{Release the `0' key.
-%        Both LEDs deluminate. \\
-%        \textit{+1 Releasing the `0' key deactivates the brake lights}}
-%
-%    \checkoffitem{Press and release the `2' key.
-%        Nothing changes.}
-%    \checkoffitem{Place the left switch in the right position.}
-%    \checkoffitem{Press and release the `2' key.
-%        Nothing changes.}
-%    \checkoffitem{Press and release the `0' key.}
-%    \checkoffitem{Press and release the `2' key.
-%        The display indicates that the speed is 1~furlong per fortnight.
-%        The distance slowly increases. \\
-%        \textit{+1 Pressing the `2' key increases the speed if and only if the motor is engaged}}
-%    \checkoffitem{Place the left switch in the left position.}
-%    \checkoffitem{Press and release the `2' key.
-%        The display indicates that the speed is 2~furlongs per fortnight.
-%        The distance continues to increase, faster than before.}
-%    \checkoffitem{Press and release the `0' key.
-%        The speed is 0.
-%        The distance is unchanged: it is non-zero but is no longer increasing. \\
-%        \textit{\textonehalf\ Pressing the `0' key sets the speed to 0}}
-%    \checkoffitem{Press and release the `2' key.
-%        Nothing changes. \\
-%        \textit{\textonehalf\ The left switch engages/disengages the motor} \\
-%        \textit{\textonehalf\ The left switch has no effect except when releasing the `0' key}}
-%
-%    \checkoffitem{Place both switches in the right position.}
-%    \checkoffitem{Press and release the `2' key.
-%        The display indicates that the speed is 3~furlongs per fortnight.
-%        The distance steadily increases. \\
-%        \textit{+1 The right switch selects low/high gear}}
-%    \checkoffitem{Press and release the `2' key.
-%        The display indicates that the speed is 6~furlongs per fortnight.}
-%    \checkoffitem{Press and release the `8' key.
-%        The display indicates that the speed is 3~furlongs per fortnight. \\
-%        \textit{+1 Pressing the `8' key decreases the speed}}
-%
-%    \checkoffitem{Press and release the `B' key.
-%        The speed-only display shows the same value as the ``normal'' display (3~fpf) \\
-%        \textit{+1 The speed is tracked at 1~furlong per fortnight}}
-%    \checkoffitem{Press and release the `C' key.
-%        The distance-only display shows a rapidly-increasing value three orders of magnitude greater than that on ``normal'' display (the display shows nanofurlongs instead of microfurlongs)}
-%    \checkoffitem{Press and release the `D' key.
-%        The direction-only display shows 0~microdegrees.}
-%    \checkoffitem{Press and hold the `6' key.
-%        The direction rapidly increases.
-%        Continue to hold the `6' key until the direction is over 2,000,000~microdegrees. \\
-%        \textit{+\textonehalf\ Pressing the `6' key causes the cart to turn right}}
-%    \checkoffitem{Release the `6' key.
-%        The direction stops changing. \\
-%        \textit{+\textonehalf\ Releasing the `6' key causes the cart to stop turning}}
-%    \checkoffitem{Press and release the `A' key.
-%        The ``normal'' display shows a the direction is 2\textdegree. \\
-%        \textit{+1 Pressing the `A', `B', `C', or `D' key causes the appropriate display to appear on the display module}}
-%    \checkoffitem{Press and hold the `4' key.
-%        After a brief amount of time, the direction changes to 1\textdegree. \\
-%        \textit{+\textonehalf\ Pressing the `4' key causes the cart to turn left}}
-%    \checkoffitem{Continue to hold the `4' key as the direction changes to 0\textdegree, 359\textdegree, and then 358\textdegree.}
-%    \checkoffitem{Release the `4' key.
-%        The direction stops changing. \\
-%        \textit{+\textonehalf\ Releasing the `4' key causes the cart to stop turning}}
-%    \checkoffitem{Press and hold the `6' key as the direction changes to 359\textdegree, 0\textdegree, and then 1\textdegree.
-%        Release the `6' key.
-%        \textit{+\textonehalf\ The direction is strictly limited to $0\degree \leq speed < 360\degree$}}
-%
-%    \checkoffitem{Press and release, in turn, `1', `3', `5', `7', `9', `*', and `\#'. \\
-%        \textit{+1 The remaining keys have no effect}}
-%\end{enumerate}
+\begin{enumerate}
+    \precheckoffitem{Upload your code to your \developmentboard, open the Serial Monitor, and leave your code open in the IDE.}
+
+    \item[] \underbar{CODE EXAMINATION} % 12 points
+    \checkoffitem{Show the TA your \function{initialize_interrupts()} function, pointing out that you registered interrupt handlers for keypresses and for each of the pushbuttons. \\
+        \textit{+1 Matrix keypad presses and releases are detected with a pin change interrupt} \\
+        \textit{+2 The right pushbutton's presses are detected with a pin change interrupt} \\
+        \textit{+2 The left pushbutton's presses are detected with a pin change interrupt} }
+    \checkoffitem{In your \function{initialize_interrupts()} function, point out the code that configures the LED timer;
+        explain how you arrived at each of the values assigned to the timer's registers \\
+        \textit{+1 Timer interrupts for TIMER2 are handled} \\
+        \textit{+1 TIMER2's interrupt period, when combined with other logic, causes the right LED to illuminate for exactly 256ms} }
+    \checkoffitem{Show the TA your ISR for \lstinline{TIMER2_COMPA_vect}, explaining how the logic causes the LED to illuminate for exactly 256ms. \\
+        \textit{+1 The logic to illuminate the right LED for exactly 256ms is implemented} }
+    \checkoffitem{In your \function{initialize_interrupts()} function, point out the code that configures the character timer;
+        explain how you arrived at each of the values assigned to the timer's registers \\
+        \textit{+2 Timer interrupts for TIMER1 are handled} \\
+        \textit{+2 TIMER1's interrupt period is exactly 2000ms} } \\
+
+    \item[] \underbar{BASIC CHARACTER ENTRY}
+    \precheckoffitem{The display initially shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
+        }
+    }
+    \checkoffitem{Press \texttt{2}, right-button.
+        The right LED illuminates for about \textonequarter second with each keypress.
+        (LED illumination with button presses is not required, but neither is it prohibited.)
+        The display shows: \\
+        \display{
+            \colorbox{LightGreen}{A\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{A\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 Starting with a blank character, pressing a number key initiates the character sequence} \\
+        \textit{+1 Pressing the right pushbutton finalizes the character}
+    }
+    \checkoffitem{Press \texttt{3}, \texttt{3}, right-button.
+        The right LED illuminates for about \textonequarter second with each keypress.
+        The display shows: \\
+        \display{
+            \colorbox{LightGreen}{AD\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AE\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AE\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xx}\^{}\phantom{xxxxxxxxxxxxx}}
+        }s \\
+        \textit{+1 The cursor is always below the character being created} \\
+        \textit{+1 Pressing a key causes the right LED to illuminate for about \textonequarter\ second}
+    }
+    \checkoffitem{Press \texttt{3}, \texttt{4}, \texttt{5}, \texttt{5}, \texttt{5}, \texttt{5}, \texttt{5}, right-button.
+        The right LED illuminates for about \textonequarter second with each keypress.
+        The display shows: \\
+        \display{
+            \colorbox{LightGreen}{AED\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xx}\^{}\phantom{xxxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDG\phantom{xxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxx}\^{}\phantom{xxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGJ\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGK\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGL\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDG5\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGJ\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGJ\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxx}\^{}\phantom{xxxxxxxxxx}}
+        } \\
+        \textit{+2 Repeated presses of the same number key cycles through the character sequence} \\
+        \textit{+1 Pressing a different key finalizes the character and initiates the appropriate character sequence}
+    }
+    \checkoffitem{Press \texttt{D}. \\
+        \texttt{AEDGJ} prints on the Serial Monitor, and the display shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 Pressing the \texttt{D} key causes the message to be printed on the Serial Monitor\dots} \\
+        \textit{+\textonehalf\ \dots and the message to be cleared from the display\dots} \\
+        \textit{+\textonehalf\ \dots with the cursor in the left position}
+    } \\
+
+    \item[NOTE] After each ``transmission'', the message buffer should clear.
+        If residue from earlier messages appear on the display while entering new messages, then you will need to press the RESET button between messages. \\
+
+    \item[] \underbar{MESSAGE BUFFER CLEARS, TIMER-BASED CHARACTER FINALIZATION}
+
+    \checkoffitem{Press \texttt{6}, \texttt{7}, \texttt{8} \\
+        \display{
+            \colorbox{LightGreen}{M\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MP\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xx}\^{}\phantom{xxxxxxxxxxxxx}}
+        } \\
+        \textit{+\textonehalf\ After a transmission, another message can be created}
+    }
+    \checkoffitem{Wait 2 seconds. \\
+        \display{
+            \colorbox{LightGreen}{MPT\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxx}\^{}\phantom{xxxxxxxxxxxx}}
+        }
+    } \\
+    \textit{+1 Pressing no buttons or keys for 2 seconds causes the system to finalize the character} \\
+
+    \item[] \underbar{CHARACTER DELETION}
+    \checkoffitem{Press \texttt{0}, texttt{9}, \texttt{9}, left-button, left-button, left-button \\
+        \display{
+            \colorbox{LightGreen}{MPT$\square$\phantom{xxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxx}\^{}\phantom{xxxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT$\square$W\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT$\square$X\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT$\square$\phantom{xxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxx}\^{}\phantom{xxxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MP\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xx}\^{}\phantom{xxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 If a character is being created, then pressing the left pushbutton deletes the character} \\
+        \textit{+1 If a character is not being created, the pressing the left pushbutton moves the character back one position and deletes the message's last character}
+    }
+    \checkoffitem{Wait 2 seconds. \\ Nothing changes}
+    \checkoffitem{Press \texttt{D}. \\
+    \texttt{MP} prints on the Serial Monitor, and the display shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \textit{+\textonehalf\ After a transmission, another message can be transmitted}
+    } \\
+
+    \item[] \underbar{LONGER MESSAGES, NO BUFFER UNDERFLOW}
+    \checkoffitem{Press \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9}. \\
+        The message is now 8 characters. \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTW\phantom{xxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxx}\^{}\phantom{xxxxxxx}}
+        }
+    }
+    \checkoffitem{Press \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}. \\
+        The message is now 15 characters. \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \textit{+1 A message with fewer than 16 chracters is displayed in full}
+    }
+    \checkoffitem{Press \texttt{9}, \texttt{8}, right-button. \\
+        The message is 16 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPTW\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots 17 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{DGJMPTWADGJMPTWT\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots 17 characters. \\
+        \display{
+            \colorbox{LightGreen}{GJMPTWADGJMPTWT\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \textit{+1 A message with more than 15 characters is displayed as the last 15 characters plus the character being created}
+    }
+    \checkoffitem{Press the left-button 4 times \\
+        \display{
+            \colorbox{LightGreen}{DGJMPTWADGJMPTW\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMP\phantom{xx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxx}\^{}\phantom{x}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJM\phantom{xxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxx}\^{}\phantom{xx}}
+        }
+    }
+    \checkoffitem{Press the left-button 12 times \\
+        The message has 1 character. \\
+        \display{
+            \colorbox{LightGreen}{A\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        }
+    }
+    \checkoffitem{Press the left-button 3 times \\
+        The message has 0 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \dots still 0 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \dots still 0 characters. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
+        }
+    }
+    \checkoffitem{Press \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, right-button. \\
+        \display{
+            \colorbox{LightGreen}{ADGJM\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxx}\^{}\phantom{xxxxxxxxxx}}
+        }
+    }
+    \checkoffitem{Press \texttt{D}. \\
+        \texttt{ADGJM} prints on the Serial Monitor, and the display shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 The cursor cannot retreat to a position earlier than start of the message buffer}
+    } \\
+
+    \item[] \underbar{NO BUFFER OVERFLOW}
+    \checkoffitem{Press: \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9}. \\
+        The message is now 56 characters. \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPTW\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        }
+    }
+    \checkoffitem{Press: \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}. \\
+        The message is now 62 characters. \\
+        \display{
+            \colorbox{LightGreen}{TWADGJMPTWADGJMP\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        }
+    }
+    \checkoffitem{Press: \texttt{8}, \texttt{2}, \texttt{3}. \\
+        The message is 63 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{WADGJMPTWADGJMPT\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots still 63 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots still 63 characters. \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \textit{+1 A message with 63 characters can be created\dots}
+        \textit{+1 \dots but not a message with 64 characters}
+    }
+    \checkoffitem{Press: left-button, \texttt{4}, \texttt{5}. \\
+        The message is 62 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{WADGJMPTWADGJMP\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots 63 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{WADGJMPTWADGJMPG\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots still 63 characters. \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPG\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        }
+    }
+    \checkoffitem{Press \texttt{D}. \\
+        \texttt{ADGJMPTWADGJMPTWADGJMPTWADGJMPTWADGJMPTWADGJMPTWADGJMPTWADGJMPG} prints on the Serial Monitor.
+    }
+\end{enumerate}

@@ -1,0 +1,44 @@
+\contentsline {section}{\numberline {1}Assignment Summary}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Why are There Letters on Telephone Keypads?}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Constraints}{5}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Constraints on the Arduino core}{5}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Constraints on AVR-libc}{5}{subsubsection.1.2.2}%
+\contentsline {subsubsection}{\numberline {1.2.3}Constraints on the CowPi library}{5}{subsubsection.1.2.3}%
+\contentsline {subsubsection}{\numberline {1.2.4}Constraints on other libraries}{5}{subsubsection.1.2.4}%
+\contentsline {section}{\numberline {2}Getting Started}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Description of InterruptLab Files}{6}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}InterruptLab.ino or InterruptLab.cpp}{6}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}output.h \& output.c}{6}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}inputs.h \& inputs.c}{6}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}character\_selector.h \& character\_selector.c}{6}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5}message\_editor.h \& message\_editor.c}{6}{subsubsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.2}Separation of Concerns}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Interrupt-Driven Input/Output -- A Different but Familiar Programming Paradigm}{7}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Text Messager Specification}{8}{section.3}%
+\contentsline {section}{\numberline {4}Initial Changes to the Code}{10}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Reviewing the Datasheet}{10}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Examining the Starter Code}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Debouncing}{10}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Handling Key Presses}{11}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}The Interrupt Service Routine}{11}{subsubsection.4.4.1}%
+\contentsline {paragraph}{Hint}{11}{section*.10}%
+\contentsline {subsubsection}{\numberline {4.4.2}The Logic}{11}{subsubsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.3}Test Your Code}{12}{subsubsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.5}Blinking the LED}{12}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}Configuring the Timer}{12}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Turning the LED On and Off}{13}{subsubsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.3}Test Your Code}{14}{subsubsection.4.5.3}%
+\contentsline {section}{\numberline {5}Generating and Fixing a Character}{14}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Repeated Number Key Presses}{14}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Fixing a Character}{15}{subsection.5.2}%
+\contentsline {paragraph}{Note}{15}{section*.11}%
+\contentsline {subsubsection}{\numberline {5.2.1}Right Pushbutton}{15}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Keypad}{15}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.3}Timer}{16}{subsubsection.5.2.3}%
+\contentsline {section}{\numberline {6}Odds and Ends}{16}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Deleting a Character}{16}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Bounds Checking}{17}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Displaying Messages Longer Than the Display Module's Width}{17}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}``Transmitting'' the Message}{17}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Turn-in and Grading}{17}{section.7}%
+\contentsline {section}{\numberline {A}Appendix: Lab Checkoff}{20}{appendix.A}%
