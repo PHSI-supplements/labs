@@ -1,10 +1,11 @@
 /**************************************************************************//**
  *
- * @file user_controls.c
+ * @file sensor.c
  *
  * @author (STUDENTS -- TYPE YOUR NAMES HERE)
+ * @author (STUDENTS -- TYPE YOUR NAMES HERE)
  *
- * @brief Code to get inputs from the user.
+ * @brief Code to manage the distance sensor.
  *
  ******************************************************************************/
 
@@ -14,20 +15,18 @@
  */
 
 #include <CowPi.h>
+#include <limits.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "user_controls.h"
+#include "sensor.h"
 #include "shared_variables.h"
-#include "supplement.h"
 
 
-void initialize_controls(void) {
+void initialize_sensor(void) {
 
 }
 
-void manage_controls(void) {
-  
+void manage_sensor(void) {
+
 }

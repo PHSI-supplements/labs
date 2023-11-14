@@ -1,10 +1,11 @@
 /**************************************************************************//**
  *
- * @file sensor.c
+ * @file alarm.c
  *
  * @author (STUDENTS -- TYPE YOUR NAMES HERE)
+ * @author (STUDENTS -- TYPE YOUR NAMES HERE)
  *
- * @brief Code to manage the distance sensor.
+ * @brief Code to manage the piezodisc and LEDs.
  *
  ******************************************************************************/
 
@@ -14,19 +15,21 @@
  */
 
 #include <CowPi.h>
-#include <limits.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-#include "sensor.h"
+#include "alarm.h"
 #include "shared_variables.h"
-#include "supplement.h"
 
 
-void initialize_sensor(void) {
+const unsigned int on_period = 7000;          // a made-up number, probably not the value you want to use
+volatile unsigned int total_period = 50000;
 
+
+void initialize_alarm(void) {
+  
 }
 
-void manage_sensor(void) {
-
+void manage_alarm(void) {
+  
 }

@@ -3,6 +3,7 @@
  * @file shared_variables.h
  *
  * @author (STUDENTS -- TYPE YOUR NAMES HERE)
+ * @author (STUDENTS -- TYPE YOUR NAMES HERE)
  *
  * @brief Types and variables that need to be shared among the .c files.
  *
@@ -41,6 +42,7 @@ extern "C" {
       example:   extern volatile unsigned long foo;
 */
 
+extern FILE *display;
 
 
 
