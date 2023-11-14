@@ -41,11 +41,14 @@ The \lstinline{total_period} variable will be used to control the time between a
 
 \subsection{Continuous Tone}
 
-Using Section~6 of the Cow Pi datasheet, place code in \function{initialize_alarm()} to configure Timer2 to produce a comparison interrupt every 100\textmu s, using the ``Clear Timer on Compare'' mode.
+Using the ``Timers'' section of the Cow Pi datasheet,\footnote{
+    \url{https://cow-pi.readthedocs.io/en/latest/microcontroller.html\#timers}
+}
+place code in \function{initialize_alarm()} to configure Timer2 to produce a comparison interrupt every 100\textmu s, using the ``Clear Timer on Compare'' mode.
 Also place in \function{initialize_alarm()} code to enable that interrupt.
 
 Use the \function{ISR} macro to create an interrupt service routine in \textit{alarm.c} for that interrupt.
-In that ISR, add code so that on every other invocation will place a 1 on Arduino pin D9 and will place a 0 on the alternate invocations.
+In that ISR, add code so that on every other invocation will place a 1 on Arduino pin D13 and will place a 0 on the alternate invocations.
 
 Test that your code is generating a tone on the piezodisc, and correct any errors.
 

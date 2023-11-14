@@ -11,18 +11,28 @@ When you need to share a variable between \textit{.c} files, declare it in exact
 and then externalize it by declaring it again with the \lstinline{extern} keyword in \textit{shared\_variables.h}.
 This approach will create just one global symbol for the variable in the program while making it ``visible'' to the code in the other \textit{.c} files.
 
+\subsection{A Quick Note about Creating State Machines}
+
+A not-uncommon pattern in embedded systems is to design the system as a state machine, or as multiple state machines.
+The states are represented as the value of an enumerated type.
+A couple of key advantages of writing the system as a state machine or as a collection of state machines is that it's easy to change the state based on inputs,
+and it's easy for the parts of the system that take action to do so based on what state the state machine is in.
+
 \subsection{Read the Switches}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=3in]{modeStateMachine}
+    \caption{\label{fig:modeStateMachine} State machine describing the rangefinder's modes of operation.}
+\end{figure}
 
 Create a way to track which mode the system is in (Requirement~\ref{spec:modes}).
 Be sure to declare it not only in \textit{user\_controls.c} (without the \lstinline{extern} modifier) but also in \textit{shared\_variables.h} (with the \lstinline{extern} modifier).
-\ifbool{offerdecompositionhints}{
-    \textbf{Hint:} If you need to, review InterruptLab's discussion about state machines on page 9 of \textit{interruptlab.pdf}.
-}{}
 Add code to \function{manage_controls()} to poll the positions of the slide-switches and set the system's mode accordingly.
 
 \subsection{Read the Pushbutton} \label{subsec:readPushbutton}
 
-As noted in Requirement~\ref{spec:singlePulseOperation}, if the system is in Single-Pulse Operation mode and the user presses the (left) pushbutton, they want to emit exactly one ultrasound pulse to get the distance to an object.
+As noted in Requirement~\ref{spec:singlePulseOperation}, if the system is in Single-Pulse Operation mode and the user presses the left pushbutton, they want to emit exactly one ultrasound pulse to get the distance to an object.
 \begin{figure}[h]
     \centering
     \includegraphics[width=10cm]{internet_images/one_ping_only}

@@ -23,131 +23,32 @@ You will need:
             \item The two prominent drums on this device are ultrasonic transducers, one of which converts electricity to 40kHz sound (well above the range of human hearing), and the other of which converts 40kHz sound into electricity
             \item You will measure the time between the ultrasound being transmitted and its reflecting being received to determine the distance to whatever is reflecting the ultrasound
         \end{itemize}
-    \item Two 20cm male-to-male wires and (optionally) two additional male-to-male wires
+    \item Six male-to-male wires (three of these must be 20cm, and the other three can be 10cm or 20cm)
 \end{itemize}
 
 You and your partner only need to modify one of your Cow Pis (but you may modify both).
 
 \subsection{Connecting the Piezoelectric Disc}
 
-The \developmentboard's pin D9 is currently used for the right pushbutton.
+The \developmentboard's pin D13 is used for the \developmentboard's internal LED, the ``left'' LED.
 In the group project, we will use it to control the piezodisc.
 
 \begin{description}
-    \checkoffitem{Remove the \textbf{right pushbutton} (Figure~\ref{fig:removeButton}).}
-    \checkoffitem{Insert the piezodisc's header into the breadboard (Figure~\ref{fig:insertPiezo}).}
-        \begin{itemize}
-            \item The piezodisc's black wire is inserted into the breadboard's contact point b43.
-            \item The piezodisc's red wire is inserted into the breadboard's contact point b44.
-        \end{itemize}
-    \checkoffitem{As shown in Figure~\ref{fig:adjustPiezoWire}, move the wire that is currently inserted into contact point e41 to contact point e44.}
+    \checkoffitem{Insert the piezodisc's header into unused rows on the breadboard (Figure~\ref{fig:insertPiezo}).}
+    \checkoffitem{Use a 20cm wire to connect the piezodisc's red lead to the \developmentboard's pin D13 (contact point a1 is a good choice).}
+    \checkoffitem{Use another wire to connect the piezodisc's black lead to the upper \ground .}
 \end{description}
 
 \begin{figure}
     \centering
-    \subfloat[Removing the right pushbutton.]{
-        \includegraphics[height=4cm]{reconfiguration_images/remove_button}
-        \label{fig:removeButton}
-    }
-    \hfil
-    \subfloat[Inserting the piezodisc.]{
-        \includegraphics[height=4cm]{reconfiguration_images/insert_piezo}
-        \label{fig:insertPiezo}
-    }
-    \hfil
-    \subfloat[Adjusting the wiring for the piezodisc.]{
-        \includegraphics[height=4cm]{reconfiguration_images/adjust_piezo_wire}
-        \label{fig:adjustPiezoWire}
-    }
-    \caption{Connecting the Piezoelectric Disc.
-        The tweezers in these photos are to point out the changes and are not needed for \textit{these} modifications.}
+    \includegraphics[height=4cm]{reconfiguration_images/adjust_piezo_wire}
+    \caption{\label{fig:insertPiezo} Connecting the Piezoelectric Disc.}
 \end{figure}
 
-The piezodisc is now connected to the \developmentboard's pin D9, which is the pin that the right pushbutton used to be connected to.
-The starter code will re-configure this pin to be an output pin.
+The piezodisc can now be operated through the \developmentboard's pin D13, which is the pin that the right pushbutton used to be connected to.
+
 
 \subsection{Connecting the ultrasonic echo sensor}
-
-\begin{figure}
-    \centering
-    \subfloat[Locating the wires to remove.]{
-        \includegraphics[height=4cm]{reconfiguration_images/pins_D2_D3}
-        \label{fig:locateD2D3}
-    }
-    \\
-    \subfloat[Removing the wire from contact point j10.]{
-        \includegraphics[height=4cm]{reconfiguration_images/remove_D3}
-        \label{fig:removeD3}
-    }
-    \hfil
-    \subfloat[Removing the wire from contact point j11.]{
-        \includegraphics[height=4cm]{reconfiguration_images/remove_D2}
-        \label{fig:removeD2}
-    }
-    \hfil
-    \subfloat[An option is to leave the two wires hanging loosely.]{
-        \includegraphics[height=4cm]{reconfiguration_images/NAND_wires_floating}
-        \label{fig:nandFloat}
-    }
-    \hfil
-    \subfloat[An option is to remove the wires completely from the breadboard.]{
-        \includegraphics[height=4cm]{reconfiguration_images/NAND_wires_removed}
-        \label{fig:nandRemoved}
-    }
-    \caption{Disconnecting the 74LS20 from the \developmentboard.}
-\end{figure}
-
-The \developmentboard's pins D2 \& D3 are currently used for the NAND values of the pushbuttons and of the keypad columns.
-In the group project, we will use those pins for the ultrasonic echo sensor.
-
-\subsubsection{Disconnecting the NAND} \label{subsubsec:disconnectNAND}
-
-\textbf{\textit{Make sure that both you and your partner agree with which wires to pull before you do so!}}
-If your partner is not available, then find someone to agree that you are about to pull the correct wires.
-
-If you do not have the finger dexterity to remove the wires in the following steps with your fingertips, then the TAs will have a pair of needle-nose pliers during lab time that you can use.
-
-\begin{description}
-    \checkoffitem{Locate the wires that are connected to the \developmentboard's pins D2 \& D3 (Figure~\ref{fig:locateD2D3}).
-        These are the wires in the breadboard's contact points j10 \& j11.}
-    \checkoffitem{Gently remove the wire in the breadboard's contact point j10 (Figure~\ref{fig:removeD3}).}
-    \checkoffitem{Gently remove the wire in the breadboard's contact point j11 (Figure~\ref{fig:removeD2}).}
-    \checkoffitem{You may leave those two wires hanging loosely among the rat's nest of jumper wires, provided that they are positioned so they do not contact other components (Figure~\ref{fig:nandFloat}).
-        Alternatively, you may \textit{very} gently tug at those two wires to completely remove them from the breadboard (Figure~\ref{fig:nandRemoved}).
-        If you completely remove the wires, you can re-use them in Section~\ref{subsubsec:connectingSensor} to connect the ultrasonic echo sensor to the power and ground rails.}
-\end{description}
-
-\begin{figure}
-    \centering
-    \subfloat[Inserting a wire into contact point j11.]{
-        \includegraphics[height=4cm]{reconfiguration_images/insert_D2}
-        \label{fig:insertD2}
-    }
-    \hfil
-    \subfloat[Inserting a wire into contact point j10.]{
-        \includegraphics[height=4cm]{reconfiguration_images/insert_D3}
-        \label{fig:insertD3}
-    }
-    \hfil
-    \subfloat[The two 20cm wires, ready to be used.]{
-        \includegraphics[height=4cm]{reconfiguration_images/20cm_D2_D3}
-%        \label{fig:20cmD2D3}
-    }
-    \caption{Connecting the 20cm wires to the \developmentboard.}
-\end{figure}
-
-\subsubsection{Connecting the ultrasonic echo sensor} \label{subsubsec:connectingSensor}
-
-You will first replace the NAND wires with 20cm male-to-male wires.
-
-\begin{description}
-    \checkoffitem{Insert a 20cm wire into contact point j11 (Figure~\ref{fig:insertD2}).
-        Make a note of the wire's color for future reference.
-        This is your \textbf{D2 wire}.}
-    \checkoffitem{Insert a 20cm wire into contact point j10 (Figure~\ref{fig:insertD3}).
-        Make a note of the wire's color for future reference.
-        This is your \textbf{D3 wire}.}
-\end{description}
 
 Take a look at the ultrasonic echo sensor (Figure~\ref{fig:ultrasonic}).
 Notice that it has four pins, labeled \texttt{Gnd}, \texttt{Echo}, \texttt{Trig}, and \texttt{Vcc}.
@@ -167,26 +68,45 @@ Notice that it has four pins, labeled \texttt{Gnd}, \texttt{Echo}, \texttt{Trig}
 \end{figure}
 
 \begin{description}
-    \checkoffitem{Insert the ultrasonic echo sensor in the breadboard's contact points d55--d58 (Figure~\ref{fig:ultrasonicInserted} shows the sensor in contact points e55--e58; however, testing shows slightly better results if the sensor's circuit board isn't allowed to dip into the breadboard's central channel).
-        The \texttt{Gnd} pin should be in contact point d55, and the \texttt{Vcc} pin should be in contact point d58.
+    \checkoffitem{Insert the ultrasonic echo sensor unused rows on the breadboard, pointing away from you.
         The ultrasonic transducers should point toward the upper power/ground rails.}
-    \checkoffitem{Insert the D2 wire into the breadboard's contact point b57, and the D3 wire into the breadboard's contact point b56 (Figure~\ref{fig:ultrasonicD2D3}).}
-    \checkoffitem{Insert one end of a male-to-male wire in contact point b55 and the other end in the upper \ground.
-        Insert one end of another male-to-male wire in contact point b58 and the other end in the upper \power.
+    \checkoffitem{Insert a 20cm wire into contact point j11 (Figure~\ref{fig:insertD2}).
+        Make a note of the wire's color for future reference.
+        This is your \textbf{D2 wire}.}
+    \checkoffitem{Insert a 20cm wire into contact point j10 (Figure~\ref{fig:insertD3}).
+        Make a note of the wire's color for future reference.
+        This is your \textbf{D3 wire}.}
+    \checkoffitem{Insert the D2 wire into the same row as the sensor's \texttt{Trig} pin,
+        and the D3 wire into the same row as the sensor's \texttt{Echo} pin (Figure~\ref{fig:ultrasonicD2D3}).}
+    \checkoffitem{Use a wire to connect the sensor's \texttt{Gnd} pin to the upper \ground.
+        Use another wire to connect the sensor's \texttt{Vcc} pin to the upper \power.
         See Figures~\ref{fig:ultrasonicPwrGnd}--\ref{fig:pwrGnd}.
-        If you fully-removed the wires between the 74LS20 and the \developmentboard\ in Section~\ref{subsubsec:disconnectNAND} then you can use those wires for this step (as we did in the photographs);
-        otherwise, you will to use spare wires from your hardware kit.
         For best performance, position these wires so that they are not directly in front of the ultrasonic transducers.}
 \end{description}
 
 \begin{figure}
     \centering
-    \subfloat[The back side of the ultrasonic sensor.]{
+    \subfloat[The ultrasonic sensor inserted into the breadboard.]{
         \includegraphics[height=4cm]{reconfiguration_images/ultrasonic_inserted}
         \label{fig:ultrasonicInserted}
     }
     \hfil
-    \subfloat[The front side of the ultrasonic sensor.]{
+    \subfloat[Inserting a wire into contact point j11.]{
+        \includegraphics[height=4cm]{reconfiguration_images/insert_D2}
+        \label{fig:insertD2}
+    }
+    \hfil
+    \subfloat[Inserting a wire into contact point j10.]{
+        \includegraphics[height=4cm]{reconfiguration_images/insert_D3}
+        \label{fig:insertD3}
+    }
+    \hfil
+    \subfloat[The two 20cm wires, ready to be used.]{
+        \includegraphics[height=4cm]{reconfiguration_images/20cm_D2_D3}
+%        \label{fig:20cmD2D3}
+    }
+    \hfil
+    \subfloat[The ultrasonic sensor connected to the D2 and D3 wires.]{
         \includegraphics[height=4cm]{reconfiguration_images/ultrasonic_D2_D3}
         \label{fig:ultrasonicD2D3}
     }
@@ -204,13 +124,13 @@ Notice that it has four pins, labeled \texttt{Gnd}, \texttt{Echo}, \texttt{Trig}
 \end{figure}
 
 The ultrasonic echo sensor is now connected to the \developmentboard's pins D2 \& D3.
-The starter code will re-configure D2 to be an output pin.
+The starter code will configure D2 to be an output pin and D3 to be an input pin.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=10cm]{reconfiguration_images/complete}
-    \caption{The Cow Pi circuit with modfications complete.}
-\end{figure}
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=10cm]{reconfiguration_images/complete}
+%    \caption{The Cow Pi circuit with modfications complete.}
+%\end{figure}
 
 \vspace{1cm}
 

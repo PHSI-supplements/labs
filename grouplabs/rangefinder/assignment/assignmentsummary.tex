@@ -13,13 +13,11 @@ In this situation, you should prioritize Section~\ref{sec:distance} over Section
 
 You may use the constants and functions provided in the starter code.
 You may use any features that are part of the C standard if they are supported by the compiler.
-You may use the constants and functions provided in the starter code.
 You may use code written by you and/or your partner.
 
 \subsubsection{Constraints on the Arduino core}
 
-You may use \function{attachInterrupt()} and \function{digitalPinToInterrupt()} to register interrupt handlers.
-You may use \function{digitalWrite()} to write to pins D2 and D9 (or you may use memory-mapped I/O).
+You may use \function{digitalWrite()} to write to pins Dxx and Dxx (or you may use memory-mapped I/O).
 You may use the \function{delayMicroseconds()} function to introduce delays not to exceed $10\mu s$.
 
 You may not use any other libraries, functions, macros, types, or constants from the Arduino core.\footnote{
@@ -35,7 +33,16 @@ You may use any AVR-specific functions, macros, types, or constants of avr-libc.
 
 \subsubsection{Constraints on the CowPi library}
 
-You may use any functions and data structures that are provided by the CowPi library.
+You may use any functions provided by the CowPi\footnote{
+    \url{https://cow-pi.readthedocs.io/en/latest/library.html}
+}
+and the CowPi\_stdio\footnote{
+    \url{https://cow-pi.readthedocs.io/en/latest/stdio.html}
+} libraries,
+and you may use any data structures\footnote{
+    \url{https://cow-pi.readthedocs.io/en/latest/microcontroller.html}
+} provided by the CowPi library.
+
 
 \subsubsection{Constraints on other libraries}
 

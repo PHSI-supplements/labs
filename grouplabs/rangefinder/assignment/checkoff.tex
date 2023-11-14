@@ -40,7 +40,7 @@ Because checking off all students during lab would take up most of the lab time,
     \checkoffitem{Show and explain to the TA how your code measures the length of a pulse.}
     \checkoffitem{Show and explain to the TA how your code achieves the required precision (no greater than 1\textmu s) and accuracy (immediately detect pulse edges without waiting for code in the main loop to poll the pin).}
     \checkoffitem{Press the pushbutton to initiate a pulse.
-        The LEDs strobe once.
+        The right LED strobes once.
         The piezodisc does not chirp.
         The system displays the correct distance to the wall (or book or other object). \\
         \textit{+2 There is code to initiate an ultrasound pulse} \\
@@ -51,18 +51,18 @@ Because checking off all students during lab would take up most of the lab time,
         \textit{+2 The distance to an object is correctly calculated from the pulse's length} \\
         \textit{+2 When an object is detected, the system displays the distance to the object} \\
         \textit{+2 When an object is detected in Single-Pulse mode, the system generates exactly one alarm} \\
-        \textit{+2 A strobe is an illumination of both LEDs for 50ms} \\
+        \textit{+2 A strobe is an illumination of the right LED for 50ms} \\
         \textit{+2 A strobe occurs for any detected object}}
     \checkoffitem{Slightly change the distance between the Cow Pi and the target object.
         Press the pushbutton to initiate a pulse.
-        The LEDs strobe once.
+        The LED strobes once.
         The piezodisc does not chirp.
         The system displays the new distance to the wall (or book or other object). \\
         \textit{+2 The user can request another ping when the system is in Single Pulse mode}}
 
     \checkoffitem{Place the left switch in the left position, putting the system in Normal Operation mode.
         The system displays the distance to the target object, and it displays an approach rate of 0cm/s.
-        The LEDs strobe once per seccond (100ms), but the piezodisc does not chirp. \\
+        The LED strobes once per seccond (100ms), but the piezodisc does not chirp. \\
         \textit{+1 The switches control the mode of operation as specified} \\
         \textit{+2 When an object is detected in Normal Operation mode, the system repeatedly generates alarms}}
     \checkoffitem{Slowly move the Cow Pi closer to the wall, or slowly move the book (or other object) closer to the Cow Pi.
@@ -73,11 +73,11 @@ Because checking off all students during lab would take up most of the lab time,
         \textit{+2 When an object is detected in Normal Operation mode, the rate of approach is updated at least once every second}}
     \checkoffitem{As the distance between the Cow Pi and the target object decreases, note that:
         \begin{description}
-            \item[When the distance falls below 100cm] the LEDs strobe more frequently, once every 750ms (\textthreequarters sec)
+            \item[When the distance falls below 100cm] the LED strobes more frequently, once every 750ms (\textthreequarters sec)
             \item[When the distance falls below 75cm] the piezodisc chirps every 750ms
-            \item[When the distance falls below 50cm] the LEDs strobe, and the piezodisc chirps, every 500ms (\textonehalf sec)
-            \item[When the distance falls below 25cm] the LEDs strobe, and the piezodisc chirps, every 250ms (\textonequarter sec)
-            \item[When the distance falls below 10cm] the LEDs strobe, and the piezodisc chirps, every 125ms ($\frac{1}{8}$ sec)
+            \item[When the distance falls below 50cm] the LED strobes, and the piezodisc chirps, every 500ms (\textonehalf sec)
+            \item[When the distance falls below 25cm] the LED strobes, and the piezodisc chirps, every 250ms (\textonequarter sec)
+            \item[When the distance falls below 10cm] the LED strobes, and the piezodisc chirps, every 125ms ($\frac{1}{8}$ sec)
         \end{description}
         \textit{+2 A chirp is an audible tone lasting 50ms} \\
         \textit{+2 When the system repeatedly generates alarms, the time between alarms is as specified}}
@@ -92,13 +92,13 @@ Because checking off all students during lab would take up most of the lab time,
         The displayed distance changes with the decreasing distance to the target object.
         The system displays a plausible, negative rate of approach.}
     \checkoffitem{As the distance between the Cow Pi and the target object decreases, the alarms become less urgent.
-        Note that as the distance increases above 55cm, the piezodisc stops chirping but the LEDs continue to strobe. \\
+        Note that as the distance increases above 55cm, the piezodisc stops chirping but the LED continues to strobe. \\
         \textit{+2 A chirp occurs for a detected object that is closer than the threshold range} \\
         \textit{+2 A chirp only occurs for a detected object that is closer than the threshold range}}
 
     \checkoffitem{Reorient the Cow Pi, or remove the book (or other object) so that there are no in-range objects to detect.
         The system displays a message indicating that no object is detected.
-        The LEDs do not strobe, and the piezodisc does not chirp.\\
+        The LED does not strobe, and the piezodisc does not chirp.\\
         \textit{+3 The code correctly recognizes the that no object has been detected, if no object reflects the ultrasound pulse} \\
         \textit{+2 When there is no in-range object, the system displays a message to that effect} \\
         \textit{+2 A strobe only occurs for a detected object}}

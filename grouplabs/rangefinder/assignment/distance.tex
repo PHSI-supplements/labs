@@ -59,7 +59,7 @@ Any object within range of the sensor will have a measured time that, when multi
 
 The other practical timing consideration is that the Arduino function \function{micros()} reports the number of microseconds since power-up to within 4\textmu s.
 By properly configuring a timer, we can measure time more precisely.
-Unfortunately, if you look at the possible prescalers in Section~6 of the Cow Pi's datasheet, you will see that we cannot set a timer to beat every microsecond.
+Unfortunately, if you look at the possible prescalers \textcolor{green}{in Section~6 of the Cow Pi's datasheet}, you will see that we cannot set a timer to beat every microsecond.
 We can, however, set a timer to beat every half-microsecond with a prescaler of 8:
 
 \[
@@ -101,11 +101,21 @@ In \function{initialize_sensor()}, initialize the object detection variable to i
 A fully-correct implementation of Single-Pulse Operation mode has the alarm chirp if an object is detected closer than the threshold range (Requirement~\ref{spec:singlePulseOperation}).
 For now, your focus will be on determining the distance to an object.
 
-Using Section~6 of the Cow Pi datasheet, place code in \function{initialize_sensor()} to configure Timer1 to produce an \textbf{overflow} interrupt every 32,768\textmu s, using the ``Normal'' mode.
+Using the ``Timers'' section of the Cow Pi datasheet,\footnote{
+    \url{https://cow-pi.readthedocs.io/en/latest/microcontroller.html\#timers}
+}
+place code in \function{initialize_sensor()} to configure Timer1 to produce an \textbf{overflow} interrupt every 32,768\textmu s, using the ``Normal'' mode.
 Place in \function{initialize_sensor()} code to enable that interrupt.
 
 Create a state machine for the sensor that can be ``ready,'' ``active-listening,'' ``active-detected,'' and ``quiescent.''
 Initialize it to be ``ready.''
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=3in]{sensorStateMachine}
+    \caption{\label{fig:sensorStateMachine} State machine describing the control of the distance sensor.
+        See Appendix~\ref{sec:phantom} for an alternative state machine.}
+\end{figure}
 
 Use the \function{ISR} macro to create an interrupt service routine in \textit{sensor.c} for that interrupt.
 Leave the ISR's body empty for now.
