@@ -51,8 +51,7 @@ inner ysep=10pt
 \renewcommand{\collaborationrules}{\memorylabcollaboration}
 \renewcommand{\duedate}{\memorylabdue}
 \newcommand{\nano}{\developmentboard} % TODO: replace \nano with \developmentboard
-\renewcommand{\runtimeenvironment}{your \nano-based class hardware kit and your
-account on the \textit{csce.unl.edu} Linux server}
+\renewcommand{\runtimeenvironment}{\memorylabenvironment}
 \pagelayout
 \begin{document}
 \labidentifier
@@ -124,9 +123,9 @@ but we will not measure the EEPROM's performance in this lab assignment.)
     \caption{Pipelined instruction fetches and instruction executions. \tiny Copied from ATmega328P Data Sheet, Figure~6-4 \label{fig:pipelining}}
 \end{figure}
 
-\subsection{MemoryMeasurement.ino}
+\subsection{MemoryMeasurement.ino / MemoryManagement.cpp}
 
-Open \textit{MemoryMeasurement.ino} in the Arduino IDE. The sketch takes four
+Open \textit{MemoryMeasurement.ino} in the Arduino IDE or \textit{MemoryMeasurement.cpp} in VS~Code. The program takes four
 measurements. The \function{get_baseline_time()} function performs every
 calculation made by the remaining functions \textit{except} for the data
 retrievals that are unique to each of the remaining functions. The time
@@ -144,7 +143,7 @@ from flash memory will be calculated and displayed. If you wish to re-run the
 sketch, you can press the \nano's RESET button to restart the program without
 re-uploading it.
 
-Upload \textit{MemoryMeasurement.ino} to your \nano\ now.
+Upload \textit{MemoryMeasurement} to your \nano\ now.
 
 \vspace{.5cm}
 
@@ -168,7 +167,7 @@ the CPU registers is part of the CPU's ``execute'' stage.
 \end{figure}
 
 Record in \textit{answers.txt} the amount of time that
-\textit{MemoryMeasurement.ino} reports is needed to access data in a CPU
+\textit{MemoryMeasurement} reports is needed to access data in a CPU
 register. What can you conclude about the time required to access data in a CPU
 register? Is the reported time significant? Record your answer in
 \textit{answers.txt}.
@@ -176,7 +175,7 @@ register? Is the reported time significant? Record your answer in
 \subsection{Data in SRAM}
 
 Record in \textit{answers.txt} the amount of time that
-\textit{MemoryMeasurement.ino} reports is needed to access data in a SRAM.
+\textit{MemoryMeasurement}  reports is needed to access data in a SRAM.
 
 Notice in Figure~\ref{fig:SramTiming} that the ATmega328P Data Sheet states
 that accessing data in SRAM requires two clock cycles. Is the reported time to
@@ -192,7 +191,7 @@ answers in \textit{answers.txt}.
 \subsection{Data in Flash Memory}
 
 Record in \textit{answers.txt} the amount of time that
-\textit{MemoryMeasurement.ino} reports is needed to access data in a flash
+\textit{MemoryMeasurement} reports is needed to access data in a flash
 memory.
 
 The ATmega328P Data Sheet does not describe timing of accesses to flash memory
@@ -200,15 +199,15 @@ except for instruction fetches, but you can draw conclusions based on the
 measurements taken.
 
 Approximately how many clock cycles are required to read data from flash
-memory, according to \textit{MemoryMeasurement.ino}? What conclusions can you
+memory, according to \textit{MemoryMeasurement}? What conclusions can you
 draw about the speed of flash memory relative to the speed of SRAM? Record your
 answers in \textit{answers.txt}.
 
-\section{Intel Xeon Caches}
+\section{AMD EPYC Caches}
 
 We will now take measurements of the cache memories of the microprocessors on
-\textit{csce.unl.edu}. Upload \textit{CacheMeasurement.c} to your account on
-\textit{csce.unl.edu}. Compile it with:
+\textit{cse-linux-01.unl.edu}. Upload \textit{CacheMeasurement.c} to your account on
+\textit{cse-linux-01.unl.edu}. Compile it with:
 
 \texttt{gcc -O0 -Wall -o CacheMeasurement CacheMeasurement.c}
 
@@ -232,7 +231,7 @@ Open \textit{CacheCharts.xlsx}.
 
 \subsection{Measuring Cache Level Sizes}
 
-Run the program: \texttt{./CacheMeasurement} on \textit{csce.unl.edu}. You will
+Run the program: \texttt{./CacheMeasurement} on \textit{cse-linux-01.unl.edu}. You will
 be presented with three options:
 
 \begin{verbatim}
@@ -287,7 +286,7 @@ and then averages the remaining three measurements. These averages are plotted
 in the ``Cache Size'' tab.
 
 The points at which the working set exceeds the sizes of the L1 and L2 caches
-should be fairly distinct. Because the L3 cache is shared among 16 cores, other
+should be fairly distinct. Because the L3 cache is shared among 24 cores, other
 processes (as well as other timing artifacts) will likely result in the L3
 cache not having a smooth ``plateau'' like the i7 processor has in
 Figure~\ref{fig:LaptopCache}.
@@ -297,13 +296,13 @@ consider editing \textit{CacheMeasurement.c} to use a greater
 \lstinline{MAX_WORKING_SET_SIZE}, re-compiling, and re-running the measurements.
 
 Based on the chart, estimate the sizes of the L1, L2, and L3 caches for the
-Xeon processor in \textit{csce.unl.edu}. Place your estimates in
+EPYC processor in \textit{cse-linux-01.unl.edu}. Place your estimates in
 \textit{answers.txt}.
 
 \subsection{Measuring Cache Line Size}
 
 For this part of the lab we will use the second option to attempt to discern the
-size of a cache line in the Xeon's cache design.
+size of a cache line in the EPYC's cache design.
 
 Recall that caches are designed to take advantage of locality, and when memory
 access patterns don't take advantage of locality then performance suffers. Your
@@ -322,7 +321,7 @@ and then averages the remaining three measurements. These averages are plotted
 in the ``Cache Line Size'' tab.
 
 If you can discern a point at which the stride exceeds a cache line, then
-estimate the size of a cache line on the Intel Xeon process, and place your
+estimate the size of a cache line on the AMD EPYC processor, and place your
 estimate in \textit{answers.txt}. It's very possible that you won't be able to
 do so. If you cannot, then use Figure~\ref{fig:LaptopCacheLine} to estimate the
 size of a cache line on the Intel Core i7 processor, and place your estimate in
@@ -349,9 +348,9 @@ This assignment is worth 10 points. \\
 \rubricitem{2}{Drawing a reasonable conclusion about the speed of flash memory
     relative to the speed of SRAM.}
 \rubricitem{1}{Measuring the cache level sizes and the cache line size on the
-    Intel Xeon processor.}
-\rubricitem{2}{Drawing reasonable conclusions about the sizes of the Xeon's L1, L2, and L3 caches.}
-\rubricitem{2}{Drawing a reasonable conclusion about the size of the Xeon's cache line, or about the size of the Intel Core i7's cache line.}
+    AMD EPYC processor.}
+\rubricitem{2}{Drawing reasonable conclusions about the sizes of the EPYC's L1, L2, and L3 caches.}
+\rubricitem{2}{Drawing a reasonable conclusion about the size of the EPYC's cache line, or about the size of the Intel Core i7's cache line.}
 \end{description}
 
 Your conclusions do not need to be correct to receive full credit. You can

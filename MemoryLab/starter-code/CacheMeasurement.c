@@ -6,9 +6,19 @@
 // 8 MB
 //#define MAX_WORKING_SET_SIZE (1 << 23)
 // 16 MB
-#define MAX_WORKING_SET_SIZE (1 << 24)
+//#define MAX_WORKING_SET_SIZE (1 << 24)
 // 32 MB
 //#define MAX_WORKING_SET_SIZE (1 << 25)
+// 64 MB
+//#define MAX_WORKING_SET_SIZE (1 << 26)
+// 128 MB
+//#define MAX_WORKING_SET_SIZE (1 << 27)
+// 256 MB
+//#define MAX_WORKING_SET_SIZE (1 << 28)
+// 512 MB
+#define MAX_WORKING_SET_SIZE (1 << 29)
+// 1024 MB
+//#define MAX_WORKING_SET_SIZE (1 << 30)
 
 struct option {
     char description[80];
@@ -114,7 +124,7 @@ void measure_cache_lines() {
     }
     for (register int stride = minimum_stride; stride <= 2048; stride *= 2) {
         fill_cache_with_junk(junk, data_size);
-        register int number_of_iterations = (1 << 11) * stride / minimum_stride;
+        register int number_of_iterations = (1 << 14) * stride / minimum_stride;
         clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
         for (register int i = 0; i < number_of_iterations; i++) {
             for (data = start_of_data; data < end_of_data; data += stride) {
