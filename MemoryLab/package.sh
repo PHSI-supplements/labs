@@ -6,7 +6,7 @@ cd ../starter-code
 cp ../assignment/memorylab.pdf .
 tar cvf memorylab.tar *
 mv memorylab.tar ..
-zip memorylab.zip * */*
+zip memorylab.zip * */* */*/*
 mv memorylab.zip ..
 mv memorylab.pdf ..
 cd ..
