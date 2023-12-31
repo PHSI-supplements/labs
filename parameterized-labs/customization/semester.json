@@ -1,0 +1,26 @@
+{
+  "semester comment": "the semester (or trimester or quarter) for the current course offering",
+  "semester": "Spring 2024",
+  "labs comment": {
+    "lab": "a lab found in labs.json",
+    "due": "a description of when the assignment is due",
+    "file flow": "optionally, override the default file flow found in course.json",
+    "policies": "optionally, override some of the default policies found in course.json"
+  },
+  "labs": [
+    {
+      "lab": "PokerLab",
+      "due": "Week of January 29, before the start of your lab section",
+      "policies": {
+        "collaboration": [
+          "Sections~\\ref{sec:connecting}, \\ref{subsec:terminology}, \\ref{sec:gettingstarted}, \\ref{subsec:typesofpokerhands}, and~\\ref{subsec:studythecode}: In addition to the professor and the TAs, you may freely seek help on these sections from other students.\n\n    Sections~\\ref{sec:completingcard} and~\\ref{subsec:completepoker}: These sections are individual-effort only.\n    You may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.\n    Sharing code with or copying code from another student or the internet is prohibited.",
+          "In addition to the professor and the TAs, you may freely seek help on this part of the assignment from other students.",
+          "The remainder of this assignment is an individual-effort project.\n    You may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.\n    Sharing code with or copying code from another student or the internet is prohibited."
+        ],
+        "grading": {
+          "uncompilable": "\\subsection*{Normally No Credit for Uncompilable Code}\n    If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\n    For most lab assignments, this would mean that you would earn very few, if any, points.\\footnote{\n        At the TA's discretion, if they can make your code compile with \\textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\\% penalty on the resulting score.\n        The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.\n        If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.\n    }\n    For \\textit{this} lab assignment, you will still receive the credit you earned for attempting the assignment, even if it does not compile.\n    Before turning in your code, be sure to compile and test your code on \\runtimeenvironment\\ without changing any files that you were instructed not to change."
+        }
+      }
+    }
+  ]
+}

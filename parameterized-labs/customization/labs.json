@@ -1,0 +1,18 @@
+{
+  "PokerLab": {
+    "location": "chap01/PokerLab",
+    "lab name": "C Programming Familiarization Lab",
+    "required files": "your screenshot, \\textit{card.c}, \\textit{poker.c}, and \\textit{answers.txt}",
+    "compilation": {
+      "C": {
+        "compiler": "clang",
+        "version": "c99",
+        "optimization": "-Og -g",
+        "warnings": "-Wall -Wextra -Wno-unused-parameter",
+        "libraries": "",
+        "additional dependencies": ""
+      },
+      "asm": null
+    }
+  }
+}

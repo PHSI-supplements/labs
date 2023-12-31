@@ -1,0 +1,34 @@
+{
+  "course information": {
+    "institute": "University of Nebraska-Lincoln",
+    "instructor": "Christopher A. Bohn",
+    "course number": "CSCE~231",
+    "cs2 course": "CSCE~156, RAIK~184H, or SOFT~161",
+    "cs2 comment": "The cs2 course is where students would've been introduced to linked lists and to GUI programming."
+  },
+  "file flow": {
+    "overall comment": "How will students typically get the lab files, and how will they typically submit their code?",
+    "macros comment 1": "`startercode` lists the file(s) students need (zip file & tarball based on assignment name).",
+    "macros comment2 ": "`requiredfiles` lists the file(s) that students need to turn in (defined in labs.json).",
+    "source": "Download \\startercode\\ from Canvas, or copy \\startercode\\ from {\\footnotesize$\\sim$}cbohn2/csce231 on \\textit{cse-linux-01.unl.edu}.",
+    "runtime environment": "the \\textit{cse-linux-01.unl.edu} Linux server",
+    "submission": "When you have completed this assignment, submit \\requiredfiles\\ to the assignment in Canvas."
+  },
+  "policies": {
+    "comment": "These are the default, or typical, policies for labs in your course; you can override the defaults in specific labs.",
+    "collaboration": [
+      "During your scheduled lab time, you may, \\textbf{but are not required to}, form a partner group of 2 students.\n    When necessary, there may be a group of 3 students.\n    During your scheduled lab time, and only during your scheduled lab time, you may discuss problem decomposition and solution design with your lab partner.\n    After your scheduled lab time, you may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.\n    Sharing code with or copying code from another student or the internet is prohibited.\n"
+    ],
+    "collaboration comment": "The 0th collaboration policy applies to the overall assignment; subsequent collaboration policies can be inserted into specific sections",
+    "grading": {
+      "uncompilable": "\\subsection*{No Credit for Uncompilable Code}\n    If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\\footnote{\n        At the TA's discretion, if they can make your code compile with \\textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\\% penalty on the resulting score.\n        The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.\n        If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.\n    }\n    Before turning in your code, be sure to compile and test your code on \\runtimeenvironment\\ with the original driver code, the original header file(s), and the original \\textit{Makefile}.",
+      "late": "\\subsection*{Late Submissions}\n    This assignment is due before the start of your lab section.\n    The due date in Canvas is five minutes after that, which is ample time for you to arrive to lab and then discover that you'd forgotten to turn in your work without Canvas reporting your work as having been turned in late.\n    We will accept late turn-ins up to one hour late, assessing a 10\\% penalty on these late submissions.\n    Any work turned in more than one hour late will not be graded."
+    },
+    "software engineering": [
+      {
+        "policy": "\\section*{No Spaghetti Code Allowed}\n        In the interest of keeping your code readable, you may \\textit{not} use\n        any \\lstinline{goto} statements, nor may you use any\n        \\lstinline{continue} statements, nor may you use any \\lstinline{break}\n        statements to exit from a loop, nor may you have any functions\n        \\lstinline{return} from within a loop.",
+        "penalty": "\\penaltyitem{1}{for each \\lstinline{goto} statement,\n            \\lstinline{continue} statement, \\lstinline{break} statement used to\n            exit from a loop, or \\lstinline{return} statement that occurs within\n            a loop.}"
+      }
+    ]
+  }
+}

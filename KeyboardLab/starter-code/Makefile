@@ -1,8 +1,10 @@
 CC = gcc
 CFLAGS = -Og -std=c99 -Wall -g
-DEPS = 
+SOURCES = $(wildcard *.c)
+DEPS = $(SOURCES:%.c=%.h)
 LIBS = -lm
-OBJ = keyboardlab.o problem1.o problem2.o problem3.o
+#OBJ = keyboardlab.o problem1.o problem2.o problem3.o
+OBJ = $(SOURCES:%.c=%.o)
 EXEC = keyboardlab
 
 %.o: %.c $(DEPS)

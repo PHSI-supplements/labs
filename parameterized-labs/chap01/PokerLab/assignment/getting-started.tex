@@ -1,0 +1,40 @@
+\begin{description}
+    \checkoffitem{\filesource\ and copy it to your account on \runtimeenvironment.}
+    \checkoffitem{Once copied, extract the starter code from the archive file.}
+    \checkoffitem{Place your name in the header comments of \textit{card.c}, \textit{poker.c}, and \textit{answers.txt}.} % TODO: parameterize to include partner(s) option
+\end{description}
+
+The five source code files (\textit{card.h}, \textit{card.c}, \textit{poker.h}, \textit{poker.c}, and \textit{pokerlab.c}) contain the starter code for this assignment, and the text file (\textit{answers.txt}) is where you'll provide some answers to demonstrate your ability to understand part of the starter code.
+\textit{Makefile} encodes information that the \textbf{\texttt{make}} command needs to build the application.
+In the \mbox{\textit{equivalent-java}} directory you will find \textit{Card.java} and \textit{Poker.java} that has Java code that is equivalent to the C code.
+You do not need to use the Java files, but you may find them useful as a reference to help you understand some differences between Java and C\@.
+
+The header file \textit{card.h} defines a ``card'' structure, specifies two functions that operate on cards, and defines some useful constants.
+The source file \textbf{card.c} has the bodies for the specified functions, but some code is missing.
+Finally, the source file \textit{poker.c} is supposed to generate a poker hand of five cards, print those five cards, and then print what kind of hand it is -- but much of its code is missing.
+To compile the program, type:
+
+\textbf{\texttt{make}}
+
+When you compile the starter code, it will generate a warning:
+
+\begin{verbatim}
+card.c:59:30: warning: format string is empty [-Wformat-zero-length]
+        sprintf(valueString, "", value);
+                             ^~
+\end{verbatim}
+
+\begin{description}
+    \checkoffitem{Before you make any other changes, you should edit \textit{card.c} so that the program compiles without generating any warnings or errors.}
+\end{description}
+If you look at the source code, you'll see a comment with instructions ``\texttt{THE SECOND ARGUMENT NEEDS THE CONVERSION SPECIFIER THAT YOU WOULD USE TO PRINT AN INTEGER}.''
+The command \lstinline{sprintf()} is like \lstinline{printf()} and \lstinline{fprintf()} except that it ``prints'' to a string.
+Some places you can find the conversion specifier to place in the format string:
+\begin{itemize}
+    \item Chapter 1 of the textbook, in the ``Printing'' section
+    \item $\S7.2$ of \textit{The C Programming Language} on pages 153--155
+    \item \url{https://en.cppreference.com/w/c/io/fprintf}
+\end{itemize}
+
+
+\input{demonstration-of-connection}

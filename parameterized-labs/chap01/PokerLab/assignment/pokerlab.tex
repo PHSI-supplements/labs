@@ -1,0 +1,45 @@
+%%
+%% PokerLab (c) 2018-23 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\documentclass[12pt]{article}
+
+\input{assignment-definitions}
+
+\pagelayout
+\begin{document}
+    \labidentifier
+
+    \pdfbookmark[1]{Frontmatter}{frontmatter}                           \input{frontmatter}
+
+    \section{Connecting to \runtimeenvironment} \label{sec:connecting}  \input{connecting}
+
+    \softwareengineeringfrontmatter
+
+    \section*{Scenario}                                                 \scenariointroduction
+
+    \section{Assignment Summary}                                        \input{assignmentsummary}
+
+    \section{Getting Started} \label{sec:gettingstarted}                \input{getting-started}
+
+    \section{Completing \textit{card.c}} \label{sec:completingcard}     \input{completing-card}
+
+    \section{Completing \textit{poker.c}} \label{sec:completingpoker}   \input{completing-poker}
+
+    \section{Turn-in and Grading}                                       \input{grading}
+
+    \section*{Epilogue}                                                 \scenariowrapup
+
+    \textit{To be continued...}
+
+\end{document}

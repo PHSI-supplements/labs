@@ -1,3 +1,13 @@
+# Particular files
+*.pdf
+*.tar
+*.zip
+parameterized-labs/chap??/*/assignment/assignment-definitions.tex
+parameterized-labs/chap??/*/assignment/*jpg
+parameterized-labs/chap??/*/assignment/*jpeg
+parameterized-labs/chap??/*/assignment/*png
+parameterized-labs/chap??/*/*/Makefile
+
 # Mac file finder metadata
 .DS_Store
 # Windows file metadata

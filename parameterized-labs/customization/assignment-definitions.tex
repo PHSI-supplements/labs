@@ -1,0 +1,112 @@
+%%
+%% labs/common/assignment.tex
+%% (c) 2021-23 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\usepackage{addfont}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{bold-extra}
+\usepackage{cancel}
+\usepackage{caption}
+\usepackage{ccicons}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[procnames]{listings}
+%\usepackage{media9}
+\usepackage{multicol}
+\usepackage{subfig}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usepackage[americanresistor]{circuitikz}
+\usepackage{tikz-uml}
+\usetikzlibrary{automata,positioning,arrows}
+\usepackage[normalem]{ulem}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+%\usepackage[dvipsnames]{xcolor}
+
+\lstset{language=C, tabsize=4, upquote=true, basicstyle=\ttfamily}
+\newcommand{\function}[1]{\textbf{\lstinline{#1}}}
+\setlength{\headsep}{0.7cm}
+\hypersetup{colorlinks=true}
+
+%% CREDIT FOR MARKERLESSFOOTNOTE WHERE CREDIT IS DUE: https://tex.stackexchange.com/questions/30720/footnote-without-a-marker?answertab=scoredesc#tab-top
+\newcommand\markerlessfootnote[1]{%
+    \begingroup
+    \renewcommand\thefootnote{}\footnote{#1}%
+    \addtocounter{footnote}{-1}%
+    \endgroup
+}
+
+\newcommand{\pagelayout}{
+    \pagestyle{fancy}
+    \fancyhf{}
+    \lhead{\coursenumber}
+    \chead{\ Lab \labnumber: \labname}
+    \rhead{\courseterm}
+    \cfoot{\shortlabname-\thepage}
+}
+
+\newcommand{\labidentifier}{
+    \title{\ Lab \labnumber}
+    \author{\labname}
+    \date{Due: \duedate}
+    \maketitle
+
+    \textit{\collaborationrules}
+    \markerlessfootnote{\tiny{\ifdefstring{\instructorname}{Christopher A. Bohn}{Assignment}{Original assignment} and starter code \copyright\ Christopher A. Bohn, licensed under the Creative Commons Attribution 4.0 International License~\ccby\ and under the Apache License Version 2.0, respectively.}}
+    \ifdefstring{\instructorname}{Christopher A. Bohn}{}{\markerlessfootnote{\tiny{Configured for \coursenumber\ at \institutename\ by \instructorname.}}}
+
+    \begin{description}
+        \item[Obtaining the starter code] \filesource
+        \item[Runtime environment] We will grade this assignment by compiling and running it on \runtimeenvironment;
+            you should compile and test your code on \runtimeenvironment before turning it in.
+        \item[Submitting your work] \filesubmission
+    \end{description}
+}
+
+% display module fonts for hardware kit
+% use with the Capital baseball "matrix printer" font collection (https://www.ctan.org/tex-archive/fonts/capbas/)
+% Identifying the specific font in the assignment sheet is deprecated
+%   -- instead, set the `usedisplayfont` boolean and the `displaymodule` variable in semester.tex,
+%      and \display{...} in the assignment sheet
+
+\addfont{OT1}{d7seg}{\dviiseg}
+\addfont{OT1}{deseg}{\deseg}
+\addfont{OT1}{necker}{\necker}
+
+\providebool{usedisplayfont}
+
+\newcommand{\display}[1]{
+    \ifboolexpe{bool{usedisplayfont}}{
+        \ifdefstring{\displaymodule}{MAX7219digits}{{\dviiseg #1}}{}
+        \ifdefstring{\displaymodule}{MAX7219matrix}{{\deseg #1}}{}
+        \ifdefstring{\displaymodule}{LCD1602}{{\necker #1}}{}
+        % We don't yet have a Cow Pi configuration with 14-segment displays, so no \deseg yet
+    }{
+        \texttt{#1}
+    }
+}
+
+\newcommand{\rubricitem}[2]{\item[\underline{\hspace{1cm}} +#1] #2}
+\newcommand{\bonusitem}[2]{\item[\underline{\hspace{1cm}} Bonus +#1] #2}
+\newcommand{\penaltyitem}[2]{\item[\underline{\hspace{1cm}} -#1] #2}
+\newcommand{\checkoffitem}[1]{\item (\phantom{xxx}) #1}
+\newcommand{\precheckoffitem}[1]{\item [] (\phantom{xxx}) #1}

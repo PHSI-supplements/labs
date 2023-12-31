@@ -1,0 +1,16 @@
+{
+  "story introduction": "\\begin{wrapfigure}{r}{0.33\\textwidth}\n        \\centering\n        \\includegraphics[width=.4\\textwidth]{archie}\n        \\caption{Archie.\\\\ \\footnotesize{Photograph by Bohn.}}\n    \\end{wrapfigure}\n\n    You're relaxing at your favorite hangout when another customer catches your attention.\n    He's rather large (dare I say, \\textit{mammoth}), a bit hairy, and looking frustrated in front of his laptop.",
+  "introduction image": "archie.jpg",
+  "descriptions": {
+    "teaser": "The teaser (if any) typically will be at the end of the previous week's lab",
+    "introduction": "Introduce the lab in the context of the storyline",
+    "wrapup": "Conclude the lab in the context of the storyline",
+    "callback": "The callback (if any) typically will be at the start of the next week's lab"
+  },
+  "PokerLab": {
+    "teaser": "",
+    "introduction": "``I'm Archie,'' he says, ``and I'm trying to teach myself this card game called \\textit{Poker}.\n    I found this source code that I thought I could use to understand Poker better, but the code is incomplete, and I don't entirely understand what's there.\n    Could you explain the code to me, please?''",
+    "wrapup": "Archie's face lights up in a very big smile.\n    ``Thanks!''\n    After pausing in thought for a moment, he says, ``Say, I've got a new startup company that could really use your help.\n    Are you interested?\n    It'll be exciting!''",
+    "callback": "\\begin{wrapfigure}{r}{0.33\\textwidth}\n        \\centering\n        \\includegraphics[width=.4\\textwidth]{some-expenses-spared}\n        \\caption{Some expenses were spared.\\\\ \\footnotesize{Original images \\textcopyright\\ Universal Studios and Amblin Entertainment, Inc. Meme creator unknown.}}\n    \\end{wrapfigure}\n\n    You've recently been hired to help get the Pleistocene Petting Zoo get started.\n    Your new employer, Archie, is surprisingly honest: he admits to you that some expenses were spared.\n    Archie cheerfully points out that any challenge is also an opportunity to succeed.\n    You suspect your job will offer plenty of ``opportunities to succeed.''"
+  }
+}

@@ -1,0 +1,113 @@
+\subsection{Create a Deck of 52 Cards}
+
+In \textit{poker.c}, the first thing you'll want to do is write the code for \function{populate_deck()}.
+\begin{description}
+    \checkoffitem{Using \function{create_card()} from \textit{card.c}, create cards corresponding to the 52 standard playing cards and add them to the \lstinline{deck[]} array.}
+    \checkoffitem{Compile and run your program.
+        Confirm that you wrote \function{populate_deck()} correctly by selecting option 2 to print out all 52 cards in \lstinline{deck[]}.}
+\end{description}
+
+\subsection{Types of Poker Hands} \label{subsec:typesofpokerhands}
+
+In the game of poker, hands are characterized by the similarities of the cards within.
+Traditionally, you characterize the hand by the ``best'' characterization (that is, the one that is least likely to occur);
+for example, a hand that is a three of a kind also contains a pair, but you would only characterize the hand as a three of a kind.
+The \function{is...()} functions in \textit{poker.c} are intentionally simple;
+they do not (and should not) check whether there is a better way to characterize the hand.
+The types of hands (from most desirable to least desirable) are:
+
+\begin{description}
+    \item[Royal Flush] This is an Ace, a King, a Queen, a Jack, and a 10, all the same suit.
+    There is no function in the starter code for a royal flush, nor do you need to write one, since a royal flush is essentially the best-possible straight flush.
+    (Note also that a Royal Flush is not possible for this lab, based on our re-definition of a Straight, below.)
+    \item[Straight Flush] This is five cards in a sequence, all the same suit;
+    that is, five cards that are both a straight and a flush.
+    This characterization is checked by the function \function{is_straight_flush()}.
+    \item[Four of a Kind] Four cards all have the same value.
+    This characterization is checked by the function \function{is_four_of_kind()}.
+    \item[Full House] The hand contains a three of a kind and also contains a pair with a different value than that of the first three cards.
+    This characterization is checked by the function \function{is_full_house()}.
+    \item[Flush] Five cards all the same suit.
+    This characterization is checked by the function \function{is_flush()}.
+    In the interest of simplicity, for this assignment we changed the definition of a flush to ``all cards are of the same suit'' (this distinction only matters if the number of cards in the hand is not five).
+    \item[Straight] Five cards in a sequence.
+    This characterization is checked by the function \function{is_straight()}.
+    In the interest of simplicity, for this assignment we changed the definition of a straight to ``all cards are in a sequence'' (this distinction only matters if the number of cards in the hand is not five).
+    We further re-defined an Ace to be adjacent only to 2 (in traditional poker, an Ace can be adjacent to 2 or to King but not both at the same time).
+    \item[Three of a Kind] Three cards all have the same value.
+    This characterization is checked by the function \function{is_three_of_kind()}.
+    \item[Two Pair] The hand holds two different pairs.
+    This characterization is checked by the function \function{is_two_pair()}.
+    \item[Pair] Two cards with the same value.This characterization is checked by
+    the function \function{is_pair()}.
+    \item[High Card] If the hand cannot be better characterized, it is characterized by the greatest-value card in the hand.
+    The starter code does not have a function to check for this since this is the characterization if all the other functions return a \textbf{0}.
+\end{description}
+
+\subsection{Study the Code} \label{subsec:studythecode}
+
+When you provide your answers in \textit{answers.txt}, bear in mind that while it's good to know that you can read code, what we're really looking for is that you understand C's logical boolean operations.
+You will receive a half-point for demonstrating that you understand what the outputs of C's logical boolean operations are and what they mean,
+and you will receive a half-point for demonstrating that you fully understand how the inputs to C's logical boolean operations are interpreted.
+
+Look at the code for \function{is_pair()}.
+Notice that the parameter \lstinline{hand}'s type is \lstinline{card*};
+that is, \lstinline{}{hand} is a pointer to a \lstinline{}{card}.
+In the code, though, we treat \lstinline{hand} as though it were an array.
+This is because in C, arrays are pointers, and we can treat pointers as arrays.
+Notice also that \lstinline{hand} is modified with the \lstinline{const} keyword;
+this states that the \function{is_pair()} function should treat the \lstinline{hand} as a read-only array.
+Now look at the rest of the code in \function{is_pair()}.
+Why does this return a \textbf{1} when the hand contains at least one pair?
+Why does it return a \textbf{0} when the hand contains no pairs?
+If you can't determine this on your own, you may talk it over with other students or the TA\@.
+\begin{description}
+    \checkoffitem{Type your answer in \textit{answers.txt}.}
+\end{description}
+
+Look at the code for \function{is_flush()}.
+Why does this return a \textbf{1} when all cards in the hand have the same suit?
+Why does it return a \textbf{0} when at least two cards have different suits than each other?
+If you can't determine this on your own, you may talk it over with other students or the TA\@.
+\begin{description}
+    \checkoffitem{Type your answer in \textit{answers.txt}.}
+\end{description}
+
+Look at the code for \function{is_straight()}.
+This is a little more challenging to understand than \function{is_pair()} and \function{is_flush()}.
+Why does it return a \textbf{1} when all cards in the hand are in sequence?
+Why does it return a \textbf{0} when they are not in sequence?
+If you can't determine this on your own, you may talk it over with other students or the TA\@.
+\begin{description}
+    \checkoffitem{Type your answer in \textit{answers.txt}.}
+\end{description}
+
+Look at the code for \function{is_two_pair()}.
+Recall that in C, arrays are pointers.
+The assignment \lstinline{partial_hand = hand + i} makes use of \textit{pointer arithmetic}.
+If the assignment were \lstinline{partial_hand = hand} then it would assign \lstinline{hand}'s base address to \lstinline{partial_hand}, and so \lstinline{partial_hand} would point to the $0^{th}$ element of \lstinline{hand}.
+The expression $hand+i$ generates the address for the $i^{th}$ element of \lstinline{}{hand}, and so \lstinline{partial_hand = hand + i} assigns to \lstinline{partial_hand} the address of the $i^{th}$ element of \lstinline{hand}.
+This effectively makes \lstinline{partial_hand} an array such that $\forall j : \mathtt{partial\_hand[j] = hand[i+j]}$.
+
+Examine the remaining starter code in \textit{poker.c} to make sure you understand it.
+
+\subsection{Complete the code} \label{subsec:completepoker}
+
+\begin{description}
+    \checkoffitem{Add code to \function{characterize_hand()} to print the five cards in \lstinline{hand}.}
+    \checkoffitem{Add code to \function{characterize_hand()} to use the \function{is...()} functions to determine the best characterization of the \lstinline{hand} and print that determination.}
+\end{description}
+
+You can test your code using the program's option 3 (which allows you to specify a particular hand) and option 4 (which generates a random hand).
+(Unlike poker with a ``real'' deck of cards, this program allows a card to appear more than once in a hand;
+decide for yourself whether this is best characterized as a known bug or as a feature.)
+For now, the program does not correctly characterize a hand that is a three of a kind, a full house, or a four of a kind.
+
+\begin{description}
+    \checkoffitem{Implement and test \function{is_three_of_kind()}.}
+    \checkoffitem{Implement and test \function{is_full_house()}.}
+    \checkoffitem{Implement and test \function{is_four_of_kind()}.}
+\end{description}
+
+You will receive half-credit for \function{characterize_hand()}, \function{is_three_of_kind()}, \function{is_full_house()}, and \function{is_four_of_kind()} if you make a good-faith effort at implementing these functions as specified.
+You will receive full credit for these functions if you implement them correctly.

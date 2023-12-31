@@ -1,0 +1,103 @@
+%% You will need to edit this file to tailor it to your  %%
+%% particular environment.                               %%
+
+
+You will need to be able to set up a secure shell terminal to \runtimeenvironment.
+You will also need to be able to edit files either directly on \runtimeenvironment, or on your personal computer (or a lab computer) and to transfer files to and from \runtimeenvironment.
+
+\subsection{Secure Shell Terminal}
+
+You will need to run commands on \runtimeenvironment.
+
+\begin{description}
+    \item[From Windows] If your personal computer (or the lab computer you're using) is a Windows machine, the most popular option is PuTTY\@.
+        See \url{https://computing.unl.edu/faq-section/working-remotely#node-29471} for instructions.
+        The principal differences are:
+        \begin{itemize}
+            \item Instead of using \textit{cse.unl.edu} as the Host Name, use \textit{cse-linux-01.unl.edu}.
+            \item Instead of using your SoC username and password, use your UNL username and password.
+        \end{itemize}
+        Alternatively, you can launch an SSH session from a Windows terminal window in the same manner as for Mac and Linux, though this seems to be a less-popular option.
+    \item[From Mac or Linux] If your personal computer (or the lab computer you're using) is a Mac or a Linux box, the simplest option is to open a terminal window on your computer and type \texttt{ssh \textit{username}@cse-linux-01.unl.edu}, where \textit{username} is your UNL username.
+        See \url{https://computing.unl.edu/faq-section/working-remotely#node-300} for Mac, or \url{https://computing.unl.edu/faq-section/working-remotely#node-30086} for Linux.
+        \begin{itemize}
+            \item Instead of using \textit{cse.unl.edu} has the Host Name, use \textit{cse-linux-01.unl.edu}.
+            \item Instead of using your SoC username and password, use your UNL username and password.
+        \end{itemize}
+    \item[From an IDE] If you already have an IDE on your personal computer, that IDE may provide the option of opening a secure shell terminal on a remote system.
+        We do not guarantee that the TAs or the School of Computing tech support team can help you with connecting your IDE to \runtimeenvironment.
+\end{description}
+
+
+\subsection{Editing Files}
+
+You will need to edit text files, C files, and assembly code files.
+
+\begin{description}
+    \item[Editing directly on the server] You might choose to edit files directly on \runtimeenvironment.
+        If you do so, your options are \texttt{vim}, an enhanced version of the classic \texttt{vi} editor, Emacs, or Pico (or its clone, GNU nano).
+        Be aware that \texttt{vim} and Emacs have non-trivial learning curves: knowing how to use them will pay dividends in your future careers, but you may be frustrated if you're accustomed to using more conventional editors.
+        Pico, an editor derived from the classic \texttt{pine} email client, has a helpful list of available commands always shown at the bottom of the terminal.
+    \item[Editing on your personal computer] Many students choose to edit files on their personal computer.
+        If you do so, and if your personal computer is a Windows machine, try to configure your editor to use ``Unix-style'' end-of-line characters.
+        This won't matter for most labs, but a couple of upcoming labs will need ``Unix-style'' line separators.
+        If you cannot change this setting, then get in the habit of running \texttt{dos2unix \textit{filename}} on your files after transferring them to \runtimeenvironment\ to convert ``DOS-style'' line separators to ``Unix-style'' line separators (this utility makes a few other changes, too, that have no bearing on \coursenumber assignments).
+    \item[Editing on the server in an IDE on your personal computer] Some IDEs allow you to edit files on a remote system.
+        Bear in mind that these IDEs may add metafiles to the remote system in sufficient quantity to exceed your disk quota on the School of Computing's file server (VS~Code is particularly notorious for this).
+        We do not guarantee that the TAs or the School of Computing tech support team can help you with connecting your IDE to \runtimeenvironment.
+\end{description}
+
+
+\subsection{Transferring Files}
+
+If you are editing your files on the Linux server, whether from within a secure shell terminal, or by configuring an IDE on your personal computer to do so,
+then you do not need to transfer files between the file server and your local computer often -- but you will need to copy your files from the server to your local computer so that you can submit them to Canvas.
+Otherwise, if you are editing local files on your personal computer, then you will need to be able to transfer your files from your local computer to the server to compile and run your code.
+
+The popular choices are:
+\begin{description}
+    \item[FileZilla] A very popular drag-and-drop option.
+        See \url{https://computing.unl.edu/faq-section/working-remotely#node-291}.
+        Be sure to specify the \textit{cse-linux-01.unl.edu} as the host.
+    \item[scp] If you're using a terminal window to \texttt{ssh} into \textit{cse-linux-01.unl.edu} then using the \texttt{scp} command is a sensible choice.
+        Basic use of the \texttt{scp} command is very much the same as basic use of the \texttt{cp} command, except that you specify the remote host.
+        Copying files from your computer to the server: \\
+        \texttt{scp \textit{file1} \textit{file2} \dots\ \textit{fileN} username@cse-linux-01.unl.edu:\textit{filepath}} copies the files from your local computer to the \textit{filepath} on \runtimeenvironment, where \textit{filepath} is relative to your home directory.
+        For example, \\
+        \underline{\underline{\texttt{scp answers.txt username@cse-linux-01.unl.edu:.}}} copies \textit{answers.txt} to the top-level of your home directory.
+        Or, working the other direction: \\
+        \texttt{scp username@cse-linux-01.unl.edu:\textit{file} \textit{filepath}} copies \textit{file} from the remote server to \textit{filepath} on your local computer.
+        Just as with \texttt{cp}, you can use the \texttt{-r} argument to copy directories: \\
+        \underline{\underline{\texttt{scp -r pokerlab username@cse-linux-01.unl.edu:.}}} \\
+        \underline{\underline{\texttt{scp -r username@cse-linux-01.unl.edu:pokerlab .}}}
+\end{description}
+
+\subsection{\textit{Notice} about Transferring \texttt{.o} Files}
+
+If you edit \textit{and} compile your code on your personal computer, you will want to also  make sure that your code compiles and runs correctly on \runtimeenvironment.
+When you transfer your files to the server, you might copy the \texttt{.o} files as well.
+If so, then when you run \texttt{\textbf{make}} you will likely see an error similar to this:
+\begin{verbatim}
+    % make
+    clang -o pokerlab pokerlab.o poker.o card.o -Og -g -std=c99 -Wall -Wextra -Wno-unused-parameter
+    /usr/bin/ld: warning: poker.o: missing .note.GNU-stack section implies executable stack
+    /usr/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+    /usr/bin/ld: /usr/bin/../lib64/gcc/x86_64-suse-linux/12/../../../../lib64/Scrt1.o: in function `_start':
+    /home/abuild/rpmbuild/BUILD/glibc-2.31/csu/../sysdeps/x86_64/start.S:104:(.text+0x30): undefined reference to `main'
+    clang-15.0: error: linker command failed with exit code 1 (use -v to see invocation)
+    make: *** [Makefile:13: pokerlab] Error 1
+    %
+\end{verbatim}
+
+This is because \texttt{.o} files produced for Windows and Mac computers (and for non-x86 Linux computers) are incompatible with the x86 Linux system on the server.
+The very easy fix is to clean-up the build with the command \texttt{\textbf{make clean}}:
+\begin{verbatim}
+    % make clean
+    rm -f pokerlab.o poker.o card.o *~ core
+    % make
+    clang -c -o pokerlab.o pokerlab.c -Og -g -std=c99 -Wall -Wextra -Wno-unused-parameter
+    clang -c -o poker.o poker.c -Og -g -std=c99 -Wall -Wextra -Wno-unused-parameter
+    clang -c -o card.o card.c -Og -g -std=c99 -Wall -Wextra -Wno-unused-parameter
+    clang -o pokerlab pokerlab.o poker.o card.o -Og -g -std=c99 -Wall -Wextra -Wno-unused-parameter
+    %
+\end{verbatim}
