@@ -4,13 +4,36 @@
   "descriptions": {
     "teaser": "The teaser (if any) typically will be at the end of the previous week's lab",
     "introduction": "Introduce the lab in the context of the storyline",
+    "progress": [
+      "Short segments that advance the story",
+      "from one part of the assignment to another"
+    ],
     "wrapup": "Conclude the lab in the context of the storyline",
-    "callback": "The callback (if any) typically will be at the start of the next week's lab"
+    "callback": "The callback (if any) typically will be at the start of the next week's lab",
+    "xyz image": "if a string, then the name of an existing file; if a dictionary, then ['link'] the url of a known-good image, ['name'] the local name for that file, and ['search'] a search term to find a replacement if the known-good image is missing"
   },
   "PokerLab": {
     "teaser": "",
     "introduction": "``I'm Archie,'' he says, ``and I'm trying to teach myself this card game called \\textit{Poker}.\n    I found this source code that I thought I could use to understand Poker better, but the code is incomplete, and I don't entirely understand what's there.\n    Could you explain the code to me, please?''",
     "wrapup": "Archie's face lights up in a very big smile.\n    ``Thanks!''\n    After pausing in thought for a moment, he says, ``Say, I've got a new startup company that could really use your help.\n    Are you interested?\n    It'll be exciting!''",
-    "callback": "\\begin{wrapfigure}{r}{0.33\\textwidth}\n        \\centering\n        \\includegraphics[width=.4\\textwidth]{some-expenses-spared}\n        \\caption{Some expenses were spared.\\\\ \\footnotesize{Original images \\textcopyright\\ Universal Studios and Amblin Entertainment, Inc. Meme creator unknown.}}\n    \\end{wrapfigure}\n\n    You've recently been hired to help get the Pleistocene Petting Zoo get started.\n    Your new employer, Archie, is surprisingly honest: he admits to you that some expenses were spared.\n    Archie cheerfully points out that any challenge is also an opportunity to succeed.\n    You suspect your job will offer plenty of ``opportunities to succeed.''"
+    "progress": null,
+    "callback": "\\begin{wrapfigure}{r}{0.33\\textwidth}\n        \\centering\n        \\includegraphics[width=.4\\textwidth]{some-expenses-spared}\n        \\caption{Some expenses were spared.\\\\ \\footnotesize{Original images \\textcopyright\\ Universal Studios and Amblin Entertainment, Inc. Meme creator unknown.}}\n    \\end{wrapfigure}\n\n    You've recently been hired to help get the Pleistocene Petting Zoo get started.\n    Your new employer, Archie, is surprisingly honest: he admits to you that some expenses were spared.\n    Archie cheerfully points out that any challenge is also an opportunity to succeed.\n    You suspect your job will offer plenty of ``opportunities to succeed.''",
+    "callback image": {
+      "link": "https://pbs.twimg.com/media/CR_8SuAUYAElSyA.png",
+      "name": "some-expenses-spared.png",
+      "search": "\"Spares no expense / Hires one I.T. guy\""
+    }
+  },
+  "KeyboardLab": {
+    "teaser": "",
+    "introduction": "",
+    "progress": [
+      "You soon discover your first $\\cancelto{\\mathrm{opportunity}}{\\mathrm{challenge}}$.\nArchie purchased your workstation from an electronics recycling warehouse.",
+      "Archie replies to your email, assuring you that a new keyboard has been ordered.\nMeanwhile, he needs you to write some code that will",
+      "Your keyboard was mistakenly delivered to the Plywood Scenery Cutting Studio instead of the Pleistocene Petting Zoo.\nWhile that gets sorted out, you ``borrow'' some tar from the La~Brea Tar Pits diorama and use the tar to re-attach your keyboard's missing keys."
+    ],
+    "wrapup": "Great news!\n    Archie brings you your new keyboard.\n    He also brings you a problem of his own.\n    Because you were held up with the broken keyboard, Archie decided to try some programming on his own, and his code is behaving strangely.",
+    "callback": "n.b.: The end of the current wrap-up should be the teaser for IntegerLab",
+    "adhesive": "tar from the diorama"
   }
 }

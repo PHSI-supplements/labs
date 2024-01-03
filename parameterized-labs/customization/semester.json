@@ -21,6 +21,12 @@
           "uncompilable": "\\subsection*{Normally No Credit for Uncompilable Code}\n    If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\n    For most lab assignments, this would mean that you would earn very few, if any, points.\\footnote{\n        At the TA's discretion, if they can make your code compile with \\textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\\% penalty on the resulting score.\n        The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.\n        If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.\n    }\n    For \\textit{this} lab assignment, you will still receive the credit you earned for attempting the assignment, even if it does not compile.\n    Before turning in your code, be sure to compile and test your code on \\runtimeenvironment\\ without changing any files that you were instructed not to change."
         }
       }
+    },
+    {
+      "lab": "KeyboardLab",
+      "due": "Week of February 5, before the start of your lab section",
+      "first missing key": "W",
+      "desired email": "TO\tArchie\nRE\tI Need a Working Keyboard\n\nPlease order a new keyboard for me. This one is broken."
     }
   ]
 }

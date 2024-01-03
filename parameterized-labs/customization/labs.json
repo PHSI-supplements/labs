@@ -5,14 +5,24 @@
     "required files": "your screenshot, \\textit{card.c}, \\textit{poker.c}, and \\textit{answers.txt}",
     "compilation": {
       "C": {
-        "compiler": "clang",
-        "version": "c99",
-        "optimization": "-Og -g",
-        "warnings": "-Wall -Wextra -Wno-unused-parameter",
-        "libraries": "",
-        "additional dependencies": ""
-      },
-      "asm": null
+        "warnings": "-Wall -Wextra -Wno-unused-parameter"
+      }
     }
+  },
+  "KeyboardLab": {
+    "location": "chap02/KeyboardLab",
+    "lab name": "Bit Manipulation Lab",
+    "required files": "\\textit{problem1.c}, \\textit{problem2.c}, and \\textit{problem3.c}",
+    "compilation": {
+      "C": {
+        "warnings": "-Wall -Wextra -Wno-unused-parameter -Wno-unused-value",
+        "libraries": "-lm"
+      }
+    },
+    "lab-specific keys": [
+      "first missing key",
+      "desired email",
+      "adhesive"
+    ]
   }
 }
