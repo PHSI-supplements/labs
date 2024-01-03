@@ -1,0 +1,50 @@
+%%
+%% KeyboardLab (c) 2021-23 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\documentclass[12pt]{article}
+
+\input{assignment-definitions}
+
+\lstset{language=c, numbers=left, showstringspaces=false,
+    moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+}
+
+\newcommand{\tab}{\ensuremath{\longrightarrow}}
+\newcommand{\nl}{\ensuremath{\hookleftarrow}}
+
+\pagelayout
+\begin{document}
+    \labidentifier
+
+    \pdfbookmark[1]{Frontmatter}{frontmatter}                                   \input{frontmatter}
+
+    \softwareengineeringfrontmatter
+
+    \section*{Scenario}                                                         \scenariointroduction
+
+    \section{Assignment Summary}                                                \input{assignmentsummary}
+
+    \section{Treating Numbers as Characters} \label{sec:asciiTable}             \input{numbers-as-characters}
+
+    \section{Treating Characters as Numbers} \label{sec:charactersAsNumbers}    \input{characters-as-numbers}
+
+    \section{Using Bitmasks and Shifting Bits} \label{sec:bitOps}               \input{bit-operations}
+
+    \section{Turn-in and Grading}                                               \input{grading}
+
+    \section*{Epilogue}                                                         \scenariowrapup
+
+    \textit{To be continued\dots}
+
+\end{document}

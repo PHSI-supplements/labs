@@ -1,0 +1,59 @@
+\transitiontwo\
+As you fasten a Scrabble tile in place for the \textit{\texttt{\missingKey}}, more keys fall off, denying you the use of \textit{\texttt{+}}, \textit{\texttt{-}}, \textit{\texttt{/}}, \textit{\texttt{\%}}, \textit{\texttt{5}}, and \textit{\texttt{b}}.
+You cannot get any more \adhesive, so you sit down to your next programming tasks without those keys.
+
+\begin{description}
+    \checkoffitem{Edit \texttt{problem3.c} so that
+        \begin{itemize}
+            \item \function{is_even()} returns 1 if the number is even (that is, divisible by 2) and 0 if the number is odd
+            \item \function{produce_multiple_of_ten()} will always output a multiple of 10 following a specific formula: if a number is even then divide it by 2;
+            otherwise, subtract 1 from the number and multiply the difference by 5 (for example, an input of 7 yields 30 because $(7-1) \times 5 = 30$);
+            repeat until the last decimal digit is 0.
+        \end{itemize}
+        These numbers are guaranteed to be non-negative.
+        You may not use addition (+), subtraction (-), division (/), nor modulo (\%).
+        You also may not use the number 5 nor the letter b.
+        (Exceptions: you \textit{may} use the forward-slash (/) for comments, and the percent-sign (\%) that is already present in the \function{sprintf()} calls' format strings is allowed)}
+\end{description}
+
+Hints:
+\begin{itemize}
+    \item Following the weighted-sum technique to convert between binary and decimal (or by examining the textbook's Table~2.1), you will note that \\ \colorbox{yellow}{all even numbers have a 0 as their least significant bit}, and \\ \colorbox{yellow}{all odd numbers have a 1 as their least significant bit}
+    \item Less obvious is that you can \\ \colorbox{yellow}{subtract 1 from an odd number by changing its least significant bit to a 0}
+    \item As we will cover in Chapter~3, you can \\ \colorbox{yellow}{halve a number by shifting its bits to the right by one}
+    \item You can create an integer by \\ \colorbox{yellow}{producing its bit pattern through a series of bit operations}
+\end{itemize}
+
+\textit{Note: } \function{is_even()} can be implemented with as little as one line of code;
+you might find a 1-line implementation easier to achieve.
+
+\begin{description}
+    \checkoffitem{Build the executable with the command: \texttt{make}.
+        Be sure to fix both errors and warnings.}
+    \checkoffitem{Run the executable with the command: \texttt{./keyboardlab} and select option 3 (``check problem 3'').
+        You will be prompted to enter a number.
+        The program will then report whether or not it is even, and it will print the generated multiple of ten.}
+\end{description}
+Here are some test values you might try:
+
+\begin{center}
+    \begin{tabular}{cc}
+        input   & multiple of ten \\ \hline
+        7       & 30    \\
+        56      & 30    \\
+        57      & 280   \\
+        58      & 140   \\
+        300     & 300   \\
+        301     & 1500  \\
+        302     & 750   \\
+    \end{tabular}
+\end{center}
+
+You can double-check that you aren't using disallowed keys by running the constraint-checking Python script: \\
+\texttt{python constraint-check.py keyboardlab3.json}
+
+The \function{is_even()} function is worth four points, two for correctly determining that an integer is even and  two for correctly determining that an integer is odd.
+Partial credit is available for determining that a character is even but returning a non-zero value other than 1.
+You will receive no credit if you simply hard-code a return value.
+
+The \function{produce_multiple_of_ten()} function is worth four points, one each for: assigning the value 5 to the variable \lstinline{five}, dividing an even number by 2, subtracting 1 from an odd number, and having the correct functionality.

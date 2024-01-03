@@ -1,0 +1,35 @@
+\transitionone\ convert uppercase letters to lowercase letters and to indicate whether a character is a decimal digit.
+You realize this is easy work since those actual functions are part of the standard C library with their prototypes in \texttt{ctype.h}.
+As you get ready to impress your boss with how fast you can ``write'' this code by calling those standard functions, you remember that your keyboard is missing the \textit{\texttt{3}} key (which is also used for \textit{\texttt{\#}}), preventing you from typing \lstinline{#include <ctype.h>}.
+Several other number keys fall off soon thereafter (only \textit{\texttt{0}}, \textit{\texttt{7}}, and \textit{\texttt{9}} remain), along with the \textit{\texttt{s}} key.
+The \textit{\texttt{f}} key is looking fragile, so you decide that you had better not type too many \lstinline{if} statements (and without the \textit{\texttt{s}} key, you can't use a \lstinline{switch} statement at all).
+
+As you look at the loose keys littering your desk, you remember that \lstinline{char} is just another integer type,
+and all of the arithmetic and comparisons that can \lstinline{int}s as operands can also use \lstinline{char}s as operands.
+For example, \lstinline{(' ' + 1 == '!')} and \lstinline{(' ' < '!')} are both perfectly valid, true expressions.
+
+\begin{description}
+    \checkoffitem{Edit \texttt{problem2.c} so that
+    \begin{itemize}
+        \item \function{iz_digit()} returns 1 if the character is a decimal digit (\textquotesingle 0\textquotesingle, \textquotesingle 1\textquotesingle, \textquotesingle 2\textquotesingle, \dots) and 0 otherwise
+        \item \function{decapitalize()} will return the lowercase version of an uppercase letter (\textquotesingle A\textquotesingle, \textquotesingle B\textquotesingle, \textquotesingle C\textquotesingle, \dots) but will return the original character if it is not an uppercase letter
+    \end{itemize}
+    You may not \lstinline{#include} any headers, you may not use any number keys other than the 0, 9, and 7 (which is also used for \textbf{\texttt{\&}}) keys, you may not use \textit{S} or \textit{\missingKey}, and you may use at most two \textit{F}s.}
+    \checkoffitem{Build the executable with the command: \texttt{make}.
+        Be sure to fix both errors and warnings.}
+    \checkoffitem{Run the executable with the command: \texttt{./keyboardlab} and select option 2 (``check problem 2''). \\
+        You will be prompted to enter a character, and the program will use that character to compare the outputs of your functions to the reference functions from \texttt{ctype.h}.}
+\end{description}
+
+\textit{Note: } Each of these functions can be implemented with as little as one line of code each;
+you might find 3-line implementations easier to achieve.
+
+You can double-check that you aren't using disallowed keys by running the constraint-checking Python script: \\
+\texttt{python constraint-check.py keyboardlab2.json}
+
+The \function{iz_digit()} function is worth four points, two for correctly determining that a character is a digit and two for correctly determining that a character is not a digit.
+Partial credit is available for determining that a character is a digit but returning a non-zero value other than 1, and partial credit is available if you fail to determine that a non-printable character is not a digit.
+You will receive no credit if you simply hard-code a return value, such as \lstinline{return 0}.
+
+The \function{decapitalize()} function is worth four points, two for converting uppercase letters to lowercase, one for returning unmodified lowercase letters, and one for returning unmodified non-letter characters.
+You will receive no credit if you always return the original character, such as \lstinline{return character} or otherwise do not attempt the task.

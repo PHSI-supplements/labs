@@ -1,0 +1,41 @@
+The purpose of this assignment is to give you more confidence in C programming and to begin your exposure to the underlying bit-level representation of data.
+
+The instructions are written assuming you will edit and run the code on \runtimeenvironment.
+If you wish, you may edit and run the code in a different environment;
+be sure that your compiler suppresses no warnings, and that if you are using an IDE that it is configured for C and not C++.
+
+\tableofcontents
+
+\section*{Learning Objectives}
+
+After successful completion of this assignment, students will be able to:
+\begin{itemize}
+    \item Use the ASCII table to determine the corresponding integer values of C \lstinline{char} values.
+    \item Apply arithmetic operators and comparators to C \lstinline{}{char} values.
+    \item Construct and use a bitmask.
+    \item Use bitwise operators and bit shift operators to create and modify values.
+\end{itemize}
+
+\section*{During Lab Time}
+
+During your lab period, the TAs will demonstrate how to read the ASCII table and will provide a refresher on bitwise AND, bitwise OR, and left- and right-shifts.
+This refresher will include a class discussion about why this code always outputs ``The number is 255.'' except when number is 0:
+\begin{lstlisting}
+#include <stdio.h>
+
+int main() {
+    int number;
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    if (number | 0xFF == number & 0xFF) {
+        printf("The number is 255.\n");
+    } else {
+        printf("The number is not 255.\n");
+    }
+    return 0;
+}
+\end{lstlisting}
+During the remaining time, the TAs will be available to answer questions.
+
+Before leaving lab, \textit{at a minimum} complete Section~\ref{sec:asciiTable} and the first function in Section~\ref{sec:charactersAsNumbers}.
+Also make sure that you understand how to use bitwise operations to examine specific bits and to change specific bits.

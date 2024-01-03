@@ -1,0 +1,78 @@
+\transitionzero\
+You decide to write an email requesting a new keyboard: \\
+\\
+\email \\
+(Note: here, the \tab\ symbol represents the \texttt{TAB} character which is needed by the email program, and the \nl\ symbol represents a \texttt{NEWLINE} character.)
+
+You quickly realize that you can't type this directly into your mail program because of the missing \textit{\texttt{\missingKey}} key.
+So you decide to write a short program that will output the text that you want to send.
+The code you would like to write is:
+
+% TODO: create a more student-friendly verion -- snprintf probably should do the trick
+\phantom{x}\\
+\lstinline{#include <stdio.h>} \\
+\lstinline{#include <string.h>} \\
+\phantom{x}\\
+\lstinline{char *generate_email(char *destination, size_t destination_size) {} \\
+\lstinline{    snprintf(destination, destination_size, "%s",} \\
+\cString
+\verb`    };` \\
+\lstinline{    return destination;} \\
+\verb`}` \\
+%\end{lstlisting}
+
+% TODO: figure out how to do a lstlisting within a macro
+%\begin{lstlisting}
+%#include <stdio.h>
+%#include <string.h>
+%
+%char *generate_email(char *destination, int destination_size) {
+%    snprintf(destination, destination_size, "%s",
+%             "TO\tArchie\n"
+%             "RE\tI Need a Working Keyboard\n"
+%             "\n"
+%             "Please order a new keyboard for me. This one is broken.\n");
+%    return destination;
+%}
+%\end{lstlisting}
+
+% TODO: note about `\t` and `\n` not being literal
+
+Of course, the \texttt{\missingKey} and the \texttt{\lowercaseKey} are still a problem, but you realize you can insert those characters by using their ASCII values.\footnote{Use the ASCII table in the textbook or type \texttt{man ascii} in a terminal window.}
+For example, if the space bar were missing then you could replace
+
+\lstinline{printf("Hello World!\n");} \\
+with
+
+\lstinline{printf("%s%c%s\n", "Hello", 0x20 , "World!");} \\
+or
+
+\lstinline{printf("%s%c%s\n", "Hello", 32, "World!");} \\
+because 0x20 (which is decimal 32) is the ASCII value for the space character (\lstinline{' '}).
+Recall that the first argument for \function{printf()} is a \textit{format string}: \texttt{\%s} specifies that a string should be placed at that position in the output, and \texttt{\%c} specifies that a character should be placed at that position in the output.
+
+\textit{Note: } the \function{snprintf()} function\footnote{\url{https://www.gnu.org/software/libc/manual/html_node/Formatted-Output-Functions.html\#index-sprintf}} is very much like the \function{printf()} function, except that it ``prints'' into a string.
+
+\textit{Note: } \lstinline{\t} and \lstinline{\n} are the \texttt{TAB} character and the \texttt{NEWLINE} character, respectively.
+They are \textit{not} a literal backslash followed by a literal \lstinline{t} or \lstinline{n}.
+
+As you open your editor, the \textit{\texttt{\textbackslash}} key falls off the keyboard, preventing you from typing \texttt{\textbackslash t} and \texttt{\textbackslash n}.
+You carefully start typing, but as soon as you've finished with the two \lstinline{#include} directives, the \textit{\texttt{3}} key (which is also used for \textit{\texttt{\#}}) falls off of your keyboard.
+
+\begin{description}
+    \checkoffitem{Edit \texttt{problem1.c} so that it produces the specified output without using the \missingKey\ key or the backslash key.} % and without #including or #embedding any other files
+    \checkoffitem{Build the executable with the command: \texttt{make}.
+        Be sure to fix both errors and warnings.}
+    \checkoffitem{Run the executable with the command: \texttt{./keyboardlab} and select option 1 (``check problem 1'').
+        This will print your email message.
+        \begin{itemize}
+            \item If it matches the intended email message, then you will be informed that it does.
+            \item If it does not match the intended email message, then the program will inform you where the first difference is between your message and the desired message and will print a small portion of each to show the difference.
+        \end{itemize}}
+\end{description}
+
+You can double-check that you aren't using the \missingKey key or the backslash key by running the constraint-checking Python script: \\
+\texttt{python constraint-check.py keyboardlab1.json}
+
+You will earn 3 points for replacing all occurrences of \texttt{\missingKey}, \texttt{\lowercaseKey}, \texttt{\textbackslash t} and \texttt{\textbackslash n} with their ASCII values.
+You will earn 1 point for producing a string that perfectly matches the desired string.
