@@ -28,5 +28,51 @@
       "first missing key": "W",
       "desired email": "TO\tArchie\nRE\tI Need a Working Keyboard\n\nPlease order a new keyboard for me. This one is broken."
     }
+  ],
+  "todo": [
+    {
+      "lab": "PointerLab",
+      "due": "Week of February 12, before the start of your lab section"
+    },
+    {
+      "lab": "IntegerLab",
+      "due": "Week of February 19, before the start of your lab section"
+    },
+    {
+      "lab": "FloatLab",
+      "due": "Week of February 26, before the start of your lab section"
+    },
+    {
+      "lab": "AddressingLab",
+      "due": "Week of March 4, before the start of your lab section"
+    },
+    {
+      "lab": "Chapter6Lab",
+      "due": "Week of March 25, before the start of your lab section"
+    },
+    {
+      "lab": "Chapter11Lab",
+      "due": "Week of April 1, before the start of your lab section"
+    },
+    {
+      "lab": "DuplicatorLab",
+      "due": "Week of April 8, before the start of your lab section"
+    },
+    {
+      "lab": "PollingLab",
+      "due": "Week of April 15, before the start of your lab section"
+    },
+    {
+      "lab": "InterruptLab",
+      "due": "Week of April 22, before the start of your lab section"
+    },
+    {
+      "lab": "GroupLab",
+      "due": "Week of May 6, before the start of your lab section\\footnote{See Piazza for the due dates of teams with students from different lab sections.}"
+    },
+    {
+      "lab": "MemoryLab",
+      "due": "Week of May 6, at the end of your lab section"
+    }
   ]
 }

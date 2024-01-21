@@ -64,7 +64,7 @@ def generate_keyboardlab_latex_macros(lab: Dict, storyline: Dict) -> str:
         email += f'\\texttt{{{line.replace(tab_character, latex_tab_replacement)}{latex_newline_replacement}}} \\\\'
     c_function = ''
     for line in message.split('\n'):
-        c_function += ('\\texttt{{\\phantom{{xxxxxxxxxxx}}"'
+        c_function += ('\\texttt{{\\phantom{{xxxxxxxxxxxx}}"'
                        f'{line.replace(tab_character, c_tab_replacement)}{c_newline_replacement}'
                        '"}} \\\\\n')
     adhesive: str = storyline[lab['lab']]['adhesive']
@@ -215,29 +215,29 @@ def prep_code(lab: Dict, storyline: Dict):
         output_file.write(makefile)
 
 
-def prep_labs(course: Dict, semester: Dict, labs: Dict, storyline: Dict, original_tex: str):
+def prep_labs(course: Dict, semester: Dict, labs: Dict, storyline: Dict, labs_to_process: List[str], original_tex: str):
     for index, lab in enumerate(semester['labs']):
-        complete_lab = lab | labs[lab['lab']]
-        for category in course:
-            if category not in complete_lab:
-                complete_lab[category] = course[category]
-            else:
-                for default in course[category]:
-                    if default not in complete_lab[category]:
-                        complete_lab[category][default] = course[category][default]
-                    elif isinstance(complete_lab[category][default], Dict):
-                        for detail in course[category][default]:
-                            if detail not in complete_lab[category][default]:
-                                complete_lab[category][default][detail] = course[category][default][detail]
-        previous_lab = semester['labs'][index - 1]['lab'] if index > 0 else None
-        next_lab = semester['labs'][index + 1]['lab'] if index < len(semester['labs']) - 1 else None
-        prep_latex(complete_lab, index + 1, semester['semester'], storyline,
-                   previous_lab, next_lab, original_tex + '\n')
-        prep_code(complete_lab, storyline)
+        if lab in labs_to_process:
+            complete_lab = lab | labs[lab['lab']]
+            for category in course:
+                if category not in complete_lab:
+                    complete_lab[category] = course[category]
+                else:
+                    for default in course[category]:
+                        if default not in complete_lab[category]:
+                            complete_lab[category][default] = course[category][default]
+                        elif isinstance(complete_lab[category][default], Dict):
+                            for detail in course[category][default]:
+                                if detail not in complete_lab[category][default]:
+                                    complete_lab[category][default][detail] = course[category][default][detail]
+            previous_lab = semester['labs'][index - 1]['lab'] if index > 0 else None
+            next_lab = semester['labs'][index + 1]['lab'] if index < len(semester['labs']) - 1 else None
+            prep_latex(complete_lab, index + 1, semester['semester'], storyline,
+                       previous_lab, next_lab, original_tex + '\n')
+            prep_code(complete_lab, storyline)
 
 
 if __name__ == '__main__':
-    # TODO: specify a subset of the labs
     course_json = {}
     semester_json = {'labs': []}
     labs_json = {}
@@ -258,6 +258,7 @@ if __name__ == '__main__':
         print(f'File not found: {error.filename}', file=sys.stderr)
         all_ready = False
     all_ready &= validate_labs_existence(semester_json['labs'], labs_json)
+    labs_subset = sys.argv[1:] if len(sys.argv) > 1 else [lab['lab'] for lab in semester_json['labs']]
     if all_ready:
-        prep_labs(course_json, semester_json, labs_json, storyline_json, definitions_tex)
+        prep_labs(course_json, semester_json, labs_json, storyline_json, labs_subset, definitions_tex)
         # TODO: build/package labs

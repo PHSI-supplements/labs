@@ -16,16 +16,18 @@
 
 % Customize the semester (or quarter)
 
-\newcommand{\courseterm}{Fall 2023}
+\newcommand{\courseterm}{Spring 2024}
 
 % Customize for the I/O lab hardware
 
-\newcommand{\developmentboard}{Arduino Nano}
+%\newcommand{\developmentboard}{Arduino Nano}
+\newcommand{\developmentboard}{Raspberry Pi Pico}
 %\newcommand{\serialprotocol}{SPI}
 \newcommand{\serialprotocol}{I2C}
 %\newcommand{\displaymodule}{MAX7219digits}
 %\newcommand{\displaymodule}{MAX7219matrix}
-\newcommand{\displaymodule}{LCD1602}
+%\newcommand{\displaymodule}{LCD1602}
+\newcommand{\displaymodule}{OLED display}
 
 \setbool{usedisplayfont}{true}
 
@@ -52,17 +54,17 @@
 
     Sections~\ref{sec:completingcard} and~\ref{subsec:completepoker}: \individualeffort
 }
-\newcommand{\pokerlabdue}{Week of August 28, before the start of your lab section}
+\newcommand{\pokerlabdue}{Week of January 29, before the start of your lab section}
 \newcommand{\pokerlablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\keyboardlabnumber}{2}
-\newcommand{\keyboardlabcollaboration}{\individualeffort}
-\newcommand{\keyboardlabdue}{Week of September 4, before the start of your lab section}
+\newcommand{\keyboardlabcollaboration}{\fullpartnersthenindividual}
+\newcommand{\keyboardlabdue}{Week of February 5, before the start of your lab section}
 \newcommand{\keyboardlablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\pointerlabnumber}{3}
 \newcommand{\pointerlabcollaboration}{\fullpartnersthenindividual}
-\newcommand{\pointerlabdue}{Week of September 11, before the start of your lab section}
+\newcommand{\pointerlabdue}{Week of February 12, before the start of your lab section}
 \newcommand{\pointerlablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\keyboardpointerlabnumber}{xx}
@@ -72,33 +74,33 @@
 
 \newcommand{\integerlabnumber}{4}
 \newcommand{\integerlabcollaboration}{\fullpartnersthenindividual}
-\newcommand{\integerlabdue}{Week of September 18, before the start of your lab section}
+\newcommand{\integerlabdue}{Week of February 19, before the start of your lab section}
 \newcommand{\integerlablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\floatlabnumber}{5}
 \newcommand{\floatlabcollaboration}{\fullpartnersthenindividual}
-\newcommand{\floatlabdue}{Week of September 25, before the start of your lab section}
+\newcommand{\floatlabdue}{Week of February 26, before the start of your lab section}
 \newcommand{\floatlablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\addressinglabnumber}{6}
 \newcommand{\addressinglabcollaboration}{\fullpartnersthenindividual}
-\newcommand{\addressinglabdue}{Week of October 2, before the start of your lab section}
+\newcommand{\addressinglabdue}{Week of March 4, before the start of your lab section}
 \newcommand{\addressinglablatepolicy}{\defaultlatepolicy}
 
-%bomblab: 7, due oct 16
-%attacklab: 8, due oct 23
+%bomblab: 7, due March 25
+%attacklab: 8, due April 1
 
 \newcommand{\duplicatorlabnumber}{9}
 \newcommand{\duplicatorlabcollaboration}{\fullpartnersthenindividual}
 % \newcommand{\duplicatorlabdue}{Before the start of your lab section on November 2, 7, or 8}
-\newcommand{\duplicatorlabdue}{Week of October 30, before the start of your lab section}
+\newcommand{\duplicatorlabdue}{Week of April 8, before the start of your lab section}
 \newcommand{\duplicatorlablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\pollinglabnumber}{10}
 %\newcommand{\pollinglabcollaboration}{\individualeffort}
 \newcommand{\pollinglabcollaboration}{\labsectionthenpartnersthenindividual{\ref{sec:LabTime}}}
 % \newcommand{\pollinglabdue}{Before the start of your lab section on November 9, 14, or 15}
-\newcommand{\pollinglabdue}{Week of November 6, before the start of your lab section}
+\newcommand{\pollinglabdue}{Week of April 15, before the start of your lab section}
 \newcommand{\pollinglabenvironment}{your \developmentboard-based class hardware kit}
 \newcommand{\pollinglablatepolicy}{\defaultlatepolicy}
 
@@ -111,7 +113,7 @@
 %\newcommand{\interruptlabcollaboration}{\individualeffort}
 \newcommand{\interruptlabcollaboration}{\labsectionthenpartnersthenindividual{\ref{sec:LabTime}}}
 % \newcommand{\interruptlabdue}{Before the start of your lab section on November 16, 21, or 22}
-\newcommand{\interruptlabdue}{Week of November 13, before the start of your lab section}
+\newcommand{\interruptlabdue}{Week of April 22, before the start of your lab section}
 \newcommand{\interruptlabenvironment}{your \developmentboard-based class hardware kit}
 \newcommand{\interruptlablatepolicy}{\defaultlatepolicy}
 
@@ -119,13 +121,13 @@
 \newcommand{\capstonelabnumber}{12}
 \newcommand{\capstonelabcollaboration}{\teameffort}
 % \newcommand{\capstonelabdue}{Before the start of your lab section on November 30, December 5, or December 6\footnote{See Piazza for the due dates of teams with students from different lab sections.}}
-\newcommand{\capstonelabdue}{Week of December 4, before the start of your lab section\footnote{See Piazza for the due dates of teams with students from different lab sections.}}
+\newcommand{\capstonelabdue}{Week of May 6, before the start of your lab section\footnote{See Piazza for the due dates of teams with students from different lab sections.}}
 \newcommand{\capstonelabenvironment}{your \developmentboard-based class hardware kit}
 \newcommand{\capstonelablatepolicy}{\defaultlatepolicy}
 
 \newcommand{\memorylabnumber}{13}
 \newcommand{\memorylabcollaboration}{This is an individual-effort project. You may discuss the nature of memory technologies and of memory hierarchies with classmates, but you must draw your own conclusions.}
-\newcommand{\memorylabdue}{Week of December 4, at the end of your lab section}
+\newcommand{\memorylabdue}{Week of May 6, at the end of your lab section}
 \newcommand{\memorylabenvironment}{your \developmentboard-based class hardware kit and your account on the \textit{cse-linux-01.unl.edu} Linux server}
 \newcommand{\memorylablatepolicy}{
     This assignment is due at the end of your lab section.
