@@ -2,12 +2,7 @@
   "PokerLab": {
     "location": "chap01/PokerLab",
     "lab name": "C Programming Familiarization Lab",
-    "required files": "your screenshot, \\textit{card.c}, \\textit{poker.c}, and \\textit{answers.txt}",
-    "compilation": {
-      "C": {
-        "warnings": "-Wall -Wextra -Wno-unused-parameter"
-      }
-    }
+    "required files": "your screenshot, \\textit{card.c}, \\textit{poker.c}, and \\textit{answers.txt}"
   },
   "KeyboardLab": {
     "location": "chap02/KeyboardLab",
@@ -24,5 +19,24 @@
       "desired email",
       "adhesive"
     ]
+  },
+  "LinkedListLab": {
+    "location": "chap01/LinkedListLab",
+    "lab name": "Pointer Manipulation Lab",
+    "required files": "\\textit{challenge-response.c}, \\textit{linked\\_list.c}, and \\textit{word\\_entry.c}",
+    "compilation": {
+      "C": {
+        "custom targets": [
+          {
+            "target": "arraylistlab",
+            "dependencies": "$(filter-out linked_list.o,$(OBJ))"
+          },
+          {
+            "target": "linkedlistlab",
+            "dependencies": "$(filter-out array_list.o,$(OBJ))"
+          }
+        ]
+      }
+    }
   }
 }

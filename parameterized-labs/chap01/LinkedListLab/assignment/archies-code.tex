@@ -1,0 +1,123 @@
+\subsection{Pleistocene Petting Zoo Marquee} \label{subsec:uninitializedvariables}
+
+\transitionzero
+
+% TODO: parameterize Archie's code
+\begin{lstlisting}
+/***********************************************************************
+ * This program will output
+ **         Welcome to the
+ **    Pleistocene Petting Zoo!
+ **
+ ** Get ready for hands-on excitement on the count of three! 1.. 2.. 3..
+ ** Have fun!
+ * With brief pauses during the "Get ready" line.
+ ***********************************************************************/
+
+#include <stdio.h>
+#include <unistd.h>
+
+void splash_screen(void) {
+    const char *first_line = "\t     Welcome to the\n";
+    const char *second_line = "\tPleistocene Petting Zoo!\n";
+    printf("%s%s\n", first_line, second_line);
+}
+
+void count(void) {
+    int i;
+    sleep(1);
+    printf("Get ready for hands-on excitement on the count of three! ");
+    while (i < 3) {
+        fflush(stdout);
+        sleep(1);
+        i++;
+        printf("%d.. ", i);
+    }
+    printf("\nHave fun!\n");
+}
+
+int main(void) {
+    splash_screen();
+    count();
+    return 0;
+}
+\end{lstlisting}
+
+Sometimes the output was what he expected:
+\begin{verbatim}
+         Welcome to the
+    Pleistocene Petting Zoo!
+
+ Get ready for hands-on excitement on the count of three! 1.. 2.. 3..
+ Have fun!
+\end{verbatim}
+
+But sometimes the output was missing the
+``\texttt{1.. 2.. 3..}'':
+\begin{verbatim}
+         Welcome to the
+    Pleistocene Petting Zoo!
+
+ Get ready for hands-on excitement on the count of three!
+ Have fun!
+\end{verbatim}
+
+What mistake did Archie make?
+What change to \textit{one} line will fix Archie's bug?
+\begin{description}
+    \checkoffitem{Place your answers in \textit{answers.txt}.}
+\end{description}
+
+
+\subsection{Math Doesn't Work Right \dots Or Does It?} \label{subsec:danglingPointers}
+
+\transitionone
+
+\begin{lstlisting}
+/***********************************************************************
+ * This program will add two numbers and then it will multiply two other
+ * numbers. Finally, it will subtract the second result from the first
+ * result.
+ ***********************************************************************/
+
+#include <stdio.h>
+
+int *add(int a, int b) {
+    int addition_result = a + b;
+    return &addition_result;
+}
+
+int *multiply(int p, int q) {
+    int multiplication_result = p * q;
+    return &multiplication_result;
+}
+
+int main(void) {
+    int *sum = add(4, 5);
+    printf("sum = %d\n", *sum);
+    int *product = multiply(2, 3);
+    printf("product = %d\n", *product);
+    printf("sum - product = %d - %d = %d\n",
+                        *sum, *product, *sum - *product);
+    return 0;
+}
+\end{lstlisting}
+
+Archie explains that when he compiles the program with the \textbf{clang} compiler and then runs it, he gets this output:
+
+\begin{verbatim}
+sum = 9
+product = 6
+sum - product = 6 - 6 = 0
+\end{verbatim}
+
+And when he compiles the program with the \textbf{gcc} compiler and then runs it, the program terminates with a segmentation fault.
+
+``I see that one compiler is giving me an incorrect answer, and the other compiler is telling me that I'm using memory in an unsafe way -- but what am I doing wrong, and why does it produce an incorrect answer?''
+
+What mistake did Archie make?
+Why does \lstinline{*sum} have the value 6 on line 25?
+Why does \lstinline{*sum - *product} produce the value 0?
+\begin{description}
+    \checkoffitem{Place your answers in \textit{answers.txt}.}
+\end{description}

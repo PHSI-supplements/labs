@@ -1,11 +1,10 @@
 import functools
-import inflect
 import json
 import os
 import shutil
 import sys
-import urllib.request
 import urllib.error
+import urllib.request
 from typing import Dict, List, Set, Optional, Union
 
 
@@ -44,6 +43,8 @@ def validate_lab_specific_keys(lab: Dict, storyline: Dict) -> bool:
     return validated
 
 
+# TODO: Move lab-specific functions to lab-specific directories,
+#  and dynamically-import the code using __import__() and possibly get_attr()
 def generate_keyboardlab_latex_macros(lab: Dict, storyline: Dict) -> str:
     # TODO: validate appropriateness of missing key
     if validate_lab_specific_keys(lab, storyline):
@@ -93,7 +94,7 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
     tex += f'\\newcommand{{\\institutename}}{{{lab["course information"]["institute"]}}}\n'
     tex += f'\\newcommand{{\\instructorname}}{{{lab["course information"]["instructor"]}}}\n'
     tex += f'\\newcommand{{\\coursenumber}}{{{lab["course information"]["course number"]}}}\n'
-    tex += f'\\newcommand{{\\cstwo}}{{{lab["course information"]["cs2 course"]}}}\n'
+    tex += f'\\newcommand{{\\cstwo}}{{{lab["course information"]["cs2 course"]}}}\n'    # TODO: separate into "linked structures course" and "GUI intro course"
     tex += f'\\newcommand{{\\courseterm}}{{{course_term}}}\n'
     # describe the assignment
     tex += f'\\newcommand{{\\labnumber}}{{{lab_number}}}\n'
@@ -188,12 +189,24 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
 
 def prep_code(lab: Dict, storyline: Dict):
     # TODO: constraint-check
-    executable: str = lab['lab'].lower()
+    handle: str = lab['lab'].lower()
     # starter code customization
     if 'lab-specific keys' in lab and lab['lab-specific keys'] is not None:
-        globals()[f'generate_{executable}_starter_code'](lab, storyline)
+        globals()[f'generate_{handle}_starter_code'](lab, storyline)
     # create the Makefile
-    compilation: Dict[str, Optional[Dict[str, str]]] = lab['compilation']
+    compilation: Dict[str, Union[Dict[str, str], List[Dict[str, str], None]]] = lab['compilation']
+    targets: List[Dict[str, str]]
+    if compilation['C']['custom targets'] is None:
+        targets = [{
+            "target": handle,
+            "dependencies": "$(OBJ)"
+        }]
+    else:
+        targets = compilation['C']['custom targets']
+    executable_names = str.join(' ', [target['target'] for target in targets])
+    target_lines = ''
+    for target in targets:
+        target_lines += f'{target["target"]}: {target["dependencies"]}\n\t$(CC) -o $@ $^ $(CFLAG) $(LIB) $(OPTION)\n\n'
     makefile: str = (f'CC = {compilation["C"]["compiler"]}\n'
                      f'CFLAG = {compilation["C"]["optimization"]} '
                      f'-std={compilation["C"]["version"]} '
@@ -201,11 +214,10 @@ def prep_code(lab: Dict, storyline: Dict):
                      f'LIB = {compilation["C"]["libraries"]}\n'
                      f'DEP = $(wildcard *.h) {compilation["C"]["additional dependencies"]}\n'
                      'OBJ := $(patsubst %.c,%.o,$(wildcard *.c))\n'
-                     f'EXEC = {executable}\n\n'
+                     f'EXEC = {executable_names}\n\n'
                      f'%.o: %.c $(DEP)\n'
-                     '\t$(CC) -c -o $@ $< $(CFLAG)\n\n'
-                     f'{executable}: $(OBJ)\n'
-                     '\t$(CC) -o $@ $^ $(CFLAG) $(LIB)\n\n'
+                     '\t$(CC) -c -o $@ $< $(CFLAG) $(OPTION)\n\n'
+                     f'{target_lines}'
                      'all: $(EXEC)\n\n'
                      'clean:\n'
                      '\trm -f $(OBJ) *~ core\n\n'
@@ -217,7 +229,7 @@ def prep_code(lab: Dict, storyline: Dict):
 
 def prep_labs(course: Dict, semester: Dict, labs: Dict, storyline: Dict, labs_to_process: List[str], original_tex: str):
     for index, lab in enumerate(semester['labs']):
-        if lab in labs_to_process:
+        if lab['lab'] in labs_to_process:
             complete_lab = lab | labs[lab['lab']]
             for category in course:
                 if category not in complete_lab:

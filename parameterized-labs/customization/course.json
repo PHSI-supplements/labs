@@ -4,16 +4,18 @@
     "instructor": "Christopher A. Bohn",
     "course number": "CSCE~231",
     "cs2 course": "CSCE~156, RAIK~184H, or SOFT~161",
-    "cs2 comment": "The CS2 course, in which students would've been introduced to linked lists and to GUI programming."
+    "cs2 comment": "The CS2 course, in which students would've been introduced to linked lists, to sorting, and to GUI programming.",
+    "cs2 todo": "separate into three separate key/value pairs (resulting in three separate macros)"
   },
   "compilation": {
     "C": {
       "compiler": "clang",
       "version": "c99",
       "optimization": "-Og -g",
-      "warnings": "-Wall -Wextra",
+      "warnings": "-Wall -Wextra -Wno-unused-parameter",
       "libraries": "",
-      "additional dependencies": ""
+      "additional dependencies": "",
+      "custom targets": null
     },
     "asm": null
   },

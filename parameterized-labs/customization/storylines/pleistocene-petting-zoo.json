@@ -1,6 +1,31 @@
 {
   "story introduction": "\\begin{wrapfigure}{r}{0.33\\textwidth}\n        \\centering\n        \\includegraphics[width=.4\\textwidth]{archie}\n        \\caption{Archie.\\\\ \\footnotesize{Photograph by Bohn.}}\n    \\end{wrapfigure}\n\n    You're relaxing at your favorite hangout when another customer catches your attention.\n    He's rather large (dare I say, \\textit{mammoth}), a bit hairy, and looking frustrated in front of his laptop.",
   "introduction image": "archie.jpg",
+  "cast of characters": {
+    "comment": "You can customize these names to names your students would relate to. You might as well leave 'Archie' as 'Archie' since there's nothing uniquely 'Nebraska' about him, and the Columbian Mammoth statue is named 'Archie' (and I've carefully removed Nebraska references from the photo).",
+    "employer": {
+      "full name": "Archie",
+      "short name": "Archie",
+      "introduction": "He's rather large (dare I say, \\textit{mammoth}), a bit hairy, and looking frustrated in front of his laptop."
+    },
+    "antagonist": {
+      "full name": "H.Awk~Aye",
+      "short name": "H.Awk",
+      "introduction": "He introduces himself, ``Hi, I'm H.Awk~Aye.'' That's right, I'm so good at Unix that `Awk' literally is my middle name.''\nYou decide to have an irrational dislike of him."
+    },
+    "supporting characters": [
+      {
+        "full name": "Herb~Bee",
+        "short name": "Herb",
+        "introduction": ""
+      },
+      {
+        "full name": "Lilith~Redd",
+        "short name": "Lil",
+        "introduction": ""
+      }
+    ]
+  },
   "descriptions": {
     "teaser": "The teaser (if any) typically will be at the end of the previous week's lab",
     "introduction": "Introduce the lab in the context of the storyline",
@@ -28,12 +53,26 @@
     "teaser": "",
     "introduction": "",
     "progress": [
-      "You soon discover your first $\\cancelto{\\mathrm{opportunity}}{\\mathrm{challenge}}$.\nArchie purchased your workstation from an electronics recycling warehouse.",
+      "You soon discover your first $\\cancelto{\\mathrm{opportunity}}{\\mathrm{challenge}}$.\nArchie purchased your workstation from an electronics recycling warehouse, and the keyboard is missing the letter \\missingKey!",
       "Archie replies to your email, assuring you that a new keyboard has been ordered.\nMeanwhile, he needs you to write some code that will",
       "Your keyboard was mistakenly delivered to the Plywood Scenery Cutting Studio instead of the Pleistocene Petting Zoo.\nWhile that gets sorted out, you ``borrow'' some tar from the La~Brea Tar Pits diorama and use the tar to re-attach your keyboard's missing keys."
     ],
     "wrapup": "Great news!\n    Archie brings you your new keyboard.\n    He also brings you a problem of his own.\n    Because you were held up with the broken keyboard, Archie decided to try some programming on his own, and his code is behaving strangely.",
-    "callback": "n.b.: The end of the current wrap-up should be the teaser for IntegerLab",
-    "adhesive": "tar from the diorama"
+    "callback": "",
+    "adhesive": "tar from the diorama",
+    "todo": "The end of the current wrap-up should be the teaser for LinkedListLab"
+  },
+  "LinkedListLab": {
+    "teaser": "",
+    "introduction": "    Working at the Pleistocene Petting Zoo certainly is proving to be interesting.\n    You're glad that you don't have to worry about the problem of the giant sloths very slowly chasing their handlers, but now it seems that Archie has decided to try to write a program or two.\n    At a glance, his code is smellier than the wooly rhinoceros' enclosure.\n    But you take a closer look anyway to try to understand why his code acts strangely.",
+    "progress": [
+      "Archie shows you his first program, which he hoped would be used to greet guests, but it doesn't always work right:",
+      "``Wow,'' Archie says.\n``I can't believe that I missed that.\nMaybe you can help me with some other code that I wrote for one of my other start-ups.\nHere it is.'' Archie shows you the code:",
+      "``Thanks for your help,'' Archie says.\n``Maybe you can help our other developer with the project he's working on.''\nA guy walks up.\nHe's wearing a Members-Only jacket over a Hawaiian shirt and looks like he might be a comedian's nemesis in another life.\n",
+      "``To protect against corporate espionage, we're writing a challenge-and-response system.\nAnybody can challenge anyone else in the Pleistocene Petting Zoo's non-public areas by providing the name of a book and a word contained within the book, and the person being challenged must respond with another word from that book, based on certain rules.\nI'm using an array-backed list to store a book's words.\nIt works fine on my desktop system, but the device from Eclectic Electronics that we're deploying it to has an interesting quirk:\nit has about a megabyte of memory, which is plenty for our needs, but it can't allocate more than 32 kilobytes of contiguous memory.\nThat's a bit of a problem for the array once the list grows large enough.''\n\nYou think about the problem for a moment, and then suggest, ``What if we replace the array-backed list with a linked list\\dots?''\n",
+      "You plug in your shiny, new keyboard, tune your satellite radio to the Greatest Hits of the 1920s, and settle in to solving this interesting problem.\n"
+    ],
+    "wrapup": "    You hear somebody enter the room.\n    ``\\textit{Frankenstein}, `boat','' is the challenge, and she answers, ``borne.''\n    Archie introduces you to the new arrival, ``Lil, this is our new developer, the one who wrote the app we just used.''\n    He turns to you: ``This is Lilith Redd from business operations.''\n    He turns back to her and continues, ``Lil, what's the good word?''\n\n    ``The word isn't good, I'm afraid.\n    I just heard back from the insurance company.''",
+    "callback": ""
   }
 }

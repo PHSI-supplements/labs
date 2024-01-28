@@ -1,0 +1,60 @@
+%%
+%% LinkedListLab (c) 2021-24 Christopher A. Bohn
+%%
+%% Assignment writeup licensed under the Creative Commons Attribution 4.0 International License
+%% https://creativecommons.org/licenses/by/4.0/
+%%
+
+\documentclass[12pt]{article}
+\usepackage{booktabs}
+
+\input{assignment-definitions}
+\input{linked-list-nodes}
+
+\lstset{language=c, numbers=left, showstringspaces=false,
+    moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+}
+%%
+%%
+% Credit where credit is due. Skipping line numbers from
+% https://tex.stackexchange.com/questions/476100/lstlisting-line-number-gaps
+\makeatletter
+\let\orig@lstnumber=\thelstnumber
+
+\newcommand\lstsetnumber[1]{\gdef\thelstnumber{#1}}
+\newcommand\lstresetnumber{\global\let\thelstnumber=\orig@lstnumber}
+\makeatother
+%%
+%%
+
+
+\pagelayout
+\begin{document}
+    \labidentifier
+
+    \pdfbookmark[1]{Frontmatter}{frontmatter}                       \input{frontmatter}
+
+    \softwareengineeringfrontmatter
+
+    \section*{Scenario}                                             \scenariointroduction
+
+    \section{Assignment Summary}                                    \input{assignmentsummary}
+
+    \section{Stray Values in Memory} \label{sec:archiesCode}        \input{archies-code}
+
+    \section{Challenge and Response} \label{sec:challengeResponse}  \input{challenge-response}
+
+    \section{Turn-in and Grading}                                   \input{grading}
+
+    \section*{Epilogue}                                             \scenariowrapup
+
+    \textit{To be continued\dots}
+
+    \newpage\appendix
+
+    \section{Appendix: Differences and Similarities between Java and C that are Relevant to this Assignment}
+                                                                    \input{JavaVsC}
+
+    \section{Appendix: Linked Lists}                                \input{data-structure}
+
+\end{document}

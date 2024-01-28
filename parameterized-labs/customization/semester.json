@@ -27,13 +27,13 @@
       "due": "Week of February 5, before the start of your lab section",
       "first missing key": "W",
       "desired email": "TO\tArchie\nRE\tI Need a Working Keyboard\n\nPlease order a new keyboard for me. This one is broken."
+    },
+    {
+      "lab": "LinkedListLab",
+      "due": "Week of February 12, before the start of your lab section"
     }
   ],
   "todo": [
-    {
-      "lab": "PointerLab",
-      "due": "Week of February 12, before the start of your lab section"
-    },
     {
       "lab": "IntegerLab",
       "due": "Week of February 19, before the start of your lab section"
