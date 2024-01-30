@@ -21,8 +21,17 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
 #include "challenge-response-test.h"
 #include "challenge-response.h"
+
+#define timed_test(action) do { signal(SIGALRM, timeout_handler); alarm(10); action; alarm(0); } while(0);
+
+static void timeout_handler(int signum) {
+    fprintf(stderr, "[ERROR] Timeout after 10 seconds!\n");
+    exit(EXIT_FAILURE);
+}
 
 static char *get_input(char *destination, const char *prompt) {
     printf("%s: ", prompt);
@@ -56,7 +65,7 @@ void test_insert_word_empty_list(void) {
     printf("\n");
     char word[MAXIMUM_WORD_LENGTH + 1];
     get_input(word, "Enter the word to be inserted into the list");
-    list = insert_word(list, word);
+    timed_test(list = insert_word(list, word));
     printf("\n");
     print(list);
     destroy_list(list, true);
@@ -81,7 +90,7 @@ void test_insert_word_populated_list(void) {
     printf("\n");
     char word[MAXIMUM_WORD_LENGTH + 1];
     get_input(word, "Enter the word to be inserted into the list");
-    list = insert_word(list, word);
+    timed_test(list = insert_word(list, word));
     printf("\n");
     print(list);
     word_entry_t *word_entry = get_word_entry(list);
@@ -99,7 +108,8 @@ void test_build_list(void) {
     char input[MAXIMUM_WORD_LENGTH + 1];
     get_input(input, "Enter the name of the book file");
     printf("Building the list.\n");
-    list_t *list = build_list(input);
+    list_t *list;
+    timed_test(list = build_list(input));
     print(list);
     delete(list, true);
 }
@@ -115,9 +125,94 @@ void test_challenge_response(void) {
         get_input(input, "Enter the challenge word (or blank input to return to main menu)");
         if (input[0]) {     // if there was a non-blank input
             word_to_lowercase(lowercase_input, input);
+            timed_test(respond(list, output, lowercase_input));
             printf("Challenge word: %s\n", lowercase_input);
-            printf("Response word:  %s\n", respond(list, output, lowercase_input));
+            printf("Response word:  %s\n", output);
         }
     } while (input[0]);
     delete(list, true);
+}
+
+void print_table(void) {
+    char input_file[MAXIMUM_WORD_LENGTH + 1];
+    get_input(input_file, "Enter the name of the book file");
+    printf("Building the list.\n");
+    // We're actually building two identical lists
+    // We'll traverse one to get the words, and use the other for the challenge-response
+    // Two lists because we really need two iterators (one for the words, one for the challenge-response)
+    list_t *challenge_list = build_list(input_file);
+    list_t *response_list = build_list(input_file);
+    printf("List built.\n");
+    char table_format[MAXIMUM_WORD_LENGTH + 1];
+    char delimiter;
+    do {
+        get_input(table_format, "Should this be a LaTeX table or a Markdown table? Type your choice");
+        // we'll assume anything starting with L is LaTeX, and anything starting with M is Markdown
+        switch (table_format[0]) {
+            case 'l':
+            case 'L':
+                delimiter = '&';
+                break;
+            case 'm':
+            case 'M':
+                delimiter = '|';
+                break;
+            default:
+                printf("Invalid choice: %s\n", table_format);
+                delimiter = 0;
+        }
+    } while (!delimiter);
+    FILE *file;
+    char output_file[MAXIMUM_WORD_LENGTH + 10];
+    get_input(output_file, "Enter the name of the output file (or stdout)");
+    if (!strcmp(output_file, "stdout")) {
+        file = stdout;
+    } else {
+        file = fopen(output_file, "w");
+    }
+    // table header
+    switch (delimiter) {
+        case '&':   // LaTeX
+            fprintf(file, "\\begin{tabular}{ccc}\n");
+            fprintf(file, "\\textit{challenge word} & \\textit{occurrences} & \\textit{response word} \\\\ \\hline\n");
+            break;
+        case '|':   // Markdown
+            fprintf(file, "| CHALLENGE WORD | OCCURRENCES | RESPONSE WORD |\n");
+            fprintf(file, "|:--------------:|:-----------:|:-------------:|\n");
+            break;
+        default:    // Unreachable
+            fprintf(file, "CHALLENGE WORD %c OCCURRENCES %c RESPONSE WORD\n", delimiter, delimiter);
+            fprintf(file, "-------------- %c ----------- %c -------------\n", delimiter, delimiter);
+    }
+    // table body
+    word_entry_t *challenge_word;
+    char response_word[MAXIMUM_WORD_LENGTH + 1];
+    reset_iterator(challenge_list);
+    do {
+        challenge_word = get_word_entry(challenge_list);
+        if (challenge_word) {
+            respond(response_list, response_word, get_word(challenge_word));
+            if (delimiter == '|')
+                fprintf(file, "%c ", delimiter);
+            fprintf(file, "%s %c %d %c %s",
+                    get_word(challenge_word), delimiter, get_count(challenge_word), delimiter, response_word);
+            switch (delimiter) {
+                case '&':
+                    fprintf(file, " \\\\\n");
+                    break;
+                case '|':
+                    fprintf(file, " %c\n", delimiter);
+                    break;
+                default:
+                    fprintf(file, "\n");
+            }
+        }
+    } while (iterate_forward(challenge_list));
+    // table footer
+    if (delimiter == '&') {
+        fprintf(file, "\\end{tabular}\n");
+    }
+    if (file != stdout) {
+        fclose(file);
+    }
 }

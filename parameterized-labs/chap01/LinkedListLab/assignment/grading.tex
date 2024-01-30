@@ -6,10 +6,27 @@
 
 \subsection*{Rubric}
 
-This assignment is worth 25 points.
+This assignment is worth 30 points.
 \begin{description}
     \rubricitem{2}{Student's answers in \textit{answers.txt} demonstrate an understanding of the bug in Section~\ref{subsec:uninitializedvariables}'s code and how to correct it.}
     \rubricitem{3}{Student's answer in \textit{answers.txt} demonstrate an understanding of the bug in Section~\ref{subsec:danglingPointers}'s code.}
+    \rubricitem{\textonehalf}{\function{create_word_entry} initializes \lstinline{word_entry} as specified.}
+    \rubricitem{\textonehalf}{\function{increment_count()} increases the number of occurrences by one.}
+    \rubricitem{\textonehalf}{\function{get_count()} returns the number of occurrences.}
+    \rubricitem{\textonehalf}{\function{get_word()} returns the word.}
+    \rubricitem{2}{\function{word_to_lowercase()} returns a copy of the word with all uppercase letters made lowercase.}
+    \rubricitem{2}{\function{words_are_equal()}, \function{word1_is_earlier_than_word2()}, and \function{word1_is_later_than_word3()} return \lstinline{true} if and only if \lstinline{word1} is equal to, less than, or greater than \lstinline{word2}, respectively.}
+    \rubricitem{2}{\function{insert_word()} correctly inserts a word into a list, when the book file is pre-sorted.}
+    \rubricitem{2}{\function{insert_word()} correctly inserts a word into a list, when the book file is not pre-sorted.}
+    \rubricitem{\textonehalf}{\function{create_node()} initializes \lstinline{node} as specified.}
+    \rubricitem{\textonehalf}{\function{create_list()} initializes \lstinline{word_list} as specified.}
+    \rubricitem{2}{\function{append()} places a word entry at the end of a linked list.}
+    \rubricitem{3}{\function{reset_iterator()}, \function{iterate_forward()}, and \function{iterate_backward()} update \function{current_node} as specified.}
+    \rubricitem{3}{\function{get_word_entry()}, \function{get_first_word_entry()}, and \function{get_last_word_entry()} return the \function{word_entry_t} contained in the current node, the head, or the tail, respectively.}
+    \rubricitem{3}{\function{insert()} places a node containing \lstinline{word_entry} in a linked list at the specified location.}
+    \rubricitem{3}{\function{delete()} removes a node from a linked list.}
+
+
 %    \rubricitem{1}{\function{create_node} creates and initializes a \lstinline{struct node} as specified.}
 %    % Depending on the insert_word code, 0 or 1 is a reasonable initial value for the occurrences field
 %    \item[\hspace{.5cm}]\function{insert_after}:

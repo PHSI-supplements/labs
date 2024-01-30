@@ -27,6 +27,7 @@
 #include "data-structure-test.h"
 
 #define NUMBER_OF_TESTS (7)
+//#define NUMBER_OF_TESTS (8)
 
 int main(void) {
     void (*problem_checkers[NUMBER_OF_TESTS + 1])(void) = {
@@ -37,7 +38,8 @@ int main(void) {
             test_insert_word_empty_list,
             test_insert_word_populated_list,
             test_build_list,
-            test_challenge_response
+            test_challenge_response,
+//            print_table
     };
     char *test_names[NUMBER_OF_TESTS + 1] = {
             "Quit",
@@ -47,7 +49,8 @@ int main(void) {
             "Test insert_word (empty list)",
             "Test insert_word (populated list)",
             "Create and print book list",
-            "Test challenge/response system"
+            "Test challenge/response system",
+//            "Print challenge/response table"
     };
     char buffer[80];
     bool running = true;

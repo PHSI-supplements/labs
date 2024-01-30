@@ -27,5 +27,6 @@ void test_insert_word_empty_list(void);
 void test_insert_word_populated_list(void);
 void test_build_list(void);
 void test_challenge_response(void);
+void print_table(void);
 
 #endif //CHALLENGE_RESPONSE_TEST_H
