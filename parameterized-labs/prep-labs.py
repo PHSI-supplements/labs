@@ -57,7 +57,6 @@ def generate_keyboardlab_latex_macros(lab: Dict, storyline: Dict) -> str:
     tab_character = '\t'
     latex_tab_replacement = '\\tab '
     c_tab_replacement = '\\textbackslash t'
-    newline_character = '\n'
     latex_newline_replacement = '\\nl '
     c_newline_replacement = '\\textbackslash n'
     email: str = ''
@@ -86,6 +85,7 @@ def generate_keyboardlab_starter_code(lab: Dict, storyline: Dict) -> None:
         output_file.write(message + '\n')
 
 
+# noinspection PyUnusedLocal
 def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
                previous_lab: Optional[str], next_lab: Optional[str], tex: str):
     short_labname = lab['lab']
@@ -94,7 +94,9 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
     tex += f'\\newcommand{{\\institutename}}{{{lab["course information"]["institute"]}}}\n'
     tex += f'\\newcommand{{\\instructorname}}{{{lab["course information"]["instructor"]}}}\n'
     tex += f'\\newcommand{{\\coursenumber}}{{{lab["course information"]["course number"]}}}\n'
-    tex += f'\\newcommand{{\\cstwo}}{{{lab["course information"]["cs2 course"]}}}\n'    # TODO: separate into "linked structures course" and "GUI intro course"
+    tex += f'\\newcommand{{\\cstwo}}{{{lab["course information"]["cs2 course"]}}}\n'
+    # TODO: separate "cs2 course" into "linked structures course" and "GUI intro course",
+    #  and maybe also "sort intro course" and "big O course"
     tex += f'\\newcommand{{\\courseterm}}{{{course_term}}}\n'
     # describe the assignment
     tex += f'\\newcommand{{\\labnumber}}{{{lab_number}}}\n'
@@ -180,7 +182,7 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
         makefile += '\tpdflatex $(LAB)\n\tbibtex   $(LAB)\n'
     makefile += ('\tpdflatex $(LAB)\n\tpdflatex $(LAB)\n\n'
                  'all: lab\n\n'
-                 'clean:\n\trm -f $(LAB).aux $(LAB).log $(LAB).out $(LAB).synctex.gz $(LAB).toc $(LAB).bbl $(LAB).blg\n'
+                 'clean:\n\trm -f $(LAB).aux $(LAB).log $(LAB).out $(LAB).synctex.gz $(LAB).toc $(LAB).bbl $(LAB).blg $(LAB).fls $(LAB).fdb_latexmk\n'
                  '\nclear: clean\n'
                  '\trm $(LAB).pdf\n')
     with open(f'{lab["location"]}/assignment/Makefile', mode='w') as output_file:
@@ -213,16 +215,22 @@ def prep_code(lab: Dict, storyline: Dict):
                      f'{compilation["C"]["warnings"]}\n'
                      f'LIB = {compilation["C"]["libraries"]}\n'
                      f'DEP = $(wildcard *.h) {compilation["C"]["additional dependencies"]}\n'
-                     'OBJ := $(patsubst %.c,%.o,$(wildcard *.c))\n'
-                     f'EXEC = {executable_names}\n\n'
-                     f'%.o: %.c $(DEP)\n'
-                     '\t$(CC) -c -o $@ $< $(CFLAG) $(OPTION)\n\n'
-                     f'{target_lines}'
-                     'all: $(EXEC)\n\n'
-                     'clean:\n'
-                     '\trm -f $(OBJ) *~ core\n\n'
-                     'clear: clean\n'
-                     '\trm $(EXEC)\n')
+                     f'OBJ := $(patsubst %.c,%.o,$(wildcard *.c))')
+    if compilation["asm"]["suffix"] is not None:
+        makefile += f' $(patsubst %{compilation["asm"]["suffix"]},%.o,$(wildcard *{compilation["asm"]["suffix"]}))'
+    makefile += ('\n'
+                 f'EXEC = {executable_names}\n\n'
+                 f'%.o: %.c $(DEP)\n'
+                 '\t$(CC) -c -o $@ $< $(CFLAG) $(OPTION)\n\n')
+    if compilation["asm"]["suffix"] is not None:
+        makefile += (f'%.o: %{compilation["asm"]["suffix"]} $(DEP)\n'
+                     '\t$(CC) -c -o $@ $< $(CFLAG) $(OPTION)\n\n')
+    makefile += (f'{target_lines}'
+                 'all: $(EXEC)\n\n'
+                 'clean:\n'
+                 '\trm -f $(OBJ) *~ core\n\n'
+                 'clear: clean\n'
+                 '\trm $(EXEC)\n')
     with open(f'{lab["location"]}/starter-code/Makefile', mode='w') as output_file:
         output_file.write(makefile)
 

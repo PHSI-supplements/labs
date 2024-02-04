@@ -53,7 +53,7 @@ void delete_word_entry(word_entry_t *word_entry) {
  * @param word_entry the word entry whose `occurrences` should be incremented
  */
 void increment_count(word_entry_t *word_entry) {
-    word_entry->occurrences++;
+    /* WRITE THIS FUNCTION */
 }
 
 /**
@@ -63,7 +63,8 @@ void increment_count(word_entry_t *word_entry) {
  * @return the number of occurrences
  */
 int get_count(word_entry_t *word_entry) {
-    return word_entry->occurrences;
+    /* WRITE THIS FUNCTION */
+    return -1;
 }
 
 /**
@@ -73,7 +74,8 @@ int get_count(word_entry_t *word_entry) {
  * @return the word
  */
 char const *get_word(word_entry_t *word_entry) {
-    return word_entry->word;
+    /* WRITE THIS FUNCTION */
+    return "";
 }
 
 /**

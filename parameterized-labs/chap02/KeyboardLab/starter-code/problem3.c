@@ -58,10 +58,13 @@ int produce_multiple_of_ten(int seed) {
         } else {
             /* CREATE A BITMASK YOU CAN USE TO REDUCE AN ODD NUMBER'S VALUE 1 AS SUGGESTED IN THE ASSIGNMENT */
             int deduct_one_mask = 0;
-            /* USE THAT BITMASK TO REDUCE value BY ONE -- REPLACE `;;;` WITH A SUITABLE BITWISE OPERATION */
+            /* USE THAT BITMASK TO REDUCE THE ODD-NUMBERED value BY ONE */
+            /* REPLACE `;;;` WITH A SUITABLE BITWISE OPERATION */
             int difference = value ;;; deduct_one_mask;
-            /* CREATE THE VALUE 5 --- `;;;` WITH A SUITABLE BITWISE OPERATION */
+            /* CREATE THE VALUE 5 */
+            /* REPLACE `;;;` WITH A SUITABLE BITWISE OPERATION */
             int five = 0x1 ;;; 0x4;
+            /* DO NOT MODIFY THE NEXT LINE */
             value = difference * five;
         }
         position_of_last_digit = value > 0 ? (int) log10(value) : 0;

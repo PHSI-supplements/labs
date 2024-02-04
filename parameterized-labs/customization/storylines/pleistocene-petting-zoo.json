@@ -40,8 +40,8 @@
   "PokerLab": {
     "teaser": "",
     "introduction": "``I'm Archie,'' he says, ``and I'm trying to teach myself this card game called \\textit{Poker}.\n    I found this source code that I thought I could use to understand Poker better, but the code is incomplete, and I don't entirely understand what's there.\n    Could you explain the code to me, please?''",
-    "wrapup": "Archie's face lights up in a very big smile.\n    ``Thanks!''\n    After pausing in thought for a moment, he says, ``Say, I've got a new startup company that could really use your help.\n    Are you interested?\n    It'll be exciting!''",
     "progress": null,
+    "wrapup": "Archie's face lights up in a very big smile.\n    ``Thanks!''\n    After pausing in thought for a moment, he says, ``Say, I've got a new startup company that could really use your help.\n    Are you interested?\n    It'll be exciting!''",
     "callback": "\\begin{wrapfigure}{r}{0.33\\textwidth}\n        \\centering\n        \\includegraphics[width=.4\\textwidth]{some-expenses-spared}\n        \\caption{Some expenses were spared.\\\\ \\footnotesize{Original images \\textcopyright\\ Universal Studios and Amblin Entertainment, Inc. Meme creator unknown.}}\n    \\end{wrapfigure}\n\n    You've recently been hired to help get the Pleistocene Petting Zoo get started.\n    Your new employer, Archie, is surprisingly honest: he admits to you that some expenses were spared.\n    Archie cheerfully points out that any challenge is also an opportunity to succeed.\n    You suspect your job will offer plenty of ``opportunities to succeed.''",
     "callback image": {
       "link": "https://pbs.twimg.com/media/CR_8SuAUYAElSyA.png",
@@ -64,7 +64,7 @@
   },
   "LinkedListLab": {
     "teaser": "",
-    "introduction": "    Working at the Pleistocene Petting Zoo certainly is proving to be interesting.\n    You're glad that you don't have to worry about the problem of the giant sloths very slowly chasing their handlers, but now it seems that Archie has decided to try to write a program or two.\n    At a glance, his code is smellier than the wooly rhinoceros' enclosure.\n    But you take a closer look anyway to try to understand why his code acts strangely.",
+    "introduction": "Working at the Pleistocene Petting Zoo certainly is proving to be interesting.\n    You're glad that you don't have to worry about the problem of the giant sloths very slowly chasing their handlers, but now it seems that Archie has decided to try to write a program or two.\n    At a glance, his code is smellier than the wooly rhinoceros' enclosure.\n    But you take a closer look anyway to try to understand why his code acts strangely.",
     "progress": [
       "Archie shows you his first program, which he hoped would be used to greet guests, but it doesn't always work right:",
       "``Wow,'' Archie says.\n``I can't believe that I missed that.\nMaybe you can help me with some other code that I wrote for one of my other start-ups.\nHere it is.'' Archie shows you the code:",
@@ -72,7 +72,14 @@
       "``To protect against corporate espionage, we're writing a challenge-and-response system.\nAnybody can challenge anyone else in the Pleistocene Petting Zoo's non-public areas by providing the name of a book and a word contained within the book, and the person being challenged must respond with another word from that book, based on certain rules.\nI'm using an array-backed list to store a book's words.\nIt works fine on my desktop system, but the device from Eclectic Electronics that we're deploying it to has an interesting quirk:\nit has about a megabyte of memory, which is plenty for our needs, but it can't allocate more than 32 kilobytes of contiguous memory.\nThat's a bit of a problem for the array once the list grows large enough.''\n\nYou think about the problem for a moment, and then suggest, ``What if we replace the array-backed list with a linked list\\dots?''\n",
       "You plug in your shiny, new keyboard, tune your satellite radio to the Greatest Hits of the 1920s, and settle in to solving this interesting problem.\n"
     ],
-    "wrapup": "    You hear somebody enter the room.\n    ``\\textit{Frankenstein}, `boat','' is the challenge, and she answers, ``borne.''\n    Archie introduces you to the new arrival, ``Lil, this is our new developer, the one who wrote the app we just used.''\n    He turns to you: ``This is Lilith Redd from business operations.''\n    He turns back to her and continues, ``Lil, what's the good word?''\n\n    ``The word isn't good, I'm afraid.\n    I just heard back from the insurance company.''",
+    "wrapup": "You hear somebody enter the room.\n    ``\\textit{Frankenstein}, `boat','' is the challenge, and she answers, ``borne.''\n    Archie introduces you to the new arrival, ``Lil, this is our new developer, the one who wrote the app we just used.''\n    He turns to you: ``This is Lilith Redd from business operations.''\n    He turns back to her and continues, ``Lil, what's the good word?''\n\n    ``The word isn't good, I'm afraid.\n    I just heard back from the insurance company.''",
+    "callback": ""
+  },
+  "IntegerLab": {
+    "teaser": "",
+    "introduction": "All work at the Pleistocene Petting Zoo has stopped while Archie tries to find a $\\cancelto{\\mathrm{reasonable}}{\\mathrm{gullible}}$ insurance company.\n    Rather than furloughing staff, he's asked everybody to help out with his other startup companies for a week or two.\n    He specifically asked that you help out with Eclectic Electronics.\n\n    Herb Bee, the chief engineer, explains that Eclectic Electronics is developing a patent-pending C-licon tool that will convert C code into an integrated circuit that has the same functionality as the original C code.\n    To test it out, he tasked you with writing the code to implement an Arithmetic Logic Unit (ALU).\n    Your task will be to implement integer addition, subtraction, multiplication, and division.\n    Even though high-level languages' \\textit{logical} boolean operations normally are not part of an ALU, Herb wants you to include these in the ALU to see if that can make some programs run faster.\n    Because bitwise operations and bit shift operations have been implemented, you will be able to use C's bitwise and bit shift operators, but because arithmetic operations have not yet been implemented, you cannot use C's arithmetic operators.\n    Because C library functions generally make use of arithmetic operations (which have not yet been implemented), you cannot use library functions.",
+    "progress": null,
+    "wrapup": "Herb smiles as he hands you the the test results from the latest integrated circuit fab batch.\n    ``C-licon successfully turned your code into an ALU.\n    Nicely done!''\n    I think maybe it's time to use C-licon to see if we can improve the Floating Point Unit (FPU) on our experimental microprocessor.",
     "callback": ""
   }
 }

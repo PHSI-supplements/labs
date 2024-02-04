@@ -38,5 +38,19 @@
         ]
       }
     }
+  },
+  "IntegerLab": {
+    "location": "chap03/IntegerLab",
+    "lab name": "Integer Representation and Arithmetic Lab",
+    "required files": "\\textit{basetwo.c} and \\textit{alu.c}",
+    "compilation": {
+      "C": {
+        "optimization": "-Og -g -finstrument-functions",
+        "libraries": "-lm"
+      },
+      "asm": {
+        "suffix": ".asm"
+      }
+    }
   }
 }

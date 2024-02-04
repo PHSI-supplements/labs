@@ -6,7 +6,7 @@
 
 \subsection*{Rubric}
 
-This assignment is worth 30 points.
+This assignment is worth 32 points.
 \begin{description}
     \rubricitem{2}{Student's answers in \textit{answers.txt} demonstrate an understanding of the bug in Section~\ref{subsec:uninitializedvariables}'s code and how to correct it.}
     \rubricitem{3}{Student's answer in \textit{answers.txt} demonstrate an understanding of the bug in Section~\ref{subsec:danglingPointers}'s code.}
@@ -25,27 +25,9 @@ This assignment is worth 30 points.
     \rubricitem{3}{\function{get_word_entry()}, \function{get_first_word_entry()}, and \function{get_last_word_entry()} return the \function{word_entry_t} contained in the current node, the head, or the tail, respectively.}
     \rubricitem{3}{\function{insert()} places a node containing \lstinline{word_entry} in a linked list at the specified location.}
     \rubricitem{3}{\function{delete()} removes a node from a linked list.}
-
-
-%    \rubricitem{1}{\function{create_node} creates and initializes a \lstinline{struct node} as specified.}
-%    % Depending on the insert_word code, 0 or 1 is a reasonable initial value for the occurrences field
-%    \item[\hspace{.5cm}]\function{insert_after}:
-%    \begin{description}
-%        \rubricitem{3}{correctly places a new node in a list by updating the \lstinline{next} pointers.}
-%        \rubricitem{1}{also updates the \lstinline{previous} pointers.}
-%    \end{description}
-%    \rubricitem{2}{\function{word_to_lowercase} returns a copy of the input string with uppercase letters replaced with lowercase letters.}
-%    \item[\hspace{.5cm}]\function{insert_word}:
-%    \begin{description}
-%        \rubricitem{2}{creates a new node at the appropriate location in the list when the word is not already present in the list (where the appropriate location is immediately after the last word to have been added).}
-%        \rubricitem{1}{does not create a new node but instead updates the number of occurrences, when the word is present in the list.}
-%    \end{description}
-%    \rubricitem{3}{\function{build_list} opens a file for reading, builds a list by reading one line at a time and the word that is passed to \function{insert_word()}, and closes the file after the last line has been read, when the words in the file are pre-sorted.}
-%    \rubricitem{2}{\function{respond()} produces the correct response word in accordance with the specified rules when the words in the file are pre-sorted.}
-%    \rubricitem{2}{Your challenge-response code can build a list and generate the correct response when the words in the file are unsorted.}
-%    \rubricitem{2}{Your challenge-response code can generate a list from a file of up to 80,000 words and generate the correct response within 20 seconds when the words in the file are pre-sorted.}
-%    \rubricitem{1}{Your challenge-response code can generate a list from a file of up to 80,000 words and generate the correct response within 20 seconds when the words in the file are unsorted.}
+    \rubricitem{1}{The challenge-response system, using your code, can generate a list from a file of up to 80,000 words and generate the correct response when the words in the file are pre-sorted.}
+    \rubricitem{1}{The challenge-response code, using your code, can generate a list from a file of up to 80,000 words and generate the correct response when the words in the file are unsorted.}
     \item[Penalties]
-%    \penaltyitem{1}Newline characters are included in the word strings when building a list.
+    \item[no credit] for functions that time out.
     \softwareengineeringpenalties{1}
 \end{description}

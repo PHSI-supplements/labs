@@ -17,7 +17,9 @@
       "additional dependencies": "",
       "custom targets": null
     },
-    "asm": null
+    "asm": {
+      "suffix": null
+    }
   },
   "file flow": {
     "overall comment": "How will students typically get the lab files, and how will they typically submit their code?",
