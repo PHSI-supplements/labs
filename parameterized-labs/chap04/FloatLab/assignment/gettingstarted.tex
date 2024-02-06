@@ -1,0 +1,91 @@
+\filesource\ and copy it to \runtimeenvironment.
+Once copied, unpackage the file.
+Five of the six files (\textit{fpu.h}, \textit{fpu.c}, \textit{unnormal.h}, \textit{unnormal.c} and \textit{floatlab.c}) contain the starter code for this assignment.
+The last file (\textit{Makefile}) tells the \texttt{make} utility how to compile the code.
+To compile the program, type:
+
+\texttt{make}
+
+This will produce an executable file called \textit{floatlab}.
+
+When you run the program with the command \texttt{\textbf{\textit{./floatlab}}}, you will be prompted:
+
+\begin{verbatim}
+    Enter a value, a two-operand arithmetic expression,
+        "decode <value>", "recode <value>",
+        or "quit":
+\end{verbatim}
+
+When you enter a value, if it is prepended with \texttt{\textbf{\textit{0x}}} then the parser will treat it as a bit vector;
+otherwise, the parser will treat it as a floating point value.
+
+For now, type \texttt{\textbf{\textit{quit}}} to exit the program.
+
+\subsection{Description of FloatLab Files}
+
+\subsubsection{floatlab.c}
+
+Do not edit \textit{floatlab.c}.
+
+This file contains the driver code for the lab, as well as a couple of helper functions.
+It parses your input, calls the appropriate arithmetic function, and displays the output.
+
+\subsubsection{fpu.h}\label{subsubsec:fpu.h}
+
+Do not edit \textit{fpu.h}.
+
+This header file contains a type definition.
+\textbf{\texttt{ieee754\_t}} is a 32-bit bit vector that represents a floating point number.
+The bit vector is to be interpreted as though it were a single-precision floating point value in the IEEE~754 format.
+The value may be in the normal form, the subnormal form, or one of the special cases (NaN, infinity, or zero).
+
+The header file also contains several function declarations.
+The requirements for these functions will be discussed later in this assignment.
+
+\subsubsection{unnormal.h \& unnormal.c}
+
+Do not edit \textit{unnormal.h}.
+Do not edit \textit{unnormal.c}.
+
+These files provide an encapsulation of the \textbf{\texttt{unnormal\_t}} data type.
+The data type and its functions are described in Section~\ref{subsec:unnormal}.
+
+\subsubsection{fpu.c}
+
+This file contains stubs for constants and functions you need to create.
+\begin{itemize}
+    \item Constants
+    \begin{description}
+        \item[SIGN\_BIT\_MASK] can be used to determine whether an \lstinline{ieee754_t} value is positive or negative
+        \item[EXPONENT\_BITS\_MASK] can be used to isolate the bits used to encode the exponent in an \lstinline{ieee754_t} value
+        \item[FRACTION\_BITS\_MASK] can be used to isolate the bits used for the fraction in an \lstinline{ieee754_t} value
+        \item[EXPONENT\_BIAS] is the single-precision exponent bias
+        \item[NUMBER\_OF\_FRACTION\_BITS] is the number of bits used for the fraction field in a single-precision floating point number
+        \item[NAN] is a bit vector for an \lstinline{ieee754_t} value that is not a number
+        \item[INFINITY] is the bit vector for an \lstinline{ieee754_t} value that is too great to be represented with the available bits
+    \end{description}
+    \item Query functions
+    \begin{description}
+        \item[is\_infinity()] reports whether an \lstinline{ieee754_t} value is positive or negative infinity
+        \item[is\_nan()] reports whether an \lstinline{ieee754_t} value is a legal NaN bit vector
+        \item[is\_zero()] reports whether an \lstinline{ieee754_t} value is positive or negative zero
+        \item[is\_negative()] reports whether an \lstinline{ieee754_t} value is negative
+    \end{description}
+    \item Functions to examine \lstinline{ieee754_t} values
+    \begin{description}
+        \item[ieee754\_to\_string()] converts an \lstinline{ieee754_t} value into a meaningful string
+        \item[decode()] converts an \lstinline{ieee754_t} value into an \lstinline{unnormal_t} value
+    \end{description}
+    \item Function to encode and round \lstinline{ieee754_t} values
+    \begin{description}
+        \item[encode()] converts an \lstinline{unnormal_t} value into an \lstinline{ieee754_t} value, applying rounding as necessary
+    \end{description}
+    \item Arithmetic functions
+    \begin{description}
+        \item[add()] adds two \lstinline{ieee754_t} values
+        \item[negate()] negates an \lstinline{ieee754_t} value
+        \item[subtract()] uses \function{add()} and \function{negate()} to subtract an \lstinline{ieee754_t} value from another (this is a one-line function provided for you)
+        \item[multiply()] multiplies two \lstinline{ieee754_t} values
+        \item[divide()] divides an \lstinline{ieee754_t} value by another, under a limited set of circumstances
+    \end{description}
+\end{itemize}

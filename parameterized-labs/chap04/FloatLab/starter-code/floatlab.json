@@ -1,0 +1,83 @@
+{
+  "targetFiles": [
+    "fpu.c"
+  ],
+  "commentDelimiters": {
+    "inlineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "codeBlockDelimiters": [
+    "{",
+    "}"
+  ],
+  "codeBlockKeywords": {
+    "loops": [
+      "do",
+      "while",
+      "for"
+    ],
+    "benignBlockTerminations": {
+      "break": "switch"
+    }
+  },
+  "operators": {
+    "all": [
+      "++",
+      "--",
+      ".",
+      "->",
+      "!",
+      "~",
+      "*",
+      "/",
+      "%",
+      "+",
+      "-",
+      "<<",
+      ">>",
+      "<",
+      "<=",
+      ">",
+      ">=",
+      "==",
+      "!=",
+      "&",
+      "^",
+      "|",
+      "&&",
+      "||",
+      "?",
+      "=",
+      "+=",
+      "-=",
+      "*=",
+      "/=",
+      "%=",
+      "<<=",
+      ">>=",
+      "&=",
+      "^=",
+      "|=",
+      ","
+    ],
+    "disallowed": []
+  },
+  "disallowedCalls": [],
+  "disallowedKeywords": [
+    "goto",
+    "float",
+    "double",
+    "union"
+  ],
+  "limitedLoopTerminations": {
+    "0": [
+      "break",
+      "continue",
+      "return"
+    ]
+  },
+  "limitedCharacters": {}
+}

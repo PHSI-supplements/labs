@@ -15,8 +15,8 @@
 /*
  * IntegerLab (c) 2018-23 Christopher A. Bohn
  *
- * Assignment and starter code licensed under the Apache License,
- * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+ * Starter code licensed under the Apache License, Version 2.0
+ * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
 #ifndef PROFILER_H

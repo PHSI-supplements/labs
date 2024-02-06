@@ -1,0 +1,50 @@
+%%
+%% FloatLab (c) 2019-24 Christopher A. Bohn
+%%
+%% Assignment writeup licensed under the Creative Commons Attribution 4.0 International License
+%% https://creativecommons.org/licenses/by/4.0/
+%%
+
+\documentclass[12pt]{article}
+
+\input{assignment-definitions}
+
+\lstset{language=c, numbers=left, showstringspaces=false,
+    moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+}
+
+\pagelayout
+\begin{document}
+    \labidentifier\
+
+    \pdfbookmark[1]{Frontmatter}{frontmatter}                           \input{frontmatter}
+
+    \softwareengineeringfrontmatter
+
+    \section*{Scenario}                                                 \scenariointroduction
+
+    \section{Assignment Summary}                                        \input{assignmentsummary}
+
+    \section{Getting Started}                                           \input{gettingstarted}
+
+    \section{Constants and Queries} \label{sec:constantsAndQueries}     \input{constants-queries}
+
+    \section{Examining IEEE 754-Compliant Values}                       \input{examining-numbers}
+
+    \section{Encoding Numbers into the IEEE 754 Format}                 \input{normalization}
+
+    \section{Negation}                                                  \input{negation}
+
+    \section{Multiplication and Division}                               \input{multiply-divide}
+
+    \section{Addition and Subtraction}                                  \input{add-subtract}
+
+    \section{Bonus Credit: Arbitrary Division}                          \input{arbitrary-division}
+
+    \section{Turn-in and Grading}                                       \input{grading}
+
+    \section*{Epilogue}                                                 \scenariowrapup
+
+    \textit{To be continued...}
+
+\end{document}

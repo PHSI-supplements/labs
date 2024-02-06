@@ -1,0 +1,68 @@
+\subsection*{Encode}
+
+The \function{encode()} function converts an \lstinline{unnormal_t} value into an IEEE~754-compliant format.
+The function stub already handles zero and the flagged cases of Not-a-Number and Infinity.
+The stub also handles the sign bit.
+
+Observe that when your program reaches \\
+\lstinline{/* GENERATE THE APPROPRIATE BIT VECTOR AND PLACE IT IN RESULT */} \\
+then you know that \lstinline{number}'s ``true value'' is a non-zero, finite number.
+Moreover, the integer portion has been set to $1$, which will make it easy to determine if \lstinline{number} can be encoded as a normal number,
+and will make it easy to perform that encoding.
+
+\begin{description}
+    \checkoffitem{Determine whether the value is too great to be represented as a normal number.}
+    \begin{itemize}
+        \item Suppose that the number \textit{can} be represented as a normal number -- what is the greatest exponent possible?
+        Is \lstinline{number}'s exponent greater than that?
+    \end{itemize}
+    \checkoffitem{Determine whether the value is too small to be represented as a normal number.}
+    \begin{itemize}
+        \item Suppose that the number \textit{can} be represented as a normal number -- what is the least exponent possible?
+            Is \lstinline{number}'s exponent less than that?
+    \end{itemize}
+    \checkoffitem{If the number can be represented as a normal number, then encode \lstinline{number} in the IEEE~754 normal form.}
+    \checkoffitem{If the number is too small to be represented as a normal number, then use \lstinline{unnormal_t}'s \function{set_exponent()} function to set \lstinline{number}'s exponent to that which all 32-bit subnormal numbers have, and}
+    \checkoffitem{Encode \lstinline{number} in the IEEE~754 subnormal form.}
+\end{description}
+For both normal and subnormal numbers, you will need to use \lstinline{unnormal_t}'s functions that access the structure's fields.
+Don't forget that the bit vector returned by \function{get_fraction()} is the numerator of $\frac{get\_fraction()}{2^{64}}$ and that \function{get_exponent()} returns the two's complement representation of the exponent.
+
+There are additional tasks for \function{encode()} that we recommend you attempt to implement now, though you will not be able to test them until later:
+
+\begin{description}
+    \checkoffitem{Appropriately encode numbers too great to be represented as normal numbers.}
+    \checkoffitem{Apply rounding, following the IEEE~754 default of ``round-to-nearest-even.''}
+\end{description}
+
+The final special circumstance, numbers that are too small to be represented as subnormal numbers,
+should be handled as a natural consequence of adjusting the \lstinline{number} to be able to properly encode it as a subnormal number.
+Regardless, you will not be able to test underflow to zero until later.
+
+
+\subsubsection*{Check Your Work}
+
+When you run \texttt{\textbf{\textit{./floatlab}}}, you can specify that you want to recode a value, such as \texttt{\textbf{\textit{recode 12.375}}} and \texttt{\textbf{\textit{recode 12.375 6}}}.
+The program will first decode the value.
+It will then adjust the exponent by the specified amount (if an amount is specified).
+Then it will send the result to \function{encode()}.
+Finally, it will print the original value and the \lstinline{ieee754_t} value returned by \function{encode}.
+
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, recoding a few values.}
+\end{description}
+For example:
+
+\begin{verbatim}
+Enter ... "recode <value>",
+    or "quit": recode 12.375
+expected: 12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
+actual:   12.3750000000_{10}	0x41460000	+1.1000,1100,0000,0000,0000,000_{2} x 2^{3}
+
+Enter ... "recode <value>",
+    or "quit": recode 0x00055000
+expected: 0.0000000000_{10}	0x00055000	+0.0000,1010,1010,0000,0000,000_{2} x 2^{-126}
+actual:   0.0000000000_{10}	0x00055000	+0.0000,1010,1010,0000,0000,000_{2} x 2^{-126}
+\end{verbatim}
+
+Try some other numbers to check that your \function{encode()} function correctly encodes the value that's in an \lstinline{unnormal_t} data structure.

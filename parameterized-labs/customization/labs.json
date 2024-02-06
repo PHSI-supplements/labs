@@ -23,7 +23,7 @@
   "LinkedListLab": {
     "location": "chap01/LinkedListLab",
     "lab name": "Pointer Manipulation Lab",
-    "required files": "\\textit{challenge-response.c}, \\textit{linked\\_list.c}, and \\textit{word\\_entry.c}",
+    "required files": "\\textit{answers.txt}, \\textit{challenge-response.c}, \\textit{linked\\_list.c}, and \\textit{word\\_entry.c}",
     "compilation": {
       "C": {
         "custom targets": [
@@ -52,5 +52,10 @@
         "suffix": ".asm"
       }
     }
+  },
+  "FloatLab": {
+    "location": "chap04/FloatLab",
+    "lab name": "Floating Point Representation and Arithmetic Lab",
+    "required files": "\\textit{fpu.c}"
   }
 }

@@ -1,0 +1,47 @@
+\filesubmission
+
+\policyforcodethatdoesnotcompile
+
+\latepolicy
+
+\subsection*{Rubric}
+
+This assignment is worth 35 points.
+\begin{description}
+    \rubricitem{1}{\function{is_nan()} correctly reports whether or not its argument is a number}
+    \rubricitem{1}{\function{is_zero()} correctly reports whether or not its argument is zero}
+    \rubricitem{1}{\function{is_infinity()} correctly reports whether or not its argument is infinite}
+    \rubricitem{1}{\function{is_negative()} correctly reports whether or not its argument is negative}
+    \rubricitem{2}{\function{ieee754_to_string()} and \function{decode()} correctly extract the significand}
+    \rubricitem{2}{\function{ieee754_to_string()} and \function{decode()} correctly extract the exponent}
+    \rubricitem{1}{\function{negate()} correctly changes its argument's sign}
+    \rubricitem{5}{\function{add()} can add integers \& fractions, positive \& negative values, and ``large'' \& ``small'' numbers}
+    \rubricitem{1}{The identity and commutative properties hold for \function{add()}}
+    \rubricitem{1}{\function{add()} provides correct answers for its special cases}
+    \rubricitem{5}{\function{multiply()} can multiply integers \& fractions, positive \& negative values, and ``large'' \& ``small'' numbers}
+    \rubricitem{2}{The identity, zero, and commutative properties hold for \function{multiply()}}
+    \rubricitem{1}{\function{multiply()} provides correct answers for its special cases}
+    \rubricitem{1}{\function{divide()} provides correct answers for its special cases}
+    \rubricitem{1}{\function{divide()} can divide when the divisor is of the form $\pm 2^n, -126 \le n \le 127$}
+    \rubricitem{1}{\function{divide()} can divide when the dividend's significand is a multiple of the divisor's significand}
+    \rubricitem{1}{\function{add()} demonstrates that \function{encode()} rounds down when the truncated part of the significand is less than halfway between representable values}
+    \rubricitem{1}{\function{add()} demonstrates that \function{encode()} rounds up when the truncated part of the significand is more than halfway between representable values}
+    \rubricitem{2}{\function{add()} demonstrates that \function{encode()} rounds to the nearest-even when the truncated part of the significand is exactly halfway between representable values}
+    \rubricitem{1}{Rounding can carry into the exponent}
+    \rubricitem{1}{\function{add()} and/or \function{multiply()} demonstrate that \function{encode()} overflows to infinity}
+    \rubricitem{1}{\function{add()}, \function{multiply()}, and/or \function{divide()} demonstrate that \function{encode()} gracefully underflows through subnormal numbers}
+    \rubricitem{1}{\function{multiply()} and/or \function{divide()} demonstrate that \function{encode() underflows to zero}}
+    \bonusitem{2}{\function{divide()} can divide arbitrary values}
+\end{description}
+
+\textbf{Penalties}
+\begin{description}
+    \softwareengineeringpenalties{1}
+    \penaltyitem{1 (each)}{\function{is_nan()}, \function{is_zero()}, \function{is_infinity()}, \function{is_negative()}, and/or \function{negate()} use \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, use C's floating point operations, and/or a function you did not write}
+    \penaltyitem{4}{\function{ieee754_to_string()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and functions defined in the starter code)}
+    \penaltyitem{27}{\function{decode()} and/or \function{encode()} use \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, use C's floating point operations, and/or a function you did not write}
+    \item[] If \function{decode()} and \function{encode()} are not penalized:
+    \penaltyitem{8}{\function{add()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+    \penaltyitem{8}{\function{multiply()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+    \penaltyitem{3 (and no bonus)}{\function{divide()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+\end{description}

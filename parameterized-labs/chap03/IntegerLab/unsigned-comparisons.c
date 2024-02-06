@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "alu.h"
+#include "starter-code/alu.h"
 
 /**
  * Determines whether the first value is below (unsigned less-than) the second.

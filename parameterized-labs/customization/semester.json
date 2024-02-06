@@ -35,13 +35,13 @@
     {
       "lab": "IntegerLab",
       "due": "Week of February 19, before the start of your lab section"
-    }
-  ],
-  "todo": [
+    },
     {
       "lab": "FloatLab",
       "due": "Week of February 26, before the start of your lab section"
-    },
+    }
+  ],
+  "todo": [
     {
       "lab": "AddressingLab",
       "due": "Week of March 4, before the start of your lab section"

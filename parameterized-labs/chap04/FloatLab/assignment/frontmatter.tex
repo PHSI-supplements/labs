@@ -1,8 +1,8 @@
-In this assignment, you will become more familiar with bit-level representations of integers.
-You'll do this by implementing integer arithmetic for 16-bit signed and unsigned integers using only bitwise operators.
+In this assignment, you will become more familiar with bit-level representations of floating point numbers.
+You'll do this by implementing floating point arithmetic for 32-bit floating point numbers using only bitwise operators and integer arithmetic.
 
 The instructions are written assuming you will edit and run the code on \runtimeenvironment.
-If you wish, you may develop your code in a different environment;
+If you wish, you may edit and run the code in a different environment;
 be sure that your compiler suppresses no warnings, and that if you are using an IDE that it is configured for C and not C++.
 
 \tableofcontents
@@ -11,18 +11,16 @@ be sure that your compiler suppresses no warnings, and that if you are using an 
 
 After successful completion of this assignment, students will be able to:
 \begin{itemize}
-    \item Recognize several powers of two
-    \item Apply bit operations in non-trivial applications
-    \item Illustrate ripple-carry binary addition
-    \item Express common boolean and comparison operations in terms of other functions
-    \item Recognize whether integer overflow has occurred
-    \item Explain the relationship between multiplication, division, and bit shifts
-    \item Express multiplication as an efficient use of other functions
+    \item Identify the bit fields of an IEEE~754-compliant floating point number
+    \item Obtain the value of an IEEE~754-compliant floating point number
+    \item Perform floating point arithmetic
+    \item Apply IEEE~754 ``round-to-nearest-even'' rounding
 \end{itemize}
 
 \section*{During Lab Time}
 
-During your lab period, the TAs will review ripple-carry addition, overflow for unsigned and signed integers, and bitshift-based multiplication and division.
+%During your lab period, the TAs will provide a refresher of the IEEE~754 format, with a particular emphasis on single-precision floating point numbers, and they will guide students through a discussion and discovery of useful bitmasks for this lab.
+During your lab period, the TAs will provide a refresher of the IEEE~754 format, with a particular emphasis on single-precision floating point numbers.
 During the remaining time, the TAs will be available to answer questions.
 
 During your lab period (and only during your lab period), you may discuss problem decomposition and solution design with your lab partner.
@@ -30,6 +28,6 @@ During your lab period (and only during your lab period), you may discuss proble
 To receive full credit for the work you and your partner do during lab time, you must be an active participate in the partnership.
 In accordance with the School of Computing's Academic Integrity Policy, we reserve the right to adjust your calculated grade if you merely ``tag along'' and let your partner do all the thinking.
 
-If you worked with a partner, then before leaving lab, upload \requiredfiles to Canvas to create a record of what you and your partner worked on during lab time.}
+If you worked with a partner, then before leaving lab, upload \requiredfiles to Canvas to create a record of what you and your partner worked on during lab time.
 After you have finished the full assignment, you will upload your completed work as well.
 If you did not work with a partner, you do not need to upload your files until you have completed the assignment.

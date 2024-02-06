@@ -1,0 +1,140 @@
+As is the case for integer arithmetic, the heavy-lifting for addition and subtraction is handled solely by the \function{add()} function.
+The \function{subtract()} function is already implemented in terms of \function{add} and the \function{negate()} function.
+
+\subsection{Add}
+
+The \function{add()} stub identifies a handful of special cases that you can easily handle.
+\begin{description}
+    \checkoffitem{Produce the appropriate reutrn values for the guard clauses.}
+\end{description}
+
+After the guard clauses, the operands are guaranteed to both be finite, non-zero numbers.
+These lines
+\begin{lstlisting}
+unnormal_t decoded_augend = prepare_for_arithmetic(decode(augend));
+unnormal_t decoded_addend = prepare_for_arithmetic(decode(addend));
+\end{lstlisting}
+create \lstinline{unnormal_t} representations of the operands that have their significands fully in the integer portion.
+
+Recall that for any number base, $b$, adding two floating point values $m_1 \times b^{e_1} + m_2 \times b^{e_2}$ is simplified when $e_1 = e_2$.
+
+Start by adjusting one of the decoded operands so that the two decoded operands have the same exponent.
+It is acceptable for the least significant bit (or even several less significant bits) to be truncated;
+however, \textit{you must take care that the most significant bit does not get truncated}!
+
+
+\begin{description}
+    \checkoffitem{Repeatedly use the \function{shift_left_once()} function (or, synonymously, use \function{decrement_exponent()} or \function{move_binary_point_to_the_right()}) on whichever operand has the \textbf{\textit{greater}} exponent to shift its significant to the left (decreasing the exponent, moving the binary point to the right) until either:}
+    \begin{itemize}
+        \item the exponents match, or
+        \item one more shift would make addition unreliable, as reported by \\ \function{left_shift_will_make_addition_unreliable()}.
+    \end{itemize}
+    \checkoffitem{If the exponents still do not match, then repeatedly use the \function{shift_right_once()} function (or \function{increment_exponent()} or \function{move_binary_point_to_the_left()}) to shift the other operand's significand to the right (increasing the exponent, moving the binary point to the left) until the exponents match.}
+\end{description}
+
+You can now add the two values using integer arithmetic.
+\begin{itemize}
+    \item You need only to add the integer portions, setting the fraction portion to 0.
+        If you shifted an operand's significand to the right only after the other operand is shifted as far to the left as is safe to do so, then any bits that were shifted into the fraction would be lost to rounding anyway.
+\end{itemize}
+
+\textit{Hint:} if the two operands have the same sign, add the significands;
+if the two operands have different signs, subtract the significands.
+
+\textit{Note: For the \function{add()} function, we will not deduct points if you have the wrong sign for Zero or for Not-a-Number} because the appropriate sign is usually indeterminate.
+(There are two cases where the sign can be determined; can you discover which cases those are?)
+
+
+\subsubsection*{Check Your Work}
+
+When you run \texttt{\textbf{\textit{./floatlab}}}, you can enter a two-operand expression, such as addition and subtraction.
+As before, if an operand is prepended with \texttt{\textbf{\textit{0x}}} then the parser will treat it as a bit vector;
+otherwise, the parser will treat it as a floating point value.
+
+\begin{verbatim}
+Enter a value, a two-operand arithmetic expression,
+    "decode <value>", "recode <value>",
+    or "quit": 1 + 2
+0x3f800000	+1.0000,0000,0000,0000,0000,000_{2} x 2^{0}
++
+0x40000000	+1.0000,0000,0000,0000,0000,000_{2} x 2^{1}
+expected: 3.0000000000_{10}	0x40400000	+1.1000,0000,0000,0000,0000,000_{2} x 2^{1}
+actual:   3.0000000000_{10}	0x40400000	+1.1000,0000,0000,0000,0000,000_{2} x 2^{1}
+\end{verbatim}
+
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, adding and subtracting a few values.}
+\end{description}
+Be sure to check:
+\begin{itemize}
+    \item The identity and commutative properties
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{5 + 0}}}
+        \item[] \texttt{\textbf{\textit{2 + 3}}}
+        \item[] \texttt{\textbf{\textit{3 + 2}}}
+    \end{itemize}
+    \item Cases in which the exponent will be greater than that of either operand
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{3 + 3}}}
+    \end{itemize}
+    \item Fractional operands
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{.4 + .04}}}
+    \end{itemize}
+    \item Not only the use of negative operands, but also subtraction
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{-5 + 2}}}
+        \item[] \texttt{\textbf{\textit{2 - 5}}}
+        \item[] \texttt{\textbf{\textit{3 - -3}}}
+    \end{itemize}
+    \item Numbers both great and small
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{1.65e35 + 2.39e29}}}
+        \item[] \texttt{\textbf{\textit{1.65e-39 + 2.39e-33}}}
+    \end{itemize}
+    \item A sufficiently-large sum overflows to infinity
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{0x7F7FFFFF + 0x73800000}}}
+    \end{itemize}
+    \item A sufficiently-small difference between normal numbers underflows to subnormal numbers
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{0x01000000 - 0x00C00000}}}
+    \end{itemize}
+    \item A number subtracted from itself produces zero:
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{0x00000001 - 0x00000001}}}
+    \end{itemize}
+    \item NaN and Infinity are ``sticky'' (except for $\infty - \infty$)
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{nan + 1}}}
+        \item[] \texttt{\textbf{\textit{inf - 0x7F7FFFFF}}}
+        \item[] \texttt{\textbf{\textit{inf - inf}}}
+    \end{itemize}
+\end{itemize}
+
+
+\subsubsection*{Rounding}
+
+You can now check the rounding code in your \function{encode()} implementation.
+
+\begin{itemize}
+    \item When the rounded-off portion is less than halfway, you always round down
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{0x40000000 + 0x33FFFFFF}}}
+        \item[] \texttt{\textbf{\textit{0x40000001 + 0x33FFFFFF}}}
+    \end{itemize}
+    \item When the rounded-off portion is more than halfway, you always round up
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{0x40000000 + 0x34000001}}}
+        \item[] \texttt{\textbf{\textit{0x40000001 + 0x34000001}}}
+    \end{itemize}
+    \item When the rounded-off portion is exactly halfway, you round to the nearest-even
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{0x40000000 + 0x34000000}}}
+        \item[] \texttt{\textbf{\textit{0x40000001 + 0x34000000}}}
+    \end{itemize}
+    \item Sometimes rounding can carry all the way to the integer portion, causing the exponent to change
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{0x407FFFFF + 0x34000000}}}
+    \end{itemize}
+\end{itemize}

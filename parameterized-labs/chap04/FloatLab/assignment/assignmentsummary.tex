@@ -1,0 +1,58 @@
+In this assignment, you will implement a 32-bit FPU\@.
+You will implement floating point arithmetic using integer operations and bit-level operations, an encapsulated data type and a small amount of other starter code that we will provide, and other code that you will write.
+Specifically, the FPU's operations are:
+\begin{itemize}
+    \item Some query functions to determine characteristics of a floating point value
+    \item Normalization and denormalization
+    \item Negation
+    \item Addition and Subtraction
+    \item Multiplication
+    \item Division, only when the dividend's significand is a multiple of the divisor's significand
+\end{itemize}
+You will \textit{not} be required to implement a square root function, which is also commonly found in FPUs.
+
+We have provided an encapsulated data type, \lstinline{unnormal_t}, to simplify some of the steps that will be necessary in your arithmetic functions.
+
+\subsection{Constraints}
+
+You may not use C's built-in floating point types or operations.
+Specifically, you may not declare any variable to be of type \lstinline{float} or \lstinline{double}, you may not cast any value to either of these types, nor may you create floating point constants.
+
+You may not use unions.
+You may not use inline assembly code.
+
+You may not use any libraries other than the \textit{libc} library.
+This prohibition includes, but is not limited to, C's \textit{math} library.
+If you find yourself \lstinline{#include}ing any header files other than \textit{fpu.h}, \textit{unnormal.h}, \textit{assert.h}, \textit{stdbool.h}, \textit{stdint.h}, and \textit{stdio.h}, you are probably violating this constraint.
+
+The time-complexity of all operations must be linear (or constant) in the number of bits required to represent the values.
+Inefficient solutions, such as (but not limited to) implementing multiplication by repeatedly adding the multiplicand to itself $multiplier$ times, or implementing division by repeatedly subtracting the divisor from the dividend, are prohibited.
+
+You may not change the signatures of any functions that you are required to complete for this assignment.
+If you write helper functions that are not required, then they may have any signature that you deem necessary
+(your helper functions must also comply with the assignment's constraints).
+
+You are permitted to use C's integer comparators, integer arithmetic, bitwise operations, bit shift operations.
+You may cast between integer types.
+You may use loops, conditionals, function calls, structs, and arrays.
+And, of course, you may use any of the provided starter code and any code that you write by yourself for this assignment.
+
+You can check whether you're declaring a \lstinline{float} or \lstinline{double}, and whether you're defining a \lstinline{union} by running the constraint-checking Python script: \\
+\texttt{python constraint-check.py integerlab.json} \\
+You can check whether you're creating a floating point constant with a simple \texttt{grep} command: \\
+\verb#grep -e "\d\." -e "\.\d" fpu.c# \\
+(Note that this \texttt{grep} command will detect false-positives in strings and comments, including two false-positives in the starter code.)
+
+\subsection{Problem Decomposition}
+As was the case with IntegerLab -- as is the case for a great many problems -- FloatLab is best solved by decomposing it into smaller, manageable problems and then using the solutions to the smaller problems to solve the larger problem.
+%    We start you with some bitmasks that will allow you to examine specific bit fields within an IEEE~754 formatted value.
+%    Then you will create some constants based on your understanding of IEEE~754.
+While the TAs' review of the IEEE~754 format is fresh on your minds, we recommend that you and your partner think about some bitmasks that would be useful for this lab.
+After that, create some constants based on your understanding of IEEE~754.
+You can then use some of the bitmasks and your understanding of IEEE~754 to create some simple functions to test qualities of an IEEE~754 formatted value.
+
+With those small problems taken care of, you can use them to determine an IEEE~754 formatted value's mathematical value.
+You'll first do this to be able to print a floating point value, and then you'll do this to convert a floating point number into a form that will make arithmetic easier.
+Then you'll use your understanding of IEEE~754 to place a floating point value into the IEEE~754 format.
+
+With those tasks complete, you have everything you need to apply your understanding of floating point arithmetic to implement the \function{add()}, \function{subtract()}, \function{multiply()}, and \function{divide()} functions.

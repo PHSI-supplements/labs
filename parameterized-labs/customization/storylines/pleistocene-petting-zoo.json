@@ -81,5 +81,12 @@
     "progress": null,
     "wrapup": "Herb smiles as he hands you the the test results from the latest integrated circuit fab batch.\n    ``C-licon successfully turned your code into an ALU.\n    Nicely done!''\n    I think maybe it's time to use C-licon to see if we can improve the Floating Point Unit (FPU) on our experimental microprocessor.",
     "callback": ""
+  },
+  "FloatLab": {
+    "teaser": "",
+    "introduction": "Herb tells you that, Eclectic Electronics tested the integrated circuit that the C-licon tool created from your ALU code, and they've concluded that C-licon is ready to use for their new experimental microprocessor.\n    He tasks you with writing C code (that will be used by the C-licon tool) to implement a Floating Point Unit (FPU).\n    Your task will be to implement floating point addition, subtraction, multiplication, and division.\n    You can use any bit operations and, thanks to the ALU you wrote, you can use any integer arithmetic operations (use the conventional + - * / operators).\n    Because the FPU has not yet been implemented, you cannot use C's floating point operations, you cannot use \\lstinline{float}s nor \\lstinline{double}s, and you cannot use library functions.",
+    "progress": null,
+    "wrapup": "Lil enters the room.\n    Herb challenges her: ``\\textit{Gulliver's Travels}, `endian','' and Lil answers, ``ends.''\n\n    Lil walks up to you and says, ``We have the insurance situation taken care of, and it's time to get the Zoo ready for guests.\n    We're reassembling the tech team, and there's plenty of work to do.''\n\n    You smile.\n    ``That's good news!''\n\n    Lil's face is hard to read.\n    ``Well, yes and no.\n    It's good that you'll be able to resume work on the Zoo's systems.\n    But while Archie was waiting for us to fix the insurance situation, he got bored and -- cutting a long story short -- he ended up creating some new `opportunities' that we need you `to succeed' at.''",
+    "callback": ""
   }
 }

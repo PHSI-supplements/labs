@@ -1,0 +1,156 @@
+Recall that for any number base, $b$, multiplying two floating point values $(m_1 \times b^{e_1}) \cdot (m_2 \times b^{e_2})$ produces $m_1 \cdot m_2 \times b^{e_1 + e_2}$.
+Similarly, dividing the two floating point values yields $\frac{m_1}{m_2} \times b^{e_1 - e_2}$.
+
+\subsection{Multiply}
+
+The \function{multiply()} stub identifies a handful of special cases that you can easily handle.
+\begin{description}
+    \checkoffitem{Produce the appropriate reutrn values for the guard clauses.}
+    \begin{itemize}
+        \item If it is easier for you, you \textit{may} change the compound conditionals in the guard clauses into separate guard clauses.
+            For example, instead of handling \\ \lstinline{if (is_infinity(multiplier) || is_zero(multiplier))} as a single guard clause,
+            you may handle \lstinline{if (is_infinity(multiplier)} as its own guard clause and then handle \lstinline{if (is_zero(multiplier))} as its own guard clause.
+    \end{itemize}
+\end{description}
+
+After the guard clauses, the operands are guaranteed to both be finite, non-zero numbers.
+These lines
+\begin{lstlisting}
+unnormal_t decoded_multiplicand = prepare_for_arithmetic(decode(multiplicand));
+unnormal_t decoded_multiplier = prepare_for_arithmetic(decode(multiplier));
+\end{lstlisting}
+create \lstinline{unnormal_t} representations of the operands that have their significands fully in the integer portion.
+Because you do not need to give the two operands the same exponent, you do not need to worry about further adjustment.
+
+\begin{description}
+    \checkoffitem{Multiply the two operands together using integer arithmetic.}
+\end{description}
+
+\textit{Note}: For the \function{multiply()} function, we will not deduct points if you have the wrong sign for Not-a-Number.
+\textit{We will, however, deduct points if you have the wrong sign for Zero.}
+
+
+\subsubsection*{Check Your Work}
+
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, multiplying a few values.}
+\end{description}
+Be sure to check:
+\begin{itemize}
+    \item The identity, zero, and commutative properties
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{5 * 1}}}
+        \item[] \texttt{\textbf{\textit{5 * 0}}}
+        \item[] \texttt{\textbf{\textit{2 * 3}}}
+        \item[] \texttt{\textbf{\textit{3 * 2}}}
+    \end{itemize}
+    \item Integer operands
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{75 * 7}}}
+        \item[] \texttt{\textbf{\textit{5 * 25}}}
+    \end{itemize}
+    \item Fractional operands
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{.75 * 7}}}
+        \item[] \texttt{\textbf{\textit{5 * .25}}}
+    \end{itemize}
+    \item Negative operands
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{-5 * 2}}}
+        \item[] \texttt{\textbf{\textit{5 * -2}}}
+        \item[] \texttt{\textbf{\textit{-5 * -2}}}
+        \item[] \texttt{\textbf{\textit{5 * -0}}}
+    \end{itemize}
+    \item Numbers both great and small
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{1.65e25 * 2.39e11}}}
+        \item[] \texttt{\textbf{\textit{1.65e-25 * 2.39e-11}}}
+        \item[] \texttt{\textbf{\textit{1e-30 * 1e-8}}}
+        \item[] \texttt{\textbf{\textit{2e30 * 2e-30}}}
+    \end{itemize}
+    \item A sufficiently-large product overflows to infinity
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{0x7E000000 * 0x41000000}}}
+    \end{itemize}
+    \item A sufficiently-small product underflows to zero
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{0x3C800000 * 0x00000020}}}
+    \end{itemize}
+    \item NaN and Infinity are ``sticky'' (except for $\infty \times 0$)
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{nan * 1}}}
+        \item[] \texttt{\textbf{\textit{inf * 2}}}
+        \item[] \texttt{\textbf{\textit{inf * 0}}}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Divide}
+
+Implementing the \function{divide()} function is very similar to implementing \function{multiply()} with three exceptions:
+
+\begin{itemize}
+    \item There are different special cases
+    \item You subtract the exponents and divide the significands
+    \item In general, integer division is insufficient
+    \begin{itemize}
+        \item We will limit our implementation of \function{divide()} to the special cases and to cases in which the dividend's significand is a multiple of the divisor's significand.
+        \item This limitation guarantees that if the \lstinline{unnormal_t} operands' significands are fully in the \lstinline{.integer} field then the \lstinline{unnormal_t} quotient's significand will fully be in the \lstinline{.integer} field and will not spill over into the \lstinline{.fraction} field.
+        \item In this limited implementation, integer division is sufficient.
+    \end{itemize}
+\end{itemize}
+
+\begin{description}
+    \checkoffitem{Produce the appropriate reutrn values for the guard clauses.}
+    \checkoffitem{Divide $dividend \div divisor$ using integer arithmetic.}
+\end{description}
+
+\textit{Note}: For the \function{divide()} function, we will not deduct points if you have the wrong sign for Not-a-Number.
+\textit{We will, however, deduct points if you have the wrong sign for Zero.}
+
+
+\subsubsection*{Check Your Work}
+
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, dividing a few values.}
+\end{description}
+
+Be sure to check:
+\begin{itemize}
+    \item The identity property
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{5 / 1}}}
+    \end{itemize}
+    \item Integer operands
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{75 / 4}}}
+    \end{itemize}
+    \item Fractional operands
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{.75 / 4}}}
+        \item[] \texttt{\textbf{\textit{5 / .25}}}
+        \item[] \texttt{\textbf{\textit{.75 / .25}}}
+    \end{itemize}
+    \item Negative operands
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{-4 / 2}}}
+        \item[] \texttt{\textbf{\textit{4 / -2}}}
+        \item[] \texttt{\textbf{\textit{-4 / -2}}}
+    \end{itemize}
+    \item Divisors that require more than one 1 in the significand (but the dividend's significand is still a multiple of the divisor's significand)
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{30 / 5}}}
+        \item[] \texttt{\textbf{\textit{25 / 0x3F200000}}}
+        \item[] \texttt{\textbf{\textit{0x3F480000 / 5}}}
+    \end{itemize}
+    \item The special cases
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{nan / 2}}}
+        \item[] \texttt{\textbf{\textit{2 / nan}}}
+        \item[] \texttt{\textbf{\textit{inf / 2}}}
+        \item[] \texttt{\textbf{\textit{0 / 2}}}
+        \item[] \texttt{\textbf{\textit{2 / inf}}}
+        \item[] \texttt{\textbf{\textit{2 / 0}}}
+        \item[] \texttt{\textbf{\textit{inf / inf}}}
+        \item[] \texttt{\textbf{\textit{0 / 0}}}
+    \end{itemize}
+\end{itemize}

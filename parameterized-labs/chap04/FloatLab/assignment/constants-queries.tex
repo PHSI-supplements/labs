@@ -1,0 +1,27 @@
+\subsection{Constants}
+
+There are seven named constants in \textit{fpu.c}.
+
+\begin{description}
+    \checkoffitem{Assign the appropriate bit vectors to \lstinline{SIGN_BIT_MASK}, \lstinline{EXPONENT_BITS_MASK}, and \lstinline{FRACTION_BITS_MASK} so that you can use them to mask-off the sign bit, the exponent bits, and the fraction bits, respectively, in a \lstinline{ieee754_t} floating point value.}
+    \checkoffitem{Assign the single-precision exponent bias to \lstinline{EXPONENT_BIAS} and assign to \lstinline{NUMBER_OF_FRACTION_BITS} the number of bits used for the fraction bit field in a single-precision floating point number.}
+    \checkoffitem{Assign to \lstinline{NAN} and \lstinline{INFINITY} suitable bit vectors for single-precision Infinity and Not-a-Number.}
+\end{description}
+
+These constants will not be graded directly;
+they exist solely to make your code more readable.
+You may define additional named constants as needed.
+
+\subsection{Query Functions}
+
+There are three functions to identify whether an \lstinline{ieee754_t} floating point value is neither normal nor subnormal.
+The remaining query function determins whether an \lstinline{ieee754_t} floating point value is negative.
+\begin{description}
+    \checkoffitem{Implement \function{is_nan()} to detect whether a value is Not-a-Number without regard to the value's sign.}
+    \begin{itemize}
+        \item Note that \function{is_nan()} must return \lstinline{true} for \textit{all} valid NaN bit vectors and not just those that match your \lstinline{NAN} constant.
+    \end{itemize}
+    \checkoffitem{Implement \function{is_nan()} to detect whether a value is infinity without regard to the value's sign.}
+    \checkoffitem{Implement \function{is_nan()} to detect whether a value is zero without regard to the value's sign.}
+    \checkoffitem{Implement \function{is_negative()} to detect whether a value is negative.}
+\end{description}

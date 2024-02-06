@@ -1,0 +1,26 @@
+It is entirely possible that your implementation of \function{divide()} handles not only the required case of the dividend's significand being a multiple of the divisor's significand,
+but it might also handle \textit{any} pair of operands whose quotient can be exactly represented in the IEEE~754 format.
+
+When the quotient cannot be represented exactly, then you are sure that the quotient will need to use the \lstinline{.fraction} field so that when the quotient is encoded as an \lstinline{ieee754_t} then the quotient will be as precise as the available bits allow.
+If you are going to pursue the arbitrary division bonus, then
+\begin{description}
+    \checkoffitem{\textcolor{red}{Be sure that you have a backup copy of your work!}}
+    \begin{itemize}
+        \item Make sure that you will be able to revert to your original \function{divide()} implementation if you need to.
+    \end{itemize}
+    \checkoffitem{Implement \function{divide()} to work for all pairs of operands, even those whose quotients cannot be represented exactly.}
+\end{description}
+\textbf{Hint:} If the bits in the \lstinline{.integer} field are the result of integer division,
+then the bits in the \lstinline{.fraction} field are derived from the integer remainder (but are not the remainder itself).
+
+Examples:
+\begin{itemize}
+    \item Example that rounds down
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{1 / 11}}}
+    \end{itemize}
+    \item Example that rounds up
+    \begin{itemize}
+        \item[] \texttt{\textbf{\textit{1 / 3}}}
+    \end{itemize}
+\end{itemize}
