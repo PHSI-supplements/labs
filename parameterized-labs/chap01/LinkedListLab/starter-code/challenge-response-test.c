@@ -93,15 +93,15 @@ void test_insert_word_populated_list(void) {
     timed_test(list = insert_word(list, word));
     printf("\n");
     print(list);
-    word_entry_t *word_entry = get_word_entry(list);
+//    word_entry_t *word_entry = get_word_entry(list);
     destroy_list(list, false);  // most of the word entries were created on the stack, not malloc'd
-    char lowercase_word[MAXIMUM_WORD_LENGTH + 1];
-    word_to_lowercase(lowercase_word, word);
-    if (strcmp(lowercase_word, "bar")   && strcmp(lowercase_word, "baz")  && strcmp(lowercase_word, "foo") &&
-        strcmp(lowercase_word, "plugh") && strcmp(lowercase_word, "quux") && strcmp(lowercase_word, "xyzzy")) {
-        // the word isn't any of the original words
-        free(word_entry);
-    }
+//    char lowercase_word[MAXIMUM_WORD_LENGTH + 1];
+//    word_to_lowercase(lowercase_word, word);
+//    if (strcmp(lowercase_word, "bar")   && strcmp(lowercase_word, "baz")  && strcmp(lowercase_word, "foo") &&
+//        strcmp(lowercase_word, "plugh") && strcmp(lowercase_word, "quux") && strcmp(lowercase_word, "xyzzy")) {
+//        // the word isn't any of the original words
+//        free(word_entry);
+//    }
 }
 
 void test_build_list(void) {
