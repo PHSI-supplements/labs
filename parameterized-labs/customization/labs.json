@@ -56,6 +56,11 @@
   "FloatLab": {
     "location": "chap04/FloatLab",
     "lab name": "Floating Point Representation and Arithmetic Lab",
-    "required files": "\\textit{fpu.c}"
+    "required files": "\\textit{fpu.c}",
+    "compilation": {
+      "C": {
+        "warnings": "-Wall -Wextra -Wno-unused-variable -Wno-unused-parameter"
+      }
+    }
   }
 }

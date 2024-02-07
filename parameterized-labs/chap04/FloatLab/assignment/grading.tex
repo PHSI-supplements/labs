@@ -12,8 +12,10 @@ This assignment is worth 35 points.
     \rubricitem{1}{\function{is_zero()} correctly reports whether or not its argument is zero}
     \rubricitem{1}{\function{is_infinity()} correctly reports whether or not its argument is infinite}
     \rubricitem{1}{\function{is_negative()} correctly reports whether or not its argument is negative}
-    \rubricitem{2}{\function{ieee754_to_string()} and \function{decode()} correctly extract the significand}
-    \rubricitem{2}{\function{ieee754_to_string()} and \function{decode()} correctly extract the exponent}
+    \rubricitem{1}{\function{get_754_integer()} correctly extracts the significand's implicit integer}
+    \rubricitem{1}{\function{get_754_fraction()} correctly extracts the significand's fraction bits}
+    \rubricitem{1}{\function{get_754_exponent()} correctly extracts the exponent}
+    \rubricitem{1}{\function{decode()} correctly converts an \lstinline{ieee754_t} value into a \lstinline{unnormal_t} structure}
     \rubricitem{1}{\function{negate()} correctly changes its argument's sign}
     \rubricitem{5}{\function{add()} can add integers \& fractions, positive \& negative values, and ``large'' \& ``small'' numbers}
     \rubricitem{1}{The identity and commutative properties hold for \function{add()}}
@@ -36,12 +38,7 @@ This assignment is worth 35 points.
 
 \textbf{Penalties}
 \begin{description}
-    \softwareengineeringpenalties{1}
-    \penaltyitem{1 (each)}{\function{is_nan()}, \function{is_zero()}, \function{is_infinity()}, \function{is_negative()}, and/or \function{negate()} use \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, use C's floating point operations, and/or a function you did not write}
-    \penaltyitem{4}{\function{ieee754_to_string()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and functions defined in the starter code)}
-    \penaltyitem{27}{\function{decode()} and/or \function{encode()} use \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, use C's floating point operations, and/or a function you did not write}
-    \item[] If \function{decode()} and \function{encode()} are not penalized:
-    \penaltyitem{8}{\function{add()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
-    \penaltyitem{8}{\function{multiply()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
-    \penaltyitem{3 (and no bonus)}{\function{divide()} uses \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, uses C's floating point operations, and/or uses a function you did not write (other than \function{sprintf()} and \function{bits_to_string()})}
+    \softwareengineeringpenalties
+    \item[no credit] for functions that use \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, use C's floating point operations, and/or a function you did not write
+    \item[no credit] for arithmetic functions, if \function{decode()} and/or \function{encode()}  use \lstinline{float} or \lstinline{double} variables or constants, use \lstinline{union} variables, use C's floating point operations, and/or a function you did not write
 \end{description}

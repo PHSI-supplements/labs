@@ -109,14 +109,14 @@ char *unnormal_to_string(char *destination, unnormal_t number);
  * @param number the Unnormal value to be evaluated
  * @return 0 if the value is positive, 1 if the value is negative
  */
-uint8_t get_sign(unnormal_t number);
+uint8_t get_unnormal_sign(unnormal_t number);
 
 /**
  * Provides the integer portion of the floating point number.
  * @param number the Unnormal value to be evaluated
  * @return a <code>uint64_t</code> storing the value's integer portion
  */
-uint64_t get_integer(unnormal_t number);
+uint64_t get_unnormal_integer(unnormal_t number);
 
 /**
  * Provides the fractional portion of the floating point number. This value should be treated as the numerator of a
@@ -124,14 +124,14 @@ uint64_t get_integer(unnormal_t number);
  * @param number the Unnormal value to be evaluated
  * @return a <code>uint64_t</code> storing value's fractional portion
  */
-uint64_t get_fraction(unnormal_t number);
+uint64_t get_unnormal_fraction(unnormal_t number);
 
 /**
  * Provides the two's complement exponent of the base-2 floating point number.
  * @param number the Unnormal value to be evaluated
  * @return a <code>int16_t</code> storing value's exponent of 2
  */
-int16_t get_exponent(unnormal_t number);
+int16_t get_unnormal_exponent(unnormal_t number);
 
 /**
  * Indicates whether a value is plus/minus infinity

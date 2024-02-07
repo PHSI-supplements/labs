@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * FloatLab (c) 2019-23 Christopher A. Bohn
+ * FloatLab (c) 2019-24 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -35,6 +35,10 @@ bool is_infinity(ieee754_t number);
 bool is_nan(ieee754_t number);
 bool is_zero(ieee754_t number);
 bool is_negative(ieee754_t number);
+
+uint8_t get_754_integer(ieee754_t number);
+uint8_t get_754_fraction(ieee754_t number);
+int8_t get_754_exponent(ieee754_t number);
 
 char *bits_to_string(char *destination, uint64_t bits, int start_bit,
                      int end_bit, enum bit_divider_direction bit_dividers);

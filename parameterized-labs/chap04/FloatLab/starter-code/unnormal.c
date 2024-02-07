@@ -75,25 +75,25 @@ char *unnormal_to_string(char *destination, unnormal_t number) {
     } else if (number.is_not_a_number) {
         sprintf(destination, "%cNot a Number", number.sign ? '-' : '+');
     } else {
-        sprintf(destination, "%c%016lx.%016lx_{16} x 2^{%d}",
+        sprintf(destination, "%c%016llx.%016llx_{16} x 2^{%d}",
                 number.sign ? '-' : '+', number.integer, number.fraction, number.exponent);
     }
     return destination;
 }
 
-uint8_t get_sign(unnormal_t number) {
+uint8_t get_unnormal_sign(unnormal_t number) {
     return number.sign;
 }
 
-uint64_t get_integer(unnormal_t number) {
+uint64_t get_unnormal_integer(unnormal_t number) {
     return number.integer;
 }
 
-uint64_t get_fraction(unnormal_t number) {
+uint64_t get_unnormal_fraction(unnormal_t number) {
     return number.fraction;
 }
 
-int16_t get_exponent(unnormal_t number) {
+int16_t get_unnormal_exponent(unnormal_t number) {
     return (int16_t) number.exponent;
 }
 

@@ -11,7 +11,7 @@
  ******************************************************************************/
 
 /*
- * FloatLab assignment and starter code (c) 2019-23 Christopher A. Bohn
+ * FloatLab assignment and starter code (c) 2019-24 Christopher A. Bohn
  * Floatlab solution (c) the above-named student(s)
  */
 
@@ -69,7 +69,61 @@ bool is_zero(ieee754_t number) {
  * @param number the number in question
  * @return `true` if the argument's sign bit is 1; `false` otherwise
  */
-bool is_negative(ieee754_t number) { return false; }
+bool is_negative(ieee754_t number) {
+    return false;
+}
+
+/**
+ * Returns the integer portion of an IEEE 754-compliant number.
+ *
+ * @note The number is assumed to be a finite number;
+ *      it cannot be infinity, and it cannot be NaN.
+ *
+ * @param number the value whose integer portion is to be returned
+ * @return the implicit integer portion of the number
+ */
+uint8_t get_754_integer(ieee754_t number) {
+    assert(!is_nan(number));
+    assert(!is_infinity(number));
+    return 0;
+}
+
+/**
+ * Returns the fractional portion of an IEEE 754-compliant number.
+ *
+ * @note The bits that are returned are not shifted; only the lower
+ *      NUMBER_OF_FRACTION_BITS should be considered significant.
+ *
+ * @note The number is assumed to be a finite number;
+ *      it cannot be infinity, and it cannot be NaN.
+ *
+ * @param number the value whose fraction portion is to be returned
+ * @return the fraction bits of the number
+ */
+uint8_t get_754_fraction(ieee754_t number) {
+    assert(!is_nan(number));
+    assert(!is_infinity(number));
+    return 0;
+}
+
+/**
+ * Returns the two's complement representation of an IEEE 754-compliant number's
+ *      exponent.
+ *
+ * @note This function converts the exponent to two's complement before returning
+ *      it.
+ *
+ * @note The number is assumed to be a finite number;
+ *      it cannot be infinity, and it cannot be NaN.
+ *
+ * @param number the number whose exponent is to be returned
+ * @return the two's complement representation of the number's exponent
+ */
+int8_t get_754_exponent(ieee754_t number) {
+    assert(!is_nan(number));
+    assert(!is_infinity(number));
+    return 0;
+}
 
 /**
  * @brief Converts an IEEE 754-compliant number to a string depicting the
@@ -98,13 +152,10 @@ char *ieee754_to_string(char *destination, ieee754_t number) {
         sprintf(destination + 12, "0.0");
     } else {
         // The number is either Normal or Subnormal
-        unsigned int integer = 0;
-        uint32_t fraction = 0;
-        int exponent = 0;
-        char fraction_string[40];   // Do not directly edit `fraction_string`
-        /* DETERMINE THE INTEGER, THE FRACTION, AND THE EXPONENT */
-
-
+        uint8_t integer = get_754_integer(number);
+        uint32_t fraction = get_754_fraction(number);
+        int8_t exponent = get_754_exponent(number);
+        char fraction_string[40];
         sprintf(destination + 12, "%u.%s_{2} x 2^{%d}",
                 integer,
                 bits_to_string(fraction_string, fraction, NUMBER_OF_FRACTION_BITS - 1, 0, FROM_LEFT),
@@ -126,10 +177,10 @@ unnormal_t decode(ieee754_t number) {
     if (is_nan(number)) {
         return unnormal(.sign = sign, .is_not_a_number = true);
     }
-    /* DETERMINE THE INTEGER PORTION, THE FRACTION, AND THE EXPONENT */
-    uint64_t integer, fraction;
-    int16_t exponent;
-
+    uint64_t integer = get_754_integer(number);
+    uint64_t fraction = get_754_fraction(number);
+    int16_t exponent = get_754_exponent(number);
+    /* ADJUST THE FRACTION BITS TO FIT UNNORMAL_T'S EXPECTATION */
 
     unnormal_t value = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
     assert(!created_number_is_improbable(value));
@@ -142,12 +193,12 @@ unnormal_t decode(ieee754_t number) {
  * @return an `ieee754_t` bit vector representing the number's value
  */
 ieee754_t encode(unnormal_t number) {
-    ieee754_t result;
+    ieee754_t result = -1;  // throwaway value
     if (is_infinite(number)) {
         result = INFINITY;
     } else if (is_not_a_number(number)) {
         result = NAN;
-    } else if ((get_integer(number) == 0) && (get_fraction(number) == 0)) {
+    } else if ((get_unnormal_integer(number) == 0) && (get_unnormal_fraction(number) == 0)) {
         result = 0;
     } else {
         number = set_integer(number, 1);
@@ -158,7 +209,7 @@ ieee754_t encode(unnormal_t number) {
 
 
     }
-    return result | (get_sign(number) ? SIGN_BIT_MASK : 0);
+    return result | (get_unnormal_sign(number) ? SIGN_BIT_MASK : 0);
 }
 
 /**
@@ -191,10 +242,11 @@ ieee754_t multiply(ieee754_t multiplicand, ieee754_t multiplier) {
     }
     unnormal_t decoded_multiplicand = prepare_for_arithmetic(decode(multiplicand));
     unnormal_t decoded_multiplier = prepare_for_arithmetic(decode(multiplier));
+    uint8_t sign = -1;      // throw-
+    uint64_t integer = -1;  //      -away
+    uint64_t fraction = -1; //            values
+    int16_t exponent = -1;  // another throwaway value
     /* COMPUTE THE PRODUCT */
-    uint8_t sign;
-    uint64_t integer, fraction;
-    int16_t exponent;
 
 
     unnormal_t product = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
@@ -224,11 +276,12 @@ ieee754_t divide(ieee754_t dividend, ieee754_t divisor) {
         return 0;
     }
     unnormal_t decoded_dividend = prepare_for_arithmetic(decode(dividend));
-    unnormal_t decoded_divisor = prepare_for_arithmetic(decode(divisor);)
+    unnormal_t decoded_divisor = prepare_for_arithmetic(decode(divisor));
+    uint8_t sign = -1;      // throw-
+    uint64_t integer = -1;  //      -away
+    uint64_t fraction = -1; //            values
+    int16_t exponent = -1;  // another throwaway value
     /* COMPUTE THE QUOTIENT */
-    uint8_t sign;
-    uint64_t integer, fraction;
-    int16_t exponent;
 
 
     unnormal_t quotient = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
@@ -269,10 +322,11 @@ ieee754_t add(ieee754_t augend, ieee754_t addend) {
     }
     unnormal_t decoded_augend = prepare_for_arithmetic(decode(augend));
     unnormal_t decoded_addend = prepare_for_arithmetic(decode(addend));
+    uint8_t sign = -1;      // throw-
+    uint64_t integer = -1;  //      -away
+    uint64_t fraction = -1; //            values
+    int16_t exponent = -1;  // another throwaway value
     /* COMPUTE THE SUM */
-    uint8_t sign;
-    uint64_t integer, fraction;
-    int16_t exponent;
 
 
     unnormal_t sum = unnormal(.sign = sign, .integer = integer, .fraction = fraction, .exponent = exponent);
