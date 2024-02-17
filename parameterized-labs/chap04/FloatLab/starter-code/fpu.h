@@ -37,7 +37,7 @@ bool is_zero(ieee754_t number);
 bool is_negative(ieee754_t number);
 
 uint8_t get_754_integer(ieee754_t number);
-uint8_t get_754_fraction(ieee754_t number);
+uint32_t get_754_fraction(ieee754_t number);
 int8_t get_754_exponent(ieee754_t number);
 
 char *bits_to_string(char *destination, uint64_t bits, int start_bit,

@@ -100,7 +100,7 @@ uint8_t get_754_integer(ieee754_t number) {
  * @param number the value whose fraction portion is to be returned
  * @return the fraction bits of the number
  */
-uint8_t get_754_fraction(ieee754_t number) {
+uint32_t get_754_fraction(ieee754_t number) {
     assert(!is_nan(number));
     assert(!is_infinity(number));
     return 0;
@@ -202,8 +202,6 @@ ieee754_t encode(unnormal_t number) {
         result = 0;
     } else {
         number = set_integer(number, 1);
-        assert(!shift_underflowed(number));
-        assert(!shift_overflowed(number));
         assert(!operation_was_not_performed(number));
         /* GENERATE THE APPROPRIATE BIT VECTOR AND PLACE IT IN RESULT */
 

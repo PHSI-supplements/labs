@@ -53,10 +53,10 @@ void evaluate_signed_division(uint16_t operand1, uint16_t operand2, struct autho
 
 #if defined (__linux__) && ((__x86_64__) || defined (_M_X64))
 #define X86_64_LINUX
-#elif defined (__APPLE__) && ((__x86_64__) || defined (_M_X64))
-#define X86_64_MACOS
-#elif defined (_WIN64) && ((__x86_64__) || defined (_M_X64))
-#define X86_64_WINDOWS
+//#elif defined (__APPLE__) && ((__x86_64__) || defined (_M_X64))
+//#define X86_64_MACOS
+//#elif defined (_WIN64) && ((__x86_64__) || defined (_M_X64))
+//#define X86_64_WINDOWS
 #else
 #warning Some of the code to determine the *expected* supplemental_result and *expected* flags is not yet defined for your system.
 #define DEFAULT_IMPLEMENTATION

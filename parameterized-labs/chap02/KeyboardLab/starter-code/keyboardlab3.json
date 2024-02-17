@@ -84,7 +84,8 @@
   "limitedCharacters": {
     "0": [
       "b",
-      "B"
+      "B",
+      "5"
     ]
   }
 }
