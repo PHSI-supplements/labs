@@ -191,14 +191,15 @@ In these examples, assume that all numbers are stored in \lstinline{unnormal_t} 
 
 \subsubsection{Decoding Numbers}
 
+The \lstinline{integer} and \lstinline{exponent} variables can obtain their correct values directly from the \function{get_754_integer()} and \function{get_754_exponent()} functions.
+The \lstinline{fraction} variable, however, needs to shift the value obtained from \function{get_754_fraction()}.
+
 \begin{description}
-    \checkoffitem{Assign the appropriate value to \lstinline{integer}.}
     \checkoffitem{Assign the appropriate value to \lstinline{fraction}.}
     \begin{itemize}
-        \item Hint: if your fraction-related code from \function{ieee754_to_string()} has the fraction bits in the \lstinline{NUMBER_OF_FRACTION_BITS} least-significant bits,
-            and if the most significant bit is $bit_{63}$, then placing the $2^{-1}$ bit in the most significant bit can be accomplished by shifting the fraction bits by $(64 - NUMBER\_OF\_FRACTION\_BITS)$ places.
+        \item Because the value obtained from \function{get_754_fraction()} has the fraction bits in the \lstinline{NUMBER_OF_FRACTION_BITS} least-significant bits,
+            and because the most significant bit is $bit_{63}$, placing the $2^{-1}$ bit in the most significant bit can be accomplished by shifting the fraction bits by $(64 - NUMBER\_OF\_FRACTION\_BITS)$ places.
     \end{itemize}
-    \checkoffitem{Assign the appropriate value to \lstinline{exponent}.}
 \end{description}
 
 

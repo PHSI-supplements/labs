@@ -168,7 +168,7 @@ Having implemented a 32-bit adder, you can use it for your 16-bit subtraction fu
         \begin{itemize}
             \item Use the adder using the technique discussed in Chapter~3 and in lecture
             \item \textcolor{red}{Apply a \texttt{0xFFFF} bitmask to your arguments when you call \function{ripple_carry_addition()} to make sure that only the 16-bit values are passed to \function{ripple_carry_addition()}!}\footnote{
-                A subtle, normally-desirable, rule in the bitwise operator's semantics will cause 1s to be placed in $bits_{31..16}$.
+                A subtle, normally-desirable, rule in the bitwise complement's semantics will cause 1s to be placed in $bits_{31..16}$.
                 For our specific use, this is undesirable and so you need to force $bits_{31..16}$ to have 0s.
             }
         \end{itemize}
