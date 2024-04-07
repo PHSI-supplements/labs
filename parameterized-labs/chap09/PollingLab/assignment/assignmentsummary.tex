@@ -1,0 +1,71 @@
+There are three parts to this assignment.
+
+\subsection{Initial Changes to the Code}
+
+The first part, \textbf{\textcolor{red}{which is intended to be completed during lab time under the guidance of a TA}},
+is to populate the keypad's lookup table (Section~\ref{subsec:populatekeypad}),
+determine the base addresses for the memory-mapped I/O registers used in this assignment (Section~\ref{subsec:baseAddresses}),
+and introduce code to detect keypresses on the numeric keypad (Section~\ref{subsec:detectKeyAction}).
+
+The remaining two parts of this assignment can be completed in either order.
+
+\subsection{Memory-Mapped Input/Output}
+
+The starter code contains functions that provide access to the buttons, switches, keypad, LEDs, and display module.
+Initially, these functions make use of functions available in the CowPi library.
+In Section~\ref{sec:MemMapIO}, you will re-implement these functions using memory-mapped I/O\@.
+
+% TODO: parameterize this
+As you complete this assignment, maintain a separation of concerns,
+and place all of the code that accesses the memory-mapped I/O registers in \textit{io\_functions.c}.
+
+\subsection{Implementing a Simple System using Polling}
+
+In Section~\ref{sec:SimpleSystem}, you will implement a simple system that makes use of the development board's buttons, switches, keypad, LEDs, and display module.
+You will implement this system by polling inputs.
+
+% TODO: parameterize this
+As you complete this assignment, maintain a separation of concerns,
+and  place all of your system's logic in \textit{number\_builder.c}.
+
+
+\subsection{Constraints} \label{subsec:constraints}
+
+You may use any features that are part of the C standard if they are supported by the compiler.
+You may use the constants and functions provided in the starter code
+(to receive credit for the memory-mapped I/O portion of this lab, you will need to re-implement the I/O functions).
+
+You must detect inputs using polling;
+you may not use interrupts.
+
+% TODO: parameterize these
+All of your memory-mapped I/O code must go in \textit{io\_functions.c}.
+All of your system's logic code must go in \textit{number\_builder.c}.
+
+% TODO: parameterize this (when we eventually port to the Pico SDK)
+\subsubsection{Constraints on the Arduino core}
+
+You may not use any libraries, functions, macros, types, or constants from the Arduino core.\footnote{\url{https://www.arduino.cc/reference/en/}}
+
+\ifdefstring{\processor}{ATmega328P}{
+    \subsubsection{Constraints on AVR-libc}
+
+    You may not use any AVR-specific functions, macros, types, or constants of avr-libc.\footnote{\url{https://www.nongnu.org/avr-libc/user-manual/index.html}}
+}{}
+\ifdefstring{\processor}{RP2040}{
+    % TODO: parameterize this (when we eventually port to the bare-metal Arduino toolchain, and to the Pico SDK)
+    \subsubsection{Constraints on MBED OS}
+
+    You may not use any functions, macros, types or constants from MBED that are not part of the C standard.\footnote{\url{https://os.mbed.com/docs/mbed-os/v6.16/introduction/index.html}}
+}{}
+
+\subsubsection{Constraints on the CowPi library}
+
+To receive credit for the memory-mapped I/O portion of this lab, all input and output must be accomplished using the memory-mapped I/O registers.
+The starter code calls \function{cowpi_setup()} for you.
+You also may use \href{https://cow-pi.readthedocs.io/en/latest/CowPi/inputs.html#debouncing}{\function{cowpi_debounce_byte()}}.
+You may not use any other functions described in the CowPi Library\footnote{\url{https://cow-pi.readthedocs.io/en/latest/library.html}} portion of the Cow~Pi datasheet.
+
+\subsubsection{Constraints on other libraries}
+
+You may not use any libraries beyond those explicitly identified here.

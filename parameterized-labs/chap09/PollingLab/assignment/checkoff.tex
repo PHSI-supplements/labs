@@ -1,0 +1,230 @@
+You are not required to have your assignment checked-off by a TA or the professor.
+If you do not do so, then we will perform a functional check ourselves.
+We are, however, offering a small bonus if you complete your assignment early and get it checked-off by a TA or the professor during office hours.
+
+\textcolor{red}{\textbf{\textit{You can also use this checklist yourself to make sure you've implemented everything correctly.}}}
+
+\begin{enumerate}
+%\precheckoffitem{Establish that the code you are demonstrating is the code
+%    you submitted to to \filesubmission.}
+%    \begin{itemize}
+%    \item If you are getting checked-off during lab time, show the TA that the file was submitted before it was due.
+%    \item Download the file into your number\_builder directory.
+%        If necessary, rename it to \textit{number\_builder.ino}.
+%    \end{itemize}
+
+
+    \checkoffitem{Show the TA your \lstinline{keys} nested array and your \function{initialize_io()} function.} \\
+        \textit{+1 The \lstinline{key} nested array is correctly populated} \\
+        \textit{+\textonehalf\ The correct address is assigned to
+            \ifdefstring{\processor}{ATmega328P}{\lstinline{ioports}}{}
+            \ifdefstring{\processor}{RP2040}{\lstinline{ioport}}{}
+            \\
+        \textit{+\textonehalf\ The correct address is assigned to \lstinline{timer}} }
+    \checkoffitem{Show the TA your implementations of the Input/Output functions.}
+    \precheckoffitem{TA make note of which functions are implemented using memory-mapped I/O and which are not.
+        Do not award credit for functions that do not use memory-mapped I/O.}
+
+    \item [] \textbf{Memory-Mapped Input/Output}
+    \precheckoffitem{Place both switches in the right position and upload your code to your Cow~Pi.}
+    \checkoffitem{Demonstrate that the display shows that a key is pressed whenever any key is pressed, and that the display shows that no key is pressed whenever no keys are pressed. \\
+        \textit{+2 The \function{key_is_pressed} function is correctly implemented} }
+    \checkoffitem{Demonstrate that, as you press those keys, the display shows time advancing at the rate of one second per second. \\
+        \textit{+2 The \function{get_microseconds} function is correctly implemented} } \vspace{5mm}
+
+    \precheckoffitem{Place the right switch in the left position and RESET your Cow~Pi.}
+    \checkoffitem{Demonstrate that both pushbuttons' positions are correctly detected. \\
+        \textit{+1 The \function{xx_button_is_pressed()} functions are correctly implemented}}
+    \checkoffitem{Demonstrate that both switches' positions are correctly detected. \\
+        \textit{+1 The \function{xx_switch_is_in_right_position()} functions are correctly implemented}}
+    \checkoffitem{Demonstrate that when and only when both pushbuttons are pressed, the left LED (the built-in LED) illuminates.
+        Demonstrate that when and only when both switches are in the right position, the right LED (the external LED) illuminates. \\
+        \textit{+2 The \function{set_left_led()}  function is correctly implemented} \\
+        \textit{+1 The \function{set_right_led()} function is correctly implemented}}
+    \checkoffitem{Demonstrate that each of the keys on the keypad is correctly detected and that the absence of a keypress is also reported correctly. \\
+        \textit{+8 The \function{get_keypress()} function is correctly implemented}}
+
+    \item [] \textbf{Number Builder}
+    \precheckoffitem{Place the left switch in the left position and RESET button your Cow~Pi.}
+    \checkoffitem{Place both switches in the left position (left justified mode, decimal number base).}
+    \checkoffitem{Press 2, then 3. The right LED illuminates for \textonehalf\ second with each keypress. \\
+        Left-justified on the display module is shown: \\
+        \display{
+            \colorbox{LightGreen}{2\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{0x2\phantom{xxxxxxxxxxxxx}}
+        } \\
+    and then: \\
+    \display{
+        \colorbox{LightGreen}{23\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+        \colorbox{LightGreen}{0x17\phantom{xxxxxxxxxxxx}}
+    } \\
+        \textit{+1 Right LED illumination occurs as specified} \\
+        \textit{+\textonehalf\ Left justified mode is implemented correctly} \\
+        \textit{+1 The first digit is displayed in the correct position in this mode, making a blank display no longer blank.} \\
+        \textit{+1 Subsequent digits update the number correctly in this mode}}
+    \checkoffitem{Press B. The display is unchanged. \\
+        \textit{+\textonehalf\ Decimal number base (positive values) is implemented correctly}}
+    \checkoffitem{Press the right pushbutton. The display clears, and the left LED lluminates for \textonehalf\ second: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 Left LED illumination occurs as specified} \\
+        \textit{+1 The right pushbutton clears the display}}
+    \checkoffitem{Press 0.The right LED illuminates for \textonehalf\ second with each keypress. \\ Left-justified on the display module is shown: \\
+        \display{
+            \colorbox{LightGreen}{0\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{0\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 The right pushbutton sets the value to 0}}
+    \checkoffitem{Press the right pushbutton. The display clears, and the left LED lluminates for \textonehalf\ second.}
+    \checkoffitem{Place both switches in the right position (right justified mode, hexadecimal number base).}
+    \checkoffitem{Press 2, then 3. The right LED illuminates for \textonehalf\ second with each keypress. \\ Right-justified on the display module is shown: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}2} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxx}0x2}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxx}35} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxx}0x23}
+        } \\
+        \textit{+\textonehalf\ Right justified mode is implemented correctly.} \\
+        \textit{+1 The first digit is displayed in the correct position in this mode, making a blank display no longer blank.} \\
+        \textit{+1 Subsequent digits update the number correctly in this mode.}}
+    \checkoffitem{Press B. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxx}571} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxx}0x23B}
+        } \\
+        \textit{+\textonehalf\ Hexadecimal number base (positive values) is implemented correctly.}}
+    \checkoffitem{Press the left pushbutton. The left LED illuminates for \textonehalf\ second. The display shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxx}-571} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}0xFFFFFDC5}
+        } \\
+        \textit{+\textonehalf\ The left pushbutton negates positive values in hexadecimal mode.}}
+    \precheckoffitem{If hexadecimal negation does not work, then clear the number with the right pushbutton and then attempt to directly enter the negative value 0xFFFFFDC5.
+        If a negative hex value cannot be produced through negation, and if a negative hex value cannot be directly entered,
+        then there is no way to test how the number builder handles negative hex values, which will result in a further loss of points.}
+    \checkoffitem{Press A. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxx}-9126} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxx}0xFFFFFDC5A}
+        } \\
+        \textit{+\textonehalf\ Hexadecimal number base (negative values) is implemented correctly.}}
+    \checkoffitem{Press the left pushbutton. \label{step:negateHex} \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxx}9126} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxx}0x23A6}
+        } \\
+        \textit{+\textonehalf\ The left pushbutton negates negative values in hexadecimal mode.}}
+    \precheckoffitem{If hexadecimal negation does not work, then clear the number with the right pushbutton and then enter the positive value 0x23A6.}
+    \checkoffitem{Press 7, 8, 9, C. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxx}598112412} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}0x23A6789C}
+        }}
+    \checkoffitem{Press D. The system displays: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxx}TOO\phantom{xxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}BIG!\phantom{xxxxxx}}
+        } \\
+        \textit{+\textonequarter\ Detects too-big positive hexadecimal numbers.} \\
+        \textit{+\textonehalf\ Displays the correct ``too big'' error message.}}
+    \checkoffitem{Press the right pushbutton to clear the display and reset the value to 0.}
+    \checkoffitem{Generate the value 0x98765432 by one of two means:}
+        \begin{multicols}{2}
+            Indirectly:
+            First enter the value 0x6789ABCE \\
+                \display{
+                    \colorbox{LightGreen}{\phantom{xxxxxx}1737075662} \vspace{-1mm}\\
+                    \colorbox{LightGreen}{\phantom{xxxxxx}0x6789ABCE}
+                } \\
+            Then negate it with the left pushbutton \\
+                \display{
+                    \colorbox{LightGreen}{\phantom{xxxxx}-1737075662} \vspace{-1mm}\\
+                    \colorbox{LightGreen}{\phantom{xxxxxx}0x98765432}
+                }
+
+        \columnbreak
+
+            Directly: enter the value 0x98765432 \\
+            \display{
+                \colorbox{LightGreen}{\phantom{xxxxx}-1737075662} \vspace{-1mm}\\
+                \colorbox{LightGreen}{\phantom{xxxxxx}0x98765432}
+            }
+        \end{multicols}
+    \checkoffitem{Press 1. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxx}TOO\phantom{xxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}BIG!\phantom{xxxxxx}}
+        } \\
+        \textit{+\textonequarter\ Detects too-big negative hexadecimal numbers.} \\
+        \textit{+\textonequarter\ No false ``too big'' detection of hexadecimal numbers.}}
+    \checkoffitem{Press the right pushbutton to clear the display and reset the value to 0.}
+    \checkoffitem{Place the right swtich in the left position (decimal number base).}
+    \checkoffitem{Enter 1, 2, 3, 4, 5. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxx}12345} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxx}0x3039}
+        }}
+    \checkoffitem{Press the left pushbutton. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxx}-12345} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}0xFFFFCFC7}
+        } \\
+        \textit{+\textonehalf\ The left pushbutton negates positive values in decimal mode.}}
+    \checkoffitem{Enter 6, 7, 8, 9, 0. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxx}-1234567890} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}0xB669FD2E}
+        } \\
+        \textit{+\textonehalf\ Decimal number base (negative values) is implemented correctly.}}
+    \checkoffitem{Press the left pushbutton. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxx}1234567890} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}0x499602D2}
+        } \\
+        \textit{+\textonehalf\ The left pushbutton negates negative values in decimal mode.}}
+    \checkoffitem{Press Press 1. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxx}TOO\phantom{xxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}BIG!\phantom{xxxxxx}}
+        } \\
+        \textit{+\textonequarter\ Detects too-big positive decimal numbers.}}
+    \checkoffitem{Clear the number with the right pushbutten and enter 1, 2, 3, 4, 5, 6, 7, 8, 9, 0. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxx}1234567890} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}0x499602D2}
+        }}
+    \checkoffitem{Press the left pushbutton. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxx}-1234567890} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}0xB669FD2E}
+        }}
+    \checkoffitem{Press 0. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxx}TOO\phantom{xxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}BIG!\phantom{xxxxxx}}
+        } \\
+        \textit{+\textonequarter\ Detects too-big negative decimal numbers.} \\
+        \textit{+\textonequarter\ No false ``too big'' detection of decimal numbers.}}
+    \checkoffitem{Clear the number with the right pushbutton, and \textbf{rapidly} (strictly less than \textonehalf~second between presses) enter 1, 2, 3, left pushbutton, left pushbutton, left pushbutton, 4, 5, 6. \\
+        The display updates as fast as you can press the keys and buttons.
+        The right LED stays illuminated between keypresses until \textonehalf~second after the 3 is pressed, and again \textonehalf~second after the 6 is pressed.
+        The left LED stays illuminated between button presses until \textonehalf~second after the third button press.
+        At the end, the display shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxx}-123456} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxx}0xFFFE1DC0}
+        } \\
+        \textit{+1 The system is responsive and does not block after an input.}}
+    \item [] \textbf{Overall} \\
+    \textit{+\textonehalf\ A single button press is treated as a single press.} \\
+    \textit{+\textonehalf\ A single key press is treated as a single press.}
+\end{enumerate}
+
+This concludes the demonstration of your system's functionality.
+The TAs will later examine your code for violations of the assignment's constraints.
+If your code looks like it is tailored for this checklist, the TAs may re-grade using a different checklist.

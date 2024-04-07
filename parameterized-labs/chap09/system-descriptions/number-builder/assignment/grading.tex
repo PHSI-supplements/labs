@@ -1,0 +1,12 @@
+\newcommand{\simpleSystemRubric}{ % 16
+    \rubricitem{1}{Left justified mode and right justified mode are implemented correctly}
+    \rubricitem{2}{Decimal and hexadecimal number bases are implemented correctly}
+    \rubricitem{2}{The LED illumination occurs as specified}
+    \rubricitem{2}{The first digit of a number is displayed in the correct position, making a blank display no longer blank, in accordance with requirements~\ref{spec:decimalExplained}, \ref{spec:hexadecimalExplained}, and \ref{spec:initialKeyPress}}
+    \rubricitem{2}{Subsequent digits update the number in accordance with requirements~\ref{spec:decimalExplained}, \ref{spec:hexadecimalExplained}, and \ref{spec:BuildingValue}}
+    \rubricitem{2}{The left pushbutton negates the number's value (1 point for each of: negating positive values, negating negative values)}
+    \rubricitem{2}{Detects and displays correct message when the number being built is too big (\textonequarter\ point for detecting too-big numbers for each of: positive decimal numbers, negative decimal numbers, positive hexadecimal numbers, negative hexadecimal numbers; \textonequarter\ point for no false detections among each of: decimal numbers, hexadecimal numbers; \textonehalf\ point for printing the correct message)}
+    \rubricitem{1}{The right pushbutton clears the display and sets the value to 0}
+    \rubricitem{1}{The system is responsive and never blocks for more than 2$\mu$s}
+    \rubricitem{1}{A button press or a key press is treated as a single press}
+}

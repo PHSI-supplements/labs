@@ -1,0 +1,15 @@
+\newcommand{\initialChangesToTheCodeRubric}{ % 6
+    \rubricitem{1}{The \lstinline{key} nested array is correctly populated}
+    \rubricitem{1}{The correct addresses are assigned to
+        \ifdefstring{\processor}{ATmega328P}{\lstinline{ioports}}{}
+        \ifdefstring{\processor}{RP2040}{\lstinline{ioport}}{}
+        and \lstinline{timer}}
+    \rubricitem{2}{The \function{key_is_pressed()} function is correctly implemented}
+    \rubricitem{2}{The \function{set_left_led()} function is correctly implemented}
+}
+
+\newcommand{\memoryMappedIORubric}{ % 13
+    \rubricitem{2}{The \function{get_microseconds()} function is correctly implemented}
+    \rubricitem{3}{The simple input/output functions are correctly implemented (1 point for \\ \function{xx_switch_is_in_right_position()} functions; 1 point for \function{xx_button_is_pressed()} functions; 1 point for the \function{set_right_led()} function)}
+    \rubricitem{8}{The \function{get_keypress()} function is correctly implemented (\textonehalf\ point for each key)}
+}

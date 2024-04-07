@@ -1,0 +1,6 @@
+starter-code/PollingLab/platformio.ini
+starter-code/PollingLab/src/*h
+starter-code/PollingLab/src/*c
+starter-code/PollingLab/src/*cpp
+!starter-code/PollingLab/src/PollingLab.cpp
+!assignment/in-this-house.png

@@ -1,0 +1,225 @@
+During your lab period, the TAs will guide the class through the first modifications to the starter code that you must make, described in this section.
+If you do not attend your lab period, then you must complete this section on your own.
+\textbf{\textit{Except during lab time, you may }not\textit{ discuss the solutions for this section with other students.}}
+
+
+
+
+\subsection{Populate the Keypad's Lookup Table} \label{subsec:populatekeypad}
+
+Locate the \lstinline{keys} $4 \times 4$ nested array on lines 34--39 of \textit{io\_functions.c}.
+This nested array serves as a lookup table to obtain the appropriate value when a key is pressed.
+\textit{Even the starter code depends on this nested array being populated correctly.}
+The element \lstinline{keys[0][0]} will correspond to the \texttt{1} key;
+\lstinline{keys[0][3]} will correspond to the \texttt{A} key;
+\lstinline{keys[3][0]} will correspond to the \texttt{*} key;
+and \lstinline{keys[3][3]} will correspond to the \texttt{D} key.
+
+We want the numerals \texttt{0}--\texttt{9} to produce their respective decimal (and hexadecimal) values.
+We want \texttt{A}--\texttt{D} to produce their respective hexadecimal values.
+We want \texttt{\#} to produce the hexadecimal value 0xE, and we want \texttt{*} to produce the hexadecimal value 0xF\@.
+
+\begin{description}
+    \checkoffitem{Populate \lstinline{keys}' nested array initializer so that the lookup table will produce the correct value for each row/column combination.}
+\end{description}
+
+\subsubsection*{Test your code}
+
+You can confirm that you correctly populated the array's initializer by running the test code.
+\begin{description}
+    \checkoffitem{Place the \textbf{left switch} in the \textit{right} position and the \textbf{right switch} in the \textit{left} position, and upload your code.
+        (Or, if you have already uploaded your code, position the switches and press the RESET button.)}
+\end{description}
+The test code will output on the display module.
+The output will include the key that was pressed (if any), a hyphen if no key is being pressed, or a question mark if \function{get_keypress()} returns an invalid value.
+
+\newcommand{\firstline}{1}
+
+\ifdefstring{\processor}{ATmega328P}{\renewcommand{\firstline}{346}}{}
+\ifdefstring{\processor}{RP2040}{\renewcommand{\firstline}{1}}{}
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=\firstline, basicstyle=\ttfamily\small]
+...
+if (key_pressed <= 0x0F) {
+    sprintf(output, "%2X%5c%2c%4c%2c",
+            key_pressed,
+            left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
+            left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
+}  else {
+    sprintf(output, "%2c%5c%2c%4c%2c",
+            key_pressed == 0xFF ? '-' : '?',
+            left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
+            left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
+}
+...
+\end{lstlisting}
+
+Familiarize yourself with the test code's other outputs.
+The output will include the positions of the left and right buttons (``U'' for up and ``D'' for down) and of the left and right switches (``L'' for left position and ``R'' for right position).
+
+Finally, if both buttons are pressed then the left LED will illuminate, and if both switches are in the right position then the right LED will illuminate.
+
+\ifdefstring{\processor}{ATmega328P}{\renewcommand{\firstline}{326}}{}
+\ifdefstring{\processor}{RP2040}{\renewcommand{\firstline}{1}}{}
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=\firstline]
+    ...
+    set_left_led(left_button_position && right_button_position);
+    set_right_led(left_switch_position && right_switch_position);
+    ...
+\end{lstlisting}
+
+
+\subsection{Determine the Base Addresses of Certain I/O Register Banks} \label{subsec:baseAddresses}
+
+In Sections~\ref{subsec:detectKeyAction}--\ref{subsec:controlLED} and \ref{subsec:simpleIO}--\ref{subsec:ScannedInput}, you will use
+\ifdefstring{\processor}{ATmega328P}{an array of \lstinline{cowpi_ioport_t} structures}{}
+\ifdefstring{\processor}{RP2040}{a \lstinline{cowpi_ioport_t} structure}{}
+to access the memory-mapped I/O registers for the \processor's data pins.
+
+In Section~\ref{subsec:timer}, you will use a pointer to a
+\ifdefstring{\processor}{ATmega328P}{\lstinline{cowpi_timer8bit_t}}{}
+\ifdefstring{\processor}{RP2040}{cowpi_timer_t}{}
+structure to determine how much time has elapsed since the system was powered-up.
+
+Read the section of the Cow~Pi datasheet that \href{https://cow-pi.readthedocs.io/en/latest/CowPi_\lowercaseprocessor/io_registers.html#structure-for-memory-mapped-input-output}{discusses the \lstinline{cowpi_ioport_t} structure}.
+(During the guided discussion in your lab period, the TAs may direct you to particular parts of that section of the datasheet,
+but be sure to go back and read the full section covering \href{https://cow-pi.readthedocs.io/en/latest/CowPi_\lowercaseprocessor/io_registers.html#external-pins-input-output}{input/output pins} later.)
+After you have done so,
+\begin{description}
+    \checkoffitem{Uncomment the
+        \ifdefstring{\processor}{ATmega328P}{\lstinline{ioports = ...}}{}
+        \ifdefstring{\processor}{RP2040}{\lstinline{ioport = ...}}{}
+        line of the starter code's \function{initialize_io()} function, and}
+    \checkoffitem{Assign the appropriate address to the
+        \ifdefstring{\processor}{ATmega328P}{\lstinline{ioports = ...}}{}
+        \ifdefstring{\processor}{RP2040}{\lstinline{ioport = ...}}{}
+        pointer on that line.}
+\end{description}
+
+\input{../../../\pathone/assignment/initialize_io-\lowercaseprocessor}
+
+You can now use the
+\ifdefstring{\processor}{ATmega328P}{
+    \lstinline{ioports} pointer as an array of \lstinline{cowpi_ioport_t} structures, which you can index using the \lstinline{D0_D7}, \lstinline{D8_D13}, and \lstinline{D14_D19} named constants.
+}{}
+\ifdefstring{\processor}{RP2040}{\lstinline{ioport} pointer to access the microcontroller pins' inputs and outputs.}{}
+
+
+Read the section of the Cow~Pi datasheet that \href{https://cow-pi.readthedocs.io/en/latest/CowPi_\lowercaseprocessor/io_registers.html#timers}{discusses the timer registers}.
+\ifdefstring{\processor}{ATmega328P}{
+    Pay attention to the \lstinline{cowpi_timer8bit_t} structure and to TIMER0's registers.
+}{}
+After you have done so,
+\begin{description}
+    \checkoffitem{Uncomment the \lstinline{timer = ...} line of the starter code's \function{initialize_io()} function, and}
+    \checkoffitem{Assign the appropriate address to the \lstinline{timer} pointer on that line.}
+\end{description}
+
+When you get to the assignment's Section~\ref{subsec:timer}, you will be able to use the \lstinline{timer} pointer to access the timer's memory-mapped registers to read its counter.
+
+
+\subsection{Detect Whether a Key on the Numeric Keypad Has Been Pressed} \label{subsec:detectKeyAction}
+
+The next part of the group activity is detecting when someone is pressing a key on the numeric keypad.
+The \function{key_movement_detected()} function in the starter code is:
+
+\input{../../../\pathone/assignment/key_is_pressed-\lowercaseprocessor}
+
+Line~\ref{code:readColumns} uses the Arduino function \function{digitalRead()} to read the values on the four pins attached to the keypad's columns.
+If any of those pins has a 0 on it, then a key has been pressed (see Section~\ref{subsec:ScannedInput}).
+The next line debounces that reading (see Section~\ref{subsec:debouncing}).
+
+%The remainder of the code compares the reading to the previous reading.
+%If no key was pressed and there is still no key being pressed, the function returns \lstinline{false}.
+%Similarly, if a key was pressed and is still being pressed, the function returns \lstinline{false}.
+%On the other hand, if no key was pressed and there is now a key being pressed, or if a key was being pressed and there is now no key being pressed, then the function returns \lstinline{true}.
+
+One problem is that the \function{digitalRead()} function is part of the Arduino core and, as noted in Section~\ref{subsec:constraints}, you may not use functions from the Arduino core.
+The other problem is that the \function{digitalRead()} function can read only one pin at a time, and so there are four distinct reads.
+Now that you have the base address for the
+\ifdefstring{\processor}{ATmega328P}{\lstinline{ioports} array,}{}
+\ifdefstring{\processor}{RP2040}{\lstinline{ioport} structure,}{}
+you can use memory-mapped I/O to replace the calls to \function{digitalRead()},
+and you can do so in a manner that obtains the values on all four pins at the same time.
+
+\ifdefstring{\processor}{ATmega328P}{
+    \newcommand{\mappingtablelink}{id9}
+    \newcommand{\mappingtablenumber}{8}
+}{}
+\ifdefstring{\processor}{RP2040}{
+    \newcommand{\mappingtablelink}{id18}
+    \newcommand{\mappingtablenumber}{22}
+}{}
+If you are currently in your lab period, then work with the other students in your lab section to determine the answers to these questions.
+If you are not attending your lab period, then work individually to determine the answers to these questions.
+\begin{description}
+    \checkoffitem{Using the datasheet's} \href{https://cow-pi.readthedocs.io/en/latest/CowPi_\lowercaseprocessor/io_registers.html#\mappingtablelink}{Table~\mappingtablenumber}:
+        \begin{itemize}
+            \ifdefstring{\processor}{ATmega328P}{
+                \item What should you use to index the \lstinline{ioports} array to read from pins~14--17, the pins connected to the keypad's columns?
+                \item What field in that element should you use?
+            }{}
+            \item What bitmask should you use?
+            \item What should line~\ref{code:readColumns} look like?
+        \end{itemize}
+    \checkoffitem{Replace line~\ref{code:readColumns} with code that reads from a memory-mapped input register to determine whether a key is being pressed.}
+\end{description}
+
+
+
+\subsubsection*{Test your code}
+
+You can confirm that you correctly detected a change on the keypad by running the test code.
+\begin{description}
+    \checkoffitem{Place the both switches in the \textit{right} position and upload your code.
+        (Or, if you have already uploaded your code, position the switches and press the RESET button.}
+\end{description}
+The test code will output on the display module.
+The output will indicate whether a key is being pressed, and also the elapsed time since the system was powered up.
+
+
+\subsection{Controlling an LED} \label{subsec:controlLED}
+
+The final part of the group activity is illuminating and deluminating the built-in LED\@.
+Locate the \function{set_left_led()} function.
+In the starter code, this function is implemented by calling functions in the CowPi library.
+
+\begin{description}
+    \checkoffitem{Modify this function to replace the calls to CowPi library functions with code that uses the
+    \ifdefstring{\processor}{ATmega328P}{\lstinline{ioports} array,}{}
+    \ifdefstring{\processor}{RP2040}{\lstinline{ioport} pointer,}{}
+    to turn the LEDs on or off.}
+        \begin{description}
+            \checkoffitem{Use the read-modify-write pattern to do so, so that you do not change any pins that you do not intend to change.\footnote{Even on ``input'' pins, changing the ``output'' register can have an effect.}}
+                \begin{itemize}
+                    \ifdefstring{\processor}{ATmega328P}{
+                        \item What should you use to index the \lstinline{ioports} array to access the pin connected to that LED?
+                        What field in that element should you use?
+                    }{}
+                    \ifdefstring{\processor}{RP2040}{
+                        \item Which field in the \lstinline{cowpi_ioport_t} structure should you use?
+                    }{}
+                    \item When turning the LED on, what bitmask should you use?
+                    What operation should you use?
+                    \item When turning the LED off, what bitmask should you use?
+                    What operation should you use?
+                \end{itemize}
+            \item[\phantom{xxx}$\bullet$] No debouncing code is necessary because these functions do not read from mechanical switches.
+        \end{description}
+\end{description}
+
+\paragraph{Test your code}
+
+\begin{description}
+    \checkoffitem{Place the \textbf{left switch} in the \textit{right position} and upload the program to your Cow~Pi.}
+\end{description}
+Whenever both buttons are pressed, the left LED will illuminate.
+
+
+\vspace{1cm}
+
+You are now ready to complete the remainder of this assignment on your own.
+Reminders:
+\begin{itemize}
+    \item You can complete Sections~\ref{sec:MemMapIO} and \ref{sec:SimpleSystem} in either order.
+    \item \collaborationrules
+\end{itemize}

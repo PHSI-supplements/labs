@@ -88,5 +88,61 @@
     "progress": null,
     "wrapup": "Lil enters the room.\n    Herb challenges her: ``\\textit{Gulliver's Travels}, `endian','' and Lil answers, ``ends.''\n\n    Lil walks up to you and says, ``We have the insurance situation taken care of, and it's time to get the Zoo ready for guests.\n    We're reassembling the tech team, and there's plenty of work to do.''\n\n    You smile.\n    ``That's good news!''\n\n    Lil's face is hard to read.\n    ``Well, yes and no.\n    It's good that you'll be able to resume work on the Zoo's systems.\n    But while Archie was waiting for us to fix the insurance situation, he got bored and -- cutting a long story short -- he ended up creating some new `opportunities' that we need you `to succeed' at.''",
     "callback": ""
+  },
+  "AddressingLab": {
+    "teaser": "",
+    "introduction": "",
+    "progress": null,
+    "wrapup": "",
+    "callback": ""
+  },
+  "Chapter6Lab": {
+    "teaser": "",
+    "introduction": "",
+    "progress": null,
+    "wrapup": "",
+    "callback": ""
+  },
+  "Chapter11Lab": {
+    "teaser": "",
+    "introduction": "",
+    "progress": null,
+    "wrapup": "",
+    "callback": ""
+  },
+  "DuplicatorLab": {
+    "teaser": "",
+    "introduction": "",
+    "progress": null,
+    "wrapup": "",
+    "callback": ""
+  },
+  "PollingLab": {
+    "teaser": "",
+    "introduction": "    Archie walks up to you, along with Herb Bee from Eclectic Electronics.\n    Herb is holding a tangled mess of electronics.\n    Archie explains, ``Herb here has developed a prototype of a device that he thinks will be useful for our physical security needs, as well as a few other applications around here. He calls it the \\textit{Cow Pi}.''\n\n    You look at the device in Herb's hands and see the Arduino Nano central to the circuit.\n    ``Isn't \\textit{-Pi} typically used as a suffix for circuits that use a Raspberry Pi instead of an Arduino?''\n        \n    Herb replies, ``Typically, yes, but \\textit{Cowduino} isn't very punny, is it?''\n\n    Archie chimes in, ``Maybe with the right emphasis: \\textit{Cow-DOO-ino}.''\n\n    ``That's kind of subtle, don't you think? How will people know to put the emPHAsis on that sylLAble?''\n    \n    ``I think we're getting off topic here,'' you point out.\n    ``How can I help?''\n\n    ``Oh, right,'' Herb says, ``We'd like you to kick its proverbial tires.\n    Let's start off with something simple, like a number builder tool.''",
+    "progress": null,
+    "wrapup": "Herb looks over your work.\n    ``Hmm, yes. I think this is coming along nicely.\n    Let's run a few more tests.''\n\n    Archie storms into the room.\n    ``We have \\textit{got} to do something about security!\n    How's that doodad coming along? \n    Because there's now a half-man/half-fly in the labs going on-and-on about Chaos Theory and how if we just give him a MacBook and a spaceship then he'll be able to get the Lord of Thunder to travel across the 8th Dimension.\n    Is that thing just about ready?''\n\n    Herb shakes his head, ``No, not quite yet. It should be ready in about a week.''",
+    "callback": ""
+  },
+  "InterruptLab": {
+    "teaser": "",
+    "introduction": "",
+    "progress": null,
+    "wrapup": "",
+    "callback": ""
+  },
+  "GroupLab": {
+    "teaser": "",
+    "introduction": "",
+    "progress": null,
+    "wrapup": "",
+    "callback": ""
+  },
+  "MemoryLab": {
+    "teaser": "",
+    "introduction": "",
+    "progress": null,
+    "wrapup": "",
+    "callback": ""
   }
 }

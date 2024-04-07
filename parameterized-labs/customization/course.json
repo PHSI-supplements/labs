@@ -8,9 +8,11 @@
     "cs2 todo": "separate into three separate key/value pairs (resulting in three separate macros)"
   },
   "compilation": {
+    "buildsystem": "make",
+    "processor": "x86-64",
     "C": {
       "compiler": "clang",
-      "version": "c99",
+      "standard": "c99",
       "optimization": "-Og -g",
       "warnings": "-Wall -Wextra -Wno-unused-parameter",
       "libraries": "",
@@ -25,7 +27,7 @@
     "overall comment": "How will students typically get the lab files, and how will they typically submit their code?",
     "macros comment 1": "`startercode` lists the file(s) students need (zip file & tarball based on assignment name).",
     "macros comment 2": "`requiredfiles` lists the file(s) that students need to turn in (defined in labs.json).",
-    "source": "Download \\startercode\\ from Canvas, or copy \\startercode\\ from {\\footnotesize$\\sim$}cbohn2/csce231 on \\textit{cse-linux-01.unl.edu}.",
+    "source": "Download \\startercode\\ from Canvas, or copy \\startercode\\ from {\\footnotesize$\\sim$}cbohn2/csce231 on \\textit{cse-linux-01.unl.edu}",
     "runtime environment": "the \\textit{cse-linux-01.unl.edu} Linux server",
     "submission": "When you have completed this assignment, submit \\requiredfiles\\ to the assignment in Canvas."
   },

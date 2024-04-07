@@ -1,0 +1,62 @@
+%%
+%% PollingLab (c) 2021-24 Christopher A. Bohn
+%%
+%% Assignment writeup licensed under the Creative Commons Attribution 4.0 International License
+%% https://creativecommons.org/licenses/by/4.0/
+%%
+
+\documentclass[12pt]{article}
+
+\usepackage{pdflscape}
+\usepackage{multicol}
+\setlength{\columnsep}{2cm}
+\setlength{\columnseprule}{0.4pt}
+\input{assignment-definitions}
+
+\lstset{language=c, numbers=left, showstringspaces=false,
+    moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+}
+
+\pagelayout
+\begin{document}
+    \labidentifier\
+
+    \pdfbookmark[1]{Frontmatter}{frontmatter}                                       \input{frontmatter}
+
+    \softwareengineeringfrontmatter
+
+    \section*{Scenario}                                                             \scenariointroduction
+
+    \section{Assignment Summary}                                                    \input{assignmentsummary}
+
+    \section{Getting Started}                                                       \input{gettingstarted}
+
+    \section{Initial Changes to the Code} \label{sec:LabTime}                       \input{../../../\pathone/assignment/labtime}
+
+    \section{Memory-Mapped Input/Output} \label{sec:MemMapIO}                       \input{../../../\pathone/assignment/memory-mapped-inputoutput}
+
+    \section {Implementing a Simple System Using Polling} \label{sec:SimpleSystem}  \input{../../../\pathtwo/assignment/system-implementation}
+
+    \section{Turn-in and Grading}                                                   \input{grading}
+
+    \section*{Epilogue}                                                             \scenariowrapup
+
+    \textit{To be continued...}
+
+%%    \newpage\appendix
+    \appendix
+
+    \section{Appendix: Lab Checkoff}                                                \input{checkoff}
+
+%%    \newpage
+
+    \section{Appendix: C Syntax Notes}                                              \input{c-syntax-notes}
+
+    \newpage
+
+    \begin{landscape}
+        \section{Appendix: Links to Cow Pi Datasheet}                               \input{datasheetlinks}
+    \end{landscape}
+
+
+\end{document}

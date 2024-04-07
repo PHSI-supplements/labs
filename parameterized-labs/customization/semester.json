@@ -4,6 +4,8 @@
   "labs comment": {
     "lab": "a lab found in labs.json",
     "due": "a description of when the assignment is due",
+    "locations": "if a lab's location is 'composite' then a 'locations' list describes where the composite lab will be placed, followed by a list of component locations -- any locations included here will be appended to the list",
+    "compilation": "optionally, override the default compilation parameters",
     "file flow": "optionally, override the default file flow found in course.json",
     "policies": "optionally, override some of the default policies found in course.json"
   },
@@ -39,40 +41,53 @@
     {
       "lab": "FloatLab",
       "due": "Week of February 26, before the start of your lab section"
-    }
-  ],
-  "todo": [
+    },
     {
       "lab": "AddressingLab",
-      "due": "Week of March 4, before the start of your lab section"
+      "due": "Week of March 4, before the start of your lab section",
+      "TODO": "TODO"
     },
     {
       "lab": "Chapter6Lab",
-      "due": "Week of March 25, before the start of your lab section"
+      "due": "Week of March 25, before the start of your lab section",
+      "TODO": "TODO"
     },
     {
       "lab": "Chapter11Lab",
-      "due": "Week of April 1, before the start of your lab section"
+      "due": "Week of April 1, before the start of your lab section",
+      "TODO": "TODO"
     },
     {
       "lab": "DuplicatorLab",
-      "due": "Week of April 8, before the start of your lab section"
+      "due": "Week of April 8, before the start of your lab section",
+      "TODO": "TODO"
     },
     {
       "lab": "PollingLab",
-      "due": "Week of April 15, before the start of your lab section"
+      "due": "Week of April 15, before the start of your lab section",
+      "required files": "\\textit{io_functions.c} and \\textit{number_builder.c}",
+      "locations": [
+        "chap09/system-descriptions/number-builder"
+      ],
+      "compilation": {
+        "processor": "ATmega328P",
+        "processor.bk": "RP2040"
+      }
     },
     {
       "lab": "InterruptLab",
-      "due": "Week of April 22, before the start of your lab section"
+      "due": "Week of April 22, before the start of your lab section",
+      "TODO": "TODO"
     },
     {
       "lab": "GroupLab",
-      "due": "Week of May 6, before the start of your lab section\\footnote{See Piazza for the due dates of teams with students from different lab sections.}"
+      "due": "Week of May 6, before the start of your lab section\\footnote{See Piazza for the due dates of teams with students from different lab sections.}",
+      "TODO": "TODO"
     },
     {
       "lab": "MemoryLab",
-      "due": "Week of May 6, at the end of your lab section"
+      "due": "Week of May 6, at the end of your lab section",
+      "TODO": "TODO"
     }
   ]
 }

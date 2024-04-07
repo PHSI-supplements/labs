@@ -15,7 +15,11 @@ def validate_labs_existence(semester: List[Dict], labs: Dict) -> bool:
         print(f'Missing data for: {missing_labs}', file=sys.stderr)
         validated = False
     else:
-        lab_locations: List[str] = [labs[lab['lab']]['location'] for lab in semester]
+        composite_labs: List[Dict] = [lab for lab in semester if labs[lab['lab']]['location'] == 'composite']
+        lab_locations: List[str] = [labs[lab['lab']]['location'] for lab in semester
+                                    if labs[lab['lab']]['location'] not in {'composite', 'TODO'}]
+        for lab in composite_labs:
+            lab_locations += labs[lab['lab']]['locations']
         existences: List[bool] = [os.path.exists(location) for location in lab_locations]
         validated = functools.reduce(lambda a, b: a & b, existences)
         if not validated:
@@ -103,12 +107,30 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
     tex += f'\\newcommand{{\\labname}}{{{lab["lab name"]}}}\n'
     tex += f'\\newcommand{{\\shortlabname}}{{{short_labname}}}\n'
     tex += f'\\newcommand{{\\duedate}}{{{lab["due"]}}}\n'
+    if lab["location"] == 'composite':
+        for index, location in enumerate(lab["locations"][1:]):
+            # number_string = inflect.engine.number_to_words(index + 1)  # there seems to be a bug in the inflect module
+            number_string: str
+            match index + 1:
+                case 1:
+                    number_string = 'one'
+                case 2:
+                    number_string = 'two'
+                case 3:
+                    number_string = 'three'
+                case _:
+                    number_string = 'unknown'
+            tex += f'\\newcommand{{\\path{number_string}}}{{{location}}}\n'
     # file flow
     tex += f'\\newcommand{{\\filesource}}{{{lab["file flow"]["source"]}}}\n'
     tex += f'\\newcommand{{\\filesubmission}}{{{lab["file flow"]["submission"]}}}\n'
     tex += f'\\newcommand{{\\runtimeenvironment}}{{{lab["file flow"]["runtime environment"]}}}\n'
     tex += f'\\newcommand{{\\startercode}}{{{filename_core}.zip or {filename_core}.tar}}\n'
-    tex += f'\\newcommand{{\\requiredfiles}}{{{lab["required files"]}}}\n'
+    tex += f'\\newcommand{{\\requiredfiles}}{{{lab["required files"]}}}\n'.replace('_', '\\_')
+    # particulars about the environment
+    tex += f'\\newcommand{{\\buildsystem}}{{{lab["compilation"]["buildsystem"]}}}\n'
+    tex += f'\\newcommand{{\\processor}}{{{lab["compilation"]["processor"]}}}\n'
+    tex += f'\\newcommand{{\\lowercaseprocessor}}{{{lab["compilation"]["processor"]}}}\n'.lower()
     # policies
     tex += f'\\newcommand{{\\collaborationrules}}{{{lab["policies"]["collaboration"][0]}}}\n'
     # TODO: handle additional collaboration elements
@@ -137,10 +159,11 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
     if 'lab-specific keys' in lab and lab['lab-specific keys'] is not None:
         tex += globals()[f'generate_{filename_core}_latex_macros'](lab, storyline)
     # output the LaTeX customization
-    with open(f'{lab["location"]}/assignment/assignment-definitions.tex', mode='w') as output_file:
+    lab_location = lab['locations'][0] if 'locations' in lab else lab['location']
+    with open(f'{lab_location}/assignment/assignment-definitions.tex', mode='w') as output_file:
         output_file.write(tex)
     # copy any necessary images
-    images: List[Union[str, Dict[str, str]]] = []
+    images: List[Union[str, Dict[str, str]]] = lab['images'] if 'images' in lab else []
     if 'introduction image' in storyline and lab_number == 1:
         images.append(storyline['introduction image'])
     for key in {'teaser image', 'introduction image', 'wrapup image', 'callback image'}:
@@ -152,7 +175,7 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
             case str():
                 if os.path.isfile(f'customization/storylines/{storyline["introduction image"]}'):
                     shutil.copy(src=f'customization/storylines/{storyline["introduction image"]}',
-                                dst=f'{lab["location"]}/assignment/', follow_symlinks=True)
+                                dst=f'{lab_location}/assignment/', follow_symlinks=True)
                 else:
                     print('No such file for introduction image:'
                           f' customization/storylines/{storyline["introduction image"]}')
@@ -161,13 +184,13 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
                     try:
                         with urllib.request.urlopen(image_description["link"]) as image_url:
                             image = image_url.read()
-                        with open(f'{lab["location"]}/assignment/{image_description["name"]}', mode='wb') as image_file:
+                        with open(f'{lab_location}/assignment/{image_description["name"]}', mode='wb') as image_file:
                             image_file.write(image)
-                            print(f'Saved {lab["location"]}/assignment/{image_description["name"]};'
+                            print(f'Saved {lab_location}/assignment/{image_description["name"]};'
                                   ' this might be the wrong location')
                     except urllib.error.HTTPError as exception:
                         print(f'Could not retrieve {image_description["link"]} for'
-                              f' {lab["location"]}/assignment/{image_description["name"]}')
+                              f' {lab_location}/assignment/{image_description["name"]}')
                         print(f'{exception}')
                         if 'search' in image_description and image_description['search'] is not None:
                             print('Consider an internet image search using the search term'
@@ -178,24 +201,20 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
                 print(f'Expected string or dictionary for image; got {image_description}')
     # create the Makefile
     makefile: str = f'LAB = {filename_core}\n\nlab: *.tex\n'
-    if os.path.exists(f'{lab["location"]}/assignment/{filename_core}.bib'):
+    if os.path.exists(f'{lab_location}/assignment/{filename_core}.bib'):
         makefile += '\tpdflatex $(LAB)\n\tbibtex   $(LAB)\n'
     makefile += ('\tpdflatex $(LAB)\n\tpdflatex $(LAB)\n\n'
                  'all: lab\n\n'
-                 'clean:\n\trm -f $(LAB).aux $(LAB).log $(LAB).out $(LAB).synctex.gz $(LAB).toc $(LAB).bbl $(LAB).blg $(LAB).fls $(LAB).fdb_latexmk\n'
+                 'clean:\n\trm -f $(LAB).aux $(LAB).log $(LAB).out $(LAB).synctex.gz'
+                 ' $(LAB).toc $(LAB).bbl $(LAB).blg $(LAB).fls $(LAB).fdb_latexmk\n'
                  '\nclear: clean\n'
                  '\trm $(LAB).pdf\n')
-    with open(f'{lab["location"]}/assignment/Makefile', mode='w') as output_file:
+    with open(f'{lab_location}/assignment/Makefile', mode='w') as output_file:
         output_file.write(makefile)
 
 
-def prep_code(lab: Dict, storyline: Dict):
-    # TODO: constraint-check
+def create_makefile(lab: Dict) -> None:
     handle: str = lab['lab'].lower()
-    # starter code customization
-    if 'lab-specific keys' in lab and lab['lab-specific keys'] is not None:
-        globals()[f'generate_{handle}_starter_code'](lab, storyline)
-    # create the Makefile
     compilation: Dict[str, Union[Dict[str, str], List[Dict[str, str], None]]] = lab['compilation']
     targets: List[Dict[str, str]]
     if compilation['C']['custom targets'] is None:
@@ -211,7 +230,7 @@ def prep_code(lab: Dict, storyline: Dict):
         target_lines += f'{target["target"]}: {target["dependencies"]}\n\t$(CC) -o $@ $^ $(CFLAG) $(LIB) $(OPTION)\n\n'
     makefile: str = (f'CC = {compilation["C"]["compiler"]}\n'
                      f'CFLAG = {compilation["C"]["optimization"]} '
-                     f'-std={compilation["C"]["version"]} '
+                     f'-std={compilation["C"]["standard"]} '
                      f'{compilation["C"]["warnings"]}\n'
                      f'LIB = {compilation["C"]["libraries"]}\n'
                      f'DEP = $(wildcard *.h) {compilation["C"]["additional dependencies"]}\n'
@@ -235,19 +254,91 @@ def prep_code(lab: Dict, storyline: Dict):
         output_file.write(makefile)
 
 
+def create_platformio_ini(lab: Dict) -> None:
+    compilation: Dict[str, Union[Dict[str, str], List[Dict[str, str], None]]] = lab['compilation']
+    targets: List[Dict[str, str]]
+    match compilation['processor']:
+        case 'ATmega328P':
+            targets = [
+                {'environment': 'nanoatmega328old', 'platform': 'atmelavr',
+                 'board': 'nanoatmega328', 'framework': 'arduino'},
+                {'environment': 'nanoatmega328new', 'platform': 'atmelavr',
+                 'board': 'nanoatmega328new', 'framework': 'arduino'},
+                {'environment': 'uno', 'platform': 'atmelavr',
+                 'board': 'uno', 'framework': 'arduino'}
+            ]
+        case 'RP2040':
+            targets = [
+                {'environment': 'pico', 'platform': 'raspberrypi', 'board': 'pico', 'framework': 'arduino'}
+            ]
+        case _:
+            raise ValueError(f'Unknown processor: {compilation["processor"]}')
+    platformio_ini: str = '; PlatformIO Project Configuration File\n\n'
+    platformio_ini += f'[env]\nlib_deps =\n{compilation["C"]["libraries"]}\n\n'
+    for target in targets:
+        platformio_ini += (f'[env:{target["environment"]}]\n'
+                           f'platform = {target["platform"]}\n'
+                           f'board = {target["board"]}\n'
+                           f'framework = {target["framework"]}\n'
+                           'build_src_flags =')
+        # we'll ignore the compiler key and the additional dependencies key
+        if compilation['C']['standard'] != '':
+            platformio_ini += f' -std={compilation["C"]["standard"]}\n'
+        for flag in ['optimization', 'warnings']:
+            platformio_ini += f' {compilation["C"][flag]}'
+        platformio_ini += '\n\n'
+    lab_location = lab['locations'][0] if 'locations' in lab else lab['location']
+    with open(f'{lab_location}/starter-code/{lab["lab"]}/platformio.ini', mode='w') as output_file:
+        output_file.write(platformio_ini)
+
+
+def compose_starter_code(lab: Dict) -> None:
+    destination: str = f'{lab["locations"][0]}/starter-code/PollingLab'
+    for location in lab['locations'][1:]:
+        source = f'{location}/starter-code'
+        if os.path.exists(source):
+            shutil.copytree(src=source, dst=destination, dirs_exist_ok=True)
+        source += f'-{lab["compilation"]["processor"].lower()}'
+        if os.path.exists(source):
+            shutil.copytree(src=source, dst=destination, dirs_exist_ok=True)
+
+
+def prep_code(lab: Dict, storyline: Dict):
+    # TODO: constraint-check
+    handle: str = lab['lab'].lower()
+    # starter code customization
+    if 'lab-specific keys' in lab and lab['lab-specific keys'] is not None:
+        globals()[f'generate_{handle}_starter_code'](lab, storyline)
+    if lab['location'] == 'composite':
+        compose_starter_code(lab)
+    # create the build file
+    if lab["compilation"]["buildsystem"] == 'make':
+        create_makefile(lab)
+    if lab["compilation"]["buildsystem"] == 'platformio':
+        create_platformio_ini(lab)
+
+
 def prep_labs(course: Dict, semester: Dict, labs: Dict, storyline: Dict, labs_to_process: List[str], original_tex: str):
     for index, lab in enumerate(semester['labs']):
         if lab['lab'] in labs_to_process:
             complete_lab = lab | labs[lab['lab']]
+            if 'locations' in complete_lab:
+                complete_lab['locations'] = labs[lab['lab']]['locations'] + lab['locations']
             for category in course:
                 if category not in complete_lab:
                     complete_lab[category] = course[category]
                 else:
                     for default in course[category]:
+                        if category in semester['labs'][index] and default in semester['labs'][index][category]:
+                            complete_lab[category][default] = semester['labs'][index][category][default]
                         if default not in complete_lab[category]:
                             complete_lab[category][default] = course[category][default]
                         elif isinstance(complete_lab[category][default], Dict):
                             for detail in course[category][default]:
+                                if (default in semester['labs'][index][category]
+                                        and detail in semester['labs'][index][category][default]):
+                                    complete_lab[category][default][detail] =\
+                                        semester['labs'][index][category][default][detail]
                                 if detail not in complete_lab[category][default]:
                                     complete_lab[category][default][detail] = course[category][default][detail]
             previous_lab = semester['labs'][index - 1]['lab'] if index > 0 else None
@@ -269,7 +360,8 @@ if __name__ == '__main__':
             semester_json = json.load(semester_file)
         with open('customization/labs.json') as labs_file:
             labs_json = json.load(labs_file)
-        with open('customization/storylines/pleistocene-petting-zoo.json') as storyline_file:  # TODO: prompt for story
+        # TODO: prompt for story -- or make that part of semester.json
+        with open('customization/storylines/pleistocene-petting-zoo.json') as storyline_file:
             storyline_json = json.load(storyline_file)
         with open('customization/assignment-definitions.tex') as definitions_file:
             definitions_tex = definitions_file.read()

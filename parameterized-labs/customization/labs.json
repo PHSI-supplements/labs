@@ -62,5 +62,57 @@
         "warnings": "-Wall -Wextra -Wno-unused-variable -Wno-unused-parameter"
       }
     }
+  },
+  "AddressingLab": {
+    "location": "TODO"
+  },
+  "Chapter6Lab": {
+    "location": "TODO"
+  },
+  "Chapter11Lab": {
+    "location": "TODO"
+  },
+  "DuplicatorLab": {
+    "location": "TODO"
+  },
+  "PollingLab": {
+    "location": "composite",
+    "locations": [
+      "chap09/PollingLab",
+      "chap09/io/memory-mapped"
+    ],
+    "locations note": "specify the simple embedded system's location in semester.json",
+    "required files note": "specify the required files (io_functions.c and ...) in semester.json",
+    "lab name": "Using Polling with Memory-Mapped Input/Output",
+    "compilation": {
+      "buildsystem": "platformio",
+      "specify processor in semester.json": "ATmega328P or RP2040",
+      "C": {
+        "compiler": "",
+        "standard": "",
+        "optimization": "",
+        "warnings": "-Wall -Wextra -Wno-unused-parameter",
+        "libraries": "  docbohn/CowPi @ ^0.7.1\n  docbohn/CowPi_stdio @ ^0.6.1"
+      }
+    },
+    "file flow": {
+      "runtime environment": "a Cow Pi development board with a \\processor\\ microcontroller"
+    },
+    "images": [
+      {
+        "link": "https://engineering.deloitte.com.au/hs-fs/hubfs/MEX%20-%20Blog%20images/MEX%20-%20Author%20-%20Paco%20de%20la%20Cruz/21807%20Async%20Http%20API/00.%20Are%20we%20there%20yet.png",
+        "name": "AreWeThereYet.png",
+        "search": "\"are we there yet\" simpsons"
+      }
+    ]
+  },
+  "InterruptLab": {
+    "location": "TODO"
+  },
+  "GroupLab": {
+    "location": "TODO"
+  },
+  "MemoryLab": {
+    "location": "TODO"
   }
 }
