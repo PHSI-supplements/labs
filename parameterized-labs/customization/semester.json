@@ -70,8 +70,8 @@
         "chap09/system-descriptions/number-builder"
       ],
       "compilation": {
-        "processor": "ATmega328P",
-        "processor.bk": "RP2040"
+        "processor.bk": "ATmega328P",
+        "processor": "RP2040"
       }
     },
     {

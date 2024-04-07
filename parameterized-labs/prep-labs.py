@@ -274,7 +274,14 @@ def create_platformio_ini(lab: Dict) -> None:
         case _:
             raise ValueError(f'Unknown processor: {compilation["processor"]}')
     platformio_ini: str = '; PlatformIO Project Configuration File\n\n'
-    platformio_ini += f'[env]\nlib_deps =\n{compilation["C"]["libraries"]}\n\n'
+    platformio_ini += f'[env]\nlib_deps =\n{compilation["C"]["libraries"]}\n'
+    # TODO: remove this temporary hack after CowPi_stdio 0.7 is implemented
+    if compilation['processor'] == 'RP2040':
+        platformio_ini += ('  bitbank2/OneBitDisplay@^2.3.1\n'
+                           '  bitbank2/BitBang_I2C@^2.2.1\n'
+                           '  SPI\n'
+                           '  Wire\n')
+    platformio_ini += '\n'
     for target in targets:
         platformio_ini += (f'[env:{target["environment"]}]\n'
                            f'platform = {target["platform"]}\n'

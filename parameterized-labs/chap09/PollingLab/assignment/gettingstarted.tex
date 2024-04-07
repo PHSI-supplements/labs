@@ -146,7 +146,7 @@ This, of course, transfers the design complexity to the software.
 
 The CowPi library includes the \function{cowpi_debounce_byte()}, \function{cowpi_debounce_short()}, and \function{cowpi_debounce_long()}  functions that essentially implement a low-pass filter in software.
 % TODO: parameterize io_functions.c
-The functions in \textit{io\_functions.c} make use of \function{cowpi_debounce_byte()}.
+The functions in \textit{io\_functions.c} make use of \function{cowpi_debounce_byte()}\ifdefstring{\processor}{RP2040}{ and \function{cowpi_debounce_long()}}{}.
 When you modify these functions, as long as you preserve those \function{cowpi_debounce_byte()} calls, you do not need to worry further about debouncing.
 
 
@@ -196,7 +196,7 @@ This allows you to print to the Serial Monitor using \function{printf()}.
     If you wish to remove this configuration (thereby allowing the program to start immediately rather than wait for a Serial Monitor connection),
     then change the \lstinline{cowpi_setup(9600,} line in \textit{starter-rp2040.cpp} to \lstinline{cowpi_setup(0,}
 
-    \textcolor{yellow}{
+    \textcolor{red}{
         If a Windows driver issue prevents you from printing to the Serial Monitor,
         then you can instead send short debug messages to the display module -- see Section~\ref{subsec:numberBuilderOutput} for information about outputting to the display module.
         The display module can display up to 8 rows of text, 16 characters per row;

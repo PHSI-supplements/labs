@@ -63,7 +63,7 @@ You may not use any libraries, functions, macros, types, or constants from the A
 
 To receive credit for the memory-mapped I/O portion of this lab, all input and output must be accomplished using the memory-mapped I/O registers.
 The starter code calls \function{cowpi_setup()} for you.
-You also may use \href{https://cow-pi.readthedocs.io/en/latest/CowPi/inputs.html#debouncing}{\function{cowpi_debounce_byte()}}.
+You also may use \href{https://cow-pi.readthedocs.io/en/latest/CowPi/inputs.html#debouncing}{\function{cowpi_debounce_byte()}\ifdefstring{\processor}{RP2040}{ and \function{cowpi_debounce_long()}}{}}.
 You may not use any other functions described in the CowPi Library\footnote{\url{https://cow-pi.readthedocs.io/en/latest/library.html}} portion of the Cow~Pi datasheet.
 
 \subsubsection{Constraints on other libraries}

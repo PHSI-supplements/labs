@@ -1,0 +1,8 @@
+\renewcommand{\firstline}{66}
+\begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=\firstline, escapechar=`]
+static bool key_is_pressed(void) {
+    // this is four distinct reads to figure out if any of the column pins has a 0 on it -- can you do it in one read?
+    bool key_is_pressed = !(digitalRead(10) && digitalRead(11) && digitalRead(12) && digitalRead(13));  `\label{code:readColumns}`
+    return cowpi_debounce_long(key_is_pressed, INPUT_X);
+}
+\end{lstlisting}

@@ -13,7 +13,7 @@ If you have already implemented the system from Section~\ref{sec:SimpleSystem}, 
 
 Because you have already completed Section~\ref{sec:LabTime}, you can use the \lstinline{timer} pointer to access the
 \ifdefstring{\processor}{ATmega328P}{\lstinline{cowpi_timer8bit_t}}{}
-\ifdefstring{\processor}{RP2040}{cowpi_timer_t}{}
+\ifdefstring{\processor}{RP2040}{\lstinline{cowpi_timer_t}}{}
 structure, which overlays the \processor's
 \ifdefstring{\processor}{ATmega328P}{TIMER0.}{}
 \ifdefstring{\processor}{RP2040}{general-purpose timer.}{}

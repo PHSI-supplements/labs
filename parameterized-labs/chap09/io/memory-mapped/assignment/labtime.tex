@@ -36,7 +36,7 @@ The output will include the key that was pressed (if any), a hyphen if no key is
 \newcommand{\firstline}{1}
 
 \ifdefstring{\processor}{ATmega328P}{\renewcommand{\firstline}{346}}{}
-\ifdefstring{\processor}{RP2040}{\renewcommand{\firstline}{1}}{}
+\ifdefstring{\processor}{RP2040}{\renewcommand{\firstline}{345}}{}
 \begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=\firstline, basicstyle=\ttfamily\small]
 ...
 if (key_pressed <= 0x0F) {
@@ -59,7 +59,7 @@ The output will include the positions of the left and right buttons (``U'' for u
 Finally, if both buttons are pressed then the left LED will illuminate, and if both switches are in the right position then the right LED will illuminate.
 
 \ifdefstring{\processor}{ATmega328P}{\renewcommand{\firstline}{326}}{}
-\ifdefstring{\processor}{RP2040}{\renewcommand{\firstline}{1}}{}
+\ifdefstring{\processor}{RP2040}{\renewcommand{\firstline}{325}}{}
 \begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=\firstline]
     ...
     set_left_led(left_button_position && right_button_position);
@@ -77,7 +77,7 @@ to access the memory-mapped I/O registers for the \processor's data pins.
 
 In Section~\ref{subsec:timer}, you will use a pointer to a
 \ifdefstring{\processor}{ATmega328P}{\lstinline{cowpi_timer8bit_t}}{}
-\ifdefstring{\processor}{RP2040}{cowpi_timer_t}{}
+\ifdefstring{\processor}{RP2040}{\lstinline{cowpi_timer_t}}{}
 structure to determine how much time has elapsed since the system was powered-up.
 
 Read the section of the Cow~Pi datasheet that \href{https://cow-pi.readthedocs.io/en/latest/CowPi_\lowercaseprocessor/io_registers.html#structure-for-memory-mapped-input-output}{discusses the \lstinline{cowpi_ioport_t} structure}.
