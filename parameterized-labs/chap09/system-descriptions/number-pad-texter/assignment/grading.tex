@@ -1,0 +1,29 @@
+\newcommand{\simpleSystemRubric}{ % 18
+% 3 for display
+    \rubricitem{1}{The cursor is always below the character being created}
+    \rubricitem{1}{A message with fewer than 16 chracters is displayed in full}
+    \rubricitem{1}{A message with more than 15 characters is displayed as the last 15 characters plus the character being created}
+    % 2 for right bound
+    \rubricitem{1}{A message with 63 characters can be created\dots}
+    \rubricitem{1}{\dots but not a message with 64 characters}
+    % 1 for LED
+    \rubricitem{1}{Pressing a key causes the right LED to illuminate for about \textonequarter\ second}
+    % 3 for character sequencing
+    \rubricitem{1}{Starting with a blank character, pressing a number key initiates the character sequence shown in Figure~\ref{fig:keypad}}
+    \rubricitem{2}{Repeated presses of the same number key cycles through the character sequence shown in Figure~\ref{fig:keypad}}
+    % 3 for finalize
+    \rubricitem{1}{Pressing a different key finalizes the character, advances the cursor, and initiates the appropriate character sequence for the next character}
+    \rubricitem{1}{Pressing the right pushbutton finalizes the character and advances the cursor but leaves a blank character above the cursor}
+    \rubricitem{1}{Pressing no buttons or keys for 2 seconds causes the system to finalize the character and to advance the cursor, leaveing a blank character above the cursor}
+    % 3 for delete (including left bound)
+    \rubricitem{1}{If a character is being created, then pressing the left pushbutton deletes the character being created and leaves the cursor under a blank space}
+    \rubricitem{1}{If a character is not being created, the pressing the left pushbutton moves the character back one position and deletes the message's last character, leaving the cursor under a blank space\dots}
+    \rubricitem{1}{\dots except that the cursor cannot retreat to a position earlier than start of the message buffer}
+    % 3 for transmit
+    \rubricitem{1}{Pressing the \texttt{D} key causes the message to be ``transmitted''\dots}
+    \rubricitem{\textonehalf}{\dots and the message to be cleared from the display\dots}
+    \rubricitem{\textonehalf}{\dots with the cursor in the left position\dots}
+    \rubricitem{1}{\dots and another message can be created and ``transmitted''}
+% 0 for extraneous inputs
+%    \rubricitem{0}{The \texttt{A}, \texttt{B}, \texttt{C}, \texttt{\#}, and \texttt{*} keys, and the switches, have no effect}
+}

@@ -82,7 +82,10 @@ Locate the \function{left_button_is_pressed()}, \function{right_button_is_presse
 In the starter code, these functions are implemented by calling functions in the CowPi library.
 
 \begin{description}
-    \checkoffitem{Replace the calls to CowPi library functions with code that uses the \lstinline{ioports} array to ascertain the controls' positions. \\
+    \checkoffitem{Replace the calls to CowPi library functions with code that uses the
+        \ifdefstring{\processor}{ATmega328P}{\lstinline{ioports} array}{}
+        \ifdefstring{\processor}{RP2040}{\lstinline{ioport} pointer}{}
+        to ascertain the controls' positions. \\
         \textcolor{red}{Do \textit{not} remove the calls to \function{debounce_byte()}!}}
 \end{description}
 
@@ -100,7 +103,10 @@ Locate the \function{set_right_led()} function.
 In the starter code, this function is implemented by calling functions in the CowPi library.
 
 \begin{description}
-    \checkoffitem{Modify this function to replace the calls to CowPi library functions with code that uses the \lstinline{ioports} array to turn the LED on or off.}
+    \checkoffitem{Modify this function to replace the calls to CowPi library functions with code that uses the
+        \ifdefstring{\processor}{ATmega328P}{\lstinline{ioports} array}{}
+        \ifdefstring{\processor}{RP2040}{\lstinline{ioport} pointer}{}
+        to turn the LED on or off.}
     \begin{description}
         \checkoffitem{Use the read-modify-write pattern to do so, so that you do not change any pins that you do not intend to change.}
         \item[\phantom{xxx}$\bullet$] No debouncing code is necessary because these functions do not read from mechanical switches.
@@ -136,7 +142,10 @@ After you have done so:
     \checkoffitem{Preserve the debouncing code in \function{get_keypress()}, and}
     \checkoffitem{Replace the starter code's call to \function{cowpi_get_keypress()} and its \lstinline{switch} statements with code that scans the keyboard.}
         \begin{description}
-            \checkoffitem{Use the \lstinline{ioports} array to read from and write to the appropriate pins,}
+            \checkoffitem{Use the
+                \ifdefstring{\processor}{ATmega328P}{\lstinline{ioports} array}{}
+                \ifdefstring{\processor}{RP2040}{\lstinline{ioport} pointer}{}
+                to read from and write to the appropriate pins,}
             \checkoffitem{Use a $1\mu s$ busy-wait (see below) for the delay shown on line 4 of the pseudocode in the datasheet, and}
             \checkoffitem{Use the \lstinline{keys} nested array to obtain the correct integer value for the key at a given row and column.}
         \end{description}

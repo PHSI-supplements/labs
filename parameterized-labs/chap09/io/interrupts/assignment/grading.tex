@@ -1,0 +1,21 @@
+\newcommand{\interruptsRubric}{ % 12
+    \rubricitem{1}{Matrix keypad presses and releases are detected with a pin change interrupt}
+    \rubricitem{2}{The right pushbutton's presses are detected with a pin change interrupt}
+    \rubricitem{2}{The left pushbutton's presses are detected with a pin change interrupt}
+    \rubricitem{1}{Timer interrupts for the LED timer are handled}
+    \rubricitem{1}{The LED timer's interrupt period, when combined with logic that uses \lstinline{supplemental_counter}, causes the right LED to illuminate for exactly 256ms\dots}
+    \rubricitem{1}{\dots and that logic is implemented}
+    \rubricitem{2}{Timer interrupts for the character timer are handled}
+    \rubricitem{2}{The character timer's interrupt period is exactly 2s}
+%    \rubricitem{1}{There is no long-running code (including, but not limited to, \function{display_string()} and \function{printf()}) in the interrupt handlers / ISRs, \textit{except} where the inclusion of print statements is the only mechanism to demonstrate that the interrupt handler determines which button was pressed}
+}
+
+% TODO: parameterize
+\newcommand{\interruptPenalties}{
+    \penaltyitem{4}{Number key presses are detected by means other than a pin change interrupt}
+    \penaltyitem{3}{Pressing the \texttt{D} key is detected by means other than a pin change interrupt}
+    \penaltyitem{1}{Pressing the right button is detected by means other than a pin change interrupt}
+    \penaltyitem{3}{Pressing the left button is detected by means other than a pin change interrupt}
+    \penaltyitem{1}{Blinking the LED is accomlished by means other than a timer interrupt}
+    \penaltyitem{1}{Timing-out character generation is accomlished by means other than a timer interrupt}
+}

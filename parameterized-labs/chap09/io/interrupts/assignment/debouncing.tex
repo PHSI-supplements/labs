@@ -1,0 +1,18 @@
+When you place your code that responds to key presses and button presses in the interrupt handlers, place it inside the braces for the \function{debounce_interrupt()} macro.
+Just as the \function{cowpi_debounce_byte()} function took care of debouncing when polling mechanical inputs, the \function{debounce_interrupt()} macro defined in \textit{inputs.h} takes care of (most of) the debouncing when mechanical inputs generate interrupts.
+There are two catches.
+
+The first catch is that \function{debounce_interrupt()} only works when the interrupt handler responds to both the rising and falling edges of the input.
+This isn't such a terrible limitation, as the system is configured to fire an interrupt whenever there is a change on a pin.
+That is, your ISR will be invoked whenever there is a key/button press \textit{or} release --
+so you already have to be able to handle both presses and releases.
+If the interrupt is due to a press, then take the appropriate actions;
+if the interrupt is due to a release, then do nothing.
+
+The second catch is that \function{debounce_interrupt()} works by ignoring interrupts that are generated due to switchbounce.
+It does not -- it cannot -- ignore switchbounce that occurs while the interrupt handler is executing.
+Consider this scenario: the user presses a button, closing the contacts, triggering an interrupt, and the interrupt handler launches.
+Before reaching the code that reads the inputs to determine which key was pressed (or whether a button was pressed or released), the switch bounces, temporarily re-opening the contacts;
+when the code reads the inputs, the wrong condition is detected!
+The fix is to introduce a loop that iterates until a sensible input reading is found.
+This busy-wait loop is already in the starter code.

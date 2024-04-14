@@ -107,7 +107,36 @@
     ]
   },
   "InterruptLab": {
-    "location": "TODO"
+    "location": "composite",
+    "locations": [
+      "chap09/InterruptLab",
+      "chap09/io/interrupts"
+    ],
+    "locations note": "specify the simple embedded system's location in semester.json",
+    "required files note": "specify the required files in semester.json",
+    "lab name": "Using Interrupt-Driven Input/Output",
+    "compilation": {
+      "buildsystem": "platformio",
+      "specify processor in semester.json": "ATmega328P or RP2040",
+      "C": {
+        "compiler": "",
+        "standard": "",
+        "optimization": "",
+        "warnings": "-Wall -Wextra -Wno-unused-parameter",
+        "libraries": "  docbohn/CowPi @ ^0.7.1\n  docbohn/CowPi_stdio @ ^0.6.1"
+      }
+    },
+    "file flow": {
+      "runtime environment": "a Cow Pi development board with a \\processor\\ microcontroller"
+    },
+    "images": [
+      {
+        "link": "https://sphilpott.files.wordpress.com/2009/12/mom.jpg",
+        "link.bk": "https://i.imgflip.com/2cmwep.jpg",
+        "name": "MomMomMom.jpg",
+        "search": "stewie mom mom mom"
+      }
+    ]
   },
   "GroupLab": {
     "location": "TODO"

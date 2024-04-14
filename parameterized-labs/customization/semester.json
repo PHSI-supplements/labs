@@ -77,7 +77,14 @@
     {
       "lab": "InterruptLab",
       "due": "Week of April 22, before the start of your lab section",
-      "TODO": "TODO"
+      "required files": "\\textit{inputs.c}, \\textit{character_selector.c}, and \\textit{message_editor.c}",
+      "locations": [
+        "chap09/system-descriptions/number-pad-texter"
+      ],
+      "compilation": {
+        "processor.bk": "ATmega328P",
+        "processor": "RP2040"
+      }
     },
     {
       "lab": "GroupLab",

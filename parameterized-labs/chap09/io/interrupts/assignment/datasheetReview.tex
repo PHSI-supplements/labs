@@ -1,0 +1,22 @@
+Read the Datasheet section that discusses \href{https://cow-pi.readthedocs.io/en/latest/CowPi_\lowercaseprocessor/io_registers.html#interrupts}{Interrupts}, and review the \href{https://cow-pi.readthedocs.io/en/latest/CowPi_\lowercaseprocessor/io_registers.html#timers}{Timers} section.
+
+%You can skip over the section that covers registering external interrupt handlers using \function{attachInterrupt()}, as we will use pin change interrupts.
+%You can skip over the section that covers the timers ``Normal'' mode, as we will use ``Clear Timer on Compare'' (CTC) mode.
+%You can skip over the section that covers configuring TIMER0, as we will use only TIMER1 and TIMER2.
+
+You can skip over the section that discusses the use of \function{attachInterrupt()}, as we will use \function{register_pin_ISR()}.
+The discussion of \function{cowpi_register_pin_ISR()} is relevant, as \function{register_pin_ISR()} in \textit{interrupt\_support.cpp} has the same signature and exhibits the same behavior.
+
+Review the header comments in \textit{interrupt\_support.h}.
+\ifdefstring{\processor}{ATmega328P}{
+    We will use the \function{configure_timer()} function to configure two timers to fire periodic interrupts,
+    and we will use the \function{register_timer_ISR()} function to register interrupt handlers for those interupts.
+    \textit{You will} not \textit{need to explicitly set the timer registers' bits as described in the datasheet};
+    however, familiarizing yourself with the timers' limitations might be helpful.
+}{}
+\ifdefstring{\processor}{RP2040}{
+    We will use the \function{register_timer_ISR()} function to configure two timers to fire periodic interrupts
+    and to register interrupt handlers for those interupts.
+    \textit{You will} not \textit{need to explicitly set the timer registers' bits,
+        nor will you need to directly invoke any MBED~OS functions.}
+}{}

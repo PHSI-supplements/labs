@@ -1,0 +1,109 @@
+\filesource.
+Once you have downloaded the file, close any existing projects in your IDE, unpackage the file, and open the project in your IDE\@.
+
+
+If you are using the Arduino IDE, use \textit{pollinglab-arduino.zip} or \textit{pollinglab-arduino.tar}.
+If you are using the VS Code with PlatformIO, use \textit{pollinglab-platformio.zip} or \textit{pollinglab-platformio.tar}.
+Download the zip file or tarball from \filesource.
+Once you have downloaded the file, close any existing projects in your IDE, unpackage the file, and open the project in your IDE\@.
+
+\subsection{Description of InterruptLab Files}
+
+\subsubsection{inputs.h \& inputs.c}
+
+Do not edit \textit{inputs.h}.
+
+The \textit{inputs.c} file contains interrupt service routines that you will write and that you will register to handle interrupts.
+
+\subsubsection{character\_selector.h \& character\_selector.c}
+
+Do not edit \textit{character\_selector.h}.
+
+The \textit{character\_selector.c} file contains functions that you will write to select the character to be added to the end of the message.
+
+\subsubsection{message\_editor.h \& message\_editor.c}
+
+Do not edit \textit{message\_editor.h}.
+
+The \textit{message\_editor.c} file contains functions that you will write to manage the message and the cursor position.
+
+\subsubsection{output.h \& output.c}
+
+Do not edit \textit{outputs.h} or \textit{outputs.cpp}.
+
+The \textit{outputs.cpp} file contains the code to configure your Cow~Pi for this lab,
+and it contains code to render the message correctly on the display module and to send the message to the Serial Monitor.
+
+\subsubsection{InterruptLab.cpp, interrupt\_support.h, \& interrupt\_support.cpp}
+
+Do not edit \textit{InterruptLab.cpp}, \textit{interrupt\_support.h}, or \textit{interrupt\_support.cpp}.
+
+\textit{InterruptLab.cpp} calls the various initialization functions.
+Notice that the main loop is empty \ifdefstring{\processor}{RP2040}{(except for a function call to manage the display module)}{}  -- your program's functionality will be entirely reactive to interrupts.
+
+The functions in \textit{interrupt\_support.cpp} are functions that will be in a future version of the CowPi library,
+meant to abstract-away the details of configuring interrupts.
+
+
+\subsection{Separation of Concerns}
+
+As with PollingLab, we attempt to provide a separation of concerns.
+The dependencies between the modules is shown in Figure~\ref{fig:architecture}.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[x=1mm, y=1mm]
+        \draw (-5,10)  rectangle (15,20) ++(-10,-5)  node {inputs.c};
+        \draw (30,0)  rectangle (70,10) ++(-20,-5)  node {character\_selector.c};
+        \draw (30,20) rectangle (70,30) ++(-20,-5)  node {message\_editor.c};
+        \draw (85,20) rectangle (105,30) ++(-10,-5) node {outputs.c};
+        \draw[blue, thick, arrows={-Stealth}] (60,10) -- (60,20);
+        \draw[blue, thick] (65,15) node {data};
+        \draw[blue, thick, arrows={-Stealth}] (70,25) -- (85,25);
+        \draw[blue, thick] (77.5,22) node {data};
+        \draw[red, thick, arrows={<->}] (40,10) -- (40,20);
+        \draw[red, thick] (30,15) node {commands};
+        \draw[red, thick, arrows={->}] (10,10) -- (30,5);
+        \draw[red, thick, arrows={->}] (10,20) -- (30,25);
+        \draw[red, thick] (20, 25) node {\rotatebox{15}{commands}};
+        \draw[red, thick] (20, 5) node {\rotatebox{-15}{commands}};
+    \end{tikzpicture}
+    \caption{High-Level Architecture of the Text Messager} \label{fig:architecture}
+\end{figure}
+
+Only \textit{outputs.c} (which you will not need to edit) interfaces with the display module and with the host computer's Serial Monitor.
+
+Only \textit{inputs.c} responds to user inputs on the buttons and keypad.
+The code in \textit{inputs.c} will instruct the character selector to reset or to update the character when the user makes particular inputs.
+Similarly, the code in \textit{inputs.c} will instruct the message editor to delete the character at the end of the message or to send the message to the output.
+
+The code in \textit{character\_generator.c} sends updated characters to the message editor and will also instruct the message editor to advance the cursor when a character is finalized.
+
+The code in \textit{message\_editor.c} might need to instruct the character selector to finalize its character,
+and it will also send the message to \textit{outputs.c} to be displayed on the display module or to be printed on the Serial Monitor.
+
+By separating the concerns in this manner, only the message editor needs to know the details of the message,
+and only the character selector needs to know which character sequence is being traversed.
+We could, in principle, replace the keypad with a QWERTY keyboard, or replace the Serial Monitor with a packet radio, or make any number of other changes, and the other modules would not detect the difference.
+
+
+\subsection{Interrupt-Driven Input/Output -- A Different but Familiar Programming Paradigm}
+
+In PollingLab you used polling to determine when to respond to a pushbutton or a key on the keypad being pressed.
+In this lab, you will rely on interrupts to let your code know when it needs to respond to a pushbutton or a key on the keypad being pressed, and you will rely on interrupts to let your code know when a certain amount of time has passed.
+
+\vspace{.25cm}
+
+Most of the code you wrote in the earlier lab assignments for this course used imperative programming:
+you, the programmer, had full control over changes to the program state.
+In PollingLab, you stretched this model to something resembling shared-memory concurrent programming:
+you still had full control over changes to the program state of your program's flow of control,
+but your program periodically read variables (memory-mapped input registers) that could be changed by another flow of control (the physical world).
+
+In this lab assignment, you will write code that reacts to things happening in the physical world;
+your code program state will not change except in reaction to interrupts.
+Conceptually, this isn't very different from event-driven programming that you learned in \cstwo.
+While configuring the hardware timer is a little more complex than configuring a GUI framework's timer, handling a timer interrupt is very much like writing an \function{onTimeout()} event handler.
+Similarly, handling a change in a pushbutton's position is very much like writing an \function{onMouseClick} event handler.
+Your code is not focused on \textit{when} the button is pressed or released, nor even on \textit{detecting} that a button has been pressed or released;
+it is focused solely on \textit{what should happen} when the button is pressed or released.
