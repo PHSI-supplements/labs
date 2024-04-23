@@ -1,13 +1,13 @@
-You will need to make some changes to your Cow Pi circuit before you can start this lab.
+You will need to add a couple of hardware components to your Cow Pi circuit before you can start this lab.
 
 \subsection{Necessary Components}
 
-Figure~\ref{fig:components} shows the components you will need for the range finder and alarm.
+Figure~\ref{fig:components-mk1f} shows the components you will need for the range finder and alarm.
 
 \begin{figure}
     \centering
-    \includegraphics[width=10cm]{reconfiguration_images/components}
-    \caption{Components needed for the Range Finder \label{fig:components}}
+    \includegraphics[width=10cm]{hardware/mk1f/components}
+    \caption{Components needed for the Range Finder \label{fig:components-mk1f}}
 \end{figure}
 
 You will need:
@@ -30,45 +30,45 @@ You and your partner only need to modify one of your Cow Pis (but you may modify
 
 \subsection{Connecting the Piezoelectric Disc}
 
-The \developmentboard's pin D13 is used for the \developmentboard's internal LED, the ``left'' LED.
+The Arduino Nano's pin D13 is used for the Arduino Nano's internal LED, the ``left'' LED.
 In the group project, we will use it to control the piezodisc.
 
 \begin{description}
     \checkoffitem{Insert the piezodisc's header into unused rows on the breadboard (Figure~\ref{fig:insertPiezo}).}
-    \checkoffitem{Use a 20cm wire to connect the piezodisc's red lead to the \developmentboard's pin D13 (contact point a1 is a good choice).}
+    \checkoffitem{Use a 20cm wire to connect the piezodisc's red lead to the Arduino Nano's pin D13 (contact point a1 is a good choice).}
     \checkoffitem{Use another wire to connect the piezodisc's black lead to the upper \ground .}
 \end{description}
 
 \begin{figure}
     \centering
-    \includegraphics[height=4cm]{reconfiguration_images/adjust_piezo_wire}
+    \includegraphics[height=4cm]{hardware/mk1f/adjust_piezo_wire}
     \caption{\label{fig:insertPiezo} Connecting the Piezoelectric Disc.}
 \end{figure}
 
-The piezodisc can now be operated through the \developmentboard's pin D13, which is the pin that the right pushbutton used to be connected to.
+The piezodisc can now be operated through the Arduino Nano's pin D13, which is the pin that the built-in LED is connected to.
 
 
 \subsection{Connecting the ultrasonic echo sensor}
 
-Take a look at the ultrasonic echo sensor (Figure~\ref{fig:ultrasonic}).
+Take a look at the ultrasonic echo sensor (Figure~\ref{fig:ultrasonic-mk1f}).
 Notice that it has four pins, labeled \texttt{Gnd}, \texttt{Echo}, \texttt{Trig}, and \texttt{Vcc}.
 
 \begin{figure}
     \centering
     \subfloat[The back side of the ultrasonic sensor.]{
-        \includegraphics[height=4cm]{reconfiguration_images/ultrasonic_rear}
+        \includegraphics[height=4cm]{hardware/components/ultrasonic_rear}
 %        \label{fig:ultrasonicRear}
     }
     \hfil
     \subfloat[The front side of the ultrasonic sensor.]{
-        \includegraphics[height=4cm]{reconfiguration_images/ultrasonic_front}
+        \includegraphics[height=4cm]{hardware/components/ultrasonic_front}
 %        \label{fig:ultrasonicFront}
     }
-    \caption{The ultrasonic echo sensor. \label{fig:ultrasonic}}
+    \caption{The ultrasonic echo sensor. \label{fig:ultrasonic-mk1f}}
 \end{figure}
 
 \begin{description}
-    \checkoffitem{Insert the ultrasonic echo sensor unused rows on the breadboard, pointing away from you.
+    \checkoffitem{Insert the ultrasonic echo sensor into unused rows on the breadboard, pointing away from you.
         The ultrasonic transducers should point toward the upper power/ground rails.}
     \checkoffitem{Insert a 20cm wire into contact point j11 (Figure~\ref{fig:insertD2}).
         Make a note of the wire's color for future reference.
@@ -87,48 +87,48 @@ Notice that it has four pins, labeled \texttt{Gnd}, \texttt{Echo}, \texttt{Trig}
 \begin{figure}
     \centering
     \subfloat[The ultrasonic sensor inserted into the breadboard.]{
-        \includegraphics[height=4cm]{reconfiguration_images/ultrasonic_inserted}
+        \includegraphics[height=4cm]{hardware/mk1f/ultrasonic_inserted}
         \label{fig:ultrasonicInserted}
     }
     \hfil
     \subfloat[Inserting a wire into contact point j11.]{
-        \includegraphics[height=4cm]{reconfiguration_images/insert_D2}
+        \includegraphics[height=4cm]{hardware/mk1f/insert_D2}
         \label{fig:insertD2}
     }
     \hfil
     \subfloat[Inserting a wire into contact point j10.]{
-        \includegraphics[height=4cm]{reconfiguration_images/insert_D3}
+        \includegraphics[height=4cm]{hardware/mk1f/insert_D3}
         \label{fig:insertD3}
     }
     \hfil
     \subfloat[The two 20cm wires, ready to be used.]{
-        \includegraphics[height=4cm]{reconfiguration_images/20cm_D2_D3}
+        \includegraphics[height=4cm]{hardware/mk1f/20cm_D2_D3}
 %        \label{fig:20cmD2D3}
     }
     \hfil
     \subfloat[The ultrasonic sensor connected to the D2 and D3 wires.]{
-        \includegraphics[height=4cm]{reconfiguration_images/ultrasonic_D2_D3}
+        \includegraphics[height=4cm]{hardware/mk1f/ultrasonic_D2_D3}
         \label{fig:ultrasonicD2D3}
     }
     \hfil
     \subfloat[Inserting one end of the power and ground wires.]{
-        \includegraphics[height=4cm]{reconfiguration_images/ultrasonic_pwr_gnd}
+        \includegraphics[height=4cm]{hardware/mk1f/ultrasonic_pwr_gnd}
         \label{fig:ultrasonicPwrGnd}
     }
     \hfil
     \subfloat[Inserting the other end of the power and ground wires in the power and ground rails.]{
-        \includegraphics[height=4cm]{reconfiguration_images/pwr_gnd}
+        \includegraphics[height=4cm]{hardware/mk1f/pwr_gnd}
         \label{fig:pwrGnd}
     }
     \caption{Connecting the ultrasonic echo sensor.}
 \end{figure}
 
-The ultrasonic echo sensor is now connected to the \developmentboard's pins D2 \& D3.
-The starter code will configure D2 to be an output pin and D3 to be an input pin.
+The ultrasonic echo sensor is now connected to the Arduino Nano's pins D2 \& D3.
+The starter code will configure D2 (\lstinline{TRIGGER}) to be an output pin and D3 (\lstinline{ECHO}) to be an input pin.
 
 %\begin{figure}
 %    \centering
-%    \includegraphics[width=10cm]{reconfiguration_images/complete}
+%    \includegraphics[width=10cm]{hardware/complete}
 %    \caption{The Cow Pi circuit with modfications complete.}
 %\end{figure}
 

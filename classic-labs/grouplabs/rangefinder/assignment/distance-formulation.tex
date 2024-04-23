@@ -1,0 +1,84 @@
+\subsection{Old Hardware}
+
+Assuming that the air temperature is 70\degree~Fahrenheit (21.1\degree~Celsius), the speed of sound is $348.8\frac{m}{s}$.\footnote{
+    \url{https://www.weather.gov/epz/wxcalc_speedofsound}
+}
+
+The distance to an object, being half of the round-trip distance, is
+\[
+    distance = \frac{1}{2} \times time_{\mu s} \times \frac{343.8 m}{1 s} \times \frac{100 cm}{1 m} \times \frac{1 s}{1,000,000 \mu s} = time_{\mu s} \times 0.01719\frac{cm}{\mu s}
+\]
+
+Because the timer will be configured with a ``tick'' of a half-microsecond, we can re-express this equation as
+\[
+    distance = time_{\mathrm{half}\mu s} \times 0.008595\frac{cm}{\mathrm{half}\mu s}
+\]
+
+In real-number arithmetic, multiplying the speed of sound by a constant non-zero finite value and by time, and dividing by the same constant value, will produce the same distance as if the speed of sound were multiplied by time.
+In bit-limited integer arithmetic, the same is true \textit{if} the original speed were an integer, \textit{if} the product doesn't overflow, and \textit{if} all multiplications occur before division.
+Because we're treating the speed of sound as a constant, and the conversion factor is also a constant, part of the multiplication can occur at compile-time, ensuring that both the run-time multiplier and multiplicand are integers.
+Normally, integer division without a hardware divider is only slightly more desirable than floating point arithmetic;
+however, if the constant factor is a power of two, then the division can be accomplished with a bitshift operation.
+\[
+    distance = time_{\mathrm{half}\mu s} \times 0.008595\frac{cm}{\mathrm{half}\mu s} \times \frac{2^{21}}{2^{21}} \approx time_{\mathrm{half}\mu s} \times \frac{18,025}{2^{21}} \frac{cm}{\mathrm{half}\mu s}
+\]
+
+when the air temperature is 70\degree~Fahrenheit (21.1\degree~Celsius).
+
+\subsection{New Hardware}
+
+\subsubsection{Calculating the Speed of Sound}
+
+The speed of sound in air is\footnote{
+    \url{https://www.weather.gov/media/epz/wxcalc/speedOfSound.pdf}
+}
+\[
+    speed = 331.228 \times \sqrt{1 + \frac{T}{273.15}} \frac{m}{s} = 0.0331228 \times \sqrt{1 + \frac{T}{273.15}} \frac{cm}{\mu s}
+\]
+
+The presence of that square root would seem to be an obstacle to our goal of avoiding floating point calculations;
+however, the expression's Taylor series gives us
+\begin{align*}
+    speed = &\ 0.0331228 \times \left( 1 + \frac{T}{546.30} \right) \frac{cm}{\mu s}      \\
+          = &\ 0.0331228 \times \left( \frac{546.30 + T}{546.30} \right) \frac{cm}{\mu s} \\
+          = &\ \frac{546.30 + T}{16493.17} \frac{cm}{\mu s}
+\end{align*}
+
+
+\subsubsection{Calculating the Temperature}
+
+The RP2040 has a temperature sensor connected to one of its analog-digital converter (ADC) inputs.
+Section~4.9.5 of the RP2040 datasheet\footnote{\url{https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf}} shows that the temperature, in \degree C, is:
+\[
+    T = 27 - \frac{ADC\_voltage - 0.706}{0.001721}
+\]
+
+The ADC is a 12-bit ADC with a reference voltage of 3.3V, and so
+\begin{align*}
+    T =       &\ 27 - \frac{\frac{3.3 \times ADC\_register\_value}{2^{12}} - 0.706}{0.001721}                                                 \\
+      =       &\ 27 - \frac{3.3 \times ADC\_register\_value - 0.706 \times 2^{12}}{0.001721 \times 2^{12}}                                    \\
+      =       &\ \frac{0.046467 \times 2^{12} - \left( 3.3 \times ADC\_register\_value - 0.706 \times 2^{12} \right)}{0.001721 \times 2^{12}} \\
+      =       &\ \frac{0.752467 \times 2^{12} - 3.3 \times ADC\_register\_value}{0.001721 \times 2^{12}}                                      \\
+      \approx &\ \frac{3.3 \times 0.22802 \times 2^{12} - 3.3 \times ADC\_register\_value}{0.001721 \times 2^{12}}                            \\
+      \approx &\ \frac{0.22802 \times 2^{12} - ADC\_register\_value}{0.0005215 \times 2^{12}}
+\end{align*}
+
+
+\subsubsection{Calculating the Distance}
+
+Substituting the expression for the temperature into the expression for the speed of sound, we get:
+\begin{align*}
+    speed   = &\ \frac{546.30 + \frac{0.22802 \times 2^{12} - ADC\_register\_value}{0.0005215 \times 2^{12}}}{16493.17} \frac{cm}{\mu s}                                        \\
+            = &\ \frac{546.30 \times 0.0005215 \times 2^{12} + 0.22802 \times 2^{12} - ADC\_register\_value}{16493.17 \times 0.0005215 \times 2^{12}} \frac{cm}{\mu s}          \\
+            = &\ \frac{0.5129 \times 2^{12} - ADC\_register\_value}{8.601438 \times 2^{12}} \frac{cm}{\mu s}                                                                    \\
+      \approx &\ \left(0.05963 - \frac{ADC\_register\_value}{8.601438 \times 2^{12}} \right) \frac{cm}{\mu s}                                                                   \\
+            = &\ \left(0.05963 \times \frac{2^{32}}{2^{32}}    -    \frac{ADC\_register\_value}{8.601438 \times 2^{12}} \times \frac{2^{20}}{2^{20}} \right) \frac{cm}{\mu s}   \\
+      \approx &\ \left( \frac{256,108,888}{2^{32}} - \frac{121,907 \times ADC\_register\_value}{2^{32}} \right) \frac{cm}{\mu s}                                                \\
+            = &\ \frac{256,108,888 - 121,907 \times ADC\_register\_value}{2^{32}} \frac{cm}{\mu s}
+\end{align*}
+
+The distance to an object, being half of the round-trip distance, is
+\begin{align*}
+    distance = &\ \frac{1}{2} \times time_{\mu s} \times \frac{256,108,888 - 121,907 \times ADC\_register\_value}{2^{32}} \frac{cm}{\mu s}  \\
+             = &\ time_{\mu s} \times  \frac{256,108,888 - 121,907 \times ADC\_register\_value}{2^{33}} \frac{cm}{\mu s}
+\end{align*}

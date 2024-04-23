@@ -1,9 +1,9 @@
 Download the zip file or tarball from \filesource.
-Once downloaded, unpackage the file and open the project in the Arduino IDE\@.
-
-If your display module's I$^2$C address is not 0x27, then edit \textit{i2c\_address.h}, and replace \lstinline{0x27} with the correct I$^2$C address for your display module.
+Once downloaded, unpackage the file and open the project in your IDE\@.
 
 \subsection{Description of RangeFinder Files}
+
+\colorbox{yellow}{TODO: update}
 
 \subsubsection{RangeFinder.ino}
 \subsubsection{RangeFinder.ino or RangeFinder.cpp}
@@ -33,3 +33,53 @@ The \textit{alarm.c} file is where you will control the piezoelectric disc and m
 \subsubsection{shared\_variables.h}
 
 The \textit{shared\_variables.h} header file is where you will place any types that you define and where you will externalize any global variables that need to be used by more than one \textit{.c} file.
+
+
+\subsection{Combining Code for Old and New Hardware}
+
+If you and your partner are both using the old hardware, you do not need to worry about combining code for old and new hardware.
+Similarly, if you and your partner are both using the new hardware, you do not need to worry about combining code for old and new hardware.
+
+If, however, one partner is using the old hardware and the other is using the new hardware,
+then you will need to include compiler preprocessor directives to detect which microcontroller the program will run on,
+and execute the correct code for that microcontroller.
+These differences primarily will be configuring the timers and calculating distances.
+
+C's preprocessor accepts directives that modify a temporary copy of a file before compiling it.
+Two that you've already seen are \lstinline{#include} and \lstinline{#define}.
+The \lstinline{#if} directive and its relatives can be used to include/exclude code based on compile-time conditions.
+If one partner is using the old hardware and the other is using the new hardware, use the pattern
+\begin{lstlisting}
+    // code for both old and new hardware goes here
+#if defined (ARDUINO_AVR_NANO)
+    // code for the old hardware goes here
+#elif defined (ARDUINO_RASPBERRY_PI_PICO)
+    // code for the new hardware goes here
+#endif
+    // code for both old and new hardware goes here
+\end{lstlisting}
+
+A concise example can be found in \function{refresh_display()} in \textit{outputs.cpp}:
+
+\begin{lstlisting}[firstnumber=109]
+void refresh_display(void) {
+    if (display_needs_refreshed) {
+#if defined (ARDUINO_AVR_NANO)
+        fprintf(display, "\f%s\n%s\f", rows[0], rows[1]);
+#elif defined (ARDUINO_RASPBERRY_PI_PICO)
+        obdDumpBuffer(&display, backbuffer);
+#endif
+        display_needs_refreshed = false;
+    }
+}
+\end{lstlisting}
+
+\subsection{Assemble the Hardware and Edit \textit{platformio.ini}}
+
+\textcolor{red}{\textbf{BEFORE YOU PROCEED FURTHER:}}
+\begin{description}
+    \checkoffitem{Edit \textit{platformio.ini} so that the section for your hardware (old/new hardware) is uncommented, and the other section (old/new hardware) is commented-out.}
+    \checkoffitem{Add the new hardware to your Cow~Pi as described in Appendices~\ref{sec:hardwareMods-mk1f}--\ref{sec:hardwareMods-mk4b}.}
+\end{description}
+
+

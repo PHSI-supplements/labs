@@ -23,17 +23,18 @@
 \usepackage{gensymb}
 \usepackage{graphicx}
 \usepackage{multirow}
+\usepackage{listings}
 \setlength{\columnsep}{2cm}
 \newcommand{\power}{power~({\color{red}\textbf{+}}) rail}
 \newcommand{\ground}{ground~({\color{blue}\textbf{--}}) rail}
 
 
 
-% \captionsetup{width=.8\linewidth}
+\captionsetup{width=.8\linewidth}
 
-% \lstset{language=c, numbers=left, showstringspaces=false,
-%     moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
-%     }
+\lstset{language=c, numbers=left, showstringspaces=false,
+ moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+ }
 
 \renewcommand{\labnumber}{\capstonelabnumber}
 \renewcommand{\labname}{Implementing a Range Finder and Alarm}
@@ -56,13 +57,9 @@
 
     \section{Getting Started} \label{sec:GettingStarted}                \input{gettingstarted}
 
-    \section{Modifying the Hardware Circuit} \label{sec:hardwareMods}   \input{hardware_changes}
-
     \section{System Specification} \label{sec:spec}                     \input{specification}
 
     \section{Initial Software Changes} \label{sec:initialSoftware}      \input{read_inputs}
-
-%    \section{Measuring Distance and Speed} \label{sec:distanceAndSpeed} \input{distance_speed}
 
     \section{Measuring Distance} \label{sec:distance}                   \input{distance}
 
@@ -81,6 +78,18 @@
 
     \section{Appendix: Lab Checkoff}                                    \input{checkoff}
 
-    \section{Appendix: Handling Phantom Interrupts} \label{sec:phantom} \input{phantom_interrupts}
+%    \section{Appendix: Handling Phantom Interrupts} \label{sec:phantom} \input{phantom_interrupts}
+
+    \newpage
+
+    \section{Installing Additional Hardware Components (Cow Pi mk1f)} \label{sec:hardwareMods-mk1f}   \input{hardware_changes-mk1f}
+
+    \newpage
+
+    \section{Installing Necessary Hardware Components (Cow Pi mk4b)} \label{sec:hardwareMods-mk4b}   \input{hardware_changes-mk4b}
+
+    \newpage
+
+    \section{Distance Equation Formulation} \label{sec:distanceFormulation}                         \input{distance-formulation}
 
 \end{document}

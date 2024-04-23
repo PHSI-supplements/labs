@@ -4,353 +4,349 @@ We are, however, offering a small bonus if you complete your assignment early an
 
 \textcolor{red}{\textbf{\textit{You can also use this checklist yourself to make sure you've implemented everything correctly.}}}
 
-\colorbox{yellow}{(The checklist is forthcoming.)}
+%\colorbox{yellow}{(The checklist is forthcoming.)}
 
-%\begin{enumerate}
-%    \precheckoffitem{Upload your code to your Cow~Pi, open the Serial Monitor, and leave your code open in the IDE.}
-%
-%    \item[] \underbar{CODE EXAMINATION} % 12 points
-%    \checkoffitem{Show the TA your \function{initialize_interrupts()} function, pointing out that you registered interrupt handlers for keypresses and for each of the pushbuttons. \\
-%        \textit{+1 Matrix keypad presses and releases are detected with a pin change interrupt} \\
-%        \textit{+2 The right pushbutton's presses are detected with a pin change interrupt} \\
-%        \textit{+2 The left pushbutton's presses are detected with a pin change interrupt} }
-%    \checkoffitem{In your \function{initialize_interrupts()} function, point out the code that configures the LED timer;
-%        explain how you arrived at each of the values assigned to the timer's registers \\
-%        \textit{+1 Timer interrupts for TIMER2 are handled} \\
-%        \textit{+1 TIMER2's interrupt period, when combined with other logic, causes the right LED to illuminate for exactly 256ms} }
-%    \checkoffitem{Show the TA your ISR for \lstinline{TIMER2_COMPA_vect}, explaining how the logic causes the LED to illuminate for exactly 256ms. \\
-%        \textit{+1 The logic to illuminate the right LED for exactly 256ms is implemented} }
-%    \checkoffitem{In your \function{initialize_interrupts()} function, point out the code that configures the character timer;
-%        explain how you arrived at each of the values assigned to the timer's registers \\
-%        \textit{+2 Timer interrupts for TIMER1 are handled} \\
-%        \textit{+2 TIMER1's interrupt period is exactly 2000ms} } \\
-%
-%    \item[] \underbar{BASIC CHARACTER ENTRY}
-%    \precheckoffitem{The display initially shows: \\
-%        \display{
-%            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
-%        }
-%    }
-%    \checkoffitem{Press \texttt{2}, right-button.
-%        The right LED illuminates for about \textonequarter second with each keypress.
-%        (LED illumination with button presses is not required, but neither is it prohibited.)
-%        The display shows: \\
-%        \display{
-%            \colorbox{LightGreen}{A\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{A\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
-%        } \\
-%        \textit{+1 Starting with a blank character, pressing a number key initiates the character sequence} \\
-%        \textit{+1 Pressing the right pushbutton finalizes the character}
-%    }
-%    \checkoffitem{Press \texttt{3}, \texttt{3}, right-button.
-%        The right LED illuminates for about \textonequarter second with each keypress.
-%        The display shows: \\
-%        \display{
-%            \colorbox{LightGreen}{AD\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{AE\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{AE\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xx}\^{}\phantom{xxxxxxxxxxxxx}}
-%        } \\
-%        \textit{+1 The cursor is always below the character being created} \\
-%        \textit{+1 Pressing a key causes the right LED to illuminate for about \textonequarter\ second}
-%    }
-%    \checkoffitem{Press \texttt{3}, \texttt{4}, \texttt{5}, \texttt{5}, \texttt{5}, \texttt{5}, \texttt{5}, right-button.
-%        The right LED illuminates for about \textonequarter second with each keypress.
-%        The display shows: \\
-%        \display{
-%            \colorbox{LightGreen}{AED\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xx}\^{}\phantom{xxxxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{AEDG\phantom{xxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxx}\^{}\phantom{xxxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{AEDGJ\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{AEDGK\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{AEDGL\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{AEDG5\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{AEDGJ\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
-%        } \\
-%        and then: \\
-%        \display{
-%            \colorbox{LightGreen}{AEDGJ\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxx}\^{}\phantom{xxxxxxxxxx}}
-%        } \\
-%        \textit{+2 Repeated presses of the same number key cycles through the character sequence} \\
-%        \textit{+1 Pressing a different key finalizes the character and initiates the appropriate character sequence}
-%    }
-%    \checkoffitem{Press \texttt{D}. \\
-%        \texttt{AEDGJ} prints on the Serial Monitor, and the display shows: \\
-%        \display{
-%            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
-%        } \\
-%        \textit{+1 Pressing the \texttt{D} key causes the message to be printed on the Serial Monitor\dots} \\
-%        \textit{+\textonehalf\ \dots and the message to be cleared from the display\dots} \\
-%        \textit{+\textonehalf\ \dots with the cursor in the left position}
-%    } \\
-%
-%    \item[NOTE] After each ``transmission'', the message buffer should clear.
-%        If residue from earlier messages appear on the display while entering new messages, then you will need to press the RESET button between messages. \\
-%
-%    \item[] \underbar{MESSAGE BUFFER CLEARS, TIMER-BASED CHARACTER FINALIZATION}
-%
-%    \checkoffitem{Press \texttt{6}, \texttt{7}, \texttt{8} \\
-%        \display{
-%            \colorbox{LightGreen}{M\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{MP\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{MPT\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xx}\^{}\phantom{xxxxxxxxxxxxx}}
-%        } \\
-%        \textit{+\textonehalf\ After a transmission, another message can be created}
-%    }
-%    \checkoffitem{Wait 2 seconds. \\
-%        \display{
-%            \colorbox{LightGreen}{MPT\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxx}\^{}\phantom{xxxxxxxxxxxx}}
-%        }
-%    } \\
-%    \textit{+1 Pressing no buttons or keys for 2 seconds causes the system to finalize the character} \\
-%
-%    \item[] \underbar{CHARACTER DELETION}
-%    \checkoffitem{Press \texttt{0}, texttt{9}, \texttt{9}, left-button, left-button, left-button \\
-%        \display{
-%            \colorbox{LightGreen}{MPT$\square$\phantom{xxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxx}\^{}\phantom{xxxxxxxxxxxx}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{MPT$\square$W\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{MPT$\square$X\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{MPT$\square$\phantom{xxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxx}\^{}\phantom{xxxxxxxxxxx}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{MPT\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxx}\^{}\phantom{xxxxxxxxxxxx}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{MP\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xx}\^{}\phantom{xxxxxxxxxxxxx}}
-%        } \\
-%        \textit{+1 If a character is being created, then pressing the left pushbutton deletes the character} \\
-%        \textit{+1 If a character is not being created, the pressing the left pushbutton moves the character back one position and deletes the message's last character}
-%    }
-%    \checkoffitem{Wait 2 seconds. \\ Nothing changes}
-%    \checkoffitem{Press \texttt{D}. \\
-%    \texttt{MP} prints on the Serial Monitor, and the display shows: \\
-%        \display{
-%            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
-%        } \\
-%        \textit{+\textonehalf\ After a transmission, another message can be transmitted}
-%    } \\
-%
-%    \item[] \underbar{LONGER MESSAGES, NO BUFFER UNDERFLOW}
-%    \checkoffitem{Press \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9}. \\
-%        The message is now 8 characters. \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTW\phantom{xxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxx}\^{}\phantom{xxxxxxx}}
-%        }
-%    }
-%    \checkoffitem{Press \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}. \\
-%        The message is now 15 characters. \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \textit{+1 A message with fewer than 16 chracters is displayed in full}
-%    }
-%    \checkoffitem{Press \texttt{9}, \texttt{8}, right-button. \\
-%        The message is 16 characters\dots \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTWADGJMPTW\phantom{}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \dots 17 characters\dots \\
-%        \display{
-%            \colorbox{LightGreen}{DGJMPTWADGJMPTWT\phantom{}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \dots 17 characters. \\
-%        \display{
-%            \colorbox{LightGreen}{GJMPTWADGJMPTWT\phantom{x}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \textit{+1 A message with more than 15 characters is displayed as the last 15 characters plus the character being created}
-%    }
-%    \checkoffitem{Press the left-button 4 times \\
-%        \display{
-%            \colorbox{LightGreen}{DGJMPTWADGJMPTW\phantom{x}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTWADGJMP\phantom{xx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxx}\^{}\phantom{x}}
-%        } \\
-%        \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTWADGJM\phantom{xxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxx}\^{}\phantom{xx}}
-%        }
-%    }
-%    \checkoffitem{Press the left-button 12 times \\
-%        The message has 1 character. \\
-%        \display{
-%            \colorbox{LightGreen}{A\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|x}\^{}\phantom{xxxxxxxxxxxxxx}}
-%        }
-%    }
-%    \checkoffitem{Press the left-button 3 times \\
-%        The message has 0 characters\dots \\
-%        \display{
-%            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
-%        } \\
-%        \dots still 0 characters\dots \\
-%        \display{
-%            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
-%        } \\
-%        \dots still 0 characters. \\
-%        \display{
-%            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
-%        }
-%    }
-%    \checkoffitem{Press \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, right-button. \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJM\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxx}\^{}\phantom{xxxxxxxxxx}}
-%        }
-%    }
-%    \checkoffitem{Press \texttt{D}. \\
-%        \texttt{ADGJM} prints on the Serial Monitor, and the display shows: \\
-%        \display{
-%            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|}\^{}\phantom{xxxxxxxxxxxxxxx}}
-%        } \\
-%        \textit{+1 The cursor cannot retreat to a position earlier than start of the message buffer}
-%    } \\
-%
-%    \item[] \underbar{NO BUFFER OVERFLOW}
-%    \checkoffitem{Press: \\
-%        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
-%        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
-%        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
-%        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
-%        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
-%        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
-%        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9}. \\
-%        The message is now 56 characters. \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTWADGJMPTW\phantom{}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        }
-%    }
-%    \checkoffitem{Press: \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}. \\
-%        The message is now 62 characters. \\
-%        \display{
-%            \colorbox{LightGreen}{TWADGJMPTWADGJMP\phantom{}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        }
-%    }
-%    \checkoffitem{Press: \texttt{8}, \texttt{2}, \texttt{3}. \\
-%        The message is 63 characters\dots \\
-%        \display{
-%            \colorbox{LightGreen}{WADGJMPTWADGJMPT\phantom{}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \dots still 63 characters\dots \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \dots still 63 characters. \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \textit{+1 A message with 63 characters can be created\dots} \\
-%        \textit{+1 \dots but not a message with 64 characters}
-%    }
-%    \checkoffitem{Press: left-button, \texttt{4}, \texttt{5}. \\
-%        The message is 62 characters\dots \\
-%        \display{
-%            \colorbox{LightGreen}{WADGJMPTWADGJMP\phantom{x}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \dots 63 characters\dots \\
-%        \display{
-%            \colorbox{LightGreen}{WADGJMPTWADGJMPG\phantom{}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        } \\
-%        \dots still 63 characters. \\
-%        \display{
-%            \colorbox{LightGreen}{ADGJMPTWADGJMPG\phantom{x}} \vspace{-1mm}\\
-%            \colorbox{LightGreen}{\phantom{|xxxxxxxxxxxxxxx}\^{}\phantom{}}
-%        }
-%    }
-%    \checkoffitem{Press \texttt{D}. \\
-%        \texttt{ADGJMPTWADGJMPTWADGJMPTWADGJMPTWADGJMPTWADGJMPTWADGJMPTWADGJMPG} prints on the Serial Monitor.
-%    }
-%\end{enumerate}
+\begin{enumerate}
+    \precheckoffitem{Upload your code to your Cow~Pi, open the Serial Monitor, and leave your code open in the IDE.}
+
+    \item[] \underbar{CODE EXAMINATION} % 12 points
+    \checkoffitem{Show the TA your \function{initialize_interrupts()} function, pointing out that you registered interrupt handlers for keypresses and for each of the pushbuttons. \\
+        \textit{+1 Matrix keypad presses and releases are detected with a pin change interrupt} \\
+        \textit{+2 The right pushbutton's presses are detected with a pin interrupt} \\
+        \textit{+2 The left pushbutton's presses are detected with a pin interrupt} }
+    \checkoffitem{In your \function{initialize_interrupts()} function, point out the code that configures the LED timer;
+        explain how you arrived at each of the values assigned to the timer's registers \\
+        \textit{+1 Timer interrupts for the LED are handled} \\
+        \textit{+1 The LED timer's interrupt period, when combined with other logic, causes the right LED to illuminate for exactly 256ms} }
+    \checkoffitem{Show the TA your \function{handle_led_timer}, explaining how the logic causes the LED to illuminate for exactly 256ms. \\
+        \textit{+1 The logic to illuminate the right LED for exactly 256ms is implemented} }
+    \checkoffitem{In your \function{initialize_interrupts()} function, point out the code that configures the character timer;
+        explain how you arrived at each of the values assigned to the timer's registers \\
+        \textit{+2 Timer interrupts for character inputs are handled} \\
+        \textit{+2 The character timer's interrupt period is exactly 2000ms} } \\
+
+    \item[] \underbar{BASIC CHARACTER ENTRY}
+    \precheckoffitem{The display initially shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\^{}\phantom{xxxxxxxxxxxxxxx}}
+        }
+    }
+    \checkoffitem{Press \texttt{2}, right-button.
+        The right LED illuminates for about \textonequarter\ second with each keypress.
+        (LED illumination with button presses is not required, but neither is it prohibited.)
+        The display shows: \\
+        \display{
+            \colorbox{LightGreen}{A\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{A\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 Starting with a blank character, pressing a number key initiates the character sequence} \\
+        \textit{+1 Pressing the right pushbutton finalizes the character}
+    }
+    \checkoffitem{Press \texttt{3}, \texttt{3}, right-button.
+        The right LED illuminates for about \textonequarter\ second with each keypress.
+        The display shows: \\
+        \display{
+            \colorbox{LightGreen}{AD\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AE\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AE\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xx}\^{}\phantom{xxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 The cursor is always below the character being created} \\
+        \textit{+1 Pressing a key causes the right LED to illuminate for about \textonequarter\ second}
+    }
+    \checkoffitem{Press \texttt{3}, \texttt{4}, \texttt{5}, \texttt{5}, \texttt{5}, \texttt{5}, \texttt{5}, right-button.
+        The right LED illuminates for about \textonequarter\ second with each keypress.
+        The display shows: \\
+        \display{
+            \colorbox{LightGreen}{AED\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xx}\^{}\phantom{xxxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDG\phantom{xxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxx}\^{}\phantom{xxxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGJ\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGK\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGL\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDG5\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGJ\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        and then: \\
+        \display{
+            \colorbox{LightGreen}{AEDGJ\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxx}\^{}\phantom{xxxxxxxxxx}}
+        } \\
+        \textit{+2 Repeated presses of the same number key cycles through the character sequence} \\
+        \textit{+1 Pressing a different key finalizes the character and initiates the appropriate character sequence}
+    }
+    \checkoffitem{Press \texttt{D}. \\
+        \texttt{AEDGJ} prints at the bottom of the Display Module, and the display shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 Pressing the \texttt{D} key causes the message to be printed on the Serial Monitor\dots} \\
+        \textit{+\textonehalf\ \dots and the message to be cleared from the display\dots} \\
+        \textit{+\textonehalf\ \dots with the cursor in the left position}
+    } \\
+
+    \item[NOTE] After each ``transmission'', the message buffer should clear.
+        If residue from earlier messages appear on the display while entering new messages, then you will need to press the RESET button between messages. \\
+
+    \item[NOTE] Along with the message, the bottom of the Display Module will also show a number.
+        This number indicates the position of the message's terminating \lstinline{NUL}.
+        It might be more than the number of characters shown;
+        however, it must \textit{never} be greater than 24. \\
+
+    \item[] \underbar{MESSAGE BUFFER CLEARS, TIMER-BASED CHARACTER FINALIZATION}
+
+    \checkoffitem{Press \texttt{6}, \texttt{7}, \texttt{8} \\
+        \display{
+            \colorbox{LightGreen}{M\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MP\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xx}\^{}\phantom{xxxxxxxxxxxxx}}
+        } \\
+        \textit{+\textonehalf\ After a transmission, another message can be created}
+    }
+    \checkoffitem{Wait 2 seconds. \\
+        \display{
+            \colorbox{LightGreen}{MPT\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxx}\^{}\phantom{xxxxxxxxxxxx}}
+        }
+    } \\
+    \textit{+1 Pressing no buttons or keys for 2 seconds causes the system to finalize the character} \\
+
+    \item[] \underbar{CHARACTER DELETION}
+    \checkoffitem{Press \texttt{0}, texttt{9}, \texttt{9}, left-button, left-button, left-button \\
+        \display{
+            \colorbox{LightGreen}{MPT$\square$\phantom{xxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxx}\^{}\phantom{xxxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT$\square$W\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT$\square$X\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT$\square$\phantom{xxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxx}\^{}\phantom{xxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MPT\phantom{xxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxx}\^{}\phantom{xxxxxxxxxxxx}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{MP\phantom{xxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xx}\^{}\phantom{xxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 If a character is being created, then pressing the left pushbutton deletes the character} \\
+        \textit{+1 If a character is not being created, the pressing the left pushbutton moves the character back one position and deletes the message's last character}
+    }
+    \checkoffitem{Wait 2 seconds. \\ Nothing changes}
+    \checkoffitem{Press \texttt{D}. \\
+    \texttt{MP} prints at the bottom of the Display Module, and the display shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \textit{+\textonehalf\ After a transmission, another message can be transmitted}
+    } \\
+
+    \item[] \underbar{LONGER MESSAGES, NO BUFFER UNDERFLOW}
+    \checkoffitem{Press \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9}. \\
+        The message is now 8 characters. \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTW\phantom{xxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxx}\^{}\phantom{xxxxxxx}}
+        }
+    }
+    \checkoffitem{Press \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}. \\
+        The message is now 15 characters. \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \textit{+1 A message with fewer than 16 chracters is displayed in full}
+    }
+    \checkoffitem{Press \texttt{9}, \texttt{8}, right-button. \\
+        The message is 16 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPTW\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots 17 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{DGJMPTWADGJMPTWT\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots 17 characters. \\
+        \display{
+            \colorbox{LightGreen}{GJMPTWADGJMPTWT\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \textit{+1 A message with more than 15 characters is displayed as the last 15 characters plus the character being created}
+    }
+    \checkoffitem{Press the left-button 4 times \\
+        \display{
+            \colorbox{LightGreen}{DGJMPTWADGJMPTW\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMP\phantom{xx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxx}\^{}\phantom{x}}
+        } \\
+        \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJM\phantom{xxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxx}\^{}\phantom{xx}}
+        }
+    }
+    \checkoffitem{Press the left-button 12 times \\
+        The message has 1 character. \\
+        \display{
+            \colorbox{LightGreen}{A\phantom{xxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{x}\^{}\phantom{xxxxxxxxxxxxxx}}
+        }
+    }
+    \checkoffitem{Press the left-button 3 times \\
+        The message has 0 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \dots still 0 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \dots still 0 characters. \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\^{}\phantom{xxxxxxxxxxxxxxx}}
+        }
+    }
+    \checkoffitem{Press \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, right-button. \\
+        \display{
+            \colorbox{LightGreen}{ADGJM\phantom{xxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxx}\^{}\phantom{xxxxxxxxxx}}
+        }
+    }
+    \checkoffitem{Press \texttt{D}. \\
+        \texttt{ADGJM} prints at the bottom of the Display Module, and the display shows: \\
+        \display{
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxxx}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\^{}\phantom{xxxxxxxxxxxxxxx}}
+        } \\
+        \textit{+1 The cursor cannot retreat to a position earlier than start of the message buffer}
+    } \\
+
+    \item[] \underbar{NO BUFFER OVERFLOW}
+    \checkoffitem{Press: \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8}, \texttt{9} \\
+        \phantom{xxxxx} \texttt{2}, \texttt{3}, \texttt{4}, \texttt{5}, \texttt{6}, \texttt{7}, \texttt{8} \\
+        The message is now 23 characters. \\
+        \display{
+            \colorbox{LightGreen}{WADGJMPTWADGJMPT\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        }
+    }
+    \checkoffitem{Press: \texttt{9}. \\
+        The message is now 24 characters. \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPTW\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        }
+    }
+    \checkoffitem{Press: \texttt{2}, \texttt{3}. \\
+        \dots The message is still 24 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{DGJMPTWADGJMPTW\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots still 24 characters. \\
+        \display{
+            \colorbox{LightGreen}{DGJMPTWADGJMPTW\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \textit{+1 A message with 24 characters can be created\dots} \\
+        \textit{+1 \dots but not a message with 25 characters}
+    }
+    \checkoffitem{Press: left-button, \texttt{4}, \texttt{5}. \\
+        The message is 23 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPT\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots 24 characters\dots \\
+        \display{
+            \colorbox{LightGreen}{ADGJMPTWADGJMPTG\phantom{}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        } \\
+        \dots still 24 characters. \\
+        \display{
+            \colorbox{LightGreen}{DGJMPTWADGJMPTG\phantom{x}} \vspace{-1mm}\\
+            \colorbox{LightGreen}{\phantom{xxxxxxxxxxxxxxx}\^{}\phantom{}}
+        }
+    }
+    \checkoffitem{Press \texttt{D}. \\
+        \texttt{ADGJMPTWADGJMPTWADGJMPTG} prints at the bottom of the Display Module.
+    }
+\end{enumerate}

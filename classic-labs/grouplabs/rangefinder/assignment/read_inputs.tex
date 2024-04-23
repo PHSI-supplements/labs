@@ -39,12 +39,18 @@ As noted in Requirement~\ref{spec:singlePulseOperation}, if the system is in Sin
     \caption{Verify our range to target. One ping only. \\ \tiny Image by Paramount Pictures Corporation \label{fig:onePingOnly}}
 \end{figure}
 
-Create a variable to indicate that the user has requested a ping.
-Be sure to declare it not only in \textit{user\_controls.c} (without the \lstinline{extern} modifier) but also in \textit{shared\_variables.h} (with the \lstinline{extern} modifier).
-Add code to \function{initialize_controls()} to set this variable initially to \lstinline{false}.
-Add code to \function{manage_controls()} to set this variable to \lstinline{true} when and only when the use presses the button while in Single-Pulse Operation mode.
-The variable should be set to \lstinline{true} only \textit{once} per press.
-(Do \textit{not} set it to \lstinline{true} just because the user is still holding the button down.)
+\begin{description}
+    \checkoffitem{Create a variable to indicate that the user has requested a ping.}
+        \begin{itemize}
+            \item Be sure to declare it not only in \textit{user\_controls.c} (without the \lstinline{extern} modifier) but also in \textit{shared\_variables.h} (with the \lstinline{extern} modifier).
+        \end{itemize}
+    \checkoffitem{Add code to \function{initialize_controls()} to set this variable initially to \lstinline{false}.}
+    \checkoffitem{Add code to \function{manage_controls()} to set this variable to \lstinline{true} when and only when the user presses the button while in Single-Pulse Operation mode.}
+        \begin{itemize}
+            \item The variable should be set to \lstinline{true} only \textit{once} per press.
+            \item Do \textit{not} set it to \lstinline{true} just because the user is still holding the button down.
+        \end{itemize}
+\end{description}
 
 Do not worry about setting this variable to \lstinline{false} yet;
 that will come later.
