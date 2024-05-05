@@ -103,7 +103,7 @@ Choose one.
                     \begin{align*}
                         speed & = \frac{\Delta distance}{time} = \frac{\left( \tau_2 - \tau_1 \right) \times \left( 256,108,888 - 121,907 \times ADC\_register\_value \right) cm}{2^{33} \times 65,536\mu s} \\
                         & \\
-                        & =  1,000,000 \times \left( \tau_2 - \tau_1 \right) \times \left( 256,108,888 - 121,907 \times ADC\_register\_value \right) \div 2^{47} \ \frac{cm}{s}
+                        & =  1,000,000 \times \left( \tau_2 - \tau_1 \right) \times \left( 256,108,888 - 121,907 \times ADC\_register\_value \right) \div 2^{49} \ \frac{cm}{s}
                     \end{align*}
             \end{description}
     \checkoffitem{Add code to \function{manage_sensor()} to calculate the rate of approach when the system is in Normal Operations.}

@@ -20,6 +20,8 @@
 #include <stdio.h>
 #include "alarm.h"
 #include "shared_variables.h"
+#include "outputs.h"
+#include "interrupt_support.h"
 
 
 const unsigned int on_period = 7000;          // a made-up number, probably not the value you want to use

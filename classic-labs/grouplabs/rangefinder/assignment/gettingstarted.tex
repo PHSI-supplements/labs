@@ -3,14 +3,11 @@ Once downloaded, unpackage the file and open the project in your IDE\@.
 
 \subsection{Description of RangeFinder Files}
 
-\colorbox{yellow}{TODO: update}
+\subsubsection{RangeFinder.cpp, interrupt\_support.h, interrupt\_support.cpp, outputs.h, outputs.cpp}
 
-\subsubsection{RangeFinder.ino}
-\subsubsection{RangeFinder.ino or RangeFinder.cpp}
+Do not edit \textit{RangeFinder.cpp}, \textit{interrupt\_support.h}, \textit{interrupt\_support.cpp}, \textit{outputs.h}, or \textit{outputs.cpp}.
 
-Do not edit \textit{RangeFinder.ino} or \textit{RangeFinder.cpp}.
-
-This file contains the code to configure your Cow Pi for this lab.
+These files contain code to simplify interrupt management and to Functions to place text on the display module.
 
 \subsubsection{user\_controls.h \& user\_controls.c}
 
@@ -33,6 +30,9 @@ The \textit{alarm.c} file is where you will control the piezoelectric disc and m
 \subsubsection{shared\_variables.h}
 
 The \textit{shared\_variables.h} header file is where you will place any types that you define and where you will externalize any global variables that need to be used by more than one \textit{.c} file.
+
+It also contains a structure that you may use to access an analog-digital converter's registers,
+and it contains meaningfully-named constants to refer to specific pins you will use in this assignment.
 
 
 \subsection{Combining Code for Old and New Hardware}
@@ -61,7 +61,7 @@ If one partner is using the old hardware and the other is using the new hardware
 
 A concise example can be found in \function{refresh_display()} in \textit{outputs.cpp}:
 
-\begin{lstlisting}[firstnumber=109]
+\begin{lstlisting}[firstnumber=108]
 void refresh_display(void) {
     if (display_needs_refreshed) {
 #if defined (ARDUINO_AVR_NANO)

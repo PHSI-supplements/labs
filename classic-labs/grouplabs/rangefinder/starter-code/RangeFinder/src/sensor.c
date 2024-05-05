@@ -21,6 +21,8 @@
 #include <stdio.h>
 #include "sensor.h"
 #include "shared_variables.h"
+#include "outputs.h"
+#include "interrupt_support.h"
 
 
 void initialize_sensor(void) {

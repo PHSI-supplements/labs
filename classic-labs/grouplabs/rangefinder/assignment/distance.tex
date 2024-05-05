@@ -212,7 +212,7 @@ In the timer interrupt handler:
 \paragraph{Initiate a Pulse}
 Place code in \function{manage_sensor()} that, whenever a ping is requested (see Section~\ref{subsec:readPushbutton}), will:
 \begin{description}
-    \checkoffitem{First, set Arduino pin~D2 to logic-high}
+    \checkoffitem{First, set the \lstinline{TRIGGER} pin to logic-high}
     \checkoffitem{Then, set the variable indicating that a ping is requested to \lstinline{false}}
     \checkoffitem{Next, delay for 10\textmu s}
     \begin{description}
@@ -227,7 +227,7 @@ Place code in \function{manage_sensor()} that, whenever a ping is requested (see
             \item Use the timer's counter to busy-wait for 10\textmu s
         \end{itemize}
     \end{description}
-    \checkoffitem{Finally, set pin~D2 to logic-low}
+    \checkoffitem{Finally, set the \lstinline{TRIGGER} pin to logic-low}
 \end{description}
 
 Several microseconds later, the sensor will emit its ultrasound pulse and raise its \texttt{Echo} line to logic-high.
