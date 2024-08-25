@@ -1,6 +1,6 @@
 {
   "semester comment": "the semester (or trimester or quarter) for the current course offering",
-  "semester": "Spring 2024",
+  "semester": "Fall 2024",
   "labs comment": {
     "lab": "a lab found in labs.json",
     "due": "a description of when the assignment is due",
@@ -12,7 +12,7 @@
   "labs": [
     {
       "lab": "PokerLab",
-      "due": "Week of January 29, before the start of your lab section",
+      "due": "Week of September 2, before the start of your lab section",
       "policies": {
         "collaboration": [
           "Sections~\\ref{sec:connecting}, \\ref{subsec:terminology}, \\ref{sec:gettingstarted}, \\ref{subsec:typesofpokerhands}, and~\\ref{subsec:studythecode}: In addition to the professor and the TAs, you may freely seek help on these sections from other students.\n\n    Sections~\\ref{sec:completingcard} and~\\ref{subsec:completepoker}: These sections are individual-effort only.\n    You may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.\n    Sharing code with or copying code from another student or the internet is prohibited.",
@@ -26,45 +26,45 @@
     },
     {
       "lab": "KeyboardLab",
-      "due": "Week of February 5, before the start of your lab section",
+      "due": "Week of September 9, before the start of your lab section",
       "first missing key": "W",
       "desired email": "TO\tArchie\nRE\tI Need a Working Keyboard\n\nPlease order a new keyboard for me. This one is broken."
     },
     {
       "lab": "LinkedListLab",
-      "due": "Week of February 12, before the start of your lab section"
+      "due": "Week of September 16, before the start of your lab section"
     },
     {
       "lab": "IntegerLab",
-      "due": "Week of February 19, before the start of your lab section"
+      "due": "Week of September 23, before the start of your lab section"
     },
     {
       "lab": "FloatLab",
-      "due": "Week of February 26, before the start of your lab section"
+      "due": "Week of September 30, before the start of your lab section"
     },
     {
       "lab": "AddressingLab",
-      "due": "Week of March 4, before the start of your lab section",
+      "due": "Week of October 7, before the start of your lab section",
       "TODO": "TODO"
     },
     {
       "lab": "Chapter6Lab",
-      "due": "Week of March 25, before the start of your lab section",
+      "due": "Week of October 21, before the start of your lab section",
       "TODO": "TODO"
     },
     {
       "lab": "Chapter11Lab",
-      "due": "Week of April 1, before the start of your lab section",
+      "due": "Week of October 28, before the start of your lab section",
       "TODO": "TODO"
     },
     {
       "lab": "DuplicatorLab",
-      "due": "Week of April 8, before the start of your lab section",
+      "due": "Week of November 4, before the start of your lab section",
       "TODO": "TODO"
     },
     {
       "lab": "PollingLab",
-      "due": "Week of April 15, before the start of your lab section",
+      "due": "Week of November 11, before the start of your lab section",
       "required files": "\\textit{io_functions.c} and \\textit{number_builder.c}",
       "locations": [
         "chap09/system-descriptions/number-builder"
@@ -76,7 +76,7 @@
     },
     {
       "lab": "InterruptLab",
-      "due": "Week of April 22, before the start of your lab section",
+      "due": "Week of November 18, before the start of your lab section",
       "required files": "\\textit{inputs.c}, \\textit{character_selector.c}, and \\textit{message_editor.c}",
       "locations": [
         "chap09/system-descriptions/number-pad-texter"
@@ -84,16 +84,31 @@
       "compilation": {
         "processor": "ATmega328P",
         "processor.bk": "RP2040"
+      },
+      "policies": {
+        "grading": {
+          "late": "\\subsection*{Late Submissions}\n    \\textcolor{red}{This assignment does \\textit{not} have a 48-hour grace period.}\n    This assignment is due before the start of your lab section.\n    The due date in Canvas is five minutes after that, which is ample time for you to arrive to lab and then discover that you'd forgotten to turn in your work without Canvas reporting your work as having been turned in late.\n    We will accept late turn-ins up to one hour late, assessing a 10\\% penalty on these late submissions.\n    Any work turned in more than one hour late will not be graded."
+        }
       }
     },
     {
       "lab": "GroupLab",
-      "due": "Week of May 6, before the start of your lab section\\footnote{See Piazza for the due dates of teams with students from different lab sections.}",
+      "due": "Week of December 9, before the start of your lab section\\footnote{See Piazza for the due dates of teams with students from different lab sections.}",
+      "policies": {
+        "grading": {
+          "late": "\\subsection*{Late Submissions}\n    \\textcolor{red}{This assignment does \\textit{not} have a 48-hour grace period.}\n    This assignment is due before the start of your lab section.\n    The due date in Canvas is five minutes after that, which is ample time for you to arrive to lab and then discover that you'd forgotten to turn in your work without Canvas reporting your work as having been turned in late.\n    We will accept late turn-ins up to one hour late, assessing a 10\\% penalty on these late submissions.\n    Any work turned in more than one hour late will not be graded."
+        }
+      },
       "TODO": "TODO"
     },
     {
       "lab": "MemoryLab",
-      "due": "Week of May 6, at the end of your lab section",
+      "due": "Week of December 9, at the end of your lab section",
+      "policies": {
+        "grading": {
+          "late": "\\subsection*{Late Submissions}\n    \\textcolor{red}{This assignment does \\textit{not} have a 48-hour grace period.}\n    This assignment is due at the end of your lab section, and the due date in Canvas is five minutes after that.  We will accept late turn-ins up to one hour late, assessing a 10\\% penalty on these late submissions.\n    Any work turned in more than one hour late will not be graded."
+        }
+      },
       "TODO": "TODO"
     }
   ]
