@@ -14,18 +14,18 @@ You will need to run commands on \runtimeenvironment.
         See \url{https://computing.unl.edu/faq-section/working-remotely#node-29471} for instructions.
         The principal differences are:
         \begin{itemize}
-            \item Instead of using \textit{cse.unl.edu} as the Host Name, use \textit{cse-linux-01.unl.edu}.
+            \item Instead of using \textit{cse.unl.edu} as the Host Name, use \textit{nuros.unl.edu}.
             \item Instead of using your SoC username and password, use your UNL username and password.
         \end{itemize}
         Alternatively, you can launch an SSH session from a Windows terminal window in the same manner as for Mac and Linux, though this seems to be a less-popular option.
-    \item[From Mac or Linux] If your personal computer (or the lab computer you're using) is a Mac or a Linux box, the simplest option is to open a terminal window on your computer and type \texttt{ssh \textit{username}@cse-linux-01.unl.edu}, where \textit{username} is your UNL username.
+    \item[From Mac or Linux] If your personal computer (or the lab computer you're using) is a Mac or a Linux box, the simplest option is to open a terminal window on your computer and type \texttt{ssh \textit{username}@nuros.unl.edu}, where \textit{username} is your UNL username.
         See \url{https://computing.unl.edu/faq-section/working-remotely#node-300} for Mac, or \url{https://computing.unl.edu/faq-section/working-remotely#node-30086} for Linux.
         \begin{itemize}
-            \item Instead of using \textit{cse.unl.edu} has the Host Name, use \textit{cse-linux-01.unl.edu}.
+            \item Instead of using \textit{cse.unl.edu} has the Host Name, use \textit{nuros.unl.edu}.
             \item Instead of using your SoC username and password, use your UNL username and password.
         \end{itemize}
     \item[From an IDE] If you already have an IDE on your personal computer, that IDE may provide the option of opening a secure shell terminal on a remote system.
-        We do not guarantee that the TAs or the School of Computing tech support team can help you with connecting your IDE to \runtimeenvironment.
+        We do not guarantee that the TAs or the School of Computing tech support team can help you with connecting any particular IDE to \runtimeenvironment.
 \end{description}
 
 
@@ -42,9 +42,11 @@ You will need to edit text files, C files, and assembly code files.
         If you do so, and if your personal computer is a Windows machine, try to configure your editor to use ``Unix-style'' end-of-line characters.
         This won't matter for most labs, but a couple of upcoming labs will need ``Unix-style'' line separators.
         If you cannot change this setting, then get in the habit of running \texttt{dos2unix \textit{filename}} on your files after transferring them to \runtimeenvironment\ to convert ``DOS-style'' line separators to ``Unix-style'' line separators (this utility makes a few other changes, too, that have no bearing on \coursenumber assignments).
-    \item[Editing on the server in an IDE on your personal computer] Some IDEs allow you to edit files on a remote system.
-        Bear in mind that these IDEs may add metafiles to the remote system in sufficient quantity to exceed your disk quota on the School of Computing's file server (VS~Code is particularly notorious for this).
-        We do not guarantee that the TAs or the School of Computing tech support team can help you with connecting your IDE to \runtimeenvironment.
+    \item[Editing on the server in an IDE on your personal computer] Many IDEs allow you to edit files on a remote system.\footnote{
+            A popular choice is to use VS~Code. Here is a helpful guide using VS~Code to develop on a remote system: \url{https://code.visualstudio.com/docs/remote/ssh}
+        }
+        %Bear in mind that these IDEs may add metafiles to the remote system in sufficient quantity to exceed your disk quota on the School of Computing's file server (VS~Code is particularly notorious for this).
+        We do not guarantee that the TAs or the School of Computing tech support team can help you with connecting any particular IDE to \runtimeenvironment.
 \end{description}
 
 
@@ -58,18 +60,18 @@ The popular choices are:
 \begin{description}
     \item[FileZilla] A very popular drag-and-drop option.
         See \url{https://computing.unl.edu/faq-section/working-remotely#node-291}.
-        Be sure to specify the \textit{cse-linux-01.unl.edu} as the host.
-    \item[scp] If you're using a terminal window to \texttt{ssh} into \textit{cse-linux-01.unl.edu} then using the \texttt{scp} command is a sensible choice.
+        Be sure to specify the \textit{nuros.unl.edu} as the host.
+    \item[scp] If you're using a terminal window to \texttt{ssh} into \textit{nuros.unl.edu} then using the \texttt{scp} command is a sensible choice.
         Basic use of the \texttt{scp} command is very much the same as basic use of the \texttt{cp} command, except that you specify the remote host.
         Copying files from your computer to the server: \\
-        \texttt{scp \textit{file1} \textit{file2} \dots\ \textit{fileN} username@cse-linux-01.unl.edu:\textit{filepath}} copies the files from your local computer to the \textit{filepath} on \runtimeenvironment, where \textit{filepath} is relative to your home directory.
+        \texttt{scp \textit{file1} \textit{file2} \dots\ \textit{fileN} username@nuros.unl.edu:\textit{filepath}} copies the files from your local computer to the \textit{filepath} on \runtimeenvironment, where \textit{filepath} is relative to your home directory.
         For example, \\
-        \underline{\underline{\texttt{scp answers.txt username@cse-linux-01.unl.edu:.}}} copies \textit{answers.txt} to the top-level of your home directory.
+        \underline{\underline{\texttt{scp answers.txt username@nuros.unl.edu:.}}} copies \textit{answers.txt} to the top-level of your home directory.
         Or, working the other direction: \\
-        \texttt{scp username@cse-linux-01.unl.edu:\textit{file} \textit{filepath}} copies \textit{file} from the remote server to \textit{filepath} on your local computer.
+        \texttt{scp username@nuros.unl.edu:\textit{file} \textit{filepath}} copies \textit{file} from the remote server to \textit{filepath} on your local computer.
         Just as with \texttt{cp}, you can use the \texttt{-r} argument to copy directories: \\
-        \underline{\underline{\texttt{scp -r pokerlab username@cse-linux-01.unl.edu:.}}} \\
-        \underline{\underline{\texttt{scp -r username@cse-linux-01.unl.edu:pokerlab .}}}
+        \underline{\underline{\texttt{scp -r pokerlab username@nuros.unl.edu:.}}} \\
+        \underline{\underline{\texttt{scp -r username@nuros.unl.edu:pokerlab .}}}
 \end{description}
 
 \subsubsection*{\textit{Notice} about Transferring \texttt{.o} Files}
@@ -90,7 +92,7 @@ If so, then when you run \texttt{\textbf{make}} you will likely see an error sim
 \end{verbatim}
 
 This is because \texttt{.o} files produced for Windows and Mac computers (and for non-x86 Linux computers) are incompatible with the x86 Linux system on the server.
-The very easy fix is to clean-up the build with the command \texttt{\textbf{make clean}}:
+The very easy fix is to clean up the build with the command \texttt{\textbf{make clean}}:
 \begin{verbatim}
     % make clean
     rm -f pokerlab.o poker.o card.o *~ core

@@ -342,7 +342,8 @@ def prep_labs(course: Dict, semester: Dict, labs: Dict, storyline: Dict, labs_to
                             complete_lab[category][default] = course[category][default]
                         elif isinstance(complete_lab[category][default], Dict):
                             for detail in course[category][default]:
-                                if (default in semester['labs'][index][category]
+                                if (category in semester['labs'][index]
+                                        and default in semester['labs'][index][category]
                                         and detail in semester['labs'][index][category][default]):
                                     complete_lab[category][default][detail] =\
                                         semester['labs'][index][category][default][detail]
