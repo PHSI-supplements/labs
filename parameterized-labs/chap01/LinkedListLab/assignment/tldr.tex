@@ -1,0 +1,160 @@
+Sections~\ref{subsec:tldrBusinessRules}--\ref{subsec:tldrTestingChallengeResponse} are concise versions of Sections~\ref{subsec:BusinessRules}--\ref{subsec:TestingChallengeResponse};
+if you need more-detailed instructions, see the appropriate subsection in Section~\ref{sec:challengeResponse}.
+Sections~\ref{subsec:LinkedList}--\ref{subsec:DeletingNode} already offer concise instructions to implement the linked list;
+we shall not unnecessarily duplicate them here.
+
+\subsection{Business Rules} \label{subsec:tldrBusinessRules}
+
+    The challenge-response app has rules to define how to find the appropriate response word.
+    The starter code already implements these rules, but that implementation will only work if your code builds an alphabetically-sorted list of words that occur in a file and the number of occurrences of each word.
+    (Note that alphabetization is case-insensitive for this app.)
+
+    \subsubsection*{The Books}
+
+        The starter code includes six files that you can use as inputs.
+        Three are pre-sorted, and three aren't.
+        Two are short, only 7 words, which can be useful for debugging.
+        Two are moderate-sized, 74-125 words, to give you confidence in the correctness of your solution.
+        Two are large, in excess of 74,000 words, which are useful to reveal whether you have any memory leaks in your code.
+
+        Each book file, ``\textit{file}'', has a corresponding ``\textit{file}-table.md'' that contains a Markdown-formatted table of the challenge words, the number of occurrences for each challenge word, and the corresponding response word.
+        You may use these files to confirm the correctness of your solution.
+
+
+\subsection{Word Entries}
+
+    The \lstinline{word_entry_t} type is defined in \textit{word\_entry.h}:
+
+    \lstinputlisting[linerange=28-31, firstnumber=28]{../starter-code/word_entry.h}
+
+    There are a handful of function prototypes in \textit{word\_entry.h} that encapsulate this datatype.
+
+    \subsubsection{Creating and Destroying Word Entries}
+
+        The \function{create_word_entry()} function allocates space for a \lstinline{word_entry_t}, and the \function{delete_word_entry()} function releases that memory.
+        The \function{create_word_entry()} function, however, does not yet initialize the word entry.
+
+        \begin{description}
+            \checkoffitem{In \function{create_word_entry()}'s \lstinline{else} block, copy \lstinline{word} into \lstinline{word_entry}'s \lstinline{word} field.}
+            \checkoffitem{In \function{create_word_entry()}'s \lstinline{else} block, set \lstinline{word_entry}'s \lstinline{occurrences} field to 0.}
+        \end{description}
+
+        You do not need to make any changes to \function{delete_word_entry()}.
+
+    \subsubsection{Accessors and Mutators \\ \footnotesize{\textit{aka}, Getters and Setters}}
+
+        \begin{description}
+            \checkoffitem{In \function{increment_count()}, increase the word entry's number of occurrences by one.}
+            \checkoffitem{In \function{get_count()}, return the number of occurrences.}
+            \checkoffitem{In \function{get_word()}, return a pointer to the word entry's word. (Do \textit{not} make a copy of the word.)}
+        \end{description}
+
+    \paragraph{Testing Your Changes}
+
+        You can build an executable that uses H.Awk's array-backed list with the command \\
+        \verb+make arraylistlab+ \\
+        or, if you want to limit each \function{malloc()} call to no more than 32KB, then use the command \\
+        \verb+make arraylistlab "OPTION=-DHOBBLE"+
+
+        \begin{description}
+            \checkoffitem{Build and run the executable.}
+            \checkoffitem{Select task 1, ``Test word\_entry''.}
+            \checkoffitem{Select function 1, ``create\_word\_entry()'', and enter a word when prompted.}
+            \checkoffitem{Use fuctions 3 (``increment\_count()''), 4 (``get\_count()''), and 5 (``get\_word()'') to test your code.}
+            \checkoffitem{Continue to test until you discover a bug or are satisfied that your implementations are correct.}
+            \checkoffitem{When you have finished, use function 2 (``delete\_word\_entry()'') to release the word entry's memory, then select 0 to return to the main menu, and then select 0 to exit the program.}
+        \end{description}
+
+
+\subsection{Alphabetical Functions}
+
+    \subsubsection{Making a Lowercase Copy of a Word}
+
+        \begin{description}
+            \checkoffitem{Implement the \function{word_to_lowercase()} function.}
+        \end{description}
+
+    \subsubsection{Comparing Words}
+
+        \begin{description}
+            \checkoffitem{Implement the \function{words_are_equal()} function.}
+            \checkoffitem{Implement the \function{word1_is_earlier_than_word2()} function.}
+            \checkoffitem{Implement the \function{word1_is_later_than_word2()} function.}
+        \end{description}
+
+    \paragraph{Testing Your Changes}
+
+        \begin{description}
+            \checkoffitem{Build and run the executable.}
+            \checkoffitem{Select task 3, ``Test alphabetical functions'', and enter words when prompted.}
+            \checkoffitem{Continue to test until you discover a bug or are satisfied that your implementations are correct.}
+            \checkoffitem{When you have finished, select 0 to exit the program.}
+        \end{description}
+
+
+\subsection{Preparing to Work with Lists}
+
+    Like \lstinline{word_entry_t}, the \lstinline{list_t} datatype has functions to encapsulate it.
+    In the case of \lstinline{list_t}, however, this encapsulation is essential because the code in \textit{challenge-response.c} has access to the type declaration but not the type definition.
+
+    \begin{description}
+        \checkoffitem{Review the datatype and functions declared in \textit{list.h}.}
+    \end{description}
+
+    A list is abstractly modeled as having a sequence of word entries and an iterator that points to the ``current'' word entry.
+    The iterator can point to anywhere between the first word entry to the ``empty'' space after the last word entry.
+
+    \begin{description}
+        \checkoffitem{Review the \function{respond()} function in \textit{challenge-response.c} to see some uses of the \lstinline{list_t} functions.}
+    \end{description}
+
+
+\subsection{Inserting Words}
+
+    \subsubsection{Limited Implementation}
+
+        You will receive half of the credit for \function{insert_word()} if it works on pre-sorted books.
+        If you choose to use this implementation:
+        \begin{description}
+            \checkoffitem{Implement \function{insert_word()} for pre-sorted books}
+            \checkoffitem{Test this implementation and move on to implementing a linked list}
+            \checkoffitem{Return to this sub-problem later to attempt a more-general implementation}
+        \end{description}
+
+    \subsubsection{Insertion Sort}
+
+        To receive full credit for \function{insert_word()}, it must work on books that are not pre-sorted.
+        If you choose to use this implementation:
+        \begin{description}
+            \checkoffitem{Implement \function{insert_word()} such that:}
+            \begin{itemize}
+                \item The function looks for the word in the sorted list
+                \item If the word is found in its proper location in the sorted list, then update the number of occurrences
+                \item If the word is not present in its proper location in the sorted list, then insert a new node for that word at its proper location
+            \end{itemize}
+        \end{description}
+
+    \paragraph{Testing Your Changes}
+
+        \begin{description}
+            \checkoffitem{Build and run the executable.}
+            \checkoffitem{Test \function{insert_word()} until you discover a bug or are satisfied that your implementation is correct.}
+        \end{description}
+
+    \subsection{Testing the Challenge-Response System} \label{subsec:tldrTestingChallengeResponse}
+
+        When conducting these tests, you can use the ``\textit{file}-table.md'' files to confirm the correctness of the results.
+
+        \begin{description}
+            \checkoffitem{Use task 6 to test building a list until you discover a bug or are satisfied that your implementations are correct.}
+            \checkoffitem{Use task 7 to test challenge/responses until you discover a bug or are satisfied that your implementations are correct.}
+            \checkoffitem{When you have finished, select 0 to exit the program.}
+        \end{description}
+
+
+\subsection{Implementing a Linked List}
+
+    Sections~\ref{subsec:LinkedList}--\ref{subsec:DeletingNode} are already fairly concise;
+    we shall not duplicate them here.
+
+

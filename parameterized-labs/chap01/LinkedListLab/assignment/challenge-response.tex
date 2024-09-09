@@ -1,13 +1,4 @@
-\transitiontwo
-
-He introduces himself, ``Hi, I'm H.Awk~Aye.'' That's right, I'm so good at Unix that `Awk' literally is my middle name.''
-You decide to have an irrational dislike of him.
-
-\transitionthree
-
-\transitionfour
-
-\subsection{Business Rules}
+\subsection{Business Rules} \label{subsec:BusinessRules}
 
 % TODO: Parameterize business rules
 
@@ -150,7 +141,7 @@ The \function{get_word()} function returns a pointer to a constant -- while it \
 \begin{description}
     \checkoffitem{In \function{increment_count()}, increase the word entry's number of occurrences by one.}
     \checkoffitem{In \function{get_count()}, return the number of occurrences.}
-    \checkoffitem{In \function{get_word()}, return the word entry's word.}
+    \checkoffitem{In \function{get_word()}, return a pointer to the word entry's word. (Do \textit{not} make a copy of the word.)}
 \end{description}
 
 When returning the word entry's word, simply returning the pointer is sufficient -- and desirable.
@@ -326,10 +317,11 @@ Otherwise, implement Insertion Sort\dots
 
 While you probably learned about sorting in \cstwo, you may not have learned about \textit{Insertion Sort}.
 If you did learn about Insertion Sort, you probably learned to use it to sort an array or list in-place, and that it's a $\mathcal{O}(n^2)$ algorithm that is less efficient than $\mathcal{O}(n \log n)$ sorting algorithms such as Merge Sort and Quick Sort.
-Insertion Sort has a particular advantage in that it can be applied \textit{as the list is built}, making for a much simpler and less error-prone implementation than a different sort that requires the list to already be built.
+Insertion Sort is often taught as a way to sort an array in-place,
+but a variation of Insertion Sort has a particular advantage in that it can be applied \textit{as the list is built}, making for a much simpler and less error-prone implementation than a different sort that requires the list to already be built.
 
-The Insertion Sort algorithm reads an input and then traverses a sorted list to find the proper location in the sorted list for the input.
-The input is then inserted into the list at that location.
+Your Insertion Sort algorithm will read an input and then traverse a sorted list to find the proper location in the sorted list for the input.
+The input is then inserted into the list at that location, preserving the property that the list is sorted.
 
 \begin{description}
     \checkoffitem{Implement \function{insert_word()} such that:}
@@ -379,7 +371,7 @@ After you have entered a word, \function{insert_word()} will be called, and the 
 \end{description}
 
 
-\subsection{Testing the Challenge-Response System}
+\subsection{Testing the Challenge-Response System} \label{subsec:TestingChallengeResponse}
 
 When you are satisfied that your word entry, alphabetical, and word insertion functions are correct, test their integration into the challenge-response system.
 With task 6, you will be prompted for the name of a book file, and then the list will be generated and printed.
@@ -406,7 +398,9 @@ As a reminder, the book files are:
 \end{itemize}
 
 
-\subsection{Linked List}
+\subsection{Linked List} \label{subsec:LinkedList}
+
+\textit{n.b.}: If you need a refresher on linked lists, see Appendix~\ref{sec:linkedLists}.
 
 In \textit{list.h}, we use a forward declaration to make the code in \textit{challenge-response.h} aware of the type.
 
@@ -422,7 +416,7 @@ The list definition has pointers to three nodes, a \lstinline{head} that points 
     Some notes about \lstinline{NULL} pointers -- we will adopt the convention that:
     \begin{itemize}
         \item \lstinline{head} and \lstinline{tail} are \lstinline{NULL} if and only if the list is empty
-        \item \lstinline{current_node} if the iterator points to the ``empty'' space after the last word entry (or the list is empty)
+        \item \lstinline{current_node} is \lstinline{NULL} if the iterator points to the ``empty'' space after the last word entry (or the list is empty)
     \end{itemize}
 }
 
@@ -434,6 +428,7 @@ We define a linked list note conventionally:
 
 (Here the forward declaration is necessary so that \lstinline{node_t} can be used when defining the node structure.)
 
+When writing functions in \textit{challenge\_response.c}, you had to rely on \lstinline{list_t}'s encapsulation and could not assume any particular list definition.
 \textbf{Whenever you are writing a function in \textit{linked\_list.c}, you can treat \lstinline{list_t} as though it has the linked list definition.}
 
 
@@ -449,7 +444,8 @@ This will allow you to compare the results with your linked list implementation 
 
 \begin{figure}
     \centering
-    \includegraphics[width=6in]{SideBySideTesting}
+    % TODO -- get this file!!
+%    \includegraphics[width=6in]{SideBySideTesting}
     \caption{Testing an array-backed list (left) and a linked list (right) side-by-side.}
     \label{fig:SideBySideTesting}
 \end{figure}
@@ -565,7 +561,7 @@ There are a couple of special cases:
 \end{description}
 
 
-\subsection{Deleting a Node}
+\subsection{Deleting a Node} \label{subsec:DeletingNode}
 
 The \function{delete()} function removes and deletes the current node from the list, updating its neighbors' \lstinline{next} and \lstinline{previous} pointers (and possibly the list's \lstinline{head} or \lstinline{tail} pointer) accordingly.
 After the deletion, the deleted node's successor node becomes the current node.
@@ -587,8 +583,6 @@ After the deletion, the deleted node's successor node becomes the current node.
     Exit out of the program by selecting function 0, then option 0.}
 \end{description}
 
-
-\subsection{Testing the Challenge-Response System with Linked List}
 
 When you are satisfied that your linked list functions are correct, test their integration into the challenge-response system.
 You can use the ``\textit{file}-table.md'' files to confirm the correctness of the results.
