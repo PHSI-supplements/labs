@@ -6,9 +6,9 @@ Anybody can challenge anyone else in the Pleistocene Petting Zoo's non-public ar
 \begin{itemize}
     \item All of the book's words are sorted alphabetically without regard to capitalization (for example, ``hello'' occurs after ``Hear'' and before ``HELP'')
     \item The challenge word occurs \textit{occurrences} times in the book
-    \item If $occurrences$ is an even number then the response word is the word is $occurrences$ places \textbf{before} the challenge word in the alphabetized list;
+    \item If $occurrences$ is an even number then the response word is the word is $occurrences$ places \textbf{after} the challenge word in the alphabetized list;
     if the challenge word is less than $occurrences$ places from the start of the list then the response word is the first word in the list
-    \item If $occurrences$ is an odd number then the response word is the word $occurrences$ places \textbf{after} the challenge word in the alphabetized list;
+    \item If $occurrences$ is an odd number then the response word is the word $occurrences$ places \textbf{before} the challenge word in the alphabetized list;
     if the challenge word is less than $occurrences$ places from the end of the list then the response word is the last word in the list
 \end{itemize}
 
@@ -186,6 +186,10 @@ For example, if your word was ``foo'' then the output will be: \\
     \checkoffitem{Use fuctions 3 (``increment\_count()''), 4 (``get\_count()''), and 5 (``get\_word()'') to test your code.}
     \checkoffitem{Continue to test until you discover a bug or are satisfied that your implementations are correct.}
     \checkoffitem{When you have finished, use function 2 (``delete\_word\_entry()'') to release the word entry's memory, then select 0 to return to the main menu, and then select 0 to exit the program.}
+    \begin{itemize}
+        \item Note: whenever you return to the main menu, any existing list will be deleted.
+            No memory references survive when moving between one main-menu-option and another.
+    \end{itemize}
 \end{description}
 
 
@@ -444,8 +448,7 @@ This will allow you to compare the results with your linked list implementation 
 
 \begin{figure}
     \centering
-    % TODO -- get this file!!
-%    \includegraphics[width=6in]{SideBySideTesting}
+    \includegraphics[width=6in]{SideBySideTesting}
     \caption{Testing an array-backed list (left) and a linked list (right) side-by-side.}
     \label{fig:SideBySideTesting}
 \end{figure}
