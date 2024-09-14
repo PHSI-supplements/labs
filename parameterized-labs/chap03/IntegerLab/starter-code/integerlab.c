@@ -350,14 +350,14 @@ bool read_evaluate_print() {
                            ((int16_t) operand1) < ((int16_t) operand2));
                     printf("actual:   (%hd < %hd) = %d\n",
                            (int16_t) operand1, (int16_t) operand2,
-                           less_than((uint16_t) operand1, (uint16_t) operand2));
+                           signed_less_than((uint16_t) operand1, (uint16_t) operand2));
                 } else if (operator[1] == '=') {
                     printf("expected: (%hd <= %hd) = %d\n",
                            (int16_t) operand1, (int16_t) operand2,
                            ((int16_t) operand1) <= ((int16_t) operand2));
                     printf("actual:   (%hd <= %hd) = %d\n",
                            (int16_t) operand1, (int16_t) operand2,
-                           at_most((uint16_t) operand1, (uint16_t) operand2));
+                           signed_at_most((uint16_t) operand1, (uint16_t) operand2));
                 } else {
                     printf("Unknown operator: %s\n", operator);
                 }
@@ -369,14 +369,14 @@ bool read_evaluate_print() {
                            ((int16_t) operand1) > ((int16_t) operand2));
                     printf("actual:   (%hd > %hd) = %d\n",
                            (int16_t) operand1, (int16_t) operand2,
-                           greater_than((uint16_t) operand1, (uint16_t) operand2));
+                           signed_greater_than((uint16_t) operand1, (uint16_t) operand2));
                 } else if (operator[1] == '=') {
                     printf("expected: (%hd >= %hd) = %d\n",
                            (int16_t) operand1, (int16_t) operand2,
                            ((int16_t) operand1) >= ((int16_t) operand2));
                     printf("actual:   (%hd >= %hd) = %d\n",
                            (int16_t) operand1, (int16_t) operand2,
-                           at_least((uint16_t) operand1, (uint16_t) operand2));
+                           signed_at_least((uint16_t) operand1, (uint16_t) operand2));
                 } else {
                     printf("Unknown operator: %s\n", operator);
                 }

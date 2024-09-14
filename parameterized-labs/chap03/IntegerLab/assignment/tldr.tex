@@ -1,0 +1,218 @@
+Sections~\ref{subsec:tldrUtility}--\ref{subsec:tldrSignedMultiplicationDivision} are concise versions of Sections~\ref{sec:utility}--\ref{sec:signedMultiplicationDivision};
+if you need more-detailed instructions, see the appropriate full-length section.
+
+\textcolor{red}{\textbf{WARNING:} The inequality comparison functions \function{signed}/\function{unsigned_}\dots\ \ \dots\function{less_than()}, \dots\function{at_most()}, \dots\function{at_least()}, and \dots\function{greater_than()} will \textit{not} work until you have implemented \function{subtract()}!}
+(However, you shouldn't need these functions, so this should not be a limitation.)
+
+\setcounter{subsection}{3}
+
+\subsection{Utility Functions, Equality Comparisons, and Logical Boolean Operations}\label{subsec:tldrUtility}
+
+\begin{description}
+    \checkoffitem{Open \textit{basetwo.c} in your editor.
+        You will see the stubs of two functions there.}
+\end{description}
+
+\subsubsection{exponentiate()}
+\begin{description}
+    \checkoffitem{Implement the \function{exponentiate()} function.}
+\end{description}
+
+\subsubsection{lg()}
+\begin{description}
+    \checkoffitem{Implement the \function{lg()} function.}
+\end{description}
+
+\subsubsection*{Check your work}
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.}
+        \begin{itemize}
+            \item Note that you will receive a warning for an unused variable in \function{ripple_carry_addition()};
+            this is okay for now
+        \end{itemize}
+    \checkoffitem{Check your code with other values, comparing your actual results with the expected results.}
+    \checkoffitem{Run the constraint checker: \texttt{python constraint-check.py integerlab.json}}
+    \vspace{1cm}
+    \checkoffitem{Open \textit{alu.c} in your editor.
+        You will see the stubs of several functions there.}
+\end{description}
+
+\subsubsection{is\_negative()}
+\begin{description}
+    \checkoffitem{Implement \function{is_negative()} to determine whether its argument, when interpreted as a signed value, is negative.}
+\end{description}
+
+\subsubsection{equal() and not\_equal()}
+\begin{description}
+    \checkoffitem{Consider what the output of each of those three bitwise operations would be if the two operands were the same, and what the output would be if the two operands were different.}
+    \checkoffitem{Implement \function{equal()} to return \lstinline{true} if and only if its two arguments are the same value.}
+    \checkoffitem{Implement \function{not_equal()} to return \lstinline{true} if and only its two arguments are not the same value.}
+\end{description}
+
+\subsubsection*{Check your work}
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.}
+    \begin{itemize}
+        \item Note that you will receive a warning for an unused variable in \function{ripple_carry_addition()};
+        this is okay for now
+    \end{itemize}
+    \checkoffitem{Check your code with other values, comparing your actual results with the expected results.}
+    \checkoffitem{Run the constraint checker: \texttt{python constraint-check.py integerlab.json}}
+\end{description}
+
+\subsubsection{logical\_not()}
+\begin{description}
+    \checkoffitem{Implement \function{logical_not()} to return \lstinline{true} if and only if its two arguments are considered to be \lstinline{true}.}
+\end{description}
+
+\subsubsection{logical\_and() and logical\_or()}
+\begin{description}
+    \checkoffitem{Implement \function{logical_and()} to return \lstinline{true} if and only if its two arguments are considered to be \lstinline{true}.}
+    \checkoffitem{Implement \function{logical_or()} to return \lstinline{true} if and only if at least one of its two arguments is considered to be \lstinline{true}.}
+\end{description}
+
+\subsubsection*{Check your work}
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.}
+    \begin{itemize}
+        \item Note that you will receive a warning for an unused variable in \function{ripple_carry_addition()};
+        this is okay for now
+    \end{itemize}
+    \checkoffitem{Check your code with other values, comparing your actual results with the expected results.}
+    \checkoffitem{Run the constraint checker: \texttt{python constraint-check.py integerlab.json}}
+\end{description}
+
+
+\subsection{Addition and Subtraction}
+
+\subsubsection{One Bit Full Adder}
+\begin{description}
+    \checkoffitem{Implement a 1-bit full adder using bitwise operations.}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying all possible values.}
+    \begin{itemize}
+        \item Note that you will receive a warning for an unused variable in \function{ripple_carry_addition()};
+        this is okay for now
+    \end{itemize}
+\end{description}
+
+\subsubsection{Ripple-Carry Adder}
+\begin{description}
+    \checkoffitem{Use your 1-bit full adder to implement a 32-bit ripple-carry adder.}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.}
+    \checkoffitem{Check your code with other values, comparing your actual results with the expected results.}
+    \checkoffitem{Run the constraint checker: \texttt{python constraint-check.py integerlab.json}}
+\end{description}
+
+\subsubsection{16-Bit Addition}
+\begin{description}
+    \checkoffitem{Use the 32-bit adder to add \lstinline{addend} to \lstinline{augend} (\textit{i.e.}, calculate $augend + addend$).}
+    \checkoffitem{Place the 16-bit sum in the \lstinline{alu_result_t} variable's \lstinline{result} field.}
+    \checkoffitem{Assume that the operands are unsigned 16-bit integers and determine whether overflow occurred;
+        set the \lstinline{alu_result_t} variable's \lstinline{unsigned_overflow} flag accordingly.}
+    \checkoffitem{Assume that the operands are signed 16-bit integers and determine whether overflow occurred;
+        set the \lstinline{alu_result_t} variable's \lstinline{signed_overflow} flag accordingly.}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.\footnote{
+        If you are performing this lab on \runtimeenvironment, then the expected overflow flags are obtained directly from flags set in the processor's ALU and are authoritative.
+        If you are not performing this lab on \runtimeenvironment\ and receive the compile-time warning ``Some of the code to determine the *expected* supplemental\_result and *expected* flags is not yet defined'' then the expected overflow flags should not be trusted.
+    }}
+    \checkoffitem{Check your code with other values, comparing your actual results with the expected results.}
+    \checkoffitem{Run the constraint checker: \texttt{python constraint-check.py integerlab.json}}
+\end{description}
+
+\subsubsection{16-Bit Subtraction}
+\begin{description}
+    \checkoffitem{Use the 32-bit adder to subtract \lstinline{subtrahend} from \lstinline{menuend} (\textit{i.e.}, calculate $menuend - subtrahend$).}
+    \begin{itemize}
+        \item Use the adder using the technique discussed in Chapter~3 and in lecture
+        \item \textcolor{red}{Apply a \texttt{0xFFFF} bitmask to your arguments when you call \function{ripple_carry_addition()} to make sure that only the 16-bit values are passed to \function{ripple_carry_addition()}!}\footnote{
+            A subtle, normally-desirable, rule in the bitwise complement's semantics will cause 1s to be placed in $bits_{31..16}$.
+            For our specific use, this is undesirable and so you need to force $bits_{31..16}$ to have 0s.
+        }
+    \end{itemize}
+    \checkoffitem{Place the 16-bit difference in the \lstinline{alu_result_t} variable's \lstinline{result} field.}
+    \checkoffitem{Assume that the operands are unsigned 16-bit integers and determine whether overflow occurred;
+        set the \lstinline{alu_result_t} variable's \lstinline{unsigned_overflow} flag accordingly.}
+    \checkoffitem{Assume that the operands are signed 16-bit integers and determine whether overflow occurred;
+        set the \lstinline{alu_result_t} variable's \lstinline{signed_overflow} flag accordingly.}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.}
+    \checkoffitem{Check your code with other values, comparing your actual results with the expected results.}
+    \checkoffitem{Run the constraint checker: \texttt{python constraint-check.py integerlab.json}}
+\end{description}
+
+
+%\subsection{Signed Inequality Comparison Functions}\label{subsec:tldrInequality-comparison}
+
+
+\subsection{Unsigned Multiplication and Division}
+
+\subsubsection{Multiplication by a Power of Two}
+
+\begin{description}
+    \checkoffitem{Add code to \function{multiply_by_power_of_two()} so that if the \lstinline{power_of_two} argument is 0, then the function returns 0.}
+    \checkoffitem{Add code to \function{multiply_by_power_of_two()} that assumes any other \lstinline{power_of_two} is in fact a power of two,
+        and apply the fast multiplication technique for powers of two discussed in Chapter~3 and in lecture.}
+    \begin{itemize}
+        \item Note that the second argument is the power of two value, such as 0x0040 ($64_{10}$) or 0x2000 ($8192_{10}$) and \textit{not} the exponent of two, such as 6 or 13.
+    \end{itemize}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.}
+    \checkoffitem{Check your code with other values, comparing your actual results with the expected results.}
+\end{description}
+
+\subsubsection{General Unsigned Multiplication}
+In the \function{unsigned_multiply()} function,
+\begin{description}
+    \checkoffitem{Use each of the \lstinline{multiplier}'s bits, in turn, as the \lstinline{power_of_two} argument to \function{multiply_by_power_of_two()} to multiply \lstinline{multiplicand}.}\footnote{
+        You must implement long multiplication by calling \function{multiply_by_power_of_two()}.
+        Alternate algorithms, such as Russian peasant multiplication, are prohibted.
+        You should not even consider superpolynomial algorithms, such as repeatedly adding the multiplicand to itself $multiplier$ times.
+    }
+    \checkoffitem{Add each of these intermediate products to arrive at the 32-bit product of $multiplicand \times multiplier$.}
+    \checkoffitem{Place the 16-bit product, the lower 16 bits of the full product, in \lstinline{product}'s \lstinline{result} field.}
+    \checkoffitem{Place the upper 16 bits of the full product in \lstinline{product}'s \lstinline{supplemental_result} field.}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.\footnote{
+        Note that unless and until you implement signed multiplication, your ``SIGNED MULTIPLICATION'' actual results will differ from the expected results.
+        \textit{You are \textbf{not} required to implement signed multiplication.}
+    }}
+    \checkoffitem{Check your code with other values, comparing your actual results with the expected results.}
+    \checkoffitem{Run the constraint checker: \texttt{python constraint-check.py integerlab.json}}
+\end{description}
+
+\subsubsection{Unsigned Division by a Power of Two}
+In the \function{unsigned_divide()} function,
+\begin{description}
+    \checkoffitem{If the divisor is 0 then set the \lstinline{divide_by_zero} flag.}
+    \checkoffitem{Otherwise, use that fast technique to implement division by a power of two.
+        \textcolor{red}{\textit{Do not implement general division.}}
+    }
+    \checkoffitem{Place the quotient in \lstinline{quotient}'s \lstinline{result} field.}
+    \checkoffitem{Place the remainder in \lstinline{quotient}'s \lstinline{supplemental_result} field.}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./integerlab}}}, trying a few values.}
+    \checkoffitem{Check your code with other values, comparing your actual results with the expected results.}
+    \checkoffitem{Run the constraint checker: \texttt{python constraint-check.py integerlab.json}}
+\end{description}
+
+
+\subsection{Signed Multiplication and Division (Bonus Credit)}\label{subsec:tldrSignedMultiplicationDivision}
+\begin{description}
+    \checkoffitem{If you chose to implement signed multiplication then step through your unsigned multiplication to see if you can find where it breaks down for negative operands.}
+    \checkoffitem{For bonus credit, implement \function{signed_multiply()} to correctly handle negative numbers when the arguments are interpreted as signed integers.}
+    \begin{itemize}
+        \item You will not receive credit if you simply keep track of which operands are negative, negate those operands so that they are positive, apply the unsigned implementation, and then negate the result as necessary.
+            \textcolor{red}{To earn bonus credit, you must address the underlying reason that the signed implementations need to be different.}
+        \item \textit{Reminder: you may not change the signatures of any functions declared in }alu.h\textit{; however, you may implement other helper functions if you wish.}
+    \end{itemize}
+    \checkoffitem{Check your work with several values, both great and small.}
+    \vspace{1cm}
+    \checkoffitem{If you chose to implement signed division then in your implementation of \function{signed_divide()}, whenever the dividend is negative you need to introduce a bias toward positive infinity.}
+    \begin{itemize}
+        \item This bias needs to be sufficient so that when the fast division technique rounds non-integer quotients toward negative infinity, it ends up rounding to the correct quotient -- but do so without overcorrecting.
+        \item The other precaution you need to take is to ensure that when you apply the fast division technique, you preserve the sign bit.
+    \end{itemize}
+    \checkoffitem{For bonus credit, implement \function{signed_division()} to correctly handle negative dividends.}
+    \begin{itemize}
+        \item Implement the fast division technique for powers of two; do not implement general division.
+        \item You will not receive credit if you simply keep track of which operands are negative, negate those operands so that they are positive, apply the unsigned implementation, and then negate the result as necessary.
+            \textcolor{red}{To earn bonus credit, you must address the underlying reason that the signed implementations need to be different.}
+    \end{itemize}
+    \checkoffitem{Check your work with several values, both great and small.}
+\end{description}

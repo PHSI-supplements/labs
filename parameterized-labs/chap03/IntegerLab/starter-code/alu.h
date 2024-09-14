@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * IntegerLab (c) 2018-22 Christopher A. Bohn
+ * IntegerLab (c) 2018-24 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -24,6 +24,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 typedef struct {
     uint8_t a       : 1;
@@ -57,17 +58,6 @@ int lg(uint32_t power_of_two);
 bool is_negative(uint16_t value);
 
 /*
- * COMPARISON FUNCTIONS
- */
-
-bool equal(uint16_t value1, uint16_t value2);
-bool not_equal(uint16_t value1, uint16_t value2);
-bool less_than(uint16_t value1, uint16_t value2);
-bool at_most(uint16_t value1, uint16_t value2);
-bool at_least(uint16_t value1, uint16_t value2);
-bool greater_than(uint16_t value1, uint16_t value2);
-
-/*
  * LOGICAL BOOLEAN FUNCTIONS
  */
 
@@ -93,5 +83,132 @@ alu_result_t unsigned_multiply(uint16_t multiplicand, uint16_t multiplier);
 alu_result_t signed_multiply(uint16_t multiplicand, uint16_t multiplier);
 alu_result_t unsigned_divide(uint16_t dividend, uint16_t divisor);
 alu_result_t signed_divide(uint16_t dividend, uint16_t divisor);
+
+/*
+ * COMPARISON FUNCTIONS
+ */
+
+bool equal(uint16_t value1, uint16_t value2);
+bool not_equal(uint16_t value1, uint16_t value2);
+
+/**
+ * Determines whether the first value is strictly less than the second, when interpreted as two's complement values.
+ * @param value1 the value on the left side of the inequality comparison
+ * @param value2 the value on the right side of the inequality comparison
+ * @return 1 if the first argument is strictly less than the second; 0 otherwise
+ */
+static inline bool signed_less_than(uint16_t value1, uint16_t value2) {
+    static int recursion_depth = 0;
+    if (recursion_depth > 0) {
+        fprintf(stderr, "[ERROR] Mutual recursion detected in comparison function! Aborting comparison.\n");
+        recursion_depth--;
+        return false;
+    }
+    recursion_depth++;
+    alu_result_t comparison = subtract(value1, value2);
+    recursion_depth--;
+    return is_negative(comparison.result) ^ comparison.signed_overflow;
+}
+
+/**
+ * Determines whether the first value is at most the second; that is, whether the first value is less than or equal to
+ * the second, when interpreted as two's complement values.
+ * @param value1 the value on the left side of the inequality comparison
+ * @param value2 the value on the right side of the inequality comparison
+ * @return 1 if the first argument is at most the second; 0 otherwise
+ */
+static inline bool signed_at_most(uint16_t value1, uint16_t value2) {
+    static int recursion_depth = 0;
+    if (recursion_depth > 0) {
+        fprintf(stderr, "[ERROR] Mutual recursion detected in comparison function! Aborting comparison.\n");
+        recursion_depth--;
+        return false;
+    }
+    recursion_depth++;
+    alu_result_t comparison = subtract(value1, value2);
+    recursion_depth--;
+    return logical_or(is_negative(comparison.result) ^ comparison.signed_overflow, is_zero(comparison.result));
+}
+
+/**
+ * Determines whether the first value is at least the second; that is, whether the first value is greater than or equal
+ * to the second, when interpreted as two's complement values.
+ * @param value1 the value on the left side of the inequality comparison
+ * @param value2 the value on the right side of the inequality comparison
+ * @return 1 if the first argument is at least the second; 0 otherwise
+ */
+static inline bool signed_at_least(uint16_t value1, uint16_t value2) {
+    return logical_not(signed_less_than(value1, value2));
+}
+
+/**
+ * Determines whether the first value is strictly greater than the second, when interpreted as two's complement values.
+ * @param value1 the value on the left side of the inequality comparison
+ * @param value2 the value on the right side of the inequality comparison
+ * @return 1 if the first argument is strictly greater than the second; 0 otherwise
+ */
+static inline bool signed_greater_than(uint16_t value1, uint16_t value2) {
+    return logical_not(signed_at_most(value1, value2));
+}
+
+/**
+ * Determines whether the first value is strictly less than the second, when interpreted as unsigned integers.
+ * @param value1 the value on the left side of the inequality comparison
+ * @param value2 the value on the right side of the inequality comparison
+ * @return 1 if the first argument is strictly less than the second; 0 otherwise
+ */
+static inline bool unsigned_less_than(uint16_t value1, uint16_t value2) {
+    static int recursion_depth = 0;
+    if (recursion_depth > 0) {
+        fprintf(stderr, "[ERROR] Mutual recursion detected in comparison function! Aborting comparison.\n");
+        recursion_depth--;
+        return false;
+    }
+    recursion_depth++;
+    alu_result_t comparison = subtract(value1, value2);
+    recursion_depth--;
+    return comparison.unsigned_overflow;
+}
+
+/**
+ * Determines whether the first value is at most the second; that is, whether the first value is less than or equal to
+ * the second, when interpreted as unsigned integers.
+ * @param value1 the value on the left side of the inequality comparison
+ * @param value2 the value on the right side of the inequality comparison
+ * @return 1 if the first argument is at most the second; 0 otherwise
+ */
+static inline bool unsigned_at_most(uint16_t value1, uint16_t value2) {
+    static int recursion_depth = 0;
+    if (recursion_depth > 0) {
+        fprintf(stderr, "[ERROR] Mutual recursion detected in comparison function! Aborting comparison.\n");
+        recursion_depth--;
+        return false;
+    }
+    recursion_depth++;
+    alu_result_t comparison = subtract(value1, value2);
+    recursion_depth--;
+    return logical_or(comparison.unsigned_overflow, is_zero(comparison.result));
+}
+
+/**
+ * Determines whether the first value is at least the second; that is, whether the first value is greater than or equal
+ * to the second, when interpreted as unsigned integers.
+ * @param value1 the value on the left side of the inequality comparison
+ * @param value2 the value on the right side of the inequality comparison
+ * @return 1 if the first argument is at least the second; 0 otherwise
+ */
+static inline bool unsigned_at_least(uint16_t value1, uint16_t value2) {
+    return logical_not(unsigned_less_than(value1, value2));
+}
+
+/**
+ * Determines whether the first value is strictly greater than the second, when interpreted as unsigned integers.
+ * @param value1 the value on the left side of the inequality comparison
+ * @param value2 the value on the right side of the inequality comparison
+ * @return 1 if the first argument is strictly greater than the second; 0 otherwise
+ */
+static inline bool unsigned_greater_than(uint16_t value1, uint16_t value2) {
+    return logical_not(unsigned_at_most(value1, value2));
+}
 
 #endif //ALU_H

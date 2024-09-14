@@ -11,8 +11,8 @@
  ******************************************************************************/
 
 /*
- * IntegerLab assignment and starter code (c) 2018-22 Christopher A. Bohn
- * Integerlab solution (c) the above-named student(s)
+ * IntegerLab assignment and starter code (c) 2018-24 Christopher A. Bohn
+ * IntegerLab solution (c) the above-named student(s)
  */
 
 #include "alu.h"
@@ -137,48 +137,6 @@ alu_result_t add(uint16_t augend, uint16_t addend) {
 alu_result_t subtract(uint16_t menuend, uint16_t subtrahend) {
     alu_result_t difference = {};   // empty initializer to suppress uninitialized variable warning in the starter code
     return difference;
-}
-
-/**
- * Determines whether the first value is strictly less than the second.
- * @param value1 the value on the left side of the inequality comparison
- * @param value2 the value on the right side of the inequality comparison
- * @return 1 if the first argument is strictly less than the second; 0 otherwise
- */
-bool less_than(uint16_t value1, uint16_t value2) {
-    return false;
-}
-
-/**
- * Determines whether the first value is at most the second; that is, whether the first value is less than or equal to
- * the second.
- * @param value1 the value on the left side of the inequality comparison
- * @param value2 the value on the right side of the inequality comparison
- * @return 1 if the first argument is at most the second; 0 otherwise
- */
-bool at_most(uint16_t value1, uint16_t value2) {
-    return false;
-}
-
-/**
- * Determines whether the first value is at least the second; that is, whether the first value is greater than or equal
- * to the second.
- * @param value1 the value on the left side of the inequality comparison
- * @param value2 the value on the right side of the inequality comparison
- * @return 1 if the first argument is at least the second; 0 otherwise
- */
-bool at_least(uint16_t value1, uint16_t value2) {
-    return false;
-}
-
-/**
- * Determines whether the first value is strictly greater than the second.
- * @param value1 the value on the left side of the inequality comparison
- * @param value2 the value on the right side of the inequality comparison
- * @return 1 if the first argument is strictly greater than the second; 0 otherwise
- */
-bool greater_than(uint16_t value1, uint16_t value2) {
-    return false;
 }
 
 /**
