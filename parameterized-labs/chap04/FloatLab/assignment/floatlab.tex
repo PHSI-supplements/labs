@@ -21,30 +21,39 @@
 
     \softwareengineeringfrontmatter
 
-    \section*{Scenario}                                                 \scenariointroduction
+    \section*{Scenario}\addcontentsline{toc}{section}{Scenario}         \scenariointroduction
 
     \section{Assignment Summary}                                        \input{assignmentsummary}
 
     \section{Getting Started}                                           \input{gettingstarted}
 
+    \section{TL;DR}                                                     \input{tldr}
+
     \section{Constants and Queries} \label{sec:constantsAndQueries}     \input{constants-queries}
 
     \section{Examining IEEE 754-Compliant Values}                       \input{examining-numbers}
 
-    \section{Encoding Numbers into the IEEE 754 Format}                 \input{normalization}
+    \section{Encoding Numbers into the IEEE 754 Format} \label{sec:encoding}
+                                                                        \input{normalization}
 
     \section{Negation}                                                  \input{negation}
 
     \section{Multiplication and Division}                               \input{multiply-divide}
 
-    \section{Addition and Subtraction}                                  \input{add-subtract}
+    \section{Addition and Subtraction} \label{sec:addition}             \input{add-subtract}
 
-    \section{Bonus Credit: Arbitrary Division}                          \input{arbitrary-division}
+    \section{Bonus Credit: Arbitrary Division} \label{sec:bonus}        \input{arbitrary-division}
 
     \section{Turn-in and Grading}                                       \input{grading}
 
-    \section*{Epilogue}                                                 \scenariowrapup
+    \section*{Epilogue}\addcontentsline{toc}{section}{Epilogue}         \scenariowrapup
+
 
     \textit{To be continued...}
+
+    \newpage\appendix
+
+    \section{Appendix: Testing Rounding by Using a Debugger} \label{sec:testRounding}
+                                                                        \input{testrounding}
 
 \end{document}

@@ -1,0 +1,240 @@
+Sections~\ref{subsec:tldrConstantsAndQueries}--\ref{subsec:tldrBonus} are concise versions of Sections~\ref{sec:constantsAndQueries}--\ref{sec:bonus};
+if you need more-detailed instructions, see the appropriate full-length section.
+
+\setcounter{subsection}{3}
+
+\subsection{Constants and Queries}\label{subsec:tldrConstantsAndQueries}
+
+In \textit{fpu.c}:
+
+\begin{description}
+    \checkoffitem{Assign the appropriate bit vectors to \lstinline{SIGN_BIT_MASK}, \lstinline{EXPONENT_BITS_MASK}, and \lstinline{FRACTION_BITS_MASK} so that you can use them to mask-off the sign bit, the exponent bits, and the fraction bits, respectively, in a \lstinline{ieee754_t} floating point value.}
+    \checkoffitem{Assign the single-precision exponent bias to \lstinline{EXPONENT_BIAS} and assign to \lstinline{NUMBER_OF_FRACTION_BITS} the number of bits used for the fraction bit field in a single-precision floating point number.}
+    \checkoffitem{Assign to \lstinline{NAN} and \lstinline{INFINITY} suitable bit vectors for single-precision Infinity and Not-a-Number.}
+    \checkoffitem{Implement \function{is_nan()} to detect whether a value is Not-a-Number without regard to the value's sign.}
+    \begin{itemize}
+        \item Note that \function{is_nan()} must return \lstinline{true} for \textit{all} valid NaN bit vectors and not just those that match your \lstinline{NAN} constant.
+    \end{itemize}
+    \checkoffitem{Implement \function{is_infinity()} to detect whether a value is infinity without regard to the value's sign.}
+    \checkoffitem{Implement \function{is_zeron()} to detect whether a value is zero without regard to the value's sign.}
+    \checkoffitem{Implement \function{is_negative()} to detect whether a value is negative.}
+\end{description}
+
+
+
+\subsection{Examining IEEE 754-Compliant Values}
+
+\subsubsection{Extracting the Integer, Fraction, and Exponent}
+
+These three functions all assume that the value is a finite number:
+the value might be a normal number;
+it might be a subnormal number;
+it might be zero.
+
+\begin{description}
+    \checkoffitem{Implement \function{get_754_integer()} to produce the implicit integer portion of the significand.}
+    \checkoffitem{Implement \function{get_754_fraction()} to return the fraction bits exactly as they appear in the \lstinline{number}.}
+    \checkoffitem{Implement \function{get_754_exponent()} to produce the two's complement representation of the exponent that you get after removing the bias from the \lstinline{number}'s \texttt{E} field.}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, trying a few values, starting with values whose IEEE~754 representation are easy to check.}
+    \checkoffitem{Create some bit vectors to see that the sign, significand, and exponent are all what you expect, based on your understanding of the IEEE~754 format.}
+    \begin{itemize}
+        \item Don't forget to check subnormal numbers, too.
+    \end{itemize}
+\end{description}
+
+
+\subsubsection{\texttt{unnormal\_t} and Its Functions}
+
+%\begin{center}
+\hspace{-2cm}\colorbox{red!25}{The \lstinline{unnormal_t} type does not correspond to any floating point type described in the IEEE~754 standard!}
+%\end{center}
+
+You should \textit{not} access the \lstinline{unnormal_t} fields directly.
+Instead, use the \function{unnormal()} macro to create an \lstinline{unnormal_t} value, the accessor functions that we provide to retrieve the fields, and the modifier functions that we provide to make adjustments in a value-preserving manner.
+
+\textcolor{red}{You must make sure that you always use the value returned by a function if you expect to use the effect of the function.}
+See Section~\ref{subsec:unnormal} for summaries of the functions that you are likely to use.
+
+
+\subsubsection{Decoding Numbers from the IEEE 754 Format into \texttt{unnormal\_t}}
+
+The \function{decode()} function converts an IEEE~754-compliant \lstinline{ieee754_t} value into a format that facilitates arithmetic.
+Unlike the IEEE~754 format, an \lstinline{unnormal_t} value can have up to 64 bits in its integer portion, and it can have up to 64 bits in its fractional portion.
+See Section~\ref{subsec:decoding} for a visualization and examples of the \lstinline{unnormal_t} abstract model and its functions.
+
+\begin{description}
+    \checkoffitem{Assign the appropriate value to \lstinline{fraction}.}
+    \begin{itemize}
+        \item The \lstinline{integer} and \lstinline{exponent} variables can obtain their correct values directly from the \function{get_754_integer()} and \function{get_754_exponent()} functions.
+        \item The \lstinline{fraction} variable, however, needs to shift the value obtained from \function{get_754_fraction()}.
+        \begin{itemize}
+            \item Because the value obtained from \function{get_754_fraction()} has the fraction bits in the \lstinline{NUMBER_OF_FRACTION_BITS} least-significant bits,
+            and because the most significant bit is $bit_{63}$, placing the $2^{-1}$ bit in the most significant bit can be accomplished by shifting the fraction bits by $(64 - NUMBER\_OF\_FRACTION\_BITS)$ places.
+        \end{itemize}
+    \end{itemize}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, decoding a few values (example usage: \texttt{\textbf{\textit{decode 12.375}}}).}
+\end{description}
+
+
+
+\subsection{Encoding Numbers into the IEEE 754 Format}
+
+\subsubsection*{Encode}
+
+The \function{encode()} function converts an \lstinline{unnormal_t} value into an IEEE~754-compliant format.
+Observe that when your program reaches \\
+\lstinline{/* GENERATE THE APPROPRIATE BIT VECTOR AND PLACE IT IN RESULT */} \\
+then you know that \lstinline{number}'s ``true value'' is a non-zero, finite number.
+Moreover, the integer portion has been set to $1$.
+
+\begin{description}
+    \checkoffitem{Determine whether the value is too great to be represented as a normal number.}
+    \begin{itemize}
+        \item Suppose that the number \textit{can} be represented as a normal number -- what is the greatest exponent possible?
+        Is \lstinline{number}'s exponent greater than that?
+    \end{itemize}
+    \checkoffitem{Determine whether the value is too small to be represented as a normal number.}
+    \begin{itemize}
+        \item Suppose that the number \textit{can} be represented as a normal number -- what is the least exponent possible?
+        Is \lstinline{number}'s exponent less than that?
+    \end{itemize}
+    \checkoffitem{If the number can be represented as a normal number, then encode \lstinline{number} in the IEEE~754 normal form.}
+    \checkoffitem{If the number is too small to be represented as a normal number, then use \lstinline{unnormal_t}'s \function{set_exponent()} function to set \lstinline{number}'s exponent to that which all 32-bit subnormal numbers have, and}
+    \checkoffitem{Encode \lstinline{number} in the IEEE~754 subnormal form.}
+\end{description}
+
+There are additional tasks for \function{encode()} that we recommend you attempt to implement now, though you will not be able to test them with the assignment's driver code until later:\footnote{See Appendix~\ref{sec:testRounding} for a way to test them now.}
+
+\begin{description}
+    \checkoffitem{Appropriately encode numbers too great to be represented as normal numbers.}
+    \checkoffitem{Apply rounding, following the IEEE~754 default of ``round-to-nearest, ties-to-even.''}
+\end{description}
+
+\paragraph*{Check Your Work}
+
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, recoding a few values (example usages: \texttt{\textbf{\textit{recode 12.375}}} and \texttt{\textbf{\textit{recode 0x00055000}}}).}
+\end{description}
+For example:
+
+
+
+\subsection{Negation}
+
+\begin{description}
+    \checkoffitem{Implement \function{negate()}.}
+\end{description}
+
+You will not be able to test \function{negate()} except as part of arithmetic functions.
+
+
+
+\subsection{Multiplication and Division}
+
+\subsubsection{Multiply}
+
+The \function{multiply()} stub identifies a handful of special cases that you can easily handle.
+\begin{description}
+    \checkoffitem{Produce the appropriate return values for the guard clauses.}
+\end{description}
+
+After the guard clauses, the operands are guaranteed to both be finite, non-zero numbers.
+
+\begin{description}
+    \checkoffitem{Multiply the two decoded operands together using integer arithmetic.}
+    \begin{itemize}
+        \item See Section~\ref{subsec:unnormal} (or \textit{unnormal.h}) for a summary of what \function{prepare_for_arithmetic()} does.
+    \end{itemize}
+\end{description}
+
+\textit{Note}: For the \function{multiply()} function, we will not deduct points if you have the wrong sign for Not-a-Number.
+\textit{We will, however, deduct points if you have the wrong sign for Zero.}
+
+\paragraph*{Check Your Work}
+
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, multiplying a few values.}
+\end{description}
+
+
+\subsubsection{Divide}
+
+We will limit our implementation of \function{divide()} to the special cases and to cases in which the dividend's significand is a multiple of the divisor's significand.
+This limitation guarantees that if the \lstinline{unnormal_t} operands' significands are fully in the \lstinline{.integer} field then the \lstinline{unnormal_t} quotient's significand will fully be in the \lstinline{.integer} field and will not spill over into the \lstinline{.fraction} field.
+In this limited implementation, integer division is sufficient.
+
+\begin{description}
+    \checkoffitem{Produce the appropriate return values for the guard clauses.}
+    \checkoffitem{Divide $dividend \div divisor$ using integer arithmetic.}
+\end{description}
+
+\textit{Note}: For the \function{divide()} function, we will not deduct points if you have the wrong sign for Not-a-Number.
+\textit{We will, however, deduct points if you have the wrong sign for Zero.}
+
+\paragraph*{Check Your Work}
+
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, dividing a few values.}
+\end{description}
+
+
+
+\subsection{Addition and Subtraction}
+
+As is the case for integer arithmetic, the heavy-lifting for addition and subtraction is handled solely by the \function{add()} function.
+The \function{subtract()} function is already implemented in terms of \function{add} and the \function{negate()} function.
+
+\subsubsection{Add}
+
+The \function{add()} stub identifies a handful of special cases that you can easily handle.
+\begin{description}
+    \checkoffitem{Produce the appropriate reutrn values for the guard clauses.}
+\end{description}
+
+After the guard clauses, the operands are guaranteed to both be finite, non-zero numbers.
+
+\begin{description}
+    \checkoffitem{Repeatedly use the \function{shift_left_once()} function (or, synonymously, use \function{decrement_exponent()} or \function{move_binary_point_to_the_right()}) on whichever operand has the \textbf{\textit{greater}} exponent to shift its significant to the left (decreasing the exponent, moving the binary point to the right) until either:}
+    \begin{itemize}
+        \item the exponents match, or
+        \item one more shift would make addition unreliable, as reported by \\ \function{left_shift_will_make_addition_unreliable()}.
+    \end{itemize}
+    \checkoffitem{If the exponents still do not match, then repeatedly use the \function{shift_right_once()} function (or \function{increment_exponent()} or \function{move_binary_point_to_the_left()}) to shift the other operand's significand to the right (increasing the exponent, moving the binary point to the left) until the exponents match.}
+    \checkoffitem{Add the two values using integer arithmetic.}
+    \begin{itemize}
+        \item You need only to add the integer portions, setting the fraction portion to 0.
+        If you shifted an operand's significand to the right only after the other operand is shifted as far to the left as is safe to do so, then any bits that were shifted into the fraction would be lost to rounding anyway.
+    \end{itemize}
+\end{description}
+
+\textit{Note: For the \function{add()} function, we will not deduct points if you have the wrong sign for Zero or for Not-a-Number} because the appropriate sign is usually indeterminate.
+
+\paragraph*{Check Your Work}
+
+\begin{description}
+    \checkoffitem{Compile and run \texttt{\textbf{\textit{./floatlab}}}, adding and subtracting a few values.}
+\end{description}
+
+\paragraph*{Check Rounding}
+
+\begin{description}
+    \checkoffitem{Test the rounding code in your \function{encode()} implementation.}
+    \begin{itemize}
+        \item Add bit vectors that, when interpreted as IEEE~754 single-precision values, will yield a sum whose rounded-off portion is less than halfway.
+        \item Add bit vectors that, when interpreted as IEEE~754 single-precision values, will yield a sum whose rounded-off portion is more than halfway.
+        \item Add bit vectors that, when interpreted as IEEE~754 single-precision values, will yield a sum whose rounded-off portion is exactly halfway.
+    \end{itemize}
+\end{description}
+
+
+
+\subsection{Bonus Credit: Arbitrary Division} \label{subsec:tldrBonus}
+
+If you are going to pursue the arbitrary division bonus, then
+\begin{description}
+    \checkoffitem{\textcolor{red}{Be sure that you have a backup copy of your work!}}
+    \begin{itemize}
+        \item Make sure that you will be able to revert to your original \function{divide()} implementation if you need to.
+    \end{itemize}
+    \checkoffitem{Implement \function{divide()} to work for all pairs of operands, even those whose quotients cannot be represented exactly.}
+\end{description}

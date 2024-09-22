@@ -75,7 +75,7 @@ char *unnormal_to_string(char *destination, unnormal_t number) {
     } else if (number.is_not_a_number) {
         sprintf(destination, "%cNot a Number", number.sign ? '-' : '+');
     } else {
-        sprintf(destination, "%c%016llx.%016llx_{16} x 2^{%d}",
+        sprintf(destination, "%c%016lx.%016lx_{16} x 2^{%d}",
                 number.sign ? '-' : '+', number.integer, number.fraction, number.exponent);
     }
     return destination;

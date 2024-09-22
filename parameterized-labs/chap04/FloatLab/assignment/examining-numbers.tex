@@ -54,7 +54,7 @@ For example:
         0x000571cc	+0.0000,1010,1110,0011,1001,100_{2} x 2^{-126}
 \end{verbatim}
 
-\subsection{\texttt{unnormal\_t} and its functions} \label{subsec:unnormal}
+\subsection{\texttt{unnormal\_t} and Its Functions} \label{subsec:unnormal}
 
 The \lstinline{unnormal_t} data type is a structure with fields for the sign bit, the integer portion, the fractional portion, and the exponent.
 It also has flags for Not-a-Number and for Infinity.
@@ -135,7 +135,7 @@ We summarize the functions that you are likely to use here (there are more funct
     \end{description}
 \end{itemize}
 
-\subsection{Decoding Numbers from the IEEE 754 Format into \texttt{unnormal\_t}}
+\subsection{Decoding Numbers from the IEEE 754 Format into \texttt{unnormal\_t}} \label{subsec:decoding}
 
 The \function{decode()} function converts an IEEE~754-compliant \lstinline{ieee754_t} value into a format that facilitates arithmetic.
 As described in Section~\ref{subsec:unnormal}, the \lstinline{unnormal_t} structure that is returned by \function{decode()} has fields for the sign bit, the integer portion, the fractional portion, and the exponent.

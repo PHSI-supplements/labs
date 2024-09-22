@@ -28,16 +28,16 @@ and will make it easy to perform that encoding.
 For both normal and subnormal numbers, you will need to use \lstinline{unnormal_t}'s functions that access the structure's fields.
 Don't forget that the bit vector returned by \function{get_unnormal_fraction()} is the numerator of $\frac{get\_unnormal\_fraction()}{2^{64}}$ and that \function{get_unnormal_exponent()} returns the two's complement representation of the exponent.
 
-There are additional tasks for \function{encode()} that we recommend you attempt to implement now, though you will not be able to test them until later:
+There are additional tasks for \function{encode()} that we recommend you attempt to implement now, though you will not be able to test them with the assignment's driver code until later:\footnote{See Appendix~\ref{sec:testRounding} for a way to test them now.}
 
 \begin{description}
     \checkoffitem{Appropriately encode numbers too great to be represented as normal numbers.}
-    \checkoffitem{Apply rounding, following the IEEE~754 default of ``round-to-nearest-even.''}
+    \checkoffitem{Apply rounding, following the IEEE~754 default of ``round-to-nearest, ties-to-even.''}
 \end{description}
 
 The final special circumstance, numbers that are too small to be represented as subnormal numbers,
 should be handled as a natural consequence of adjusting the \lstinline{number} to be able to properly encode it as a subnormal number.
-Regardless, you will not be able to test underflow to zero until later.
+Regardless, you will not be able to test underflow to zero using the assignment's driver code until later.
 
 
 \subsubsection*{Check Your Work}
