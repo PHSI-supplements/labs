@@ -89,7 +89,7 @@
     The \textit{duplicator} executable makes a copy of a text file.
     It takes two command-line arguments, first the name of the file to be copied, and then the name of the new file that will be a copy of the first.
     (This is not a replacement for the UNIX \textit{cp} command;
-    even after you get it working correctly, \textit{duplicator} will not accurately copy non-text files.\footnote{\textit{Duplicator} probably shouldn't be used to copy prehistoric animals' DNA, either.}
+    even after you get it working correctly, \textit{duplicator} will not accurately copy non-text files.\footnote{\textit{duplicator} probably shouldn't be used to copy prehistoric animals' DNA, either.}
     We designed \textit{duplicator} specifically for text files so that it's easier for you to see when it doesn't work right.)
 
     For example, running the program with the command \texttt{\textbf{\textit{./duplicator}~paleolama.txt~copy.txt}} will create a new file, \textit{copy.txt} that is almost -- but not quite -- a copy of \textit{paleolama.txt}.
@@ -192,7 +192,7 @@ pthread_mutex_t mutex;
 
     Notice that \lstinline{shared_buffer} and \lstinline{status} are qualified with the keyword \lstinline{volatile}.
     Like the \lstinline{const} qualifier, the \lstinline{volatile} qualifier is used to provide a hint to the compiler, but it does so for the opposite reason.
-    A \lstinline{const} variable will not vary, allowing the compiler to make optimizations based on that fact.
+    A \lstinline{const} variable cannot be modified by the program, allowing the compiler to make optimizations based on that fact.
     On the other hand, a \lstinline{volatile} variable not only can change, it can change spontaneously: the compiler must assume that something will cause the variable to change other than the code that it can see.
 
     \subsubsection{Reading from the Source File}\label{subsubsec:understandReader}
@@ -412,7 +412,9 @@ void duplicate(FILE *source_file, FILE *destination_file) {
         \phantom{foobarbaz} P
     \end{multicols}}
 
-    \textbf{Determine a valid interleaving that produces this output:}
+    \begin{description}
+        \checkoffitem{Determine a valid interleaving that produces this output:}
+    \end{description}
     \begin{verbatim}
         % ./duplicator threelines.txt copy.txt; cat copy.txt
         first line
@@ -420,8 +422,12 @@ void duplicate(FILE *source_file, FILE *destination_file) {
         third line
     \end{verbatim}
 
-    Place your answer in \textit{answers.txt}.
-    We recommend including parenthetical remarks because they may help you to think about the state of the system at various points in your proposed interleaving.
+    \begin{description}
+        \checkoffitem{Place your answer in \textit{answers.txt}.}
+        \begin{itemize}
+            \item We recommend including parenthetical remarks because they may help you to think about the state of the system at various points in your proposed interleaving.
+        \end{itemize}
+    \end{description}
 
     \subsection{Remove the Race Condition}
 
@@ -430,14 +436,22 @@ void duplicate(FILE *source_file, FILE *destination_file) {
     \subsubsection{Initialize and Destroy the Mutex}
 
     Before using a mutual exclusion token, you must first initialize it.
-    \textbf{Use \function{pthread_mutex_init()} to initialize the \lstinline{mutex} mutual exclusion token.}
-    We recommend that you do so in the \function{duplicate()} function, using the default attribute, before any threads are created.
-    The syntax is in Chapter~7 of the textbook.
+    \begin{description}
+        \checkoffitem{Use \function{pthread_mutex_init()} to initialize the \lstinline{mutex} mutual exclusion token.}
+        \begin{itemize}
+            \item We recommend that you do so in the \function{duplicate()} function, using the default attribute, before any threads are created.
+                The syntax is in Chapter~7 of the textbook.
+        \end{itemize}
+    \end{description}
 
     As a matter of good code hygiene, you should destroy a mutual exclusion token when it is no longer required.
-    \textbf{Use \function{pthread_mutex_destroy()} to release the \lstinline{mutex} mutual exclusion token's resources.}
-    We recommend that you do so in the \function{duplicate()} function after all threads have been joined.
-    The syntax is in Chapter~7 of the textbook.
+    \begin{description}
+        \checkoffitem{Use \function{pthread_mutex_destroy()} to release the \lstinline{mutex} mutual exclusion token's resources.}
+        \begin{itemize}
+            \item We recommend that you do so in the \function{duplicate()} function after all threads have been joined.
+                The syntax is in Chapter~7 of the textbook.
+        \end{itemize}
+    \end{description}
 
     \subsubsection{Determine Where to Lock and Unlock the Mutex} \label{subsubsec:designMutex}
 
@@ -469,26 +483,33 @@ void duplicate(FILE *source_file, FILE *destination_file) {
     }
     \vspace{1cm}
 
-    \textbf{Think about where locking and unlocking the mutual exclusion token would prevent undesirable interleavings while still allowing desirable interleavings to occur.}
-    Make sure that it would not prevent the functionally-correct interleaving shown earlier.
-    In \textit{answers.txt}, using the line numbers identify where in the original code (using the line numbering from Sections~\ref{subsubsec:understandReader} and \ref{subsubsec:understandWriter}) the mutex should be locked and unlocked.
-
-    In \textit{answers.txt}, make a copy of the interleaving you provided for your answer to the first question and paste it into the space for your answer to the fourth question.
-    Introduce ``(mutex locked)'', ``(mutex unlocked)'', ``(read\_original blocked for mutex)'', and ``(write\_copy blocked for mutex)'' wherever appropriate to the interleaving in your fourth answer,
-    up to the point that a thread getting blocked will prevent the buffer containing ``second line'' from being overwritten prematurely.
-    You can delete the remaining portion of your interleaving in your fourth answer that occurs after that.
+    \begin{description}
+        \checkoffitem{Think about where locking and unlocking the mutual exclusion token would prevent undesirable interleavings while still allowing desirable interleavings to occur.
+            Make sure that it would not prevent the functionally-correct interleaving shown earlier.}
+        \checkoffitem{In \textit{answers.txt}, using the line numbers identify where in the original code (using the line numbering from Sections~\ref{subsubsec:understandReader} and \ref{subsubsec:understandWriter}) the mutex should be locked and unlocked.}
+        \checkoffitem{In \textit{answers.txt}, make a copy of the interleaving you provided for your answer to the first question and paste it into the space for your answer to the fourth question.}
+        \checkoffitem{Introduce ``(mutex locked)'', ``(mutex unlocked)'', ``(read\_original blocked for mutex)'', and ``(write\_copy blocked for mutex)'' wherever appropriate to the interleaving in your fourth answer,
+            up to the point that a thread getting blocked will prevent the buffer containing ``second line'' from being overwritten prematurely.}
+        \begin{itemize}
+            \item You can delete the remaining portion of your interleaving in your fourth answer that occurs after that.
+        \end{itemize}
+    \end{description}
 
 
     \subsubsection{Lock and Unlock the Mutex in the Code}
 
-    \textbf{Add calls to \function{pthread_mutex_lock()} and \function{pthread_mutex_unlock()}, as appropriate, in \function{read_original()} and \function{write_copy()} to lock and unlock the mutex.}
-    These locations should correspond to your answers to the second and third questions in \textit{answers.txt}.
-    The syntax is in Chapter~7 of the textbook.
-
-    Test your code!
-
-    Run the command \texttt{./duplicator threelines.txt copy.txt; cat copy.txt} a dozen times to make sure the file is copied correctly.
-    Then try \texttt{./duplicator paleolama.txt copy.txt; cat copy.txt} several times.
+    \begin{description}
+        \checkoffitem{Add calls to \function{pthread_mutex_lock()} and \function{pthread_mutex_unlock()}, as appropriate, in \function{read_original()} and \function{write_copy()} to lock and unlock the mutex.}
+        \begin{itemize}
+            \item These locations should correspond to your answers to the second and third questions in \textit{answers.txt}.
+                The syntax is in Chapter~7 of the textbook.
+        \end{itemize}
+        \checkoffitem{Test your code!}
+        \begin{itemize}
+            \item Run the command \texttt{./duplicator threelines.txt copy.txt; cat copy.txt} a dozen times to make sure the file is copied correctly.
+            \item Then try \texttt{./duplicator paleolama.txt copy.txt; cat copy.txt} several times.
+        \end{itemize}
+    \end{description}
 
     If you find that you are not producing identical copies of the originals, or if the program never terminates, then revisit Section~\ref{subsubsec:designMutex}.
 

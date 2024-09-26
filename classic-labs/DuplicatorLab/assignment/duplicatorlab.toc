@@ -13,8 +13,8 @@
 \contentsline {subsubsection}{\numberline {4.1.5}Discussion}{9}{subsubsection.4.1.5}%
 \contentsline {subsection}{\numberline {4.2}Understand the Race Condition}{9}{subsection.4.2}%
 \contentsline {subsection}{\numberline {4.3}Remove the Race Condition}{10}{subsection.4.3}%
-\contentsline {subsubsection}{\numberline {4.3.1}Initialize and Destroy the Mutex}{10}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.1}Initialize and Destroy the Mutex}{11}{subsubsection.4.3.1}%
 \contentsline {subsubsection}{\numberline {4.3.2}Determine Where to Lock and Unlock the Mutex}{11}{subsubsection.4.3.2}%
 \contentsline {subsubsection}{\numberline {4.3.3}Lock and Unlock the Mutex in the Code}{12}{subsubsection.4.3.3}%
-\contentsline {section}{\numberline {5}Turn-in and Grading}{12}{section.5}%
+\contentsline {section}{\numberline {5}Turn-in and Grading}{13}{section.5}%
 \contentsline {section}{\numberline {6}Epilogue}{13}{section.6}%
