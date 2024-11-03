@@ -4,7 +4,7 @@
 
 /**************************************************************************//**
  *
- * @file PollingLab.ino
+ * @file PollingLab.cpp
  *
  * @author Christopher A. Bohn
  *
@@ -20,18 +20,26 @@
  */
 
 #include <CowPi.h>
-#include <string.h>
-#include "starter.h"
+#include "display.h"
 #include "io_functions.h"
 #include "number_builder.h"
 
 static bool test_mode;
 
 void setup() {
-    initialize_board();
+    record_build_timestamp(__FILE__, __DATE__, __TIME__);
+    cowpi_setup(0,
+                (cowpi_display_module_t) {.display_module = NO_MODULE},
+                (cowpi_display_module_protocol_t) {.protocol = NO_PROTOCOL}
+               );
+    initialize_display(21);
+//    initialize_display(16);
+
     test_mode = cowpi_left_switch_is_in_right_position();
     initialize_io(cowpi_right_switch_is_in_right_position());
     initialize_number_system();
+
+    print_build_timestamps(true);
 }
 
 void loop() {
@@ -41,4 +49,5 @@ void loop() {
     } else {
         build_number();
     }
+    count_visits(7);
 }

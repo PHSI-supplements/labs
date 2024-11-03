@@ -159,7 +159,7 @@ If you have already implemented the I/O code from Section~\ref{sec:MemMapIO}, yo
 
 \subsection{Simplified State Diagram}
 
-This state diagram doesn't fully capture all of the system's requirements,
+The state diagram in Figure~\ref{fig:numberBuilderStateDiagram} doesn't fully capture all of the system's requirements,
 but it characterizes the basic handling of inputs.
 
 \begin{figure}[h]
@@ -179,7 +179,7 @@ but it characterizes the basic handling of inputs.
         (decimalDisplay) edge[-Latex, bend right] node{\textcolor{blue}{clear pressed}} (blank)
         (hexadecimalDisplay) edge[-Latex, bend left] node{} (blank);
     \end{tikzpicture}
-    \caption{Simplified state diagram for building numbers.}
+    \caption{Simplified state diagram for building numbers. \label{fig:numberBuilderStateDiagram}}
 \end{figure}
 
 %\begin{figure}[h]
@@ -228,29 +228,65 @@ Debouncing addresses the problem of the mechanical components bouncing back and 
 The other problem that needs to be addressed is that the pushbuttons and keys are polled with each iteration of the control loop,
 and the control loop iterates much faster than a human can remove their finger -- this resuls in a single press of a button or key being detected many, many times.
 
-You will overcome this with the \function{is_changed_input()} function.
-The idea is that after you poll a pushbutton or the keypad,
-pass the value to \function{is_changed_input()} along with the input type (\lstinline{KEYPAD}, \lstinline{LEFT_BUTTON_DOWN}, or \lstinline{RIGHT_BUTTON_DOWN}).\footnote{
-    These are defined in the CowPi library and are convenient for our use here.
-}
-The function will compare that value with the value that was passed to it in the previous iteration to determine whether the input has changed.
-The first few lines of \function{build_number()} demonstrate the use of \function{is_changed_input()}, using the slide-switches.
-\textit{The number builder specification does not require you to detect the exact moment that a slide-switch is toggled.}
+%You will overcome this with the \function{is_changed_input()} function.
+%The idea is that after you poll a pushbutton or the keypad,
+%pass the value to \function{is_changed_input()} along with the input type (\lstinline{KEYPAD}, \lstinline{LEFT_BUTTON_DOWN}, or \lstinline{RIGHT_BUTTON_DOWN}).\footnote{
+%    These are defined in the CowPi library and are convenient for our use here.
+%}
+%The function will compare that value with the value that was passed to it in the previous iteration to determine whether the input has changed.
+%The first few lines of \function{build_number()} demonstrate the use of \function{is_changed_input()}, using the slide-switches.
+%\textit{The number builder specification does not require you to detect the exact moment that a slide-switch is toggled.}
+%
+%Locate the \function{is_changed_input()} function.
+%\begin{description}
+%    \checkoffitem{Use the \lstinline{input_source} argument to index the \lstinline{values_from_last_iteration} array to obtain the input source's previous value.}
+%    \checkoffitem{Compare the previous value to the \lstinline{current_value}.}
+%    \checkoffitem{Store the current value in the array, to be compared in the next iteration.}
+%    \checkoffitem{Return \lstinline{true} if the previous value and the current value are different, or \lstinline{false} if there is no change.}
+%\end{description}
+%
+%Locate the \function{build_number()} function.
+%\begin{description}
+%    \checkoffitem{Add code to determine which (if any) key is being pressed, and code to determine whether each pushbutton is being pressed.}
+%    \checkoffitem{Add an \lstinline{if} block that will execute if a key was just pressed.}
+%    \checkoffitem{Add an \lstinline{if} block that will execute if the left pushbutton was just pressed.}
+%    \checkoffitem{Add an \lstinline{if} block that will execute if the right pushbutton was just pressed.}
+%\end{description}
 
-Locate the \function{is_changed_input()} function.
-\begin{description}
-    \checkoffitem{Use the \lstinline{input_source} argument to index the \lstinline{values_from_last_iteration} array to obtain the input source's previous value.}
-    \checkoffitem{Compare the previous value to the \lstinline{current_value}.}
-    \checkoffitem{Store the current value in the array, to be compared in the next iteration.}
-    \checkoffitem{Return \lstinline{true} if the previous value and the current value are different, or \lstinline{false} if there is no change.}
-\end{description}
+You will overcome this by implementing three state machines: one for each pushbutton and one for the keypad.
+The idea is that each of these inputs is in one of four possible states (Figure~\ref{fig:buttonStateMachine}).
+\begin{itemize}
+    \item If the input's state machine is in the \textit{Not Pressed} state, it stays in that state until the input is pressed.
+        When the input is pressed, the input's state machine transitions to the \textit{Respond to Press} state.
+    \item If the input's state machine is in the \textit{Respond to Press} state, then the system takes whatever one-time action needs to be taken in response to the input being pressed.
+        After this action is complete, the input's state machine transitions to the \textit{Pressed} state.
+    \item If the input's state machine is in the \textit{Pressed} state, it stays in that state until the input is released.
+        When the input is released, the input's state machine transitions to the \textit{Respond to Release} state.
+    \item If the input's state machine is in the \textit{Respond to Release} state, then the system takes whatever one-time action (if any) needs to be taken in response to the input being released.
+        After this action is complete, the input's state machine transitions to the \textit{Not Pressed} state.
+\end{itemize}
+
+\begin{figure}%[h]
+    \centering
+    \begin{tikzpicture}
+        \node[state, initial] at (-4, -3)  (notPressed){Not Pressed};
+        \node[state]          at (4, -3)   (respondingToPress){Respond to Press};
+        \node[state]          at (3, -7)   (pressed){Pressed};
+        \node[state]          at (-3, -7)  (respondingToRelease){Respond to Release};
+        \draw   (notPressed)          edge[-Latex, bend left, above] node{\textcolor{blue}{button/keypad is pressed}} (respondingToPress)
+                (respondingToPress)   edge[-Latex, bend left] (pressed)
+                (pressed)             edge[-Latex, bend left, below] node{\textcolor{blue}{button/keypad is released}} (respondingToRelease)
+                (respondingToRelease) edge[-Latex, bend left] (notPressed);
+    \end{tikzpicture}
+    \caption{State machine that responds to presses and releases, but not to continuously pressing (or not pressing) a button. \label{fig:buttonStateMachine}}
+\end{figure}
 
 Locate the \function{build_number()} function.
 \begin{description}
-    \checkoffitem{Add code to determine which (if any) key is being pressed, and code to determine whether each pushbutton is being pressed.}
-    \checkoffitem{Add an \lstinline{if} block that will execute if a key was just pressed.}
-    \checkoffitem{Add an \lstinline{if} block that will execute if the left pushbutton was just pressed.}
-    \checkoffitem{Add an \lstinline{if} block that will execute if the right pushbutton was just pressed.}
+    \checkoffitem{Add code to determine which (if any) key is being pressed,\footnote{Reminder: \function{get_keypress()} returns \lstinline{0xFF} when no key is being pressed.} and code to determine whether each pushbutton is being pressed.}
+    \checkoffitem{Add either chained \lstinline{if}/\lstinline{else if} blocks, or a \lstinline{switch} statement that will transition \lstinline{keypad_state} between states according the the input state machine just described.}
+    \checkoffitem{Add either chained \lstinline{if}/\lstinline{else if} blocks, or a \lstinline{switch} statement that will transition \lstinline{left_button_state} between states according the the input state machine just described.}
+    \checkoffitem{Add either chained \lstinline{if}/\lstinline{else if} blocks, or a \lstinline{switch} statement that will transition \lstinline{right_button_state} between states according the the input state machine just described.}
 \end{description}
 
 
@@ -271,10 +307,10 @@ calling \lstinline{set_xx_led(true)} will illuminate that LED if it is not illum
 Similarly, calling \lstinline{set_xx_led(false)} will deluminate that LED if it is illuminated and will leave it deluminated if it is already off.
 
 \begin{description}
-    \checkoffitem{Add variables to \function{build_number()} to track the last key press and the last button press.
+    \checkoffitem{Add variables to \function{build_number()} to track the times of the last key press and the last button press.
         \textit{These variables need to ``remember'' their values between calls to \function{build_number()}.}}
-    \checkoffitem{In each of the aforementioned \lstinline{if} blocks, add code to note the time that a press occurred.}
-    \checkoffitem{Add code to update each LED's illumination state based on how much time has elapsed since the last key/button press.}
+    \checkoffitem{In each of the aforementioned state machines, add code to note the time that a press occurred.}
+    \checkoffitem{Add code to \function{build_number()} to update each LED's illumination state based on how much time has elapsed since the last key/button press.}
 \end{description}
 
 \subsubsection*{Test your code}
@@ -282,7 +318,7 @@ Similarly, calling \lstinline{set_xx_led(false)} will deluminate that LED if it 
     \checkoffitem{Place the \textbf{left switch} in the \textit{right position} and upload the program to your Cow~Pi.}
     \checkoffitem{Check to see if the appropriate LED lights up when you press a key or a button and go out a half-second later.}
     \checkoffitem{Can you make both LEDs illuminate by pressing a key \textit{and} a button at about the same time?}
-    \checkoffitem{Does the time that an LED is illuminated continue to a half-second after the last key/button press?
+    \checkoffitem{Does the time that an LED is illuminated continue to be a half-second after the last key/button press?
         \textit{e.g.}, if you press a button, release it, and press it again about a quarter-second after the first press, does the LED illuminate for about three-quarters of a second?}
 \end{description}
 
@@ -292,9 +328,11 @@ Similarly, calling \lstinline{set_xx_led(false)} will deluminate that LED if it 
 The \textit{display.h} file declares a \function{display_string()} function.
 The first argument is which row (0 or 1) that you want to display a string,
 and the second argument is the string to display.
-The display can show up to 16 characters per line.
+The display can show up to 21 characters per line.
+%The display can show up to 16 characters per line.
 
-We recommend that you create a 17-byte buffer,
+%We recommend that you create a 17-byte buffer,
+We recommend that you create a 22-byte buffer,
 use \function{sprintf()} to ``print'' to the buffer,
 and then pass the buffer to \function{display_string()}.
 You might want to review the \function{printf}/\function{fprintf}/\function{sprintf} conversion specifiers in Section~\ref{subsec:conversionSpecifiers}.
@@ -303,11 +341,16 @@ Look at the end of the \function{test_io()} function in \textit{io\_functions.c}
 
 \ifdefstring{\processor}{RP2040}{
     \textcolor{red}{
-        If a Windows driver issue prevents you from printing to the Serial Monitor,
-        then you can instead send short debug messages to the display module.
-        The display module can display up to 8 rows of text, 16 characters per row;
+%        If a Windows driver issue prevents you from printing to the Serial Monitor,
+%        then you can instead send short debug messages to the display module.
+%        The display module can display up to 8 rows of text, 16 characters per row;
+%        however, the assignment only makes use of rows~0 \& 1.
+%        This leaves rows~2--7 available for short (16 character) debug messages.
+        You can send short debug messages to the display module.
+        The display module can display up to 8 rows of text, 21 characters per row;
         however, the assignment only makes use of rows~0 \& 1.
-        This leaves rows~2--7 available for short (16 character) debug messages.
+        This leaves rows~2--7 available for short (21 character) debug messages.
+        You might find \function{count_visits}, declared in \textit{display.h} to be useful.
     }
 }{}
 

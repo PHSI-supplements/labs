@@ -15,32 +15,27 @@
  */
 
 #include <CowPi.h>
-#include "starter.h"
+#include "display.h"
 #include "number_builder.h"
 #include "io_functions.h"
 
 
-void clear_display(void);
 void print_number(int32_t number);
-bool is_changed_input(uint8_t current_value, enum input_names input_source);
 int32_t process_digit(int32_t old_number, uint8_t digit);
 bool overflow_occurred(int32_t old_number, int32_t new_number);
 
+typedef enum {
+    NOT_PRESSED, RESPOND_TO_PRESS, PRESSED, RESPOND_TO_RELEASE
+} input_states_t;
+
 
 void initialize_number_system(void) {
+    record_build_timestamp(__FILE__, __DATE__, __TIME__);
     clear_display();                                                // requirement 7
 }
 
 
 void build_number(void) {
-    bool switch_is_left = left_switch_is_in_left_position();
-    if (is_changed_input(switch_is_left, LEFT_SWITCH_LEFT)) {
-        printf("%s justified output\n", switch_is_left ? "left" : "right");
-    }
-    switch_is_left = right_switch_is_in_left_position();
-    if (is_changed_input(switch_is_left, RIGHT_SWITCH_LEFT)) {
-        printf("%s input\n", switch_is_left ? "decimal" : "hexadecimal");
-    }
     // Req 1:     left switch to left = left justified; left switch to right = right justified
     // Reg 2, 6:  toggling switches has well-defined behavior only when it doesn't require immediate attention
     // Req 3, 4:  right switch to left = decimal input
@@ -55,13 +50,10 @@ void build_number(void) {
     //        j                   - right button clears display & sets number to 0
     // Req 12:    respond only once to each distinct press
     // Req 13:    responsiveness
-
-}
-
-bool is_changed_input(uint8_t current_value, enum input_names input_source) {
-    // the values in this array are preserved between calls
-    static uint8_t values_from_last_iteration[NUMBER_OF_INPUTS] = { [0 ... (NUMBER_OF_INPUTS-1)] = 0x80 };    // initializing using gcc non-standard extension
-    return false;
+    static input_states_t keypad_state = NOT_PRESSED;
+    static input_states_t left_button_state = NOT_PRESSED;
+    static input_states_t right_button_state = NOT_PRESSED;
+    ;
 }
 
 void clear_display(void) {

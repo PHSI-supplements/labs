@@ -166,22 +166,28 @@ int main() {
 
 \subsection{Debugging} \label{subsec:debugging}
 
-The starter code configures the Cow~Pi such that the \lstinline{stdout} file stream sends data to the Serial Monitor.
-This allows you to print to the Serial Monitor using \function{printf()}.
+%The starter code configures the Cow~Pi such that the \lstinline{stdout} file stream sends data to the Serial Monitor.
+%This allows you to print to the Serial Monitor using \function{printf()}.
+%
+%\ifdefstring{\processor}{RP2040}{
+%% TODO: parameterize this (when we eventually port to the bare-metal Arduino toolchain, and to the Pico SDK)
+%    A consequence of this is that the development board will wait for the Serial Monitor to be ready, timing out after 5 seconds.
+%    If the connection attempt times out, then the \function{printf()} statements will have no effect, even if you later connect the Serial Monitor.
+%
+%    If you wish to remove this configuration (thereby allowing the program to start immediately rather than wait for a Serial Monitor connection),
+%    then change the \lstinline{cowpi_setup(9600,} line in \textit{starter-rp2040.cpp} to \lstinline{cowpi_setup(0,}
+%
+%    \textcolor{red}{
+%        If a Windows driver issue prevents you from printing to the Serial Monitor,
+%        then you can instead send short debug messages to the display module -- see Section~\ref{subsec:numberBuilderOutput} for information about outputting to the display module.
+%        The display module can display up to 8 rows of text, 16 characters per row;
+%        however, the assignment only makes use of rows~0 \& 1.
+%        This leaves rows~2--7 available for short (16 character) debug messages.
+%    }
+%}{}
 
-\ifdefstring{\processor}{RP2040}{
-% TODO: parameterize this (when we eventually port to the bare-metal Arduino toolchain, and to the Pico SDK)
-    A consequence of this is that the development board will wait for the Serial Monitor to be ready, timing out after 5 seconds.
-    If the connection attempt times out, then the \function{printf()} statements will have no effect, even if you later connect the Serial Monitor.
-
-    If you wish to remove this configuration (thereby allowing the program to start immediately rather than wait for a Serial Monitor connection),
-    then change the \lstinline{cowpi_setup(9600,} line in \textit{starter-rp2040.cpp} to \lstinline{cowpi_setup(0,}
-
-    \textcolor{red}{
-        If a Windows driver issue prevents you from printing to the Serial Monitor,
-        then you can instead send short debug messages to the display module -- see Section~\ref{subsec:numberBuilderOutput} for information about outputting to the display module.
-        The display module can display up to 8 rows of text, 16 characters per row;
-        however, the assignment only makes use of rows~0 \& 1.
-        This leaves rows~2--7 available for short (16 character) debug messages.
-    }
-}{}
+You can send short debug messages to the display module-- see Section~\ref{subsec:numberBuilderOutput} for information about outputting to the display module.
+The display module can display up to 8 rows of text, 21 characters per row;
+however, the assignment only makes use of rows~0 \& 1.
+This leaves rows~2--7 available for short (21 character) debug messages.
+You might find \function{count_visits}, declared in \textit{display.h} to be useful.

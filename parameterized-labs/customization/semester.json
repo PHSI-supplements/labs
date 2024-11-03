@@ -82,8 +82,8 @@
         "chap09/system-descriptions/number-pad-texter"
       ],
       "compilation": {
-        "processor": "ATmega328P",
-        "processor.bk": "RP2040"
+        "processor.bk": "ATmega328P",
+        "processor": "RP2040"
       },
       "policies": {
         "grading": {
