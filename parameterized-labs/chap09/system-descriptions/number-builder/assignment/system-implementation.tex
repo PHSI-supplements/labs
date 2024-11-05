@@ -469,12 +469,17 @@ if the number cannot fit in 32 bits then it is too big.
 
 In Chapter~3, you learned that you can detect signed integer overflow due to addition by examining the sign bits.
 Unfortunately, here you are performing two arithmetic operations, multiplication and addition, either one of which could overflow, and together might defeat the ``examine the sign bits'' technique.
-For example, when limited to 32 bits, \[-2,147,483,648_{10} \times 10_{10} - 1_{10} = -1_{10}\].
+For example, when limited to 32 bits, \[-2,147,483,648_{10} \times 10_{10} - 1_{10} = -1_{10}\]
 (Go ahead, try to build the number $-21,474,836,481$. I'll wait.)
 
-Fortunately, because of the nature of the problem, we know that processing a new digit should increase the magnitude of the number being built:
+The solution is to handle the two arithmetic operations separately.
+First, check to see if multiplication would cause the overflow:
+is the old number more than a tenth (or sixteenth) of \lstinline{INT32_MAX}?
+Or less than a tenth (or sixteenth) of \lstinline{INT32_MIN}?
+
+Because of the nature of the problem, we know that processing a new digit should increase the magnitude of the number being built:
 a negative number should become more negative, and a positive number should become more positive.
-If a negative number becomes a value \textit{greater than} its original value, or if a positive number becomes a value \textit{less than} its original value, then overflow occurred.
+If multiplication didn't cause overflow, then you can now check to see if $10 \times old\_number$ has the same sign as the new number.
 
 There is an exception to this rule.
 
@@ -496,7 +501,8 @@ When building a negative number with hexadecimal input, the user has two equally
 Locate the \function{overflow_occurred()} function.
 \begin{description}
     \checkoffitem{Add code to handle the special case.}
-    \checkoffitem{Add code to detect if overflow occurred for the regular cases.}
+    \checkoffitem{Add code to detect if overflow occurred during the multiplication step.}
+    \checkoffitem{Add code to detect if overflow occurred during the addition step.}
 \end{description}
 
 In \function{build_number()}:
@@ -505,33 +511,6 @@ In \function{build_number()}:
     \checkoffitem{Add code that prevents further processing after an overflow until the ``too big'' number has been cleared.}
 \end{description}
 
-
-%You can determine that ``too big'' should be displayed either by predicting that overflow \textit{will} happen, or by determining that overflow \textit{has} happened.
-%
-%\paragraph{Detecting that Overflow Has Happened}
-%
-%Because multiplication is involved, detecting overflow after-the-fact isn't as simple as checking ``if the result is less than the operands\dots''
-%The surest way is to use more bits.
-%Using 64-bit arithmetic on an 8-bit microcontroller doesn't sound particularly appealing for the time budget and memory budget, but it is tremendously simple, and for this particular system you should have enough responsiveness and memory.\footnote{
-%    In our sample solution using 64-bit arithmetic to detect that overflow has happened added about half of a kilobyte and took twice as long ($40\mu s$) as predicting overflow and using 32-bit arithmetic.
-%}
-%You can cast the 32-bit value to \lstinline{int64_t}, perform the arithmetic, cast it back to \lstinline{int32_t} or \lstinline{long}\footnote{
-%    Remember: on an 8-bit processor, a \lstinline{long} only has 32 bits.
-%} and see if the value is different than the 64-bit value.
-%
-%%    If the combination of \function{sprintf()} and 64-bit arithmetic introduces no noticeable lag, then this is fine.
-%
-%\paragraph{Predicting that Overflow Will Happen}
-%
-%Except for a couple of edge cases, predicting overflow isn't too challenging and will avoid all of the messy casting mentioned above.
-%
-%\textit{Hexadecimal}: What is in bits~31..28 (the most-significant half-byte) of the ``old value'' (before updating it with the new digit)?
-%If it's anything other than \lstinline{0x0} or \lstinline{0xF}, overflow will happen.
-%If it's \lstinline{0x0} then overflow won't happen.
-%If it's \lstinline{0xF} then overflow might happen, depending on the value of bit~27.
-%
-%\textit{Decimal}: If you know what $\frac{1}{10}$ of \lstinline{INT32_MAX} and $\frac{1}{10}$ of \lstinline{INT32_MIN} (found in \lstinline{<limits.h>}) are, then you can compare the ``old value'' to those, to determine if multiplying by 10 will overflow.
-%If multiplication won't overflow, then multiply the old value by 10 and compare that product with \lstinline{INT32_MAX} and \lstinline{INT32_MIN} to determine if the difference is less than the value of the new digit.
 
 \subsubsection{Due to Negation}
 

@@ -20,6 +20,7 @@
 #include "io_functions.h"
 
 
+void print_two_blank_lines(void);
 void print_number(int32_t number);
 int32_t process_digit(int32_t old_number, uint8_t digit);
 bool overflow_occurred(int32_t old_number, int32_t new_number);
@@ -31,7 +32,7 @@ typedef enum {
 
 void initialize_number_system(void) {
     record_build_timestamp(__FILE__, __DATE__, __TIME__);
-    clear_display();                                                // requirement 7
+    print_two_blank_lines();                                                // requirement 7
 }
 
 
@@ -56,7 +57,7 @@ void build_number(void) {
     ;
 }
 
-void clear_display(void) {
+void print_two_blank_lines(void) {
     display_string(0, "");
     display_string(1, "");   
 }
