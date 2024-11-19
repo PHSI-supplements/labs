@@ -27,7 +27,7 @@ Any code that you want to run \textit{once} should go in \function{initialize_lo
 
 \subsection{Storing the Combination Between Resets, and Resetting the Combination}
 
-As long as you store the correct combination in the \lstinline{combination} array, you will have satisfied Requirement~\ref{spec:persistentCombination}.
+As long as you store the correct combination in the \lstinline{combination} array (and store the user entries in other arrays), you will have satisfied Requirement~\ref{spec:persistentCombination}.
 
 An earlier version of this assignment used a different microcontroller that had a small EEPROM built into it, and so students were able to save the combination and access it even after power had been removed and restored.
 The RP2040 microcontroller doesn't have a built-in EEPROM for data, so we will get as close as possible to persisting the combination.
@@ -52,3 +52,16 @@ Debounce these inputs if you need to -- see the PollingLab code for examples of 
 You can implement blinking using timed busy-waits, similar to the busy-wait you placed in \function{get_keypress()} in PollingLab, but considerably longer than 1\textmu s.
 Other than when you're blinking the LEDs, the system must be responsive to valid user inputs.
 (You may ignore invalid inputs.)
+
+Use \function{display_string()} to send strings to the display module.
+
+You do \textbf{not} need to set up globally-shared variables to communicate between \textit{lock-controller.c}, \textit{rotary-encoder.c}, and \textit{servomotor.c}.
+If you believe that you do, see me and if I agree that you do then I'll show you how to set that up.
+However:
+\begin{itemize}
+    \item The lock controller should not need to expose any information to the rotary encoder and the servomotor.
+    \item The lock controller needs to find out which direction the rotary encoder's shaft had been turned, if it had been turned.
+        This can be obtained through the \function{get_direction()} function.
+    \item The lock controller needs to instruct the servomotor to turn one direction or another.
+        This can be accomplished through the \function{rotate_full_clockwise()} and \\ \function{rotate_full_counterclockwise()} functions.
+\end{itemize}
