@@ -38,6 +38,7 @@ void refresh_display(void);
 
 void loop() {
 #if defined (ARDUINO_RASPBERRY_PI_PICO)
+    count_visits(5);
     refresh_display();
 #endif // PICO
 }

@@ -1,0 +1,151 @@
+\subsection{Theory of Operation}
+
+The rotary encoder consists of a shaft that can rotate without stop in either direction,
+and detents that hold the shaft in position when you are not rotating it.
+Electrically, it has a pair of wipers, each of which is connected to a pin at one end, and which share a common pin at the other end.
+By connecting the common pin to ground (as we have) and connecting the wipers' pins to pulled-up input pins on the microcontroller (as we have), then we can read the logic values of the wipers.
+
+As the shaft rotates, the pair of wipers each cycle through a square wave.
+The two wipers' square waves form a \textit{quadrature};
+that is, they are 90\textdegree out of phase with each other, as shown in Figure~{fig:quadrature}.
+By tracking which pin changes value first or second, we can determine which direction the shaft is rotating.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}[x=2mm, y=2mm]
+            \draw (0,0) -- ++(2.5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(2.5,0);
+            \draw (-5, 2.5) node[left]{B};
+            \draw (-1, 0) node[left]{\small 0};
+            \draw (-1, 5) node[left]{\small 1};
+            \draw (0,0) ++(0,-10) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0);
+            \draw (-5, -7.5) node[left]{A};
+            \draw (-1, -10) node[left]{\small 0};
+            \draw (-1, -5) node[left]{\small 1};
+            \draw[-Latex] (10, 10) -- ++(5,0) node[right]{\footnotesize clockwise};
+            \draw[Latex-] (10, 8) -- ++(5,0) node[right]{\footnotesize counterclockwise};
+            \draw[dashed] (3.75, -11) -- ++(0, 21) node[above] {detent};
+            \draw[dashed] (3.75, -11) ++(10, 0) -- ++(0, 17);
+            \draw[dashed] (3.75, -11) ++(20, 0) -- ++(0, 17);
+        \end{tikzpicture}
+        \caption{Quadrature encoding of the rotational position in a rotary encoder.} \label{fig:quadrature}
+    \end{center}
+\end{figure}
+
+\subsection{Changes to \textit{rotary-encoder.c}}
+
+Open \textit{rotary-encoder.c}.
+Locate the \function{get_quadrature()} function.
+The \texttt{A} component of the signal from Figure~{fig:quadrature} is on input pin~16, and the \texttt{B} component is on input pin~17.
+\begin{description}
+    \checkoffitem{Read the quadrature from the input pins into a variable.}
+    \checkoffitem{Shift the bits in that variable so that the \texttt{A} component is in bit~0 and the \texttt{B} component is bit 1, and return the shifted variable.}
+\end{description}
+
+We will track the movement of the rotary encoder's shaft using the state machine depicted in Figure~\ref{fig:rotaryEncoderStateMachine}.
+The convention we will use is that the states are named after the logic values of the quadrature's two components: \texttt{\textit{B\_A}}.
+For example, if the bits returned by \function{get_quadrature()} are 0b0000'0010 then the state machine should be in state \texttt{HIGH\_LOW}.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[state, initial]   at (0, 10)  (highHigh){HIGH\_HIGH};
+            \node[state]            at (5, 5)   (highLow){HIGH\_LOW};
+            \node[state]            at (-5, 5)  (lowHigh){LOW\_HIGH};
+            \node[state]            at (0, 0)   (lowLow){LOW\_LOW};
+            \draw   (highHigh)  edge[-Latex, bend left]     node{\rotatebox{-45}{\textcolor{blue}{quadrature==0b10}}}   (highLow)
+                    (highHigh)  edge[-Latex, bend right]    node{\rotatebox{45}{\textcolor{blue}{quadrature==0b01}}}    (lowHigh)
+                    (highLow)   edge[-Latex, bend left]     node{\rotatebox{-45}{\textcolor{blue}{quadrature==0b11}}}   (highHigh)
+                    (highLow)   edge[-Latex, bend left]     node{\rotatebox{45}{\parbox{5cm}{\centering\textcolor{blue}{quadrature==0b00 \&\& last\_state==HIGH\_HIGH}\\\textcolor{red}{rotating clockwise} } } }           (lowLow)
+                    (lowHigh)   edge[-Latex, bend right]    node{\rotatebox{45}{\textcolor{blue}{quadrature==0b11}}}    (highHigh)
+                    (lowHigh)   edge[-Latex, bend right]    node{\rotatebox{-45}{\parbox{5cm}{\centering\textcolor{blue}{quadrature==0b00 \&\& last\_state==HIGH\_HIGH}\\\textcolor{red}{rotating counterclockwise} } } }   (lowLow)
+                    (lowLow)    edge[-Latex, bend right]    node{\rotatebox{-45}{\parbox{5cm}{\centering\textcolor{blue}{\phantom{x} \\ quadrature==0b01 \&\& last\_state==HIGH\_LOW}}}}   (lowHigh)
+                    (lowLow)    edge[-Latex, bend left]     node{\rotatebox{45}{\parbox{5cm}{\centering\textcolor{blue}{\phantom{x} \\ quadrature==0b10 \&\& last\_state==LOW\_HIGH}}}}    (highLow)
+                    ;
+        \end{tikzpicture}
+        \caption{State machine to determine a rotary encoder's direction of rotation.}\label{fig:rotaryEncoderStateMachine}
+    \end{center}
+\end{figure}
+
+Locate the \function{initialize_rotary_encoder()}
+\begin{description}
+    \checkoffitem{Initialize the \lstinline{state} variable.}
+\end{description}
+
+For test mode, we'll use \lstinline{clockwise_count} and \lstinline{counterclockwise_count} to count the number of times that the shaft is turned in each direction for Requirement~\ref{spec:encoderCounts}.
+For the combination lock, we'll use \lstinline{direction} to track which direction the shaft was turned.
+Once the direction has been provided to the lock controller, we want to set \lstinline{direction} back to \lstinline{STATIONARY} so that a single turn isn't interpreted as many turns.
+
+Location \function{count_rotations()}.
+\begin{description}
+    \checkoffitem{Add code to populate the buffer with the counts as required by Requirement~\ref{spec:encoderCounts}.
+        Clearly label which count is which.
+        \begin{itemize}
+            \item Due to the limited amount of space on the display, you'll probably want to abbreviate, such as ``CW'' for clockwise and ``CCW'' for counterclockwise.
+        \end{itemize}
+    }
+    \checkoffitem{Compile and upload your code, and confirm that a descriptive string is displayed with the counts (both of which should be 0 for now).}
+\end{description}
+
+Locate \function{get_direction()}.
+\begin{description}
+    \checkoffitem{Add code to save a copy of \lstinline{direction}.}
+    \checkoffitem{Add code to set \lstinline{direction} to \lstinline{STATIONARY}.}
+    \checkoffitem{Return the copy of \lstinline{direction}.}
+\end{description}
+
+Locate \function{handle_quadrature_interrupt()} and examine the state machine depicted in Figure~\ref{fig:rotaryEncoderStateMachine}.
+You will implement the state machine in \function{handle_quadrature_interrupt()},
+but first make sure that you understand how the state transitions driven by the quadrature signal in Figure~\ref{fig:quadrature} allow us to determine the direction of rotation.
+
+\subsubsection*{But what about debouncing?}
+
+You \textit{should} be wondering about debouncing.
+After all, the rotary encoder relies on mechanical contacts.
+In fact the \texttt{A} and \texttt{B} wipers \textit{do} experience switch bounce.
+Fortunately, the state machine provides us a way to implement debouncing without using \function{cowpi_debounce_byte()} or \function{debounce_interrupt()}.
+
+Consider the transition from \texttt{HIGH\_HIGH} to \texttt{HIGH\_LOW}:
+\begin{itemize}
+    \item This could be due to the user turning the shaft clockwise, causing the \texttt{A} component to drop from 1 to 0, or
+    \item This could be due to switch bounce
+        \begin{itemize}
+            \item The user has turned the shaft counterclockwise
+            \item The last quadrature change from that action is the \texttt{A} component rising from 0 to 1
+            \item Switch bounce has caused the \texttt{A} component to drop from 1 to 0
+        \end{itemize}
+\end{itemize}
+Now consider the transition from \texttt{HIGH\_LOW} to \texttt{HIGH\_HIGH}:
+\begin{itemize}
+    \item This could be due to the user rotating the shaft counterclockwise, causing the \texttt{A} component to rise from 0 to 1, or
+    \item This could be due to the \texttt{A} wiper bouncing back as part of the aforementioned switch bounce
+\end{itemize}
+The reasoning is similar for transitions between \texttt{HIGH\_HIGH} and \texttt{LOW\_HIGH}.
+
+Now consider the transition from \texttt{HIGH\_LOW} to \texttt{LOW\_LOW}.
+Continuing the clockwise turn, the \texttt{B} component drops from 1 to 0.
+If the change in \texttt{B}'s value were due to switch bounce, then we shall deny the state transition.
+How?
+By remembering which state the state machine was in before it was in \texttt{HIGH\_LOW}.
+
+If the previous state was \texttt{HIGH\_HIGH} then \texttt{we know that the shaft is turning clockwise}.
+On the other hand, if the previous state was \texttt{LOW\_LOW} then we know that the \texttt{B} wiper is bouncing.
+Thus, we will only allow a transition from \texttt{HIGH\_LOW} to \texttt{LOW\_LOW} if the previous state was \texttt{HIGH\_HIGH}.
+We will similarly limit all transitions into and out of \texttt{LOW\_LOW}.
+
+(We cannot similarly limit the transitions into and out of \texttt{HIGH\_HIGH} because after the shaft stops at the detent, the user can continue to turn the shaft in the same direction, or they could turn the shaft in the opposite direction.)
+
+\begin{description}
+    \checkoffitem{Implement the state machine from Figure~\ref{fig:rotaryEncoderStateMachine} in \function{handle_quadrature_interrupt()}.}
+    \checkoffitem{Add code to the transitions into \texttt{LOW\_LOW} to update \lstinline{clockwise_count}, \lstinline{counterclockwise_count}, and \lstinline{direction} as appropriate.}
+\end{description}
+
+Locate the \function{initialize_rotary_encoder()} function:
+\begin{description}
+    \checkoffitem{Uncomment this line: \\
+    \lstinline{//    register_pin_ISR((1 << A_WIPER_PIN) | (1 << B_WIPER_PIN), handle_quadrature_interrupt);}
+    }
+    \checkoffitem{Compile and upload your code, and confirm that the clockwise count and counterclockwise count update on the display as specified by Requirement~\ref{spec:encoderCounts}.}
+        \begin{itemize}
+            \item It is acceptable for the counter to fail to update for the occasional turn if you turn the shaft quickly, but slow turns should always register, and most fast turns should register.
+        \end{itemize}
+\end{description}

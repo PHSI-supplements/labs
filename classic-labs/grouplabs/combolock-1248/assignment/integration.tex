@@ -1,0 +1,54 @@
+Open \textit{lock-controller.c}.
+
+\subsection{Limited Starter Code}
+
+The starter code in \textit{lock-controller.c} is sparse:
+an array to store the combination, a function to retrieve the combination, and a function to force the combination to take on a pre-defined setting (think of it as a ``factory reset'').
+There are also stubs for two additional functions.
+
+For your lock controller, you won't need to use \function{get_combination()} because you can directly access the \lstinline{combination} array,
+and you should not use \function{force_combination_reset()} because it serves no purpose in the context of the system's specification.
+
+The functions you \textit{will} use are \function{initialize_lock_controller()} and \function{control_lock()}, as well as any additional functions that you write and call from these functions.
+When the system is in its combination lock mode, the effective \function{main} code looks like:
+\begin{lstlisting}
+    int main() {
+        initialize_rotary_encoder();
+        initialize_servo();
+        initialize_lock_controller();
+        for(;;) {
+            control_lock();
+        }
+    }
+\end{lstlisting}
+(If you look at \textit{combolock.c}, you'll see that there's more to it than that, but this simplification is enough to make the point that\dots)
+Any code that you want to run \textit{once} should go in \function{initialize_lock_controller()}, and any code that you want to run repeatedly in the main control loop should go in \function{control_lock()} (or be called by \function{control_lock()}.)
+
+
+\subsection{Storing the Combination Between Resets, and Resetting the Combination}
+
+As long as you store the correct combination in the \lstinline{combination} array, you will have satisfied Requirement~\ref{spec:persistentCombination}.
+
+An earlier version of this assignment used a different microcontroller that had a small EEPROM built into it, and so students were able to save the combination and access it even after power had been removed and restored.
+The RP2040 microcontroller doesn't have a built-in EEPROM for data, so we will get as close as possible to persisting the combination.
+
+The declaration of the \lstinline{combination} array includes a directive that it should be placed in memory that doesn't get initialized during a system boot.
+The effect of this is that, as long as the microcontroller continues to have power, the \lstinline{combination} array will retain its contents even if the microcontroller gets reset.
+
+\subsubsection*{What if the microcontroller loses power?}
+
+If the microcontroller loses power, the combination \textit{will} change.
+If you place the system in its test mode, then the currently-stored combination will be displayed.
+Because the combination after restoring power might not have numbers that are strictly less than 16,
+if you press the \textbf{right pushbutton} while in test mode, the combination will reset to 05-10-15.
+
+
+\subsection{Recommendations}
+
+I recommend that you use polling to get human-scale inputs (\textit{i.e.}, button \& key presses and switch toggles).
+I recommend that you use the functions from the CowPi library to do so (\function{cowpi_get_keypress()}, \function{cowpi_left_button_is_pressed()}, etc.)
+Debounce these inputs if you need to -- see the PollingLab code for examples of how to use the debounce functions, and/or read the datasheet (\url{https://cow-pi.readthedocs.io/en/latest/CowPi/inputs.html#debouncing}).
+
+You can implement blinking using timed busy-waits, similar to the busy-wait you placed in \function{get_keypress()} in PollingLab, but considerably longer than 1\textmu s.
+Other than when you're blinking the LEDs, the system must be responsive to valid user inputs.
+(You may ignore invalid inputs.)

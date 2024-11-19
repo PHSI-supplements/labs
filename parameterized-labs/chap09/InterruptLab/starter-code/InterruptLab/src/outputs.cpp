@@ -152,11 +152,12 @@ static void initialize_ssd1306(void) {
     display_needs_refreshed = true;
 }
 
+static char rows[8][17] = {
+        {"                "}, {"                "}, {"                "}, {"                "},
+        {"                "}, {"                "}, {"                "}, {"                "}
+};
+
 static void display_string(int row, char const string[]) {
-    static char rows[8][17] = {
-            {"                "}, {"                "}, {"                "}, {"                "},
-            {"                "}, {"                "}, {"                "}, {"                "}
-    };
     if (0 <= row && row < 8) {
         sprintf(rows[row], "%-16s", string);
     }
@@ -170,5 +171,21 @@ void refresh_display(void) {
         display_needs_refreshed = false;
     }
 }
+
+void count_visits(int row) {
+    static uint8_t counters[8] = {0};
+    int counter_position = 14;
+    for (int i = 0; i < counter_position; i++) {
+        if (!rows[row][i]) {
+            rows[row][i] = ' ';
+        }
+    }
+    static char buffer[17];
+    strncpy(buffer, rows[row], 17);
+    sprintf(buffer + counter_position, "%02X", ++counters[row]);
+    display_string(row, buffer);
+    refresh_display();
+}
+
 
 #endif //PICO

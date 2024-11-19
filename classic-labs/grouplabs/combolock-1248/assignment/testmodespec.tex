@@ -1,0 +1,18 @@
+If the \textbf{right switch} is in the \textit{left position} when the system boots, then the system shall enter its test mode.
+The test mode is used to demonstrate the correct handling of the \textbf{rotary encoder} and of the \textbf{servomotor}.
+
+\subsection*{When the system is in its test mode:}
+%! suppress = LabelConvention
+\begin{enumerate}
+    \item \label{spec:encoderCounts} The system shall display the number of times that the \textbf{rotary encoder} is turned clockwise and the number of times that the \textbf{rotary encoder} is turned counterclockwise.
+%        \begin{itemize}
+%            \item Optionally, the system may also display the quadrature values as the \textbf{rotary encoder is turned}.
+%        \end{itemize}
+    \item \label{spec:servoCenter} If the \textbf{right pushbutton} is \textit{pressed}, the servomotor shall take its \textit{center position}.
+    \item \label{spec:servoFollow} If the \textbf{right pushbutton} is \textit{not pressed}, the servomotor shall follow the \textbf{left switch}:
+        \begin{itemize}
+            \item If the \textbf{left switch} is in the \textit{left position}, the servomotor shall rotate \textit{fully clockwise}.
+            \item If the \textbf{left switch} is in the \textit{right position}, the servomotor shall rotate \textit{fully counterclockwise}.
+        \end{itemize}
+    \item \label{spec:servoString} The system shall display ``SERVO: center'', ``SERVO: left'', or ``SERVO: right'' according to the command given to the servo per Requirements~\ref{spec:servoCenter}--\ref{spec:servoFollow}.
+\end{enumerate}

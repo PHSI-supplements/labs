@@ -31,6 +31,7 @@ extern "C" {
 void initialize_display(void);
 void transmit_message(char message[], int8_t maximum_message_length);
 void update_display(const char message[], int8_t cursor_position);
+void count_visits(int row);
 
 #ifdef __cplusplus
 } // extern "C"

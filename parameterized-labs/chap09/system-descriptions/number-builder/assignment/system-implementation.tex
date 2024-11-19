@@ -472,14 +472,14 @@ Unfortunately, here you are performing two arithmetic operations, multiplication
 For example, when limited to 32 bits, \[-2,147,483,648_{10} \times 10_{10} - 1_{10} = -1_{10}\]
 (Go ahead, try to build the number $-21,474,836,481$. I'll wait.)
 
-The solution is to handle the two arithmetic operations separately.
-First, check to see if multiplication would cause the overflow:
+The solution is to check for overflow caused by each the two arithmetic operations separately.
+First, check to see if multiplication caused overflow:
 is the old number more than a tenth (or sixteenth) of \lstinline{INT32_MAX}?
 Or less than a tenth (or sixteenth) of \lstinline{INT32_MIN}?
 
 Because of the nature of the problem, we know that processing a new digit should increase the magnitude of the number being built:
 a negative number should become more negative, and a positive number should become more positive.
-If multiplication didn't cause overflow, then you can now check to see if $10 \times old\_number$ has the same sign as the new number.
+If multiplication didn't cause overflow, then you can now check to see if $10 \times old\_number$ (or $16 \times old\_number$) has the same sign as the new number.
 
 There is an exception to this rule.
 

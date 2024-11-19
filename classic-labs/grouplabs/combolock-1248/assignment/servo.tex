@@ -1,0 +1,106 @@
+\subsection{Theory of Operation}
+
+The servomotor is controlled with a signal that consists of periodic pulses.
+The desired position of the servomotor is encoded as with width of each pulse.
+This encoding, \textit{pulse width modulation} (PWM) is sufficiently useful that most microcontrollers can be configured to generate such a signal by setting a few of their memory-mapped I/O registers.
+We will not do that.
+Instead, we will directly form the signal by setting an output pin to 1 or 0 as needed.
+Figure~\ref{fig:pwm} shows the relevant parameters of a PWM signal.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}[x=2mm, y=2mm]
+            \draw (0,0) -- (5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- (25,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- (45,0)-- ++(0,5) -- ++(5,0) -- ++(0,-5) -- (65,0)-- ++(0,5) -- ++(5,0) -- ++(0,-5) -- (75,0);
+            \draw (-1, 0) node[left]{\small 0};
+            \draw (-1, 5) node[left]{\small 1};
+            \draw (25, -3) -- ++(0,-6);
+            \draw (45, -3) -- ++(0,-6);
+            \draw[Latex-Latex] (26, -6) -- (44,-6) node[pos=.5]{\footnotesize \parbox{1.8cm}{\centering signal\\period}};
+            \draw (45, 8) -- ++(0, 6);
+            \draw (50, 8) -- ++(0, 6);
+            \draw[Latex-] (44, 11) -- ++(-3, 0);
+            \draw[Latex-] (51, 11) -- ++(3, 0);
+            \draw (47.5, 11) node{\footnotesize \parbox{1.8cm}{\centering pulse\\width}};
+        \end{tikzpicture}
+        \caption{A PWM signal periodically sends a pulse. The $pulse\ width$ encodes the information being transmitted; the $signal\ period$ is how often the pulse is sent.}\label{fig:pwm}
+    \end{center}
+\end{figure}
+
+A servomotor expects a pulse to be sent every 20ms (20,000\textmu s); this is the \textit{signal period}.
+The \textit{pulse width} can vary between 500\textmu s and 2500\textmu s.
+A 500\textmu s pulse directs the servomotor to rotate fully clockwise,
+and a 2500\textmu s pulse directs the servomotor to rotate fully counterclockwise.
+The angle varies linearly with the pulse width (for example, 1500\textmu is the central position).
+
+\subsection{Changes to \textit{servomotor.c}}
+
+Open \textit{servomotor.c}.
+
+Locate these lines of code:
+\begin{lstlisting}
+#define PULSE_INCREMENT_uS  (INT32_MAX)
+#define SIGNAL_PERIOD_uS    (INT32_MAX)
+\end{lstlisting}
+\begin{description}
+    \checkoffitem{For \lstinline{SIGNAL_PERIOD_uS}, replace \lstinline{INT32_MAX} with the period (measured in microseconds) that the servomotor requires of its signal.}
+    \checkoffitem{Select a factor common to the signal period and to each of the pulse widths necessary to realize Requirements~\ref{spec:servoCenter}--\ref{spec:servoFollow}.}
+    \checkoffitem{For \lstinline{PULSE_INCREMENT_uS}, replace \lstinline{INT32_MAX} with that factor (measured in microseconds).
+        This will be your timer interrupt period.}
+\end{description}
+
+Locate the \function{test_servo()} function.
+\begin{description}
+    \checkoffitem{Add code to call the \function{center_servo()}, \function{rotate_full_clockwise()}, and \\ \function{rotate_full_counterclockwise()} functions as necessary for Requirements~\ref{spec:servoCenter}--\ref{spec:servoFollow}.}
+    \checkoffitem{Add code to populate \lstinline{buffer} with the strings required by Requirement~\ref{spec:servoString}.}
+    \checkoffitem{Compile and upload your code, and confirm that the correct strings are displayed.}
+\end{description}
+
+Locate the \function{center_servo()}, \function{rotate_full_clockwise()}, and \function{rotate_full_counterclockwise()} functions.
+\begin{description}
+    \checkoffitem{Populate these functions with code to set the value of \lstinline{pulse_width_us} to the necessary pulse width as necessary to encode the servo's desired rotational position into the pulse width.}
+\end{description}
+
+Locate the \function{handle_timer_interrupt()} function.
+\begin{description}
+    \checkoffitem{Add variables to track the time until the next rising edge of the pulse and the next falling edge of the pulse.}
+    \checkoffitem{Add code so that when the time until the next rising edge is 0\textmu s:
+        \begin{itemize}
+            \item Start the pulse by setting output pin~22 to 1.
+            \item Update your variable that tracks the time until the next rising edge, to the time until the \textit{next} pulse should start.
+            \item Update your variable that tracks the time until the next falling edge, to the time until \textit{this} pulse should finish.
+        \end{itemize}
+    }
+    \checkoffitem{Add code so that when the time until the next falling edge is 0\textmu s:
+        \begin{itemize}
+            \item Finish the pulse by setting output pin~22 to 0.
+        \end{itemize}
+    }
+    \checkoffitem{Add code to update the time remaining until the next rising edge and the time until the next falling edge, to reflect the time that has elapsed between timer interrupts.}
+\end{description}
+
+Locate the \function{initialize_servo()} function:
+\begin{description}
+    \checkoffitem{Uncomment this line: \\
+        \lstinline{//    register_periodic_timer_ISR(0, PULSE_INCREMENT_uS, handle_timer_interrupt);}
+    }
+\end{description}
+
+\vspace{1cm}
+
+\textcolor{red}{Pre-emptive debugging.} Consider:
+\begin{description}
+    \checkoffitem{Multiply the definitions of \lstinline{SIGNAL_PERIOD_uS} and \lstinline{PULSE_INCREMENT_uS} by 1000.}
+    \checkoffitem{Multiply the assignments to \lstinline{pulse_width_us} by 1000.}
+    \checkoffitem{In \function{handle_timer_interrupts()}, replace the updates to pin~22 with updates to pin~20.}
+\end{description}
+This will have the effect of replacing ``microseconds'' with ``milliseconds'' and of replacing the servomotor with the right LED\@.
+\begin{description}
+    \checkoffitem{Compile and upload your code, and confirm that the correct right LED lights up and dims in the correct pattern, considering that you have replaced ``microseconds'' with ``milliseconds''.}
+    \checkoffitem{Restore the original definitions, assignments, and pin number.}
+\end{description}
+
+\vspace{1cm}
+
+\begin{description}
+    \checkoffitem{Compile and upload your code, and confirm that the servomotor rotates to the correct positions as specified by Requirements~\ref{spec:servoCenter}--\ref{spec:servoFollow}.}
+\end{description}
