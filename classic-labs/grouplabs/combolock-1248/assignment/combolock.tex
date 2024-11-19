@@ -1,0 +1,91 @@
+%%
+%% CombinationLock GroupLab (c) 2022-24 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\input{../../../common/assignment}
+\input{../../../common/semester}
+\input{../../../common/storylines}
+\usepackage{amsmath}
+%\usepackage{array,color,colortbl}
+\definecolor{LightGreen}{rgb}{0.88,1,0.88}
+\usepackage{multicol}
+\usepackage{CJKutf8}
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{tikz}
+\setlength{\columnsep}{2cm}
+\newcommand{\power}{power~({\color{red}\textbf{+}}) rail}
+\newcommand{\ground}{ground~({\color{blue}\textbf{--}}) rail}
+
+
+
+\captionsetup{width=.8\linewidth}
+
+\lstset{language=c, numbers=left, showstringspaces=false,
+    moredelim = [s][\ttfamily]{/*}{*/} % I shouldn't need this parameter!
+}
+
+\renewcommand{\labnumber}{\capstonelabnumber}
+\renewcommand{\labname}{Implementing a Combination Lock}
+\renewcommand{\shortlabname}{combolock -- grouplab}
+\renewcommand{\collaborationrules}{\capstonelabcollaboration}
+\renewcommand{\duedate}{\capstonelabdue}
+\renewcommand{\runtimeenvironment}{\capstonelabenvironment}
+\pagelayout
+\begin{document}
+    \labidentifier
+
+    \pdfbookmark[1]{Frontmatter}{frontmatter}                           \input{frontmatter}
+
+    \softwareengineeringfrontmatter
+
+    \section*{Scenario}                                                 \CombinationLockNeeded
+
+    \section{Assignment Summary}                                        \input{assignmentsummary}
+
+    \section{Getting Started} \label{sec:GettingStarted}                \input{gettingstarted}
+
+    \vspace{1cm}
+
+    After you have assembled the hardware, you can work on the lab entirely with your partner, perhaps pair programming,
+    or you can decide to have one partner work on Section~\ref{sec:rotaryEncoder} and the other work on Section~\ref{sec:servo}.
+    Regardless, you will need to work together on Section~\ref{sec:integration}, as this is when you will integrate the work from Sections~\ref{sec:rotaryEncoder}--\ref{sec:servo}.
+
+    \section{Test Mode Specification} \label{sec:testMode}              \input{testmodespec}
+
+    \section{Rotary Encoder Test Mode} \label{sec:rotaryEncoder}        \input{rotaryencoder}
+
+    \section{Servomotor Test Mode} \label{sec:servo}                    \input{servo}
+
+    \section{Combination Lock Specification} \label{sec:spec}           \input{specification}
+
+    \section{Implementing the Combination Lock} \label{sec:integration} \input{integration}
+
+    \section{Turn-in and Grading}                                       \input{grading}
+
+    \section*{Epilogue}                                                 \CombinationLockInstalled
+
+    \textit{The end...?}
+
+%    \newpage\appendix
+    \appendix
+
+    \section{Appendix: Lab Checkoff}                                    \input{checkoff}
+
+    \newpage
+
+    \section{Installing Necessary Hardware Components} \label{sec:hardwareMods-mk4b}    \input{hardware_changes-mk4b}
+
+\end{document}

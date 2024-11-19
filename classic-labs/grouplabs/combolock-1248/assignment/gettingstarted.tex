@@ -1,0 +1,43 @@
+Download the zip file or tarball from \filesource.
+Once downloaded, unpackage the file and open the project in your IDE\@.
+
+\subsection{Description of RangeFinder Files}
+
+\subsubsection{combolock.c, interrupt\_support.h, interrupt\_support.cpp, display.h, display.cpp}
+
+Do not edit \textit{combolock.c}, \textit{interrupt\_support.h}, \textit{interrupt\_support.cpp}, \textit{display.}, or \textit{display.cpp}.
+
+These files contain code to simplify interrupt management, and functions to place text on the display module.
+
+\subsubsection{rotary-encoder.h \& rotary-encoder.c}
+
+Do not edit \textit{rotary-encoder.h}
+
+The \textit{rotary-encoder.c} file is where you will process inputs from the rotary encoder.
+
+\subsubsection{servomotor.h \& servomotor.c}
+
+Do not edit \textit{servomotor.h}
+
+The \textit{servomotor.c} file is where you will control the servomotor.
+
+\subsection{lock-controller.h \& lock-controller.c}
+
+Do not edit \textit{lock-controller.h}
+
+The \textit{lock-controller.c} file is where you will implement the logic for the combination lock.
+
+%\subsubsection{shared\_variables.h}
+%
+%The \textit{shared\_variables.h} header file is where you will place any types that you define and where you will externalize any global variables that need to be used by more than one \textit{.c} file.
+%
+%It also contains a structure that you may use to access an analog-digital converter's registers,
+%and it contains meaningfully-named constants to refer to specific pins you will use in this assignment.
+
+
+\subsection{Assemble the Hardware}
+
+\textcolor{red}{\textbf{BEFORE YOU PROCEED FURTHER:}}
+\begin{description}
+    \checkoffitem{Add the new hardware to your Cow~Pi as described in Appendix~\ref{sec:hardwareMods-mk4b}.}
+\end{description}

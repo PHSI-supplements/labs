@@ -1,0 +1,112 @@
+%! suppress = LabelConvention
+\newcounter{myenumcounter}
+\setcounter{myenumcounter}{\value{enumi}}
+
+If the \textbf{right switch} is in the \textit{right position} when the system boots, then the system shall enter its combination lock mode.
+
+\subsection*{When the system is in its combination lock mode:}
+
+\begin{enumerate}[start=\value{enumi}]
+    \setcounter{enumi}{\value{myenumcounter}}
+    \item \label{spec:combinationDefined} A combination shall consist of three numbers in a particular order.
+        \begin{enumerate}
+            \item Each of the three numbers shall consist of exactly two decimal digits.
+            \item It shall be possible for any two of the numbers to be duplicates of each other.
+                It shall be possible for all three numbers to be duplicates of each other.
+                For example, 12-12-12 is a valid combination.
+            \item Single-digit numbers must have leading zeroes.
+                For example, 01-02-03 is a valid combination, but 1-2-3 is not.
+            \item Each of the three numbers can assume any value between 00 and 15, inclusive.
+                \begin{itemize}
+                    \item We are artificially limiting the range of possible values to simplify verifying the solution's correctness.
+                \end{itemize}
+        \end{enumerate}
+    \item When displayed on the \textbf{display module}, the combination's first number shall occupy the two leftmost digits;
+        the second number shall occupy the middle two digits;
+        and the third number shall occupy the two rightmost digits.
+        Dashes shall be displayed between the numbers, for example: \texttt{12-03-10}.
+        If one or more of the positions has not had a number entered, then the digits for the unentered positions(s) shall be blank.
+        For example, if the first number has been entered but not the second and third, then the display will show \texttt{12-\phantom{88}-\phantom{88}}.
+%    \item The combination's numbers shall be entered using the \textbf{matrix keypad}.
+%        Buttons with decimal numerals (\textit{0-9}) or alphabetic letters (\textit{A-D}) shall be interpreted as having the corresponding hexadecimal numeral;
+%        the button with the octothorp (\#) shall be interpreted as having the hexadecimal numeral \textit{E};
+%        and the button with the asterisk (*) shall be interpreted as having the hexadecimal numeral \textit{F}.
+    \item The combination's numbers shall be entered using the \textbf{rotary encoder}.
+        \begin{enumerate}
+            \item When entering a number, the initial number shall be the last number that had been entered.
+                If no number had previously been entered, then the initial number shall be 00.
+            \item When the \textbf{rotary encoder} is turned \textit{clockwise}, the number shall increase.
+                If the number increases past 15, it shall overflow to 00.
+            \item When the \textbf{rotary encoder} is turned \textit{counterclockwise}, the number shall decrease.
+                If the number decreases past 00, it shall underflow to 15.
+        \end{enumerate}
+    \item When the system is powered-up, and after the system is reset, it shall be LOCKED, regardless of its state before losing power,
+        and the display shall have all numbers blank: \texttt{\phantom{88}-\phantom{88}-\phantom{88}}.
+    \item When the system is LOCKED, the \textbf{left LED} shall be \textit{on}, and the \textbf{right LED} shall be \textit{off}.
+    \item When the system is LOCKED, the \textbf{servomotor} shall be turned fully \textit{clockwise}.
+    \item When the system is LOCKED, the system shall display the combination-entry display.
+    \item \label{spec:enterCombination} When the system displays the combination-entry display, it shall display the currently-entered combination (which might not be the correct combination),
+        and the user shall be able to enter and change the currently-entered combination.
+        \begin{enumerate}
+            \item The first number shall be entered by turning the \textbf{rotary encoder} \textit{clockwise}.
+            \item After entering the first number, when the user turns the \textbf{rotary encoder} \textit{counterclockwise}, the first number shall be fixed, and the second number shall be entered.
+            \item The second number shall be entered by turning the \textbf{rotary encoder} \textit{counterclockwise}.
+            \item After entering the second number, when the user turns the \textbf{rotary encoder} \textit{clockwise}, the second number shall be fixed, and the third number shall be entered.
+            \item The third number shall be entered by turning the \textbf{rotary encoder} \textit{clockwise}.
+            \item After entering the third number, if the user turns the \textbf{rotary encoder} \textit{counterclockwise}, then the entered combination shall be cleared.
+            \item After entering the third number, if the user presses the \textbf{left pushbutton}, then the entered combination shall be evaluated.
+        \end{enumerate}
+    \item \label{spec:verifyCombination} The entered combination is \textit{correct} if and only if the following are true:
+        \begin{enumerate}
+            \item The first number is the correct first number, the second number is the correct second number, and the third number is the correct third number.
+            \item The first number was entered by passing the correct first number at least twice and then stopped at the correct first number on the \textit{third} (or greater) time that number had been visible.
+            \item The second number was entered by passing the correct second number once and then stopped at the correct second number on the \textit{second} time that number had been visible.
+            \item The third number was entered by stopping at the correct third number the \textit{first} time that number had been visible.
+        \end{enumerate}
+    \item If the entered combination is correct, then the system shall be UNLOCKED\@.
+    \item When the system is UNLOCKED, the \textbf{right LED} shall be \textit{on}, and the \textbf{left LED} shall be \textit{off}.
+    \item When the system is UNLOCKED, the \textbf{servomotor} shall be turned fully \textit{counterclockwise}.
+    \item When the system is UNLOCKED, the system shall \textit{not} display the combination but instead shall display ``OPEN''.
+    \item \label{spec:incorrectCombination} If the entered combination is incorrect, a warning message shall be displayed, both LEDs shall blink twice, the entered combination shall be cleared, and the system shall remain LOCKED\@.
+        \begin{itemize}
+            \item The warning message shall be ``bad try 1'' or ``bad try 2'', depending on whether it was their first or second attempt.
+            \item The blinks may be implemented with timed busy-waits.
+        \end{itemize}
+    \item If the user makes three incorrect attempts, the system shall be ALARMED\@.
+        \begin{enumerate}
+            \item When the system is ALARMED, it shall display \texttt{alert!} and both \textbf{LEDs} shall blink on-and-off every quarter-second.
+                \begin{itemize}
+                    \item The blinks may be implemented with timed busy-waits.
+                \end{itemize}
+            \item When the system is ALARMED, it shall not accept further input until it has been reset or has been powered-down and then powered-up.
+        \end{enumerate}
+    \item \label{spec:abandonedCombination} \underline{Optionally}, a partially-entered combination can be abandoned, causing the partially-entered combination to be cleared, under these conditions:
+        \begin{itemize}
+            \item When entering the second number, 00 is displayed three times
+            \item When entering the third number, 00 is displayed twice
+        \end{itemize}
+    \item \label{spec:changeCombination} When the system is UNLOCKED, the user shall be able to change the combination.
+    \begin{enumerate}
+        \item When the user places the \textbf{left switch} in the \textit{right position} and then presses the \textbf{right pushbutton}, the system shall be CHANGING\@.
+        \item When the system is CHANGING, it shall display \texttt{enter} and the combination-entry display,
+            and the user shall be able to enter the proposed new combination by pressing six digits on the \textbf{numeric keypad}.
+        \item After the user has entered a new combination, a second combination-entry display shall be shown,
+            and the user shall be able to re-enter the proposed new combination by pressing six digits on the \textbf{numeric keypad}.
+        \item When the user places the \textbf{left switch} in the \textit{left position}:
+            \begin{enumerate}
+                \item If either of the two entered combinations are incomplete, the system shall display ``no change''.
+                \item If the two entered combinations do not match, the system shall display ``no change''.
+                \item If any of the numbers in the combination is greater than 15, the system shall display ``no change''.
+                \item Otherwise, the system shall display ``changed'', and the correct combination shall change to the new combination.
+                \item The system shall be UNLOCKED\@.
+            \end{enumerate}
+    \end{enumerate}
+    \item \label{spec:locking} When the system is UNLOCKED, the user shall be able to lock the system by pressing both \textbf{pushbuttons} simultaneously.
+        \begin{itemize}
+            \item After doing so, the system shall be LOCKED.
+        \end{itemize}
+%    \item \label{spec:persistentCombination} The correct combination shall be persistent even while the system is unpowered.
+%        For example, if the user changes the combination, powers-down the system, and powers-up the system, then the correct combination shall still be the combination that they had changed it to before powering-down the system.
+    \item \label{spec:persistentCombination} The correct combination shall be persistent even when the system is reset.
+        For example, if the user changes the combination and presses the \textbf{RESET button}, then the correct combination shall still be the combination that they had changed it to before resetting the system.
+\end{enumerate}
