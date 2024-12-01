@@ -82,7 +82,7 @@ Simply let it fit snugly.
         The colors do not need to match, but you do need to pay attention to which 20cm wire you attached to which servo wire.}
     \checkoffitem{Locate the 20cm that is attached to the servo's \textbf{red} wire. Insert the other end into a \texttt{5V} slot.}
     \checkoffitem{Locate the 20cm that is attached to the servo's \textbf{brown} wire. Insert the other end into a \texttt{GND} slot.}
-    \checkoffitem{Locate the 20cm that is attached to the servo's \textbf{brown} wire. Insert the other end into the \texttt{GP22} slot.}
+    \checkoffitem{Locate the 20cm that is attached to the servo's \textbf{yelow} wire. Insert the other end into the \texttt{GP22} slot.}
     \checkoffitem{\textcolor{red}{Have someone verify that you have each wire inserted into the correct slot.}}
 \end{description}
 
@@ -100,7 +100,7 @@ Simply let it fit snugly.
     }
     \hfil
     \subfloat[All servo wires connected.]{
-        \includegraphics[height=4cm]{hardware/attachingServo}
+        \includegraphics[height=4cm]{hardware/servoAttached}
 %        \label{fig:attached}
     }
     \caption{Wiring a servo motor to the Cow~Pi. \label{fig:servoWiring}}
@@ -147,12 +147,6 @@ The starter code will configure \texttt{GP22} to be an output pin.
     \checkoffitem{Gently but firmly, press on the rotary encoder until the bottom of the encoder is flush with the top of the breadboard (Figure~\ref{fig:rotaryEncoderInserted}).}
     \checkoffitem{Insert three 20cm wires, one into each of the same terminal strips that the rotary encoder uses (Figure~\ref{fig:rotaryEncoderAligningWires}--\ref{fig:rotaryEncoderWiresBreadboard}).
         Make a note of which color wire corresponds to which of the sensor's pins.}
-    \vdots
-    \checkoffitem{Insert the other end of one of the wires into a \texttt{GND} slot
-        \begin{itemize}
-            \item For \textit{this} particular device, the polarity does not matter, so it doesn't matter which wire is connected to \texttt{GND}
-        \end{itemize}}
-    \checkoffitem{Insert the other end of the other wire into the \texttt{GP22} slot}
 \end{description}
 
 The three pins are connected to the rotary encoder's \texttt{A} and \texttt{B} wipers, and to a \texttt{C}ommon ground.

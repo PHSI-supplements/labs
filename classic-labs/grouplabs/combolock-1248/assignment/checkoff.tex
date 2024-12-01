@@ -4,237 +4,202 @@ In the interest of making grading go faster, we are offering a small bonus % to 
 % Because checking off all students during lab would take up most of the lab time, we are offering a slightly larger bonus
 if you complete your assignment early and get it checked-off by a TA or the professor during office hours.
 
-\subsection*{TODO}
+\begin{enumerate}
+    \checkoffitem{Place both switches in the left position and apply power (or reset) the Cow Pi.}
+    \vspace{1cm}
 
-%\begin{enumerate}
-%    \precheckoffitem{Position your Cow Pi's storage box upright, a little more than 1~meter from the Cow Pi.}
-%    \precheckoffitem{Place both switches in the left position.}
-%    \precheckoffitem{Upload your code to your Cow Pi, and leave your code open in the IDE.}
-%    \precheckoffitem{Confirm that the system detects the box and not something closer (such as a computer or the table surface).}
-%
-%    \checkoffitem{Show and explain to the TA how your code generates a tone with a frequency of 5kHz; that is, it has a period of 200\textmu s.}
-%    \checkoffitem{Place the right switch in the right position, putting the system in Continuous Tone mode.
-%        The system generates a continuous 5kHz tone.}
-%    \item[] (TA, confirm that the tone is 5kHz by code inspection and by ear; confirm with the HuskerScope spectrum analyzer if you aren't sure.) \\
-%        \textit{+1 There is code to generate an audible tone} \\
-%        \textit{+1 The system continuously generates the tone when in Continuous Tone mode} \\
-%        \textit{+2 The audible tone has a frequency of 5kHz}
-%
-%    \checkoffitem{Place the left switch in the right position, putting the system in Threshold Adjustment mode.
-%        The system prompts for a new threshold range. \\
-%        \textit{+1 The user is prompted to enter a new threshold range when the system is in Threshold Adjustment mode}}
-%    \checkoffitem{Enter a range of 25, using the `\#' key to indidicate that you have fininished entering the value.
-%        The system displays a helpful error message explaining that this is not a valid threshold range.
-%        The system then prompts the user for a new threshold range. \\
-%        \textit{+1 The user is given a helpful error message after entering an invalid threshold range} \\
-%        \textit{+1 The user is re-prompted to enter a threshold range after entering an invalid threshold range}}
-%    \checkoffitem{Enter a range of 450, using the `\#' key to indidicate that you have fininished entering the value.
-%        The system displays a helpful error message explaining that this is not a valid threshold range.
-%        The system then prompts the user for a new threshold range.}
-%    \checkoffitem{Enter a range of 75, using the `\#' key to indidicate that you have fininished entering the value.
-%        The system displays a message confirming the new threshold range. \\
-%        \textit{+2 Valid threshold ranges are those between 50cm and 400cm, inclusive} \\
-%        \textit{+1 The user is shown a confirmation message after entering a valid threshold range} \\
-%        \textit{+2 The user can enter a new threshold range when the system is in Threshold Adjustment mode}}
-%
-%    \checkoffitem{Place the right switch in the left position, putting the system in Single Pulse mode.
-%        The system might indicate that no object has been detected yet; however, this is not required information before initiating a ping.}
-%    \checkoffitem{Show and explain to the TA how your code initiates a pulse.}
-%    \checkoffitem{Show and explain to the TA how your code measures the length of a pulse.}
-%    \checkoffitem{Show and explain to the TA how your code achieves the required precision (no greater than 1\textmu s) and accuracy (immediately detect pulse edges without waiting for code in the main loop to poll the pin).}
-%    \checkoffitem{Press the pushbutton to initiate a pulse.
-%        The right LED strobes once.
-%        The piezodisc does not chirp.
-%        The system displays the correct distance to the wall (or book or other object). \\
-%        \textit{+2 There is code to initiate an ultrasound pulse} \\
-%        \textit{+3 There is code to detect the length of the pulse} \\
-%        \textit{+3 The pulse's length is measured to a precision of no greater than 1\textmu s} \\
-%        \textit{+3 The pulse's length is measured as accurately as possible} \\
-%        \textit{+2 The user can request a ping when the system is in Single Pulse mode} \\
-%        \textit{+2 The distance to an object is correctly calculated from the pulse's length} \\
-%        \textit{+2 When an object is detected, the system displays the distance to the object} \\
-%        \textit{+2 When an object is detected in Single-Pulse mode, the system generates exactly one alarm} \\
-%        \textit{+2 A strobe is an illumination of the right LED for 50ms} \\
-%        \textit{+2 A strobe occurs for any detected object}}
-%    \checkoffitem{Slightly change the distance between the Cow Pi and the target object.
-%        Press the pushbutton to initiate a pulse.
-%        The LED strobes once.
-%        The piezodisc does not chirp.
-%        The system displays the new distance to the wall (or book or other object). \\
-%        \textit{+2 The user can request another ping when the system is in Single Pulse mode}}
-%
-%    \checkoffitem{Place the left switch in the left position, putting the system in Normal Operation mode.
-%        The system displays the distance to the target object, and it displays an approach rate of 0cm/s.
-%        The LED strobes once per seccond (100ms), but the piezodisc does not chirp. \\
-%        \textit{+1 The switches control the mode of operation as specified} \\
-%        \textit{+2 When an object is detected in Normal Operation mode, the system repeatedly generates alarms}}
-%    \checkoffitem{Slowly move the Cow Pi closer to the wall, or slowly move the book (or other object) closer to the Cow Pi.
-%        As you do so, vary the rate of approach slighly to demonstrate that the rate of approach updates.
-%        The displayed distance changes with the decreasing distance to the target object.
-%        The system displays a plausible, positive rate of approach that updates at least once every second. \\
-%        \textit{+2 When an object is detected in Normal Operation mode the rate of approach is displayed} \\
-%        \textit{+2 When an object is detected in Normal Operation mode, the rate of approach is updated at least once every second}}
-%    \checkoffitem{As the distance between the Cow Pi and the target object decreases, note that:
-%        \begin{description}
-%            \item[When the distance falls below 100cm] the LED strobes more frequently, once every 750ms (\textthreequarters sec)
-%            \item[When the distance falls below 75cm] the piezodisc chirps every 750ms
-%            \item[When the distance falls below 50cm] the LED strobes, and the piezodisc chirps, every 500ms (\textonehalf sec)
-%            \item[When the distance falls below 25cm] the LED strobes, and the piezodisc chirps, every 250ms (\textonequarter sec)
-%            \item[When the distance falls below 10cm] the LED strobes, and the piezodisc chirps, every 125ms ($\frac{1}{8}$ sec)
-%        \end{description}
-%        \textit{+2 A chirp is an audible tone lasting 50ms} \\
-%        \textit{+2 When the system repeatedly generates alarms, the time between alarms is as specified}}
-%
-%    \checkoffitem{Place the both switches in the right position, putting the system in Threshold Adjustment mode.
-%        The system prompts for a new threshold range.}
-%    \checkoffitem{Enter a range of 55.
-%        The system displays a message confirming the new threshold range.}
-%    \checkoffitem{Place the both switches in the left position, putting the system in Normal Operation mode.
-%        The system displays the distance to the target object, and it displays an approach rate of 0cm/s.}
-%    \checkoffitem{Slowly move the Cow Pi away from the wall, or slowly move the book (or other object) away from the Cow Pi.
-%        The displayed distance changes with the decreasing distance to the target object.
-%        The system displays a plausible, negative rate of approach.}
-%    \checkoffitem{As the distance between the Cow Pi and the target object decreases, the alarms become less urgent.
-%        Note that as the distance increases above 55cm, the piezodisc stops chirping but the LED continues to strobe. \\
-%        \textit{+2 A chirp occurs for a detected object that is closer than the threshold range} \\
-%        \textit{+2 A chirp only occurs for a detected object that is closer than the threshold range}}
-%
-%    \checkoffitem{Reorient the Cow Pi, or remove the book (or other object) so that there are no in-range objects to detect.
-%        The system displays a message indicating that no object is detected.
-%        The LED does not strobe, and the piezodisc does not chirp.\\
-%        \textit{+3 The code correctly recognizes the that no object has been detected, if no object reflects the ultrasound pulse} \\
-%        \textit{+2 When there is no in-range object, the system displays a message to that effect} \\
-%        \textit{+2 A strobe only occurs for a detected object}}
-%
+    % Rotary Encoder Test Mode -- 10
+
+    \checkoffitem{Confirm that the number of clockwise \& counterclockwise turns is displayed and clearly labeled, with the number of turns holding at 0. \\
+        \textit{+1 The number of clockwise and counterclockwise turns is displayed, starting at 0 for each}
+    }
+    \checkoffitem{Gently turn the rotary encoder one notch clockwise. \\
+        \textbf{The number of clockwise turns increases to 1; the number of counterclockwise turns remains 0} \\
+        \textit{+1 Turning clockwise increases the clockwise count}
+    }
+    \checkoffitem{Gently turn the rotary encoder one notch clockwise. \\
+        \textbf{The number of clockwise turns increases to 2; the number of counterclockwise turns remains 0} \\
+        \textit{+1 Turning clockwise again increases the clockwise count}
+    }
+    \checkoffitem{Gently turn the rotary encoder two notches clockwise. \\
+        \textbf{The number of clockwise turns increases to 4; the number of counterclockwise turns remains 0} \\
+        \textit{+1 Continuous turning clockwise increases the clockwise count for each detent}
+    }
+    \checkoffitem{Gently turn the rotary encoder one notch counterclockwise. \\
+        \textbf{The number of counterclockwise turns increases to 1; the number of clockwise turns remains 4} \\
+        \textit{+1 Turning counterclockwise increases the clockwise count}
+    }
+    \checkoffitem{Gently turn the rotary encoder one notch counterclockwise. \\
+        \textbf{The number of counterclockwise turns increases to 2; the number of clockwise turns remains 4} \\
+        \textit{+1 Turning counterclockwise again increases the clockwise count}
+    }
+    \checkoffitem{Gently turn the rotary encoder two notches counterclockwise. \\
+        \textbf{The number of counterclockwise turns increases to 4; the number of clockwise turns remains 4} \\
+        \textit{+1 Continuous turning counterclockwise increases the clockwise count for each detent} \\
+        \textit{+1 No evidence of bouncing} \\
+        \textit{+1 The displayed turns are not opposite of the actual direction turned}
+    }
+    \checkoffitem{Confirm that the number of clockwise \& counterclockwise turns being displayed holds at 4. \\
+        \textit{+1 When the rotary encoder is not turned, the number of turns shown on the display does not change}
+    }
+    \vspace{1cm}
+
+    % Servomotor Test Mode -- 10
+
+    \checkoffitem{Confirm that the display shows ``SERVO: left''.}
+    \checkoffitem{Press the left pushbutton \\
+        \textbf{The servo arm moves 90\textdegree counterclockwise} \\
+        \textbf{The display shows ``SERVO: center''} \\
+        \textit{+1 The servo arm is initially following the left switch} \\
+        \textit{+1 Pressing the left pushbutton centers the servo arm}
+    }
+    \checkoffitem{Release the left pushbutton. \\
+        \textbf{The servo arm moves 90\textdegree clockwise, back to its original position} \\
+        \textbf{The display shows ``SERVO: left''} \\
+        \textit{+1 Releasing the button allows the servo arm to following the left switch} \\
+        \textit{+1 The servo can rotate clockwise}
+    }
+    \checkoffitem{Toggle the left switch to the right position. \\
+        \textbf{The servo arm moves 180\textdegree counterclockwise} \\
+        \textbf{The display shows ``SERVO: right''} \\
+        \textit{+1 The servo can rotate counterclockwise} \\
+        \textit{+1 The servo's position is correctly displayed}
+    }
+    \checkoffitem{Toggle the left switch to the left position. \\
+        \textbf{The servo arm moves 180\textdegree clockwise} \\
+        \textbf{The display shows ``SERVO: left''} \\
+        \textit{+1 The servo can rotate clockwise again}
+    }
+    \checkoffitem{Toggle the left switch to the right position. \\
+        \textbf{The servo arm moves 180\textdegree counterclockwise} \\
+        \textbf{The display shows ``SERVO: right''} \\
+        \textit{+1 The servo can rotate counterclockwise again} \\
+        \textit{+1 The servo fully deflects} \\
+        \textit{+1 The servo does not ``stutter'' (except when the system boots)}
+    }
+    \vspace{1cm}
+
+    \checkoffitem{Examine the combination shown on the display module.
+        If any numbers are greater than 15, press the right pushbuton to reset the combination.}
+    \checkoffitem{Make note of the combination.}
+    \checkoffitem{Place the right switch in the right position, and press the RESET button.}
+    \vspace{1cm}
+
+    % Combination Lock -- 30 //
+
+    \checkoffitem{The system is now in ``Combination Lock'' mode. \\
+        \textbf{The left LED is lit} \\
+        \textbf{The display shows \texttt{\phantom{xx}-\phantom{xx}-\phantom{xx}}} \\
+        \textbf{The servo is deflected fully clockwise} \\
+        \textit{+1 The system is locked when powered-up} \\
+        \textit{+\textonehalf\ When the system is locked, the left LED is lit} \\
+        \textit{+\textonehalf\ When the system is locked, the display shows the combination-entry display, initially showing empty numbers} \\
+        \textit{+2 When the system is locked, the servo is deflected fully clockwise}
+    }
+    \checkoffitem{Turn the rotary encoder clockwise until the \underline{first} time that the first number reaches the correct first number. \\
+        \textbf{The display shows \texttt{\phantom{05}-\phantom{xx}-\phantom{xx}}} (if the correct combination is 05-10-15) \\
+        \textit{+\textonehalf\ Combination numbers increase with clockwise turns}
+    }
+    \checkoffitem{Turn the rotary encoder counterclockwise until the \underline{first} time that the second number reaches the correct second number. \\
+        \textbf{The display shows \texttt{\phantom{05}-\phantom{10}-\phantom{xx}}} (if the correct combination is 05-10-15) \\
+        \textit{+\textonehalf\ Combination numbers decreases with counterclockwise turns}
+    }
+    \checkoffitem{Turn the rotary encoder clockwise until the \underline{first} time that the third number reaches the correct third number. \\
+        \textbf{The display shows \texttt{\phantom{05}-\phantom{10}-\phantom{15}}} (if the correct combination is 05-10-15) \\
+        \textit{+1 Combination numbers are display as three 2-digit numbers separated by dashes}
+    }
+    \checkoffitem{Press the left pushbutton. \\
+        \textbf{The display shows \texttt{bad try 1} and both LEDs blink twice}, then \\
+        \textbf{An empty combination-entry is shown and the left LED is lit} \\
+        \textit{+1 The combination is evaluated when the user presses the left pushbutton} \\
+        \textit{+2 The system does not unlock if the correct combination is entered, but was entered incorrectly} \\
+        \textit{+1 When the user mis-enters the combination, it displays ``bad try'' and the attempt number, and blinks both LEDs twice} \\
+        \textit{+\textonehalf\ After the first bad try, the user is given another opportunity to enter the combination}
+    }
+    \checkoffitem{Turn the rotary encoder clockwise until the \underline{third} time that the first number reaches 10 (or some other incorrect first number). \\
+        \textbf{The display shows \texttt{\phantom{10}-\phantom{xx}-\phantom{xx}}} \\
+        \textit{+\textonehalf\ Combination numbers overflow from 15 to 00}
+    }
+    \checkoffitem{Turn the rotary encoder counterclockwise until the \underline{second} time that the first number reaches 15 (or some other incorrect second number). \\
+        \textbf{The display shows \texttt{\phantom{10}-\phantom{15}-\phantom{xx}}} \\
+        \textit{+\textonehalf\ Combination numbers underflow from 00 to 15}
+    }
+    \checkoffitem{Turn the rotary encoder clockwise until the \underline{first} time that the first number reaches 05 (or some other incorrect third number), and press the left pushbutton. \\
+        \textbf{The display shows \texttt{\phantom{10}-\phantom{15}-\phantom{00}}}, then \\
+        \textbf{The display shows \texttt{bad try 2} and both LEDs blink twice}, then \\
+        \textbf{An empty combination-entry is shown and the left LED is lit} \\
+        \textit{+2 The system does not unlock for incorrect combinations} \\
+        \textit{+\textonehalf\ After the second bad try, the user is given another opportunity to enter the combination}
+    }
+    \checkoffitem{Enter the combination thrice-clockwise~05, twice-counterclockwise~10, once-clockwise~15 (or the correct number if it isn't 05-10-15), and press the left pushbutton. \\
+        \textbf{The display shows \texttt{\phantom{05}-\phantom{10}-\phantom{15}}}, then \\
+        \textbf{The display shows \texttt{OPEN} and the right LED is lit}, and \\
+        \textbf{The servo deflects fully counterclockwise} \\
+        \textit{+2 The system unlocks for the correct combination entered correctly} \\
+        \textit{+\textonehalf\ When the system is unlocked, the right LED is lit} \\
+        \textit{+\textonehalf\ When the system is unlocked, the display shows ``OPEN''} \\
+        \textit{+2 When the system is unlocked, the servo is deflected fully counterclockwise}
+    }
+    \checkoffitem{Place the left switch in the right position, and press the right pushbutton. \\
+        \textbf{The display shows \texttt{enter} and \texttt{\phantom{xx}-\phantom{xx}-\phantom{xx}}} \\
+        \textit{+1 The user can begin changing the combination by moving the left switch to the right and pressing the right pushbutton} \\
+        \textit{+1 When the user begins changing the combination, the lock displays ``enter'' and then shows the combination-entry display}
+    }
+    \checkoffitem{Using the numeric keypad, press \texttt{1 2 0 6 0 1} \\
+        \textbf{The display shows \texttt{enter} and \texttt{\phantom{12}-\phantom{06}-\phantom{01}} and \texttt{\phantom{xx}-\phantom{xx}-\phantom{xx}}} \\
+        \textit{+1 The user enters the new combination by pressing six digits on the numeric keypad} \\
+        \textit{+1 The user confirms the new combination in a second combination-entry display, using the numeric keypad}
+    }
+    \checkoffitem{Using the numeric keypad, press \texttt{1 2 0 6 0 1}, and place the left switch in the left position. \\
+        \textbf{The display shows \texttt{enter} and \texttt{\phantom{12}-\phantom{06}-\phantom{01}} and \texttt{\phantom{12}-\phantom{06}-\phantom{01}}}, then \\
+        \textbf{The display shows \texttt{changed}} \\
+        \textit{+1 The new combination is checked for validity by returning the left switch to the left position}
+    }
+    \checkoffitem{Press both pushbuttons simultaneously. \\
+        \textbf{The left LED is lit}, and \\
+        \textbf{The display shows \texttt{\phantom{xx}-\phantom{xx}-\phantom{xx}}}, and \\
+        \textbf{The servo deflects fully clockwise} \\
+        \textit{+2 The system is re-locked by pressing both pushbuttons simultaneously.}
+    }
+    \checkoffitem{Enter the \underline{original} correct combination (which is no longer correct) three times. \\
+        \textbf{The system displays \texttt{alert!}}, and \\
+        \textbf{Both LEDs continuously blink}, and \\
+        \textbf{The system becomes unresponsive} \\
+        \textit{+1 After the third bad try, the system displays ``alert!'', both LEDS continously blink, and the lock becomes unresponsive}
+    }
+    \checkoffitem{Press the RESET button. \\
+        \textbf{The left LED is lit}, and \\
+        \textbf{The display shows \texttt{\phantom{xx}-\phantom{xx}-\phantom{xx}}}, and \\
+        \textbf{The servo deflects fully clockwise}
+    }
+    \checkoffitem{Enter the thrice-clockwise~12, twice-counterclockwise~06, once-clockwise~01 \\
+        \textbf{The display shows \texttt{OPEN} and the right LED is lit}, and \\
+        \textbf{The servo deflects fully counterclockwise} \\
+        \textit{+1 Valid proposed combinations are saved in memory that persists between resets}
+    }
+    \checkoffitem{Place the left switch in the right position, and press the right pushbutton. Using the numeric keypad, press \texttt{0 2 1 3 0 4}. For the confirmation, press \texttt{0 2 1 4 0 3}. Place the left switch in the left position. \\
+        \textbf{The display shows \texttt{no change}} \\
+        \textit{+1 If the proposed combination and its confirmation do not match, the change is rejected.}
+    }
+    \checkoffitem{Place the left switch in the right position, and press the right pushbutton. Using the numeric keypad, press \texttt{0 2 1 6 0 4}. For the confirmation, press \texttt{0 2 1 6 0 4}. Place the left switch in the left position. \\
+        \textbf{The display shows \texttt{no change}} \\
+        \textit{+1 If the proposed combination has an out-of-range value, the change is rejected.}
+    }
+    \vspace{1cm}
+
+    \checkoffitem{Press both pushbuttons simultaneously to re-lock the combination lock.}
+    \checkoffitem{Turn thrice-clockwise~12. Turn \underline{thrice}-counterclockwise~00 (going past the second occurrence of 06). \\
+        \textbf{The combination is abandoned without generating a ``bad try''.} \textbf{This \underline{should} happen by going back to an empty combination-entry display but is not required for this point.} (Since you're turning counterclockwise, the first number should \underline{not} be generating.) \\
+        \textit{BONUS +1 A combination can be abandoned on the second number.}
+    }
+    \checkoffitem{Turn thrice-clockwise~12. Turn twice-counterclockwise~06. Turn \underline{twice}-clockwise~00 (going past the first occurrence of 01). \\
+        \textbf{The combination is abandoned without generating a ``bad try''.} \\
+        \textit{BONUS +1 A combination can be abandoned on the second number.} \\
+        If \textbf{the combination-entry display resets, and the continuing clockwise motion generates the first number.} \\
+        \textit{BONUS +1 When entering the third number, if the rotation goes too far then seamlessly transitions to entering the first number.}
+    }
+
+\end{enumerate}
+
 %    \checkoffitem{Show the TA any code they have not yet examined. \\
 %        \textit{+1 The code is clean, well-organized, has good variable and function names, and is otherwise understandable}}
-%\end{enumerate}
-%
-%
-%\begin{description}
-%    \precheckoffitem{Establish that the code you are demonstrating is the code
-%    you submitted to to \filesubmission.}
-%    \begin{itemize}
-%        \item If you are getting checked-off during lab time, show the TA that the
-%        file was submitted before it was due.
-%        \item Download the file into your ComboLab directory. If necessary,
-%        rename it to \textit{ComboLab.ino}.
-%    \end{itemize}
-%    \precheckoffitem{Upload \textit{ComboLab.ino} to your \developmentboard\ and open the
-%    Serial Monitor.}
-%\end{description}
-%
-%\begin{enumerate}
-%    \checkoffitem{The combination screen is displayed
-%    \texttt{\phantom{88}-\phantom{88}-\phantom{88}}) with the cursor (two
-%    decimal points) blinking in the left-most position. No numbers are
-%    displayed in the combination.} \\
-%    \textit{+2 The lock is locked when powered-up.} \\
-%    \textit{+2 When locked, shows combo-entry display, initially without numbers
-%        (power-up).} \\
-%    \textit{+2 The cursor is represented with decimal points in the relevant
-%    position.} \\
-%    \textit{+2 The cursor blinks.}
-%    \checkoffitem{Place both switches in the left position.}
-%    \checkoffitem{Press the right button twice. The cursor moves into the middle
-%    position and then the right-most position.} \\
-%    \textit{+3 The user can move the cursor using the right button.}
-%    \checkoffitem{Press the right button again. the cursor moves into the left-most
-%    position.} \\
-%    \textit{+1 The cursor wraps-around from the last number to the first
-%    number.}
-%    \checkoffitem{Press 1, then A. The display shows \texttt{1.A.-\phantom{88}-\phantom{88}}}. \\
-%    \textit{+1 Combinations use 2-hex-digit numbers.} \\
-%    \textit{+4 Numbers are entered using the keypad.}
-%    \checkoffitem{Press the left button. The display shows \texttt{error} and then
-%    \texttt{1.A.-\phantom{88}-\phantom{88}}.} \\
-%    \textit{+1 Submit ``error'' combination with left button.} \\
-%    \textit{+1 Incomplete combination produces error message.} \\
-%    \textit{+1 After the error message, the combo-entry display returns.}
-%    \checkoffitem{Finish entering an incorrect combination. The display shows all
-%    three numbers, separated by dashes.} \\
-%    \textit{+1 Combinations are three numbers separated by dashes.}
-%    \checkoffitem{Press the left button. The display shows \texttt{badtry 1} and
-%    then the combo-display display.} \\
-%    \textit{+1 Submit ``bad try'' combination with left button.} \\
-%    \textit{+1 Wrong combination produces bad-try message.} \\
-%    \textit{+2 After the first bad try, the combo-entry display returns.}
-%    \checkoffitem{Enter another incorrect combination and press the left button. The
-%    display shows \texttt{badtry 2} and then the combo-display display.} \\
-%    \textit{+1 The ``bad try'' number increments.} \\
-%    \textit{+2 After the second bad try, the combo-entry display returns.}
-%    \checkoffitem{Enter another incorrect combination and press the left button. The
-%    display shows \texttt{badtry 3} and then \texttt{alert!}. The external
-%    LED rapidly blinks.} \\
-%    \textit{+1 After the third bad try, the sytem displays an alert message.} \\
-%    \textit{+2 After the third bad try, the external LED rapidly blinks.}
-%    \checkoffitem{Press buttons and keys a few times. Nothing happens except that
-%    the alert message is still displayed and the LED still blinks.} \\
-%    \textit{+1 After the third bad try, the system is non-responsive.}
-%    \checkoffitem{Press the \developmentboard's RESET button (on the top of the \developmentboard).}
-%    \checkoffitem{Enter the correct combination and press the left button. The
-%    system displays \texttt{lab open}.} \\
-%    \textit{+2 Submit correct combination with left button.} \\
-%    \textit{+4 When the user locks the lock, it displays ``lab open.''}
-%    \checkoffitem{Double-check that both switches are in the left position. Press
-%    the left button. Nothing happens. Press the right button. Nothing
-%    happens.} \\
-%    \textit{+1 Single-presses of only one button have no effect when the lock is unlocked and the switches are not in the right position.}
-%    \checkoffitem{Place both switches in the right position and press the left
-%    button. The system displays \texttt{enter} then
-%    \texttt{\phantom{88}-\phantom{88}-\phantom{88}}.} \\
-%    \textit{+4 Start changing combo by pushing left button while both switches
-%    are to the right.} \\
-%    \textit{+2 When starting to change the combo, ``enter'' is displayed.} \\
-%    \textit{+2 After displaying ``enter,'' the combo-entry display is shown.}
-%    \checkoffitem{Enter a new combination.}
-%    \checkoffitem{Press the left button. Nothing happens.} \\
-%    \textit{+\textonehalf\ Left button has no effect unless left switch is
-%    moved.}
-%    \checkoffitem{Place the left switch in the left position and press the left
-%    button. The system displays \texttt{re-enter} then
-%    \texttt{\phantom{88}-\phantom{88}-\phantom{88}}.} \\
-%    \textit{+4 Start confirming by moving the left switch and pressing the left
-%    button.} \\
-%    \textit{+2 When starting to change the combo, ``re-enter'' is displayed.} \\
-%    \textit{+2 After displaying ``re-enter,'' the combo-entry display is shown.}
-%    \checkoffitem{Enter a non-matching combination.}
-%    \checkoffitem{Press the left button. Nothing happens.} \\
-%    \textit{+\textonehalf\ Left button has no effect unless right switch is
-%    moved.}
-%    \checkoffitem{Place the right switch in the left position and press the left
-%    button. The system displays \texttt{nochange}. Though unspecified, it is
-%    acceptable to display \texttt{lab open} after displaying \texttt{nochange} for at least one second.} \\
-%    \textit{+4 Compare combos by moving the right switch and pressing the left
-%    button.} \\
-%    \textit{+2 When the combos do not match, ``nochange'' is displayed.}
-%    \checkoffitem{Double-check that both switches are in the left position. Either
-%    double-click the right button \textit{or} press both buttons at the same
-%    time. The system displays \texttt{closed} and then \texttt{\phantom{88}-\phantom{88}-\phantom{88}}.} \\
-%    \textit{+4 Re-lock the lock using one of the specified techniques.} \\
-%    \textit{+2 When locked, shows combo-entry display, initially without numbers
-%        (re-locked).}
-%    \checkoffitem{Enter the original, correct combination and press the left button.
-%    The system displays \texttt{lab open}.} \\
-%    \textit{+2 When the combos do not match, the previously-correct combo
-%    remains the correct combo.}
-%    \checkoffitem{Move both switches to the right, enter a new combination, move the
-%    left switch to the left, and press the left button. The system displays
-%    \texttt{re-enter} then \texttt{\phantom{88}-\phantom{88}-\phantom{88}}.}
-%    \checkoffitem{Enter the matching combination, move the right switch to the left,
-%        and press the right button. The system displays \texttt{nochange}. Though
-%        unspecified, it is acceptable to display \texttt{lab open} after
-%        displaying \texttt{changed} for at least one second.} \\
-%    \textit{+2 When the combos match, ``changed'' is displayed.}
-%    \checkoffitem{Double-check that both switches are in the left position. Either
-%    double-click the right button \textit{or} press both buttons at the same
-%    time. The system displays \texttt{closed} and then \texttt{\phantom{88}-\phantom{88}-\phantom{88}}.}
-%    \checkoffitem{Enter the new combination and press the left button. The system
-%    displays \texttt{lab open}.} \\
-%    \textit{+2 When the combos match, the new combo is the correct combo.}
-%    \checkoffitem{Press the \developmentboard's RESET button.}
-%    \checkoffitem{Enter the new combination and press the left button. The system
-%    displays \texttt{lab open}.} \\
-%    \textit{+4 The correct combination persists while the Arduino is
-%    powered-down.}
-%\end{enumerate}

@@ -13,126 +13,47 @@ Before turning in your code, be sure to compile and test your code on your Cow~P
 
 \subsection*{Rubric}
 
-This assignment is tentatively worth 50 points.
-(I might increase it to 60.)
+This assignment is worth 50 points.
 
-\subsection*{TODO}
+\begin{description}
+    \item[Rotary Encoder (test mode)] % 10
+    \rubricitem{1}{The number of clockwise and counterclockwise turns is displayed, starting at 0 for each}
+    \rubricitem{1}{When the rotary encoder is not turned, the number of turns shown on the display does not change}
+    \rubricitem{4}{When the rotary encoder is turned clockwise, the displayed number of clockwise turns increases by one for each detent}
+    \rubricitem{4}{When the rotary encoder is turned counterclockwise, the displayed number of counterclockwise turns increases by one for each detent}
 
-%This assignment is worth 60 points.
-%
-%\begin{description}
-%    \item[User Controls] %13
-%    \rubricitem{1}{The switches control the mode of operation as specified}
-%    \rubricitem{2}{The user can request a ping when the system is in Single Pulse mode}
-%    \rubricitem{2}{The user can request another ping when the system is in Single Pulse mode}
-%    \rubricitem{1}{The user is prompted to enter a new threshold range when the system is in Threshold Adjustment mode}
-%    \rubricitem{2}{The user can enter a new threshold range when the system is in Threshold Adjustment mode}
-%    \rubricitem{2}{Valid threshold ranges are those between 50cm and 400cm, inclusive}
-%    \rubricitem{1}{The user is given a helpful error message after entering an invalid threshold range}
-%    \rubricitem{1}{The user is re-prompted to enter a threshold range after entering an invalid threshold range}
-%    \rubricitem{1}{The user is shown a confirmation message after entering a valid threshold range}
-%
-%    \item[Sensor] %16
-%    \rubricitem{2}{There is code to initiate an ultrasound pulse}
-%    \rubricitem{3}{There is code to detect the length of the pulse}
-%    \rubricitem{3}{The pulse's length is measured to a precision of no greater than 1\textmu s\footnote{
-%        The assignment describes obtaining a precision of \textonehalf\textmu s, which is, of course, acceptable. The 4\textmu s precision offered by the Arduino \function{micros()} function is \textit{not} acceptable.
-%    }}
-%    \rubricitem{3}{The pulse's length is measured as accurately as possible\footnote{
-%        This means you use interrupts to detect the rising and falling edges of the pulse.
-%    }}
-%    \rubricitem{3}{The code correctly recognizes the that no object has been detected, if no object reflects the ultrasound pulse}
-%    \rubricitem{2}{The distance to an object is correctly calculated from the pulse's length}
-%    \penaltyitem{16}{The Arduino \function{pulseIn()} and/or \function{pulseInLong()} function, or a third-party library, is used to time the ultrasonic echo sensor's pulse.}
-%
-%    \item[Alarm] %16
-%    \rubricitem{1}{There is code to generate an audible tone}
-%    \rubricitem{1}{The system continuously generates the tone when in Continuous Tone mode}
-%    \rubricitem{2}{The audible tone has a frequency of 5kHz}
-%    \rubricitem{2}{A chirp is an audible tone lasting 50ms}
-%    \rubricitem{2}{A chirp occurs for a detected object that is closer than the threshold range}
-%    \rubricitem{2}{A chirp only occurs for a detected object that is closer than the threshold range}
-%    \rubricitem{2}{A strobe is an illumination of the right LED for 50ms}
-%    \rubricitem{2}{A strobe occurs for any detected object}
-%    \rubricitem{2}{A strobe only occurs for a detected object}
-%    \penaltyitem{16}{The Arduino \function{tone()} and/or \function{noTone()} function, or a third-party library, is used to generate tones on the piezoelectric disc.}
-%
-%    \item[Object Detection] %14
-%    \rubricitem{2}{When there is no in-range object, the system displays a message to that effect}
-%    \rubricitem{2}{When an object is detected (in Single-Pulse mode or Normal Operation mode), the system displays the distance to the object}
-%    \rubricitem{2}{When an object is detected in Normal Operation mode the rate of approach is displayed}
-%    \rubricitem{2}{When an object is detected in Normal Operation mode, the rate of approach is updated at least once every second}
-%    \rubricitem{2}{When an object is detected in Single-Pulse mode, the system generates exactly one alarm}
-%    \rubricitem{2}{When an object is detected in Normal Operation mode, the system repeatedly generates alarms}
-%    \rubricitem{2}{When the system repeatedly generates alarms, the time between alarms is as specified in Table~\ref{tab:alarmPeriods}}
-%
-%    \item[Code Quality]
-%    \rubricitem{1}{The code is clean, well-organized, has good variable and function names, and is otherwise understandable}
-%    \spaghetticodepenalties{1}
-%
-%    \item[Bonuses]
-%    \bonusitem{1}{Use the actual $ADC\_register\_value$ when performing distance and speed calculations.}
-%    \bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due (you cannot get both check-off bonuses)}
-%    \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due (your code must be uploaded to \filesubmission\ \textit{before} it is due; you cannot get both bonuses)}
-%\end{description}
-%
-%This assignment is worth 80 points. \\
-%
-%Rubric:
-%\begin{description}
-%    \rubricitem{2}{Combinations are displayed as three 2-hex-digit numbers separated
-%    by dashes.}
-%    \rubricitem{4}{Numbers are entered using the matrix keypad.}
-%    \rubricitem{2}{The lock is locked when powered-up.}
-%    \rubricitem{4}{When the lock is locked, it displays the combination-entry
-%    display, initially showing empty numbers (only dashes).}
-%    \rubricitem{4}{The cursor indicating which number is being entered is
-%    represented as blinking decimal points in the relevant number position.}
-%    \rubricitem{4}{The user can move the cursor between number positions by pressing
-%    the right button.}
-%    \rubricitem{4}{After entering a combination, the user can submit the combination
-%    by pressing the left button.}
-%    \rubricitem{2}{If the user tries to submit an incomplete combination, the lock
-%    displays ``error'' and then returns to the combination-entry display.}
-%    \rubricitem{4}{When the user unlocks the lock, it displays ``lab open''.}
-%    \rubricitem{2}{When the user mis-enters the combination, it displays ``bad try''
-%    and the attempt number.}
-%    \rubricitem{4}{After the first two bad tries, the user is given another
-%    opportunity to enter the combination.}
-%    \rubricitem{4}{After the third bad try, the system displays ``alert!'', the
-%    external LED rapidly blinks, and the lock becomes unresponsive.}
-%    \rubricitem{4}{The user can begin changing the combination by moving both
-%    switches to the right and pressing the left button.}
-%    \rubricitem{4}{When the user begins changing the combination, the lock displays
-%    ``enter'' and then shows the combination-entry display.}
-%    \rubricitem{4}{After entering a new combination, the user can begin confirming
-%    the combination by sliding the left switch to the left and pressing the left
-%    button.}
-%    \rubricitem{4}{When the user begins confirming the combination, the lock
-%    displays ``re-enter'' and then shows the combination-entry display.}
-%    \rubricitem{4}{After entering the confirming combination, the user can compare
-%    the new combination with the confirmed combination by sliding the right switch
-%    to the left and pressing the left button.}
-%    \rubricitem{4}{If the user successfully confirmed the new combination, the lock
-%    displays ``changed'', and the new combination is the correct combination
-%    for future unlocking attempts.}
-%    \rubricitem{4}{If the user failed to confirm the new combination, the lock
-%    displays ``nochange'', and the previously-correct combination remains the
-%    combination for future unlocking attempts.}
-%    \rubricitem{4}{The user can lock the lock by moving both switches to the left
-%    and \textit{either} double-clicking the right button, \textit{or} pressing
-%    both buttons at the same time. (Only one of these methods needs to be
-%    implemented).}
-%    \rubricitem{2}{The inputs that are explicitly specified as having no effect in
-%    certain situations are ignored in those situations.}
-%    \rubricitem{4}{The correct combination persists while Arduino is powered-down.}
-%    \rubricitem{2}{The source code is well-organized and is readable.}
-%    \bonusitem{2}{Get assignment checked-off by TA or professor during office hours
-%    before it is due. (You cannot get both bonuses.)}
-%    \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your
-%    scheduled lab immediately after it is due. (Your code must be uploaded to
-%    \filesubmission\ \textit{before} it is due. You cannot get both bonuses.)}
-%    \spaghetticodepenalties{1}
-%\end{description}
+    \item[Servomotor (test mode)] % 10
+    \rubricitem{1}{The servo's position is correctly displayed}
+    \rubricitem{3}{When (and only when) the left pushbutton is pressed, the servo moves to the center position}
+    \rubricitem{3}{When the left switch is in the \underline{left} position (and the pushbutton is not pressed), the servo deflects fully \underline{clockwise}}
+    \rubricitem{3}{When the left switch is in the \underline{right} position (and the pushbutton is not pressed), the servo deflects fully \underline{clockwise}}
+
+    \item[Combination Lock] %30
+    \rubricitem{1}{Combinations are displayed as three 2-digit numbers separated by dashes}
+    \rubricitem{2}{Combinations are entered using the rotary encoder}
+    \rubricitem{1}{The system is locked when powered-up}
+    \rubricitem{1}{When the system is locked, the left LED is lit, and the display shows the combination-entry display, initially showing empty numbers (only dashes)}
+    \rubricitem{2}{When the system is locked, the servo is deflected fully clockwise}
+    \rubricitem{1}{The combination is evaluated when the user presses the left pushbutton}
+    \rubricitem{2}{The system unlocks only if the correct combination is entered}
+    \rubricitem{4}{The system unlocks only if the combination is entered correctly (3x clockwise, 2x counterclockwise, 1x clockwise)}
+    \rubricitem{1}{When the system is unlocked, the right LED is lit, and the display shows ``OPEN''}
+    \rubricitem{2}{When the system is unlocked, the servo is deflected fully counterclockwise}
+    \rubricitem{1}{When the user mis-enters the combination, it displays ``bad try'' and the attempt number, and blinks both LEDs twice}
+    \rubricitem{1}{After the first two bad tries, the user is given another opportunity to enter the combination}
+    \rubricitem{1}{After the third bad try, the system displays ``alert!'', both LEDS continously blink, and the lock becomes unresponsive}
+    \rubricitem{1}{The user can begin changing the combination by moving the left switch to the right and pressing the right pushbutton}
+    \rubricitem{1}{When the user begins changing the combination, the lock displays ``enter'' and then shows the combination-entry display}
+    \rubricitem{1}{The user enters the new combination by pressing six digits on the numeric keypad}
+    \rubricitem{1}{The user confirms the new combination in a second combination-entry display, using the numeric keypad}
+    \rubricitem{1}{The new combination is checked for validity by returning the left switch to the left position}
+    \rubricitem{2}{Invalid proposed combinations are rejected with a ``no change'' message}
+    \rubricitem{1}{Valid proposed combinations are saved in memory that persists between resets}
+    \rubricitem{2}{The system is re-locked by pressing both pushbuttons simultaneously.}
+    \bonusitem{3}{A partially-entered combination can be abandoned by turning the rotary encoder sufficiently past the correct numbers}
+    \bonusitem{2}{Get assignment checked-off by TA or professor during office hours before it is due}% (you cannot get both bonuses)}
+%    \bonusitem{1}{Get assignment checked-off by TA at \textit{start} of your scheduled lab immediately after it is due (your code must be uploaded to \filesubmission\ \textit{before} it is due. You cannot get both bonuses)}
+    \spaghetticodepenalties{1}
+\end{description}
 
 Students' scores may be adjusted up or down as necessary if the team had an inequitable distribution of effort.
