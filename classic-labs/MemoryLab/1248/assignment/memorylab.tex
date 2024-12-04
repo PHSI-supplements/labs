@@ -80,7 +80,7 @@ After successful completion of this assignment, students will be able to:
 
 \textbf{You must complete this lab assignment during lab time}; it is due at the
 end of your scheduled lab session. The TAs will be available to answer
-questions.
+questions. \textcolor{red}{After you have finished this assignment, take your Cow Pi kit to Avery 27 to return it.}
 
 \section{Scenario}
 
@@ -130,15 +130,15 @@ Because it shares the same address space as the data memory, we will be able to 
 
 \subsection{Getting/Offering Help for Collecting Data}
 
-If you forgot to bring your Cow~Pi to lab, or if you cannot establish a serial connection to the board (can you upload code from VS~Code by using the ``upload'' button?),
+If you forgot to bring your Cow~Pi to lab, %or if you cannot establish a serial connection to the board (can you upload code from VS~Code by using the ``upload'' button?),
 then you will need to work with someone else to collect data.
-Students using Mac or Linux, and about half of the students using Windows, should be able to establish a serial connection.
+%Students using Mac or Linux, and about half of the students using Windows, should be able to establish a serial connection.
 \textit{You may work with another student to collect data, and you may discuss the nature of memory technologies and of memory hierarchies with other students, but \textbf{you must draw your own conclusions.}}
 
-The program that you will use to take measurements sends its output to PlatformIO's serial monitor so that you can easily copy/paste its output into the \textit{CacheCharts.xlsx} spreadsheet.
+%The program that you will use to take measurements sends its output to PlatformIO's serial monitor so that you can easily copy/paste its output into the \textit{CacheCharts.xlsx} spreadsheet.
 
-The simulator that some students used for PollingLab and InterruptLab will not work for this assignment, because it does not simulate the flash memory's performance.
-(It treats all accesses to the instruction memory as though they are cache hits, even when using a feature of the RP2040 that allows us to bypass the cache.)
+%The simulator that some students used for PollingLab and InterruptLab will not work for this assignment, because it does not simulate the flash memory's performance.
+%(It treats all accesses to the instruction memory as though they are cache hits, even when using a feature of the RP2040 that allows us to bypass the cache.)
 
 
 
@@ -146,7 +146,7 @@ The simulator that some students used for PollingLab and InterruptLab will not w
 
 The starter code, besides assorted header files and configuration files, consists of:
 \begin{description}
-    \item[MemoryLab.cpp] Driver code
+    \item[MemoryLab.c] Driver code
     \item[memory\_measurement.c] Code to measure the speed of memory reads
     \item[cache\_measurement.c] Code to obtain data that will allow you to infer information about the RP2040's instruction cache
     \item[answers.txt] A text file with questions for you to answer
@@ -164,14 +164,14 @@ You do not need to (and should not) edit any files other than \textit{answers.tx
     \checkoffitem{Compile the program and upload it to your Cow~Pi.}
 \end{description}
 
-The Serial Monitor will show:
-
-\begin{verbatim}
-  1. Measure SRAM and Flash memory access times
-  2. Measure the size of the instruction cache using timing data
-  3. Determine the size of a cache line using timing data
-Please choose the measurement you wish to take:
-\end{verbatim}
+%The Serial Monitor will show:
+%
+%\begin{verbatim}
+%  1. Measure SRAM and Flash memory access times
+%  2. Measure the size of the instruction cache using timing data
+%  3. Determine the size of a cache line using timing data
+%Please choose the measurement you wish to take:
+%\end{verbatim}
 
 %\begin{verbatim}
 %  1. Measure SRAM and Flash memory access times
@@ -181,8 +181,19 @@ Please choose the measurement you wish to take:
 %Please choose the measurement you wish to take:
 %\end{verbatim}
 
-When you make your selections, use your laptop's keyboard.
-You will not need to press the Return key.
+The display module will show the main menu:
+
+\begin{figure}[h]
+    \includegraphics[height=3cm]{Mk4Screens/MainMenu}
+\end{figure}
+
+Use the numeric keypad to make your selection:
+
+\begin{enumerate}
+    \item Measure the memory access times for SRAM data memory and Flash instruction memory
+    \item Determine the size of the instruction cache using timing data
+    \item Infer the size of a cache line using timing data
+\end{enumerate}
 
 
 \section{Measuring Memory Speed}
@@ -249,7 +260,16 @@ In \function{time_sram_access()}, the array is at an arbitrary location in data 
 In \function{time_flash_access()}, the array is at one of the addresses that map to the flash instruction memory; its particular address is one that bypasses the cache and will always read directly from the flash memory.
 
 \begin{description}
-    \checkoffitem{Using your laptop's cursor in the Serial Monitor, press your laptop's \textbf{1} key (\textit{Measure SRAM and Flash memory access times}).}
+    \checkoffitem{Press the \textbf{1} key on the numeric keypad (\textit{Memory access time}).}
+\end{description}
+
+A screen with the time to access each of the memories will be displayed:
+
+\begin{figure}[h]
+    \includegraphics[height=3cm]{Mk4Screens/Option1}
+\end{figure}
+
+\begin{description}
     \checkoffitem{Answer questions 1--6 in \textit{answers.txt}.}
 \end{description}
 
@@ -286,6 +306,10 @@ In \function{time_flash_access()}, the array is at one of the addresses that map
 
 \end{enumerate}
 
+\begin{description}
+    \checkoffitem{Press the left pushbutton to return to the main menu.}
+\end{description}
+
 
 \section{Measuring the Size of the Cache}
 
@@ -312,7 +336,7 @@ There are labels showing where these limits are exceeded -- other measurement ar
 
 \begin{figure}
     \centering
-    \includegraphics[width=13cm]{IntelI7caches}
+    \includegraphics[width=13cm]{IntelImages/IntelI7caches}
     \caption{Measurement of cache levels on Intel Core i7 processor. \label{fig:LaptopCache}}
 \end{figure}
 
@@ -328,9 +352,38 @@ On the RP2040, the only competition for the cache will be the program's instruct
 and the occasional interrupt by MBED~OS\@.
 
 \begin{description}
-    \checkoffitem{Using your laptop's cursor in the Serial Monitor, press your laptop's \textbf{2} key (\textit{Measure the size of the instruction cache using timing data}).}
-    \checkoffitem{Open the ``Raw Data'' tab in \textit{CacheCharts.xlsx} and locate the portion labeled ``CACHE SIZE by time (menu option 2)''.}
-    \checkoffitem{Copy/paste the program's output from the Serial Monitor into the spreadsheet's rows 2--35.}
+    \checkoffitem{Press the \textbf{2} key on the numeric keypad (\textit{Cache size}).}
+\end{description}
+
+A screen with the time to access each of the memories will be displayed:
+
+\begin{figure}[h]
+    \includegraphics[height=3cm]{Mk4Screens/Option2Screen1}
+\end{figure}
+
+\newpage
+
+\begin{description}
+    \checkoffitem{Open the ``Data'' tab in \textit{CacheCharts.xlsx} and locate the portion labeled ``CACHE SIZE''.}
+    \checkoffitem{Copy the times reported for working sets sized 32--80 bytes into the spreadsheet's cells B2--B6.}
+    \checkoffitem{Press the left button to advance to the next page of data.}
+\end{description}
+
+\begin{figure}[h]
+    \subfloat{\includegraphics[width=3cm]{Mk4Screens/Option2Screen2}}
+    \hfil
+    \subfloat{\includegraphics[width=3cm]{Mk4Screens/Option2Screen3}}
+    \hfil
+    \subfloat{\includegraphics[width=3cm]{Mk4Screens/Option2Screen4}}
+    \hfil
+    \subfloat{\includegraphics[width=3cm]{Mk4Screens/Option2Screen5}}
+    \hfil
+    \subfloat{\includegraphics[width=3cm]{Mk4Screens/Option2Screen6}}
+\end{figure}
+
+\begin{description}
+    \checkoffitem{Repeatedly copy the times reported into the appropriate cells in the spreadsheet, using the left pushbutton to advance through the pages.}
+    \checkoffitem{When you have finished, use the left pushbutton to return to the main menu.}
     \checkoffitem{Open the ``Cache Size'' tab.}
     \checkoffitem{Answer question 7 in \textit{answers.txt}.}
 \end{description}
@@ -365,7 +418,7 @@ From this, we can conclude that the Intel Core i7's cache line is 64 bytes.
 
 \begin{figure}
     \centering
-    \includegraphics[width=13cm]{IntelI7cacheLine}
+    \includegraphics[width=13cm]{IntelImages/IntelI7cacheLine}
     \caption{Measurement of cache lines on Intel Core i7 processor. \label{fig:LaptopCacheLine}}
 \end{figure}
 
@@ -373,9 +426,30 @@ As with the earlier cache measurement, you might see some interference from MBED
 if the data doesn't seem to make sense, feel free to re-run the test.
 
 \begin{description}
-    \checkoffitem{Using your laptop's cursor in the Serial Monitor, press your laptop's \textbf{3} key (\textit{Measure the size of a cache line using timing data}).}
-    \checkoffitem{Open the ``Raw Data'' tab in \textit{CacheCharts.xlsx} and locate the portion labeled ``CACHE LINE SIZE by time (menu option 3)''.}
-    \checkoffitem{Copy/paste the program's output from the Serial Monitor into the spreadsheet's rows 40--45.}
+    \checkoffitem{Press the \textbf{3} key on the numeric keypad (\textit{Cache line size}).}
+\end{description}
+
+A screen with the time to access each of the memories will be displayed:
+
+\begin{figure}[h]
+    \includegraphics[height=3cm]{Mk4Screens/Option3Screen1}
+\end{figure}
+
+\newpage
+
+\begin{description}
+    \checkoffitem{Open the ``Data'' tab in \textit{CacheCharts.xlsx} and locate the portion labeled ``STRIDE''.}
+    \checkoffitem{Copy the times reported for strides of 2--32 bytes into the spreadsheet's cells B40--B44.}
+    \checkoffitem{Press the left button to advance to the next page of data.}
+\end{description}
+
+\begin{figure}[h]
+    \includegraphics[height=3cm]{Mk4Screens/Option3Screen2}
+\end{figure}
+
+\begin{description}
+    \checkoffitem{Copy the times reported for strides of 64--512 bytes into the spreadsheet's cells B45--B48.}
+    \checkoffitem{Press the left button to advance to the next page of data.}
     \checkoffitem{Open the ``Cache Line Size infer by time'' tab.}
     \checkoffitem{Answer question 8 in \textit{answers.txt}.}
 \end{description}
@@ -387,6 +461,10 @@ if the data doesn't seem to make sense, feel free to re-run the test.
 
     The size at which there is a noticeable increase in time is the size of a cache line.
 \end{enumerate}
+
+\begin{description}
+    \checkoffitem{Save \textit{CacheCharts.xlsx} \textit{answers.txt}.}
+\end{description}
 
 
 

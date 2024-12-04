@@ -104,7 +104,7 @@ uint32_t measure_cache_line_by_time(char destination[][22]) {
     uint32_t sum = 0;
     int data_size = 1 << 10;   // 1 KB
     int minimum_stride = 2;
-    int maximum_stride = 64;
+    int maximum_stride = 512;
     uint8_t volatile *end_of_data = cache + data_size;
     for (int stride = minimum_stride; stride <= maximum_stride; stride *= 2) {
         int number_of_iterations = (1 << 10) * stride / minimum_stride;
