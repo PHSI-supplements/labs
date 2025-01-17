@@ -26,6 +26,9 @@ int deck_is_populated = 0;
 
 /**
  * Places the 52 standard `card_t`s in `deck`.
+ *
+ * @post There are 52 distinct `card_t`s in `deck`.
+ * @post `deck_is_populated == 1`.
  */
 void populate_deck(void) {
     deck_is_populated = 1;
@@ -50,6 +53,8 @@ void print_deck(void) {
 /**
  * Sorts an array of `card_t`s in-place from the least value to the greatest value.
  *
+ * @post The subdeck has its initial `card_t`s, sorted from the least value to the greatest value.
+ * 
  * @param subdeck the `card_t`s to be sorted; it might not be the full deck
  * @param size the number of cards in the subdeck
  * @return the sorted array of `card_t`s, in the same array passed as `subdeck`
@@ -58,9 +63,9 @@ card_t *sort(card_t *subdeck, int size) {
     for (int i = 0; i < size - 1; i++) {
         for (int j = i + 1; j < size; j++) {
             if (subdeck[i].value > subdeck[j].value) {
-                card_t temporary_card = subdeck[i];
+                card_t swap_card = subdeck[i];
                 subdeck[i] = subdeck[j];
-                subdeck[j] = temporary_card;
+                subdeck[j] = swap_card;
             }
         }
     }
@@ -71,7 +76,8 @@ card_t *sort(card_t *subdeck, int size) {
  * Randomly selects `size_of_hand` `card_t`s and returns them sorted from the
  *      least value to the greatest value.
  *
- * @note The destination must have space for at least `size_of_hand` `card_t`s.
+ * @pre The destination must have space for at least `size_of_hand` `card_t`s.
+ * @post The destination has `size_of_hand` `card_t`s, sorted from the least value to the greatest value.
  *
  * @param destination an array to hold the hand
  * @param size_of_hand the number of `card_t`s to be placed in the hand
@@ -93,7 +99,8 @@ card_t *get_random_hand(card_t *destination, int size_of_hand) {
  *      elements in the `indices` argument, sorted from the least value to the
  *      greatest value.
  *
- * @note The destination must have space for at least `size_of_hand` `card_t`s.
+ * @pre The destination must have space for at least `size_of_hand` `card_t`s.
+ * @post The destination has `size_of_hand` `card_t`s, sorted from the least value to the greatest value.
  *
  * @param destination an array to hold the hand
  * @param indices specifies which `card_t`s from `deck` are to be placed in the
@@ -115,7 +122,7 @@ card_t *get_specific_hand(card_t *destination, int const *indices, int size_of_h
  * Returns 1 if two of the `card_t`s in `hand` have the same value; returns 0
  *      otherwise.
  *
- * @note `hand` must be sorted from the least value to the greatest value.
+ * @pre `hand` must be sorted from the least value to the greatest value.
  * @note `size_of_hand` does *not* need to be 5.
  *
  * @param hand the `card_t`s to be assessed
@@ -137,7 +144,7 @@ int is_pair(card_t const *hand, int size_of_hand) {
  *      a pair; returns 0 otherwise. "hand" must be sorted from the least value
  *      to the greatest value.
  *
- * @note `hand` must be sorted from the least value to the greatest value.
+ * @pre `hand` must be sorted from the least value to the greatest value.
  * @note `size_of_hand` does *not* need to be 5.
  *
  * @param hand the `card_t`s to be assessed
@@ -164,7 +171,7 @@ int is_two_pair(card_t const *hand, int size_of_hand) {
  * Returns 1 if three of the `card_t`s in `hand` have the same value; returns 0
  *      otherwise.
  *
- * @note `hand` must be sorted from the least value to the greatest value.
+ * @pre `hand` must be sorted from the least value to the greatest value.
  * @note `size_of_hand` does *not* need to be 5.
  *
  * @param hand the `card_t`s to be assessed
@@ -179,7 +186,7 @@ int is_three_of_kind(card_t const *hand, int size_of_hand) {
 /**
  * Returns 1 if the `card_t`s have contiguous values; returns 0 otherwise.
  *
- * @note `hand` must be sorted from the least value to the greatest value.
+ * @pre `hand` must be sorted from the least value to the greatest value.
  * @note `size_of_hand` does *not* need to be 5.
  *
  * @param hand the `card_t`s to be assessed
@@ -198,7 +205,7 @@ int is_straight(card_t const *hand, int size_of_hand) {
 /**
  * Returns 1 if the `card_t`s all have the same suit; returns 0 otherwise.
  *
- * @note `size_of_hand` does *not* need to be 5.
+ * @pre `size_of_hand` does *not* need to be 5.
  *
  * @param hand the `card_t`s to be assessed
  * @param size_of_hand the number of `card_t`s in the hand
@@ -218,7 +225,7 @@ int is_flush(card_t const *hand, int size_of_hand) {
  * Returns 1 if three of the `card_t`s in `hand` are three of a kind and another
  *      two are a pair; returns 0 otherwise.
  *
- * @note `hand` must be sorted from the least value to the greatest value.
+ * @pre `hand` must be sorted from the least value to the greatest value.
  * @note `size_of_hand` does *not* need to be 5.
  *
  * @param hand the `card_t`s to be assessed
@@ -234,7 +241,7 @@ int is_full_house(card_t const *hand, int size_of_hand) {
  * Returns 1 if four of the `card_t`s in `hand` have the same value; returns 0
  *      otherwise.
  *
- * @note `hand` must be sorted from the least value to the greatest value.
+ * @pre `hand` must be sorted from the least value to the greatest value.
  * @note `size_of_hand` does *not* need to be 5.
  *
  * @param hand the `card_t`s to be assessed
@@ -250,7 +257,7 @@ int is_four_of_kind(card_t const *hand, int size_of_hand) {
  * Returns 1 if the `card_t`s in `hand` are both a straight and a flush; returns
  *      0 otherwise.
  *
- * @note `hand` must be sorted from the least value to the greatest value.
+ * @pre `hand` must be sorted from the least value to the greatest value.
  * @note `size_of_hand` does *not* need to be 5.
  *
  * @param hand the `card_t`s to be assessed
@@ -264,12 +271,13 @@ int is_straight_flush(card_t const *hand, int size_of_hand) {
 /**
  * Prints the `hand` and characterizes it in the best possible way.
  *
- * @note `hand` must be sorted from the least value to the greatest value.
+ * @pre `hand` must be sorted from the least value to the greatest value.
  * @note `size_of_hand` does *not* need to be 5.
  *
  * @param hand the `card_t`s to be assessed
  * @param size_of_hand the number of `card_t`s in the hand
  */
 void characterize_hand(card_t const *hand, int size_of_hand) {
+    /* WRITE THIS FUNCTION */
 
 }

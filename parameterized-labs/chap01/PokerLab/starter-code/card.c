@@ -35,7 +35,7 @@ card_t *create_card(int value, suit_t suit, card_t *destination) {
 /**
  * Returns the printable representation of a card_t.
  *
- * @note The destination must have at least 21 bytes allocated.
+ * @pre The destination must have at least 21 bytes allocated.
  *
  * @param card a pointer to the card_t to be represented as a string
  * @param destination a pointer to a buffer with at least 21 bytes allocated for

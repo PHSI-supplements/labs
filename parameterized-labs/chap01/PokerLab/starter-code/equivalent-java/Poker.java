@@ -19,6 +19,10 @@ public class Poker {
 
     /**
      * Places the 52 standard {@link Card}s in {@link #deck}.
+     *
+     * <ul>
+     *     <li>There are 52 distinct non-null {@link Card}s in {@link #deck}.</li>
+     * </ul>
      */
     public static void populateDeck() {
         /* IF THIS WERE THE C CODE, YOU WOULD ADD CODE TO PLACE THE 52 STANDARD CARDS IN DECK.
@@ -40,6 +44,10 @@ public class Poker {
 
     /**
      * Sorts an array of {@link Card}s in-place from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Postcondition: The subdeck has its initial `card_t`s, sorted from the least value to the greatest value.</li>
+     * </ul>
      *
      * @param subdeck the {@link Card}s to be sorted; it might not be the full deck
      * @return the sorted array of {@link Card}s, in the same array passed as {@code subdeck}
@@ -66,6 +74,11 @@ public class Poker {
      * Randomly selects {@code size_of_hand} {@link Card}s and returns them
      *      sorted from the least value to the greatest value.
      *
+     * <ul>
+     *     <li>Precondition:  The destination must have space for at least `size_of_hand` `card_t`s.</li>
+     *     <li>Postcondition: The destination has `size_of_hand` `card_t`s, sorted from the least value to the greatest value.</li>
+     * </ul>
+     *
      * @param sizeOfHand the number of {@link Card}s to be placed in the hand
      * @return an array of randomly-selected {@link Card}s, of length {@code sizeOfHand}
      */
@@ -85,6 +98,11 @@ public class Poker {
      * Populates an array of {@link Card}s whose indices in {@link #deck}
      *      correspond to the elements in the `indices` argument, sorted from
      *      the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition:  The destination must have space for at least `size_of_hand` `card_t`s.</li>
+     *     <li>Postcondition: The destination has `size_of_hand` `card_t`s, sorted from the least value to the greatest value.</li>
+     * </ul>
      *
      * @param indices specifies which {@link Card}s from {@link #deck} are to be
      *               placed in the hand.
@@ -106,7 +124,11 @@ public class Poker {
     /**
      * Returns {@code true} if the {@link Card}s in {@code hand} have the same
      * value; returns {@code false} otherwise.
-     * {@code hand} must be sorted from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition: {@code hand} must be sorted from the least value to the greatest value.</li>
+     *     <li>Note: {@code hand.length} does <i>not</i> need to be 5.</li>
+     * </ul>
      *
      * @param hand the {@link Card}s to be assessed
      * @return {@code true} if and only if {@code hand} contains a "pair"
@@ -123,7 +145,11 @@ public class Poker {
     /**
      * Returns {@code true} if two of the {@link Card}s in {@code hand} are a
      * pair and two other are also a pair; returns {@code false} otherwise.
-     * {@code hand} must be sorted from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition: {@code hand} must be sorted from the least value to the greatest value.</li>
+     *     <li>Note: {@code hand.length} does <i>not</i> need to be 5.</li>
+     * </ul>
      *
      * @param hand the {@link Card}s to be assessed
      * @return {@code true} if and only if {@code hand} contains "two pair"
@@ -150,7 +176,11 @@ public class Poker {
     /**
      * Returns {@code true} if three of the {@link Card}s in {@code hand} have
      * the same value; returns {@code false} otherwise.
-     * {@code hand} must be sorted from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition: {@code hand} must be sorted from the least value to the greatest value.</li>
+     *     <li>Note: {@code hand.length} does <i>not</i> need to be 5.</li>
+     * </ul>
      *
      * @param hand the {@link Card}s to be assessed
      * @return {@code true} if and only if {@code hand} contains "three of a kind"
@@ -164,7 +194,11 @@ public class Poker {
     /**
      * Returns {@code true} if the {@link Card}s have contiguous values; returns
      * {@code false} otherwise.
-     * {@code hand} must be sorted from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition: {@code hand} must be sorted from the least value to the greatest value.</li>
+     *     <li>Note: {@code hand.length} does <i>not</i> need to be 5.</li>
+     * </ul>
      *
      * @param hand the {@link Card}s to be assessed
      * @return {@code true} if and only if {@code hand} contains a "straight"
@@ -181,7 +215,11 @@ public class Poker {
     /**
      * Returns {@code true} if the {@link Card}s all have the same suit; returns
      * {@code false} otherwise.
-     * {@code hand} must be sorted from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition: {@code hand} must be sorted from the least value to the greatest value.</li>
+     *     <li>Note: {@code hand.length} does <i>not</i> need to be 5.</li>
+     * </ul>
      *
      * @param hand the {@link Card}s to be assessed
      * @return {@code true} if and only if {@code hand} contains a "flush"
@@ -200,7 +238,11 @@ public class Poker {
      * Returns {@code true} if three of the {@link Card}s in {@code hand} are
      * three of a kind and another two are a pair; returns {@code false}
      * otherwise.
-     * {@code hand} must be sorted from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition: {@code hand} must be sorted from the least value to the greatest value.</li>
+     *     <li>Note: {@code hand.length} does <i>not</i> need to be 5.</li>
+     * </ul>
      *
      * @param hand the {@link Card}s to be assessed
      * @return {@code true} if and only if {@code hand} contains a "flush"
@@ -214,7 +256,11 @@ public class Poker {
     /**
      * Returns {@code true} if four of the {@link Card}s have the same value;
      * returns {@code false} otherwise.
-     * {@code hand} must be sorted from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition: {@code hand} must be sorted from the least value to the greatest value.</li>
+     *     <li>Note: {@code hand.length} does <i>not</i> need to be 5.</li>
+     * </ul>
      *
      * @param hand the {@link Card}s to be assessed
      * @return {@code true} if and only if {@code hand} contains "four of a kind"
@@ -228,7 +274,11 @@ public class Poker {
     /**
      * Returns {@code true} the {@link Card}s in {@code hand} are both a
      * straight and a flush; returns {@code false} otherwise.
-     * {@code hand} must be sorted from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition: {@code hand} must be sorted from the least value to the greatest value.</li>
+     *     <li>Note: {@code hand.length} does <i>not</i> need to be 5.</li>
+     * </ul>
      *
      * @param hand the {@link Card}s to be assessed
      * @return {@code true} if and only if {@code hand} contains a "straight flush"
@@ -239,7 +289,11 @@ public class Poker {
 
     /**
      * Prints the {@code hand} and characterizes it in the best possible way.
-     * {@code hand} must be sorted from the least value to the greatest value.
+     *
+     * <ul>
+     *     <li>Precondition: {@code hand} must be sorted from the least value to the greatest value.</li>
+     *     <li>Note: {@code hand.length} does <i>not</i> need to be 5.</li>
+     * </ul>
      *
      * @param hand the {@link Card}s to be assessed
      */

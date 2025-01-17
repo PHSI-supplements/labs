@@ -24,8 +24,8 @@ You will need to run commands on \runtimeenvironment.
             \item Instead of using \textit{cse.unl.edu} has the Host Name, use \textit{nuros.unl.edu}.
             \item Instead of using your SoC username and password, use your UNL username and password.
         \end{itemize}
-    \item[From an IDE] If you already have an IDE on your personal computer, that IDE may provide the option of opening a secure shell terminal on a remote system.
-        We do not guarantee that the TAs or the School of Computing tech support team can help you with connecting any particular IDE to \runtimeenvironment.
+%    \item[From an IDE] If you already have an IDE on your personal computer, that IDE may provide the option of opening a secure shell terminal on a remote system.
+%        We do not guarantee that the TAs or the School of Computing tech support team can help you with connecting any particular IDE to \runtimeenvironment.
 \end{description}
 
 
@@ -34,19 +34,16 @@ You will need to run commands on \runtimeenvironment.
 You will need to edit text files, C files, and assembly code files.
 
 \begin{description}
+    \item[Remote development in VS~Code] Many IDEs allow you to edit files on a remote file system.
+        VS~Code is a very popular choice -- so popular that my default assumption is that you're going to do so.
+        If you don't know how to do so already, the TAs will demonstrate during lab time. \vspace{0.5cm} \\ You have other options:
     \item[Editing directly on the server] You might choose to edit files directly on \runtimeenvironment.
         If you do so, your options are \texttt{vim}, an enhanced version of the classic \texttt{vi} editor, Emacs, or Pico (or its clone, GNU nano).
-        Be aware that \texttt{vim} and Emacs have non-trivial learning curves: knowing how to use them will pay dividends in your future careers, but you may be frustrated if you're accustomed to using more conventional editors.
-        Pico, an editor derived from the classic \texttt{pine} email client, has a helpful list of available commands always shown at the bottom of the terminal.
     \item[Editing on your personal computer] Many students choose to edit files on their personal computer.
         If you do so, and if your personal computer is a Windows machine, try to configure your editor to use ``Unix-style'' end-of-line characters.
         This won't matter for most labs, but a couple of upcoming labs will need ``Unix-style'' line separators.
-        If you cannot change this setting, then get in the habit of running \texttt{dos2unix \textit{filename}} on your files after transferring them to \runtimeenvironment\ to convert ``DOS-style'' line separators to ``Unix-style'' line separators (this utility makes a few other changes, too, that have no bearing on \coursenumber assignments).
-    \item[Editing on the server in an IDE on your personal computer] Many IDEs allow you to edit files on a remote system.\footnote{
-            A popular choice is to use VS~Code. Here is a helpful guide using VS~Code to develop on a remote system: \url{https://code.visualstudio.com/docs/remote/ssh}
-        }
-        %Bear in mind that these IDEs may add metafiles to the remote system in sufficient quantity to exceed your disk quota on the School of Computing's file server (VS~Code is particularly notorious for this).
-        We do not guarantee that the TAs or the School of Computing tech support team can help you with connecting any particular IDE to \runtimeenvironment.
+        If you cannot change this setting, then get in the habit of running \texttt{dos2unix \textit{filename}} on your files after transferring them to \runtimeenvironment\ to convert ``DOS-style'' line separators to ``Unix-style'' line separators (this utility makes a few other changes, too, that have no bearing on \coursenumber\ assignments).
+    \item[Remote development using an IDE other than VS~Code] Many IDEs allow you to edit files on a remote file system.
 \end{description}
 
 
@@ -54,12 +51,12 @@ You will need to edit text files, C files, and assembly code files.
 
 If you are editing your files on the Linux server, whether from within a secure shell terminal, or by configuring an IDE on your personal computer to do so,
 then you do not need to transfer files between the file server and your local computer often -- but you will need to copy your files from the server to your local computer so that you can submit them to Canvas.
-Otherwise, if you are editing local files on your personal computer, then you will need to be able to transfer your files from your local computer to the server to compile and run your code.
+If you are editing local files on your personal computer, then you will need to be able to transfer your files from your local computer to the server to compile and run your code.
 
 The popular choices are:
 \begin{description}
     \item[FileZilla] A very popular drag-and-drop option.
-        See \url{https://computing.unl.edu/faq-section/working-remotely#node-291}.
+%        See \url{https://computing.unl.edu/faq-section/working-remotely#node-291}.
         Be sure to specify the \textit{nuros.unl.edu} as the host.
     \item[scp] If you're using a terminal window to \texttt{ssh} into \textit{nuros.unl.edu} then using the \texttt{scp} command is a sensible choice.
         Basic use of the \texttt{scp} command is very much the same as basic use of the \texttt{cp} command, except that you specify the remote host.
@@ -72,12 +69,14 @@ The popular choices are:
         Just as with \texttt{cp}, you can use the \texttt{-r} argument to copy directories: \\
         \underline{\underline{\texttt{scp -r pokerlab username@nuros.unl.edu:.}}} \\
         \underline{\underline{\texttt{scp -r username@nuros.unl.edu:pokerlab .}}}
+    \item[VS~Code's Explorer] If you're using VS~Code for remote development, then you can drag~\& drop between your local file system and VS~Code's Explorer.
 \end{description}
 
 \subsubsection*{\textit{Notice} about Transferring \texttt{.o} Files}
+\begin{quote}
 
 If you edit \textit{and} compile your code on your personal computer, you will want to also  make sure that your code compiles and runs correctly on \runtimeenvironment.
-When you transfer your files to the server, you might copy the \texttt{.o} files as well.
+When you transfer your files to the server, you might inadvertently copy the \texttt{.o} files as well.
 If so, then when you run \texttt{\textbf{make}} you will likely see an error similar to this:
 \begin{verbatim}
     % make
@@ -103,3 +102,4 @@ The very easy fix is to clean up the build with the command \texttt{\textbf{make
     clang -o pokerlab pokerlab.o poker.o card.o -Og -g -std=c99 -Wall -Wextra -Wno-unused-parameter
     %
 \end{verbatim}
+\end{quote}

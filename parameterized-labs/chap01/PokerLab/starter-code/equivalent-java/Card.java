@@ -51,10 +51,10 @@ public class Card {
                 case MINIMUM_VALUE:
                     valueString = "ACE";
                     break;
-                case 11:
+                case MAXIMUM_VALUE - 2:
                     valueString = "JACK";
                     break;
-                case 12:
+                case MAXIMUM_VALUE - 1:
                     valueString = "QUEEN";
                     break;
                 case MAXIMUM_VALUE:

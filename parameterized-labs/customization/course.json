@@ -5,7 +5,8 @@
     "course number": "CSCE~231",
     "cs2 course": "CSCE~156, RAIK~184H, or SOFT~161",
     "cs2 comment": "The CS2 course, in which students would've been introduced to linked lists, to sorting, and to GUI programming.",
-    "cs2 todo": "separate into three separate key/value pairs (resulting in three separate macros)"
+    "cs2 todo": "separate into three separate key/value pairs (resulting in three separate macros)",
+    "discrete math todo": "create a key/value pair (resulting in a macro)"
   },
   "compilation": {
     "buildsystem": "make",
@@ -34,13 +35,14 @@
   "policies": {
     "comment": "These are the default, or typical, policies for labs in your course; you can override the defaults in specific labs.",
     "collaboration": [
-      "During your scheduled lab time, you may, \\textbf{but are not required to}, form a partner group of 2 students.\n    When necessary, there may be a group of 3 students.\n    During your scheduled lab time, and only during your scheduled lab time, you may discuss problem decomposition and solution design with your lab partner.\n    After your scheduled lab time, you may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.\n    Sharing code with or copying code from another student or the internet is prohibited.\n"
+      "During your scheduled lab time, you may, \\textbf{but are not required to}, form a partner group of 2 students.\n    When necessary, there may be a group of 3 students.\n    During your scheduled lab time, and until the end of your lab day, you may discuss problem decomposition and solution design with your lab partner.\n    After your scheduled lab day, you may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.\n    Sharing code with or copying code from another student or the internet is prohibited.\n"
     ],
     "collaboration comment": "The 0th collaboration policy applies to the overall assignment; subsequent collaboration policies can be inserted into specific sections",
     "grading": {
       "uncompilable": "\\subsection*{No Credit for Uncompilable Code}\n    If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\\footnote{\n        At the TA's discretion, if they can make your code compile with \\textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\\% penalty on the resulting score.\n        The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.\n        If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.\n    }\n    Before turning in your code, be sure to compile and test your code on \\runtimeenvironment\\ with the original driver code, the original header file(s), and the original \\textit{Makefile}.",
-      "late.bk": "\\subsection*{Late Submissions}\n    This assignment is due before the start of your lab section.\n    The due date in Canvas is five minutes after that, which is ample time for you to arrive to lab and then discover that you'd forgotten to turn in your work without Canvas reporting your work as having been turned in late.\n    We will accept late turn-ins up to one hour late, assessing a 10\\% penalty on these late submissions.\n    Any work turned in more than one hour late will not be graded.",
-      "late": "\\subsection*{Late Submissions}\n    This assignment is due before the start of your lab section.\n    To help you deal with unexpected life events without the stress of asking for an extension, you have a 48-hour grace period during which you can turn in the assignment late without penalty.  The TAs will \\textbf{not} use lab time to help students with a late lab assignment.  We do not guarantee prompt grading of lab assignments turned in during the grace period."
+      "late.bk1": "\\subsection*{Late Submissions}\n    This assignment is due before the start of your lab section.\n    The due date in Canvas is five minutes after that, which is ample time for you to arrive to lab and then discover that you'd forgotten to turn in your work without Canvas reporting your work as having been turned in late.\n    We will accept late turn-ins up to one hour late, assessing a 10\\% penalty on these late submissions.\n    Any work turned in more than one hour late will not be graded.",
+      "late.bk2": "\\subsection*{Late Submissions}\n    This assignment is due before the start of your lab section.\n    To help you deal with unexpected life events without the stress of asking for an extension, you have a 48-hour grace period during which you can turn in the assignment late without penalty.  The TAs will \\textbf{not} use lab time to help students with a late lab assignment.  We do not guarantee prompt grading of lab assignments turned in during the grace period.",
+      "late": "\\subsection*{Late Submissions}\n    This assignment is due before the start of your lab section.\n     After you have exhausted your grace days, we will accept late turn-ins up to one hour late, assessing a 10\\% penalty on these late submissions.\n    After you have exhausted your grace days, any work turned in more than one hour late will not be graded."
     },
     "software engineering": [
       {
