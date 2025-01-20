@@ -6,7 +6,7 @@ The \textit{\texttt{f}} key is looking fragile, so you decide that you had bette
 
 As you look at the loose keys littering your desk, you remember that \lstinline{char} is just another integer type,
 and all of the arithmetic and comparisons that can use \lstinline{int}s as operands can also use \lstinline{char}s as operands.
-For example, \lstinline{(' ' + 1 == '!')} and \lstinline{(' ' < '!')} are both perfectly valid, true expressions.
+For example, \lstinline{('i' + 1 == 'j')} and \lstinline{('i' < 'j')} are both perfectly valid, true expressions.
 
 \begin{description}
     \checkoffitem{Edit \texttt{problem2.c} so that
@@ -15,10 +15,19 @@ For example, \lstinline{(' ' + 1 == '!')} and \lstinline{(' ' < '!')} are both p
         \item \function{decapitalize()} will return the lowercase version of an uppercase letter (\textquotesingle A\textquotesingle, \textquotesingle B\textquotesingle, \textquotesingle C\textquotesingle, \dots) but will return the original character if it is not an uppercase letter
     \end{itemize}
     You may not \lstinline{#include} any headers, you may not use any number keys other than the 0, 9, and 7 (which is also used for \textbf{\texttt{\&}}) keys, you may not use \textit{S} or \textit{\missingKey}, and you may use at most two \textit{F}s.}
+
+    \textit{Note: } Your code will be more readable if it does not depend on any characters' ASCII values.
+    Instead, have your code depend only that digits are in a contiguous sequence in the ASCII table (sorted from least to greatest value),
+    that lowercase letters are in a contiguous sequence (sorted alphabetically),
+    and that uppercase letters are in a contiguous sequence (sorted alphabetically).
+
     \checkoffitem{Build the executable with the command: \texttt{make}.
         Be sure to fix both errors and warnings.}
     \checkoffitem{Run the executable with the command: \texttt{./keyboardlab} and select option 2 (``check problem 2''). \\
         You will be prompted to enter a character, and the program will use that character to compare the outputs of your functions to the reference functions from \texttt{ctype.h}.}
+    \begin{itemize}
+        \item When testing \function{decapitalize()}, be sure to test it using uppercase letters, lowercase letters, and characters other than letters.
+    \end{itemize}
 \end{description}
 
 \textit{Note: } Each of these functions can be implemented with as little as one line of code each;

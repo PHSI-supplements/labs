@@ -79,11 +79,12 @@ This is a little more challenging to understand than \function{is_pair()} and \f
 Why does it return a \textbf{1} when all cards in the hand are in sequence?
 Why does it return a \textbf{0} when they are not in sequence?\footnote{
     It would have been more (ahem) straight-forward to implement \function{is_straight()} as:
-    \texttt{                                                                \\
-    int straight = 1;                                                       \\
-    for (int i = 0; i < size\_of\_hand - 1; i++)                            \\
-        straight = straight \&\& (hand[i].value == hand[i + 1].value - 1);  \\
-    return straight;                                                        \\
+    \texttt{                                                                          \\
+    int straight = 1;                                                                 \\
+    for (int i = 0; i < size\_of\_hand - 1; i++) \{                                   \\
+    \phantom{xxxx}straight = straight \&\& (hand[i].value == hand[i + 1].value - 1);  \\
+    \}                                                                                \\
+    return straight;                                                                  \\
     }
     Instead of using a logical-AND, we implemented \function{is_straight()} using addition and the awkwardly-named \lstinline{not_straight} variable.
     There must be a point we're trying to make.
