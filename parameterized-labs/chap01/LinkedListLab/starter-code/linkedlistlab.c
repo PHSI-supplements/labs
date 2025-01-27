@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab (c) 2021-25 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -23,11 +23,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "challenge-response-test.h"
-#include "data-structure-test.h"
+#include "sorted-test.h"
+#include "word-entry-test.h"
+#include "list-test.h"
 
 #define NUMBER_OF_TESTS (7)
-//#define NUMBER_OF_TESTS (8)
 
 int main(void) {
     void (*problem_checkers[NUMBER_OF_TESTS + 1])(void) = {
@@ -36,10 +36,9 @@ int main(void) {
             test_list,
             test_alphabetical_functions,
             test_insert_word_empty_list,
+            test_insert_word_singleton_list,
             test_insert_word_populated_list,
             test_build_list,
-            test_challenge_response,
-//            print_table
     };
     char *test_names[NUMBER_OF_TESTS + 1] = {
             "Quit",
@@ -47,10 +46,9 @@ int main(void) {
             "Test list",
             "Test alphabetical functions",
             "Test insert_word (empty list)",
+            "Test insert_word (singleton list)",
             "Test insert_word (populated list)",
             "Create and print book list",
-            "Test challenge/response system",
-//            "Print challenge/response table"
     };
     char buffer[80];
     bool running = true;

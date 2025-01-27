@@ -23,7 +23,8 @@
   "LinkedListLab": {
     "location": "chap01/LinkedListLab",
     "lab name": "Pointer Manipulation Lab",
-    "required files": "\\textit{answers.txt}, \\textit{challenge-response.c}, \\textit{linked\\_list.c}, and \\textit{word\\_entry.c}",
+    "required files": "\\textit{answers.txt}, \\textit{linked\\_list.c}, \\textit{sorted\\_word\\_entries.c}, and \\textit{word\\_entry.c}",
+    "required files question": "why is \\_ coming across with two backslashes instead of one?",
     "compilation": {
       "C": {
         "custom targets": [

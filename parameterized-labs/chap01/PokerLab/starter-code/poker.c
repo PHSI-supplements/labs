@@ -164,7 +164,7 @@ int is_two_pair(card_t const *hand, int size_of_hand) {
             i++;
         }
     }
-    return (number_of_pairs == 2);
+    return (number_of_pairs >= 2);
 }
 
 /**

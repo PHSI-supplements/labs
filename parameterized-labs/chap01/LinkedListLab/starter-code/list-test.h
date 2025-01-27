@@ -4,26 +4,25 @@
 
 /**************************************************************************//**
  *
- * @file data-structure-test.h
+ * @file list-test.h
  *
  * @author Christopher A. Bohn
  *
- * @brief Functions prototypes for testing the data structures used by the
- *      "challenge/response" application.
+ * @brief Function prototypes for testing the list code (should work with both
+ *      arraylist and linkedlist).
  *
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab (c) 2021-25 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#ifndef WORD_ENTRY_TEST_H
-#define WORD_ENTRY_TEST_H
+#ifndef LIST_TEST_H
+#define LIST_TEST_H
 
-void test_word_entry(void);
 void test_list(void);
 
-#endif //WORD_ENTRY_TEST_H
+#endif //LIST_TEST_H

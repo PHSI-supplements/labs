@@ -135,32 +135,43 @@ public class Node {
 \end{lstlisting}
 
 \begin{lstlisting}[firstnumber=309, mathescape=true]
-public class MyLinkedList {
-    private Node head;
-    private Note tail;
-    private Node current;
+public class MyIterator {
+    private MyLinkedList list;
+    private Node currentNode;
+    $\lstsetnumber{\ldots}$
 
-    public MyLinkedList() {$\lstsetnumber{\ldots}$
-        ...$\lstresetnumber\setcounter{lstnumber}{320}$
-    }
-
-    public void insert(WordEntry wordEntry) {
+    public MyLinkedList insert(WordEntry wordEntry) {
         Node node = new Node(wordEntry){$\lstsetnumber{\ldots}$
         ...$\lstresetnumber\setcounter{lstnumber}{329}$
     }
     $\lstsetnumber{\ldots}$
     ...$\lstresetnumber\setcounter{lstnumber}{417}$
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=452, mathescape=true]
+public class MyLinkedList {
+    private Node head;
+    private Note tail;
+    private Node current;
+
+    public MyIterator append(WordEntry wordEntry) {
+        Node node = new Node(wordEntry){$\lstsetnumber{\ldots}$
+        ...$\lstresetnumber\setcounter{lstnumber}{473}$
+    }
+    $\lstsetnumber{\ldots}$
+    ...$\lstresetnumber\setcounter{lstnumber}{528}$
 }
 \end{lstlisting}
 
 Creating and inserting a new word entry would look something like this:
 
-\begin{lstlisting}[firstnumber=450, mathescape=true]
-    WordEntry wordEntry = new WordEntry("eggplant");    $\label{code:newWordEntry}$
-    list.resetIterator();
-    while (...) list.iterateForward(); // determine where new node goes
-    list.insert(wordEntry);                             $\label{code:javaInsert}$
+\begin{lstlisting}[firstnumber=642, mathescape=true]
+    iterator = list.append(new WordEntry("eggplant"));
+    while (...) iterator.swapPrevious(); // determine where new node goes
+    if (...) iterator.merge();           // no duplicate word entries allowed
 \end{lstlisting}
+%WordEntry wordEntry = new WordEntry("eggplant");    $\label{code:newWordEntry}$
+%list.insert(wordEntry);                             $\label{code:javaInsert}$
 
 Recall that in Java, all variables except primitive types (such as \lstinline{occurrences} on line~\ref{code:javaOccurrences}) are references.
 This means that the \lstinline{next} field on line~\ref{code:javaNext} is a reference to another Node, just as we described in Section~\ref{subsec:singlylinkedlist}.
@@ -168,17 +179,20 @@ The payload is the \lstinline{wordEntry}.
 
 \subsubsection{C Implementation} \label{subsubsec:cImplementation}
 
-In \textit{linked-list.h}, you'll see a \lstinline{struct}s with the same fields as our Java example:
+In \textit{linked-list.h}, you'll see \lstinline{struct}s fields similar to our Java example
+(we've placed the pointer to the current node in an iterator to make the mental model for some of the operations more explicit):
 
 \lstinputlisting[linerange=41-45, firstnumber=41]{../starter-code/linked_list.h}
 
-\lstinputlisting[linerange=56-60, firstnumber=56]{../starter-code/linked_list.h}
+\lstinputlisting[linerange=58-60, firstnumber=58]{../starter-code/linked_list.h}
+
+\lstinputlisting[linerange=71-74, firstnumber=71]{../starter-code/linked_list.h}
 
 In \textit{linked\_list.c}, you'll also see the \function{create_node()} and \function{create_list()} functions:
 
-\lstinputlisting[linerange=29-33, firstnumber=29]{../starter-code/linked_list.c}
+\lstinputlisting[linerange=36-41, firstnumber=36]{../starter-code/linked_list.c}
 
-\lstinputlisting[linerange=61-66, firstnumber=61]{../starter-code/linked_list.c}
+\lstinputlisting[linerange=74-79, firstnumber=74]{../starter-code/linked_list.c}
 
 As you can see, they allocate space for a new node or a new list handle using \function{malloc()}.
 The code that you will need to add to \function{create_node()} will copy the \lstinline{word_entry} argument into the \lstinline{word_entry} field.
@@ -217,11 +231,17 @@ The code that you will need to add to \function{create_list()} is even simpler: 
 \subsubsection{list\_t as an array-backed list}
 
 \begin{tikzpicture}[x=1.5mm, y=1.5mm]
-    \draw[thick] (0,0) rectangle (25,34);
+    \draw[thick] (0,0) rectangle ++(25,34);
     \draw (17,32) rectangle ++(6,-6) +(-6,3) node[anchor=east] {array};
     \draw (17,24) rectangle ++(6,-6) +(-6,3) node[anchor=east] {length};
     \draw (17,16) rectangle ++(6,-6) +(-6,3) node[anchor=east] {allocation};
-    \draw (17,8) rectangle ++(6,-6) +(-6,3) node[anchor=east] {index};
+    \draw (17,8)  rectangle ++(6,-6) +(-6,3) node[anchor=east] {iterator};
+    \draw[Circle-Stealth,very thick] (20,5) -- (20,-8);
+
+    \draw[thick] (0,-8) rectangle ++(25,-13);
+    \draw (17,-10) rectangle ++(6,-6) +(-3,0) node[anchor=north] {index};
+    \draw (2,-10) rectangle ++(6,-6) +(-3,0) node[anchor=north] {list};
+    \draw[Circle-Stealth,very thick] (5,-13) -- (5,0);
 
     \draw[Circle-Stealth,very thick] (20,29) -- (40,21);
     \draw (40,24) rectangle ++(6,-6) rectangle ++(6,6) rectangle ++(6,-6) ++(6,0) rectangle ++(6,6) +(-9,-3) node {...};
@@ -242,20 +262,26 @@ The code that you will need to add to \function{create_list()} is even simpler: 
     \draw (80,7) ++(-5,0) rectangle ++(+10,-6) +(-5,3) node {\tiny{word\_entry\_t}};
 \end{tikzpicture}
 
-\subsubsection{list\_t as a linked list}
+\subsubsection{list\_t as a linked list} \label{subsubsec:listt-as-lined-list}
 
 \begin{tikzpicture}[x=1.5mm, y=1.5mm]
     \draw[thick] (0,0) rectangle (25,26);
     \draw (17,24) rectangle ++(6,-6) +(-6,3) node[anchor=east] {head};
     \draw (17,16) rectangle ++(6,-6) +(-6,3) node[anchor=east] {tail};
-    \draw (17,8) rectangle ++(6,-6) +(-6,3) node[anchor=east] {current\_node};
+    \draw (17,8)  rectangle ++(6,-6) +(-6,3) node[anchor=east] {iterator};
+    \draw[Circle-Stealth,very thick] (20,5) -- (20,-8);
+
+    \draw[thick] (0,-8) rectangle ++(25,-13);
+    \draw (17,-10) rectangle ++(6,-6) +(-6,0) node[anchor=north] {current\_node};
+    \draw (2,-10) rectangle ++(6,-6) +(-3,0) node[anchor=north] {list};
+    \draw[Circle-Stealth,very thick] (5,-13) -- (5,0);
 
     \draw (38,28) rectangle ++(6,-6) +(-3,3) node (head) {\tiny{node\_t}};
     \draw[Circle-Stealth,very thick] (20,21) -- (head.west);
     \draw (38,16) rectangle ++(6,-6) +(-3,3) node (tail) {\tiny{node\_t}};
     \draw[Circle-Stealth,very thick] (20,13) -- (tail.west);
     \draw (86,4) rectangle ++(6,-6) +(-3,3) node (current) {\tiny{node\_t}};
-    \draw[Circle-Stealth,very thick] (20,5) -- (current.west);
+    \draw[Circle-Stealth,very thick] (20,-13) -- (current.west);
 
     \draw (38,28)
         ++(12,0) rectangle ++(6,-6) ++(-3,3) node (node1) {\tiny{node\_t}}

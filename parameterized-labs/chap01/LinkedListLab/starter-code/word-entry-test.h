@@ -4,11 +4,11 @@
 
 /**************************************************************************//**
  *
- * @file array_list.h
+ * @file word-entry-test.h
  *
  * @author Christopher A. Bohn
  *
- * @brief Structure definitions for array-backed list handle.
+ * @brief Function prototypes for testing the word_entry code.
  *
  ******************************************************************************/
 
@@ -19,21 +19,9 @@
  * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#ifndef ARRAY_LIST_H
-#define ARRAY_LIST_H
+#ifndef WORD_ENTRY_TEST_H
+#define WORD_ENTRY_TEST_H
 
-#include "list.h"
+void test_word_entry(void);
 
-struct list_definition {
-    word_entry_t **array;
-    iterator_t *iterator;
-    size_t length;
-    size_t allocation;
-};
-
-struct iterator_definition {
-    list_t *list;
-    size_t index;
-};
-
-#endif //ARRAY_LIST_H
+#endif //WORD_ENTRY_TEST_H

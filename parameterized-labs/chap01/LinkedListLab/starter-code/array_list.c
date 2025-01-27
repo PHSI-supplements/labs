@@ -16,7 +16,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab (c) 2021-25 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -26,189 +26,251 @@
 #include "array_list.h"
 #include "hobbled_alloc.h"
 
+
+/*                       *
+ * CREATION, DESTRUCTION *
+ *                       */
+
+
 static int const MINIMUM_ALLOCATION = 8;
 
 /**
- * Creates an initially-empty array-backed list.
+ * @brief Creates an initially-empty array-backed list.
  *
  * Initially, a minimum allocation for the array has been made, but the list's
- * length is 0, and the list's index is equal to the length (i.e., 0) because
- * the iterator points to a blank space
+ * length is 0.
  *
  * @return a pointer to the list
  */
 list_t *create_list(void) {
     list_t *list = hobbled_malloc(sizeof(list_t));
-    if (list) {
-        list->array = hobbled_calloc(MINIMUM_ALLOCATION, sizeof(word_entry_t *));
-        if (!list->array) {
-            free(list);
-            list = NULL;
-        } else {
-            list->allocation = MINIMUM_ALLOCATION;
-            list->length = 0;
-            list->index = 0;
-        }
-    }
     if (!list) {
-        fprintf(stderr, "Failed to allocate space for new list. Returning NULL!\n");
+        fprintf(stderr, "Failed to allocate space for the new list. Returning NULL!\n");
+        return NULL;
     }
+    if (!(list->array = hobbled_calloc(MINIMUM_ALLOCATION, sizeof(word_entry_t *)))) {
+        free(list);
+        fprintf(stderr, "Failed to allocate space for the new list's array. Returning NULL!\n");
+        return NULL;
+    }
+    if (!(list->iterator = hobbled_malloc(sizeof(iterator_t)))) {
+        free(list);
+        fprintf(stderr, "Failed to allocate space for new list's iterator. Returning NULL!\n");
+        return NULL;
+    }
+    list->allocation = MINIMUM_ALLOCATION;
+    list->length = 0;
+    list->iterator->list = list;
+    list->iterator->index = 0;
     return list;
 }
 
 /**
- * Releases any memory held by an array-backed list.
+ * @brief Releases any memory held by an array-backed list.
  *
  * Optionally (and recommended), the caller can specify that the word entries in
  * the list should also be freed. If a use case requires that the word entries
  * not be freed, then the application programmer is responsible for eventually
  * calling `delete_word_entry()` for all word entries.
  *
+ * @warning If the word entry is not freed, and if the the application does not
+ * have pointers to the word entries, then the word entries cannot be deleted,
+ * causing a memory leak.
+ *
  * @param list the list to be destroyed
  * @param free_word_entries a flag to indicate whether this function should free
  *      the list's word entries.
  */
 void destroy_list(list_t *list, bool free_word_entries) {
-    if (free_word_entries) {
-        for (size_t i = 0; i < list->length; i++) {
-            delete_word_entry(list->array[i]);
+    if (list) {
+        if (free_word_entries) {
+            for (size_t i = 0; i < list->length; i++) {
+                delete_word_entry(list->array[i]);
+            }
         }
+        free(list->iterator);
+        free(list->array);
+        free(list);
     }
-    free(list->array);
-    free(list);
+}
+
+
+/*           *
+ * ITERATION *
+ *           */
+
+
+/**
+ * @brief Provides an iterator over the elements in the list, invalidating all
+ * iterate_previous iterators.
+ *
+ * The iterator is invalid, and subsequent behavior is undefined, if the list
+ * is empty.
+ *
+ * @param list the list to be iterated over
+ * @return a pointer to an iterator for the list, positioned at the head element
+ */
+iterator_t *get_iterator(list_t *list) {
+    list->iterator->index = 0;
+    return list->iterator;
 }
 
 /**
- * Resets the array-backed list's iterator to the first word entry (i.e., sets
- * the array's index to 0).
+ * Provides the iterator's list, invalidating the iterator.
  *
- * @param list the list whose iterator is to be reset
- * @return `true` if the iterator was successfully reset to the first element;
- *      `false` if the list does not have a first element
+ * @param iterator
+ * @return a pointer to the iterator's list
  */
-bool reset_iterator(list_t *list) {
-    list->index = 0;
-    return (list->length > 0);
+list_t *get_list(iterator_t *iterator) {
+    return iterator->list;
 }
 
 /**
- * Advances the array-backed list's iterator to the next word entry in the
- * sequence (i.e., increments the array's index).
+ * Indicates whether forward iteration has more elements; that is, indicates
+ * whether the iterator would remain valid if <code>iterate_next()</code> is called.
+ * Specifically, if the iterator's index is at least two less than the array's
+ * length, then there is a next element.
  *
- * @param list the list whose iterator is to be advanced
- * @return `true` if the iterator was successfully advanced;
- *      `false` the iterator already pointed to the empty space at the
- *      end of the sequence (i.e., the index is equal to the length)
+ * @param iterator the iterator to be examined
+ * @return <code>true</code> if forward iteration has more elements;
+ *      <code>false</code> if the iterator points to the tail element
  */
-bool iterate_forward(list_t *list) {
-    if (list->index == list->length) {
+bool has_next(iterator_t const *iterator) {
+    if (iterator->list->length == 0) {
         return false;
-    } else {
-        list->index++;
-        return true;
     }
+    return (iterator->index < iterator->list->length - 1);
 }
 
 /**
- * Retreats the array-backed list's iterator to the previous word entry in the
- * sequence (i.e., decrements the array's index).
+ * Indicates whether backwards iteration has more elements; that is, indicates
+ * whether the iterator would remain valid if <code>iterate_previous()</code> is called.
+ * Specifically, if the iterator's index isn't zero, then there is a previous element.
  *
- * @param list the list whose iterator is to be retreated
- * @return `true` if the iterator was successfully retreats;
- *      `false` the iterator already pointed to the first entry in the sequence
- *      (i.e., the index is 0)
+ * @param iterator the iterator to be examined
+ * @return <code>true</code> if backwards iteration has more elements;
+ *      <code>false</code> if the iterator points to the tail element
  */
-bool iterate_backward(list_t *list) {
-    if (list->index == 0) {
-        return false;
-    } else {
-        list->index--;
-        return true;
-    }
+bool has_previous(iterator_t const *iterator) {
+    return (iterator->index > 0);
 }
 
 /**
- * Retrieves the word entry that is pointed to by the list's iterator, or NULL
- * if the iterator points to a blank space. That is, this function retrieves the
- * array-backed list's `array[index]` element.
- * The word entry remains in the list.
+ * @brief Advances the iterator to the next element in the list.
  *
- * @param list the list with the desired word entry
- * @return a pointer to the desired word entry
- */
-word_entry_t *get_word_entry(list_t const *list) {
-    if (list->index == list->length) {
-        return NULL;
-    } else {
-        return list->array[list->index];
-    }
-}
-
-/**
- * Retrieves the first word entry in the sequence without moving the list's
- * iterator, or NULL if the sequence is empty. That is, this function retrieves
- * the array-backed list's `array[0]` element.
- * The word entry remains in the list, and the iterator remains unchanged.
+ * Specifically, the iterator's index is incremented.
  *
- * @param list the list with the desired word entry
- * @return a pointer to the first word entry
- */
-word_entry_t *get_first_word_entry(list_t const *list) {
-    if (list->length == 0) {
-        return NULL;
-    } else {
-        return list->array[0];
-    }
-}
-
-/**
- * Retrieves the last word entry in the sequence without moving the list's
- * iterator, or NULL if the sequence is empty. That is, this function retrieves
- * the array-backed list's `array[length - 1]` element.
- * The word entry remains in the list, and the iterator remains unchanged.
+ * The iterator is invalidated, and the subsequent behavior is undefined, if
+ * there is no next element.
  *
- * @param list the list with the desired word entry
- * @return a pointer to the last word entry
+ * @param iterator the iterator to be advanced
+ * @return a pointer to the iterator
  */
-word_entry_t *get_last_word_entry(list_t const *list) {
-    if (list->length == 0) {
-        return NULL;
-    } else {
-        return list->array[list->length - 1];
+iterator_t *iterate_next(iterator_t *iterator) {
+    // allowing an invalid iterator to go past the array is a legitimate "undefined behavior" choice,
+    // but I don't recommend it
+    if (has_next(iterator)) {
+        iterator->index++;
     }
+    return iterator;
 }
 
 /**
- * Adds a word entry to the end of the sequence without moving the list's
- * iterator. That is, the array-backed list's length increases by one
- * (reallocating a larger array if necessary), and the word entry is placed at
+ * @brief Retreats the iterator to the previous element in the list.
+ *
+ * Specifically, the iterator's index is decremented.
+ *
+ * The iterator is invalidated, and the subsequent behavior is undefined, if
+ * there is no previous element.
+ *
+ * @param iterator the iterator to be retreated
+ * @return a pointer to the iterator
+ */
+iterator_t *iterate_previous(iterator_t *iterator) {
+    // allowing an invalid iterator to underflow the array is a legitimate "undefined behavior" choice,
+    // but I don't recommend it
+    if (has_previous(iterator)) {
+        iterator->index--;
+    }
+    return iterator;
+}
+
+
+/*                   *
+ * ADDITION, REMOVAL *
+ *                   */
+
+
+/**
+ * @brief Adds a word entry to the head of the list and generates an iterator
+ * pointing to the head.
+ *
+ * The effect on the list is equivalent to <code>insert(get_iterator(list))</code>.
+ * The difference is that <code>prepend()</code> returns a pointer to a valid
+ * iterator, but <code>insert()</code> invalidates the iterator and returns a
+ * pointer to the list.
+ *
+ * @param list the list to receive the word entry
+ * @param word_entry the word entry to be added to the list
+ * @return an iterator to the list, positioned at the newly-appended entry
+ */
+iterator_t *prepend(list_t *list, word_entry_t *word_entry) {
+    size_t original_length = list->length;
+    size_t original_index = list->iterator->index;
+    list->iterator->index = 0;
+    list = insert(list->iterator, word_entry);
+    if (list->length == original_length) {
+        list->iterator->index = original_index;
+    }
+    return list->iterator;
+}
+
+/**
+ * @brief Adds a word entry to the tail of the list and generates an iterator
+ * pointing to the head.
+ *
+ * Specifically, the array-backed list's length increases by one (reallocating
+ * a larger array if necessary), and the word entry is placed at
  * `array[length - 1]`.
  *
- * @param list the list to receive the word entry
- * @param word_entry the word entry to be added to the list
- * @return a pointer to the list
- */
-list_t *append(list_t *list, word_entry_t *word_entry) {
-    size_t index = list->index;
-    list->index = list->length;
-    list = insert(list, word_entry);
-    list->index = index;
-    return list;
-}
-
-/**
- * Adds a word entry to the sequence at the iterator's current position.
- * The iterator points to the newly-added word entry. That is, the array-backed
- * list's length increases by one (reallocating a larger array if necessary),
- * all elements from `array[index]` through `array[length - 2]` are shifted
- * to `array[index + 1]` through `array[length - 1]`, and the word entry is
- * placed at `array[index]`.
+ * The effect on the list is equivalent to
+ * <pre>
+ * iterator = prepend(list, word_entry);
+ * while(has_next(iterator) {
+ *     swap_next(iterator);
+ * }
+ * </pre>
  *
  * @param list the list to receive the word entry
  * @param word_entry the word entry to be added to the list
+ * @return an iterator to the list, positioned at the newly-appended entry
+ */
+iterator_t *append(list_t *list, word_entry_t *word_entry) {
+    size_t original_length = list->length;
+    size_t original_index = list->iterator->index;
+    list->iterator->index = original_length;
+    list = insert(list->iterator, word_entry);
+    if (list->length == original_length) {
+        list->iterator->index = original_index;
+    }
+    return list->iterator;
+}
+
+/**
+ * Adds a word entry to the list at the iterator's current position,
+ * invalidating the iterator.
+ *
+ * Specifically, the array-backed list's length increases by one (reallocating
+ * a larger array if necessary), all elements from `array[index]` through
+ * `array[length - 2]` are shifted to `array[index + 1]` through
+ * `array[length - 1]`, and the word entry is placed at `array[index]`.
+ *
+ * @param iterator the iterator pointing to the insertion position
+ * @param word_entry the word entry to be added to the list
  * @return a pointer to the list
  */
-list_t *insert(list_t *list, word_entry_t *word_entry) {
+list_t *insert(iterator_t *iterator, word_entry_t *word_entry) {
+    list_t *list = iterator->list;
     // make sure there's room for another element
     if (list->allocation == list->length) {
         void *larger_array = hobbled_realloc(list->array, sizeof(word_entry_t *) * list->allocation * 2);
@@ -223,52 +285,52 @@ list_t *insert(list_t *list, word_entry_t *word_entry) {
         }
     }
     // move the elements at `index` and later to the right
-    for (size_t i = list->length; i > list->index; i--) {
+    for (size_t i = list->length; i > iterator->index; i--) {
         list->array[i] = list->array[i - 1];
     }
-    list->array[list->index] = word_entry;
+    list->array[iterator->index] = word_entry;
     list->length++;
     return list;
 }
 
 /**
- * Removes a word entry from the sequence at the iterator's current position.
- * The iterator points to the word entry that followed the removed entry, or
- * to entry at the now at the end of the sequence if the removed entry was at
- * the end. (However, if the resulting list is an empty list, then and only then
- * will the iterator point to a blank space.)
+ * @brief Removes the word entry from the list at the iterator's current
+ * position, invalidating the iterator.
  *
- * That is, the array-backed list's elements at `array[index + 1]` through
+ * Specifically, the array-backed list's elements at `array[index + 1]` through
  * `array[length - 1]` are shifted to `array[index]` through
- * `array[length - 2]`, and the length is decreased by 1. The index is typically
- * left unchanged; however, if the index is equal to the new length (and the new
- * length is not 0) then the index will decrease by 1.
+ * `array[length - 2]`, and the length is decreased by 1.
  *
  * Optionally (and recommended), the caller can specify that the word entry that
  * gets removed should be freed. If a use case requires that the word entry not
  * be freed, then the application programmer is responsible for eventually
  * calling `delete_word_entry()` for the word entry.
  *
- * @param list the list to discard the word entry
+ * @warning If the word entry is not freed, and if the the application does not
+ * have a pointer to the word entry, then the word entry cannot be deleted,
+ * causing a memory leak.
+ *
+ * @param iterator the iterator pointing to the element to be removed
  * @param free_word_entry a flag to indicate whether this function should free
  *      the word entry that has been removed from the list
  * @return a pointer to the list
  */
-list_t *delete(list_t *list, bool free_word_entry) {
-    if (list->index < list->length) {
-        if (free_word_entry) {
-            word_entry_t *word_entry = list->array[list->index];
+list_t *delete(iterator_t *iterator, bool free_word_entry) {
+    if (!iterator) {
+        return NULL;
+    }
+    list_t *list = iterator->list;
+    if (free_word_entry) {
+        word_entry_t *word_entry = list->array[iterator->index];
+        if (word_entry) {
             delete_word_entry(word_entry);
         }
-        // move the elements at `index`+1 and later to the left
-        for (size_t i = list->index + 1; i < list->length; i++) {
-            list->array[i - 1] = list->array[i];
-        }
-        list->length--;
     }
-    if (list->index == list->length && list->length > 0) {
-        list->index--;
+    // move the elements at `index`+1 and later to the left
+    for (size_t i = iterator->index + 1; i < list->length; i++) {
+        list->array[i - 1] = list->array[i];
     }
+    list->length--;
     // free up unneeded space
     if (list->length * 2 > MINIMUM_ALLOCATION && list->length * 2 < list->allocation) {
         void *smaller_array = hobbled_realloc(list->array, sizeof(word_entry_t *) * list->allocation / 2);
@@ -283,6 +345,198 @@ list_t *delete(list_t *list, bool free_word_entry) {
     return list;
 }
 
+
+/*             *
+ * EXAMINATION *
+ *             */
+
+
+/**
+ * @brief Retrieves the word entry that is pointed to by the iterator.
+ * 
+ * Specifically, this function retrieves the array-backed list's `array[index]`
+ * element.
+ *
+ * The iterator remains valid and unchanged, and the word entry remains in the
+ * list.
+ *
+ * @param iterator the iterator pointing to the word entry
+ * @return a pointer to the desired word entry
+ */
+word_entry_t const *get_word_entry(iterator_t const *iterator) {
+    list_t *list = iterator->list;
+    if (list->length == 0) {
+        return NULL;
+    }
+    return list->array[iterator->index];
+}
+
+/**
+ * @brief Retrieve's the iterate_next element's word entry, if `has_next(iterator)`, or
+ * NULL otherwise.
+ *
+ * Specifically, this function retrieves the array-backed list's
+ * `array[index+1]` element.
+ *
+ * The iterator remains valid and unchanged, and the word entry remains in the
+ * list.
+ *
+ * @param iterator the iterator pointing to a valid word entry
+ * @returna pointer to the iterate_next word entry
+ */
+word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
+    list_t *list = iterator->list;
+    if (list->length == 0) {
+        return NULL;
+    }
+    if (!has_next(iterator)) {
+        return NULL;
+    }
+    return list->array[iterator->index + 1];
+}
+
+/**
+ * @brief Retrieve's the iterate_previous element's word entry, if
+ * `has_previous(iterator)`, or NULL otherwise.
+ *
+ * Specifically, this function retrieves the array-backed list's
+ * `array[index-1]` element.
+ *
+ * The iterator remains valid and unchanged, and the word entry remains in the
+ * list.
+ *
+ * @param iterator the iterator pointing to a valid word entry
+ * @returna pointer to the iterate_previous word entry
+ */
+word_entry_t const *get_previous_word_entry(iterator_t const *iterator) {
+    list_t *list = iterator->list;
+    if (list->length == 0) {
+        return NULL;
+    }
+    if (!has_previous(iterator)) {
+        return NULL;
+    }
+    return list->array[iterator->index - 1];
+}
+
+
+/*                   *
+ * SWAPPING, MERGING *
+ *                   */
+
+
+/**
+ * @brief Swaps the positions of the element pointed to by the iterator,
+ * and its iterate_next element.
+ *
+ * After the operation is complete, the iterator will point to the same element
+ * as before, but in its new position.
+ *
+ * If <code>has_next(iterator)</code> is <code>false</code> then the behavior
+ * is undefined.
+ *
+ * @param iterator the iterator pointing to the first of the two elements to be
+ *      swapped, in its new position
+ * @return a pointer to the iterator
+ */
+iterator_t *swap_next(iterator_t *iterator) {
+    if (has_next(iterator)) {
+        list_t *list = iterator->list;
+        word_entry_t *next_word_entry = list->array[iterator->index + 1];
+        list->array[iterator->index + 1] = list->array[iterator->index];
+        list->array[iterator->index] = next_word_entry;
+        iterator->index++;
+    }
+    return iterator;
+}
+
+/**
+ * @brief Swaps the positions of the element pointed to by the iterator,
+ * and its iterate_previous element.
+ *
+ * After the operation is complete, the iterator will point to the same element
+ * as before, but in its new position.
+ *
+ * If <code>has_previous(iterator)</code> is <code>false</code> then the
+ * behavior is undefined.
+ *
+ * @param iterator the iterator pointing to the latter of the two elements to be
+ *      swapped, in its new position
+ * @return a pointer to the iterator
+ */
+iterator_t *swap_previous(iterator_t *iterator) {
+    if (has_previous(iterator)) {
+        list_t *list = iterator->list;
+        word_entry_t *previous_word_entry = list->array[iterator->index - 1];
+        list->array[iterator->index - 1] = list->array[iterator->index];
+        list->array[iterator->index] = previous_word_entry;
+        iterator->index--;
+    }
+    return iterator;
+}
+
+/**
+ * @brief Combines the word entry pointed to by the iterator, and its iterate_next
+ * element, forming a single word entry.
+ *
+ * The two word entries should have the same word; the behavior is undefined if
+ * the words differ. After the operation is complete, the combined word entry's
+ * count will be the sum of the two original word entries' counts, and the
+ * iterator will point to the combined word entry.
+ *
+ * If <code>has_next(iterator)</code> is <code>false</code> then the behavior
+ * is undefined.
+ *
+ * @param iterator the iterator pointing to merged element
+ * @return a pointer to the iterator
+ */
+iterator_t *merge_next(iterator_t *iterator) {
+    if (has_next(iterator)) {
+        list_t *list = iterator->list;
+        size_t index = iterator->index;
+        word_entry_t *word_entry = list->array[index];
+        word_entry_t *next_word_entry = list->array[index + 1];
+        next_word_entry->occurrences += word_entry->occurrences;
+        delete(iterator, true);
+        iterator->index = index;
+    }
+    return iterator;
+}
+
+/**
+ * @brief Combines the word entry pointed to by the iterator, and its iterate_previous
+ * element, forming a single word entry.
+ *
+ * The two word entries should have the same word; the behavior is undefined if
+ * the words differ. After the operation is complete, the combined word entry's
+ * count will be the sum of the two original word entries' counts, and the
+ * iterator will point to the combined word entry.
+ *
+ * If <code>has_previous(iterator)</code> is <code>false</code> then the behavior
+ * is undefined.
+ *
+ * @param iterator the iterator pointing to merged element
+ * @return a pointer to the iterator
+ */
+iterator_t *merge_previous(iterator_t *iterator) {
+    if (has_previous(iterator)) {
+        list_t *list = iterator->list;
+        size_t index = iterator->index;
+        word_entry_t *word_entry = list->array[index];
+        word_entry_t *previous_word_entry = list->array[index - 1];
+        previous_word_entry->occurrences += word_entry->occurrences;
+        delete(iterator, true);
+        iterator->index = index - 1;
+    }
+    return iterator;
+}
+
+
+/*          *
+ * PRINTING *
+ *          */
+
+
 /**
  * Prints the contents of the array-backed list.
  *
@@ -294,10 +548,16 @@ list_t *delete(list_t *list, bool free_word_entry) {
  */
 void print(list_t *list) {
     char string[MAXIMUM_WORD_LENGTH + 15];
-    printf("index: %zu\tlength: %zu (%zu elements allocated)\n", list->index, list->length, list->allocation);
+    printf("index: %zu\tlength: %zu (%zu elements allocated)\n", list->iterator->index, list->length, list->allocation);
     for (size_t i = 0; i < list->length; i++) {
+        if (i == list->iterator->index) {
+            printf("[%5zu] **index**\n", i);
+        }
         printf("[%5zu] ", i);
         fflush(stdout);
         printf("%s\n", word_entry_to_string(string, list->array[i]));
+    }
+    if (list->length == 0) {
+        printf("[--NAN--] **index**\n");
     }
 }

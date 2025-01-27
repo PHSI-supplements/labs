@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab (c) 2021-25 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -25,25 +25,43 @@
 #include <stdbool.h>
 #include "word_entry.h"
 
+
+/*                  *
+ * TYPE DEFINITIONS *
+ *                  */
+
+
 /**
- * <p>
- * A generic list for word entries.
- * </p><p>
+ * @brief A generic list for word entries.
+ *
  * The underlying representation cannot be inferred except by the functions
- * in array_list.c and in linked_list.c When used in array_list.c, the list's
+ * in array_list.c and in linked_list.c. When used in array_list.c, the list's
  * definition can be assumed to be that found in array_list.h. When used in
  * linked_list.c, the list's definition can be assumed to be that found in
  * linked_list.h.
- * </p><p>
- * The abstract model for a list is that it has:
- * <ul>
- * <li> A sequence of word entries
- * <li> An iterator that can be used as a handle to some part of the sequence;
- *      the iterator always points to exactly one word entry or to an empty
- *      space at the end of the sequence
- * </ul></p>
  */
 typedef struct list_definition list_t;
+
+/**
+ * @brief A handle to some part of a list.
+ *
+ * A valid iterator always points to exactly one word entry. Invalid iterators
+ * include:
+ * <ul>
+ * <li> An iterator that traverses forward past the tail of a list
+ * <li> An interator that traverses backwards past the head of a list
+ * <li> An iterator that pre-dates the creation of another iterator
+ * <li> An iterator to an empty list (except when used for insertion)
+ * </ul>
+ *
+ */
+typedef struct iterator_definition iterator_t;
+
+
+/*                       *
+ * CREATION, DESTRUCTION *
+ *                       */
+
 
 /**
  * Creates an initially-empty list.
@@ -53,12 +71,16 @@ typedef struct list_definition list_t;
 list_t *create_list(void);
 
 /**
- * Releases any memory held by a list.
+ * @brief Releases any memory held by a list.
  *
  * Optionally (and recommended), the caller can specify that the word entries in
  * the list should also be freed. If a use case requires that the word entries
  * not be freed, then the application programmer is responsible for eventually
  * calling `delete_word_entry()` for all word entries.
+ *
+ * @warning If the word entry is not freed, and if the the application does not
+ * have pointers to the word entries, then the word entries cannot be deleted,
+ * causing a memory leak.
  *
  * @param list the list to be destroyed
  * @param free_word_entries a flag to indicate whether this function should free
@@ -66,102 +88,261 @@ list_t *create_list(void);
  */
 void destroy_list(list_t *list, bool free_word_entries);
 
-/**
- * Resets the list's iterator to the first word entry.
- *
- * @param list the list whose iterator is to be reset
- * @return `true` if the iterator was successfully reset to the first element;
- *      `false` if the list does not have a first element
- */
-bool reset_iterator(list_t *list);
+
+/*           *
+ * ITERATION *
+ *           */
+
 
 /**
- * Advances the list's iterator to the next word entry in the sequence.
+ * @brief Provides an iterator over the elements in the list, invalidating all
+ * iterate_previous iterators.
  *
- * @param list the list whose iterator is to be advanced
- * @return `true` if the iterator was successfully advanced;
- *      `false` the iterator already pointed to the empty space at the
- *      end of the sequence
+ * If the list is empty, the iterator is valid <i>only</i> for inserting a word
+ * entry into the empty list; the behavior is undefined for all other uses.
+ *
+ * @param list the list to be iterated over
+ * @return a pointer to an iterator for the list, positioned at the head element
  */
-bool iterate_forward(list_t *list);
+iterator_t *get_iterator(list_t *list);
 
 /**
- * Retreats the list's iterator to the previous word entry in the sequence.
+ * Provides the iterator's list, invalidating the iterator.
  *
- * @param list the list whose iterator is to be retreated
- * @return `true` if the iterator was successfully retreats;
- *      `false` the iterator already pointed to the first entry in the sequence
+ * @param iterator
+ * @return a pointer to the iterator's list
  */
-bool iterate_backward(list_t *list);
+list_t *get_list(iterator_t *iterator);
 
 /**
- * Retrieves the word entry that is pointed to by the list's iterator, or NULL
- * if the iterator points to a blank space.
- * The word entry remains in the list.
+ * Indicates whether forward iteration has more elements; that is, indicates
+ * whether the iterator would remain valid if <code>iterate_next()</code> is called.
  *
- * @param list the list with the desired word entry
- * @return a pointer to the desired word entry
+ * @param iterator the iterator to be examined
+ * @return <code>true</code> if forward iteration has more elements;
+ *      <code>false</code> if the iterator points to the tail element
  */
-word_entry_t *get_word_entry(list_t const *list);
+bool has_next(iterator_t const *iterator);
 
 /**
- * Retrieves the first word entry in the sequence without moving the list's
- * iterator, or NULL if the sequence is empty.
- * The word entry remains in the list, and the iterator remains unchanged.
+ * Indicates whether backwards iteration has more elements; that is, indicates
+ * whether the iterator would remain valid if <code>iterate_previous()</code> is called.
  *
- * @param list the list with the desired word entry
- * @return a pointer to the first word entry
+ * @param iterator the iterator to be examined
+ * @return <code>true</code> if backwards iteration has more elements;
+ *      <code>false</code> if the iterator points to the tail element
  */
-word_entry_t *get_first_word_entry(list_t const *list);
+bool has_previous(iterator_t const *iterator);
 
 /**
- * Retrieves the last word entry in the sequence without moving the list's
- * iterator, or NULL if the sequence is empty.
- * The word entry remains in the list, and the iterator remains unchanged.
+ * @brief Advances the iterator to the next element in the list.
  *
- * @param list the list with the desired word entry
- * @return a pointer to the last word entry
+ * The iterator is invalidated, and the subsequent behavior is undefined, if
+ * there is no next element.
+ *
+ * @param iterator the iterator to be advanced
+ * @return a pointer to the iterator
  */
-word_entry_t *get_last_word_entry(list_t const *list);
+iterator_t *iterate_next(iterator_t *iterator);
 
 /**
- * Adds a word entry to the end of the sequence without moving the list's
- * iterator.
+ * @brief Retreats the iterator to the previous element in the list.
+ *
+ * The iterator is invalidated, and the subsequent behavior is undefined, if
+ * there is no previous element.
+ *
+ * @param iterator the iterator to be retreated
+ * @return a pointer to the iterator
+ */
+iterator_t *iterate_previous(iterator_t *iterator);
+
+
+/*                   *
+ * ADDITION, REMOVAL *
+ *                   */
+
+
+/**
+ * @brief Adds a word entry to the head of the list and generates an iterator
+ * pointing to the head.
+ *
+ * The effect on the list is equivalent to <code>insert(get_iterator(list))</code>.
+ * The difference is that <code>prepend()</code> returns a pointer to a valid
+ * iterator, but <code>insert()</code> invalidates the iterator and returns a
+ * pointer to the list.
  *
  * @param list the list to receive the word entry
  * @param word_entry the word entry to be added to the list
- * @return a pointer to the list
+ * @return an iterator to the list, positioned at the newly-appended entry
  */
-list_t *append(list_t *list, word_entry_t *word_entry);
+iterator_t *prepend(list_t *list, word_entry_t *word_entry);
 
 /**
- * Adds a word entry to the sequence at the iterator's current position.
- * The iterator points to the newly-added word entry.
+ * @brief Adds a word entry to the tail of the list and generates an iterator
+ * pointing to the head.
+ *
+ * The effect on the list is equivalent to
+ * <pre>
+ * iterator = prepend(list, word_entry);
+ * while(has_next(iterator) {
+ *     swap_next(iterator);
+ * }
+ * </pre>
  *
  * @param list the list to receive the word entry
  * @param word_entry the word entry to be added to the list
- * @return a pointer to the list
+ * @return an iterator to the list, positioned at the newly-appended entry
  */
-list_t *insert(list_t *list, word_entry_t *word_entry);
+iterator_t *append(list_t *list, word_entry_t *word_entry);
 
 /**
- * Removes a word entry from the sequence at the iterator's current position.
- * The iterator points to the word entry that followed the removed entry, or
- * to entry at the now at the end of the sequence if the removed entry was at
- * the end. (However, if the resulting list is an empty list, then and only then
- * will the iterator point to a blank space.)
+ * Adds a word entry to the list at the iterator's current position,
+ * invalidating the iterator.
+ *
+ * @param iterator the iterator pointing to the insertion position
+ * @param word_entry the word entry to be added to the list
+ * @return a pointer to the list
+ */
+list_t *insert(iterator_t *iterator, word_entry_t *word_entry);
+
+/**
+ * @brief Removes the word entry from the list at the iterator's current
+ * position, invalidating the iterator.
  *
  * Optionally (and recommended), the caller can specify that the word entry that
  * gets removed should be freed. If a use case requires that the word entry not
  * be freed, then the application programmer is responsible for eventually
  * calling `delete_word_entry()` for the word entry.
  *
- * @param list the list to discard the word entry
+ * @warning If the word entry is not freed, and if the the application does not
+ * have a pointer to the word entry, then the word entry cannot be deleted,
+ * causing a memory leak.
+ *
+ * @param iterator the iterator pointing to the element to be removed
  * @param free_word_entry a flag to indicate whether this function should free
  *      the word entry that has been removed from the list
  * @return a pointer to the list
  */
-list_t *delete(list_t *list, bool free_word_entry);
+list_t *delete(iterator_t *iterator, bool free_word_entry);
+
+
+/*             *
+ * EXAMINATION *
+ *             */
+
+
+/**
+ * @brief Retrieves the word entry that is pointed to by the iterator.
+ *
+ * The iterator remains valid and unchanged, and the word entry remains in the
+ * list.
+ *
+ * @param iterator the iterator pointing to the word entry
+ * @return a pointer to the desired word entry
+ */
+word_entry_t const* get_word_entry(iterator_t const *iterator);
+
+/**
+ * @brief Retrieve's the iterate_next element's word entry, if `has_next(iterator)`, or
+ * NULL otherwise.
+ *
+ * The iterator remains valid and unchanged, and the word entry remains in the
+ * list.
+ *
+ * @param iterator the iterator pointing to a valid word entry
+ * @returna pointer to the iterate_next word entry
+ */
+word_entry_t const* get_next_word_entry(iterator_t const *iterator);
+
+/**
+ * @brief Retrieve's the iterate_previous element's word entry, if
+ * `has_previous(iterator)`, or NULL otherwise.
+ *
+ * The iterator remains valid and unchanged, and the word entry remains in the
+ * list.
+ *
+ * @param iterator the iterator pointing to a valid word entry
+ * @returna pointer to the iterate_previous word entry
+ */
+word_entry_t const *get_previous_word_entry(iterator_t const *iterator);
+
+
+/*                   *
+ * SWAPPING, MERGING *
+ *                   */
+
+
+/**
+ * @brief Swaps the positions of the element pointed to by the iterator,
+ * and its iterate_next element.
+ *
+ * After the operation is complete, the iterator will point to the same element
+ * as before, but in its new position.
+ *
+ * If <code>has_next(iterator)</code> is <code>false</code> then the behavior
+ * is undefined.
+ *
+ * @param iterator the iterator pointing to the first of the two elements to be
+ *      swapped, in its new position
+ * @return a pointer to the iterator
+ */
+iterator_t *swap_next(iterator_t *iterator);
+
+/**
+ * @brief Swaps the positions of the element pointed to by the iterator,
+ * and its iterate_previous element.
+ *
+ * After the operation is complete, the iterator will point to the same element
+ * as before, but in its new position.
+ *
+ * If <code>has_previous(iterator)</code> is <code>false</code> then the
+ * behavior is undefined.
+ *
+ * @param iterator the iterator pointing to the latter of the two elements to be
+ *      swapped, in its new position
+ * @return a pointer to the iterator
+ */
+iterator_t *swap_previous(iterator_t *iterator);
+
+/**
+ * @brief Combines the word entry pointed to by the iterator, and its iterate_next
+ * element, forming a single word entry.
+ *
+ * The two word entries should have the same word; the behavior is undefined if
+ * the words differ. After the operation is complete, the combined word entry's
+ * count will be the sum of the two original word entries' counts, and the
+ * iterator will point to the combined word entry.
+ *
+ * If <code>has_next(iterator)</code> is <code>false</code> then the behavior
+ * is undefined.
+ *
+ * @param iterator the iterator pointing to merged element
+ * @return a pointer to the iterator
+ */
+iterator_t *merge_next(iterator_t *iterator);
+
+/**
+ * @brief Combines the word entry pointed to by the iterator, and its iterate_previous
+ * element, forming a single word entry.
+ *
+ * The two word entries should have the same word; the behavior is undefined if
+ * the words differ. After the operation is complete, the combined word entry's
+ * count will be the sum of the two original word entries' counts, and the
+ * iterator will point to the combined word entry.
+ *
+ * If <code>has_previous(iterator)</code> is <code>false</code> then the behavior
+ * is undefined.
+ *
+ * @param iterator the iterator pointing to merged element
+ * @return a pointer to the iterator
+ */
+iterator_t *merge_previous(iterator_t *iterator);
+
+
+/*          *
+ * PRINTING *
+ *          */
+
 
 /**
  * Prints the contents of the list.

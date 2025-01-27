@@ -11,7 +11,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab assignment and starter code (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab assignment and starter code (c) 2021-25 Christopher A. Bohn
  * LinkedListLab solution (c) the above-named student(s)
  */
 
@@ -62,7 +62,7 @@ void increment_count(word_entry_t *word_entry) {
  * @param word_entry the `word_entry_t` to be examined
  * @return the number of occurrences
  */
-int get_count(word_entry_t *word_entry) {
+int get_count(word_entry_t const *word_entry) {
     /* WRITE THIS FUNCTION */
     return -1;
 }
@@ -73,7 +73,7 @@ int get_count(word_entry_t *word_entry) {
  * @param word_entry the `word_entry_t` to be examined
  * @return the word
  */
-char const *get_word(word_entry_t *word_entry) {
+char const *get_word(word_entry_t const *word_entry) {
     /* WRITE THIS FUNCTION */
     return "";
 }
@@ -85,7 +85,7 @@ char const *get_word(word_entry_t *word_entry) {
  * @param word_entry the word entry to be converted to a string
  * @return the `destination` array, with the string representation
  */
-char *word_entry_to_string(char *destination, word_entry_t *word_entry) {
+char *word_entry_to_string(char *destination, word_entry_t const *word_entry) {
     if (word_entry == NULL) {
         sprintf(destination, "%7s : %s", "NULL", "NULL");
     } else {

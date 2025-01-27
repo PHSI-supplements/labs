@@ -11,7 +11,7 @@
     "antagonist": {
       "full name": "H.Awk~Aye",
       "short name": "H.Awk",
-      "introduction": "He introduces himself, ``Hi, I'm H.Awk~Aye.'' That's right, I'm so good at Unix that `Awk' literally is my middle name.''\nYou decide to have an irrational dislike of him."
+      "introduction": "He introduces himself, ``Hi, I'm H.Awk~Aye. That's right, I'm so good at Unix that `Awk' literally is my middle name.''\nYou decide to have an irrational dislike of him."
     },
     "supporting characters": [
       {
@@ -70,7 +70,7 @@
       "Archie shows you his first program, which he hoped would be used to greet guests, but it doesn't always work right:",
       "``Wow,'' Archie says.\n``I can't believe that I missed that.\nMaybe you can help me with some other code that I wrote for one of my other start-ups.\nHere it is.'' Archie shows you the code:",
       "``Thanks for your help,'' Archie says.\n``Maybe you can help our other developer with the project he's working on.''\nA guy walks up.\nHe's wearing a Members-Only jacket over a Hawaiian shirt and looks like he might be a comedian's nemesis in another life.\n",
-      "``To protect against corporate espionage, we're writing a challenge-and-response system.\nAnybody can challenge anyone else in the Pleistocene Petting Zoo's non-public areas by providing the name of a book and a word contained within the book, and the person being challenged must respond with another word from that book, based on certain rules.\nI'm using an array-backed list to store a book's words.\nIt works fine on my desktop system, but the device from Eclectic Electronics that we're deploying it to has an interesting quirk:\nit has about a megabyte of memory, which is plenty for our needs, but it can't allocate more than 32 kilobytes of contiguous memory.\nThat's a bit of a problem for the array once the list grows large enough.''\n\nYou think about the problem for a moment, and then suggest, ``What if we replace the array-backed list with a linked list\\dots?''\n",
+      "``To protect against corporate espionage, we're writing an authentication system based on counting the words in books.\nTo make it work, we need to sort the words and count the number of occurrences of each word.\nI'm using an array-backed list to store a book's words.\nIt works fine on my desktop system, but the device from Eclectic Electronics that we're deploying it to has an interesting quirk:\nit has plenty of memory for our needs, but it has 256-byte memory segments, and a memory allocation cannot span more than one segment.\nThat's a bit of a problem for the array once the list grows large enough.''\n\nYou think about the problem for a moment, and then suggest, ``What if we replace the array-backed list with a linked list\\dots?''\n",
       "You plug in your shiny, new keyboard, tune your satellite radio to the Greatest Hits of the 1920s, and settle in to solving this interesting problem.\n"
     ],
     "wrapup": "You hear somebody enter the room.\n    ``\\textit{Frankenstein}, `boat','' is the challenge, and she answers, ``borne.''\n    Archie introduces you to the new arrival, ``Lil, this is our new developer, the one who wrote the app we just used.''\n    He turns to you: ``This is Lilith Redd from business operations.''\n    He turns back to her and continues, ``Lil, what's the good word?''\n\n    ``The word isn't good, I'm afraid.\n    I just heard back from the insurance company.''",

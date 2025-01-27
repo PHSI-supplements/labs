@@ -1,16 +1,16 @@
 /**************************************************************************//**
  *
- * @file challenge-response.c
+ * @file sorted_word_entries.c
  *
  * @author (TYPE YOUR NAME HERE)
  * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
- * @brief Functions for the "challenge/response" application.
+ * @brief Functions for a sorted list of word entries.
  *
  ******************************************************************************/
 
 /*
- * LinkedListLab assignment and starter code (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab assignment and starter code (c) 2021-25 Christopher A. Bohn
  * LinkedListLab solution (c) the above-named student(s)
  */
 
@@ -18,9 +18,12 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <time.h>
-#include "challenge-response.h"
+#include "sorted_word_entries.h"
 
-/* ALPHABETIZE WORDS */
+
+/*                   *
+ * ALPHABETIZE WORDS *
+ *                   */
 
 /**
  * Makes a copy of a string, except that all uppercase letters in the original
@@ -86,7 +89,11 @@ bool word1_is_later_than_word2(const char *word1, const char *word2) {
     return is_later;
 }
 
-/* INSERTION SORT */
+
+/*                *
+ * INSERTION SORT *
+ *                */
+
 
 /**
  * <p>
@@ -112,7 +119,11 @@ list_t *insert_word(list_t *list, char const *word) {
     return list;
 }
 
-/* BUILD AND USE THE LIST */
+
+/*                        *
+ * BUILD AND USE THE LIST *
+ *                        */
+
 
 /**
  * Given the name of the book file from the user, reads the file
@@ -142,58 +153,4 @@ list_t *build_list(char const *filename) {
 //    clock_t stop = clock();
 //    printf("List built in %f sec\n", (double) (stop - start) / CLOCKS_PER_SEC);
     return list;
-}
-
-/**
- * Given an alphabetically sorted list of words with the number of occurrences
- * of each word, and given the challenge_word, will return the response word
- * based on the following rules:
- * <ul>
- * <li> If the number of occurrences is an even number then the response word is
- *      that many places *before* `challenge_word` in the list
- * <li> If the number of occurrences is an odd number then the response word is
- *      that many places *after* `challenge_word` in the list
- * <li> If the `challenge_word` is fewer than that number of places from the
- *      start/end of the list, then the response is the word at the start/end of
- *      the list
- * <li> If `challenge_word` is not present in the list, then the response is
- *      "<challenge_word> is not present!"
- * </ul>
- *
- * @param list the list of words
- * @param destination a character array with at least 51 bytes allocated
- * @param challenge_word the word to search for in the list
- * @return the response word, as described above
- */
-char *respond(list_t *list, char *destination, char const *challenge_word) {
-//    clock_t start = clock();
-    reset_iterator(list);
-    destination[0] = '\0';
-    // no matter how long or short the word is, that '\0' will be overwritten when we have a response
-    while (!destination[0]) {
-        word_entry_t *word_entry = get_word_entry(list);
-        char const *word = get_word(word_entry);
-        if (word_entry == NULL || word1_is_earlier_than_word2(challenge_word, word)) {
-            // we're at the end of the list, or we've moved past where the word should be
-            // we *could* ignore the second condition -- if the word isn't there, we'll eventually get to the end
-            sprintf(destination, "%s is not present!", challenge_word);
-        } else if (words_are_equal(challenge_word, word)) {
-            int displacement = get_count(word_entry);
-//            printf("%s has %d occurrences\n", challenge_word, displacement);
-            if (displacement % 2 == 0) {
-                while (displacement-- > 0 && iterate_forward(list)) {}
-                if (get_word_entry(list) == NULL) {     // reached the end of the list
-                    iterate_backward(list);
-                }
-            } else {
-                while (displacement-- > 0 && iterate_backward(list)) {}
-            }
-            strncpy(destination, get_word(get_word_entry(list)), MAXIMUM_WORD_LENGTH);
-        } else {
-            iterate_forward(list);
-        }
-    }
-//    clock_t stop = clock();
-//    printf("Word found in %f sec\n", (double) (stop - start) / CLOCKS_PER_SEC);
-    return destination;
 }

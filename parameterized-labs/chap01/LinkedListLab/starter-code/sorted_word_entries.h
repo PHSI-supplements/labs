@@ -4,23 +4,23 @@
 
 /**************************************************************************//**
  *
- * @file challenge-response.h
+ * @file sorted_word_entries.h
  *
  * @author Christopher A. Bohn
  *
- * @brief Functions prototypes for the "challenge/response" application.
+ * @brief Functions prototypes for a sorted list of word entries.
  *
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab (c) 2021-25 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#ifndef CHALLENGE_RESPONSE_H
-#define CHALLENGE_RESPONSE_H
+#ifndef SORTED_WORD_ENTRIES_H
+#define SORTED_WORD_ENTRIES_H
 
 #include <string.h>
 #include "list.h"
@@ -31,6 +31,5 @@ bool word1_is_earlier_than_word2(const char *word1, const char *word2);
 bool word1_is_later_than_word2(const char *word1, const char *word2);
 list_t *insert_word(list_t *list, char const *word);
 list_t *build_list(char const *filename);
-char *respond(list_t *list, char *destination, char const *challenge_word);
 
-#endif //CHALLENGE_RESPONSE_H
+#endif //SORTED_WORD_ENTRIES_H

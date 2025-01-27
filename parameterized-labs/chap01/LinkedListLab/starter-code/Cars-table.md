@@ -1,21 +1,21 @@
-| CHALLENGE WORD | OCCURRENCES | RESPONSE WORD |
-|:--------------:|:-----------:|:-------------:|
-| blazer | 7 | blazer |
-| camero | 6 | equinox |
-| charger | 1 | camero |
-| chevette | 10 | neon |
-| colt | 4 | explorer |
-| corvette | 1 | colt |
-| duster | 6 | mustang |
-| equinox | 4 | lancer |
-| explorer | 2 | gremlin |
-| fiesta | 3 | duster |
-| gremlin | 1 | fiesta |
-| lancer | 5 | duster |
-| mustang | 5 | equinox |
-| neon | 4 | thunderbird |
-| prowler | 3 | lancer |
-| tahoo | 1 | prowler |
-| taurus | 2 | transam |
-| thunderbird | 5 | mustang |
-| transam | 4 | transam |
+|    WORD     | OCCURRENCES |
+|:-----------:|:-----------:|
+|   blazer    |      7      |
+|   camero    |      6      |
+|   charger   |      1      |
+|  chevette   |     10      |
+|    colt     |      4      |
+|  corvette   |      1      |
+|   duster    |      6      |
+|   equinox   |      4      |
+|  explorer   |      2      |
+|   fiesta    |      3      |
+|   gremlin   |      1      |
+|   lancer    |      5      |
+|   mustang   |      5      |
+|    neon     |      4      |
+|   prowler   |      3      |
+|    tahoo    |      1      |
+|   taurus    |      2      |
+| thunderbird |      5      |
+|   transam   |      4      |

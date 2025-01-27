@@ -2,18 +2,17 @@
 
 % TODO: Parameterize business rules
 
-Anybody can challenge anyone else in the Pleistocene Petting Zoo's non-public areas by providing the name of a book and a word contained within the book, and the person being challenged must respond with another word from that book, based on certain rules:
 \begin{itemize}
     \item All of the book's words are sorted alphabetically without regard to capitalization (for example, ``hello'' occurs after ``Hear'' and before ``HELP'')
-    \item The challenge word occurs \textit{occurrences} times in the book
-    \item If $occurrences$ is an even number then the response word is the word is $occurrences$ places \textbf{after} the challenge word in the alphabetized list;
-    if the challenge word is less than $occurrences$ places from the start of the list then the response word is the first word in the list
-    \item If $occurrences$ is an odd number then the response word is the word $occurrences$ places \textbf{before} the challenge word in the alphabetized list;
-    if the challenge word is less than $occurrences$ places from the end of the list then the response word is the last word in the list
+    \item The word occurs \textit{occurrences} times in the book
+%    \item If $occurrences$ is an even number then the response word is the word is $occurrences$ places \textbf{after} the challenge word in the alphabetized list;
+%    if the challenge word is less than $occurrences$ places from the start of the list then the response word is the first word in the list
+%    \item If $occurrences$ is an odd number then the response word is the word $occurrences$ places \textbf{before} the challenge word in the alphabetized list;
+%    if the challenge word is less than $occurrences$ places from the end of the list then the response word is the last word in the list
 \end{itemize}
 
-Here is a simple example.
-Suppose the words in the specified book are:
+As a simple example, look at the \textit{Food} file.
+After sorting and counting, we have:
 
 \begin{center}
     \begin{tabular}{cc}
@@ -40,20 +39,14 @@ Suppose the words in the specified book are:
         tomato      & 12 \\
     \end{tabular}
 \end{center}
-If the challenge word is ``horseradish'' then because horseradish occurs 9 times in the book, the response word is ``quinoa,'' which is 9 places in the list after ``horseradish.''
-If the challenge word is ``eggplant'' then the response is ``carrot,'' which is 2 places earlier in the list than ``eggplant.''
-If the challenge word is ``quinoa'' then the response word is ``tomato,'' because the response word should be 11 places after ``quinoa,'' but the end of the list is 3 places later;
-``tomato'' is the last word in the list.
-%(\textit{Note:} ``horseradish'' and ``quinoa'' being each other's response words is coincidental.
-%Unusual things happen with short lists of words that do not generalize to longer lists.)
 
-You break the problem down into four sub-problems:
+You break the problem down into three sub-problems:
 
 \begin{enumerate}
     \item Designing the Data Structure and Its Algorithms
     \item Alphabetizing Words
     \item Inserting Words
-    \item Responding to a Challenge
+%    \item Responding to a Challenge
 \end{enumerate}
 
 \subsubsection*{The Books}
@@ -69,7 +62,7 @@ Four small ``books'' are included with the starter code:
 
 Two real books have also been reduced to one word per line:\footnote{The text for these books was obtained from \href{https://www.gutenberg.org/}{Project Gutenberg}.
 In accordance with Paragraph~1.C of the \href{https://www.gutenberg.org/policy/license}{Project Gutenberg License}, all references to Project Gutenberg have been removed from the ``derived works'' that we are distributing.
-    (Removing the references to Project Gutenberg was also necessary to ensure that \textit{only} the words from the books are used for the challenge-and-response system.)}
+    (Removing the references to Project Gutenberg was also necessary to ensure that \textit{only} the words from the books are included in the list.)}
 
 \begin{itemize}
     \item Mary Shelly's \textit{Frankenstein; Or, The Modern Prometheus} (filename ``Frankenstein'') \url{https://www.gutenberg.org/ebooks/84} (sorted, 74,363 words)
@@ -83,18 +76,17 @@ The files marked as \textit{sorted} have all of their words already in alphabeti
 the files marked as \textit{unsorted} do not have their words sorted (the words in ``Plants'' and ``Food'' are in a randomly-selected order;
 the words in ``TheLostWorld'' appear in the order that they appear in the original \textit{The Lost World}).
 
-Each book file, ``\textit{file}'', has a corresponding ``\textit{file}-table.md'' that contains a Markdown-formatted table of the challenge words, the number of occurrences for each challenge word, and the corresponding response word.
+Each book file, ``\textit{file}'', has a corresponding ``\textit{file}-table.md'' that contains a Markdown-formatted table of the words and the number of occurrences for each word.
 You may use these files to confirm the correctness of your solution.
 
-% TODO: re-generate the solution tables
-
 Throughout the assignment, we note that if building the list takes more than a few seconds, there is a bug in your code;
-for context, we can build the list for \textit{Frankenstein} in 1--2 seconds and the list for \textit{The Lost World} in 1.5--3 seconds.
-We can locate a word (or determine the absence of a word) in the \textit{Frankenstein} list in under 0.5ms and in the \textit{The Lost World} list in under 0.9ms.
+You should be able to build a list for \textit{Frankenstein} or \textit{The Lost World} in under a second.
 Your code may take longer, but it should not take much longer.
 
-% TODO: re-time the sample solution
-% TODO: add time-out code to driver
+\colorbox{yellow}{Some of the tests in \textit{sorted-test.c} will timeout after ten seconds to stop runaway code.} \\
+\colorbox{yellow}{To disable this timeout (such as when debugging with breakpoints), compile the code with} \\
+\colorbox{yellow}{\texttt{touch sorted-list.c; make OPTION="-DNOTIMEOUT"}} \\
+(to re-enable the timeout, use \texttt{touch sorted-list.c; make})
 
 You will earn most of the credit for this lab if your code works for pre-sorted files of up to 200 words.
 The remaining credit is for making your code work with unsorted files and, when using files of up to 80,000 words, your code can generate a list and find a word in fewer than 20 seconds.
@@ -102,7 +94,7 @@ The remaining credit is for making your code work with unsorted files and, when 
 \vspace{1cm}
 
 H.Awk provides you with the code he worked on.
-It turns out that while he finished implemented the array-backed list, he didn't finish the actual challenge-response app.
+It turns out that while he finished implemented the array-backed list, he didn't finish the sorting algorithm.
 You decide to warm up by finishing the app and then circling back to the linked list.
 
 \subsection{Word Entries}
@@ -152,9 +144,9 @@ the caller would be unable to later free this memory without discarding the \lst
 \paragraph{Testing Your Changes}
 
 You can build an executable that uses H.Awk's array-backed list with the command \\
-\verb+make arraylistlab+ \\
+\verb+make arraylist+ \\
 or, if you want to limit each \function{malloc()} call to no more than 32KB, then use the command \\
-\verb+make arraylistlab "OPTION=-DHOBBLE"+
+\verb+make arraylist "OPTION=-DHOBBLE"+
 
 \begin{description}
     \checkoffitem{Build and run the executable.         \\
@@ -163,9 +155,9 @@ or, if you want to limit each \function{malloc()} call to no more than 32KB, the
                 2) Test list                            \\
                 3) Test alphabetical functions          \\
                 4) Test insert\_word (empty list)       \\
-                5) Test insert\_word (populated list)   \\
-                6) Create and print book list           \\
-                7) Test challenge/response system       \\
+                5) Test insert\_word (singleton list)   \\
+                6) Test insert\_word (populated list)   \\
+                7) Create and print book list           \\
                 Select the task you wish to check:}}
     \checkoffitem{Select task 1, ``Test word\_entry''.  \\
         \texttt{0) Return to main menu                  \\
@@ -228,9 +220,9 @@ We recommend that you use the \function{strncmp()} function\footnote{\url{https:
 \paragraph{Testing Your Changes}
 
 You can build an executable that uses H.Awk's array-backed list with the command \\
-\verb+make arraylistlab+ \\
+\verb+make arraylist+ \\
 or, if you want to limit each \function{malloc()} call to no more than 32KB, then use the command \\
-\verb+make arraylistlab "OPTION=-DHOBBLE"+
+\verb+make arraylist "OPTION=-DHOBBLE"+
 
 \begin{description}
     \checkoffitem{Build and run the executable.         \\
@@ -239,9 +231,9 @@ or, if you want to limit each \function{malloc()} call to no more than 32KB, the
                 2) Test list                            \\
                 3) Test alphabetical functions          \\
                 4) Test insert\_word (empty list)       \\
-                5) Test insert\_word (populated list)   \\
-                6) Create and print book list           \\
-                7) Test challenge/response system       \\
+                5) Test insert\_word (singleton list)   \\
+                6) Test insert\_word (populated list)   \\
+                7) Create and print book list           \\
                 Select the task you wish to check:}}
     \checkoffitem{Select task 3, ``Test alphabetical functions'', and enter words when prompted.}
 \end{description}
@@ -256,47 +248,47 @@ Each word will be displayed in its lowercase form, and the results of the three 
 
 \subsection{Preparing to Work with Lists}
 
-It is entirely probably that H.Awk, left to his own devices, would simply have used an array instead of making the effort to create an array-backed list with a well-defined abstract model.
+It is entirely probable that H.Awk, left to his own devices, would simply have used an array instead of making the effort to create an array-backed list with a well-defined abstract model.
 Fortunately, someone pulled his strings, and you have available to you an abstract model of a list that can be realized by any number of implementations.
 
-Like \lstinline{word_entry_t}, the \lstinline{list_t} datatype has functions to encapsulate it.
-In the case of \lstinline{list_t}, however, this encapsulation is essential because the code in \textit{challenge-response.c} has access to the type declaration but not the type definition.
+Like \lstinline{word_entry_t}, the \lstinline{list_t} and the \lstinline{iterator_t} datatypes have functions to encapsulate them.
+In the case of \lstinline{list_t} and \lstinline{iterator_t}, however, this encapsulation is essential because the code in \textit{sorted\_word\_entries.c} has access to the type declaration but not the type definition.
 
 \begin{description}
-    \checkoffitem{Review the datatype and functions declared in \textit{list.h}.}
+    \checkoffitem{Review the datatypes and functions declared in \textit{list.h}.}
 \end{description}
 
 A list is abstractly modeled as having a sequence of word entries and an iterator that points to the ``current'' word entry.
-The iterator can point to anywhere between the first word entry to the ``empty'' space after the last word entry.
+The iterator can point to anywhere between the first word entry and the last word entry.
 
-The \function{reset_iterator()} function sets the iterator to the first word entry, and the \function{iterate_forward()} and \function{iterate_backward()} functions cause the iterator to advance and retreat.
-These functions return \lstinline{true} if successful, and \lstinline{false} if not.
-``Not successful'' isn't a bad thing, though -- the implications are informative:
+\textcolor{red}{
+A good rule of thumb is that if the previous operation returned the iterator, then the iterator is valid;
+if the previous operation returned the list, then the iterator is invalid and should not be used.
+Attempting to access non-existent word entries beyond the bounds of the list will also invalidate the iterator.
+}
+
 \begin{itemize}
-    \item \lstinline{reset_iterator()} fails only when there is no first element; that is, when the list is empty
-    \item \lstinline{iterate_forward()} fails only when iterating forward is not possible; that is, when the iterator already points to the ``empty'' space after the last word entry
-    \item \lstinline{iterator_backward()} fails only when iterating backward is not possible; that is, when the iterator already points to the first word entry
+    \item The \function{get_iterator()} function sets the iterator to the first word entry, and the \function{iterate_next()} and \function{iterate_previous()} functions cause the iterator to advance and retreat
+    \item The \function{has_next()} and \function{has_previous()} functions report whether there are additional word entries in the indicated direction
+    \item The \function{get_word_entry()} function retrieves the word entry that the iterator points to, and the \function{get_next_word_entry()} and \function{get_previous_word_entry()} functions retrieve the word entry in the indicated direction
+    \item The \function{prepend()} and \function{append()} functions place a word entry at the beginning or end of the list, respectively, setting the iterator to the new word entry
+    \item The \function{insert()} function places a new word entry at the iterator's location, and the function{delete()} function removes the word entry at the iterator's location -- both of these functions invalidate the iterator
+    \item The \function{swap_next()} and \function{swap_previous()} functions can be used to move a word entry forward and backward
+    \item The \function{merge_next()} and \function{merge_previous()} functions can be used to combine a word entry with its neighbor
 \end{itemize}
 
-The \function{get_word_entry()} function retrieves the word entry that the iterator points to.
-The \function{insert()} function inserts the word entry before the word entry that the iterator currently points to.
-And the \function{delete()} function removes the word entry that the iterator currently points to.
-
-There are three functions that do not depend on the iterator:
-\function{get_first_word_entry()} and \function{get_last_word_entry()}, with the obvious meanings,
-and \function{append()} that places a word entry at the end of the sequence.
-
 \begin{description}
-    \checkoffitem{Review the \function{respond()} function in \textit{challenge-response.c} to see some uses of the \lstinline{list_t} functions.}
+    \checkoffitem{Review the \function{test_list()} function in \textit{list-test.c} to see uses of the \lstinline{list_t} and \lstinline{iterator_t} functions.}
+    \checkoffitem{Run the arraylist executable, selecting task 2 (``Test list'') to observe the behavior of the \lstinline{list_t} and \lstinline{iterator_t} functions.}
 \end{description}
 
 
 \subsection{Inserting Words}
 
-The \function{build_list()} function in \textit{challenge-response.c} reads words from a ``book'' and sends them to \function{insert_word()}.
+The \function{build_list()} function in \textit{sorted\_word\_entries.c} reads words from a ``book'' and sends them to \function{insert_word()}.
 You do not need to implement \function{build_list()}.
 
-The \function{insert_word()} function in \textit{challenge-response.c} finds the correct place in the list for a lowercase copy of the word.
+The \function{insert_word()} function in \textit{sorted\_word\_entries.c} finds the correct place in the list for a lowercase copy of the word.
 If the word is already in the list, then it increments the word's count;
 otherwise, it inserts the word into the list.
 You will implement \function{insert_word()}.
@@ -329,10 +321,10 @@ The input is then inserted into the list at that location, preserving the proper
 
 \begin{description}
     \checkoffitem{Implement \function{insert_word()} such that:}
-        \begin{itemize}
-            \item The function looks for the word in the sorted list
-            \item If the word is found in its proper location in the sorted list, then update the number of occurrences
-            \item If the word is not present in its proper location in the sorted list, then insert a new node for that word at its proper location
+    \begin{itemize}
+            \item The word is placed at the end of the list
+            \item If the word is not in its proper location, then it is moved to is proper location
+            \item Once in its proper location, if there is another word entry with the same word, then the two word entries are combined
         \end{itemize}
 \end{description}
 
@@ -346,6 +338,9 @@ If you were to apply category-partition testing, you might arrive at these categ
                                     & at the start of the list              \\
                                     & at the end of the list                \\
                                     & somewhere in the middle of the list   \\ \hline
+    The list's initial length       & no words                              \\
+                                    & one word                              \\
+                                    & more than one word                    \\ \hline
     Word is already in the list?    & yes                                   \\
                                     & no                                    \\ \hline
     Word is already lowercase?      & yes                                   \\
@@ -359,14 +354,14 @@ If you were to apply category-partition testing, you might arrive at these categ
                 2) Test list                            \\
                 3) Test alphabetical functions          \\
                 4) Test insert\_word (empty list)       \\
-                5) Test insert\_word (populated list)   \\
-                6) Create and print book list           \\
-                7) Test challenge/response system       \\
+                5) Test insert\_word (singleton list)   \\
+                6) Test insert\_word (populated list)   \\
+                7) Create and print book list           \\
                 Select the task you wish to check:}}
 \end{description}
 
 You can test ``only word in the list''/``word is not already in the list'' with task 4.
-You can test most of the other combinations with task 5.\footnote{The only combination not supported is ``only word in the list''/``word is already in the list'' -- but testing ``at the start of the list''/``word is already in the list'' and/or ``at the end of the list''/``word is already in the list'' should exercise the code that would be used by ``only word in the list''/``word is already in the list,''}
+You can test most of the other combinations with tasks 5 \& 6.
 When you select these options, an initial sorted list (empty or pre-populated, as appropriate) will be created and printed, and you will be prompted to enter a word.
 After you have entered a word, \function{insert_word()} will be called, and the resulting sorted list (with a new word with 1 occurrence, or with an existing word's occurrences increased by 1) will be printed.
 
@@ -375,18 +370,17 @@ After you have entered a word, \function{insert_word()} will be called, and the 
 \end{description}
 
 
-\subsection{Testing the Challenge-Response System} \label{subsec:TestingChallengeResponse}
+\subsection{Testing the System with ``Books''} \label{subsec:TestingChallengeResponse}
 
-When you are satisfied that your word entry, alphabetical, and word insertion functions are correct, test their integration into the challenge-response system.
-With task 6, you will be prompted for the name of a book file, and then the list will be generated and printed.
-With task 7, you will be prompted for the name of a book file, and then the list will be generated; you will then be repeatedly prompted for challenge words which will produce responses.
+When you are satisfied that your word entry, alphabetical, and word insertion functions are correct, test them with book files.
+With task 7, you will be prompted for the name of a book file, and then the list will be generated and printed.
 You can use the ``\textit{file}-table.md'' files to confirm the correctness of the results.
 
-\textcolor{red}{If your program requires more than a few seconds to build a list, or does not get a challenge word's response nearly instantaneously, then there is a bug in your code.}
+\textcolor{red}{If your program requires more than a few seconds to build a list, then there is a bug in your code.}
 
 \begin{description}
     \checkoffitem{Test building a list until you discover a bug or are satisfied that your implementations are correct.}
-    \checkoffitem{Test challenge/responses until you discover a bug or are satisfied that your implementations are correct.}
+%    \checkoffitem{Test challenge/responses until you discover a bug or are satisfied that your implementations are correct.}
     \checkoffitem{When you have finished, select 0 to exit the program.}
 \end{description}
 
@@ -402,25 +396,28 @@ As a reminder, the book files are:
 \end{itemize}
 
 
-\subsection{Linked List} \label{subsec:LinkedList}
+\section{Linked List} \label{sec:LinkedList}
 
 \textit{n.b.}: If you need a refresher on linked lists, see Appendix~\ref{sec:linkedLists}.
 
-In \textit{list.h}, we use a forward declaration to make the code in \textit{challenge-response.h} aware of the type.
+In \textit{list.h}, we use a forward declaration to make the code in \textit{sorted\_word\_entries.c} aware of the types.
 
-\lstinputlisting[linerange=46-46, firstnumber=46]{../starter-code/list.h}
+\lstinputlisting[linerange=43-43, firstnumber=43]{../starter-code/list.h}
+\lstinputlisting[linerange=58-58, firstnumber=58]{../starter-code/list.h}
 
-When you built the \textit{arraylistlab} executable earlier, the \textit{array\_list.h} file provided a type definition for the code in \textit{array\_list.c} to use.
-Similarly, when you build the \textit{linkedlistlab} executable, the \textit{linked\_list.h} file provided a type definition for the code in \textit{linked\_list.c} to use.
+When you built the \textit{arraylist} executable earlier, the \textit{array\_list.h} file provided type definitions for the code in \textit{array\_list.c} to use.
+Similarly, when you build the \textit{linkedlist} executable, the \textit{linked\_list.h} file provides type definitions for the code in \textit{linked\_list.c} to use.
 
-\lstinputlisting[linerange=56-60, firstnumber=56]{../starter-code/linked_list.h}
+\lstinputlisting[linerange=58-62, firstnumber=58]{../starter-code/linked_list.h}
+\lstinputlisting[linerange=71-74, firstnumber=71]{../starter-code/linked_list.h}
 
-The list definition has pointers to three nodes, a \lstinline{head} that points to the first node in the list, a \lstinline{tail} that points to the last node in the list, and a \lstinline{current} that serves as the ``iterator'' for the list's abstract model.
+The list definition has three pointers, a \lstinline{head} that points to the first node in the list, a \lstinline{tail} that points to the last node in the list, and an \lstinline{iterator}.
+The iterator definition has two pointers, a \lstinline{list} that points back to the list structure, and a \lstinline{current_node} that points to the current node, denoting the iterator's position in the list.
 \textcolor{red}{
-    Some notes about \lstinline{NULL} pointers -- we will adopt the convention that:
     \begin{itemize}
-        \item \lstinline{head} and \lstinline{tail} are \lstinline{NULL} if and only if the list is empty
-        \item \lstinline{current_node} is \lstinline{NULL} if the iterator points to the ``empty'' space after the last word entry (or the list is empty)
+        \item \lstinline{head} and \lstinline{tail} are \lstinline{NULL} if and only if the list is empty.
+        \item \lstinline{current_node} only needs to have a sensible assignment when the iterator is valid.
+            When the iterator is invalid, \lstinline{current_node} can be NULL; it can point to a node in the list; it can point to \textit{any} memory location.
     \end{itemize}
 }
 
@@ -432,18 +429,18 @@ We define a linked list note conventionally:
 
 (Here the forward declaration is necessary so that \lstinline{node_t} can be used when defining the node structure.)
 
-When writing functions in \textit{challenge\_response.c}, you had to rely on \lstinline{list_t}'s encapsulation and could not assume any particular list definition.
-\textbf{Whenever you are writing a function in \textit{linked\_list.c}, you can treat \lstinline{list_t} as though it has the linked list definition.}
+When writing functions in \textit{sorted\_word\_entries.c}, you had to rely on \lstinline{list_t}'s and \lstinline{iterator_t}'s encapsulation and could not assume any particular list \& iterator definitions.
+\textbf{Whenever you are writing a function in \textit{linked\_list.c}, you can treat \lstinline{list_t} and \lstinline{iterator_t} as though they have the linked list definitions.}
 
 
-\subsection{Building and Testing Your Linked List Implementation}
+\subsection{Building and Testing Your Linked List Implementation} \label{subsec:BuildingLinkedList}
 
 If you use the command \\
 \verb+make all+ \\
 or \\
 \verb+make all "OPTION=-DHOBBLE"+ \\
-then you will generate two executables: \textit{arraylistlab} that has the array-backed list, and \textit{linkedlistlab} that has the linked list.
-If you open two terminal windows, you can run the test code on \textit{arraylistlab} in one window and run the test suite on \textit{linkedlistlab} in the other window.
+then you will generate two executables: \textit{arraylist} that has the array-backed list, and \textit{linkedlist} that has the linked list.
+If you open two terminal windows, you can run the test code on \textit{arraylist} in one window and run the test suite on \textit{linkedlist} in the other window.
 This will allow you to compare the results with your linked list implementation against the expected results provided by the array-backed list (Figure~\ref{fig:SideBySideTesting}).
 
 \begin{figure}
@@ -453,7 +450,7 @@ This will allow you to compare the results with your linked list implementation 
     \label{fig:SideBySideTesting}
 \end{figure}
 
-To test your linked list implementation, run \textit{linkedlistlab} (and, optionally, \textit{arraylistlab} in another terminal window),
+To test your linked list implementation, run \textit{linkedlist} (and, optionally, \textit{arraylist} in another terminal window),
 and select option 2, ``Test list''
 
 
@@ -462,139 +459,191 @@ and select option 2, ``Test list''
 In \textit{linked\_list.c}:
 
 \begin{description}
-    \checkoffitem{Edit \function{create_node()} to initialize all of a new node's fields.}
-    \checkoffitem{Edit \function{create_list()} to initialize all of a new list's fields.}
+    \checkoffitem{Edit \function{create_node()} to initialize all of a new node's fields, as well as those of its iterator.}
+    \checkoffitem{Edit \function{create_list()} to initialize all of a new list's fields.
+        \begin{itemize}
+            \item The list's \lstinline{iterator} field should point to its iterator, and the iterator's \lstinline{list} field should point back to its list (See Section~\ref{subsubsec:listt-as-lined-list}).
+        \end{itemize}
+    }
+    \checkoffitem{Edit \function{get_iterator()} to return the list's iterator.}
+    \checkoffitem{Edit \function{get_list()} to return the list's iterator. The current node should be the head of the list.}
     \checkoffitem{Test \function{create_node()} and \function{create_list()} by selecting option 2 (``Test list'') and function 1 (``create\_list()'').}
+    \checkoffitem{Test \function{get_iterator()} and \function{get_list()} by selecting functions 3 (``get\_iterator()'') and 4 (``get\_list()'').}
     \checkoffitem{Free the memory by selecting function 2 (``delete\_list()'').
         Exit out of the program by selecting function 0, then option 0.}
 \end{description}
 
-It is unlikely that you made any errors that would cause the ``create\_list()'' test to fail,
+It is unlikely that you made any errors that would cause these test to fail,
 but it's better to find out now if you did.
 
 
-\subsection{Appending a Node}
+\subsection{Prepending and Appending a Node}
 
-The \function{append()} function takes a word entry, makes it the payload of a new node, and places the new node at the end of the linked list.
-The new node, of course, becomes the tail of the list.
-If the list is initially empty, then the new node is also the head of the list.
+The \function{append()} function takes a word entry, makes it the payload of a new node, and places the new node at the start of the linked list.
+The new node, of course, becomes the head of the list.
+Similarly, the \function{append()} function takes a word entry, makes it the payload of a new node, and places the new node at the end of the linked list.
+The new node becomes the tail of the list.
+If the list is initially empty, then the new node is both the head and the tail of the list.
 
 \begin{description}
-    \checkoffitem{Edit \function{append()} to place a word entry at the end of the list.}
+    \checkoffitem{Edit \function{prepend()} to place a word entry at the start of the list. The current node should be the newly-added node.}
+    \checkoffitem{Edit \function{append()} to place a word entry at the end of the list. The current node should be the newly-added node.}
     \checkoffitem{Create a list by selection option option 2 (``Test list'') and function 1 (``create\_list()'').}
-    \checkoffitem{Test \function{append()} for an empty list by selecting function 7 (``append()'').}
-    \checkoffitem{Test \function{append()} for a list with one node by selecting function 7 (``append()'').}
-    \checkoffitem{Test \function{append()} for a list with multiple nodes by selecting function 7 (``append()'').}
+    \checkoffitem{Test \function{prepend()} for an empty list by selecting function 9 (``prepend()'').}
+    \checkoffitem{Test \function{prepend()} for a list with one node by selecting function 9 (``prepend()'').}
+    \checkoffitem{Test \function{prepend()} for a list with multiple nodes by selecting function 9 (``prepend()'').}
+    \checkoffitem{Delete the list (function 2, ``delete\_list()'') and create a new list (function 1, ``create\_list()'').}
+    \checkoffitem{Test \function{append()} for an empty list by selecting function 10 (``append()'').}
+    \checkoffitem{Test \function{append()} for a list with one node by selecting function 10 (``append()'').}
+    \checkoffitem{Test \function{append()} for a list with multiple nodes by selecting function 10 (``append()'').}
+    \checkoffitem{Continue to test \function{append()} and \function{prepend()} until you discover a bug or are satisfied that your implementation is correct.}
     \checkoffitem{Free the memory by selecting function 2 (``delete\_list()'').
         Exit out of the program by selecting function 0, then option 0.}
 \end{description}
 
 
-\subsection{Iterator Manipulation}
+\subsection{Iterating}
 
-The \function{reset_iterator()} function should make the iterator point to the first element in the sequence.
-For a linked list, this means that the current node should be the head.
-If successful, then the function returns \lstinline{true},
-but if there isn't a first element (that is, if the head is \lstinline{NULL}) then the function returns \lstinline{false}.
+In our list design, the iterator is used to navigate the list.
 
-The \function{iterate_forward()} and \function{iterate_backward()} functions cause the iterator to move back and forth across the sequence.
+Iterating forward past the tail, or backward past the head, is problematic -- these actions would fire an exception in languages with software exceptions.
+Our list specification instead invalidates the iterator, resulting in undefined behavior.
+The surest way to avoid that problem is to first determine whether there's another element to iterate to.
+
+\begin{description}
+    \checkoffitem{Implement \function{has_next()} and \function{has_previous()} to return true if and only if the iterator's current node has a next or previous node, respectively.}
+\end{description}
+
+The \function{iterate_next()} and \function{iterate_previous()} functions cause the iterator to move back and forth across the sequence.
 For a linked list, this means that you follow the current node's \lstinline{next} or \lstinline{previous} pointers, as appropriate.
 
 \begin{description}
-    \checkoffitem{Implement \function{reset_iterator()}.}
-    \checkoffitem{Implement \function{iterate_forward()}.}
-    \checkoffitem{Implement \function{iterate_backward()}.}
-    \checkoffitem{Create a list by selection option option 2 (``Test list'') and function 1 (``create\_list()'').}
-    \checkoffitem{Test these functions on an empty list by selecting function 3 (``reset\_iterator()''), function 4 (``iterate\_forward()''), and function 5 (``iterate\_backward()'').
-        The test should state that the iterator doesn't change for any of these functions.}
-    \checkoffitem{Create a list with one node by selecting function 7 (``append()'').}
-    \checkoffitem{Test these functions on a singleton list by selecting function 3 (``reset\_iterator()''), function 4 (``iterate\_forward()''), and function 5 (``iterate\_backward()'').
-        Pay attention to whether the test states that the iterator changed or not.
-        When the iterator does change, you should also see that the address of the current node has changed.}
-    \checkoffitem{Create a list with multiple nodes by selecting function 7 (``append()'').}
-    \checkoffitem{Continue to test the iterator manipulation functions until you discover a bug or are satisfied that your implementations are correct.}
+    \checkoffitem{Implement \function{iterate_next()} and \function{iterate_previous()}.
+    \begin{itemize}
+        \item Iterating to a non-existent node beyond the bounds of the list invalidates the iterator and results in undefined behavior.
+            Normally, when behavior is undefined, any resulting behavior is acceptable, including crashing the program.
+        \item \textcolor{red}{In this assignment, when the behavior is undefined, any result is acceptable \textit{except} crashing the program.
+        Specifically, you may not dereference a NULL pointer.}
+    \end{itemize}
+    }
+    \checkoffitem{Create a list by selection option option 2 (``Test list'') and function 1 (``create\_list()''). Get the iterator with function 3 (``get\_iterator()'').}
+    \checkoffitem{Test that \function{has_next()} and \function{has_previous()} both return \lstinline{false} for an empty list, using functions 5 (``has\_next()'') and 6 (``has\_previous()''.}
+    \checkoffitem{Test that neither \function{iterate_next()} nor \function{iterate_previous()} crash the program for an empty list, using functions 7 (``iterate\_next()'') and 8 (``iterate\_previous()''.
+    \begin{itemize}
+        \item Be sure to get a valid iterator (function 3) between those tests, since attempting to iterate beyond the list's bounds invalidates the iterator.
+    \end{itemize}
+    }
+    \checkoffitem{Prepend a word entry (function 9).}
+    \checkoffitem{Test that \function{has_next()} and \function{has_previous()} both return \lstinline{false} for singleton list, using functions 5 (``has\_next()'') and 6 (``has\_previous()''.}
+    \checkoffitem{Test that neither \function{iterate_next()} nor \function{iterate_previous()} crash the program for singleton list, using functions 7 (``iterate\_next()'') and 8 (``iterate\_previous()''.
+        \begin{itemize}
+            \item Be sure to get a valid iterator (function 3) between those tests, since attempting to iterate beyond the list's bounds invalidates the iterator.
+        \end{itemize}
+    }
+    \checkoffitem{Use \function{prepend()} and/or \function{append()} a few times to build-out the list.}
+    \checkoffitem{Test that \function{iterate_next()} nor \function{iterate_previous()} correctly navigate the list by updating the iterator, using functions 7 (``iterate\_next()'') and 8 (``iterate\_previous()''.}
+    \checkoffitem{Test that \function{has_next()} and \function{has_previous()} return \lstinline{true} or \lstinline{false} as appropriate for various positions in the list, using functions 5 (``has\_next()'') and 6 (``has\_previous()''.}
+    \checkoffitem{Continue to test the iteration functions until you discover a bug or are satisfied that your implementations are correct.}
     \checkoffitem{Free the memory by selecting function 2 (``delete\_list()'').
         Exit out of the program by selecting function 0, then option 0.}
+\end{description}
+
+
+\subsection{Insertion and Deletion at Arbitrary Locations}
+
+The \function{prepend()} and \function{append()} functions can only add nodes to the list's extrema.
+One of the advantages of a linked list over an array is that insertions and deletions in the middle of the list are constant-time operations.
+
+\begin{description}
+    \checkoffitem{Implement \function{insert()} to place a word entry at the iterator's current location; that is, the new node should be between the current node and its previous node.}
+    \checkoffitem{Implement \function{delete()} to remove the word entry at the iterator's current location.}
+    \checkoffitem{Create a list by selection option option 2 (``Test list'') and function 1 (``create\_list()''). Get the iterator with function 3 (``get\_iterator()'').}
+    \checkoffitem{Test \function{insert()} for an empty list by selecting function 11 (``insert()'').}
+    \checkoffitem{Get a a valid iterator (function 3), and test \function{insert()} for a list with one node by selecting function 11 (``insert()'').}
+    \checkoffitem{Get a a valid iterator (function 3), iterate forward (function 7), and test \function{insert()} for a list with multiple nodes by selecting function 11 (``insert()'').}
+    \checkoffitem{Test that you can delete the head of a list by prepending a node (function 9), and then deleting that node by selecting function 12 (``delete()'').}
+    \checkoffitem{Test that you can delete a node in the middle of a list by getting a valid iterator (function 3), iterating forward (function 7), and deleting the second of three nodes by selecting function 12 (``delete()'').}
+    \checkoffitem{Test that you can delete the tail of a list by getting a valid iterator (function 3), iterating forward (function 7), and deleting the second of two nodes by selecting function 12 (``delete()'').}
+    \checkoffitem{Test that you can delete the only node in a singleton list by getting a valid iterator (function 3) and deleting the node by selecting function 12 (``delete()'').}
+    \checkoffitem{Test that attempting to delete from an empty list doesn't crash the program, by getting a valid iterator (function 3) and selecting function 12 (``delete()'').}
+    \checkoffitem{Continue to test \function{insert()} and \function{delete()} until you discover a bug or are satisfied that your implementation is correct.}
 \end{description}
 
 
 \subsection{Examining Word Entries}
 
 The \function{get_word_entry()} function retrieves the current node's word entry.
-The \function{get_first_word_entry()} and \function{get_last_word_entr()} retrieve the head's and tail's word entries, respectively.
+The \function{get_next_word_entry()} and \function{get_previous_word_entry()} retrieve the head's and tail's word entries, respectively.
 If the current, head, or tail pointers are \lstinline{NULL}, then the corresponding functions return \lstinline{NULL}.
 
 \begin{description}
     \checkoffitem{Implement \function{get_word_entry()}.}
-    \checkoffitem{Implement \function{get_first_word_entry()}.}
-    \checkoffitem{Implement \function{get_last_word_entry()}.}
-    \checkoffitem{Create a list by selection option option 2 (``Test list'') and function 1 (``create\_list()'').}
-    \checkoffitem{Test \function{get_word_entry()} on an empty list by selecting function 6 (``get\_word\_entry()'').}
+    \checkoffitem{Implement \function{get_next_word_entry()}.}
+    \checkoffitem{Implement \function{get_previous_word_entry()}.}
+    \checkoffitem{Create a list by selection option option 2 (``Test list'') and function 1 (``create\_list()''). Get the iterator with function 3 (``get\_iterator()'').}
+    \checkoffitem{Test \function{get_word_entry()} on an empty list by selecting function 13 (``get\_word\_entry()'').}
     \checkoffitem{Create a list with one node by selecting function 7 (``append()'').}
-    \checkoffitem{Test \function{get_word_entry()} on a singleton list.
-        Test it with the iterator pointing at the only node in the list,
-        and test it with the iterator pointing at the ```empty'' space after the word entry}
+    \checkoffitem{Test \function{get_word_entry()} by selecting function 13 (``get\_word\_entry()'').}
     \checkoffitem{Create a list with multiple nodes by selecting function 7 (``append()'').}
-    \checkoffitem{Continue to test \function{get_word_entry()} until you discover a bug or are satisfied that your implementation is correct.}
+    \checkoffitem{Test \function{get_previous_word_entry()} selecting function 15 (``get\_previous\_word\_entry()'').}
+    \checkoffitem{Iterate back to the head with \function{iterate_previous()} (function 8), and test \function{get_next_word_entry()} selecting function 14 (``get\_next\_word\_entry()'').}
+    \checkoffitem{Continue to test \function{get_word_entry()}, \function{get_next_word_entry()}, and \function{get_previous_word_entry()} until you discover a bug or are satisfied that your implementation is correct.}
     \checkoffitem{Free the memory by selecting function 2 (``delete\_list()'').
         Exit out of the program by selecting function 0, then option 0.}
 \end{description}
 
 
-\subsection{Inserting a Node}
+\subsection{Swapping Nodes}
 
-The \function{insert()} function takes a word entry, makes it the payload of a new node, and places the new node before the current node and after the current node's predecessor node.
-The new node, becomes the current node.
-There are a couple of special cases:
-\begin{itemize}
-    \item If the list is initially empty, then the new node is also the head and the tail of the list.
-    \item If the current node is \lstinline{NULL} but there is head and tail, then the iterator points at the ``empty'' space after the last word entry.
-        In this case, the new node is also the tail.
-\end{itemize}
+The \function{swap_next()} and \function{swap_previous()} functions cause the current node to swap places in the list with its next or previous node, respectively.
+Just as repeated calls to \function{iterate_next()} or \function{iterate_previous()} can move the iterator to any position in the list,
+repeated calls to \function{swap_next()} or \function{swap_previous()} can move a node to any position in the list.
 
 \begin{description}
-    \checkoffitem{Implement \function{insert()}.
-        Be sure to handle its special cases.}
+    \checkoffitem{Implement \function{swap_next()}.}
+    \checkoffitem{Implement \function{swap_previous()}.}
     \checkoffitem{Create a list by selection option option 2 (``Test list'') and function 1 (``create\_list()'').}
-    \checkoffitem{Test \function{insert()} on an empty list by selecting function 8 (``insert()'').}
-    \checkoffitem{Thoroughly test \function{insert()} until you discover a bug or are satisfied that your implementation is correct.
-        (Use the iterator manipulation functions to move the iterator to where it needs to be for each test.)}
-    \checkoffitem{Free the memory by selecting function 2 (``delete\_list()'').
-        Exit out of the program by selecting function 0, then option 0.}
-\end{description}
-
-
-\subsection{Deleting a Node} \label{subsec:DeletingNode}
-
-The \function{delete()} function removes and deletes the current node from the list, updating its neighbors' \lstinline{next} and \lstinline{previous} pointers (and possibly the list's \lstinline{head} or \lstinline{tail} pointer) accordingly.
-After the deletion, the deleted node's successor node becomes the current node.
-\begin{itemize}
-    \item[] \textit{Exception} -- if the deleted node was the list's tail, then that node's ``successor'' is the ``empty'' space after the last word entry.
-        In this case, the new tail should become the current node.
-    \item[] \textit{Exception to the exception} -- if the deleted node was the only node in the list, then there isn't a new tail, and so the current node is \lstinline{NULL}.
-\end{itemize}
-
-\begin{description}
-    \checkoffitem{Implement \function{delete()}.
-        Be sure to handle its special cases.}
-    \checkoffitem{Create a list by selection option option 2 (``Test list'') and function 1 (``create\_list()'').}
-    \checkoffitem{Populate the list with several using \function{append()} and/or \function{insert()}.}
-    \checkoffitem{Thoroughly test \function{delete()} (function 9) until you discover a bug or are satisfied that your implementation is correct.
-        (Use the iterator manipulation functions to move the iterator to where it needs to be for each test.
-        Place more word entries in the list if  you need to.)}
+    \checkoffitem{Add a node by selecting function 10 (``append()''), and test that \function{swap_next()} does not crash the program when there is no next node, by selecting function 16 (``swap\_next()'').}
+    \checkoffitem{Get a valid iterator (function 3), and test that \function{swap_previous()} does not crash the program when there is no next node, by selecting function 17 (``swap\_previous()'').}
+    \checkoffitem{Prepend (function 9) two more nodes.}
+    \checkoffitem{Test that you can move the head node to the tail by swapping next (function 16) twice.}
+    \checkoffitem{Test that you can move the tail node to the head by swapping previous (function 17) twice.}
+    \checkoffitem{Continue to test \function{swap_next()} and \function{swap_previous()} until you discover a bug or are satisfied that your implementation is correct.}
     \checkoffitem{Free the memory by selecting function 2 (``delete\_list()'').
     Exit out of the program by selecting function 0, then option 0.}
 \end{description}
 
 
-When you are satisfied that your linked list functions are correct, test their integration into the challenge-response system.
+\subsection{Merging Nodes} \label{subsec:MergingNodes}
+
+Once you have a word entry in its correct position in the list, it's possible that there's another word entry with the same word.
+If that happens, then the word entries should be merged, resulting in one word entry whose \textit{occurrences} is the sum of the two original word entries' \textit{occurrences}.
+
+\begin{description}
+    \checkoffitem{Implement \function{merge_next()}.}
+    \checkoffitem{Implement \function{merge_previous()}.}
+    \checkoffitem{Create a list by selection option option 2 (``Test list'') and function 1 (``create\_list()'').}
+    \checkoffitem{Add a node by selecting function 10 (``append()''), and test that \function{merge_next()} does not crash the program when there is no next node, by selecting function 18 (``merge\_next()'').}
+    \checkoffitem{Get a valid iterator (function 3), and test that \function{merge()} does not crash the program when there is no next node, by selecting function 19 (``merge\_previous()'').}
+    \checkoffitem{Prepend (function 9) four more nodes, and iterate (function 7) to the third of the five nodes.}
+    \checkoffitem{Test that you can merge the current node with its next node by selecting function 18 (``merge\_next()'').}
+    \checkoffitem{Test that you can merge the current node with its previous node by selecting function 19 (``merge\_previous()'').}
+    \checkoffitem{Test that you can merge the current node with the tail node by selecting function 18 (``merge\_next()'').}
+    \checkoffitem{Test that you can merge the current node with the head node by selecting function 19 (``merge\_previous()'').}
+    \checkoffitem{Continue to test \function{swap_next()} and \function{swap_previous()} until you discover a bug or are satisfied that your implementation is correct.}
+    \checkoffitem{Free the memory by selecting function 2 (``delete\_list()'').
+    Exit out of the program by selecting function 0, then option 0.}
+\end{description}
+
+
+When you are satisfied that your linked list functions are correct, test them with book files.
 You can use the ``\textit{file}-table.md'' files to confirm the correctness of the results.
 
-\textcolor{red}{If your program requires more than a few seconds to build a list, or does not get a challenge word's response nearly instantaneously, then there is a bug in your code.}
+\textcolor{red}{If your program requires more than a few seconds to build a list, then there is a bug in your code.}
 
 \begin{description}
     \checkoffitem{Test building a list until you discover a bug or are satisfied that your implementations are correct.}
-    \checkoffitem{Test challenge/responses until you discover a bug or are satisfied that your implementations are correct.}
+%    \checkoffitem{Test challenge/responses until you discover a bug or are satisfied that your implementations are correct.}
     \checkoffitem{When you have finished, select 0 to exit the program.}
 \end{description}
 

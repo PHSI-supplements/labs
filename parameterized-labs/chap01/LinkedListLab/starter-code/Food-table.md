@@ -1,22 +1,22 @@
-| CHALLENGE WORD | OCCURRENCES | RESPONSE WORD |
-|:--------------:|:-----------:|:-------------:|
-| apple | 7 | apple |
-| banana | 4 | fig |
-| carrot | 15 | apple |
-| date | 3 | apple |
-| eggplant | 2 | granola |
-| fig | 6 | lemon |
-| granola | 9 | apple |
-| horseradish | 9 | apple |
-| ice | 6 | orange |
-| jelly | 3 | granola |
-| kale | 1 | jelly |
-| lemon | 2 | naan |
-| mango | 8 | tomato |
-| naan | 7 | granola |
-| orange | 5 | jelly |
-| pineapple | 1 | orange |
-| quinoa | 11 | fig |
-| raisin | 4 | tomato |
-| spaghetti | 10 | tomato |
-| tomato | 12 | tomato |
+|    WORD     | OCCURRENCES |
+|:-----------:|:-----------:|
+|    apple    |      7      |
+|   banana    |      4      |
+|   carrot    |     15      |
+|    date     |      3      |
+|  eggplant   |      2      |
+|     fig     |      6      |
+|   granola   |      9      |
+| horseradish |      9      |
+|     ice     |      6      |
+|    jelly    |      3      |
+|    kale     |      1      |
+|    lemon    |      2      |
+|    mango    |      8      |
+|    naan     |      7      |
+|   orange    |      5      |
+|  pineapple  |      1      |
+|   quinoa    |     11      |
+|   raisin    |      4      |
+|  spaghetti  |     10      |
+|   tomato    |     12      |

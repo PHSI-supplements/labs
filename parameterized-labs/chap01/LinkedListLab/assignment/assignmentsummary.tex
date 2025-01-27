@@ -10,6 +10,11 @@ This will require you to allocate space for the list's nodes and manipulate poin
 
 \subsection{Constraints}
 
-There are no particular restrictions in this assignment other than those common to most lab assignments in this course.
+There are no particular restrictions on uses of C's features in this assignment other than those common to most lab assignments in this course.
     You can check whether you're using a \lstinline{goto} or \lstinline{continue} statement, or whether you're using \lstinline{break} or \lstinline{return} to exit a loop, by running the constraint-checking Python script:
     \texttt{python constraint-check.py linkedlistlab.json}
+
+Some operations on a list have ``undefined behavior'' when performed using an invalid iterator.
+When the behavior is undefined, any result is acceptable \textit{except} crashing the program.
+Specifically, you may not dereference a NULL pointer.
+\texttt{constraint-check.py} will not check for this; however, you can test for it using the code provided to you.

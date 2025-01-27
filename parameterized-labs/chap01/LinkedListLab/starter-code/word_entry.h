@@ -14,7 +14,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab (c) 2021-25 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -33,9 +33,9 @@ typedef struct {
 word_entry_t *create_word_entry(char const *word);
 void delete_word_entry(word_entry_t *word_entry);
 void increment_count(word_entry_t *word_entry);
-int get_count(word_entry_t *word_entry);
-char const *get_word(word_entry_t *word_entry);
-char *word_entry_to_string(char *destination, word_entry_t *word_entry);
+int get_count(word_entry_t const *word_entry);
+char const *get_word(word_entry_t const *word_entry);
+char *word_entry_to_string(char *destination, word_entry_t const *word_entry);
 
 
 #endif //WORD_ENTRY_H

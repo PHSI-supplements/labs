@@ -14,7 +14,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab (c) 2021-25 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -25,7 +25,7 @@
 
 #include <stdlib.h>
 
-static const size_t MAXIMUM_CONTIGUOUS_MEMORY = 1 << 15;
+static const size_t MAXIMUM_CONTIGUOUS_MEMORY = 1 << 8;
 
 static inline void *hobbled_malloc(size_t size) {
 #ifdef HOBBLE

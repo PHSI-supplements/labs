@@ -69,6 +69,7 @@ suit_t get_suit_input(void) {
             printf("\n");
         } else if (suit <= 0 || suit > NUMBER_OF_SUITS) {
             printf("Invalid option: %d. Select a number between 1 and %d.\n", suit, NUMBER_OF_SUITS);
+            suit += NUMBER_OF_SUITS;
         } else {
             suit -= 1;
         }

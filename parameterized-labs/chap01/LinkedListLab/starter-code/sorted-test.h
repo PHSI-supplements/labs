@@ -4,7 +4,7 @@
 
 /**************************************************************************//**
  *
- * @file challenge-response-test.h
+ * @file sorted-test.h
  *
  * @author Christopher A. Bohn
  *
@@ -13,20 +13,19 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-24 Christopher A. Bohn
+ * LinkedListLab (c) 2021-25 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#ifndef CHALLENGE_RESPONSE_TEST_H
-#define CHALLENGE_RESPONSE_TEST_H
+#ifndef SORTED_TEST_H
+#define SORTED_TEST_H
 
 void test_alphabetical_functions(void);
 void test_insert_word_empty_list(void);
+void test_insert_word_singleton_list(void);
 void test_insert_word_populated_list(void);
 void test_build_list(void);
-void test_challenge_response(void);
-void print_table(void);
 
-#endif //CHALLENGE_RESPONSE_TEST_H
+#endif //SORTED_TEST_H
