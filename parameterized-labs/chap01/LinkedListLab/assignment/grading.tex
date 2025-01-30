@@ -9,27 +9,36 @@
 % TODO: update
 \colorbox{green}{TODO: update}
 
-This assignment is worth 32 points.
+This assignment is worth 35 points.
 \begin{description}
+    % Archie's Code - 5
     \rubricitem{2}{Student's answers in \textit{answers.txt} demonstrate an understanding of the bug in Section~\ref{subsec:uninitializedvariables}'s code and how to correct it.}
     \rubricitem{3}{Student's answer in \textit{answers.txt} demonstrate an understanding of the bug in Section~\ref{subsec:danglingPointers}'s code.}
+    % Word Entries - 2
     \rubricitem{\textonehalf}{\function{create_word_entry} initializes \lstinline{word_entry} as specified.}
     \rubricitem{\textonehalf}{\function{increment_count()} increases the number of occurrences by one.}
     \rubricitem{\textonehalf}{\function{get_count()} returns the number of occurrences.}
     \rubricitem{\textonehalf}{\function{get_word()} returns the word.}
+    % Sorting - 8
     \rubricitem{2}{\function{word_to_lowercase()} returns a copy of the word with all uppercase letters made lowercase.}
     \rubricitem{2}{\function{words_are_equal()}, \function{word1_is_earlier_than_word2()}, and \function{word1_is_later_than_word3()} return \lstinline{true} if and only if \lstinline{word1} is equal to, less than, or greater than \lstinline{word2}, respectively.}
     \rubricitem{2}{\function{insert_word()} correctly inserts a word into a list, when the book file is pre-sorted.}
     \rubricitem{2}{\function{insert_word()} correctly inserts a word into a list, when the book file is not pre-sorted.}
+    % Linked List - 20
     \rubricitem{\textonehalf}{\function{create_node()} initializes \lstinline{node} as specified.}
     \rubricitem{\textonehalf}{\function{create_list()} initializes \lstinline{word_list} as specified.}
-    \rubricitem{2}{\function{append()} places a word entry at the end of a linked list.}
-    \rubricitem{3}{\function{reset_iterator()}, \function{iterate_forward()}, and \function{iterate_backward()} update \function{current_node} as specified.}
-    \rubricitem{3}{\function{get_word_entry()}, \function{get_first_word_entry()}, and \function{get_last_word_entry()} return the \function{word_entry_t} contained in the current node, the head, or the tail, respectively.}
-    \rubricitem{3}{\function{insert()} places a node containing \lstinline{word_entry} in a linked list at the specified location.}
-    \rubricitem{3}{\function{delete()} removes a node from a linked list.}
-    \rubricitem{1}{The challenge-response system, using your code, can generate a list from a file of up to 80,000 words and generate the correct response when the words in the file are pre-sorted.}
-    \rubricitem{1}{The challenge-response code, using your code, can generate a list from a file of up to 80,000 words and generate the correct response when the words in the file are unsorted.}
+    \rubricitem{1}{\function{get_iterator()} returns the list's \lstinline{iterator}, and \function{get_list()} returns the iterator's \lstinline{list}, as specified.}
+    \rubricitem{1}{\function{has_next()} and \function{has_previous()} correctly report the presence/absence of a next/previous node, as specified}
+    \rubricitem{2}{\function{iterate_next()} and \function{iterate_previous()} change the current node to the next/previous node, as specified}
+    \rubricitem{1}{\function{prepend()} places a word entry at the start of a linked list.}
+    \rubricitem{1}{\function{append()} places a word entry at the end of a linked list.}
+    \rubricitem{2}{\function{insert()} places a node containing \lstinline{word_entry} in a linked list at the iterator's location.}
+    \rubricitem{2}{\function{delete()} removes a node from a linked list.}
+    \rubricitem{3}{\function{get_word_entry()}, \function{get_next_word_entry()}, and \function{get_previous_word_entry()} return the \function{word_entry_t} contained in the current/next/previous node as specified.}
+    \rubricitem{2}{\function{swap_next()} and \function{swap_previous()} swap the positions of the current node and the next/previous node, as specified}
+    \rubricitem{2}{\function{merge_next()} and \function{merge_previous()} combine the current node with the next/previous node, as specified}
+    \rubricitem{1}{The system, using your code, can generate a list from a pre-sorted file of up to 80,000 words without crashing or timing-out.}
+    \rubricitem{1}{The system, using your code, can generate a list from an unsorted file of up to 80,000 words without crashing or timing-out.}
     \item[Penalties]
     \item[no credit] for functions that time out.
     \softwareengineeringpenalties{1}
