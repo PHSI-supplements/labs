@@ -29,7 +29,7 @@
 #ifdef NOTIMEOUT
 #define timed_test(action) do { action; } while (0);
 #else
-#define timed_test(action) do { signal(SIGALRM, timeout_handler); alarm(10); action; alarm(0); } while(0);
+#define timed_test(action) do { signal(SIGALRM, timeout_handler); alarm(1); action; alarm(0); } while(0);
 #endif //NOTIMEOUT
 
 static void timeout_handler(int signum) {

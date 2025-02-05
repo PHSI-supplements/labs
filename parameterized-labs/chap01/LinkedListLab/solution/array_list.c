@@ -203,7 +203,7 @@ iterator_t *iterate_previous(iterator_t *iterator) {
 
 /**
  * @brief Adds a word entry to the head of the list and generates an iterator
- * pointing to the new head.
+ * pointing to the head.
  *
  * The effect on the list is equivalent to <code>insert(get_iterator(list))</code>.
  * The difference is that <code>prepend()</code> returns a pointer to a valid
@@ -212,7 +212,7 @@ iterator_t *iterate_previous(iterator_t *iterator) {
  *
  * @param list the list to receive the word entry
  * @param word_entry the word entry to be added to the list
- * @return an iterator to the list, positioned at the newly-added entry
+ * @return an iterator to the list, positioned at the newly-appended entry
  */
 iterator_t *prepend(list_t *list, word_entry_t *word_entry) {
     size_t original_length = list->length;
@@ -227,7 +227,7 @@ iterator_t *prepend(list_t *list, word_entry_t *word_entry) {
 
 /**
  * @brief Adds a word entry to the tail of the list and generates an iterator
- * pointing to the new tail.
+ * pointing to the head.
  *
  * Specifically, the array-backed list's length increases by one (reallocating
  * a larger array if necessary), and the word entry is placed at
@@ -243,7 +243,7 @@ iterator_t *prepend(list_t *list, word_entry_t *word_entry) {
  *
  * @param list the list to receive the word entry
  * @param word_entry the word entry to be added to the list
- * @return an iterator to the list, positioned at the newly-added entry
+ * @return an iterator to the list, positioned at the newly-appended entry
  */
 iterator_t *append(list_t *list, word_entry_t *word_entry) {
     size_t original_length = list->length;
