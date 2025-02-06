@@ -180,7 +180,7 @@ bool has_previous(iterator_t const *iterator) {
  * Specifically, the current node's `next` pointer is followed.
  *
  * The iterator is invalidated, and the subsequent behavior is undefined, if
- * there is no iterate_next element.
+ * there is no next element.
  *
  * @param iterator the iterator to be advanced
  * @return a pointer to the iterator
@@ -197,7 +197,7 @@ iterator_t *iterate_next(iterator_t *iterator) {
  * Specifically, the current node's `previous` pointer is followed.
  *
  * The iterator is invalidated, and the subsequent behavior is undefined, if
- * there is no iterate_previous element.
+ * there is no previous element.
  *
  * @param iterator the iterator to be retreated
  * @return a pointer to the iterator
@@ -313,7 +313,7 @@ word_entry_t const *get_word_entry(iterator_t const *iterator) {
 }
 
 /**
- * @brief Retrieve's the iterate_next element's word entry, if `has_next(iterator)`, or
+ * @brief Retrieve's the next element's word entry, if `has_next(iterator)`, or
  * NULL otherwise.
  *
  * Specifically, this function retrieves the word entry pointed to by the next node.
@@ -331,7 +331,7 @@ word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
 }
 
 /**
- * @brief Retrieve's the iterate_previous element's word entry, if
+ * @brief Retrieve's the previous element's word entry, if
  * `has_previous(iterator)`, or NULL otherwise.
  *
  * Specifically, this function retrieves the word entry pointed to by the previous node.
@@ -356,7 +356,7 @@ word_entry_t const *get_previous_word_entry(iterator_t const *iterator) {
 
 /**
  * @brief Swaps the positions of the element pointed to by the iterator,
- * and its iterate_next element.
+ * and its next element.
  *
  * After the operation is complete, the iterator will point to the same element
  * as before, but in its new position.
@@ -376,7 +376,7 @@ iterator_t *swap_next(iterator_t *iterator) {
 
 /**
  * @brief Swaps the positions of the element pointed to by the iterator,
- * and its iterate_previous element.
+ * and its previous element.
  *
  * After the operation is complete, the iterator will point to the same element
  * as before, but in its new position.
