@@ -54,18 +54,18 @@
         //     ]
         // },
 
-        // {
-        //     "name": "(lldb) Launch without external console",
-        //     "type": "cppdbg",
-        //     "request": "launch",
-        //     "program": "${workspaceFolder}/pokerlab",
-        //     "args": [],
-        //     "stopAtEntry": false,
-        //     "cwd": "${fileDirname}",
-        //     "environment": [],
-        //     "externalConsole": false,
-        //     "MIMode": "lldb"
-        // },
+        {
+            "name": "(lldb) Launch without external console",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/pokerlab",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
 
         // {
         //     "name": "(lldb) Launch with external console",

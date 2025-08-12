@@ -167,7 +167,7 @@ static void display_string(int row, char const string[]) {
 
 void refresh_display(void) {
     if (display_needs_refreshed) {
-        obdDumpBuffer(&display, backbuffer);
+        obdDumpBuffer(&display, backbuffer, 0, 0, 0);
         display_needs_refreshed = false;
     }
 }

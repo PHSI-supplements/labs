@@ -104,8 +104,8 @@ void destroy_list(list_t *list, bool free_word_entries) {
  * @brief Provides an iterator over the elements in the list, invalidating all
  * iterate_previous iterators.
  *
- * The iterator is invalid, and subsequent behavior is undefined, if the list
- * is empty.
+ * If the list is empty, the iterator is valid <i>only</i> for inserting a word
+ * entry into the empty list; the behavior is undefined for all other uses.
  *
  * @param list the list to be iterated over
  * @return a pointer to an iterator for the list, positioned at the head element

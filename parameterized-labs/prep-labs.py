@@ -188,7 +188,7 @@ def prep_latex(lab: Dict, lab_number: int, course_term: str, storyline: Dict,
                             image_file.write(image)
                             print(f'Saved {lab_location}/assignment/{image_description["name"]};'
                                   ' this might be the wrong location')
-                    except urllib.error.HTTPError as exception:
+                    except urllib.error.URLError as exception:
                         print(f'Could not retrieve {image_description["link"]} for'
                               f' {lab_location}/assignment/{image_description["name"]}')
                         print(f'{exception}')

@@ -40,18 +40,31 @@ The output will include the key that was pressed (if any), a hyphen if no key is
 \begin{lstlisting}[numberstyle=\color{gray}, numbers=left, firstnumber=\firstline, basicstyle=\ttfamily\small]
 ...
 if (key_pressed <= 0x0F) {
-    sprintf(output, "%2X%5c%2c%4c%2c",
+    sprintf(output, ''%2X%5c%2c%4c%2c'',
             key_pressed,
             left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
             left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
 }  else {
-    sprintf(output, "%2c%5c%2c%4c%2c",
+    sprintf(output, ''%2c%5c%2c%4c%2c'',
             key_pressed == 0xFF ? '-' : '?',
             left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
             left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
 }
 ...
 \end{lstlisting}
+%...
+%if (key_pressed <= 0x0F) {
+%    sprintf(output, "%2X%5c%2c%4c%2c",
+%    key_pressed,
+%    left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
+%    left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
+%}  else {
+%    sprintf(output, "%2c%5c%2c%4c%2c",
+%    key_pressed == 0xFF ? '-' : '?',
+%    left_button_position ? 'D' : 'U', right_button_position ? 'D' : 'U',
+%    left_switch_position ? 'R' : 'L', right_switch_position ? 'R' : 'L');
+%}
+%...
 
 Familiarize yourself with the test code's other outputs.
 The output will include the positions of the left and right buttons (``U'' for up and ``D'' for down) and of the left and right switches (``L'' for left position and ``R'' for right position).
