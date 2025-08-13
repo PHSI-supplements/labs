@@ -1,4 +1,4 @@
-> 📇typ **Scenario**
+> 📇 **Scenario**
 > 
 > You’re relaxing at your favorite hangout when another customer catches your attention.
 > He’s rather large (dare I say, mammoth), a bit hairy, and looking frustrated in front of his laptop.

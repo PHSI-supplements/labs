@@ -24,8 +24,10 @@ The `is...()` functions in *poker.c* are intentionally simple;
 they do not (and should not) check whether there is a better way to characterize the hand.
 The types of hands (from most desirable to least desirable) are:
 
-Royal Flush
-: This is an Ace, a King, a Queen, a Jack, and a 10, all the same suit.
+[//]: # (TODO: This "definition list" works well in CLion, but VS Code's renderer and GitLab's renderer treat it like ordinary text. We can to fix that with trailing spaces)
+
+Royal Flush  
+: This is an Ace, a King, a Queen, a Jack, and a 10, all the same suit.  
 : There is no function in the starter code for a royal flush, nor do you need to write one, since a royal flush is essentially the best-possible straight flush.
   (Note also that a Royal Flush is not possible for this lab, based on our re-definition of a Straight, below.)
 

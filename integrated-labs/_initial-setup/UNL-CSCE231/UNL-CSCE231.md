@@ -10,9 +10,7 @@ If you have not already done so, create an account on [git.unl.edu](https://git.
 - [ ] Sign-in under "University of Nebraska - Lincoln" (*not* "University of Nebraska").
   - If you accidentally sign in under the wrong institution, you can get back to the original menu by clearing browser cookies from the domain incommonfederation.org.
   - If you see a message that your account is blocked, click on the "Request Service" button [on this page](https://nusupport.nebraska.edu/TDClient/33/Portal/Requests/ServiceDet?ID=77) and let the TAs know *immediately*.
-- [ ] Open the [git.unl.edu username](...) Canvas assignment and enter your username in the text entry field.
-
-[//]: # (TODO: prepare the "git.unl.edu username" assignment)
+- [ ] Open the [git.unl.edu username](https://canvas.unl.edu/courses/200913/assignments/2093960) Canvas assignment and enter your username in the text entry field.
 
 After you have submitted your git.unl.edu username, a TA will assign to you one of the Git repositories that already has the assignment and starter code for the code portion of this week's assignment.
 They will place the URL in a comment in the "git.unl.edu username" Canvas assignment and mark the Canvas assignment as "Complete".
@@ -26,9 +24,35 @@ There are other setup actions you can take while you wait for the TAs.
 
 ### Git Configuration
 
-...
+#### Prepare an SSH keypair
 
-[//]: # (TODO: complete this section)
+If you have not already prepared an SSH keypair to authenticate with git.unl.edu from nuros.unl.edu:
+- [ ] Log into nuros.unl.edu (see the [discussion below](#the-development-environment))
+- [ ] Run the command
+  ```
+  ssh-keygen -t rsa -b 4096 -C "CSCE 231"
+  ```
+  When asked what file to save it in, press ENTER to accept the default.  
+  When prompted for a passphrase, you may set one up, or you can press ENTER to use no passphrase.
+- [ ] Run the command
+  ```
+  cat ~/.ssh/id_rsa.pub
+  ```
+- [ ] Highlight the output, and copy it to your computer's clipboard.
+- [ ] In git.unl.edu's web interface, click on your avatar to get a drop-down menu, and select "Edit profile" (alternatively, from your account page, there is an "Edit profile" in the upper-right corner)
+  ![A dropdown menu suspended from a photograph. Highlighted on the dropdown menu is "Edit profile".](git-edit-profile.png)
+- [ ] In the left-side menu, select "SSH Keys".
+- [ ] Paste the public key that you copied into the "Key" field, and click "Add key"
+
+#### Configure your Git identity
+
+If you have not already configured your Git identity on nuros.unl.edu:
+- [ ] Run these commands:
+  ```
+  git config --global user.name "YOUR HUMAN NAME"
+  git config --global user.email "USERNAME@huskers.unl.edu"
+  ```
+  Where *YOUR HUMAN NAME* is your name, such as *Stuart Dent*, and *USERNAME* is your huskers.unl.edu username.
 
 ---
 
@@ -143,7 +167,7 @@ When we issue the Cow Pi hardware kits (or before that), you will want to instal
 
 ---
 
-## Clone Your Repository
+## Clone Your Git Repository
 
 After the TAs have placed the URL for your Git repository in the comments of the "git.unl.edu username" Canvas assignment,
 navigate to that URL in your web browser to confirm that you have access.
@@ -162,9 +186,7 @@ navigate to that URL in your web browser to confirm that you have access.
   whoami
   ls
   ```
-- [ ] Open the [Connection to Nuros](...) Canvas assignment and the responses in the text entry field.
-
-[//]: # (TODO: prepare the "Connection to Nuros" assignment)
+- [ ] Open the [Connection to Nuros](https://canvas.unl.edu/courses/200913/assignments/2094033) Canvas assignment and copy the responses into the text entry field.
 
 ## Connect to the Starter Code and Start PokerLab
 
