@@ -16,6 +16,6 @@ If you need to do so, you can review the "Printing" section of the textbook's Ch
 
 ---
 
-|       [⬅️](2-getting-started.md)        |      [⬆️](../README.md)      |            [➡️](4-creating-deck-of-cards.md)            |
-|:---------------------------------------:|:----------------------------:|:-------------------------------------------------------:|
-| [Getting Started](2-getting-started.md) | [Front Matter](../README.md) | [Creating a Deck of Cards](4-creating-deck-of-cards.md) |
+|       [⬅️](02-getting-started.md)        |      [⬆️](../README.md)      |            [➡️](04-creating-deck-of-cards.md)            |
+|:----------------------------------------:|:----------------------------:|:--------------------------------------------------------:|
+| [Getting Started](02-getting-started.md) | [Front Matter](../README.md) | [Creating a Deck of Cards](04-creating-deck-of-cards.md) |

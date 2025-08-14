@@ -5,7 +5,7 @@
 - [ ] Add code to `characterize_hand()` to print the five cards in `hand`.
 - [ ] Add code to `characterize_hand()` to use the `is...()` functions to determine the best characterization of `hand`.
 
-Recall from the discussion of the [types of poker hands](1-terminology.md#types-of-poker-hands) that the hand characterizations from most-desirable to least-desirable are:
+Recall from the discussion of the [types of poker hands](01-terminology.md#types-of-poker-hands) that the hand characterizations from most-desirable to least-desirable are:
 - Straight Flush
 - Four of a Kind
 - Full House
@@ -29,20 +29,20 @@ For now, the program does not correctly characterize a hand that is a three of a
 
 - [ ] Implement and test `is_three_of_kind()`.
   - Do three cards all have the same value?
-  - You may assume that `hand` is pre-sorted from least value to greatest value
+  - You may assume that `hand` is pre-sorted from the least value to the greatest value
 
 ### Write `is_full_house()`
 
 - [ ] Implement and test `is_full_house()`.
   - Does the hand contain a three of a kind and also contain a pair with a different value than that of the other three cards?
     - The card value of the pair might be less than the card value of the three of a kind, or it might be greater than the card value of the three of a kind. 
-  - You may assume that `hand` is pre-sorted from least value to greatest value
+  - You may assume that `hand` is pre-sorted from the least value to the greatest value
 
 ### Write `is_four_of_kind()`
 
 - [ ] Implement and test `is_four_of_kind()`.
   - Do four cards all have the same value?
-  - You may assume that `hand` is pre-sorted from least value to greatest value
+  - You may assume that `hand` is pre-sorted from the least value to the greatest value
 
 ---    
 
@@ -51,6 +51,6 @@ You will receive full credit for these functions if you implement them correctly
 
 ---
 
-|             [⬅️](5-code-reading.md)              |      [⬆️](../README.md)      |         [➡️](7-grading.md)          |
-|:------------------------------------------------:|:----------------------------:|:-----------------------------------:|
-| [Study the Code in *poker.c*](5-code-reading.md) | [Front Matter](../README.md) | [Turn-In and Grading](7-grading.md) |
+|             [⬅️](05-code-reading.md)              |      [⬆️](../README.md)      |         [➡️](07-grading.md)          |
+|:-------------------------------------------------:|:----------------------------:|:------------------------------------:|
+| [Study the Code in *poker.c*](05-code-reading.md) | [Front Matter](../README.md) | [Turn-In and Grading](07-grading.md) |

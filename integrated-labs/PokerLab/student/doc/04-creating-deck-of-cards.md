@@ -28,6 +28,6 @@ Catching errors now will be easier than trying to catch them after you've starte
 
 ---
 
-|             [⬅️](3-print-conversion-specifier.md)             |      [⬆️](../README.md)      |             [➡️](5-code-reading.md)              |
-|:-------------------------------------------------------------:|:----------------------------:|:------------------------------------------------:|
-| [Print Conversion Specifier](3-print-conversion-specifier.md) | [Front Matter](../README.md) | [Study the Code in *poker.c*](5-code-reading.md) |
+|             [⬅️](03-print-conversion-specifier.md)             |      [⬆️](../README.md)      |             [➡️](05-code-reading.md)              |
+|:--------------------------------------------------------------:|:----------------------------:|:-------------------------------------------------:|
+| [Print Conversion Specifier](03-print-conversion-specifier.md) | [Front Matter](../README.md) | [Study the Code in *poker.c*](05-code-reading.md) |

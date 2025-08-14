@@ -1,6 +1,6 @@
 ## Study the Code in *poker.c*
 
-- [ ] Open the [PokerLab code reading](https://canvas.unl.edu/courses/200913/quizzes/468941) quiz in Canvas.
+- [ ] Open the [PokerLab Code Study](https://canvas.unl.edu/courses/200913/quizzes/468941) quiz in Canvas.
 
 When you provide your answers in <!-- *answers.txt* --> the Canvas quiz, bear in mind that while it's good to know that you can read code, <font color="red">what we're really looking for is that you understand C's logical boolean operations</font>.
 Not boolean operations in general, but <u>C's logical boolean operations</u>.
@@ -97,6 +97,6 @@ You may find it interesting to set a breakpoint in `is_to_pair()` and use the de
 
 ---
 
-|            [⬅️](4-creating-deck-of-cards.md)            |      [⬆️](../README.md)      |             [➡️](6-characterize-hands.md)              |
-|:-------------------------------------------------------:|:----------------------------:|:------------------------------------------------------:|
-| [Creating a Deck of Cards](4-creating-deck-of-cards.md) | [Front Matter](../README.md) | [Characterizing a Poker Hand](6-characterize-hands.md) |
+|            [⬅️](04-creating-deck-of-cards.md)            |      [⬆️](../README.md)      |             [➡️](06-characterize-hands.md)              |
+|:--------------------------------------------------------:|:----------------------------:|:-------------------------------------------------------:|
+| [Creating a Deck of Cards](04-creating-deck-of-cards.md) | [Front Matter](../README.md) | [Characterizing a Poker Hand](06-characterize-hands.md) |

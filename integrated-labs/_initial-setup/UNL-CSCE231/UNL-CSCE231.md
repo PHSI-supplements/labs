@@ -39,7 +39,7 @@ If you have not already prepared an SSH keypair to authenticate with git.unl.edu
   cat ~/.ssh/id_rsa.pub
   ```
 - [ ] Highlight the output, and copy it to your computer's clipboard.
-- [ ] In git.unl.edu's web interface, click on your avatar to get a drop-down menu, and select "Edit profile" (alternatively, from your account page, there is an "Edit profile" in the upper-right corner)
+- [ ] In git.unl.edu's web interface, click on your avatar to get a drop-down menu, and select "Edit profile" (alternatively, from your account page, there is an "Edit profile" in the upper-right corner)  
   ![A dropdown menu suspended from a photograph. Highlighted on the dropdown menu is "Edit profile".](git-edit-profile.png)
 - [ ] In the left-side menu, select "SSH Keys".
 - [ ] Paste the public key that you copied into the "Key" field, and click "Add key"
@@ -111,7 +111,7 @@ Or, working the other direction:
 ```
 scp USERNAME@nuros.unl.edu:FILE FILEPATH
 ```
-copies *file* from the remote server to *filepath on your local computer.
+copies *file* from the remote server to *filepath* on your local computer.
 Just as with *cp*, you can use the `-r` argument to copy directories:
 ```
 scp -r pokerlab USERNAME@nuros.unl.edu:.
@@ -206,7 +206,7 @@ navigate to that URL in your web browser to confirm that you have access.
 [//]: # (        - After you have the connection configured, you can access it from "SSH" under "Connections")
 [//]: # (    - [ ] )
 
-- [ ] In your VS Code (or your preferred IDE), connect to nuros.unl.edu for remote development.
+- [ ] In VS Code (or your preferred IDE), connect to nuros.unl.edu for remote development.
   - Select **Remote-SSH: Connect to Host...** from the Command Palette.
   - Use USERNAME@nuros.unl.edu
   - After the connection is established, use **File** ⇒ **Open...** to navigate to PokerLab.

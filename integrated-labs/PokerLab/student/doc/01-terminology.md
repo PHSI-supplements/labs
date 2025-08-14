@@ -24,55 +24,53 @@ The `is...()` functions in *poker.c* are intentionally simple;
 they do not (and should not) check whether there is a better way to characterize the hand.
 The types of hands (from most desirable to least desirable) are:
 
-[//]: # (TODO: This "definition list" works well in CLion, but VS Code's renderer and GitLab's renderer treat it like ordinary text. We can to fix that with trailing spaces)
-
 Royal Flush  
 : This is an Ace, a King, a Queen, a Jack, and a 10, all the same suit.  
 : There is no function in the starter code for a royal flush, nor do you need to write one, since a royal flush is essentially the best-possible straight flush.
   (Note also that a Royal Flush is not possible for this lab, based on our re-definition of a Straight, below.)
 
-Straight Flush
+Straight Flush  
 : This is five cards in a sequence, all the same suit;
-  that is, five cards that are both a Straight and a Flush.
+  that is, five cards that are both a Straight and a Flush.  
 : This characterization is checked by the function `is_straight_flush()`.
 
-Four of a Kind
-: Four cards all have the same value.
+Four of a Kind  
+: Four cards all have the same value.  
 : This characterization is checked by the function `is_four_of_kind()`.
 
-Full House
-: The hand contains a three of a kind and also contains a pair with a different value than that of the other three cards.
+Full House  
+: The hand contains a three of a kind and also contains a pair with a different value than that of the other three cards.  
 : This characterization is checked by the function `is_full_house()`.
 
-Flush
-: Five cards all the same suit.
-: In the interest of simplicity, for this assignment we changed the definition of a flush to "all cards are of the same suit" (this distinction only matters if the number of cards in the hand is not five).
+Flush  
+: Five cards all the same suit.  
+: In the interest of simplicity, for this assignment we changed the definition of a flush to "all cards are of the same suit" (this distinction only matters if the number of cards in the hand is not five).  
 : This characterization is checked by the function `is_flush()`.
 
-Straight
-: Five cards in a sequence. 
+Straight  
+: Five cards in a sequence.  
 : In the interest of simplicity, for this assignment we changed the definition of a straight to "all cards are in a sequence" (this distinction only matters if the number of cards in the hand is not five).
-  We further re-defined an Ace to be adjacent only to 2 (in traditional poker, an Ace can be adjacent to 2 or to King but not both at the same time).
+  We further re-defined an Ace to be adjacent only to 2 (in traditional poker, an Ace can be adjacent to 2 or to King but not both at the same time).  
 : This characterization is checked by the function `is_straight()`.
 
-Three of a Kind
-: Three cards all have the same value.
+Three of a Kind  
+: Three cards all have the same value.  
 : This characterization is checked by the function `is_three_of_kind()`.
 
-Two Pair
-: The hand holds two different pairs.
+Two Pair  
+: The hand holds two different pairs.  
 : This characterization is checked by the function `is_two_pair()`.
   
-Pair
-: Two cards with the same value.
+Pair  
+: Two cards with the same value.  
 : This characterization is checked by the function `is_pair()`.
 
-High Card
-: If the hand cannot be better characterized, it is characterized by the greatest-value card in the hand.
+High Card  
+: If the hand cannot be better characterized, it is characterized by the greatest-value card in the hand.  
 : The starter code does not have a function to check for this since this is the characterization if all the other functions return `0`.
 
 ---
 
-|                 |      [⬆️](../README.md)      |       [➡️](2-getting-started.md)        |
-|:---------------:|:----------------------------:|:---------------------------------------:|
-|                 | [Front Matter](../README.md) | [Getting Started](2-getting-started.md) |
+|                 |      [⬆️](../README.md)      |       [➡️](02-getting-started.md)        |
+|:---------------:|:----------------------------:|:----------------------------------------:|
+|                 | [Front Matter](../README.md) | [Getting Started](02-getting-started.md) |

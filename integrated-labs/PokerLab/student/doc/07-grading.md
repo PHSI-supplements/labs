@@ -11,7 +11,7 @@
 
 ## Turn-In and Grading
 
-Be sure that you have pushed your code to git.unl.edu, and that you have submitted the [PokerLab code reading](https://canvas.unl.edu/courses/200913/quizzes/468941) Canvas quiz.
+Be sure that you have pushed your code to git.unl.edu, and that you have submitted the [Connection to Nuros](https://canvas.unl.edu/courses/200913/assignments/2094033) Canvas assignment and the [PokerLab Code Study](https://canvas.unl.edu/courses/200913/quizzes/468941) Canvas quiz.
 
 ### Normally No Credit for Uncompilable Code
 
@@ -29,6 +29,9 @@ Be sure to compile and test your code on the nuros.unl.edu Linux server without 
 ### Late Submissions
 
 This assignment is due before the start of your lab section.
+If you have late days available, you may use one or more to extend your deadline.
+You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](../LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+
 After you have exhausted your late days, we will accept late turn-ins up to one hour late, assessing a 10% penalty on these late submissions.
 After you have exhausted your late days, any work turned in more than one hour late will not be graded.
 
@@ -36,8 +39,8 @@ After you have exhausted your late days, any work turned in more than one hour l
 
 This assignment is worth 10 points.
 
-- [ ] **+1** The initial setup portion of the assignment is complete
-- [ ] **+1** The student's answers in <!--*answers.txt*--> the [PokerLab code reading](https://canvas.unl.edu/courses/200913/quizzes/468941) Canvas quiz demonstrate an understanding of C's logical boolean operations
+- [ ] **+1** The student has successfully connected to Nuros, as evidenced in the <!--screenshot--> [Connection to Nuros](https://canvas.unl.edu/courses/200913/assignments/2094033) Canvas assignment
+- [ ] **+1** The student's answers in <!--*answers.txt*--> the [PokerLab Code Study](https://canvas.unl.edu/courses/200913/quizzes/468941) Canvas quiz demonstrate an understanding of C's logical boolean operations
 - [ ] **+1** `create_card()` populates a card's fields
 - [ ] **+1** `card_to_string()` generates the printable representation of a card
 - [ ] **+1** `populate_deck()` creates a deck of 52 cards
@@ -48,6 +51,6 @@ This assignment is worth 10 points.
 
 ---
 
-|             [⬅️](6-characterize-hands.md)              |      [⬆️](../README.md)      |                         |
-|:------------------------------------------------------:|:----------------------------:|:-----------------------:|
-| [Characterizing a Poker Hand](6-characterize-hands.md) | [Front Matter](../README.md) |                         |
+|             [⬅️](06-characterize-hands.md)              |      [⬆️](../README.md)      |                         |
+|:-------------------------------------------------------:|:----------------------------:|:-----------------------:|
+| [Characterizing a Poker Hand](06-characterize-hands.md) | [Front Matter](../README.md) |                         |

@@ -51,6 +51,6 @@ sprintf(valueString, "", value);
 
 ---
 
-|        [⬅️](1-terminology.md)         |      [⬆️](../README.md)      |             [➡️](3-print-conversion-specifier.md)             |
-|:-------------------------------------:|:----------------------------:|:-------------------------------------------------------------:|
-| [Poker Terminology](1-terminology.md) | [Front Matter](../README.md) | [Print Conversion Specifier](3-print-conversion-specifier.md) |
+|        [⬅️](01-terminology.md)         |      [⬆️](../README.md)      |             [➡️](03-print-conversion-specifier.md)             |
+|:--------------------------------------:|:----------------------------:|:--------------------------------------------------------------:|
+| [Poker Terminology](01-terminology.md) | [Front Matter](../README.md) | [Print Conversion Specifier](03-print-conversion-specifier.md) |

@@ -7,8 +7,12 @@ Even if you know C, work this assignment to re-familiarize yourself.
 
 ### Submission Deadline
 
-This assignment is due **the week of September 1, before the start of your lab section**.  
+This assignment is due **the week of September 1, before the start of your lab section**.
+Your completed assignment must be pushed to git.unl.edu before it is due.
+A portion of this assignment is on Canvas; that must also be completed before it is due.
+
 If you have late days available, you may use one or more to extend your deadline.
+You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
 
 ### Collaboration Rules
 
@@ -28,13 +32,13 @@ No other use of generative AI is permitted on this assignment without explicit p
 
 ### Table of Contents
 
-- [Poker Terminology](doc/1-terminology.md)
-- [Getting Started](doc/2-getting-started.md)
-- [Print Conversion Specifier](doc/3-print-conversion-specifier.md)
-- [Creating a Deck of Cards](doc/4-creating-deck-of-cards.md)
-- [Study the Code in *poker.c*](doc/5-code-reading.md)
-- [Characterizing a Poker Hand](doc/6-characterize-hands.md)
-- [Turn-In and Grading](doc/7-grading.md)
+- [Poker Terminology](doc/01-terminology.md)
+- [Getting Started](doc/02-getting-started.md)
+- [Print Conversion Specifier](doc/03-print-conversion-specifier.md)
+- [Creating a Deck of Cards](doc/04-creating-deck-of-cards.md)
+- [Study the Code in *poker.c*](doc/05-code-reading.md)
+- [Characterizing a Poker Hand](doc/06-characterize-hands.md)
+- [Turn-In and Grading](doc/07-grading.md)
 
 ### Learning Objectives
 
@@ -70,7 +74,14 @@ nor may you have any functions `return` from within a loop.
 
 ---
 
-|                 |                              |        [➡️](doc/1-terminology.md)         |
-|:---------------:|:----------------------------:|:-----------------------------------------:|
-|                 |                              | [Poker Terminology](doc/1-terminology.md) |
+|                 |                              |        [➡️](doc/01-terminology.md)         |
+|:---------------:|:----------------------------:|:------------------------------------------:|
+|                 |                              | [Poker Terminology](doc/01-terminology.md) |
 
+Assignment and starter code © Christopher A. Bohn,
+licensed under the Creative Commons Attribution 4.0 International License
+and under the Apache License Version 2.0, respectively.
+
+<!-- [![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/) -->
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
