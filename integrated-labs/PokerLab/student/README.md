@@ -3,6 +3,8 @@
 The purpose of this assignment is to (re)familiarize you with some aspects of C that may not be intuitive to students who are new to C.
 Even if you know C, work this assignment to re-familiarize yourself.
 
+This assignment is worth 10 points.
+
 ## Front Matter
 
 ### Submission Deadline

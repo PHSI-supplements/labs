@@ -17,8 +17,8 @@ Be sure that you have pushed your code to git.unl.edu, and that you have submitt
 
 If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
 For most lab assignments, this would mean that you would earn very few, if any, points.
-For this lab assignment, you will still receive the credit you earned for attempting the assignment, even if it does not compile.
-Be sure to compile and test your code on the nuros.unl.edu Linux server without changing any files that you were instructed not to change.
+For this lab assignment, you will still receive some credit for attempting the assignment, even if it does not compile.
+Be sure to compile and test your code on the nuros.unl.edu Linux server with the original driver code, the original header file(s), and the original CMake configuration files.
 
 > ✍️ **One Edit Rule**
 > 
