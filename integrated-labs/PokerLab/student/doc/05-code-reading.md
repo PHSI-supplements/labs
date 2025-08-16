@@ -67,13 +67,15 @@ Why does `is_straight()` return a **1** when all cards in the hand are in sequen
 Why does it return a **0** when they are not in sequence?
 If you can't determine this on your own, you may talk it over with other students or the TA.
 
-*Suggestion*: set a breakpoint on this line:
-```c
-not_straight = not_straight + abs(hand[i + 1].value - hand[i].value - 1);
-```
-and launch the debugger.
-(Or, if you're using gdb from the command line, launch the debugger and set a breakpoint on that line.)
-Observe the changes to `not_straight`'s value with the hand 2♣️ 3♦️ 5♦️ 5♥️ 9♠️.
+[//]: # (*Suggestion*: set a breakpoint on this line:)
+[//]: # (```c)
+[//]: # (not_straight = not_straight + abs&#40;hand[i + 1].value - hand[i].value - 1&#41;;)
+[//]: # (```)
+[//]: # (and launch the debugger.)
+[//]: # (&#40;Or, if you're using gdb from the command line, launch the debugger and set a breakpoint on that line.&#41;)
+[//]: # (Observe the changes to `not_straight`'s value with the hand 2♣️ 3♦️ 5♦️ 5♥️ 9♠️.)
+
+*Suggestion*: walk through the code to reason-out `not_straight`'s value with the hand 2♣️ 3♦️ 5♦️ 5♥️ 9♠️.
 
 <!-- - [ ] Type your answer in *answers.txt*. -->
 - [ ] Type your answer in the Canvas quiz.
@@ -91,7 +93,7 @@ The assignment `partial_hand = hand + i` makes use of *pointer arithmetic*.
 
 This effectively makes `partial_hand` an array such that $\forall j : partial\_hand[j] = hand[i+j]$.
 
-You may find it interesting to set a breakpoint in `is_to_pair()` and use the debugger to observe the changes to the address stored in `partial_hand`.
+[//]: # (You may find it interesting to set a breakpoint in `is_to_pair&#40;&#41;` and use the debugger to observe the changes to the address stored in `partial_hand`.)
 
 - [ ] Examine the remaining starter code in *poker.c* to make sure you understand it.
 

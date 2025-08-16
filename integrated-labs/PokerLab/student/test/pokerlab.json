@@ -1,0 +1,80 @@
+{
+  "targetFiles": [
+    "../src/card.c",
+    "../src/poker.c"
+  ],
+  "commentDelimiters": {
+    "inlineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "codeBlockDelimiters": [
+    "{",
+    "}"
+  ],
+  "codeBlockKeywords": {
+    "loops": [
+      "do",
+      "while",
+      "for"
+    ],
+    "benignBlockTerminations": {
+      "break": "switch"
+    }
+  },
+  "operators": {
+    "all": [
+      "++",
+      "--",
+      ".",
+      "->",
+      "!",
+      "~",
+      "*",
+      "/",
+      "%",
+      "+",
+      "-",
+      "<<",
+      ">>",
+      "<",
+      "<=",
+      ">",
+      ">=",
+      "==",
+      "!=",
+      "&",
+      "^",
+      "|",
+      "&&",
+      "||",
+      "?",
+      "=",
+      "+=",
+      "-=",
+      "*=",
+      "/=",
+      "%=",
+      "<<=",
+      ">>=",
+      "&=",
+      "^=",
+      "|=",
+      ","
+    ],
+    "disallowed": []
+  },
+  "disallowedCalls": [],
+  "disallowedKeywords": [
+    "goto"
+  ],
+  "limitedLoopTerminations": {
+    "0": [
+      "break",
+      "return"
+    ]
+  },
+  "limitedCharacters": {}
+}

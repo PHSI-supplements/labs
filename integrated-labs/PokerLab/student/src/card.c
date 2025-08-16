@@ -54,10 +54,10 @@ char *card_to_string(card_t const *card, char *destination) {
     } else {
         suit_string = "UNKNOWN";
     }
+    char buffer[3];
     if ((value < MINIMUM_VALUE) || (value > MAXIMUM_VALUE)) {                       // Illegal values
         value_string = "UNKNOWN";
     } else if ((value >= MINIMUM_FACE_VALUE) && (value <= MAXIMUM_FACE_VALUE)) {    // Number card
-        char buffer[3];
         value_string = buffer;
         /* THE SECOND ARGUMENT NEEDS THE CONVERSION SPECIFIER THAT YOU WOULD USE TO PRINT AN INTEGER */
         sprintf(value_string, "", value);

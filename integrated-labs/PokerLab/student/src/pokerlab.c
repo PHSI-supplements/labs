@@ -59,7 +59,7 @@ suit_t get_suit_input(void) {
     do {
         printf("Select suit (1-%d): ", NUMBER_OF_SUITS);
         fflush(stdout);
-        int result = scanf("%d", &suit);
+        int result = scanf("%u", &suit);
         if (result == 0) {
             printf("Invalid input: ");
             int c;

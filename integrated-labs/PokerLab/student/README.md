@@ -71,6 +71,7 @@ We encourage you to learn more about the C language on your own.
 In the interest of keeping your code readable, you may not use any `goto` statements,
 nor may you use any `break` statements to exit from a loop,
 nor may you have any functions `return` from within a loop.
+You can use the command `ctest --test-dir build --output-on-failure` to check whether you inadvertently violated this constraint.
 
 ---
 

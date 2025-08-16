@@ -32,7 +32,7 @@ Most IDEs will be able to configure the compilation settings from *CMakeLists.tx
 
 - If you plan to operate from the command line, you can configure the compilation settings with this command:
   ```
-  cmake -B build
+  cmake --preset=default
   ```
   You can then compile the program with this command:
   ```

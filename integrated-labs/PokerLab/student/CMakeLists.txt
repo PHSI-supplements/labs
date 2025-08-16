@@ -2,11 +2,16 @@ cmake_minimum_required(VERSION 3.10)
 
 project(pokerlab C)
 
+include(CTest)
+enable_testing()
+
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
 option(INSTRUCTOR_BUILD "Suppress warnings for grading" OFF)
+
+### Executables
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
@@ -29,3 +34,16 @@ if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     endif()
     target_compile_options(pokerlab PRIVATE -O0)    # for debugger demonstration
 endif()
+
+### Constraint Check
+
+find_package(Python3 REQUIRED)
+
+add_test(
+        NAME ConstraintCheck
+        COMMAND ${Python3_EXECUTABLE}
+        ${CMAKE_SOURCE_DIR}/test/constraint-check.py
+        ${CMAKE_SOURCE_DIR}/test/pokerlab.json
+)
+
+
