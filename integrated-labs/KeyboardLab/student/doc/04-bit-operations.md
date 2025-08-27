@@ -10,13 +10,13 @@
 
 ### The Task
 
-- [ ] Edit \texttt{problem3.c so that
-- `is_even()` returns 1 if the number is even (that is, divisible by 2) and 0 if the number is odd
-- `produce_multiple_of_ten()` will always output a multiple of 10 following a specific formula: if a number is even then divide it by 2;
-  otherwise, subtract 1 from the number and multiply the difference by 5 (for example, an input of 7 yields 30 because $(7-1) \times 5 = 30$);
-  repeat until the last decimal digit is 0.
-  - These numbers are guaranteed to be non-negative.
-  - 
+- [ ] Edit *problem3.c* so that
+  - `is_even()` returns 1 if the number is even (that is, divisible by 2) and 0 if the number is odd
+  - `produce_multiple_of_ten()` will always output a multiple of 10 following a specific formula: if a number is even then divide it by 2;
+    otherwise, subtract 1 from the number and multiply the difference by 5 (for example, an input of 7 yields 30 because $(7-1) \times 5 = 30$);
+    repeat until the last decimal digit is 0.
+    - These numbers are guaranteed to be non-negative.
+
 You may not use addition (`+`), subtraction (`-`), division (`/`), nor modulo (`%`).
 You also may not use the number `5` nor the letter `b`.
 (Exceptions: you *may* use the forward-slash (`/`) for comments, and the percent-sign (`%`) that is already present in the `sprintf()` calls' format strings is allowed)}

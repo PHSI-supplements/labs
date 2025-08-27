@@ -44,9 +44,11 @@ This assignment is worth 20 points.
   - [ ] **+1** Code to divide an even number by 2
   - [ ] **+1** Code to subtract 1 from an odd number
   - [ ] **+1** Correct functionality
+[//]: # (- Bonus:)
+[//]: # (- [ ] **+1** Your correct solutions to `iz_digit&#40;&#41;` and `decapitalize&#40;&#41;` do not depend on specific ASCII values, nor in the relative positions of upper- and lowercase letters in the ASCII table.)
 - Penalties:
-  - [ ] **no credit** for each solution that depends on a prohibited character
-  - [ ] **no credit** for each solution that hard-codes a return value instead of attempting to solve the specified problem
+  - [ ] **no credit** for each function that depends on a prohibited character
+  - [ ] **no credit** for each function that hard-codes a return value instead of attempting to solve the specified problem
   - [ ] **-1** for each `goto` statement, `break` statement used to exit from a loop, or `return` statement that occurs within a loop
 
 ---

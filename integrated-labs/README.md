@@ -42,7 +42,7 @@ When you are ready to work on the next lab, notionally *FooLab*, you can retriev
   git fetch origin FooLab
   ```
   You should see something like this:
-  ```bash
+  ```
   From git.unl.edu:csce231/fall2025/your-repo.git
   * branch            FooLab     -> FETCH_HEAD
   ```

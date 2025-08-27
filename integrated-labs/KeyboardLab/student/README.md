@@ -42,8 +42,8 @@ No other use of generative AI is permitted on this assignment without explicit p
 ### Learning Objectives
 
 After successful completion of this assignment, students will be able to:
-- Use the ASCII table to determine the corresponding integer values of C \lstinline{char} values.
-- Apply arithmetic operators and comparators to C \lstinline{char} values.
+- Use the ASCII table to determine the corresponding integer values of C `char` values.
+- Apply arithmetic operators and comparators to C `char` values.
 - Construct and use a bitmask.
 - Use bitwise operators and bit shift operators to create and modify values.
 
@@ -54,7 +54,7 @@ The "damage" to your keyboard as the scenario progresses will require you to tre
 
 First, you will need to use some characters' ASCII values -- that is, integers -- in place of the characters when constructing a string.
 Next, you will need to use characters as though they were integers and perform arithmetic upon them.
-Finally, in Section~\ref{sec:bitOps}, you will manipulate integers using bit operations.
+Finally, you will manipulate integers using bit operations.
 
 #### Constraints
 

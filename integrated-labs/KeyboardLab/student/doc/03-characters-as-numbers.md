@@ -14,7 +14,7 @@
 
 As you look at the loose keys littering your desk, you remember that `char` is just another integer type,
 and all the arithmetic and comparisons that can use `int`s as operands can also use `char`s as operands.
-For example, `(i + 1 == j)` and `(i < j)` are both perfectly valid, true expressions.
+For example, `('a' + 1 == 'b')` and `('c' < 'd')` are both perfectly valid, true expressions.
 
 (*Note*: your solution should not need the number `7`;
 the *7* key is retained so that you can use a logical AND (`&&`) if you need to.)
@@ -23,12 +23,12 @@ the *7* key is retained so that you can use a logical AND (`&&`) if you need to.
 
 - [ ] Edit *problem2.c* so that:
   - `iz_digit()` returns 1 if the character is a decimal digit ('0', '1', '2', ...) and 0 otherwise
+    > 💡**Tip**
+    >
+    > $9 \div 9 = 1$
   - `decapitalize()` will return the lowercase version of an uppercase letter ('A', 'B', 'C', ...) but will return the original character if it is not an uppercase letter
-You may not `#include` any headers, you may not use any number keys other than the *0*, *9*, and *7* (which is used for *&*) keys, you may not use *S* or *W*, and you may use at most two *F*s.}
 
-> 💡**Tip**
->
-> $9 \div 9 = 1$
+You may not `#include` any headers, you may not use any number keys other than the *0*, *9*, and *7* (which is used for *&*) keys, you may not use *S* or *W*, and you may use at most two *F*s.}
 
 > 📖 **Readability Tip**
 > 
@@ -58,7 +58,7 @@ You will receive no credit if you simply hard-code a return value, such as `retu
 The `decapitalize()` function is worth four points, two for converting uppercase letters to lowercase, one for returning unmodified lowercase letters, and one for returning unmodified non-letter characters.
 You will receive no credit if you always return the original character, such as `return character` or otherwise do not attempt the task.
 
-[//]: # (You will receive one bonus point if your correct solutions do not depend on specific ASCII values, nor in the relative positions of upper- and lowercase letters in the ASCII table.)
+[//]: # (You will receive one bonus point if your correct solutions to `iz_digit&#40;&#41;` and `decapitalize&#40;&#41;` do not depend on specific ASCII values, nor in the relative positions of upper- and lowercase letters in the ASCII table.)
 
 ---
 

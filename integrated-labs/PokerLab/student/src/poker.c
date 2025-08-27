@@ -37,7 +37,7 @@ void populate_deck(void) {
 }
 
 /**
- * Prints all 52 cars in the deck, in order.
+ * Prints all 52 cards in the deck, in order.
  */
 void print_deck(void) {
     if (!deck_is_populated) {
