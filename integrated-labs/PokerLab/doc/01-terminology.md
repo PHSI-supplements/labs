@@ -1,6 +1,6 @@
 ## Poker Terminology
 
-In case you care not familiar with the game of Poker and/or the cards used to play Poker:
+In case you are not familiar with the game of Poker and/or the cards used to play Poker:
 
 The standard 52-card deck of ["French" playing cards](https://en.wikipedia.org/wiki/Standard_52-card_deck) consists of 52 cards.
 The cards are divided into 4 "suits," clubs (♣️), diamonds (♦️), hearts (♥️), and spades (♠️).
