@@ -30,8 +30,12 @@ RE⇥I Need a Working Keyboard↵
 Please order a new keyboard for me.  This one is broken.↵
 ```
 
-(*Note*: here, the ⇥ symbol represents the TAB character, which is needed by the email program,
-and the ↵ symbol represents the NEWLINE character.)
+> ⓘ **Note**
+>
+> Here, the ⇥ symbol represents the TAB character, which is needed by the email program,
+> and the ↵ symbol represents the NEWLINE character.
+
+---
 
 ### TL;DR
 
@@ -42,6 +46,8 @@ and the ↵ symbol represents the NEWLINE character.)
   This will print your email message.
   - If it matches the intended email message, then you will be informed that it does.
   - If it does not match the intended email message, then the program will inform you where the first difference is between your message and the desired message and will print a small portion of each to show the difference.
+
+---
 
 ### The Challenge
 
@@ -63,14 +69,16 @@ char *generate_email(char *destination, int destination_size) {
 }
 ```
 
-(*Note*: `\t` and `\n` are the escape sequences that generate the TAB and NEWLINE characters.
-They are *not* a literal backslash followed by a literal 't' or 'n'.)
+> ⓘ **Note**
+>
+> `\t` and `\n` are the escape sequences that generate the TAB and NEWLINE characters.
+> They are *not* a literal backslash followed by a literal 't' or 'n'.
 
 ### Discussion
 
 Of course, the `W` and `w` are still a problem, but you realize you can insert those characters by using their ASCII values.
 
-> 💡**Tip**
+> 💡 **Tip**
 > 
 > Use the ASCII table in Chapter 2 of the textbook.
 
@@ -91,8 +99,10 @@ Recall that the first argument for `printf()` is a *format string*:
 `%s` specifies that a string should be palced at that position in the output,
 and `%c` specifies that a character should be placed at that position in the output.
 
-(*Note*: the `snprintf()` function is very much like the `printf()` function, except that it "prints" into a string.
-See Appendix C of the textbook.)
+> ⓘ **Note**
+>
+> The `snprintf()` function is very much like the `printf()` function, except that it "prints" into a string.
+> See Appendix C of the textbook.
 
 As you open your editor, the *\\* key falls off the keyboard, preventing you from typing `\t` and `\n`.
 You carefully start typing, but as soon as you've finished with the two `#include` directives, the *3* key (which is also used for *#*) falls off of your keyboard.

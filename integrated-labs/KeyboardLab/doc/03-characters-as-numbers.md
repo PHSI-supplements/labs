@@ -16,14 +16,16 @@ As you look at the loose keys littering your desk, you remember that `char` is j
 and all the arithmetic and comparisons that can use `int`s as operands can also use `char`s as operands.
 For example, `('a' + 1 == 'b')` and `('c' < 'd')` are both perfectly valid, true expressions.
 
-(*Note*: your solution should not need the number `7`;
-the *7* key is retained so that you can use a logical AND (`&&`) if you need to.)
+> ⓘ **Note**
+>
+> Your solution should not need the number `7`;
+> the *7* key is retained so that you can use a logical AND (`&&`) if you need to.
 
 ### The Task
 
 - [ ] Edit *problem2.c* so that:
   - `iz_digit()` returns 1 if the character is a decimal digit ('0', '1', '2', ...) and 0 otherwise
-    > 💡**Tip**
+    > 💡 **Tip**
     >
     > $9 \div 9 = 1$
   - `decapitalize()` will return the lowercase version of an uppercase letter ('A', 'B', 'C', ...) but will return the original character if it is not an uppercase letter
