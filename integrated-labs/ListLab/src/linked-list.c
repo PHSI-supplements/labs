@@ -1,6 +1,6 @@
 /**************************************************************************//**
  *
- * @file linked_list.c
+ * @file linked-list.c
  *
  * @author (TYPE YOUR NAME HERE)
  * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
@@ -16,12 +16,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "linked_list.h"
+#include "linked-list.h"
 
 
 /*                                        *
  * NODE CREATION, DESTRUCTION             *
- * (not for use outside of linked_list.c) *
+ * (not for use outside of linked-list.c) *
  *                                        */
 
 

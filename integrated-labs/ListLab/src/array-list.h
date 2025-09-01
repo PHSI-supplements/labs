@@ -4,7 +4,7 @@
 
 /**************************************************************************//**
  *
- * @file array_list.h
+ * @file array-list.h
  *
  * @author Christopher A. Bohn
  *

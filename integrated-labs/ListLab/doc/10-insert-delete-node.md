@@ -1,4 +1,4 @@
-\subsection{Insertion and Deletion at Arbitrary Locations}
+## Insertion and Deletion at Arbitrary Locations
 
 The `prepend()` and `append()` functions can only add nodes to the list's extrema.
 One of the advantages of a linked list over an array is that insertions and deletions in the middle of the list are constant-time operations.
@@ -7,7 +7,7 @@ One of the advantages of a linked list over an array is that insertions and dele
 - [ ] Implement `delete()` to remove the word entry at the iterator's current location.
 
 
-- [ ] Build and run *linkedlist* (and, optionally, *arraylist* in another terminal window)
+- [ ] Build and run *build/linkedlist* (and, optionally, *build/arraylist* in another terminal window)
 - [ ] Create a list by selecting option 2 ("Test list") and function 1 ("create_list()"). Get the iterator with function 3 ("get_iterator()").
 - [ ] Test `insert()` for an empty list by selecting function 11 ("insert()").
 - [ ] Get a valid iterator (function 3), and test `insert()` for a list with one node by selecting function 11 ("insert()").

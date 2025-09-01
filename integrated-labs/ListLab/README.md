@@ -34,7 +34,7 @@ No other use of generative AI is permitted on this assignment without explicit p
 ### Table of Contents
 
 - [Stray Values in Memory](doc/01-stray-values-in-memory.md)
-- [The Books, Business Rules](doc/02-books-rules.md)
+- [The Books, Business Rules](doc/02-getting-started.md)
 - [Word Entries](doc/03-word-entries.md)
 - [Alphabetical Functions](doc/04-alphabetical-functions.md)
 - [Preparing to Work with Lists](doc/05-preparing-to-work-with-lists.md)
@@ -48,40 +48,37 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [Grading](doc/13-grading.md)
 - [Appendix A: Differences and Similarities between Java and C that are Relevant to this Assignment](doc/AA-JavaVsC.md)
 - [Appendix B: Linked List](doc/BB-data-structure.md)
+- [Appendix C: Word Count Tables](doc/CC-word-tables.md)
 
 ### Learning Objectives
 
 After successful completion of this assignment, students will be able to:
 - Recognize the hazards of code with undefined behavior.
-- Use C's string functions from \lstinline{string.h}
+- Use C's string functions from [string.h](https://unl.grlcontent.com/compeng2e/page/appendixc#c16)
 - Alias and reassign pointers.
-- Create and traverse a linked list[01-stray-values-in-memory.md](doc/01-stray-values-in-memory.md).
-
-[//]: # (TODO: point students to appendix C and/or \url{https://en.cppreference.com/w/c/string/byte}} )
+- Create and traverse a linked list.
 
 ### Assignment Summary
 
 This assignment is principally about getting comfortable when explicitly working with memory.
 Being able to think about a value and a reference to that value distinctly will improve your programming skills in any language.
 
-Before you do so, in Section~\ref{sec:archiesCode} you will examine Archie's code.
+Before you do so, you will [examine Archie's code](doc/01-stray-values-in-memory.md).
 Parts of Archie's programs use code that the C standard explicitly states will result in undefined behavior.
 By understanding the mistakes that Archie made, we hope that you can avoid them in your own code.
 
-In Section~\ref{sec:challengeResponse}, you will build and use a linked list.
+As part of this assignment, you will build and use a linked list.
 This will require you to allocate space for the list's nodes and manipulate pointers that connect the nodes to each other.
-
-[//]: # (TODO: update cross-references)
 
 #### Constraints
 
 There are no particular restrictions on uses of C's features in this assignment other than those common to most lab assignments in this course.
 You can use the command `ctest --test-dir build --output-on-failure` to check whether you inadvertently used one of those characters.
 
-Some operations on a list have ``undefined behavior'' when performed using an invalid iterator.
+Some operations on a list have "undefined behavior" when performed using an invalid iterator.
 When the behavior is undefined, any result is acceptable \textit{except} crashing the program.
-Specifically, you may not dereference a NULL pointer.
-\texttt{constraint-check.py} will not check for this; however, you can test for it using the code provided to you.
+Specifically, you may not dereference a null pointer.
+The constraint-checking test will not check for this; however, you can test for it using the code provided to you.
 
 ### No Spaghetti Code Allowed
 

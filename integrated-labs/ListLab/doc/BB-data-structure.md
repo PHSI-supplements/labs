@@ -78,6 +78,7 @@ public class MyIterator {
         …
     }
     …
+}
 ```
 
 ```java
@@ -183,6 +184,6 @@ The code that you will need to add to `create_list()` is even simpler: a newly-c
 
 ---
 
-|                                                [⬅️](AA-JavaVsC.md)                                                |      [⬆️](../README.md)      |                                                                                               |
-|:-----------------------------------------------------------------------------------------------------------------:|:----------------------------:|:---------------------------------------------------------------------------------------------:|
-| [Appendix A: Differences and Similarities between Java and C that are Relevant to this Assignment](AA-JavaVsC.md) | [Front Matter](../README.md) |                                                                                               |
+|                                                [⬅️](AA-JavaVsC.md)                                                |      [⬆️](../README.md)      |              [➡️](CC-word-tables.md)               |
+|:-----------------------------------------------------------------------------------------------------------------:|:----------------------------:|:--------------------------------------------------:|
+| [Appendix A: Differences and Similarities between Java and C that are Relevant to this Assignment](AA-JavaVsC.md) | [Front Matter](../README.md) | [Appendix C: Word Count Tables](CC-word-tables.md) |

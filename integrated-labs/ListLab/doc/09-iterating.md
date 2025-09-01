@@ -16,10 +16,10 @@ For a linked list, this means that you follow the current node's `next` or `prev
   - Iterating to a non-existent node beyond the bounds of the list invalidates the iterator and results in undefined behavior.
     Normally, when behavior is undefined, any resulting behavior is acceptable, including crashing the program.
   - <font color="red">In this assignment, when the behavior is undefined, any result is acceptable *except* crashing the program.
-    Specifically, **you may not dereference a NULL pointer**.</font>
+    Specifically, **you may not dereference a null pointer**.</font>
 
 
-- [ ] Build and run *linkedlist* (and, optionally, *arraylist* in another terminal window)
+- [ ] Build and run *build/linkedlist* (and, optionally, *build/arraylist* in another terminal window)
 - [ ] Create a list by selecting option 2 ("Test list") and function 1 ("create_list()"). Get the iterator with function 3 ("get_iterator()").
 - [ ] Test that `has_next()` and `has_previous()` both return `false` for an empty list, using functions 5 ("has_next()") and 6 ("has_previous()").
 - [ ] Test that neither `iterate_next()` nor `iterate_previous()` crash the program for an empty list, using functions 7 ("iterate_next()") and 8 ("iterate_previous()").

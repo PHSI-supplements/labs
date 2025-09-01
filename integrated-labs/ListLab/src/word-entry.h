@@ -4,7 +4,7 @@
 
 /**************************************************************************//**
  *
- * @file word_entry.h
+ * @file word-entry.h
  *
  * @author Christopher A. Bohn
  *

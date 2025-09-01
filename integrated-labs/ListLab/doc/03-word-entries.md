@@ -36,10 +36,14 @@ You do not need to make any changes to `delete_word_entry()`.
 - [ ] In `get_count()`, return the number of occurrences.
 - [ ] In `get_word()`, return a pointer to the word entry's word. (Do *not* make a copy of the word.)
 
-You can build an executable that uses H.Awk's array-backed list with the command \\
-\verb+make arraylist+ \\
+You can build an executable that uses H.Awk's array-backed list with the command
+```shell
+cmake --build build --target arraylist
+```
+<!--
 or, if you want to limit each `malloc()` call to no more than 256 bytes, then use the command \\
 \verb+make arraylist OPTION="-DHOBBLE"+
+--> 
 
         
 - [ ] Build and run the executable.
@@ -91,10 +95,14 @@ the caller would be unable to later free this memory without discarding the `con
 
 ### Testing Your Changes
 
-You can build an executable that uses H.Awk's array-backed list with the command \\
-\verb+make arraylist+ \\
+You can build an executable that uses H.Awk's array-backed list with the command
+```shell
+cmake --build build --target arraylist
+```
+<!--
 or, if you want to limit each `malloc()` call to no more than 32KB, then use the command \\
 \verb+make arraylist "OPTION=-DHOBBLE"+
+-->
 
 - [ ] Build and run the executable.
   ```
@@ -136,6 +144,6 @@ or, if you want to limit each `malloc()` call to no more than 32KB, then use the
 
 ---
 
-|              [⬅️](02-books-rules.md)              |      [⬆️](../README.md)      |           [➡️](04-alphabetical-functions.md)           |
+|              [⬅️](02-getting-started.md)              |      [⬆️](../README.md)      |           [➡️](04-alphabetical-functions.md)           |
 |:-------------------------------------------------:|:----------------------------:|:------------------------------------------------------:|
-|  [The Books, Business Rules](02-books-rules.md)   | [Front Matter](../README.md) | [Alphabetical Functions](04-alphabetical-functions.md) |
+|  [The Books, Business Rules](02-getting-started.md)   | [Front Matter](../README.md) | [Alphabetical Functions](04-alphabetical-functions.md) |

@@ -23,7 +23,7 @@
 #define LIST_H
 
 #include <stdbool.h>
-#include "word_entry.h"
+#include "word-entry.h"
 
 
 /*                  *
@@ -35,10 +35,10 @@
  * @brief A generic list for word entries.
  *
  * The underlying representation cannot be inferred except by the functions
- * in array_list.c and in linked_list.c. When used in array_list.c, the list's
- * definition can be assumed to be that found in array_list.h. When used in
- * linked_list.c, the list's definition can be assumed to be that found in
- * linked_list.h.
+ * in array-list.c and in linked-list.c. When used in array-list.c, the list's
+ * definition can be assumed to be that found in array-list.h. When used in
+ * linked-list.c, the list's definition can be assumed to be that found in
+ * linked-list.h.
  */
 typedef struct list_definition list_t;
 

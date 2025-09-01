@@ -11,7 +11,7 @@ In *linked_list.c*:
 - [ ] Edit `get_list()` to return the list's iterator. The current node should be the head of the list.
 
 
-- [ ] Build and run *linkedlist* (and, optionally, *arraylist* in another terminal window)
+- [ ] Build and run *build/linkedlist* (and, optionally, *build/arraylist* in another terminal window)
 - [ ] Test `create_node()` and `create_list()` by selecting option 2 ("Test list") and function 1 ("create_list()").
 - [ ] Test `get_iterator()` and `get_list()` by selecting functions 3 ("get_iterator()") and 4 ("get_list()").
 - [ ] Free the memory by selecting function 2 ("delete_list()").
@@ -33,7 +33,7 @@ If the list is initially empty, then the new node is both the head and the tail 
 - [ ] Edit `append()` to place a word entry at the end of the list. The current node should be the newly-added node.
 
 
-- [ ] Build and run *linkedlist* (and, optionally, *arraylist* in another terminal window)
+- [ ] Build and run *build/linkedlist* (and, optionally, *build/arraylist* in another terminal window)
 - [ ] Create a list by selecting option 2 ("Test list") and function 1 ("create_list()").
 - [ ] Test `prepend()` for an empty list by selecting function 9 ("prepend()").
 - [ ] Test `prepend()` for a list with one node by selecting function 9 ("prepend()").

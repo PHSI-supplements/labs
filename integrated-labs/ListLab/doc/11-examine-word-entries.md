@@ -4,13 +4,14 @@ The `get_word_entry()` function retrieves the current node's word entry.
 The `get_next_word_entry()` and `get_previous_word_entry()` retrieve the head's and tail's word entries, respectively.
 If the current, head, or tail pointers are `NULL`, then the corresponding functions return `NULL`.
 
+[//]: # (TODO: replace NULL with nullptr)
 
 - [ ] Implement `get_word_entry()`.
 - [ ] Implement `get_next_word_entry()`.
 - [ ] Implement `get_previous_word_entry()`.
 
 
-- [ ] Build and run *linkedlist* (and, optionally, *arraylist* in another terminal window)
+- [ ] Build and run *build/linkedlist* (and, optionally, *build/arraylist* in another terminal window)
 - [ ] Create a list by selecting option 2 ("Test list") and function 1 ("create_list()"). Get the iterator with function 3 ("get_iterator()").
 - [ ] Test `get_word_entry()` on an empty list by selecting function 13 ("get_word_entry()").
 - [ ] Create a list with one node by selecting function 7 ("append()").

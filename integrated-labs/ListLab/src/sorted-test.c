@@ -26,11 +26,11 @@
 #include "sorted-test.h"
 #include "sorted_word_entries.h"
 
-#ifdef NOTIMEOUT
-#define timed_test(action) do { action; } while (0);
+#ifdef TIMEOUT
+#define timed_test(action) do { fprintf(stderr, "[INFO]  10-second timeout enabled.\n"); signal(SIGALRM, timeout_handler); alarm(10); action; alarm(0); } while(0)
 #else
-#define timed_test(action) do { signal(SIGALRM, timeout_handler); alarm(10); action; alarm(0); } while(0);
-#endif //NOTIMEOUT
+#define timed_test(action) do { fprintf(stderr, "[INFO]  Timeout disabled.\n"); action; } while (0)
+#endif //TIMEOUT
 
 static void timeout_handler(int signum) {
     fprintf(stderr, "[ERROR] Timeout after 10 seconds!\n");

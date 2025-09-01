@@ -24,7 +24,7 @@ In *challenge-response.c*, there is a `word_to_lowercase()` function to do just 
 
 - [ ] Implement the `word_to_lowercase()` function.
 
-Unlike KeyboardLab, you can use the `tolower()` function\footnote{\url{https://en.cppreference.com/w/c/string/byte/tolower}} from `ctype.h`.
+Unlike KeyboardLab, you can use [the `tolower()` function](https://en.cppreference.com/w/c/string/byte/tolower) from `ctype.h`.
 
 ### Comparing Words
 
@@ -40,14 +40,18 @@ In *challenge-response.c*, there are three functions to do that:
 - [ ] Implement the `word1_is_earlier_than_word2()` function.
 - [ ] Implement the `word1_is_later_than_word2()` function.
 
-We recommend that you use the `strncmp()` function\footnote{\url{https://en.cppreference.com/w/c/string/byte/strncmp}} from `string.h`.
+We recommend that you use [the `strncmp()` function](https://unl.grlcontent.com/compeng2e/page/appendixc#c16) <!-- [the `strncmp()` function](https://en.cppreference.com/w/c/string/byte/strncmp) --> from `string.h`.
 
 ### Testing Your Changes
 
-You can build an executable that uses H.Awk's array-backed list with the command \\
-\verb+make arraylist+ \\
+You can build an executable that uses H.Awk's array-backed list with the command
+```shell
+cmake --build build --target arraylist
+```
+<!--
 or, if you want to limit each `malloc()` call to no more than 32KB, then use the command \\
 \verb+make arraylist "OPTION=-DHOBBLE"+
+-->
 
 - [ ] Build and run the executable.
   ```

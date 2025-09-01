@@ -26,7 +26,7 @@ We will place subsequent labs in branches so that doing so does not cause any co
 When you are ready to work on the next lab, notionally *FooLab*, you can retrieve the assignment and starter code:
 
 - First, make sure your repository is ready to receive the *FooLab*.
-  ```bash
+  ```shell
   git status
   ```
   You should see something like this:
@@ -38,7 +38,7 @@ When you are ready to work on the next lab, notionally *FooLab*, you can retriev
   ```
   If you see something different, see [the corrective steps below](#git-grumpiness-git-status).
 - Next, retrieve the FooLab branch (replace `FooLab` with the actual, correct branch name).
-  ```bash
+  ```shell
   git fetch origin FooLab
   ```
   You should see something like this:
@@ -48,7 +48,7 @@ When you are ready to work on the next lab, notionally *FooLab*, you can retriev
   ```
   If you see something different, see [the corrective steps below](#git-grumpiness-git-status).
 - Finally, and merge the *FooLab* branch into your `main` branch.
-  ```bash
+  ```shell
   git merge --no-ff origin/FooLab
   ```
   If everything is clean, you should see a message like:
@@ -103,15 +103,15 @@ If you're working on your personal computer instead of Nuros, you may be prompte
 
 If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt).
 If you're working on Nuros, run the command:
-```bash
+```shell
 cmake --preset=default
 ```
 If you're working on your personal computer, run the command:
-```bash
+```shell
 cmake --preset=personal-computer
 ```
 or, if you need to specify a particular compiler:
-```bash
+```shell
 cmake --preset=personal-computer -DCMAKE_C_COMPILER=/path/to/the/compiler
 ```
 
@@ -125,11 +125,11 @@ CMake: Build Target                         # Build a specific target
 ```
 
 If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt) and run the command:
-```bash
+```shell
 cmake --build build
 ```
 or, to build a specific target:
-```bash
+```shell
 cmake --build build --target foolab
 ```
 
@@ -143,7 +143,7 @@ CMake: Debug
 ```
 
 If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt) and run the command:
-```bash
+```shell
 build/foolab
 ```
 
@@ -165,7 +165,7 @@ CMake: Run Tests
 ```
 
 If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt) and run the command:
-```bash
+```shell
 ctest --test-dir build --output-on-failure
 ```
 
@@ -181,7 +181,7 @@ You *should* make a habit of committing successful changes along the way, but at
 If you are exercising one or more late days, be sure to also edit and push LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt.
 
 If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt) and run the commands:
-```bash
+```shell
 git add .                                   # will stage both src/ directory and LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt
 git commit
 ```
@@ -189,7 +189,7 @@ An editor should open for you to provide a commit message.
 If it does not, see [the corrective steps below](#git-grumpiness-git-commit).
 
 Send the updates to git.unl.edu:
-```bash
+```shell
 git push
 ```
 You should see a message that is something like this:
@@ -212,7 +212,7 @@ If you see something different, see [the corrective steps below](#git-grumpiness
 ### Git Grumpiness: `git status`
 
 You made sure your repository is ready to receive the *FooLab*.
-```bash
+```shell
 git status
 ```
 You expected to see something like this:
@@ -225,11 +225,11 @@ nothing to commit, working tree clean
 But you saw something different.
 - If you get a *fatal: not a git repository* error, then navigate to your repository's directory and try again.
 - If it does not say *On branch main*, then switch back to the main branch:
-  ```bash
+  ```shell
   git checkout main
   ```
 - If it does not say *Your branch is up to date with 'origin/main'*, then update it:
-  ```bash
+  ```shell
   git pull --no-ff
   ```
 - If it does not say *nothing to commit, working tree clean*, then commit your changes (or stash them if you prefer) before continuing.
@@ -241,11 +241,11 @@ If you cannot resolve the problem(s) yourself, then talk with a TA or the instru
 ### Git Grumpiness: `git fetch`
 
 You attempted to retrieve the FooLab branch.
-  ```bash
+  ```shell
   git fetch origin FooLab
   ```
 You expected to see something like this:
-  ```bash
+  ```shell
   From git.unl.edu:csce231/fall2025/your-repo
   * branch            FooLab     -> FETCH_HEAD
   ```
@@ -256,7 +256,7 @@ If the error is:
   either the instructor hasn’t released this lab yet, or you mistyped the branch name.
   Double-check spelling and capitalization.
   You can list all remote branches with:
-  ```bash
+  ```shell
   git ls-remote --heads origin
   ```
 - *ssh: Could not resolve hostname git.unl.edu: Name or service not known*, or  
@@ -272,7 +272,7 @@ If you cannot resolve the problem(s) yourself, then talk with a TA or the instru
 ### Git Grumpiness: `git merge`
 
 You attempted merge the *FooLab* branch into your `main` branch.
-```bash
+```shell
 git merge --no-ff origin/FooLab
 ```
 You expected to see a message like:
@@ -292,11 +292,11 @@ But you saw something different.
   1. Open the conflicting files -- Git will mark the conflicting lines with `<<<<<<<`, `=======`, and `>>>>>>>`.
   2. Edit the file(s) to keep the correct code.
   3. Mark them resolved:
-     ```bash
+     ```shell
      git add path/to/conflicted-file
      ```
   4. Once all conflicts are resolved:
-     ```bash
+     ```shell
      git commit
      ```
   This completes the merge.
@@ -309,7 +309,7 @@ If you cannot resolve the problem(s) yourself, then talk with a TA or the instru
 ### Git Grumpiness: `git commit`
 
 You attempted to stage and commit files:
-```bash
+```shell
 git add .
 git commit
 ```
@@ -323,7 +323,7 @@ If you cannot resolve the problem(s) yourself, then talk with a TA or the instru
 ### Git Grumpiness: `git push`
 
 You attempted to send the updates to git.unl.edu:
-```bash
+```shell
 git push
 ```
 You expected to see a message that is something like this:
@@ -352,11 +352,11 @@ But you saw something different.
   Then the message tells you exactly what is wrong (*the remote* copy of your repository *contains work that you do not have locally*)
   and how to fix it (`git pull ...`)
   - If you're new to Git, I recommend using
-    ```bash
+    ```shell
     git pull --no-ff
     ```
     which will highlight merge conflicts for you. If you're more comfortable with Git, you may use
-    ```bash
+    ```shell
     git pull --rebase
     ```
     Regardless of which command you use, be sure to check that your code still compiles and functions correctly before re-running `git push`.
@@ -374,7 +374,7 @@ If you cannot resolve the problem(s) yourself, then talk with a TA or the instru
 ### Git Grumpiness: `git pull --no-ff`
 
 You retrieved changes from the remote copy of your repository with:
-```bash
+```shell
 git pull --no-ff
 ```
 and expected to see something similar to:
@@ -412,11 +412,11 @@ But instead you saw something different.
   1. Open the conflicting files -- Git will mark the conflicting lines with `<<<<<<<`, `=======`, and `>>>>>>>`.
   2. Edit the file(s) to keep the correct code.
   3. Mark them resolved:
-     ```bash
+     ```shell
      git add path/to/conflicted-file
      ```
   4. Once all conflicts are resolved:
-     ```bash
+     ```shell
      git commit
      ```
   This completes the merge.
@@ -426,7 +426,7 @@ If you cannot resolve the problem(s) yourself, then talk with a TA or the instru
 ### Git Grumpiness: `git pull --rebase`
 
 You retrieved changes from the remote copy of your repository with:
-```bash
+```shell
 git pull --rebase
 ```
 and expected to see something similar to:
@@ -456,7 +456,7 @@ But instead you saw something different.
   1. Open the conflicting file -- Git will mark the conflicting lines with `<<<<<<<`, `=======`, and `>>>>>>>`.
   2. Edit the file to keep the correct code.
   3. Mark it resolved:
-     ```bash
+     ```shell
      git add path/to/conflicted-file
      git rebase --continue
      ```

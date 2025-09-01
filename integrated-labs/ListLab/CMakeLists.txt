@@ -10,6 +10,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
 option(INSTRUCTOR_BUILD "Suppress warnings for grading" OFF)
+option(TIMEOUT "Enable 10-second timeout to prevent runaway code" ON)
 
 ### Executables
 
@@ -18,16 +19,21 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(COMMON_SRC
-        src/linkedlistlab.c         src/list-test.c
+        src/listlab.c               src/list-test.c
         src/sorted_word_entries.c   src/sorted-test.c
-        src/word_entry.c            src/word-entry-test.c
+        src/word-entry.c            src/word-entry-test.c
 )
-set(ARRAYLIST_SRC   src/array_list.c)
-set(LINKEDLIST_SRC  src/linked_list.c)
+set(ARRAYLIST_SRC src/array-list.c)
+set(LINKEDLIST_SRC src/linked-list.c)
 file(GLOB HDR_FILES CONFIGURE_DEPENDS src/*.h)      # some IDEs need this
 
 add_executable(arraylist    ${COMMON_SRC}   ${ARRAYLIST_SRC}    ${HDR_FILES})
 add_executable(linkedlist   ${COMMON_SRC}   ${LINKEDLIST_SRC}   ${HDR_FILES})
+
+if(TIMEOUT)
+    target_compile_definitions(arraylist PRIVATE TIMEOUT)
+    target_compile_definitions(linkedlist PRIVATE TIMEOUT)
+endif()
 
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)
@@ -44,7 +50,7 @@ if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
             -Wextra
             -Wno-unused-parameter
         )
-        # I'd like to replace -Wno-unused-parameter with [[maybe_unused]] exactly where it's needed, 23 temporarily-unused parameters!
+        # I'd like to replace -Wno-unused-parameter with [[maybe_unused]] exactly where it's needed, but there are 23 temporarily-unused parameters!
     endif()
     target_compile_options(arraylist PRIVATE -Og)
     target_compile_options(linkedlist PRIVATE -Og)

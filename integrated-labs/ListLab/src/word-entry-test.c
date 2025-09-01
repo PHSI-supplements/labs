@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "word-entry-test.h"
-#include "word_entry.h"
+#include "word-entry.h"
 
 #define NUMBER_OF_WORD_ENTRY_FUNCTIONS (5)
 

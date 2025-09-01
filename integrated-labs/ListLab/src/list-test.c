@@ -26,7 +26,7 @@
 #include <errno.h>
 #include "list-test.h"
 #include "list.h"
-#include "word_entry.h"
+#include "word-entry.h"
 
 static int select_function(char const *function_names[], int number_of_functions) {
     char buffer[80];

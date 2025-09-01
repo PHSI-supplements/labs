@@ -4,7 +4,7 @@
 
 /**************************************************************************//**
  *
- * @file linked_list.h
+ * @file linked-list.h
  *
  * @author Christopher A. Bohn
  *

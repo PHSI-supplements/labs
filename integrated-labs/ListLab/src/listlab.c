@@ -4,7 +4,7 @@
 
 /**************************************************************************//**
  *
- * @file linkedlistlab.c
+ * @file listlab.c
  *
  * @author Christopher A. Bohn
  *
@@ -28,6 +28,9 @@
 #include "list-test.h"
 
 #define NUMBER_OF_TESTS (7)
+
+// TODO: [INFO] which list definition is being used
+// TODO: replace `#define NUMBER_OF_TESTS (7)` with `constexpr size_t NUMBER_OF_TESTS = 7;
 
 int main(void) {
     void (*problem_checkers[NUMBER_OF_TESTS + 1])(void) = {

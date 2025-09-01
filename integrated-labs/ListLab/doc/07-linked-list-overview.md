@@ -2,7 +2,7 @@
 
 > 💡 **Tip**
 > 
-> If you need a refresher on linked lists, see Appendix~\ref{sec:linkedLists}.
+> If you need a refresher on linked lists, see [this assignment's Appendix B](BB-data-structure.md).
 
 ### Definitions
 
@@ -37,6 +37,8 @@ The iterator definition has two pointers, a `list` that points back to the list 
   When the iterator is invalid, `current_node` can be NULL; it can point to a node in the list; it can point to *any* memory location.
 </font>
 
+[//]: # (TODO: replace NULL with nullptr)
+
 We define a linked list node conventionally:
 
 ```c
@@ -53,16 +55,19 @@ struct node_definition {
 >
 > Here the forward declaration is necessary so that `node_t` can be used when defining the node structure.
 
-When writing functions in *sorted_word_entries.c*, you had to rely on 'list_t`'s and 'iterator_t`'s encapsulation and could not assume any particular list \& iterator definitions.
-**Whenever you are writing a function in *linked_list.c*, you can treat `list_t** and \lstinline{iterator_t` as though they have the linked list definitions.}
-
+When writing functions in *sorted_word_entries.c*, you had to rely on `list_t`'s and `iterator_t`'s encapsulation and could not assume any particular list & iterator definitions.
+**Whenever you are writing a function in *linked_list.c*, you can treat `list_t` and `iterator_t` as though they have the linked list definitions.**
 
 ### Building and Testing Your Linked List Implementation
 
-If you use the command \\
-\verb+make all+ \\
+If you use the command
+```shell
+cmake --build build
+```
+<!--
 or \\
 \verb+make all "OPTION=-DHOBBLE"+ \\
+-->
 then you will generate two executables: *arraylist* that has the array-backed list, and *linkedlist* that has the linked list.
 If you open two terminal windows, you can run the test code on *arraylist* in one window and run the test suite on *linkedlist* in the other window.
 This will allow you to compare the results with your linked list implementation against the expected results provided by the array-backed list:
@@ -73,7 +78,7 @@ This will allow you to compare the results with your linked list implementation 
     <figcaption>Testing an array-backed list (left) and a linked list (right) side-by-side.</figcaption>
 </figure>
 
-To test your linked list implementation, run *linkedlist* (and, optionally, *arraylist* in another terminal window),
+To test your linked list implementation, run *build/linkedlist* (and, optionally, *build/arraylist* in another terminal window),
 and select option 2, "Test list"
 
 ---

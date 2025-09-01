@@ -4,7 +4,7 @@
 
 /**************************************************************************//**
  *
- * @file array_list.c
+ * @file array-list.c
  *
  * @author Christopher A. Bohn
  *
@@ -23,7 +23,7 @@
  */
 
 #include <stdio.h>
-#include "array_list.h"
+#include "array-list.h"
 #include "hobbled_alloc.h"
 
 

@@ -1,6 +1,6 @@
 /**************************************************************************//**
  *
- * @file word_entry.c
+ * @file word-entry.c
  *
  * @author (TYPE YOUR NAME HERE)
  * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "word_entry.h"
+#include "word-entry.h"
 
 /**
  * Creates a `word_entry_t` that holds a copy of the word, with the number of

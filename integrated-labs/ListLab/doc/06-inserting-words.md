@@ -39,15 +39,17 @@ In this case, you know that if the word is already in the list then it is the la
 and if the word is not already in the list then it belongs at the end of the list.
 
 You will receive half of the credit for `insert_word()` if it works on pre-sorted books.
-If you choose to use this implementation:
+*If you choose to use this implementation:*
 
 - [ ] Implement `insert_word()` for pre-sorted books
 - [ ] Test this implementation and move on to implementing a linked list
 - [ ] Return to this sub-problem later to attempt a more-general implementation
 
-Otherwise, implement Insertion Sort…
+*Otherwise, implement Insertion Sort…*
 
 ### Insertion Sort
+
+[//]: # (TODO: Links to videos)
 
 While you probably learned about sorting in \cstwo, you may not have learned about *Insertion Sort*.
 If you did learn about Insertion Sort, you probably learned to use it to sort an array or list in-place, and that it's a $\mathcal{O}(n^2)$ algorithm that is less efficient than $\mathcal{O}(n \log n)$ sorting algorithms such as Merge Sort and Quick Sort.

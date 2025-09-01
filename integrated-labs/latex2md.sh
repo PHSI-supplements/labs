@@ -45,7 +45,13 @@ sed -E -f - "$@" <<'SED'
   # \item XX
   s/\\item[[:space:]]+(.*)/- \1/g
 
+  # \url{XX}
+  s/\\url\{([^}]*)\}/[\1](\1)/g
+
   ## Two-Argument Conversions ##
+
+  # \href{XX}{YY}
+  s/\\href\{([^}]*)\}\{([^}]*)\}/[\2](\1)/g
 
   # \item[XX] YY
   s/\\item\[([^]]+)\][[:space:]]*(.*)/- **\1** \2/g

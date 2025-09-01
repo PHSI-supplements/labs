@@ -3,7 +3,7 @@
   "configurePresets": [
     {
       "name": "default",
-      "displayName": "Default (server) build with gcc-15",
+      "displayName": "Default (server) build with gcc-15, timeout enabled",
       "binaryDir": "${sourceDir}/build",
       "condition": {
         "type": "equals",
@@ -12,13 +12,62 @@
       },
       "cacheVariables": {
         "CMAKE_C_COMPILER": "/usr/bin/gcc-15",
-        "CMAKE_CXX_COMPILER": "/usr/bin/g++-15"
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++-15",
+        "TIMEOUT": "ON"
+      }
+    },
+    {
+      "name": "timeout-disabled",
+      "displayName": "Default (server) build with gcc-15, timeout disabled",
+      "binaryDir": "${sourceDir}/build",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "/usr/bin/gcc-15",
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++-15",
+        "TIMEOUT": "OFF"
       }
     },
     {
       "name": "personal-computer",
-      "displayName": "Build on personal computer (system default compiler)",
-      "binaryDir": "${sourceDir}/build"
+      "displayName": "Build on personal computer (system default compiler), timeout enabled",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "TIMEOUT": "ON"
+      }
+    },
+    {
+      "name": "personal-computer-timeout-disabled",
+      "displayName": "Build on personal computer (system default compiler), timeout disabled",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "TIMEOUT": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-default",
+      "configurePreset": "default",
+      "displayName": "Build with timeout ON"
+    },
+    {
+      "name": "build-no-timeout",
+      "configurePreset": "timeout-disabled",
+      "displayName": "Build with timeout OFF"
+    },
+    {
+      "name": "build-personal-default",
+      "configurePreset": "personal-computer",
+      "displayName": "Build on personal computer with timeout ON"
+    },
+    {
+      "name": "build-personal-no-timeout",
+      "configurePreset": "personal-computer-timeout-disabled",
+      "displayName": "Build on personal computer with timeout OFF"
     }
   ]
 }

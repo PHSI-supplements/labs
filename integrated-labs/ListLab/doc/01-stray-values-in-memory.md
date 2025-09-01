@@ -131,6 +131,6 @@ Without changing the function signatures, how can Archie's code be fixed?
 
 ---
 
-|                 |      [⬆️](../README.md)      |              [➡️](02-books-rules.md)              |
+|                 |      [⬆️](../README.md)      |              [➡️](02-getting-started.md)              |
 |:---------------:|:----------------------------:|:-------------------------------------------------:|
-|                 | [Front Matter](../README.md) |  [The Books, Business Rules](02-books-rules.md)   |
+|                 | [Front Matter](../README.md) |  [The Books, Business Rules](02-getting-started.md)   |

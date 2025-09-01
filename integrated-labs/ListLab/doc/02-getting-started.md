@@ -15,7 +15,93 @@
 > You think about the problem for a moment, and then suggest, "What if we replace the array-backed list with a linked list...?"
 > You plug in your shiny, new keyboard, tune your satellite radio to the Greatest Hits of the 1920s, and settle in to solving this interesting problem.
 
-## The Books
+## Getting Started
+
+### Compiling and Running
+
+[//]: # (TODO: Finish this section)
+
+This assignment is a little different from the other assignments, in that it has two build targets instead of one,
+and in that it has a timeout feature that will terminate the program if it runs too long.
+These differences mean there are a few extra options when compiling and running your code.
+
+*We strongly recommend that you leave the timeout feature enabled for most or all of your testing.*
+However, if you are using an interactive debugger
+
+#### Configuring the Project
+
+<u>From the Command Line</u>
+
+<u>From VS Code</u>
+
+#### Compiling the Project
+
+<u>From the Command Line</u>
+
+<u>From VS Code</u>
+
+#### Running the Program
+
+<u>From the Command Line</u>
+
+<u>From VS Code</u>
+
+<!--
+### Configuring the Project
+
+If you're using an IDE, open the project in the *FooLab* directory (the same directory that has CMakeLists.txt).
+It should configure the project for you.
+If you're working on your personal computer instead of Nuros, you may be prompted to identify the compiler you'll use.
+
+If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt).
+If you're working on Nuros, run the command:
+```shell
+cmake --preset=default
+```
+If you're working on your personal computer, run the command:
+```shell
+cmake --preset=personal-computer
+```
+or, if you need to specify a particular compiler:
+```shell
+cmake --preset=personal-computer -DCMAKE_C_COMPILER=/path/to/the/compiler
+```
+
+### Compiling the Project
+
+If you're using an IDE, there should be a "Build" button.
+In VS Code, you can also select one of these commands from the command palette:
+```
+CMake: Build                                # Builds all targets
+CMake: Build Target                         # Build a specific target
+```
+
+If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt) and run the command:
+```shell
+cmake --build build
+```
+or, to build a specific target:
+```shell
+cmake --build build --target foolab
+```
+
+### Running the Program
+
+If you're using an IDE, there should be a "Run" button.
+In VS Code, you can also select one of these commands from the command palette:
+```
+CMake: Run Without Debugging
+CMake: Debug
+```
+
+If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt) and run the command:
+```shell
+build/foolab
+```
+
+-->
+
+### The Books
 
 The starter code includes six files that you can use as inputs.
 Three are pre-sorted, and three aren't.
@@ -31,7 +117,8 @@ Two are real books;[^gutenberg] they are large, in excess of 74,000 words, and t
 - Mary Shelly's [*Frankenstein; Or, The Modern Prometheus*](https://www.gutenberg.org/ebooks/84) (sorted, 74,363 words, filename: "Frankenstein")
 - Arthur Conan Doyle's [*The Lost World*](https://www.gutenberg.org/ebooks/139) (unsorted, 77,268 words, filename "TheLostWorld")
 
-Each book file, "*file*", has a corresponding "*file*-table.md" that contains a Markdown-formatted table of the challenge words, the number of occurrences for each challenge word, and the corresponding response word.
+[This assignment's Appendix C](CC-word-tables.md) has a table for each of these book files.
+The tables have the challenge words and the number of occurrences for each challenge word.
 You may use these files to confirm the correctness of your solution.
 
 Throughout the assignment, we note that if building the list takes more than a few seconds, there is a bug in your code;
@@ -40,18 +127,16 @@ Your code may take longer, but it should not take much longer.
 
 <span style="background-color: yellow;">Some of the tests in *sorted-test.c* will timeout after ten seconds to stop runaway code.
 To disable this timeout (such as when debugging with breakpoints), compile the code with</span>
-```bash
-touch sorted-list.c
-make OPTION="-DNOTIMEOUT"
+```shell
+cmake --preset=timeout-disabled
+cmake --build build
 ```
-(to re-enable the timeout, use `touch sorted-test.c; make`)
-
-[//]: # (TODO: Be sure to give CMake a "-DNOTIMEOUT" option, and update the commands here)
+(to re-enable the timeout, use `cmake --preset=default; cmake --build build`)
 
 You will earn most of the credit for this lab if your code works for pre-sorted files of up to 200 words.
 The remaining credit is for making your code work with unsorted files and, when using files of up to 80,000 words, your code can generate a list and find a word in fewer than 20 seconds.
 
-## Business Rules
+### Business Rules
 
 You are not required to implement the challenge-response app's business rules.
 We include them here as a reference, if it helps you to understand the code better.
@@ -60,7 +145,7 @@ We include them here as a reference, if it helps you to understand the code bett
 - The word occurs *occurrences* times in the book
 
 As a simple example, look at the *Food* file.
-After sorting and counting, we have:
+After sorting and counting, [we have](CC-word-tables.md#food):
 
 |   *word*    | *occurrences* |
 |:-----------:|:-------------:|
@@ -87,8 +172,8 @@ After sorting and counting, we have:
 
 ---
 
-[^gutenberg] The text for these books was obtained from \href{https://www.gutenberg.org/}{Project Gutenberg}.
-In accordance with Paragraph~1.C of the \href{https://www.gutenberg.org/policy/license}{Project Gutenberg License}, all references to Project Gutenberg have been removed from the "derived works" that we are distributing.
+[^gutenberg] The text for these books was obtained from [Project Gutenberg](https://www.gutenberg.org/).
+In accordance with Paragraph~1.C of the [Project Gutenberg License](https://www.gutenberg.org/policy/license), all references to Project Gutenberg have been removed from the "derived works" that we are distributing.
 (Removing the references to Project Gutenberg was also necessary to ensure that *only* the words from the books are included in the list.)
 
 |           [⬅️](01-stray-values-in-memory.md)           |      [⬆️](../README.md)      |      [➡️](03-word-entries.md)      |

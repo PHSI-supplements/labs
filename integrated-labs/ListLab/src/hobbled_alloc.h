@@ -25,12 +25,12 @@
 
 #include <stdlib.h>
 
-static const size_t MAXIMUM_CONTIGUOUS_MEMORY = 1 << 8;
+constexpr size_t MAXIMUM_CONTIGUOUS_MEMORY = 1 << 8;
 
 static inline void *hobbled_malloc(size_t size) {
 #ifdef HOBBLE
     if (size > MAXIMUM_CONTIGUOUS_MEMORY) {
-        return NULL;
+        return nullptr;
     }
 #endif //HOBBLE
     return malloc(size);
@@ -39,7 +39,7 @@ static inline void *hobbled_malloc(size_t size) {
 static inline void *hobbled_calloc(size_t count, size_t size) {
 #ifdef HOBBLE
     if (size > MAXIMUM_CONTIGUOUS_MEMORY) {
-        return NULL;
+        return nullptr;
     }
 #endif //HOBBLE
     return calloc(count, size);
@@ -48,7 +48,7 @@ static inline void *hobbled_calloc(size_t count, size_t size) {
 static inline void *hobbled_realloc(void *ptr, size_t size) {
 #ifdef HOBBLE
     if (size > MAXIMUM_CONTIGUOUS_MEMORY) {
-        return NULL;
+        return nullptr;
     }
 #endif //HOBBLE
     return realloc(ptr, size);
