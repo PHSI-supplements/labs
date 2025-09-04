@@ -244,7 +244,7 @@ word_entry_t const* get_word_entry(iterator_t const *iterator);
 
 /**
  * @brief Retrieve's the next element's word entry, if `has_next(iterator)`, or
- * NULL otherwise.
+ * `nullptr` otherwise.
  *
  * The iterator remains valid and unchanged, and the word entry remains in the
  * list.
@@ -256,7 +256,7 @@ word_entry_t const* get_next_word_entry(iterator_t const *iterator);
 
 /**
  * @brief Retrieve's the previous element's word entry, if
- * `has_previous(iterator)`, or NULL otherwise.
+ * `has_previous(iterator)`, or `nullptr` otherwise.
  *
  * The iterator remains valid and unchanged, and the word entry remains in the
  * list.

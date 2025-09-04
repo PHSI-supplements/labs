@@ -43,7 +43,7 @@ static int select_function(char const *function_names[], int number_of_functions
         }
         printf("Select the function you wish to check: ");
         scanf("%79s", buffer);
-        option = (int) strtol(buffer, NULL, 10);
+        option = (int) strtol(buffer, nullptr, 10);
         if (option == 0 && errno == EINVAL) {
             printf("Invalid choice (%s). Please select a number between 0 and %d.\n\n", buffer, number_of_functions);
             errno = 0;
@@ -103,9 +103,9 @@ void test_list(void) {
             "merge_previous()",
     };
     char buffer[80];
-    word_entry_t *word_entry = NULL;
-    list_t *list = NULL;
-    iterator_t *iterator = NULL;
+    word_entry_t *word_entry = nullptr;
+    list_t *list = nullptr;
+    iterator_t *iterator = nullptr;
     int option = select_function(function_names, NUMBER_OF_LIST_FUNCTIONS);
     printf("\n");
     while (option) {
@@ -118,7 +118,7 @@ void test_list(void) {
                 break;
             case DESTROY_LIST:
                 printf("Destroying list.\n");
-                if (list == NULL) {
+                if (list == nullptr) {
                     printf("There is no list to destroy.\n");
                 } else {
                     destroy_list(list, true);
@@ -128,7 +128,7 @@ void test_list(void) {
                 printf("Retrieving iterator from list at %p.\n", list);
                 iterator = get_iterator(list);
                 if (!iterator) {
-                    printf("get_iterator() returned NULL.\n");
+                    printf("get_iterator() returned nullptr.\n");
                 } else {
                     printf("Iterator successfully retrieved at %p.\n", iterator);
                 }

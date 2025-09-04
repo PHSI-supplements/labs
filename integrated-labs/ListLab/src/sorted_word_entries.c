@@ -110,8 +110,8 @@ bool word1_is_later_than_word2(const char *word1, const char *word2) {
  * @return a pointer to the list
  */
 list_t *insert_word(list_t *list, char const *word) {
-    assert(list != NULL);
-    assert(word != NULL);
+    assert(list != nullptr);
+    assert(word != nullptr);
     char lowercase_word[MAXIMUM_WORD_LENGTH + 1];
     word_to_lowercase(lowercase_word, word);
     /* IMPLEMENT THIS FUNCTION */
@@ -141,7 +141,7 @@ list_t *build_list(char const *filename) {
     FILE *book = fopen(filename, "r");
     if (!book) {
         fprintf(stderr, "No such file: %s\n", filename);
-        list = NULL;
+        list = nullptr;
     } else {
         char word[MAXIMUM_WORD_LENGTH + 1];
         while (fgets(word, MAXIMUM_WORD_LENGTH + 1, book)) {

@@ -30,7 +30,7 @@
 word_entry_t *create_word_entry(char const *word) {
     word_entry_t *word_entry = malloc(sizeof(word_entry_t));
     if (!word_entry) {
-        fprintf(stderr, "Failed to allocate space for new word_entry for %s. Returning NULL!\n", word);
+        fprintf(stderr, "Failed to allocate space for new word_entry for %s. Returning nullptr!\n", word);
     } else {
         /* INITIALIZE WORD_ENTRY */
 
@@ -86,8 +86,8 @@ char const *get_word(word_entry_t const *word_entry) {
  * @return the `destination` array, with the string representation
  */
 char *word_entry_to_string(char *destination, word_entry_t const *word_entry) {
-    if (word_entry == NULL) {
-        sprintf(destination, "%7s : %s", "NULL", "NULL");
+    if (word_entry == nullptr) {
+        sprintf(destination, "%7s : %s", "nullptr", "Null Pointer");
     } else {
         sprintf(destination, "%7d : %s", word_entry->occurrences, word_entry->word);
     }

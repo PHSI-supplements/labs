@@ -32,12 +32,10 @@ struct iterator_definition {
 The list definition has three pointers, a `head` that points to the first node in the list, a `tail` that points to the last node in the list, and an `iterator`.
 The iterator definition has two pointers, a `list` that points back to the list structure, and a `current_node` that points to the current node, denoting the iterator's position in the list.
 <font color="red">
-- `head` and `tail` are `NULL` if and only if the list is empty.
+- `head` and `tail` are `nullptr` if and only if the list is empty.
 - `current_node` only needs to have a sensible assignment when the iterator is valid.
-  When the iterator is invalid, `current_node` can be NULL; it can point to a node in the list; it can point to *any* memory location.
+  When the iterator is invalid, `current_node` can be `nullptr`; it can point to a node in the list; it can point to *any* memory location.
 </font>
-
-[//]: # (TODO: replace NULL with nullptr)
 
 We define a linked list node conventionally:
 

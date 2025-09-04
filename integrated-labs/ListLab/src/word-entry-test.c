@@ -40,14 +40,14 @@ void test_word_entry(void) {
     };
     char buffer[80];
     bool running = true;
-    word_entry_t *word_entry = NULL;
+    word_entry_t *word_entry = nullptr;
     while (running) {
         for (int i = 0; i < NUMBER_OF_WORD_ENTRY_FUNCTIONS + 1; i++) {
             printf("%d) %s\n", i, function_names[i]);
         }
         printf("Select the function you wish to check: ");
         scanf("%79s", buffer);
-        int option = (int) strtol(buffer, NULL, 10);
+        int option = (int) strtol(buffer, nullptr, 10);
         printf("\n");
         if (option < 0 || option > NUMBER_OF_WORD_ENTRY_FUNCTIONS) {
             printf("Invalid choice %d. Please select a choice between 0 and %d.\n", option,
@@ -72,16 +72,16 @@ void test_word_entry(void) {
                     break;
                 case 2:
                     printf("Deleting word_entry.\n");
-                    if (word_entry == NULL) {
+                    if (word_entry == nullptr) {
                         printf("There is no word_entry to delete.\n");
                     } else {
                         delete_word_entry(word_entry);
-                        word_entry = NULL;
+                        word_entry = nullptr;
                     }
                     break;
                 case 3:
                     printf("Incrementing count.\n");
-                    if (word_entry == NULL) {
+                    if (word_entry == nullptr) {
                         printf("There is no word_entry to increment count.\n");
                     } else {
                         increment_count(word_entry);
@@ -90,16 +90,16 @@ void test_word_entry(void) {
                     break;
                 case 4:
                     printf("Getting count: ");
-                    if (word_entry == NULL) {
-                        printf("NULL\n");
+                    if (word_entry == nullptr) {
+                        printf("Null Pointer\n");
                     } else {
                         printf("%d\n", get_count(word_entry));
                     }
                     break;
                 case 5:
                     printf("Getting word: ");
-                    if (word_entry == NULL) {
-                        printf("NULL\n");
+                    if (word_entry == nullptr) {
+                        printf("Null Pointer\n");
                     } else {
                         printf("%s\n", get_word(word_entry));
                     }

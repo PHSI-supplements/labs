@@ -30,12 +30,10 @@
 static constexpr size_t NUMBER_OF_TESTS = 7;
 extern char const *const LIST_TYPE;
 
-// TODO: [INFO] which list definition is being used
-
 int main(void) {
     fprintf(stderr, "[INFO]  Using %s implementation.\n", LIST_TYPE);
     void (*problem_checkers[NUMBER_OF_TESTS + 1])(void) = {
-            NULL,
+            nullptr,
             test_word_entry,
             test_list,
             test_alphabetical_functions,
@@ -62,7 +60,7 @@ int main(void) {
         }
         printf("Select the task you wish to check: ");
         scanf("%79s", buffer);
-        unsigned int option = (unsigned int) strtol(buffer, NULL, 10);
+        unsigned int option = (unsigned int) strtol(buffer, nullptr, 10);
         printf("\n");
         if (option < 0 || option > NUMBER_OF_TESTS) {
             printf("Invalid choice %d. Please select a choice between 0 and %zu.\n", option, NUMBER_OF_TESTS);

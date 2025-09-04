@@ -157,7 +157,7 @@ list_t *create_list(void) {
 
 As you can see, they allocate space for a new node or a new list handle using `malloc()`.
 The code that you will need to add to `create_node()` will copy the `word_entry` argument into the `word_entry` field.
-Since we don't yet know where this node will go, set the node's `next` and `previous` pointers to point to NULL.
+Since we don't yet know where this node will go, set the node's `next` and `previous` pointers to point to `nullptr`.
 The code that you will need to add to `create_list()` is even simpler: a newly-created list is empty, and so it has no head, no tail, and no current node.
 
 

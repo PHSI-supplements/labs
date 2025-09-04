@@ -47,18 +47,18 @@ static constexpr int MINIMUM_ALLOCATION = 8;
 list_t *create_list(void) {
     list_t *list = hobbled_malloc(sizeof(list_t));
     if (!list) {
-        fprintf(stderr, "Failed to allocate space for the new list. Returning NULL!\n");
-        return NULL;
+        fprintf(stderr, "Failed to allocate space for the new list. Returning nullptr!\n");
+        return nullptr;
     }
     if (!(list->array = hobbled_calloc(MINIMUM_ALLOCATION, sizeof(word_entry_t *)))) {
         free(list);
-        fprintf(stderr, "Failed to allocate space for the new list's array. Returning NULL!\n");
-        return NULL;
+        fprintf(stderr, "Failed to allocate space for the new list's array. Returning nullptr!\n");
+        return nullptr;
     }
     if (!(list->iterator = hobbled_malloc(sizeof(iterator_t)))) {
         free(list);
-        fprintf(stderr, "Failed to allocate space for new list's iterator. Returning NULL!\n");
-        return NULL;
+        fprintf(stderr, "Failed to allocate space for new list's iterator. Returning nullptr!\n");
+        return nullptr;
     }
     list->allocation = MINIMUM_ALLOCATION;
     list->length = 0;
@@ -319,7 +319,7 @@ list_t *insert(iterator_t *iterator, word_entry_t *word_entry) {
  */
 list_t *delete(iterator_t *iterator, bool free_word_entry) {
     if (!iterator) {
-        return NULL;
+        return nullptr;
     }
     list_t *list = iterator->list;
     if (free_word_entry) {
@@ -368,14 +368,14 @@ list_t *delete(iterator_t *iterator, bool free_word_entry) {
 word_entry_t const *get_word_entry(iterator_t const *iterator) {
     list_t *list = iterator->list;
     if (list->length == 0) {
-        return NULL;
+        return nullptr;
     }
     return list->array[iterator->index];
 }
 
 /**
  * @brief Retrieve's the next element's word entry, if `has_next(iterator)`, or
- * NULL otherwise.
+ * nullptr otherwise.
  *
  * Specifically, this function retrieves the array-backed list's
  * `array[index+1]` element.
@@ -389,17 +389,17 @@ word_entry_t const *get_word_entry(iterator_t const *iterator) {
 word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
     list_t *list = iterator->list;
     if (list->length == 0) {
-        return NULL;
+        return nullptr;
     }
     if (!has_next(iterator)) {
-        return NULL;
+        return nullptr;
     }
     return list->array[iterator->index + 1];
 }
 
 /**
  * @brief Retrieve's the previous element's word entry, if
- * `has_previous(iterator)`, or NULL otherwise.
+ * `has_previous(iterator)`, or nullptr otherwise.
  *
  * Specifically, this function retrieves the array-backed list's
  * `array[index-1]` element.
@@ -413,10 +413,10 @@ word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
 word_entry_t const *get_previous_word_entry(iterator_t const *iterator) {
     list_t *list = iterator->list;
     if (list->length == 0) {
-        return NULL;
+        return nullptr;
     }
     if (!has_previous(iterator)) {
-        return NULL;
+        return nullptr;
     }
     return list->array[iterator->index - 1];
 }

@@ -30,7 +30,7 @@ char const *const LIST_TYPE = "Linked List";
 /**
  * @brief Creates an initially-blank `node_t` that has a word entry as its payload.
  *
- * Initially, the `iterate_next` and `iterate_previous` pointers are NULL.
+ * Initially, the `iterate_next` and `iterate_previous` pointers are `nullptr`.
  *
  * @param word_entry the node's payload
  * @return a pointer to the node
@@ -68,8 +68,8 @@ static void delete_node(node_t *node, bool free_word_entry) {
 /**
  * @brief Creates an initially-empty linked list.
  *
- * Initially, the head and the tail are NULL (because there are no nodes),
- * and the current node is NULL (because the iterator points to a blank space).
+ * Initially, the head and the tail are `nullptr` (because there are no nodes),
+ * and the current node is `nullptr` (because the iterator points to a blank space).
  *
  * @return a pointer to the list
  */
@@ -97,11 +97,11 @@ list_t *create_list(void) {
  *      the list's word entries.
  */
 void destroy_list(list_t *list, bool free_word_entries) {
-    if (list->tail != NULL) {
-        list->tail->next = NULL;    // just in case this is a circular linked list
+    if (list->tail != nullptr) {
+        list->tail->next = nullptr;    // just in case this is a circular linked list
     }
     node_t *node = list->head;
-    while (node != NULL) {
+    while (node != nullptr) {
         node_t *next_node = node->next;
         delete_node(node, free_word_entries);
         node = next_node;
@@ -129,7 +129,7 @@ void destroy_list(list_t *list, bool free_word_entries) {
 iterator_t *get_iterator(list_t *list) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -141,13 +141,13 @@ iterator_t *get_iterator(list_t *list) {
 list_t *get_list(iterator_t *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
  * Indicates whether forward iteration has more elements; that is, indicates
  * whether the iterator would remain valid if <code>iterate_next()</code> is called.
- * Specifically, if the current node's `next` pointer is not NULL, then there is a
+ * Specifically, if the current node's `next` pointer is not `nullptr`, then there is a
  * next element.
  *
  * @param iterator the iterator to be examined
@@ -157,13 +157,13 @@ list_t *get_list(iterator_t *iterator) {
 bool has_next(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
  * Indicates whether backwards iteration has more elements; that is, indicates
  * whether the iterator would remain valid if <code>iterate_previous()</code> is called.
- * Specifically, if the current node's `previous` pointer is not NULL, then there is a
+ * Specifically, if the current node's `previous` pointer is not `nullptr`, then there is a
  * previous element.
  *
  * @param iterator the iterator to be examined
@@ -173,7 +173,7 @@ bool has_next(iterator_t const *iterator) {
 bool has_previous(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -190,7 +190,7 @@ bool has_previous(iterator_t const *iterator) {
 iterator_t *iterate_next(iterator_t *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -207,7 +207,7 @@ iterator_t *iterate_next(iterator_t *iterator) {
 iterator_t *iterate_previous(iterator_t *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -229,7 +229,7 @@ iterator_t *iterate_previous(iterator_t *iterator) {
 iterator_t *prepend(list_t *list, word_entry_t *word_entry) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -245,7 +245,7 @@ iterator_t *prepend(list_t *list, word_entry_t *word_entry) {
 iterator_t *append(list_t *list, word_entry_t *word_entry) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -263,7 +263,7 @@ iterator_t *append(list_t *list, word_entry_t *word_entry) {
 list_t *insert(iterator_t *iterator, word_entry_t *word_entry) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -287,7 +287,7 @@ list_t *insert(iterator_t *iterator, word_entry_t *word_entry) {
 list_t *delete(iterator_t *iterator, bool free_word_entry) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -311,12 +311,12 @@ list_t *delete(iterator_t *iterator, bool free_word_entry) {
 word_entry_t const *get_word_entry(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
  * @brief Retrieve's the next element's word entry, if `has_next(iterator)`, or
- * NULL otherwise.
+ * `nullptr` otherwise.
  *
  * Specifically, this function retrieves the word entry pointed to by the next node.
  *
@@ -329,12 +329,12 @@ word_entry_t const *get_word_entry(iterator_t const *iterator) {
 word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
  * @brief Retrieve's the previous element's word entry, if
- * `has_previous(iterator)`, or NULL otherwise.
+ * `has_previous(iterator)`, or `nullptr` otherwise.
  *
  * Specifically, this function retrieves the word entry pointed to by the previous node.
  *
@@ -347,7 +347,7 @@ word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
 word_entry_t const *get_previous_word_entry(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -373,7 +373,7 @@ word_entry_t const *get_previous_word_entry(iterator_t const *iterator) {
 iterator_t *swap_next(iterator_t *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -393,7 +393,7 @@ iterator_t *swap_next(iterator_t *iterator) {
 iterator_t *swap_previous(iterator_t *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -414,7 +414,7 @@ iterator_t *swap_previous(iterator_t *iterator) {
 iterator_t *merge_next(iterator_t *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -435,7 +435,7 @@ iterator_t *merge_next(iterator_t *iterator) {
 iterator_t *merge_previous(iterator_t *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -457,7 +457,7 @@ void print(list_t *list) {
     char string[MAXIMUM_WORD_LENGTH + 15];
     printf("head: %p\tcurrent_node: %p\ttail: %p\n", list->head, list->iterator->current_node, list->tail);
     node_t *node = list->head;
-    if (node != NULL) {
+    if (node != nullptr) {
         printf("[%p] **head**\n", list->head);
         do {
             if (node == list->iterator->current_node) {
@@ -466,10 +466,10 @@ void print(list_t *list) {
             printf("[%p] %s\n", node, word_entry_to_string(string, node->word_entry));
             printf("\t\tprevious %-20pnext %p\n", node->previous, node->next);
             node = node->next;
-        } while (node != NULL && node->previous != list->tail);
+        } while (node != nullptr && node->previous != list->tail);
         printf("[%p] **tail**\n", list->tail);
     }
-    if (list->iterator->current_node == NULL) {
-        printf("[--NULL--] **current_node**\n");
+    if (list->iterator->current_node == nullptr) {
+        printf("[--nullptr--] **current_node**\n");
     }
 }
