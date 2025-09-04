@@ -4,9 +4,9 @@
 
 In *linked_list.c*:
 
-- [ ] Edit `create_node()` to initialize all of a new node's fields, as well as those of its iterator.
-- [ ] Edit `create_list()` to initialize all of a new list's fields.
-  - The list's `iterator` field should point to its iterator, and the iterator's `list` field should point back to its list (See Section~\ref{subsubsec:listt-as-lined-list}).
+- [ ] Edit `create_node()` to initialize all of a new node's fields.
+- [ ] Edit `create_list()` to initialize all of a new list's fields, as well as those of its iterator.
+  - The list's `iterator` field should point to its iterator, and the iterator's `list` field should point back to its list (see the [`list_t as a linked list` visualization](BB-data-structure.md#list_t-as-a-linked-list)).
 - [ ] Edit `get_iterator()` to return the list's iterator.
 - [ ] Edit `get_list()` to return the list's iterator. The current node should be the head of the list.
 

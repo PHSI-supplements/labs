@@ -49,9 +49,11 @@ You will receive half of the credit for `insert_word()` if it works on pre-sorte
 
 ### Insertion Sort
 
-[//]: # (TODO: Links to videos)
+> 📽️ **Optional Videos**
+> 
+> Consider reviewing [these videos](https://canvas.unl.edu/courses/200913/pages/insertion-sort) about Insertion Sort.
 
-While you probably learned about sorting in \cstwo, you may not have learned about *Insertion Sort*.
+While you probably learned about sorting in CSCE 156, RAIK 184H, or SOFT 161, you may not have learned about *Insertion Sort*.
 If you did learn about Insertion Sort, you probably learned to use it to sort an array or list in-place, and that it's a $\mathcal{O}(n^2)$ algorithm that is less efficient than $\mathcal{O}(n \log n)$ sorting algorithms such as Merge Sort and Quick Sort.
 Insertion Sort is often taught as a way to sort an array in-place,
 but a variation of Insertion Sort has a particular advantage in that it can be applied *as the list is built*, making for a much simpler and less error-prone implementation than a different sort that requires the list to already be built.

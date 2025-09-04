@@ -104,7 +104,7 @@ Creating and inserting a new word entry would look something like this:
 ```
 
 Recall that in Java, all variables except primitive types (such as `occurrences`) are references.
-This means that the `next` field is a reference to another Node, just as we described in Section~\ref{subsec:singlylinkedlist}.
+This means that the `next` field is a reference to another Node, just as we described in [the section discussing singly-linked lists](#singly-linked-list).
 The payload is the `wordEntry`.
 
 ### C Implementation

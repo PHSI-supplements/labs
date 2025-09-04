@@ -19,87 +19,59 @@
 
 ### Compiling and Running
 
-[//]: # (TODO: Finish this section)
-
 This assignment is a little different from the other assignments, in that it has two build targets instead of one,
 and in that it has a timeout feature that will terminate the program if it runs too long.
 These differences mean there are a few extra options when compiling and running your code.
 
 *We strongly recommend that you leave the timeout feature enabled for most or all of your testing.*
-However, if you are using an interactive debugger
+However, if you are using an interactive debugger, then you will want to disable timeout so that the program doesn't terminate while you're at a breakpoint.
 
 #### Configuring the Project
 
 <u>From the Command Line</u>
 
+- `cmake --preset default` -- developing on nuros, timeout enabled
+- `cmake --preset timeout-disabled` -- developing on nuros, timeout disabled
+- `cmake --preset personal-computer` -- developing on your computer, timeout enabled
+- `cmake --preset personal-computer-timeout-disabled` -- developing on nuros, timeout disabled
+
 <u>From VS Code</u>
+
+From the Command Palette, select `CMake: Select Configure Preset`. Then select the preset of your choice:
+
+- `default` -- developing on nuros, timeout enabled
+- `timeout-disabled` -- developing on nuros, timeout disabled
+- `personal-computer` -- developing on your computer, timeout enabled
+- `personal-computer-timeout-disabled` -- developing on nuros, timeout disabled
 
 #### Compiling the Project
 
 <u>From the Command Line</u>
 
+- `cmake --build build --target arraylist` -- compile the program using the array-backed list that's in the starter code
+- `cmake --build build --target linkedlist` -- compile the program using the linked list that you'll write
+- `cmake --build build` -- compile both versions of the program, useful for running the two side-by-side during testing
+
 <u>From VS Code</u>
+
+From the Command Palette, either select `CMake: Build Target` and choose one of:
+
+- `arraylist EXECUTABLE` -- compile the program using the array-backed list that's in the starter code
+- `linkedlist EXECUTABLE` -- compile the program using the array-backed list that's in the starter code
+
+or, to compile both versions of the program, select `CMake: Build`
 
 #### Running the Program
 
 <u>From the Command Line</u>
 
+- `build/arraylist` -- run the program using the array-backed list that's in the starter code
+- `build/linkedlist` -- run the program using the linked list that you'll write
+
 <u>From VS Code</u>
 
-<!--
-### Configuring the Project
-
-If you're using an IDE, open the project in the *FooLab* directory (the same directory that has CMakeLists.txt).
-It should configure the project for you.
-If you're working on your personal computer instead of Nuros, you may be prompted to identify the compiler you'll use.
-
-If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt).
-If you're working on Nuros, run the command:
-```shell
-cmake --preset=default
-```
-If you're working on your personal computer, run the command:
-```shell
-cmake --preset=personal-computer
-```
-or, if you need to specify a particular compiler:
-```shell
-cmake --preset=personal-computer -DCMAKE_C_COMPILER=/path/to/the/compiler
-```
-
-### Compiling the Project
-
-If you're using an IDE, there should be a "Build" button.
-In VS Code, you can also select one of these commands from the command palette:
-```
-CMake: Build                                # Builds all targets
-CMake: Build Target                         # Build a specific target
-```
-
-If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt) and run the command:
-```shell
-cmake --build build
-```
-or, to build a specific target:
-```shell
-cmake --build build --target foolab
-```
-
-### Running the Program
-
-If you're using an IDE, there should be a "Run" button.
-In VS Code, you can also select one of these commands from the command palette:
-```
-CMake: Run Without Debugging
-CMake: Debug
-```
-
-If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt) and run the command:
-```shell
-build/foolab
-```
-
--->
+From the Command Pallet, select `Set Launch/Debug Target` and choose either `arraylist` or `linkedlist`, and then click on the "Run" icon as normal.
+If you want to run both versions of the program side-by-side, you'll need to do so from the command line.
 
 ### The Books
 

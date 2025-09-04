@@ -18,6 +18,8 @@
 #include <stdlib.h>
 #include "linked-list.h"
 
+char const *const LIST_TYPE = "Linked List";
+
 
 /*                                        *
  * NODE CREATION, DESTRUCTION             *

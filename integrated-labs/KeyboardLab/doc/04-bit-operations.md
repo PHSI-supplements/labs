@@ -37,15 +37,15 @@ You also may not use the number `5` nor the letter `b`.
 
 Here are some test cases you might try:
 
-| input | even? | multiple of ten  |
-|:-----:|:-----:|:----------------:|
-|   7   |  no   |        30        |
-|  56   |  yes  |        30        |
-|  57   |  no   |        28        |
-|  58   |  yes  |        14        |
-|  300  |  yes  |        30        |
-|  301  |  no   |        15        |
-|  302  |  yes  |        75        |
+| input | even? | multiple of ten |
+|:-----:|:-----:|:---------------:|
+|   7   |  no   |       30        |
+|  56   |  yes  |       30        |
+|  57   |  no   |       280       |
+|  58   |  yes  |       140       |
+|  300  |  yes  |       300       |
+|  301  |  no   |      1500       |
+|  302  |  yes  |       750       |
 
 <font color="red">
 You can double-check that you aren't using disallowed keys by running the constraint-checking Python script:

@@ -1,6 +1,6 @@
 > 📇 **Scenario**
 >
-> You've recently been hired to help the Pleistocene Petting Zoo get started.
+> You've recently been hired to help the Pleistocene Petting Zoo to get started.
 > Your new employer, Archie, is surprisingly honest: he admits to you that some expenses were spared.
 > Archie helpfully points out that any challenge is also an opportunity to succeed.
 > You suspect your job will offer plenty of "opportunities to succeed."

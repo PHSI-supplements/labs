@@ -27,12 +27,13 @@
 #include "word-entry-test.h"
 #include "list-test.h"
 
-#define NUMBER_OF_TESTS (7)
+static constexpr size_t NUMBER_OF_TESTS = 7;
+extern char const *const LIST_TYPE;
 
 // TODO: [INFO] which list definition is being used
-// TODO: replace `#define NUMBER_OF_TESTS (7)` with `constexpr size_t NUMBER_OF_TESTS = 7;
 
 int main(void) {
+    fprintf(stderr, "[INFO]  Using %s implementation.\n", LIST_TYPE);
     void (*problem_checkers[NUMBER_OF_TESTS + 1])(void) = {
             NULL,
             test_word_entry,
@@ -56,18 +57,18 @@ int main(void) {
     char buffer[80];
     bool running = true;
     while (running) {
-        for (int i = 0; i < NUMBER_OF_TESTS + 1; i++) {
+        for (unsigned int i = 0; i < NUMBER_OF_TESTS + 1; i++) {
             printf("%d) %s\n", i, test_names[i]);
         }
         printf("Select the task you wish to check: ");
         scanf("%79s", buffer);
-        int option = (int) strtol(buffer, NULL, 10);
+        unsigned int option = (unsigned int) strtol(buffer, NULL, 10);
         printf("\n");
         if (option < 0 || option > NUMBER_OF_TESTS) {
-            printf("Invalid choice %d. Please select a choice between 0 and %d.\n", option, NUMBER_OF_TESTS);
+            printf("Invalid choice %d. Please select a choice between 0 and %zu.\n", option, NUMBER_OF_TESTS);
         } else if (option == 0) {
             if (errno == EINVAL) {
-                printf("Invalid choice (%s). Please select a number between 0 and %d.\n", buffer, NUMBER_OF_TESTS);
+                printf("Invalid choice (%s). Please select a number between 0 and %zu.\n", buffer, NUMBER_OF_TESTS);
                 errno = 0;
             } else {
                 printf("Goodbye.\n");

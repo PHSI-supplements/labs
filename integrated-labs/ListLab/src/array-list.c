@@ -26,13 +26,15 @@
 #include "array-list.h"
 #include "hobbled_alloc.h"
 
+char const *const LIST_TYPE = "Array-Backed List";
+
 
 /*                       *
  * CREATION, DESTRUCTION *
  *                       */
 
 
-static int const MINIMUM_ALLOCATION = 8;
+static constexpr int MINIMUM_ALLOCATION = 8;
 
 /**
  * @brief Creates an initially-empty array-backed list.

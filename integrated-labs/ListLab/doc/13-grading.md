@@ -36,7 +36,7 @@ After you have exhausted your late days, any work turned in more than one hour l
 
 ### Rubric
 
-[//]: # (<span style="background-color: lime;">TODO: update?</span>)
+[//]: # (TODO: update?)
 
 This assignment is worth 35 points.
 

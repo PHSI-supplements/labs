@@ -1,7 +1,7 @@
 ## Examining Word Entries
 
 The `get_word_entry()` function retrieves the current node's word entry.
-The `get_next_word_entry()` and `get_previous_word_entry()` retrieve the head's and tail's word entries, respectively.
+The `get_next_word_entry()` and `get_previous_word_entry()` retrieve the current node's next and previous word entries, respectively.
 If the current, head, or tail pointers are `NULL`, then the corresponding functions return `NULL`.
 
 [//]: # (TODO: replace NULL with nullptr)

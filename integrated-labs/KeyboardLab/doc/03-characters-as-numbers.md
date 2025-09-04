@@ -8,7 +8,7 @@
 > As you're pondering this, the *s* key falls off.
 > Several number keys fall off soon thereafter: only *0*, *7*, and *9* remain.
 > The *f* key is looking fragile, so you decide that you had better not type too many `if` statements
-> (and without the *`s*` key, you can't use a `switch` statement at all).
+> (and without the *s* key, you can't use a `switch` statement at all).
 
 ## Treating Characters as Numbers
 
@@ -35,7 +35,7 @@ You may not `#include` any headers, you may not use any number keys other than t
 > 📖 **Readability Tip**
 > 
 > Your code will be more readable if it does not depend on any characters' ASCII values, nor in the relative positions of upper- and lowercase letters in the ASCII table, only that:
-> - digits are in a contiguous sequence in the ASCII table (sorted from the leat to the greatest value)
+> - digits are in a contiguous sequence in the ASCII table (sorted from the least to the greatest value)
 > - the lowercase letters are in a contiguous sequence (sorted alphabetically)
 > - the uppercase letters are in a contiguous sequence (sorted alphabetically)
 
