@@ -4,7 +4,7 @@
 > While that gets sorted out, you "borrow" some tar from the La Brea Tar Pits diorama and use the tar to re-attach your keyboard's missing keys.
 > 
 > As you fasten a Scrabble tile in place for the *W*, more keys fall off, denying you the use of *+*, *-*, */*, *%*, *5*, and *B*.
-> You cannot get anymore adhesive, so you sit down to your next programming tasks without those keys.
+> You cannot get any more adhesive, so you sit down to your next programming tasks without those keys.
 
 ## Using Bitmasks and Shifting Bits
 

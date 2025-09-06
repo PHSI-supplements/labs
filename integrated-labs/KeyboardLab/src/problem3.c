@@ -57,7 +57,7 @@ int produce_multiple_of_ten(int seed) {
             /* DIVIDE BY TWO WITHOUT USING DIVISION */
             value = 0;
         } else {
-            /* CREATE A BITMASK YOU CAN USE TO REDUCE AN ODD NUMBER'S VALUE 1 AS SUGGESTED IN THE ASSIGNMENT */
+            /* CREATE A BITMASK YOU CAN USE TO REDUCE AN ODD NUMBER'S VALUE BY 1 AS SUGGESTED IN THE ASSIGNMENT */
             int deduct_one_mask = 0;
             /* USE THAT BITMASK TO REDUCE THE ODD-NUMBERED value BY ONE */
             /* REPLACE `;;;` WITH A SUITABLE BITWISE OPERATION */

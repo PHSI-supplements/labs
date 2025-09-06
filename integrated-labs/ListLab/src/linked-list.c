@@ -157,7 +157,7 @@ list_t *get_list(iterator_t *iterator) {
 bool has_next(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return nullptr;
+    return false;
 }
 
 /**
@@ -173,7 +173,7 @@ bool has_next(iterator_t const *iterator) {
 bool has_previous(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
 
-    return nullptr;
+    return false;
 }
 
 /**

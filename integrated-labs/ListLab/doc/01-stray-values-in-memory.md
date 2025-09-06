@@ -7,47 +7,49 @@
 > At a glance, his code is smellier than the wooly rhinoceros’ enclosure.
 > But you take a closer look anyway to try to understand why his code acts strangely.
 
+- [ ] Open the [PokerLab Code Study](https://canvas.unl.edu/courses/200913/quizzes/468941) quiz in Canvas.
+
 ### Pleistocene Petting Zoo Marquee
 
 > Archie shows you his first program, which he hoped would be used to greet guests, but it doesn’t always work right:
 > ```c
-> /***********************************************************************
->   * This program will output
->   **         Welcome to the
->   **    Pleistocene Petting Zoo!
->   **
->   ** Get ready for hands-on excitement on the count of three! 1.. 2.. 3..
->   ** Have fun!
->   * With brief pauses during the "Get ready" line.
->   ***********************************************************************/
-> 
-> #include <stdio.h>
-> #include <unistd.h>
-> 
-> void splash_screen(void) {
->     char const *first_line = "\t     Welcome to the\n";
->     char const *second_line = "\tPleistocene Petting Zoo!\n";
->     printf("%s%s\n", first_line, second_line);
-> }
-> 
-> void count(void) {
->     int i;
->     sleep(1);
->     printf("Get ready for hands-on excitement on the count of three! ");
->     while (i < 3) {
->         fflush(stdout);
->         sleep(1);
->         i++;
->         printf("%d.. ", i);
->     }
->     printf("\nHave fun!\n");
-> }
-> 
-> int main(void) {
->     splash_screen();
->     count();
->     return 0;
-> }
+>  1. /***********************************************************************
+>  2.  *  This program will output
+>  3.  **         Welcome to the
+>  4.  **    Pleistocene Petting Zoo!
+>  5.  **
+>  6.  **    Get ready for hands-on excitement on the count of three! 1.. 2.. 3..
+>  7.  **    Have fun!
+>  8.  *  With brief pauses during the "Get ready" line.
+>  9.  ***********************************************************************/
+> 10. 
+> 11. #include <stdio.h>
+> 12. #include <unistd.h>
+> 13. 
+> 14. void splash_screen(void) {
+> 15.     char const *first_line = "\t     Welcome to the\n";
+> 16.     char const *second_line = "\tPleistocene Petting Zoo!\n";
+> 17.     printf("%s%s\n", first_line, second_line);
+> 18. }
+> 19. 
+> 20. void count(void) {
+> 21.     int i;
+> 22.     sleep(1);
+> 23.     printf("Get ready for hands-on excitement on the count of three! ");
+> 24.     while (i < 3) {
+> 25.         fflush(stdout);
+> 26.         sleep(1);
+> 27.         i++;
+> 28.         printf("%d.. ", i);
+> 29.     }
+> 30.     printf("\nHave fun!\n");
+> 31. }
+> 32. 
+> 33. int main(void) {
+> 34.     splash_screen();
+> 35.     count();
+> 36.     return 0;
+> 37. }
 > ```
 > Sometimes the output was what he expected:
 > ```
@@ -82,33 +84,33 @@ What change to *one* line will fix Archie's bug?
 > Here it is.”
 > Archie shows you the code:
 > ```c
-> /***********************************************************************
-> * This program will add two numbers, and then it will multiply two other
-> * numbers. Finally, it will subtract the second result from the first
-> * result.
-> ***********************************************************************/
->
-> #include <stdio.h>
->
-> int *add(int a, int b) {
->     int addition_result = a + b;
->     return &addition_result;
-> }
-> 
-> int *multiply(int p, int q) {
->     int multiplication_result = p * q;
->     return &multiplication_result;
-> }
-> 
-> int main(void) {
->     int *sum = add(4, 5);
->     printf("sum = %d\n", *sum);
->     int *product = multiply(2, 3);
->     printf("product = %d\n", *product);
->     printf("sum - product = %d - %d = %d\n",
->     *sum, *product, *sum - *product);
->     return 0;
-> }
+>  1. /***********************************************************************
+>  2. * This program will add two numbers, and then it will multiply two other
+>  3. * numbers. Finally, it will subtract the second result from the first
+>  4. * result.
+>  5. ***********************************************************************/
+>  6.
+>  7. #include <stdio.h>
+>  8.
+>  9. int *add(int a, int b) {
+> 10.     int addition_result = a + b;
+> 11.     return &addition_result;
+> 12. }
+> 13. 
+> 14. int *multiply(int p, int q) {
+> 15.     int multiplication_result = p * q;
+> 16.     return &multiplication_result;
+> 17. }
+> 18. 
+> 19. int main(void) {
+> 20.     int *sum = add(4, 5);
+> 21.     printf("sum = %d\n", *sum);
+> 22.     int *product = multiply(2, 3);
+> 23.     printf("product = %d\n", *product);
+> 24.     printf("sum - product = %d - %d = %d\n",
+> 25.     *sum, *product, *sum - *product);
+> 26.     return 0;
+> 27. }
 > ```
 > Archie explains that when he compiles the program with the **clang** compiler and then runs it, he gets this output:
 > ```

@@ -34,7 +34,7 @@ No other use of generative AI is permitted on this assignment without explicit p
 ### Table of Contents
 
 - [Stray Values in Memory](doc/01-stray-values-in-memory.md)
-- [The Books, Business Rules](doc/02-getting-started.md)
+- [Getting Started](doc/02-getting-started.md)
 - [Word Entries](doc/03-word-entries.md)
 - [Alphabetical Functions](doc/04-alphabetical-functions.md)
 - [Preparing to Work with Lists](doc/05-preparing-to-work-with-lists.md)
@@ -54,7 +54,7 @@ No other use of generative AI is permitted on this assignment without explicit p
 
 After successful completion of this assignment, students will be able to:
 - Recognize the hazards of code with undefined behavior.
-- Use C's string functions from [string.h](https://unl.grlcontent.com/compeng2e/page/appendixc#c16)
+- Use C's string functions from [string.h](https://unl.grlcontent.com/compeng2e/page/appendixc#c16).
 - Alias and reassign pointers.
 - Create and traverse a linked list.
 

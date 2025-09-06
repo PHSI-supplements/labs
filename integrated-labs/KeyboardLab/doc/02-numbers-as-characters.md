@@ -59,7 +59,7 @@ The code you would like to write is:
 #include <stdio.h>
 #include <string.h>
 
-char *generate_email(char *destination, int destination_size) {
+char *generate_email(char *destination, size_t destination_size) {
     snprintf(destination, destination_size, "%s",
              "TO\tArchie\n"
              "RE\tI Need a Working Keyboard\n"
@@ -96,7 +96,7 @@ printf("%s%c%s\n", "Hello", 32, "World!");
 ```
 because 0x20 (which is decimal 32) is the ASCII value for the space character (`' '`).
 Recall that the first argument for `printf()` is a *format string*:
-`%s` specifies that a string should be palced at that position in the output,
+`%s` specifies that a string should be placed at that position in the output,
 and `%c` specifies that a character should be placed at that position in the output.
 
 > ⓘ **Note**
