@@ -137,7 +137,7 @@ void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operan
                    operand1, operator, operand2, expected_result->result);
             printf("\texpected result (unsigned):    %u %c %u = %u\toverflow: %s\n",
                    operand1, operator, operand2, expected_result->result,
-                   expected_result->c_flag ? "true" : "false");
+                   expected_result->carry_flag ? "true" : "false");
             printf("\tactual result (hexadecimal):   0x%04X %c 0x%04X = 0x%04X\n",
                    operand1, operator, operand2, actual_result.result);
             printf("\tactual result (unsigned):      %u %c %u = %u\toverflow: %s\n",
@@ -148,7 +148,7 @@ void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operan
                    operand1, operator, operand2, expected_result->result);
             printf("\texpected result (signed):      %d %c %d = %d\toverflow: %s\n",
                    (int16_t) operand1, operator, (int16_t) operand2, (int16_t) expected_result->result,
-                   expected_result->o_flag ? "true" : "false");
+                   expected_result->overflow_flag ? "true" : "false");
             printf("\tactual result (hexadecimal):   0x%04X %c 0x%04X = 0x%04X\n",
                    operand1, operator, operand2, actual_result.result);
             printf("\tactual result (signed):        %d %c %d = %d\toverflow: %s\n",

@@ -11,7 +11,7 @@
  ******************************************************************************/
 
 /*
- * IntegerLab assignment and starter code (c) 2018-24 Christopher A. Bohn
+ * IntegerLab assignment and starter code (c) 2018-25 Christopher A. Bohn
  * IntegerLab solution (c) the above-named student(s)
  */
 
@@ -98,7 +98,7 @@ one_bit_adder_t one_bit_full_addition(one_bit_adder_t bits) {
  * @return the 32-bit sum of the arguments
  */
 uint32_t ripple_carry_addition(uint32_t value1, uint32_t value2, uint8_t initial_carry_in) {
-    uint8_t carry = initial_carry_in & 0x1;
+    [[maybe_unused]] uint8_t carry = initial_carry_in & 0x1;        // [[maybe_unused]] to suppress warning until students implement ripple_carry_addition()
     uint32_t sum = 0;
     return sum;
 }

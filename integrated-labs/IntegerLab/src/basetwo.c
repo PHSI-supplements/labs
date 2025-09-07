@@ -39,7 +39,8 @@ int lg(uint32_t power_of_two) {
             return 0;
         case 0x2 :
             return 1;
+        // COMPLETE THE REST OF THE SWITCH STATEMENT
         default :
-            return -1;
+            return (int) 0xFFFF'FFFF;
     }
 }

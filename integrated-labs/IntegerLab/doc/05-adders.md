@@ -40,10 +40,6 @@ Because the fields are guaranteed to be strictly 1 or 0, you do not need to appl
 #### Check your work
 
 - [ ] Compile and run *integerlab*, trying all possible values.
-  - Note that you will receive a warning for an unused variable in `ripple_carry_addition()`;
-    this is okay for now
-
-[//]: # (TODO: Mark as [[possibly-unused]])
 
 When you enter the inputs for your 1-bit full adder, only the least significant bit of each operand will be used.
 For example:

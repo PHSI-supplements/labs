@@ -48,10 +48,6 @@ use a `switch` statement, enumerating the 32 possible cases and returning the ap
 ### Check your work
 
 - [ ] Compile and run *integerlab*, trying a few values.
-  - Note that you will receive a warning for an unused variable in `ripple_carry_addition()`;
-    this is okay for now
-
-[//]: # (TODO: Mark as [[possibly-unused]])
 
 For example:
 ```

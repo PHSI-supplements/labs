@@ -23,7 +23,7 @@
 
 ### is_negative()
 
-Real ALUs typically have hardware dedicated to quickly determining whether a value is 0 or not, and *alu.h* includes the macros `is_zero()` and `is_not_zero)()` to serve this purpose.
+Real ALUs typically have hardware dedicated to quickly determining whether a value is 0 or not, and *alu.h* includes the macros `is_zero()` and `is_not_zero()` to serve this purpose.
 Real ALUs also typically have hardware dedicated to quickly determine whether an integer, when treated as a signed value, is negative.
 
 - [ ] Implement `is_negative()` to determine whether its argument, when interpreted as a signed value, is negative.
@@ -56,10 +56,6 @@ One of those six possibilities will have a predictable output that can be evalua
 ### Check your work
 
 - [ ] Compile and run *integerlab*, trying a few values.
-  - Note that you will receive a warning for an unused variable in `ripple_carry_addition()`;
-    this is okay for now
-
-[//]: # (TODO: Mark as [[possibly-unused]])
 
 For example:
 ```

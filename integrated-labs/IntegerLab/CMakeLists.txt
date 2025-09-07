@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(pokerlab C)
+project(integerlab C)
 
 include(CTest)
 enable_testing()
@@ -20,19 +20,19 @@ endif()
 file(GLOB SRC_FILES CONFIGURE_DEPENDS src/*.c)
 file(GLOB HDR_FILES CONFIGURE_DEPENDS src/*.h)      # some IDEs need this
 
-add_executable(pokerlab ${SRC_FILES} ${HDR_FILES})
+add_executable(integerlab ${SRC_FILES} ${HDR_FILES})
 
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)
-        target_compile_options(pokerlab PRIVATE -w)
+        target_compile_options(integerlab PRIVATE -w)
     else()
-        target_compile_options(pokerlab PRIVATE
+        target_compile_options(integerlab PRIVATE
             -Wall
             -Wextra
             -Wno-unused-parameter
         )
     endif()
-    target_compile_options(pokerlab PRIVATE -Og)
+    target_compile_options(integerlab PRIVATE -Og)
 endif()
 
 ### Constraint Check

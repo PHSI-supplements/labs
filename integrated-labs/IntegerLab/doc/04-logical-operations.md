@@ -18,7 +18,7 @@ Implementing logical NOT, logical AND, and logical OR is not quite as simple as 
 When is a value considered to be `false`?
 From among the tests that you have available, one of these will return `true` when that condition is satisfied, and `false` when it is not.
 
-- [ ] Implement `logical_not()` to return `true` if and only if its two arguments are considered to be `true`.
+- [ ] Implement `logical_not()` to return `true` if and only if its argument is considered to be `false`.
 
 
 ### logical_and() and logical_or()
@@ -41,10 +41,6 @@ After you reduce these values to a 1 or a 0, then their bits will line up, and t
 ### Check your work
 
 - [ ] Compile and run *integerlab*, trying a few values.
-  - Note that you will receive a warning for an unused variable in `ripple_carry_addition()`;
-    this is okay for now
-
-[//]: # (TODO: Mark as [[possibly-unused]])
 
 For example:
 ```
