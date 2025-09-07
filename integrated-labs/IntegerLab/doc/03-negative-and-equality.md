@@ -34,16 +34,20 @@ You should be able to implement this function in a single line of code (but you 
 
 ### equal() and not_equal()
 
-The general approach to comparing two values requires arithmetic, as discussed in Section~\ref{sec:inequality-comparison}.
+The general approach to comparing two values requires arithmetic, as will be covered in [the textbook's Chapter 6](https://unl.grlcontent.com/compeng2e/page/chapter6).
 If you do not anticipate testing the equality of two values in your arithmetic, then you can postpone implementing `equal()` and `not_equal()` until later.
 On the other hand, if you think that you might need to test for equality as part of your arithmetic functions, there is a simple test for equality that does not require arithmetic.
 
-[//]: # (TODO: Update section reference)
+To implement each of the `equal()` and `not_equal()` functions, you will need one of the 2-operand bitwise operations, either bitwise AND, bitwise OR, or bitwise XOR.
+- What is $(a\text{ AND }a)$?
+- What is $(a\text{ OR }a)$?
+- What is $(a\text{ XOR }a)$?
 
-To implement each of the `equal()` and `not_equal()` functions, you will need one 2-operand bitwise operation, either bitwise AND, bitwise OR, or bitwise XOR\@.
-Recognize that so far you have only three tests you can make on the output of that bitwise operation: `is_zero()`, `is_not_zero()`, and `is_negative()`.
+Notice that only one of these operations produces something "interesting" when the two operands are the same.
 
-[//]: # (TODO: Be more explicit without giving it away)
+So far, you have three tests to characterize a value: `is_zero()`, `is_not_zero()`, and `is_negative()`.
+If you apply the right test to the output of the right bitwise operation, you'll have your implementation of `equal()`.
+The opposite test to the same bitwise operation naturally gives you `not_equal()`.
 
 - [ ] Consider what the output of each of those three bitwise operations would be if the two operands were the same, and what the output would be if the two operands were different.
 

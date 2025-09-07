@@ -35,7 +35,7 @@ SIGNED MULTIPLICATION
     ...
 ```
 
-Notice that in the example, the upper 13 bits are 0 after unsigned multiplication but are 1 after signed multiplication.
+Notice that in the example, the upper 13 bits are all 0s after unsigned multiplication but are all 1s after signed multiplication.
 That should not be possible if the operands have only 0s above their lower 16 bits!
 Think about what you can do to the operands to make it possible.
 
@@ -70,11 +70,8 @@ SIGNED DIVISION
     actual result (signed):        -14 / 4 = -4    -14 % 4 = 2
 ```
 
-[//]: # (TODO: rephrase)
-
-If you chose to implement signed division then in your implementation of `signed_divide()`, whenever the dividend is negative you need to introduce a bias toward positive infinity.
-This bias needs to be sufficient so that when the fast division technique rounds non-integer quotients toward negative infinity, it ends up rounding to the correct quotient -- but do so without overcorrecting.
-The other precaution you need to take is to ensure that when you apply the fast division technique, you preserve the sign bit.
+If you chose to implement signed division then in your implementation of `signed_divide()`, 
+whenever the dividend is negative you need to introduce a bias toward positive infinity to correct the rounding direction.
 
 > ❗️ **Important**
 >

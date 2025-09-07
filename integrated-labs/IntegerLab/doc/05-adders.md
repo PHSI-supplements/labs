@@ -27,11 +27,9 @@ In the `one_bit_full_addition()` function, you will implement a 1-bit full adder
 that is, an adder that takes two operand bits and a carry-in bit, and it produces a sum bit and a carry-out bit.
 
 The function takes one argument, a structure containing five fields.
-As described in Section~\ref{subsubsec:alu.h}, these five fields are the operand bits `a` and `b`, the carry-in bit `c_in`, the sum bit `sum`, and the carry-out bit `c_out`.
+As described in [the description of *alu.h*](01-getting-started.md#aluh), these five fields are the operand bits `a` and `b`, the carry-in bit `c_in`, the sum bit `sum`, and the carry-out bit `c_out`.
 When the structure is passed in to the function, only `a`, `b`, and `c_in` are populated.
 Your task is to populate the `sum` and `c_out` fields, and return the structure.
-
-[//]: # (TODO: Update reference)
 
 - [ ] Implement a 1-bit full adder using bitwise operations.
 

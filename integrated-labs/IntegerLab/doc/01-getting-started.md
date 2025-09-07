@@ -69,9 +69,7 @@ Enter a one- or two-operand logical expression,
 ```
 
 When you enter a value, if it is prepended with `0x` then the parser will parse it as a hexadecimal value;
-otherwise, except as noted in Sections~\ref{subsec:one-bit-full-adder} and \ref{subsec:ripple-carry-adder}, the parser will treat it as a decimal value.
-
-[//]: # (TODO: references to those sections)
+otherwise, except as noted in the [sections for the one-bit full adder and the ripple-carry adder](05-adders.md), the parser will treat it as a decimal value.
 
 ### Problem Decomposition
 
