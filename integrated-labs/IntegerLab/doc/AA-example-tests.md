@@ -39,7 +39,7 @@
 | signed_multiply()          | -25633 * 12                          |
 | signed_multiply()          | 9 * -25633                           |
 | signed_divide()            | 500 / 16                             |
-| signed_divide()            | -24576 / 0x40                        |
+| signed_divide()            | -24577 / 0x40                        |
 
 ---
 

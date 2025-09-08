@@ -24,7 +24,7 @@
 The email needs to read:
 
 ```
-To⇥Archie↵
+TO⇥Archie↵
 RE⇥I Need a Working Keyboard↵
 ↵
 Please order a new keyboard for me.  This one is broken.↵

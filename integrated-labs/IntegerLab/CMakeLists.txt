@@ -22,6 +22,9 @@ file(GLOB HDR_FILES CONFIGURE_DEPENDS src/*.h)      # some IDEs need this
 
 add_executable(integerlab ${SRC_FILES} ${HDR_FILES})
 
+target_link_libraries(integerlab m)
+
+
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)
         target_compile_options(integerlab PRIVATE -w)
@@ -30,6 +33,7 @@ if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
             -Wall
             -Wextra
             -Wno-unused-parameter
+            -finstrument-functions
         )
     endif()
     target_compile_options(integerlab PRIVATE -Og)

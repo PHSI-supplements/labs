@@ -1,7 +1,7 @@
 {
   "targetFiles": [
-    "alu.c",
-    "basetwo.c"
+    "../src/alu.c",
+    "../src/basetwo.c"
   ],
   "commentDelimiters": {
     "inlineComment": "//",
