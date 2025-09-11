@@ -2,13 +2,13 @@
 
 ### Creating a Node, Creating a List
 
-In *linked_list.c*:
+In *linked-list.c*:
 
 - [ ] Edit `create_node()` to initialize all of a new node's fields.
 - [ ] Edit `create_list()` to initialize all of a new list's fields, as well as those of its iterator.
   - The list's `iterator` field should point to its iterator, and the iterator's `list` field should point back to its list (see the [`list_t as a linked list` visualization](BB-data-structure.md#list_t-as-a-linked-list)).
 - [ ] Edit `get_iterator()` to return the list's iterator.
-- [ ] Edit `get_list()` to return the list's iterator. The current node should be the head of the list.
+- [ ] Edit `get_list()` to return the list. The current node should be the head of the list.
 
 
 - [ ] Build and run *build/linkedlist* (and, optionally, *build/arraylist* in another terminal window)
@@ -22,7 +22,7 @@ but it's better to find out now if you did.
 
 ### Prepending and Appending a Node
 
-The `append()` function takes a word entry, makes it the payload of a new node, and places the new node at the start of the linked list.
+The `prepend()` function takes a word entry, makes it the payload of a new node, and places the new node at the start of the linked list.
 The new node, of course, becomes the head of the list.
 Similarly, the `append()` function takes a word entry, makes it the payload of a new node, and places the new node at the end of the linked list.
 The new node becomes the tail of the list.

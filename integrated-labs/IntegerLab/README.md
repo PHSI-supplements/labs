@@ -11,7 +11,6 @@ This assignment is worth 36 points.
 
 This assignment is due **the week of September 22, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
-A portion of this assignment is on Canvas; that must also be completed before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
 You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.

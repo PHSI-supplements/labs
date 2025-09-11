@@ -23,7 +23,7 @@ The iterator can point to anywhere between the first word entry and the last wor
 - The `has_next()` and `has_previous()` functions report whether there are additional word entries in the indicated direction
 - The `get_word_entry()` function retrieves the word entry that the iterator points to, and the `get_next_word_entry()` and `get_previous_word_entry()` functions retrieve the word entry in the indicated direction
 - The `prepend()` and `append()` functions place a word entry at the beginning or end of the list, respectively, setting the iterator to the new word entry
-- The `insert()` function places a new word entry at the iterator's location, and the function{delete()} function removes the word entry at the iterator's location -- both of these functions invalidate the iterator
+- The `insert()` function places a new word entry at the iterator's location, and `delete()` function removes the word entry at the iterator's location -- both of these functions invalidate the iterator
 - The `swap_next()` and `swap_previous()` functions can be used to move a word entry forward and backward
 - The `merge_next()` and `merge_previous()` functions can be used to combine a word entry with its neighbor
 

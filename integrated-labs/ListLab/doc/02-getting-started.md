@@ -57,7 +57,7 @@ From the Command Palette, select `CMake: Select Configure Preset`. Then select t
 From the Command Palette, either select `CMake: Build Target` and choose one of:
 
 - `arraylist EXECUTABLE` -- compile the program using the array-backed list that's in the starter code
-- `linkedlist EXECUTABLE` -- compile the program using the array-backed list that's in the starter code
+- `linkedlist EXECUTABLE` -- compile the program using the linked list that you'll write
 
 or, to compile both versions of the program, select `CMake: Build`
 

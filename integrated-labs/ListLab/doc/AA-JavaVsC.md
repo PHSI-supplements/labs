@@ -110,13 +110,13 @@ In a future lab, you'll see an example of a variable declaration that has its de
 
 In this lab, we have an example of a type declaration that occurs separately from its definition.
 In *list.h.*, we declare a `struct list_definition` type (and `typedef` it to `list_t`) without a definition.
-Because none of the function prototypes in *list.h* need to know anything about `list_t` other than its existence, and because none of the code in *challenge-response.c* depends on the definition, you are able to write code for the challenge-response system without regard to the underlying representation.
-We provide a definition of `struct list_definition` in *array_list.h* and another definition in *linked_list.h*.
-We crafted the Makefile so that when you build *arraylistlab*, only the definition in *array_list.h* is included;
-similarly, when you build *linkedlistlab*, only the definition in *linked_list.h* is included.
+Because none of the function prototypes in *list.h* need to know anything about `list_t` other than its existence, and because none of the code in *sorted_word_entries.c* depends on the definition, you are able to write code for the challenge-response system without regard to the underlying representation.
+We provide a definition of `struct list_definition` in *array-list.h* and another definition in *linked-list.h*.
+We crafted the Makefile so that when you build *arraylistlab*, only the definition in *array-list.h* is included;
+similarly, when you build *linkedlistlab*, only the definition in *linked-list.h* is included.
 In doing so, we ensure that each executable has only one definition of `struct list_definition`.
 
-Note that the code in *linked_list.c* does depend on `struct list_definition`'s definition, but that's okay because *linked_list.c* `#include`s *linked_list.h*.
+Note that the code in *linked-list.c* does depend on `struct list_definition`'s definition, but that's okay because *linked-list.c* `#include`s *linked-list.h*.
 
 ### The `static` Keyword
 
@@ -140,4 +140,4 @@ This has two implications:
 
 |   [⬅️](13-grading.md)    |      [⬆️](../README.md)      |           [➡️](BB-data-structure.md)            |
 |:------------------------:|:----------------------------:|:-----------------------------------------------:|
-| [Grading](13-grading.md) | [Front Matter](../README.md) | [Appendix B: Linked List](BB-data-structure.md) |
+| [Turn-In and Grading](13-grading.md) | [Front Matter](../README.md) | [Appendix B: Linked List](BB-data-structure.md) |

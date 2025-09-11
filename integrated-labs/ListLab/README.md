@@ -45,7 +45,7 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [Insertion and Deletion at Arbitrary Locations](doc/10-insert-delete-node.md)
 - [Examining Word Entries](doc/11-examine-word-entries.md)
 - [Swapping and Merging Nodes, and Final Testing](doc/12-swap-merge-nodes.md)
-- [Grading](doc/13-grading.md)
+- [Turn-In and Grading](doc/13-grading.md)
 - [Appendix A: Differences and Similarities between Java and C that are Relevant to this Assignment](doc/AA-JavaVsC.md)
 - [Appendix B: Linked List](doc/BB-data-structure.md)
 - [Appendix C: Word Count Tables](doc/CC-word-tables.md)

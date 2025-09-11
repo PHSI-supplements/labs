@@ -135,7 +135,7 @@ struct iterator_definition {
 };
 ```
 
-In *linked_list.c*, you'll also see the `create_node()` and `create_list()` functions:
+In *linked-list.c*, you'll also see the `create_node()` and `create_list()` functions:
 
 ```c
 static node_t *create_node(word_entry_t *word_entry) {

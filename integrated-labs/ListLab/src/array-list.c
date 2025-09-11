@@ -151,7 +151,7 @@ bool has_next(iterator_t const *iterator) {
  *
  * @param iterator the iterator to be examined
  * @return <code>true</code> if backwards iteration has more elements;
- *      <code>false</code> if the iterator points to the tail element
+ *      <code>false</code> if the iterator points to the head element
  */
 bool has_previous(iterator_t const *iterator) {
     return (iterator->index > 0);

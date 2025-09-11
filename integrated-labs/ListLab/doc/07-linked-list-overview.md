@@ -13,8 +13,8 @@ typedef struct list_definition list_t;
 typedef struct iterator_definition iterator_t;
 ```
 
-When you built the *arraylist* executable earlier, the *array_list.h* file provided type definitions for the code in *array_list.c* to use.
-Similarly, when you build the *linkedlist* executable, the *linked_list.h* file provides type definitions for the code in *linked_list.c* to use.
+When you built the *arraylist* executable earlier, the *array-list.h* file provided type definitions for the code in *array-list.c* to use.
+Similarly, when you build the *linkedlist* executable, the *linked-list.h* file provides type definitions for the code in *linked-list.c* to use.
 
 ```c
 struct list_definition {
@@ -54,7 +54,7 @@ struct node_definition {
 > Here the forward declaration is necessary so that `node_t` can be used when defining the node structure.
 
 When writing functions in *sorted_word_entries.c*, you had to rely on `list_t`'s and `iterator_t`'s encapsulation and could not assume any particular list & iterator definitions.
-**Whenever you are writing a function in *linked_list.c*, you can treat `list_t` and `iterator_t` as though they have the linked list definitions.**
+**Whenever you are writing a function in *linked-list.c*, you can treat `list_t` and `iterator_t` as though they have the linked list definitions.**
 
 ### Building and Testing Your Linked List Implementation
 

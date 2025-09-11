@@ -75,11 +75,12 @@ void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authorita
         __asm__ volatile (
             "lsl %w5, %w5, #16\n\t"
             "lsl %w6, %w6, #16\n\t"
-            "adds %w7, %w5, %w6\n\t"
+            "subs %w7, %w5, %w6\n\t"
             "cset %w1, eq\n\t"
             "cset %w2, mi\n\t"
             "cset %w3, vs\n\t"
-            "cset %w4, cs\n\t"
+            // "cset %w4, cs\n\t"    // it seems that Arm is using
+            "cset %w4, cc\n\t"       // "borrow" instead of "carry"
             "lsr %w0, %w7, #16"
             :   "=&r"(result->result),
                 "=&r"(result->zero_flag),
@@ -94,7 +95,7 @@ void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authorita
         );
     #elif defined(__x86_64__)
         __asm__ volatile (
-            "addw %5, %4\n\t"
+            "subw %5, %4\n\t"
             "setz %0\n\t"
             "sets %1\n\t"
             "seto %2\n\t"
