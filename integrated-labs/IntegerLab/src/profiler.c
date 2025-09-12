@@ -21,9 +21,9 @@
 
 #include "profiler.h"
 
-void __cyg_profile_func_enter(void *, void *) __attribute__ ((no_instrument_function)); // NOLINT(bugprone-reserved-identifier)
-void __cyg_profile_func_exit(void *, void *) __attribute__ ((no_instrument_function)); // NOLINT(bugprone-reserved-identifier)
-static int get_function_index(const void *) __attribute__ ((no_instrument_function));
+[[gnu:no_instrument_function]] void __cyg_profile_func_enter(void *, void *); // NOLINT(bugprone-reserved-identifier)
+[[gnu:no_instrument_function]] void __cyg_profile_func_exit(void *, void *); // NOLINT(bugprone-reserved-identifier)
+[[gnu:no_instrument_function]] static int get_function_index(const void *);
 
 enum function_indices {
     ONE_BIT_FULL_ADDITION = 0,

@@ -45,7 +45,7 @@ char *word_to_lowercase(char *destination, char const *word) {
  * Determines whether two strings are identical.
  *
  * @param word1 one of the strings to be compared
- * @param word2 the other sting to be compared
+ * @param word2 the other string to be compared
  * @return <code>true</code> if and only if every the two strings have the same
  *      length, and character in `word1` matches the corresponding character in
  *      `word2`
@@ -62,7 +62,7 @@ bool words_are_equal(const char *word1, const char *word2) {
  * alphabetic sort.
  *
  * @param word1 the first string to be compared
- * @param word2 the other sting to be compared
+ * @param word2 the other string to be compared
  * @return <code>true</code> if and only if `word1` occurs alphabetically
  * earlier than `word2`
  */
@@ -78,7 +78,7 @@ bool word1_is_earlier_than_word2(const char *word1, const char *word2) {
  * alphabetic sort.
  *
  * @param word1 the first string to be compared
- * @param word2 the other sting to be compared
+ * @param word2 the other string to be compared
  * @return <code>true</code> if and only if `word1` occurs alphabetically
  * later than `word2`
  */

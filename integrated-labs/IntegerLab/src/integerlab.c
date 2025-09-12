@@ -30,13 +30,13 @@
 #include "authoritative_results.h"
 #include "profiler.h"
 
-bool read_evaluate_print() __attribute__ ((no_instrument_function));
-char *parse_operand(const char *buffer, uint32_t *operand) __attribute__ ((no_instrument_function));
-char *parse_operator(const char *buffer, char *operator) __attribute__ ((no_instrument_function));
-void evaluate_print_one_bit_adder(const char *input_buffer) __attribute__ ((no_instrument_function));
-void evaluate_print_thirty_two_bit_adder(const char *input_buffer) __attribute__ ((no_instrument_function));
-void evaluate_print_power_of_two_multiplier(const char *input_buffer) __attribute__ ((no_instrument_function));
-void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operand2) __attribute__ ((no_instrument_function));
+[[gnu:no_instrument_function]] bool read_evaluate_print();
+[[gnu:no_instrument_function]] char *parse_operand(const char *buffer, uint32_t *operand);
+[[gnu:no_instrument_function]] char *parse_operator(const char *buffer, char operator[static 3]);
+[[gnu:no_instrument_function]] void evaluate_print_one_bit_adder(const char *input_buffer);
+[[gnu:no_instrument_function]] void evaluate_print_thirty_two_bit_adder(const char *input_buffer);
+[[gnu:no_instrument_function]] void evaluate_print_power_of_two_multiplier(const char *input_buffer);
+[[gnu:no_instrument_function]] void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operand2);
 
 int main() {
     bool running = true;
@@ -57,7 +57,7 @@ char *parse_operand(const char *buffer, uint32_t *operand) {
     return end_pointer[0];
 }
 
-char *parse_operator(const char *buffer, char operator[3]) {
+char *parse_operator(const char *buffer, char operator[static 3]) {
     const char *end_pointer = buffer;
     while (*end_pointer == ' ' || *end_pointer == '\t') {
         end_pointer++;
