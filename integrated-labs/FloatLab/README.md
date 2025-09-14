@@ -40,12 +40,11 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [Constants and Queries](doc/03-constants-queries.md)
 - [Examining IEEE 754-Compliant Values](doc/04-examining-numbers.md)
 - [Encoding Numbers into the IEEE 754 Format](doc/05-normalization.md)
-- [Rounding](doc/06-rounding.md)
-- [Negation](doc/07-negation.md)
-- [Multiplication and Division](doc/08-multiply-divide.md)
-- [Addition and Subtraction](doc/09-add-subtract.md)
-- [Bonus Credit: Arbitrary Division](doc/10-arbitrary-division.md)
-- [Turn-In and Grading](doc/11-grading.md)
+- [Multiplication and Division](doc/06-multiply-divide.md)
+- [Addition and Subtraction](doc/07-add-subtract.md)
+- [Rounding](doc/08-rounding.md)
+- [Bonus Credit: Arbitrary Division](doc/09-arbitrary-division.md)
+- [Turn-In and Grading](doc/10-grading.md)
 
 ### Learning Objectives
 

@@ -83,6 +83,6 @@ This assignment is worth 35 points.
 
 ---
 
-|                [⬅️](10-arbitrary-division.md)                |      [⬆️](../README.md)      |                              |
+|                [⬅️](09-arbitrary-division.md)                |      [⬆️](../README.md)      |                              |
 |:------------------------------------------------------------:|:----------------------------:|:----------------------------:|
-| [Bonus Credit: Arbitrary Division](10-arbitrary-division.md) | [Front Matter](../README.md) |                              |
+| [Bonus Credit: Arbitrary Division](09-arbitrary-division.md) | [Front Matter](../README.md) |                              |

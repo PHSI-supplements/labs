@@ -23,7 +23,6 @@ Examples:
 
 ---
 
-|            [⬅️](09-add-subtract.md)            |      [⬆️](../../IntegerLab/README.md)      |         [➡️](11-grading.md)          |
-|:----------------------------------------------:|:------------------------------------------:|:------------------------------------:|
-| [Addition and Subtraction](09-add-subtract.md) | [Front Matter](../../IntegerLab/README.md) | [Turn-In and Grading](11-grading.md) |
-
+|    [⬅️](08-rounding.md)    |      [⬆️](../../IntegerLab/README.md)      |         [➡️](10-grading.md)          |
+|:--------------------------:|:------------------------------------------:|:------------------------------------:|
+| [Rounding](08-rounding.md) | [Front Matter](../../IntegerLab/README.md) | [Turn-In and Grading](10-grading.md) |

@@ -22,11 +22,10 @@
 #ifndef UNNORMAL_H
 #define UNNORMAL_H
 
-#include <stdbool.h>
 #include <stdint.h>
 
 /**
- * Constants for various warnings that may be issued by the Unnonrmal code.
+ * Constants for various warnings that may be issued by the Unnormal code.
  */
 typedef enum {
     NO_WARNING = 0,

@@ -20,7 +20,6 @@
  */
 
 #include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -174,10 +173,10 @@ char *bits_to_string(char *destination, uint64_t bits, int start_bit,
         mask = mask >> 1;
         place_counter = (place_counter + 1) % 4;
         if (!place_counter && (bit_dividers != NONE)) {
-            *destination_bit++ = ',';
+            *destination_bit++ = '\'';
         }
     }
-    if (*(destination_bit - 1) == ',') {
+    if (*(destination_bit - 1) == '\'') {
         destination_bit--;
     }
     *destination_bit = '\0';

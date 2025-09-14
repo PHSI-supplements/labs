@@ -5,6 +5,10 @@ The `subtract()` function is already implemented in terms of `add` and the `nega
 
 ### TL;DR
 
+- [ ] Implement `negate()`.
+
+
+
 - [ ] Produce the appropriate return values for `add()`'s guard clauses.
 - [ ] Repeatedly use the `shift_left_once()` function (or, synonymously, use `decrement_exponent()` or `move_binary_point_to_the_right()`) on whichever operand has the ***greater*** exponent to shift its significant to the left (decreasing the exponent, moving the binary point to the right) until either:
   - the exponents match, or
@@ -17,6 +21,16 @@ The `subtract()` function is already implemented in terms of `add` and the `nega
 [//]: # (TODO: this may be redundant after we get the Rounding section up & going)
 
 - [ ] Test the rounding code in your `encode()` implementation.
+
+
+### Negation
+
+The `negate()` function is simple: it only needs to change the number's sign bit.
+
+- [ ] Implement `negate()`.
+
+You will test `negate()` with the `subtract()` function.
+
 
 ### Addition
 
@@ -51,7 +65,7 @@ however, *you must take care that the most significant bit does not get truncate
 > 💡 **Tip**
 > 
 > If the two operands have the same sign, add the significands;
-> if the two operands have different signs, subtract the significands.
+> if the two operands have different signs, subtract the significands' magnitudes.
 
 > 📝 **Grading Note**
 > 
@@ -126,6 +140,6 @@ You can now check the rounding code in your `encode()` implementation.
 
 ---
 
-|             [⬅️](08-multiply-divide.md)              |      [⬆️](../README.md)      |                [➡️](10-arbitrary-division.md)                |
-|:----------------------------------------------------:|:----------------------------:|:------------------------------------------------------------:|
-| [Multiplication and Division](08-multiply-divide.md) | [Front Matter](../README.md) | [Bonus Credit: Arbitrary Division](10-arbitrary-division.md) |
+|             [⬅️](06-multiply-divide.md)              |      [⬆️](../README.md)      |    [➡️](08-rounding.md)    |
+|:----------------------------------------------------:|:----------------------------:|:--------------------------:|
+| [Multiplication and Division](06-multiply-divide.md) | [Front Matter](../README.md) | [Rounding](08-rounding.md) |

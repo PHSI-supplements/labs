@@ -20,17 +20,16 @@
  */
 
 #include <inttypes.h>   // this'll go away once C23's width-specific type-size modifier for printf conversions is more widely adopted
-#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include "unnormal.h"
 
-static const uint64_t LSB = ((uint64_t) 0x1);
-static const uint64_t MSB = (((uint64_t) 0x1) << 63);
-static const uint64_t MSB_OF_LOWER_HALF = (((uint64_t) 0x1) << 31);
-// static const uint64_t LOWER_THIRTY_TWO_BITS = (uint64_t) 0xFFFFFFFF;
-static const uint64_t UPPER_THIRTY_TWO_BITS = (uint64_t) 0xFFFFFFFF00000000uL;
-static const uint64_t SIGNIFICANT_FRACTION_BITS = (uint64_t) 037777777;
+static constexpr uint64_t LSB = ((uint64_t) 0x1);
+static constexpr uint64_t MSB = (((uint64_t) 0x1) << 63);
+static constexpr uint64_t MSB_OF_LOWER_HALF = (((uint64_t) 0x1) << 31);
+// static constexpr uint64_t LOWER_THIRTY_TWO_BITS = (uint64_t) 0xFFFFFFFF;
+static constexpr uint64_t UPPER_THIRTY_TWO_BITS = (uint64_t) 0xFFFFFFFF00000000uL;
+static constexpr uint64_t SIGNIFICANT_FRACTION_BITS = (uint64_t) 037777777;
 
 
 #define assign_static_warnings(value) do {                          \
@@ -70,6 +69,7 @@ unnormal_t _create_unnormal(unnormal_t *args) {
     return result;
 }
 
+// TODO: consider digit separators
 char *unnormal_to_string(char *destination, unnormal_t number) {
     if (number.is_infinite) {
         sprintf(destination, "%cInfinity", number.sign ? '-' : '+');

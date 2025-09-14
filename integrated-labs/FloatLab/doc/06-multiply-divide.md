@@ -82,6 +82,7 @@ Be sure to check:
   - <u>`inf * 2`</u>
   - <u>`inf * 0`</u>
     
+[//]: # (TODO: double-check that these aren't affected by rounding)
 
 ### Division
 
@@ -136,6 +137,6 @@ Be sure to check:
 
 ---
 
-|    [⬅️](07-negation.md)    |      [⬆️](../../IntegerLab/README.md)      |            [➡️](09-add-subtract.md)            |
-|:--------------------------:|:------------------------------------------:|:----------------------------------------------:|
-| [Negation](07-negation.md) | [Front Matter](../../IntegerLab/README.md) | [Addition and Subtraction](09-add-subtract.md) |
+|                    [⬅️](05-normalization.md)                     |      [⬆️](../../IntegerLab/README.md)      |            [➡️](07-add-subtract.md)            |
+|:----------------------------------------------------------------:|:------------------------------------------:|:----------------------------------------------:|
+| [Encoding Numbers into the IEEE 754 Format](05-normalization.md) | [Front Matter](../../IntegerLab/README.md) | [Addition and Subtraction](07-add-subtract.md) |

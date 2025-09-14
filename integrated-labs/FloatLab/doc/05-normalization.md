@@ -60,7 +60,9 @@ Regardless, you will not be able to test underflow to zero using the assignment'
 
 #### Check Your Work
 
-When you run *floatlab*, you can specify that you want to recode a value, such as `***recode 12.375***` and `***recode 12.375 6***`.
+[//]: # (TODO: Double-check that "recode 12.375 6" is still an option)
+
+When you run *floatlab*, you can specify that you want to recode a value, such as <u>`recode 12.375`</u> and <u>`recode 12.375 6`</u>.
 The program will first decode the value.
 It will then adjust the exponent by the specified amount (if an amount is specified).
 Then it will send the result to `encode()`.
@@ -87,6 +89,6 @@ Try some other numbers to check that your `encode()` function correctly encodes 
 
 ---
 
-|                 [⬅️](04-examining-numbers.md)                  |      [⬆️](../README.md)      |    [➡️](06-rounding.md)    |
-|:--------------------------------------------------------------:|:----------------------------:|:--------------------------:|
-| [Examining IEEE 754-Compliant Values](04-examining-numbers.md) | [Front Matter](../README.md) | [Rounding](06-rounding.md) |
+|                 [⬅️](04-examining-numbers.md)                  |      [⬆️](../README.md)      |             [➡️](06-multiply-divide.md)              | 
+|:--------------------------------------------------------------:|:----------------------------:|:----------------------------------------------------:| 
+| [Examining IEEE 754-Compliant Values](04-examining-numbers.md) | [Front Matter](../README.md) | [Multiplication and Division](06-multiply-divide.md) | 
