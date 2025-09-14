@@ -108,7 +108,7 @@ This file contains stubs for constants and functions you need to create.
 - Functions to examine `ieee754_t` values
   - **ieee754_to_string()** converts an `ieee754_t` value into a meaningful string
   - **decode()** converts an `ieee754_t` value into an `unnormal_t` value
-- Function to encode and round `ieee754_t` values
+- Function to encode and round_to_nearest_even `ieee754_t` values
   - **encode()** converts an `unnormal_t` value into an `ieee754_t` value, applying rounding as necessary
 - Arithmetic functions
   - **add()** adds two `ieee754_t` values

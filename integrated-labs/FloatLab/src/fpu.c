@@ -22,19 +22,19 @@
 
 /* BITMASKS TO EXTRACT SPECIFIC BITFIELDS */
 
-constexpr uint32_t SIGN_BIT_MASK = 0x0000'0000;
-constexpr uint32_t EXPONENT_BITS_MASK = 0x0000'0000;
-constexpr uint32_t FRACTION_BITS_MASK = 0x0000'0000;
+[[maybe_unused]] constexpr uint32_t SIGN_BIT_MASK      = 0x0000'0000;
+[[maybe_unused]] constexpr uint32_t EXPONENT_BITS_MASK = 0x0000'0000;
+[[maybe_unused]] constexpr uint32_t FRACTION_BITS_MASK = 0x0000'0000;
 
 /* PROPERTIES OF 32-BIT FLOATING POINT NUMBERS */
 
-constexpr int EXPONENT_BIAS = 0;
-constexpr int NUMBER_OF_FRACTION_BITS = 0;
+[[maybe_unused]] constexpr int EXPONENT_BIAS = 0;
+[[maybe_unused]] constexpr int NUMBER_OF_FRACTION_BITS = 0;
 
 /* SPECIAL VALUES */
 
-constexpr uint32_t NAN = 0x0000'0000;
-constexpr uint32_t INFINITY = 0x0000'0000;
+[[maybe_unused]] constexpr uint32_t NAN      = 0x0000'0000;
+[[maybe_unused]] constexpr uint32_t INFINITY = 0x0000'0000;
 
 /**
  * Reports whether a number is infinity.
@@ -205,8 +205,35 @@ ieee754_t encode(unnormal_t number) {
         /* GENERATE THE APPROPRIATE BIT VECTOR AND PLACE IT IN RESULT */
 
 
+        result = round_to_nearest_even(result, get_unnormal_fraction(number));
     }
     return result | (get_unnormal_sign(number) ? SIGN_BIT_MASK : 0);
+}
+
+/**
+ * Applies the "round to nearest, ties to even" rounding strategy.
+ * @param unrounded_number the number with the excess fraction bits truncated off
+ * @param original_fraction the original fraction with the 2**(-1) bit in bit63
+ * @return the number, either rounded up or down
+ */
+ieee754_t round_to_nearest_even(ieee754_t unrounded_number, uint64_t original_fraction) {
+    if (is_nan(unrounded_number) || is_infinity(unrounded_number)) {
+        return unrounded_number;
+    }
+    // This variable is [[maybe_unused]] to suppress a compiler warning until students implement this function
+    [[maybe_unused]] uint64_t truncated_portion = original_fraction << NUMBER_OF_FRACTION_BITS;
+    bool should_round_up = false;
+    /* DETERMINE WHETHER TO ROUND UP OR ROUND DOWN */
+
+
+    if (should_round_up) {
+        /* ROUND THE NUMBER UP */
+
+        return -1;  // placeholder
+    } else {
+        // if rounding down, nothing needs to be done
+        return unrounded_number;
+    }
 }
 
 /**

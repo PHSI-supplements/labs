@@ -18,11 +18,6 @@ The `subtract()` function is already implemented in terms of `add` and the `nega
 - [ ] Compile and run *floatlab*, adding and subtracting a few values.
 
 
-[//]: # (TODO: this may be redundant after we get the Rounding section up & going)
-
-- [ ] Test the rounding code in your `encode()` implementation.
-
-
 ### Negation
 
 The `negate()` function is simple: it only needs to change the number's sign bit.
@@ -118,25 +113,6 @@ Be sure to check:
   - <u>`nan + 1`</u>
   - <u>`inf - 0x7F7FFFFF`</u>
   - <u>`inf - inf`</u>
-
-    
-#### Check Rounding
-
-[//]: # (TODO: this may be redundant after we get the Rounding section up & going)
-
-You can now check the rounding code in your `encode()` implementation.
-
-- When the rounded-off portion is less than halfway, you always round down
-  - <u>`0x40000000 + 0x33FFFFFF`</u>
-  - <u>`0x40000001 + 0x33FFFFFF`</u>
-- When the rounded-off portion is more than halfway, you always round up
-  - <u>`0x40000000 + 0x34000001`</u>
-  - <u>`0x40000001 + 0x34000001`</u>
-- When the rounded-off portion is exactly halfway, you round to the nearest-even
-  - <u>`0x40000000 + 0x34000000`</u>
-  - <u>`0x40000001 + 0x34000000`</u>
-- Sometimes rounding can carry all the way to the integer portion, causing the exponent to change
-  - <u>`0x407FFFFF + 0x34000000`</u>
 
 ---
 

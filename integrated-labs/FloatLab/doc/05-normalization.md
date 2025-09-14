@@ -10,10 +10,8 @@ In the `encode()` function:
   - [ ] Use `unnormal_t`'s `set_exponent()` function to set `number`'s exponent to that which all 32-bit subnormal numbers have, and
   - [ ] Encode `number` in the IEEE&nbsp;754 subnormal form.
 - [ ] Appropriately encode numbers too great to be represented as normal numbers.
-- [ ] Apply rounding, following the IEEE&nbsp;754 default of "round-to-nearest, ties-to-even."
 - [ ] Compile and run *floatlab*, recoding a few values (example usages: <u>`recode 12.375`</u> and <u>`recode 0x00055000`</u>).
 
-[//]: # (TODO: Migrate rounding to its own function, its own section)
 
 ### Encoding Numbers
 
@@ -29,15 +27,17 @@ then you know that `number`'s "true value" is a non-zero, finite number.
 Moreover, the integer portion has been set to $1$, which will make it easy to determine if `number` can be encoded as a normal number,
 and will make it easy to perform that encoding.
 
-[//]: # (TODO: Make the hints **💡 Hint**s)
-
 In the `encode()` function:
 - [ ] Determine whether the value is too great to be represented as a normal number.
-  - Suppose that the number *can* be represented as a normal number -- what is the greatest exponent possible?
-    Is `number`'s exponent greater than that?
+  > 💡 **Tip**
+  >
+  > Suppose that the number *can* be represented as a normal number -- what is the greatest exponent possible?
+  > Is `number`'s exponent greater than that?
 - [ ] Determine whether the value is too small to be represented as a normal number.
-  - Suppose that the number *can* be represented as a normal number -- what is the least exponent possible?
-    Is `number`'s exponent less than that?
+  > 💡 **Tip**
+  >
+  > Suppose that the number *can* be represented as a normal number -- what is the least exponent possible?
+  > Is `number`'s exponent less than that?
 - [ ] If the number can be represented as a normal number, then encode `number` in the IEEE&nbsp;754 normal form.
 - [ ] If the number is too small to be represented as a normal number, then:
     - [ ] Use `unnormal_t`'s `set_exponent()` function to set `number`'s exponent to that which all 32-bit subnormal numbers have, and
@@ -46,25 +46,15 @@ In the `encode()` function:
 For both normal and subnormal numbers, you will need to use `unnormal_t`'s functions that access the structure's fields.
 Don't forget that the bit vector returned by `get_unnormal_fraction()` is the numerator of $\frac{get\_unnormal\_fraction()}{2^{64}}$ and that `get_unnormal_exponent()` returns the two's complement representation of the exponent.
 
-There are additional tasks for `encode()` that we recommend you attempt to implement now, though you will not be able to test them with the assignment's driver code until later:\footnote{See Appendix&nbsp;\ref{sec:testRounding} for a way to test them now.}
-
+Overflowing numbers too great to be represented as normal numbers, and underflowing numbers too small to be represented as subnormal numbers can be implemented now, but you will not be able to test them until you have implemented some arithmetic.
 - [ ] Appropriately encode numbers too great to be represented as normal numbers.
-- [ ] Apply rounding, following the IEEE&nbsp;754 default of "round-to-nearest, ties-to-even."
-
-[//]: # (TODO: Migrate rounding to its own function, its own section)
-
-The final special circumstance, numbers that are too small to be represented as subnormal numbers,
-should be handled as a natural consequence of adjusting the `number` to be able to properly encode it as a subnormal number.
-Regardless, you will not be able to test underflow to zero using the assignment's driver code until later.
+- Encoding numbers that are too small to be represented as subnormal numbers requires no special treatment -- it should be handled as a natural consequence of adjusting the `number` to be able to properly encode it as a subnormal number.
 
 
 #### Check Your Work
 
-[//]: # (TODO: Double-check that "recode 12.375 6" is still an option)
-
-When you run *floatlab*, you can specify that you want to recode a value, such as <u>`recode 12.375`</u> and <u>`recode 12.375 6`</u>.
+When you run *floatlab*, you can specify that you want to recode a value, such as <u>`recode 12.375`</u>.
 The program will first decode the value.
-It will then adjust the exponent by the specified amount (if an amount is specified).
 Then it will send the result to `encode()`.
 Finally, it will print the original value and the `ieee754_t` value returned by `encode`.
 

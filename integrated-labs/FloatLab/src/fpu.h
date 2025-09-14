@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * FloatLab (c) 2019-24 Christopher A. Bohn
+ * FloatLab (c) 2019-25 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -44,8 +44,9 @@ char *bits_to_string(char *destination, uint64_t bits, int start_bit,
                      int end_bit, enum bit_divider_direction bit_dividers);
 char *ieee754_to_string(char *destination, ieee754_t number);
 
-ieee754_t encode(unnormal_t number);
 unnormal_t decode(ieee754_t number);
+ieee754_t encode(unnormal_t number);
+ieee754_t round_to_nearest_even(ieee754_t unrounded_number, uint64_t original_fraction);
 
 ieee754_t negate(ieee754_t number);
 ieee754_t add(ieee754_t augend, ieee754_t addend);
