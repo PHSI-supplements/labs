@@ -10,6 +10,9 @@
 sed -E -f - "$@" <<'SED'
   ## Zero-Argument Conversions ##
 
+  # ~
+  s/\~/\&nbsp;/g
+
   # \_
   s/\\_/_/g
 

@@ -11,7 +11,7 @@
  ******************************************************************************/
 
 /*
- * IntegerLab assignment and starter code (c) 2018-22 Christopher A. Bohn
+ * IntegerLab assignment and starter code (c) 2018-25 Christopher A. Bohn
  * IntegerLab solution (c) the above-named student(s)
  */
 

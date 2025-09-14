@@ -22,7 +22,7 @@ file(GLOB HDR_FILES CONFIGURE_DEPENDS src/*.h)      # some IDEs need this
 
 add_executable(keyboardlab ${SRC_FILES} ${HDR_FILES})
 
-target_link_libraries(keyboardlab m)
+target_link_libraries(keyboardlab PRIVATE m)
 
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)

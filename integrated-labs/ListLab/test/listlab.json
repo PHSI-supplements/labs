@@ -1,7 +1,7 @@
 {
   "targetFiles": [
     "../src/sorted_word_entries.c",
-    "../src/linked_list.c"
+    "../src/linked-list.c"
   ],
   "commentDelimiters": {
     "inlineComment": "//",

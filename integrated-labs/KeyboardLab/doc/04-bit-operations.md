@@ -19,9 +19,9 @@
 
 You may not use addition (`+`), subtraction (`-`), division (`/`), nor modulo (`%`).
 You also may not use the number `5` nor the letter `b`.
-(Exceptions: you *may* use the forward-slash (`/`) for comments, and the percent-sign (`%`) that is already present in the `sprintf()` calls' format strings is allowed)}
+(Exceptions: you *may* use the forward-slash (`/`) for comments, and the percent-sign (`%`) that is already present in the `sprintf()` calls' format strings is allowed.)
 
-> #### Hints
+> 💡 **Hints**
 > - Following the weighted-sum technique to convert between binary and decimal (or by examining the textbook's Table 2.1), 
 >   you will note that <span style="background-color: yellow;">all even numbers have a 0 as their least significant bit</span>, 
 >   and <span style="background-color: yellow;">all odd numbers have a 1 as their least significant bit</span>

@@ -1,7 +1,6 @@
 {
   "targetFiles": [
-    "../src/alu.c",
-    "../src/basetwo.c"
+    "../src/fpu.c"
   ],
   "commentDelimiters": {
     "inlineComment": "//",
@@ -64,24 +63,14 @@
       "|=",
       ","
     ],
-    "disallowed": [
-      "+",
-      "-",
-      "*",
-      "/",
-      "%",
-      "+=",
-      "-=",
-      "*=",
-      "/=",
-      "%=",
-      "++",
-      "--"
-    ]
+    "disallowed": []
   },
   "disallowedCalls": [],
   "disallowedKeywords": [
-    "goto"
+    "goto",
+    "float",
+    "double",
+    "union"
   ],
   "limitedLoopTerminations": {
     "0": [
@@ -89,9 +78,5 @@
       "return"
     ]
   },
-  "limitedCharacters": {
-    "1": [
-      "#"
-    ]
-  }
+  "limitedCharacters": {}
 }
