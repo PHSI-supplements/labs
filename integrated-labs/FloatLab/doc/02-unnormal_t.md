@@ -12,8 +12,6 @@ Unlike the IEEE&nbsp;754 format, an `unnormal_t` value can have more than one bi
 > Instead, use the `unnormal()` macro to create an `unnormal_t` value, the accessor functions that we provide to retrieve the fields, and the modifier functions that we provide to make adjustments in a **value-preserving** manner.
 > These functions are pass-by-value "pure" functions; there is no observable effect if you do not use the value returned.
 
-[//]: # (TODO: introduce [[unsequenced]])
-
 > ⓘ **Note**
 > 
 > While you typically will see non-primitive variables passed by reference to C functions, the `unnormal_t` functions use pass-by-value.
@@ -22,19 +20,15 @@ Unlike the IEEE&nbsp;754 format, an `unnormal_t` value can have more than one bi
 > <font color="red">This means that the variables passed as arguments to functions will be unchanged, and if an `unnormal_t` variable is returned then it will be a modified copy of the original.</font>
 > A consequence of this is that *you must make sure that you always use the value returned by a function if you expect to use the effect of the function.*
 
-[//]: # (TODO: introduce [[nodiscard]])
-
 You can, and should, look at the functions' signatures in *unnormal.h*.
 <font color="red">The shift functions and the alignment functions are *value-preserving*: changes to the significand create corresponding changes to the exponent, and vice-versa.</font>
 We summarize the functions that you are likely to use here (there are more functions than we list here, and you may use *any* function that is declared in *unnormal.h*):
 
-[//]: # (TODO: consider breaking-out these notes)
-
 - Creating and printing an `unnormal_t` value (all necessary calls to these functions are in the starter code)
   - **unnormal()** returns an `unnormal_t` value (*not* a pointer) based on the arguments provided.
     The argument list is a series of dot-prefixed named fields (such as `.sign=0, .infinity=1`) whose meanings are the obvious ones from the class discussion about floating point numbers.
-    <span style="background-color: lime;">***Note:*** the `.exponent` argument, if included, is expected to be a two's complement value.</span>
-    <span style="background-color: yellow;">***Note:*** the `.fraction` argument, if included, is expected to be the numerator of $\frac{\mathtt{.fraction}\ argument}{2^{64}}$ (*i.e.*, the $2^{-1}$ bit is $bit_{63}$).
+    <span style="background-color: lime;">The `.exponent` argument, if included, is expected to be a two's complement value.</span>
+    <span style="background-color: yellow;">The `.fraction` argument, if included, is expected to be the numerator of $\frac{\mathtt{.fraction}\ argument}{2^{64}}$ (*i.e.*, the $2^{-1}$ bit is $bit_{63}$).
   - **unnormal_to_string()** returns a string representation of the value.
       Because of the number of bits available in the `unnormal_t` fields, the significand is represented in base-16, though the exponent is the exponent of 2.
 - Accessors

@@ -203,7 +203,7 @@ ieee754_t encode(unnormal_t number) {
         number = set_integer(number, 1);
         assert(!operation_was_not_performed(number));
         /* GENERATE THE APPROPRIATE BIT VECTOR AND PLACE IT IN RESULT */
-
+        shift_left_once(number);
 
         result = round_to_nearest_even(result, get_unnormal_fraction(number));
     }

@@ -108,14 +108,14 @@ char *unnormal_to_string(char *destination, unnormal_t number);
  * @param number the Unnormal value to be evaluated
  * @return 0 if the value is positive, 1 if the value is negative
  */
-uint8_t get_unnormal_sign(unnormal_t number);
+uint8_t get_unnormal_sign(unnormal_t number) [[unsequenced]];
 
 /**
  * Provides the integer portion of the floating point number.
  * @param number the Unnormal value to be evaluated
  * @return a <code>uint64_t</code> storing the value's integer portion
  */
-uint64_t get_unnormal_integer(unnormal_t number);
+uint64_t get_unnormal_integer(unnormal_t number) [[unsequenced]];
 
 /**
  * Provides the fractional portion of the floating point number. This value should be treated as the numerator of a
@@ -123,47 +123,48 @@ uint64_t get_unnormal_integer(unnormal_t number);
  * @param number the Unnormal value to be evaluated
  * @return a <code>uint64_t</code> storing value's fractional portion
  */
-uint64_t get_unnormal_fraction(unnormal_t number);
+uint64_t get_unnormal_fraction(unnormal_t number) [[unsequenced]];
 
 /**
  * Provides the two's complement exponent of the base-2 floating point number.
  * @param number the Unnormal value to be evaluated
  * @return a <code>int16_t</code> storing value's exponent of 2
  */
-int16_t get_unnormal_exponent(unnormal_t number);
+int16_t get_unnormal_exponent(unnormal_t number) [[unsequenced]];
 
 /**
  * Indicates whether a value is plus/minus infinity
  * @param number the Unnormal value to be evaluated
  * @return 0 if the value is finite (or NaN), 1 if the value is plus/minus infinity
  */
-bool is_infinite(unnormal_t number);
+bool is_infinite(unnormal_t number) [[unsequenced]];
 
 /**
  * Indicates whether a value is NaN
  * @param number the Unnormal value to be evaluated
  * @return 0 if the value is a valid number, 1 if the value is not a number
  */
-bool is_not_a_number(unnormal_t number);
+bool is_not_a_number(unnormal_t number) [[unsequenced]];
 
 /*          *
  * Warnings *
  *          */
 
-bool has_no_warnings(unnormal_t number);
-bool has_unspecified_warning(unnormal_t number);
-bool multiplication_is_not_recommended(unnormal_t number);
-bool multiplication_is_unreliable(unnormal_t number);
-bool addition_is_unreliable(unnormal_t number);
-bool shift_overflowed(unnormal_t number);
-bool shift_underflowed(unnormal_t number);
-bool operation_was_not_performed(unnormal_t number);
-bool created_number_is_improbable(unnormal_t number);
+bool has_no_warnings(unnormal_t number) [[unsequenced]];
+bool has_unspecified_warning(unnormal_t number) [[unsequenced]];
+bool multiplication_is_not_recommended(unnormal_t number) [[unsequenced]];
+bool multiplication_is_unreliable(unnormal_t number) [[unsequenced]];
+bool addition_is_unreliable(unnormal_t number) [[unsequenced]];
+bool shift_overflowed(unnormal_t number) [[unsequenced]];
+bool shift_underflowed(unnormal_t number) [[unsequenced]];
+bool operation_was_not_performed(unnormal_t number) [[unsequenced]];
+bool created_number_is_improbable(unnormal_t number) [[unsequenced]];
 
 /*                     *
  * Primitive functions *
  *                     */
 
+[[nodiscard]]
 /**
  * Shifts the significand's bits to the left by one position, having the effect of moving the binary point to the right
  * and decreasing the exponent by one. The argument is unmodified (pass-by-value), and the returned Unnormal value
@@ -175,8 +176,9 @@ bool created_number_is_improbable(unnormal_t number);
  * @param number the value whose copy will have shifted bits
  * @return a copy of the argument but with its bits shifted
  */
-unnormal_t shift_left_once(unnormal_t number);
+unnormal_t shift_left_once(unnormal_t number) [[unsequenced]];
 
+[[nodiscard]]
 /**
  * Shifts the significand's bits to the right by one position, having the effect of moving the binary point to the right
  * and decreasing the exponent by one. The argument is unmodified (pass-by-value), and the returned Unnormal value
@@ -188,12 +190,13 @@ unnormal_t shift_left_once(unnormal_t number);
  * @param number the value whose copy will have shifted bits
  * @return a copy of the argument but with its bits shifted
  */
-unnormal_t shift_right_once(unnormal_t number);
+unnormal_t shift_right_once(unnormal_t number) [[unsequenced]];
 
 /*                              *
  * Higher-level shift functions *
  *                              */
 
+[[nodiscard]]
 /**
  * Shifts the significand's bits to the left by the specified amount, with corresponding effects on the binary point and
  * the exponent. The <code>number</code> argument is unmodified (pass-by-value), and the returned Unnormal value
@@ -207,8 +210,9 @@ unnormal_t shift_right_once(unnormal_t number);
  * @param amount the amount to shift the bits by
  * @return a copy of the argument but with its bits shifted
  */
-unnormal_t shift_left(unnormal_t number, int16_t amount);
+unnormal_t shift_left(unnormal_t number, int16_t amount) [[unsequenced]];
 
+[[nodiscard]]
 /**
  * Shifts the significand's bits to the right by the specified amount, with corresponding effects on the binary point
  * and the exponent. The <code>number</code> argument is unmodified (pass-by-value), and the returned Unnormal value
@@ -222,12 +226,13 @@ unnormal_t shift_left(unnormal_t number, int16_t amount);
  * @param amount the amount to shift the bits by
  * @return a copy of the argument but with its bits shifted
  */
-unnormal_t shift_right(unnormal_t number, int16_t amount);
+unnormal_t shift_right(unnormal_t number, int16_t amount) [[unsequenced]];
 
 /*                     *
  * Alignment functions *
  *                     */
 
+[[nodiscard]]
 /**
  * Shifts the significand such that the least-significant `1` bit is in the $2^0$ position, with a
  * corresponding change in the exponent (the fraction, of course, will be 0). The argument is unmodified
@@ -239,8 +244,9 @@ unnormal_t shift_right(unnormal_t number, int16_t amount);
  * @param number the value whose copy will have shifted bits
  * @return a copy of the argument but with its non-zero bits to the left of the binary point
  */
-unnormal_t place_all_bits_in_integer(unnormal_t number);
+unnormal_t place_all_bits_in_integer(unnormal_t number) [[unsequenced]];
 
+[[nodiscard]]
 /**
  * If possible, shifts the significand such that the resulting integer portion is the specified value, with a
  * corresponding changes in the fraction and exponent. The argument is unmodified (pass-by-value), and the returned
@@ -253,8 +259,9 @@ unnormal_t place_all_bits_in_integer(unnormal_t number);
  * @return a copy of the argument with the specified integer or with the original integer if the specified integer
  *      cannot be set
  */
-unnormal_t set_integer(unnormal_t number, unsigned int integer);
+unnormal_t set_integer(unnormal_t number, unsigned int integer) [[unsequenced]];
 
+[[nodiscard]]
 /**
  * Shifts the significand, with a corresponding change in the exponent, such that the resulting exponent is the
  * specified value with a corresponding changes in the fraction and exponent. The argument is unmodified
@@ -265,7 +272,7 @@ unnormal_t set_integer(unnormal_t number, unsigned int integer);
  * @param exponent the desired exponent of 2
  * @return a copy of the argument with the specified exponent
  */
-unnormal_t set_exponent(unnormal_t number, int16_t exponent);
+unnormal_t set_exponent(unnormal_t number, int16_t exponent) [[unsequenced]];
 
 /*                      *
  * Prediction functions *
@@ -278,7 +285,7 @@ unnormal_t set_exponent(unnormal_t number, int16_t exponent);
  * @param augend the other value potentially being added to the first
  * @return <code>true</code> if adding the fractions to each other will overflow, <code>false</code> otherwise
  */
-bool fraction_will_carry_into_integer_on_addition(unnormal_t addend, unnormal_t augend);
+bool fraction_will_carry_into_integer_on_addition(unnormal_t addend, unnormal_t augend) [[unsequenced]];
 
 /**
  * Indicates that if the next operation is subtraction with the specified values, then subtracting the fractions will
@@ -288,7 +295,7 @@ bool fraction_will_carry_into_integer_on_addition(unnormal_t addend, unnormal_t 
  * @return <code>true</code> if the subtrahend's fraction is greater than the menuend's fraction,
  *      <code>false</code> otherwise
  */
-bool fraction_will_borrow_from_integer_on_subtraction(unnormal_t menuend, unnormal_t subtrahend);
+bool fraction_will_borrow_from_integer_on_subtraction(unnormal_t menuend, unnormal_t subtrahend) [[unsequenced]];
 
 /**
  * Indicates that if the next function is #left_shift_once (or one of its aliases) then after that function
@@ -297,7 +304,7 @@ bool fraction_will_borrow_from_integer_on_subtraction(unnormal_t menuend, unnorm
  * @return <code>true</code> if the value's integer portion has a `1` bit just to the right of the median,
  *      <code>false</code> otherwise
  */
-bool left_shift_will_make_multiplication_unreliable(unnormal_t number);
+bool left_shift_will_make_multiplication_unreliable(unnormal_t number) [[unsequenced]];
 
 /**
  * Indicates that if the next function is #left_shift_once (or one of its aliases) then after that function
@@ -306,7 +313,7 @@ bool left_shift_will_make_multiplication_unreliable(unnormal_t number);
  * @return <code>true</code> if the value's integer portion has a `1` bit in the second-most-significant position
  *      <code>false</code> otherwise
  */
-bool left_shift_will_make_addition_unreliable(unnormal_t number);
+bool left_shift_will_make_addition_unreliable(unnormal_t number) [[unsequenced]];
 
 /**
  * Indicates that if the next function is #left_shift_once (or one of its aliases) then after that function
@@ -315,7 +322,7 @@ bool left_shift_will_make_addition_unreliable(unnormal_t number);
  * @return <code>true</code> if the value's integer portion has a `1` bit in the most-significant position
  *      <code>false</code> otherwise
  */
-bool left_shift_will_overflow(unnormal_t number);
+bool left_shift_will_overflow(unnormal_t number) [[unsequenced]];
 
 /**
  * Indicates that if the next function is #right_shift_once (or one of its aliases) then after that function
@@ -324,12 +331,13 @@ bool left_shift_will_overflow(unnormal_t number);
  * @return <code>true</code> if the value's fraction portion has a `1` bit in the least-significant position
  *      <code>false</code> otherwise
  */
-bool right_shift_will_underflow(unnormal_t number);
+bool right_shift_will_underflow(unnormal_t number) [[unsequenced]];
 
 /*                  *
  * Function aliases *
  *                  */
 
+[[nodiscard]]
 /**
  * Shifts the significand's bits to the left by one position, having the effect of moving the binary point to the right
  * and decreasing the exponent by one. The argument is unmodified (pass-by-value), and the returned Unnormal value
@@ -341,8 +349,9 @@ bool right_shift_will_underflow(unnormal_t number);
  * @param number the value whose copy will have a lesser exponent
  * @return a copy of the argument but with its exponent decremented
  */
-static inline unnormal_t decrement_exponent(unnormal_t number) { return shift_left_once(number); }
+static inline unnormal_t decrement_exponent(unnormal_t number) [[unsequenced]] { return shift_left_once(number); }
 
+[[nodiscard]]
 /**
  * Shifts the significand's bits to the right by one position, having the effect of moving the binary point to the right
  * and decreasing the exponent by one. The argument is unmodified (pass-by-value), and the returned Unnormal value
@@ -354,8 +363,9 @@ static inline unnormal_t decrement_exponent(unnormal_t number) { return shift_le
  * @param number the value whose copy will have a greater exponent
  * @return a copy of the argument but with its exponent incremented
  */
-static inline unnormal_t increment_exponent(unnormal_t number) { return shift_right_once(number); }
+static inline unnormal_t increment_exponent(unnormal_t number) [[unsequenced]] { return shift_right_once(number); }
 
+[[nodiscard]]
 /**
  * Shifts the significand's bits to the left by one position, having the effect of moving the binary point to the right
  * and decreasing the exponent by one. The argument is unmodified (pass-by-value), and the returned Unnormal value
@@ -367,8 +377,9 @@ static inline unnormal_t increment_exponent(unnormal_t number) { return shift_ri
  * @param number the value whose copy will have its binary point moved
  * @return a copy of the argument but with its binary point moved to the right
  */
-static inline unnormal_t move_binary_point_to_the_right(unnormal_t number) { return shift_left_once(number); }
+static inline unnormal_t move_binary_point_to_the_right(unnormal_t number) [[unsequenced]] { return shift_left_once(number); }
 
+[[nodiscard]]
 /**
  * Shifts the significand's bits to the right by one position, having the effect of moving the binary point to the right
  * and decreasing the exponent by one. The argument is unmodified (pass-by-value), and the returned Unnormal value
@@ -380,8 +391,9 @@ static inline unnormal_t move_binary_point_to_the_right(unnormal_t number) { ret
  * @param number the value whose copy will have its binary point moved
  * @return a copy of the argument but with its binary point moved to the left
  */
-static inline unnormal_t move_binary_point_to_the_left(unnormal_t number) { return shift_right_once(number); }
+static inline unnormal_t move_binary_point_to_the_left(unnormal_t number) [[unsequenced]] { return shift_right_once(number); }
 
+[[nodiscard]]
 /**
  * Shifts the significand such that the least-significant `1` bit is in the 2**0 position, with a
  * corresponding change in the exponent (the fraction, of course, will be 0). The argument is unmodified
@@ -393,6 +405,6 @@ static inline unnormal_t move_binary_point_to_the_left(unnormal_t number) { retu
  * @param number the value whose copy will have shifted bits
  * @return a copy of the argument but with its non-zero bits to the left of the binary point
  */
-static inline unnormal_t prepare_for_arithmetic(unnormal_t number) { return place_all_bits_in_integer(number); }
+static inline unnormal_t prepare_for_arithmetic(unnormal_t number) [[unsequenced]] { return place_all_bits_in_integer(number); }
 
 #endif //UNNORMAL_H
