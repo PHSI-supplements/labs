@@ -18,7 +18,7 @@ repeated calls to `swap_next()` or `swap_previous()` can move a node to any posi
 - [ ] Test that you can move the head node to the tail by swapping next (function 16) twice.
 - [ ] Test that you can move the tail node to the head by swapping previous (function 17) twice.
 - [ ] Continue to test `swap_next()` and `swap_previous()` until you discover a bug or are satisfied that your implementation is correct.
-- [ ] Free the memory by selecting function 2 ("delete_list()").
+- [ ] Free the memory by selecting function 2 ("destroy_list()").
   Exit out of the program by selecting function 0, then option 0.
 
 
@@ -43,7 +43,7 @@ If that happens, then the word entries should be merged, resulting in one word e
 - [ ] Test that you can merge the current node with the tail node by selecting function 18 ("merge_next()").
 - [ ] Test that you can merge the current node with the head node by selecting function 19 ("merge_previous()").
 - [ ] Continue to test `swap_next()` and `swap_previous()` until you discover a bug or are satisfied that your implementation is correct.
-- [ ] Free the memory by selecting function 2 ("delete_list()").
+- [ ] Free the memory by selecting function 2 ("destroy_list()").
   Exit out of the program by selecting function 0, then option 0.
 
 

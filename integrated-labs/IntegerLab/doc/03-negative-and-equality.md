@@ -5,8 +5,8 @@
 > The signed/unsigned inequality comparison functions `…less_than()`, `…at_most()`, `…at_least()`, and `…greater_than()` will *not* work until you have implemented `subtract()`!
 > <small>(However, you shouldn't need these functions, so this should not be a limitation.)</small>
 
-- [ ] Open *basetwo.c* in your editor.
-  You will see the stubs of two functions there.
+- [ ] Open *alu.c* in your editor.
+  You will see the stubs of several functions there.
 
 
 ### TL;DR

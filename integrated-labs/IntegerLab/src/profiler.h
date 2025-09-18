@@ -24,7 +24,7 @@
 
 #include "alu.h"
 
-[[gnu:no_instrument_function]] void reset_call_counts(void);
-[[gnu:no_instrument_function]] int get_call_counts(const void *);
+[[gnu::no_instrument_function]] void reset_call_counts(void);
+[[gnu::no_instrument_function]] int get_call_counts(const void *);
 
 #endif //PROFILER_H

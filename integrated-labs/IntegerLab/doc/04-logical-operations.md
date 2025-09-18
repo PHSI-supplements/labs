@@ -4,7 +4,7 @@ Implementing logical NOT, logical AND, and logical OR is not quite as simple as 
 
 ### TL;DR
 
-- [ ] Implement `logical_not()` to return `true` if and only if its two arguments are considered to be `true`.
+- [ ] Implement `logical_not()` to return `true` if and only if its argument is considered to be `false`.
 - [ ] Implement `logical_and()` to return `true` if and only if its two arguments are considered to be `true`.
 - [ ] Implement `logical_or()` to return `true` if and only if at least one of its two arguments is considered to be `true`.
 - [ ] Compile and run *integerlab*, trying several values, comparing your actual results with the expected results.
@@ -28,7 +28,7 @@ From among the tests that you have available, one of these will return `true` wh
 Specifically, it will return a 1 or a 0, as appropriate.
 
 You cannot simply apply bitwise AND and bitwise OR to the original values because their bits might not line up -- for example, `0x5 & 0xA == 0x0`.
-After you reduce these values to a 1 or a 0, then their bits will line up, and tjen you can apply a bitwise operation to the results of the aforementioned test.
+After you reduce these values to a 1 or a 0, then their bits will line up, and then you can apply a bitwise operation to the results of the aforementioned test.
 
 - [ ] Implement `logical_and()` to return `true` if and only if its two arguments are considered to be `true`.
 - [ ] Implement `logical_or()` to return `true` if and only if at least one of its two arguments is considered to be `true`.

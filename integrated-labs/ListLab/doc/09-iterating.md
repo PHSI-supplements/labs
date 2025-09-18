@@ -32,7 +32,7 @@ For a linked list, this means that you follow the current node's `next` or `prev
 - [ ] Test that `iterate_next()` nor `iterate_previous()` correctly navigate the list by updating the iterator, using functions 7 ("iterate_next()") and 8 ("iterate_previous()").
 - [ ] Test that `has_next()` and `has_previous()` return `true` or `false` as appropriate for various positions in the list, using functions 5 ("has_next()") and 6 ("has_previous()").
 - [ ] Continue to test the iteration functions until you discover a bug or are satisfied that your implementations are correct.
-- [ ] Free the memory by selecting function 2 ("delete_list()").
+- [ ] Free the memory by selecting function 2 ("destroy_list()").
   Exit out of the program by selecting function 0, then option 0.
 
 ---

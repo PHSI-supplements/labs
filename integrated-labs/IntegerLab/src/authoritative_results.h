@@ -34,11 +34,11 @@ struct authoritative_result {
     uint8_t carry_flag;
 };
 
-[[gnu:no_instrument_function]] void evaluate_addition(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-[[gnu:no_instrument_function]] void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-[[gnu:no_instrument_function]] void evaluate_unsigned_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-[[gnu:no_instrument_function]] void evaluate_unsigned_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-[[gnu:no_instrument_function]] void evaluate_signed_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
-[[gnu:no_instrument_function]] void evaluate_signed_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+[[gnu::no_instrument_function]] void evaluate_addition(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+[[gnu::no_instrument_function]] void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+[[gnu::no_instrument_function]] void evaluate_unsigned_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+[[gnu::no_instrument_function]] void evaluate_unsigned_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+[[gnu::no_instrument_function]] void evaluate_signed_multiplication(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
+[[gnu::no_instrument_function]] void evaluate_signed_division(uint16_t operand1, uint16_t operand2, struct authoritative_result *result);
 
 #endif //AUTHORITATIVE_RESULTS_H

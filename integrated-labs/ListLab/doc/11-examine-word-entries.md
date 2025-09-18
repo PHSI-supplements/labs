@@ -18,7 +18,7 @@ If the current, head, or tail pointers are `nullptr`, then the corresponding fun
 - [ ] Test `get_previous_word_entry()` selecting function 15 ("get_previous_word_entry()").
 - [ ] Iterate back to the head with `iterate_previous()` (function 8), and test `get_next_word_entry()` selecting function 14 ("get_next_word_entry()").
 - [ ] Continue to test `get_word_entry()`, `get_next_word_entry()`, and `get_previous_word_entry()` until you discover a bug or are satisfied that your implementation is correct.
-- [ ] Free the memory by selecting function 2 ("delete_list()").
+- [ ] Free the memory by selecting function 2 ("destroy_list()").
   Exit out of the program by selecting function 0, then option 0.
 
 ---

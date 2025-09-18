@@ -12,7 +12,7 @@
 ### TL;DR
 
 - [ ] Implement the `exponentiate()` function using a bit shift operation.
-- [ ] Implement the `lg()` function using a `swtich` statement.
+- [ ] Implement the `lg()` function using a `switch` statement.
 - [ ] Compile and run *integerlab*, trying several values, comparing your actual results with the expected results.
   - Note that you will receive a warning for an unused variable in `ripple_carry_addition()`;
     this is okay for now
@@ -43,7 +43,7 @@ There are some very short solutions that will work if you have already implement
 Since you haven't, the function stub begins an alternative:
 use a `switch` statement, enumerating the 32 possible cases and returning the appropriate value in each case.
 
-- [ ] Implement the `lg()` function using a `swtich` statement.
+- [ ] Implement the `lg()` function using a `switch` statement.
 
 ### Check your work
 

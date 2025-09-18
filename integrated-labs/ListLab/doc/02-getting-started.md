@@ -33,7 +33,7 @@ However, if you are using an interactive debugger, then you will want to disable
 - `cmake --preset default` -- developing on nuros, timeout enabled
 - `cmake --preset timeout-disabled` -- developing on nuros, timeout disabled
 - `cmake --preset personal-computer` -- developing on your computer, timeout enabled
-- `cmake --preset personal-computer-timeout-disabled` -- developing on nuros, timeout disabled
+- `cmake --preset personal-computer-timeout-disabled` -- developing on your computer, timeout disabled
 
 <u>From VS Code</u>
 

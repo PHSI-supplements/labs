@@ -11,7 +11,7 @@
 > Herb Bee, the chief engineer, explains that Eclectic Electronics is developing a patent-pending C-licon tool that will convert C code into an integrated circuit that has the same functionality as the original C code.
 > To test it out, he tasked you with writing the code to implement an Arithmetic Logic Unit (ALU).
 > Your task will be to implement integer addition, subtraction, multiplication, and division.
-> Even though high-leve languages' *logical* boolean operations normally are not part of an ALU, Herb wants you to include these in the ALU to see if that can make some programs run faster.
+> Even though high-level languages' *logical* boolean operations normally are not part of an ALU, Herb wants you to include these in the ALU to see if that can make some programs run faster.
 > Because bitwise operations and bit shift operations have already been implemented, you will be able to use C's bitwise and bit shift operators,
 > but because arithmetic operations have not yet been implemented, you cannot use C's arithmetic operators.
 > Because C library functions generally make use of arithmetic operations (which have not yet been implemented), you cannot use library functions.
@@ -104,7 +104,7 @@ Do not edit *alu.h*.
 
 This header file contains two type definitions:
 
-- `one_bit_adder_t` is a structure to hold the 1-bin inputs (`a`, `b`, `c_in`) and 1-bit outputs (`sum`, `c_out`) of a one-bit full adder.
+- `one_bit_adder_t` is a structure to hold the 1-bit inputs (`a`, `b`, `c_in`) and 1-bit outputs (`sum`, `c_out`) of a one-bit full adder.
 - `alu_result_t` is a structure to hold the outputs from an arithmetic logic unit.
   Its fields are:
   - `result`, a 16-bit bit vector that is considered "the" result of the computation
