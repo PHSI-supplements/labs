@@ -108,7 +108,7 @@ What change to *one* line will fix Archie's bug?
 > 22.     int *product = multiply(2, 3);
 > 23.     printf("product = %d\n", *product);
 > 24.     printf("sum - product = %d - %d = %d\n",
-> 25.     *sum, *product, *sum - *product);
+> 25.            *sum, *product, *sum - *product);
 > 26.     return 0;
 > 27. }
 > ```

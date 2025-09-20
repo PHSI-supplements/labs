@@ -30,7 +30,7 @@ char const *const LIST_TYPE = "Linked List";
 /**
  * @brief Creates an initially-blank `node_t` that has a word entry as its payload.
  *
- * Initially, the `iterate_next` and `iterate_previous` pointers are `nullptr`.
+ * Initially, the `next` and `previous` pointers are `nullptr`.
  *
  * @param word_entry the node's payload
  * @return a pointer to the node
@@ -118,7 +118,7 @@ void destroy_list(list_t *list, bool free_word_entries) {
 
 /**
  * @brief Provides an iterator over the elements in the list, invalidating all
- * iterate_previous iterators.
+ * previous iterators.
  *
  * If the list is empty, the iterator is valid <i>only</i> for inserting a word
  * entry into the empty list; the behavior is undefined for all other uses.
@@ -324,7 +324,7 @@ word_entry_t const *get_word_entry(iterator_t const *iterator) {
  * list.
  *
  * @param iterator the iterator pointing to a valid word entry
- * @returna pointer to the iterate_next word entry
+ * @returna pointer to the next word entry
  */
 word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
@@ -342,7 +342,7 @@ word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
  * list.
  *
  * @param iterator the iterator pointing to a valid word entry
- * @returna pointer to the iterate_previous word entry
+ * @returna pointer to the previous word entry
  */
 word_entry_t const *get_previous_word_entry(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
@@ -397,7 +397,7 @@ iterator_t *swap_previous(iterator_t *iterator) {
 }
 
 /**
- * @brief Combines the word entry pointed to by the iterator, and its iterate_next
+ * @brief Combines the word entry pointed to by the iterator, and its next
  * element, forming a single word entry.
  *
  * The two word entries should have the same word; the behavior is undefined if
@@ -418,7 +418,7 @@ iterator_t *merge_next(iterator_t *iterator) {
 }
 
 /**
- * @brief Combines the word entry pointed to by the iterator, and its iterate_previous
+ * @brief Combines the word entry pointed to by the iterator, and its previous
  * element, forming a single word entry.
  *
  * The two word entries should have the same word; the behavior is undefined if
@@ -449,7 +449,7 @@ iterator_t *merge_previous(iterator_t *iterator) {
  *
  * Specifically, this function will print the address of the head, current, and
  * tail nodes. It will then print, in order, each node's address and word entry,
- * as well as the addresses held by its `iterate_previous` and `iterate_next` pointers.
+ * as well as the addresses held by its `previous` and `next` pointers.
  *
  * @param list the list to be printed
  */

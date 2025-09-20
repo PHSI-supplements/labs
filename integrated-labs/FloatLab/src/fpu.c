@@ -203,9 +203,16 @@ ieee754_t encode(unnormal_t number) {
         number = set_integer(number, 1);
         assert(!operation_was_not_performed(number));
         /* GENERATE THE APPROPRIATE BIT VECTOR AND PLACE IT IN RESULT */
-        shift_left_once(number);
+        if (false) {    /* NUMBER IS TOO GREAT TO BE A NORMAL NUMBER */
 
-        result = round_to_nearest_even(result, get_unnormal_fraction(number));
+
+        } else {        /* ENCODE THE NUMBER IN THE NORMAL OR SUBNORMAL FORM, AS APPROPRIATE */
+
+
+
+            /* AT THIS POINT, `result` SHOULD CONTAIN THE VALUE WITH THE EXCESS FRACTION BITS SIMPLY TRUNCATED OFF */
+            result = round_to_nearest_even(result, get_unnormal_fraction(number));
+        }
     }
     return result | (get_unnormal_sign(number) ? SIGN_BIT_MASK : 0);
 }

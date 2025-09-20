@@ -69,8 +69,8 @@ Be sure to check:
   - <u>`-5 * -2`</u>
   - <u>`5 * -0`</u>
 - Numbers both great and small
-  - <u>`1.65e25 * 2.39e11`</u>
-  - <u>`1.65e-25 * 2.39e-11`</u>
+  - <u>`1.35e25 * 2.39e11`</u>
+  - <u>`1.35e-25 * 2.39e-11`</u>
   - <u>`1e-30 * 1e-8`</u>
   - <u>`2e30 * 2e-30`</u>
 - A sufficiently-large product overflows to infinity
@@ -82,7 +82,11 @@ Be sure to check:
   - <u>`inf * 2`</u>
   - <u>`inf * 0`</u>
     
-[//]: # (TODO: double-check that these aren't affected by rounding)
+<!--
+The first of these requires rounding up
+  - <u>`1.65e25 * 2.39e11`</u>
+  - <u>`1.65e-25 * 2.39e-11`</u>
+-->
 
 ### Division
 

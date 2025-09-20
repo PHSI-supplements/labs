@@ -41,8 +41,8 @@ After you have exhausted your late days, any work turned in more than one hour l
 This assignment is worth 35 points.
 
 <!-- Archie's Code - 5 -->
-- [ ] **+2** Student's answers in *answers.txt* demonstrate an understanding of the bug in Section~\ref{subsec:uninitializedvariables's code and how to correct it.}
-- [ ] **+3** Student's answer in *answers.txt* demonstrate an understanding of the bug in Section~\ref{subsec:danglingPointers's code.}
+- [ ] **+2** Student's answers in *answers.txt* demonstrate an understanding of the bug in the "Pleistocene Petting Zoo Marquee" code and how to correct it.
+- [ ] **+3** Student's answer in *answers.txt* demonstrate an understanding of the bug in the "Math Doesn't Work Right ... Or Does It?" code.
 <!-- Word Entries - 2 -->
 - [ ] **+½** `create_word_entry` initializes `word_entry` as specified.
 - [ ] **+½** `increment_count()` increases the number of occurrences by one.
