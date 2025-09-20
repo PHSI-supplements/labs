@@ -114,6 +114,12 @@ Be sure to check:
   - <u>`inf - 0x7F7FFFFF`</u>
   - <u>`inf - inf`</u>
 
+> ⓘ Note
+>
+> When you try your own values for testing, if the *expected* value's LSB is 1 and the *actual* value's LSB is 0,
+> but the two values are otherwise identical, then this is a rounding error.
+> You will implement rounding [on the next page](08-rounding.md).
+
 ---
 
 |             [⬅️](06-multiply-divide.md)              |      [⬆️](../README.md)      |    [➡️](08-rounding.md)    |

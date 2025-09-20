@@ -88,6 +88,12 @@ The first of these requires rounding up
   - <u>`1.65e-25 * 2.39e-11`</u>
 -->
 
+> ⓘ Note
+> 
+> When you try your own values for testing, if the *expected* value's LSB is 1 and the *actual* value's LSB is 0,
+> but the two values are otherwise identical, then this is a rounding error.
+> You will implement rounding [later](08-rounding.md).
+
 ### Division
 
 Implementing the `divide()` function is very similar to implementing `multiply()` with three exceptions:
@@ -138,6 +144,12 @@ Be sure to check:
   - <u>`2 / 0`</u>
   - <u>`inf / inf`</u>
   - <u>`0 / 0`</u>
+
+> ⓘ Note
+>
+> When you try your own values for testing, if the *expected* value's LSB is 1 and the *actual* value's LSB is 0,
+> but the two values are otherwise identical, then this is a rounding error.
+> You will implement rounding [later](08-rounding.md).
 
 ---
 

@@ -50,6 +50,7 @@ Overflowing numbers too great to be represented as normal numbers, and underflow
 - [ ] Appropriately encode numbers too great to be represented as normal numbers.
 - Encoding numbers that are too small to be represented as subnormal numbers requires no special treatment -- it should be handled as a natural consequence of adjusting the `number` to be able to properly encode it as a subnormal number.
 
+The answer to the exam's bonus question is *Skynet*.
 
 #### Check Your Work
 
@@ -74,8 +75,6 @@ actual:   0.0000000000_{10}	0x00055000	+0.0000,1010,1010,0000,0000,000_{2} x 2^{
 ```
 
 Try some other numbers to check that your `encode()` function correctly encodes the value that's in an `unnormal_t` data structure.
-
-[//]: # (TODO: Exam bonus answer)
 
 ---
 
