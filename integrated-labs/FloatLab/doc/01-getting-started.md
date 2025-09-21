@@ -82,7 +82,7 @@ The value may be in the normal form, the subnormal form, or one of the special c
 The header file also contains several function declarations.
 The requirements for these functions will be discussed later in this assignment.
 
-### unnormal.h & unnormal.c
+#### unnormal.h & unnormal.c
 Do not edit *unnormal.h*.
 Do not edit *unnormal.c*.
 

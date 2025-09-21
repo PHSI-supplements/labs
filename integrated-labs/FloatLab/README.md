@@ -49,14 +49,14 @@ No other use of generative AI is permitted on this assignment without explicit p
 ### Learning Objectives
 
 After successful completion of this assignment, students will be able to:
-- Identify the bit fields of an IEEE~&nbsp;-compliant floating point number
-- Obtain the value of an IEEE~&nbsp;-compliant floating point number
+- Identify the bit fields of an IEEE&nbsp;754-compliant floating point number
+- Obtain the value of an IEEE&nbsp;754-compliant floating point number
 - Perform floating point arithmetic
-- Apply IEEE~&nbsp; "round-to-nearest-even" rounding
+- Apply IEEE&nbsp754; "round-to-nearest-even" rounding
 
 ### Assignment Summary
 
-In this assignment, you will implement a 32-bit FPU\@.
+In this assignment, you will implement a 32-bit FPU.
 You will implement floating point arithmetic using integer operations and bit-level operations, an encapsulated data type and a small amount of other starter code that we will provide, and other code that you will write.
 Specifically, the FPU's operations are:
 - Some query functions to determine characteristics of a floating point value
