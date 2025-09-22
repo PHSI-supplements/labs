@@ -1,7 +1,6 @@
 ## Sentence to Uppercase Function
 
-The second of the three functions converts lowercase letters in a sentence
-to uppercase letters.
+The second of the three functions converts lowercase letters in a sentence to uppercase letters.
 Here is the equivalent C code:
 
 ```c
@@ -27,29 +26,24 @@ The base address for the `sentence` array is in `%r15`;
 the base address for the lookup table is in `%rcx`, 
 and the loop index `i` is in `%rbx`.
 
-Find the line in *addressinglab.s* that says
-```asm
-##### PLACE INSTRUCTIONS FOR TASK 5 ON NEXT TWO LINES #####
-```
-On the next line, insert a `movsbq` instruction. 
-`movsbq` is like `movsbl` except that it sign-extends the byte so that it becomes a *q*uad word (using the AMD64 nomenclature that a ``quad word'' occupies 8 bytes). 
-The source is a location in the `sentence` array: use the indexed addressing mode. 
-The base address is `%r15`;
-the index is `%rbx`, and each array element is 1 byte. 
-The destination for this instruction is `%rdx`.
+- [ ] Find the line in *addressinglab.asm* that says
+  ```asm
+  ##### PLACE INSTRUCTIONS FOR TASK 5 ON NEXT TWO LINES #####
+  ```
+- [ ] On the next line, insert a `movsbq` instruction.
+  The source is a location in the `sentence` array: use the indexed addressing mode.
+  The base address is `%r15`;
+  the index is `%rbx`, and each array element is 1 byte.
+  The destination for this instruction is `%rdx`.
+  - `movsbq` is like `movsbl` except that it sign-extends the byte so that it becomes a *q*uad word (using the AMD64 nomenclature that a ``quad word'' occupies 8 bytes).
 
 On the next line after that you will use the `toupper` lookup table.
 To preserve the illusion that the program called the `toupper` function, the lookup table stores integers (`toupper`'s specification states that it returns an `int`).
-Insert a `movzbl` instruction. 
-The source is a location in the lookup table array: use the indexed addressing mode. 
-The base address is `%rcx`; 
-the index is the character from the previous instruction in `%rdx`,
-and each array element is 4 bytes in size. The destination for this instruction is `%ecx`.
-
-<!--
-% movsbq (%r15,%rbx), %rdx
-% movzbl (%rcx,%rdx,4), %ecx
--->
+- [ ] Insert a `movzbl` instruction. 
+  The source is a location in the lookup table array: use the indexed addressing mode. 
+  The base address is `%rcx`; 
+  the index is the character from the previous instruction in `%rdx`,
+  and each array element is 4 bytes in size. The destination for this instruction is `%ecx`.
 
 Do not delete the `##### PLACE INSTRUCTIONS...` comment,
 and do not delete or modify any other instructions.
@@ -63,17 +57,15 @@ The other part of line&nbsp;44 is casting the integer from Task&nbsp;5 to a
 `char` and storing it in the `destination` array. 
 The array's base address is in `%r14`, and as before the loop index is in `%rbx`.
 
-Find the line in *addressinglab.s* that says
-```asm
-##### PLACE INSTRUCTION FOR TASK 6 ON NEXT LINE #####
-```
-On the next line, use a `movb` instruction to move the lower 8 bits of the integer into the `destination` array. 
-The instruction's source is `%cl`,
-and the destination is a location in the array. 
-The array's base address is `%r14`; the index is `%rbx`, 
-and each array element is 1 byte.
-
-<!-- movb %cl, (%r14,%rbx) -->
+- [ ] Find the line in *addressinglab.asm* that says
+  ```asm
+  ##### PLACE INSTRUCTION FOR TASK 6 ON NEXT LINE #####
+  ```
+- [ ] On the next line, use a `movb` instruction to move the lower 8 bits of the integer into the `destination` array. 
+  The instruction's source is `%cl`,
+  and the destination is a location in the array. 
+  The array's base address is `%r14`; the index is `%rbx`, 
+  and each array element is 1 byte.
 
 Do not delete the `##### PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
@@ -81,22 +73,11 @@ and do not delete or modify any other instructions.
 
 ### Check Your Work
 
-[//]: # (TODO: rewrite this section)
+- [ ] Compile and run *addressinglab*.
+- [ ] Select option 2, "sentence_to_uppercase + caesar_cipher".
+- [ ] Test your code with plaintext "ZebrA" and the key `1`; the ciphertext should be "AFCSB".
+- [ ] Try a few other plaintext strings and keys.
 
-You have now completed the `sentence_to_uppercase` function. 
-We strongly recommend that you confirm that this function works before moving on to the remaining tasks.
-\colorbox{yellow}{In *addressingdriver.c*'s `main` function, un-comment this line:}
-
-```c
-capitalized_plaintext = sentence_to_uppercase(capitalized_plaintext, plaintext);
-```
-Then generate the executable with the command:
-
-`gcc -std=c99 -Wall -o addressinglab addressingdriver.c addressinglab.s`
-
-Run the program with a few manual tests.
-For example, "ZebrA" with the key `1` enciphers to "AFCSB", 
-and the deciphered text will be "ZEBRA".
 If the function does not perform correctly go back and double-check each of the three instructions you placed in it.
 
 

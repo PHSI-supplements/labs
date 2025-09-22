@@ -2,8 +2,6 @@
 
 [//]: # (AddressingLab © 2021-25 Christopher A. Bohn)
 
-[//]: # (TODO: remove answer key comments)
-
 In this assignment, you will practice creating the source and destination for x86 assembly language instructions.
 There is no design effort required for this lab assignment,
 and **you should be able to complete it during lab time**.

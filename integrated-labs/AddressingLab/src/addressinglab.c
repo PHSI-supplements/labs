@@ -52,7 +52,7 @@ int main() {
             "Options:\n"
             "1) caesar_cipher\n"
             "2) sentence_to_uppercase + caesar_cipher\n"
-            "3) validate_cipher + sentence_to_uppercase + caesar_cipher\n"
+            "3) sentence_to_uppercase + caesar_cipher + validate_cipher\n"
             "Select the code you wish to check"
     );
     if (option < 1 || option > 3) {
