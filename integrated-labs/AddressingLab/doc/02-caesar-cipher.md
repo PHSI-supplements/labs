@@ -33,7 +33,7 @@ Specifically, we are combining the `- 'A'` from line 28 with the `key + 26` to c
 The `key` value is initially in register `%edx`;
 since we will not need this value again, the assembly instruction can safely overwrite `%edx`.
 
-- [ ] Find the line in *addressinglab.asm* that says
+- [ ] Find the line in *caesarcipher.s* that says
   ```asm
   ##### PLACE INSTRUCTION FOR TASK 1 ON NEXT LINE #####
   ```
@@ -53,7 +53,7 @@ In this task,
 you will first sign-extend the one-byte character so that it can be added to the 32-byte value,
 and then you will perform the addition.
 
-- [ ] Find the line in *addressinglab.s* that says
+- [ ] Find the line in *caesarcipher.s* that says
   ```asm
   ##### PLACE INSTRUCTIONS FOR TASK 2 ON NEXT TWO LINES #####
   ```
@@ -75,7 +75,7 @@ Register `%al` will hold either `(char) (reduced_character+'A')` from line&nbsp;
 This character needs to be placed in memory at the address pointed to by the `target` pointer.
 Register `%r8` holds that address.
 
-- [ ] Find the line in *addressinglab.s* that says
+- [ ] Find the line in *caesarcipher.s* that says
   ```asm
   ##### PLACE INSTRUCTION FOR TASK 3 ON NEXT LINE #####
   ```
@@ -97,7 +97,7 @@ This character is pointed to by the `text` pointer,
 and this pointer is in register `%rsi`. 
 You will place the character in the 32-bit register `%eax`.
 
-- [ ] Find the line in *addressinglab.s* that says
+- [ ] Find the line in *caesarcipher.s* that says
   ```asm
   ##### PLACE INSTRUCTION FOR TASK 4 ON NEXT LINE #####
   ```

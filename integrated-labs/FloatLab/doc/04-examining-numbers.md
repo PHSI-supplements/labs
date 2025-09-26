@@ -82,7 +82,7 @@ $$ i_{63} i_{62} i_{61} i_{60} \cdots i_3 i_2 i_1 i_0\ \mathbf{.} \ f_{63} f_{62
 
 If we have the number $1\frac{3}{4}$, and if we were to place the `ieee754_t`'s fraction bits directly into the `unnormal_t`'s `.fraction` field, then we would have:
 $$ 0\mathrm{b}\ 0000 \cdots 0001\ \mathbf{.} \ 0000 \cdots 0110'0000 \cdots 0000 $$
-giving us the value $1\frac{3 \times 2^{21}}{2^{64}} = 1\frac{3}{2^{43}}$, which not what we want.
+giving us the value $1\frac{3 \times 2^{21}}{2^{64}} = 1\frac{3}{2^{43}}$, which is not what we want.
 On the other hand, if we were to shift the fraction bits by $(64 - NUMBER\_OF\_FRACTION\_BITS)$ places, then we would have:
 $$ 0\mathrm{b}\ 0000 \cdots 0001\ \mathbf{.} \ 1100 \cdots 0000 $$
 giving us the value $1\frac{3 \times 2^{62}}{2^{64}} = 1\frac{3}{2^2} = 1\frac{3}{4}$.
@@ -145,6 +145,6 @@ Because $12.375_{10} = 1.1000'11_{2} \times 2^3$, we can see that $1.8\mathrm{C}
 
 ---
 
-|          [⬅️](03-constants-queries.md)           |      [⬆️](../../IntegerLab/README.md)      |                    [➡️](05-normalization.md)                     |
-|:------------------------------------------------:|:------------------------------------------:|:----------------------------------------------------------------:|
-| [Constants and Queries](03-constants-queries.md) | [Front Matter](../../IntegerLab/README.md) | [Encoding Numbers into the IEEE 754 Format](05-normalization.md) |
+|          [⬅️](03-constants-queries.md)           |      [⬆️](../README.md)      |                    [➡️](05-normalization.md)                     |
+|:------------------------------------------------:|:----------------------------:|:----------------------------------------------------------------:|
+| [Constants and Queries](03-constants-queries.md) | [Front Matter](../README.md) | [Encoding Numbers into the IEEE 754 Format](05-normalization.md) |

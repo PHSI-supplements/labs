@@ -33,7 +33,7 @@ Then select the preset of your choice:
 
 ### How the Program will Parse Numbers
 
-When you run the *build/integerlab*, you will be prompted:
+When you run the *build/floatlab*, you will be prompted:
 
 ```
 Enter a value, a two-operand arithmetic expression,
@@ -92,6 +92,7 @@ The data type and its functions are described on the [next page](02-unnormal_t.m
 #### fpu.c
 
 This file contains stubs for constants and functions you need to create.
+
 - Constants
   - **SIGN_BIT_MASK** can be used to determine whether an `ieee754_t` value is positive or negative
   - **EXPONENT_BITS_MASK** can be used to isolate the bits used to encode the exponent in an `ieee754_t` value
@@ -119,6 +120,6 @@ This file contains stubs for constants and functions you need to create.
 
 ---
 
-|                 |      [⬆️](../README.md)      |          [➡️](03-constants-queries.md)           |
-|:---------------:|:----------------------------:|:------------------------------------------------:|
-|                 | [Front Matter](../README.md) | [Constants and Queries](03-constants-queries.md) |
+|                 |      [⬆️](../README.md)      |               [➡️](02-unnormal_t.md)               |
+|:---------------:|:----------------------------:|:--------------------------------------------------:|
+|                 | [Front Matter](../README.md) | [`unnormal_t` and Its Functions](02-unnormal_t.md) |

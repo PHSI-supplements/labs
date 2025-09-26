@@ -16,6 +16,7 @@ If you are going to pursue the arbitrary division bonus, then:
 > then the bits in the `.fraction` field are derived from the integer remainder (but are not the remainder itself).
 
 Examples:
+
 - Example that rounds down
   - <u>`1 / 11`</u>
 - Example that rounds up
@@ -23,6 +24,6 @@ Examples:
 
 ---
 
-|    [⬅️](08-rounding.md)    |      [⬆️](../../IntegerLab/README.md)      |         [➡️](10-grading.md)          |
-|:--------------------------:|:------------------------------------------:|:------------------------------------:|
-| [Rounding](08-rounding.md) | [Front Matter](../../IntegerLab/README.md) | [Turn-In and Grading](10-grading.md) |
+|    [⬅️](08-rounding.md)    |      [⬆️](../README.md)      |         [➡️](10-grading.md)          |
+|:--------------------------:|:----------------------------:|:------------------------------------:|
+| [Rounding](08-rounding.md) | [Front Matter](../README.md) | [Turn-In and Grading](10-grading.md) |

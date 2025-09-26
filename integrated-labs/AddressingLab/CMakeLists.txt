@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(addressinglab C)
+project(addressinglab C ASM)
 
 include(CTest)
 enable_testing()
@@ -21,7 +21,7 @@ set(C_FILES src/addressinglab.c)
 
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
     if(UNIX)
-        set(ASM_FILES src/caesarcipher.asm)
+        set(ASM_FILES src/caesarcipher.s)
     else()
         message(FATAL_ERROR "Unsupported operating system: ${CMAKE_SYSTEM_NAME}")
     endif()

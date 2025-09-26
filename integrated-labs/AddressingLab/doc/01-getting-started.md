@@ -64,7 +64,7 @@ Do not edit *caesarcipher.h*.
 
 This header file contains a structure definition and the declarations of the three.
 
-#### caesarcipher.asm
+#### caesarcipher.s
 
 This file contains the assembly code for the three functions.
 The code is mostly-complete;

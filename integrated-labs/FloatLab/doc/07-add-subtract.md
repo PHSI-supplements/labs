@@ -10,7 +10,7 @@ The `subtract()` function is already implemented in terms of `add` and the `nega
 
 
 - [ ] Produce the appropriate return values for `add()`'s guard clauses.
-- [ ] Repeatedly use the `shift_left_once()` function (or, synonymously, use `decrement_exponent()` or `move_binary_point_to_the_right()`) on whichever operand has the ***greater*** exponent to shift its significant to the left (decreasing the exponent, moving the binary point to the right) until either:
+- [ ] Repeatedly use the `shift_left_once()` function (or, synonymously, use `decrement_exponent()` or `move_binary_point_to_the_right()`) on whichever operand has the ***greater*** exponent to shift its significand to the left (decreasing the exponent, moving the binary point to the right) until either:
   - the exponents match, or
   - one more shift would make addition unreliable, as reported by  `left_shift_will_make_addition_unreliable()`.
 - [ ] If the exponents still do not match, then repeatedly use the `shift_right_once()` function (or `increment_exponent()` or `move_binary_point_to_the_left()`) to shift the other operand's significand to the right (increasing the exponent, moving the binary point to the left) until the exponents match.
@@ -47,11 +47,12 @@ Start by adjusting one of the decoded operands so that the two decoded operands 
 It is acceptable for the least significant bit (or even several less significant bits) to be truncated;
 however, *you must take care that the most significant bit does not get truncated*!
 
-- [ ] Repeatedly use the `shift_left_once()` function (or, synonymously, use `decrement_exponent()` or `move_binary_point_to_the_right()`) on whichever operand has the ***greater*** exponent to shift its significant to the left (decreasing the exponent, moving the binary point to the right) until either:
+- [ ] Repeatedly use the `shift_left_once()` function (or, synonymously, use `decrement_exponent()` or `move_binary_point_to_the_right()`) on whichever operand has the ***greater*** exponent to shift its significand to the left (decreasing the exponent, moving the binary point to the right) until either:
   - the exponents match, or
   - one more shift would make addition unreliable, as reported by  `left_shift_will_make_addition_unreliable()`.
 - [ ] If the exponents still do not match, then repeatedly use the `shift_right_once()` function (or `increment_exponent()` or `move_binary_point_to_the_left()`) to shift the other operand's significand to the right (increasing the exponent, moving the binary point to the left) until the exponents match.
 - [ ] Add the two values using integer arithmetic.
+
     > ⓘ **Note**
     > 
     > You need only to add the integer portions, setting the fraction portion to 0.
@@ -88,6 +89,7 @@ actual:   3.0000000000_{10}	0x40400000	+1.1000,0000,0000,0000,0000,000_{2} x 2^{
 - [ ] Compile and run *floatlab*, adding and subtracting a few values.
 
 Be sure to check:
+
 - The identity and commutative properties
   - <u>`5 + 0`</u>
   - <u>`2 + 3`</u>

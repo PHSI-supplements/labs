@@ -19,6 +19,7 @@ Similarly, dividing the two floating point values yields $\frac{m_1}{m_2} \times
 ### Multiplication
 
 The `multiply()` stub identifies a handful of special cases that you can easily handle.
+
 - [ ] Produce the appropriate return values for `multiply()`'s guard clauses.
   - If it is easier for you, you *may* change the compound conditionals in the guard clauses into separate guard clauses.
     For example, instead of handling \
@@ -52,6 +53,7 @@ Because you do not need to give the two operands the same exponent, you do not n
 - [ ] Compile and run *floatlab*, multiplying a few values.
 
 Be sure to check:
+
 - The identity, zero, and commutative properties
   - <u>`5 * 1`</u>
   - <u>`5 * 0`</u>
@@ -97,6 +99,7 @@ The first of these requires rounding up
 ### Division
 
 Implementing the `divide()` function is very similar to implementing `multiply()` with three exceptions:
+
 - There are different special cases
 - You subtract the exponents and divide the significands
 - In general, integer division is insufficient
@@ -119,6 +122,7 @@ This limitation guarantees that if the `unnormal_t` operands' significands are f
 - [ ] Compile and run *floatlab*, dividing a few values.
 
 Be sure to check:
+
 - The identity property
   - <u>`5 / 1`</u>
 - Integer operands
@@ -153,6 +157,6 @@ Be sure to check:
 
 ---
 
-|                    [⬅️](05-normalization.md)                     |      [⬆️](../../IntegerLab/README.md)      |            [➡️](07-add-subtract.md)            |
-|:----------------------------------------------------------------:|:------------------------------------------:|:----------------------------------------------:|
-| [Encoding Numbers into the IEEE 754 Format](05-normalization.md) | [Front Matter](../../IntegerLab/README.md) | [Addition and Subtraction](07-add-subtract.md) |
+|                    [⬅️](05-normalization.md)                     |      [⬆️](../README.md)      |            [➡️](07-add-subtract.md)            |
+|:----------------------------------------------------------------:|:----------------------------:|:----------------------------------------------:|
+| [Encoding Numbers into the IEEE 754 Format](05-normalization.md) | [Front Matter](../README.md) | [Addition and Subtraction](07-add-subtract.md) |

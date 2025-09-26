@@ -3,6 +3,7 @@
 ### TL;DR
 
 In the `encode()` function:
+
 - [ ] Determine whether the value is too great to be represented as a normal number.
 - [ ] Determine whether the value is too small to be represented as a normal number.
 - [ ] If the number can be represented as a normal number, then encode `number` in the IEEE&nbsp;754 normal form.
@@ -28,12 +29,15 @@ Moreover, the integer portion has been set to $1$, which will make it easy to de
 and will make it easy to perform that encoding.
 
 In the `encode()` function:
+
 - [ ] Determine whether the value is too great to be represented as a normal number.
+
   > 💡 **Tip**
   >
   > Suppose that the number *can* be represented as a normal number -- what is the greatest exponent possible?
   > Is `number`'s exponent greater than that?
 - [ ] Determine whether the value is too small to be represented as a normal number.
+
   > 💡 **Tip**
   >
   > Suppose that the number *can* be represented as a normal number -- what is the least exponent possible?
@@ -47,6 +51,7 @@ For both normal and subnormal numbers, you will need to use `unnormal_t`'s funct
 Don't forget that the bit vector returned by `get_unnormal_fraction()` is the numerator of $\frac{get\_unnormal\_fraction()}{2^{64}}$ and that `get_unnormal_exponent()` returns the two's complement representation of the exponent.
 
 Overflowing numbers too great to be represented as normal numbers, and underflowing numbers too small to be represented as subnormal numbers can be implemented now, but you will not be able to test them until you have implemented some arithmetic.
+
 - [ ] Appropriately encode numbers too great to be represented as normal numbers.
 - Encoding numbers that are too small to be represented as subnormal numbers requires no special treatment -- it should be handled as a natural consequence of adjusting the `number` to be able to properly encode it as a subnormal number.
 

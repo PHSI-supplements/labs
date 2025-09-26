@@ -3,7 +3,7 @@
 The third function validates that the plaintext and ciphertext are a valid pair by confirming that 
 they are both the length specified by the package's `sentence_length` field and that 
 the inverse of the package's `key` field will decipher the ciphertext back to the plaintext. 
-(See *addressinglab.h* for the field details of the `cipher_package` structure.) 
+(See *caesarcipher.h* for the field details of the `cipher_package` structure.) 
 Here is the equivalent C code:
 
 ```c
@@ -28,7 +28,7 @@ you do not need to take care of that.
 Each of the other two arguments is a field in the `cipher_package` structure. 
 The base address for `package` is in `%rbx`.
 
-- [ ] Find the line in *addressinglab.asm* that says
+- [ ] Find the line in *caesarcipher.s* that says
   ```asm
   ##### PLACE INSTRUCTIONS FOR TASK 7 ON NEXT TWO LINES #####
   ```

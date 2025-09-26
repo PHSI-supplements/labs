@@ -10,6 +10,7 @@ Observe that when your program reaches
 /* DETERMINE WHETHER TO ROUND UP OR ROUND DOWN */
 ```
 then:
+
 - `unrounded_number` is the value after truncating the extra fraction bits.
   - Its least significant bit ($bit_{0}$) is the number's *least significant retained bit*.
 - `truncated_portion` contains the bits that were cut off, shifted so that:
@@ -41,6 +42,6 @@ If the number should be rounded down then there is nothing to be done; `unrounde
 
 ---
 
-|            [⬅️](07-add-subtract.md)            |      [⬆️](../../IntegerLab/README.md)      |                [➡️](09-arbitrary-division.md)                |
-|:----------------------------------------------:|:------------------------------------------:|:------------------------------------------------------------:|
-| [Addition and Subtraction](07-add-subtract.md) | [Front Matter](../../IntegerLab/README.md) | [Bonus Credit: Arbitrary Division](09-arbitrary-division.md) |
+|            [⬅️](07-add-subtract.md)            |      [⬆️](../README.md)      |                [➡️](09-arbitrary-division.md)                |
+|:----------------------------------------------:|:----------------------------:|:------------------------------------------------------------:|
+| [Addition and Subtraction](07-add-subtract.md) | [Front Matter](../README.md) | [Bonus Credit: Arbitrary Division](09-arbitrary-division.md) |

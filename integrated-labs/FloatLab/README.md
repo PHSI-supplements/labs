@@ -52,7 +52,7 @@ After successful completion of this assignment, students will be able to:
 - Identify the bit fields of an IEEE&nbsp;754-compliant floating point number
 - Obtain the value of an IEEE&nbsp;754-compliant floating point number
 - Perform floating point arithmetic
-- Apply IEEE&nbsp754; "round-to-nearest-even" rounding
+- Apply IEEE&nbsp;754 "round-to-nearest-even" rounding
 
 ### Assignment Summary
 

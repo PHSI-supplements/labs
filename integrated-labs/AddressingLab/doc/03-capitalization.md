@@ -26,7 +26,7 @@ The base address for the `sentence` array is in `%r15`;
 the base address for the lookup table is in `%rcx`, 
 and the loop index `i` is in `%rbx`.
 
-- [ ] Find the line in *addressinglab.asm* that says
+- [ ] Find the line in *caesarcipher.s* that says
   ```asm
   ##### PLACE INSTRUCTIONS FOR TASK 5 ON NEXT TWO LINES #####
   ```
@@ -57,7 +57,7 @@ The other part of line&nbsp;44 is casting the integer from Task&nbsp;5 to a
 `char` and storing it in the `destination` array. 
 The array's base address is in `%r14`, and as before the loop index is in `%rbx`.
 
-- [ ] Find the line in *addressinglab.asm* that says
+- [ ] Find the line in *caesarcipher.s* that says
   ```asm
   ##### PLACE INSTRUCTION FOR TASK 6 ON NEXT LINE #####
   ```

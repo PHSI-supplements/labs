@@ -75,6 +75,6 @@ We summarize the functions that you are likely to use here (there are more funct
 
 ---
 
-|       [⬅️](01-getting-started.md)        |      [⬆️](../../IntegerLab/README.md)      |          [➡️](03-constants-queries.md)           |
-|:----------------------------------------:|:------------------------------------------:|:------------------------------------------------:|
-| [Getting Started](01-getting-started.md) | [Front Matter](../../IntegerLab/README.md) | [Constants and Queries](03-constants-queries.md) |
+|       [⬅️](01-getting-started.md)        |      [⬆️](../README.md)      |          [➡️](03-constants-queries.md)           |
+|:----------------------------------------:|:----------------------------:|:------------------------------------------------:|
+| [Getting Started](01-getting-started.md) | [Front Matter](../README.md) | [Constants and Queries](03-constants-queries.md) |
