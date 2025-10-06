@@ -78,7 +78,7 @@ The utility and "building block" functions that you will implement along the way
 
 You may not use C's built-in arithmetic and logical boolean operations.
 Specifically, you may not use addition (+), increment (++), subtraction(-), decrement(--), multiplication(*), division(/), modulo (%), logical NOT (!), logical AND (&&), or logical OR (||).
-You may not use arithmetic-and-assignment operators (+=, -=, *=, =, %=).
+You may not use arithmetic-and-assignment operators (`+=`, `-=`, `*=`, `/=`, `%=`).
 You may not use C's comparators;
 specifically, you are not permitted to use equals (==), not-equals (!=), less-than (<), less-than-or-equal-to (<=), greater-than-or-equal-to (>=), or greater-than (>).
 You may not use floating-point operators as a substitute for integer operators.

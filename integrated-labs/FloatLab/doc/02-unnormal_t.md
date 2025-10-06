@@ -48,9 +48,9 @@ We summarize the functions that you are likely to use here (there are more funct
 - Static Warnings (warnings based on the current bit positions)
   - **addition_is_unreliable()** indicates that there are `1` bits far enough to the left of the binary point that addition could yield a sum whose integer portion exceeds the available bits
 - Dynamic Warnings (warnings that result from the last function call)
-  - **created_number_is_improbable()** indicates that a call to `unnormal()` was made with all of the fraction's `1` far enough from the binary point that it is unlikely to have been the intended value (because it is *possible* that the requested fraction is also the intended fraction, an Unnormal value with the requested fraction was created)
+  - **created_number_is_improbable()** indicates that a call to `unnormal()` was made with all of the fraction's `1` far enough from the binary point that it is unlikely to have been the intended value (because it is *possible* that the requested fraction is also the intended fraction, an Unnormal value with the requested fraction will still be created)
 - Prediction Functions (warnings that indicate what will happen in the next operation)
-  - **left_shift_will_make_addition_unreliable()** indicates that if the next function is `left_shift_once()` (or one of its aliases) then after that function call, \\ `addition_is_unreliable()` will return `true`
+  - **left_shift_will_make_addition_unreliable()** indicates that if the next function is `left_shift_once()` (or one of its aliases) then after that function call,  `addition_is_unreliable()` will return `true`
 
 <!--
 - Unmentioned Functions

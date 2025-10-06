@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# @file caesarcipher.h
+# @file caesarcipher.s
 #
 # @author (TYPE YOUR NAME HERE)
 # @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
@@ -10,8 +10,8 @@
 ##############################################################################
 
 #
-# FloatLab assignment and starter code (c) 2019-25 Christopher A. Bohn
-# Floatlab solution (c) the above-named student(s)
+# AddressingLab assignment and starter code (c) 2019-25 Christopher A. Bohn
+# AddressingLab solution (c) the above-named student(s)
 #
 
 	.text

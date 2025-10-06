@@ -41,10 +41,10 @@ Enter a value, a two-operand arithmetic expression,
     or "quit":
 ```
 
-When you enter a value, if it is prepended with `***0x***` then the parser will treat it as a bit vector;
+When you enter a value, if it is prepended with ***`0x`*** then the parser will treat it as a bit vector;
 otherwise, the parser will treat it as a floating point value.
 
-For now, type `***quit***` to exit the program.
+For now, type ***`quit`*** to exit the program.
 
 
 ### Problem Decomposition

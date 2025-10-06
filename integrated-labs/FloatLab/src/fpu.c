@@ -12,7 +12,7 @@
 
 /*
  * FloatLab assignment and starter code (c) 2019-25 Christopher A. Bohn
- * Floatlab solution (c) the above-named student(s)
+ * FloatLab solution (c) the above-named student(s)
  */
 
 #include <assert.h>

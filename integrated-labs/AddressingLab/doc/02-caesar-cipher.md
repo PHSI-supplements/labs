@@ -122,7 +122,7 @@ and do not delete or modify any other instructions.
 - [ ] Test your code with plaintext "ZEBRA" and the key `1`; the ciphertext should be "AFCSB".
 - [ ] Try a few other plaintext strings and keys.
 
-If the function does not perform correctly go back and double-check each of the six instructions you placed in it.
+If the function does not perform correctly go back and double-check each of the five instructions you placed in it.
 
 
 ---
