@@ -1,0 +1,77 @@
+{
+  "targetFiles": [
+    "../src/duplicator.c"
+  ],
+  "commentDelimiters": {
+    "inlineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "codeBlockDelimiters": [
+    "{",
+    "}"
+  ],
+  "codeBlockKeywords": {
+    "loops": [
+      "do",
+      "while",
+      "for"
+    ],
+    "benignBlockTerminations": {
+      "break": "switch"
+    }
+  },
+  "operators": {
+    "all": [
+      "++",
+      "--",
+      ".",
+      "->",
+      "!",
+      "~",
+      "*",
+      "/",
+      "%",
+      "+",
+      "-",
+      "<<",
+      ">>",
+      "<",
+      "<=",
+      ">",
+      ">=",
+      "==",
+      "!=",
+      "&",
+      "^",
+      "|",
+      "&&",
+      "||",
+      "?",
+      "=",
+      "+=",
+      "-=",
+      "*=",
+      "/=",
+      "%=",
+      "<<=",
+      ">>=",
+      "&=",
+      "^=",
+      "|=",
+      ","
+    ],
+    "disallowed": []
+  },
+  "disallowedCalls": [],
+  "disallowedKeywords": [],
+  "limitedLoopTerminations": {
+    "0": [
+      "break",
+      "return"
+    ]
+  },
+  "limitedCharacters": {}
+}

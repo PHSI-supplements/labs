@@ -73,7 +73,6 @@ This will require you to allocate space for the list's nodes and manipulate poin
 #### Constraints
 
 There are no particular restrictions on uses of C's features in this assignment other than those common to most lab assignments in this course.
-You can use the command `ctest --test-dir build --output-on-failure` to check whether you inadvertently used one of those characters.
 
 Some operations on a list have "undefined behavior" when performed using an invalid iterator.
 When the behavior is undefined, any result is acceptable \textit{except} crashing the program.
