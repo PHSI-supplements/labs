@@ -46,20 +46,5 @@ add_test(
         NAME ConstraintCheck
         COMMAND ${Python3_EXECUTABLE}
         ${CMAKE_SOURCE_DIR}/test/constraint-check.py
-        ${CMAKE_SOURCE_DIR}/test/duplicator.json
+        ${CMAKE_SOURCE_DIR}/test/duplicatorlab.json
 )
-
-add_test(
-        NAME no_float_literals
-        COMMAND sh -c
-        "if grep -E '([0-9]\\.|\\.[0-9])' ${CMAKE_SOURCE_DIR}/src/fpu.c \
-        | grep -v -E '\"[^\"]*\"' \
-        | grep -v -E '//' \
-        | grep -v 'Reports whether a number is'; then
-         echo 'ERROR: floating-point literal(s) detected in fpu.c' >&2
-         exit 1
-     else
-         exit 0
-     fi"
-)
-

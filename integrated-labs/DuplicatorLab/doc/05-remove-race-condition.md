@@ -67,11 +67,11 @@ For example:
 - [ ] Test your code!
   - [ ] Run this command a dozen times to make sure the file is copied correctly:
     ```shell
-    build/duplicator src/threelines.txt copy.txt; cat copy.txt
+    build/duplicator data/threelines.txt copy.txt; cat copy.txt
     ```
   - [ ] Then try this command several times:
     ```shell
-    build/duplicator src/paleolama.txt copy.txt; cat copy.txt
+    build/duplicator data/paleolama.txt copy.txt; cat copy.txt
     ```
 
 If you find that you are not producing identical copies of the originals, or if the program never terminates, then revisit [your lock/unlock placement](#determine-where-to-lock-and-unlock-the-mutex).
@@ -84,7 +84,7 @@ build/duplicator src/duplicator.c copy.c; diff src/duplicator.c copy.c
 ```
 or:
 ```shell
-build/duplicator src/answers.txt copy.txt; diff src/answers.txt copy.txt
+build/duplicator data/answers.txt copy.txt; diff data/answers.txt copy.txt
 ```
 
 ---

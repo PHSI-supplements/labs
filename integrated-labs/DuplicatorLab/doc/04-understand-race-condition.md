@@ -4,16 +4,16 @@ There is a file included with the starter code, *threelines.txt* that contains t
 The race condition in the starter code is so pronounced that it can cause errors in the output even when copying only three lines:
 
 ```text
-% cat src/threelines.txt
+% cat data/threelines.txt
 first line
 second line
 third line
-% build/duplicator src/threelines.txt copy.txt; cat copy.txt
+% build/duplicator data/threelines.txt copy.txt; cat copy.txt
 second line
 second line
 second line
 third line
-% build/duplicator src/threelines.txt copy.txt; cat copy.txt
+% build/duplicator data/threelines.txt copy.txt; cat copy.txt
 first line
 third line
 third line
@@ -88,7 +88,7 @@ Using the line numbering from [the previous section](03-understanding-code.md), 
 
 - [ ] Determine a valid interleaving that produces this output:
   ```text
-  % build/duplicator src/threelines.txt copy.txt; cat copy.txt
+  % build/duplicator data/threelines.txt copy.txt; cat copy.txt
   first line
   third line
   third line

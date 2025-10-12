@@ -51,19 +51,27 @@ After successful completion of this assignment, students will be able to:
 
 ### Assignment Summary
 
-[//]: # (TODO)
+This lab assignment requires you to think about valid interleavings of a concurrent program.
+Being able to think about how concurrent processes interleave, and how to constrain those interleavings, will be very valuable in later courses and in your future career.
 
+You will use valid interleavings to demonstrate that a race condition is present in the starter code, and
+you will use valid interleavings to find suitable locations to lock and unlock a muthal exclusion token to remove that race condition.
+
+This assignment also introduces a couple of concepts that aren’t central this assignment’s objectives but will re-appear in the input/output lab assignments.
 
 #### Constraints
 
-There are no particular restrictions on uses of C's features in this assignment other than those common to most lab assignments in this course.
+Do not add any lines of code other than those specified by the assignment.
+Do not edit, delete, or move any lines of code that are present in the starter code.
 
+<!--
 ### No Spaghetti Code Allowed
 
 In the interest of keeping your code readable, you may not use any `goto` statements,
 nor may you use any `break` statements to exit from a loop,
 nor may you have any functions `return` from within a loop.
 You can use the command `ctest --test-dir build --output-on-failure` to check whether you inadvertently violated this constraint.
+-->
 
 ---
 

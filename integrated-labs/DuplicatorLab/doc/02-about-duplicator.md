@@ -14,12 +14,12 @@ We designed *duplicator* specifically for text files so that it's easier for you
 
 For example, running the program with the command 
 ```shell
-build/duplicator src/paleolama.txt copy.txt
+build/duplicator data/paleolama.txt copy.txt
 ```
 will create a new file, *copy.txt* that is almost -- but not quite -- a copy of *paleolama.txt*.
 As a shortcut, you can run the command
 ```shell
-build/duplicator src/paleolama.txt copy.txt; cat copy.txt
+build/duplicator data/paleolama.txt copy.txt; cat copy.txt
 ````
 to display the contents of *copy.txt* after creating it.
 For reference, here are the contents of the original file:
@@ -40,7 +40,7 @@ For reference, here are the contents of the original file:
 Here is one possible result:
 
 ```text
-% ./duplicator src/paleolama.txt copy.txt; cat copy.txt
+% build/duplicator data/paleolama.txt copy.txt; cat copy.txt
   (\__/)
    \  \
    \  \
@@ -55,7 +55,7 @@ Here is one possible result:
 Here is another:
 
 ```text
-% ./duplicator src/paleolama.txt copy.txt; cat copy.txt
+% build/duplicator data/paleolama.txt copy.txt; cat copy.txt
 (o '' )
 (o '' )
 (o '' )
@@ -70,11 +70,14 @@ Here is another:
 
 Clearly, neither of these outputs are accurate copies of the original file.
 The problem is that there is a **race condition** in *duplicator.c*.
-After you have finished this assignment, you will have removed the race condition, and the command
-```shell
-build/duplicator src/paleolama.txt copy.txt
-```
-will create *copy.txt* that is a perfect copy of *paleolama.txt*.
+
+> 🎯 **Your Goal**
+> 
+> After you have finished this assignment, you will have removed the race condition, and the command
+> ```shell
+> build/duplicator data/paleolama.txt copy.txt
+> ```
+> will create *copy.txt* that is a perfect copy of *paleolama.txt*.
 
 ---
 

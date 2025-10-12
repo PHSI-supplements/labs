@@ -67,6 +67,11 @@ The assembly code has a few optimizations, so some of it may not be immediately 
 **You should be able to complete this lab assignment during lab time**;
 however, it is not due until the week of October 6, before the start of your lab section.
 
+#### Constraints
+
+Do not add any lines of code other than those specified by the assignment.
+Do not edit, delete, or move any lines of code that are present in the starter code.
+
 
 ---
 
