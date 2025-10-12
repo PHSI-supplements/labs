@@ -1,5 +1,7 @@
 ## Understand the Race Condition
 
+- [ ] Open the [DuplicatorLab Questions/Answers](https://canvas.unl.edu/courses/200913/assignments/2161825) quiz in Canvas.
+
 There is a file included with the starter code, *threelines.txt* that contains three lines of text.
 The race condition in the starter code is so pronounced that it can cause errors in the output even when copying only three lines:
 
@@ -94,7 +96,7 @@ Using the line numbering from [the previous section](03-understanding-code.md), 
   third line
   ```
 
-- [ ] Place your answer in *answers.txt*.
+- [ ] Type your answer in the Canvas quiz.
   > 💡 **Tip**
   > 
   > We recommend including parenthetical remarks because they may help you to think about the state of the system at various points in your proposed interleaving.

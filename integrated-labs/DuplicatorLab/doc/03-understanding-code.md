@@ -65,7 +65,7 @@ To give an idea of why declaring the shared variables to be `volatile` is import
 Clearly, `copying` is true the first time that the program reaches line&nbsp;45 so the loop body will execute at least once.
 If `status` is not `BUFFER_IS_EMPTY` then the compiler doesn't see any way for that to change, and the compiler would expect that case to result in an infinite, do-nothing loop.
 If `status` is `BUFFER_IS_EMPTY`, then `status` will be changed;
-depending on how the file read goes, the function will either return or enter into a infinite, do-nothing loop.
+depending on how the file read goes, the function will either return or enter into an infinite, do-nothing loop.
 If the shared variables are not `volatile`, and if optimizations are enabled, then the compiler is free to turn `read_original()` into this code that it thinks is functionally-equivalent (but isn't when viewed from the big-picture):
 
 ```c
@@ -115,7 +115,7 @@ In each iteration, if `status` indicates that `read_original()` placed a line of
 The function then copies the contents of `shared_buffer` into `local_buffer` (line&nbsp;H) and then writes the contents of `local_buffer` to the destination file on line&nbsp;I.
 
 The shared buffer was a possible bottleneck.
-If `read_original()` directly placed the source file's contents into `shared_buffer` and `write_copy()` directly moved `shared_buffer`'s contents into the destination file, then either one function would have to wait for the other to finish its file access or we'd risk both functions accessing the shared buffer at the same time.
+If `read_original()` directly placed the source file's contents into `shared_buffer` and `write_copy()` directly moved `shared_buffer`'s contents into the destination file, then either one function would have to wait for the other to finish its file access, or we'd risk both functions accessing the shared buffer at the same time.
 By using local buffers when accessing files, one thread can safely access the shared buffer while the other is accessing a file.
 
 

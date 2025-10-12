@@ -55,7 +55,7 @@ This lab assignment requires you to think about valid interleavings of a concurr
 Being able to think about how concurrent processes interleave, and how to constrain those interleavings, will be very valuable in later courses and in your future career.
 
 You will use valid interleavings to demonstrate that a race condition is present in the starter code, and
-you will use valid interleavings to find suitable locations to lock and unlock a muthal exclusion token to remove that race condition.
+you will use valid interleavings to find suitable locations to lock and unlock a mutual exclusion token to remove that race condition.
 
 This assignment also introduces a couple of concepts that aren’t central this assignment’s objectives but will re-appear in the input/output lab assignments.
 

@@ -1,7 +1,7 @@
 > 📇 **Epilogue**
 >
 > Between H.Awk trying to sell samples to a competitor, that weird guy almost blowing up the zoo, and the animals almost escaping, Archie is getting worried.
-> I think we need to introduce additional protective measures.
+> "I think we need to introduce additional protective measures.
 > As useful as your challenge-response app is in helping us detect intruders, I think it's now clear that we need something that will keep someone -- or some*thing* -- out of places they shouldn't be, even when no one else is around.
 > I've asked the team at Eclectic Electronics to put something together."
 > 
@@ -35,7 +35,7 @@ After you have exhausted your late days, any work turned in more than one hour l
 
 This assignment is worth 20 points.
 
-- In *answers.txt*:
+- In <!--*answers.txt*--> the [DuplicatorLab Questions/Answers](https://canvas.unl.edu/courses/200913/assignments/2161825) Canvas quiz:
   - [ ] **+3** Provides a valid interleaving that produces the specified output
   - [ ] **+2** Proposes reasonable locations to lock the mutex
   - [ ] **+2** Proposes reasonable locations to unlock the mutex
@@ -43,7 +43,7 @@ This assignment is worth 20 points.
 - In *duplicator.c*:
   - [ ] **+2** Correctly initializes and destroys the mutex
   - [ ] **+2** Correctly locks and unlocks the mutex…
-  - [ ] **+1** … and does so in the locations that are identified in *answers.txt*
+  - [ ] **+1** … and does so in the locations that are identified in <!--*answers.txt*--> the Canvas quiz
   - [ ] **+3** The duplicator makes correct copies
   - [ ] **+3** No thread starves
 - Penalties:
