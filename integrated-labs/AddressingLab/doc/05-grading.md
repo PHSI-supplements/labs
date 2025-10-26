@@ -1,6 +1,6 @@
 > 📇 **Epilogue**
 >
-> Archie is hurriedly packing is trunk, like he's about to leave on a short-notice urgent trip. 
+> Archie is hurriedly packing his trunk, like he's about to leave on a short-notice urgent trip. 
 > Before charging out the door, he pauses to tell you, "H.Awk&nbsp;Aye just stole some of our samples. 
 > I need to track him down before he sells them to the Supersized Safari Syndicate. 
 > I guess this means you're in charge of the Zoo's computer system now. 

@@ -1,17 +1,16 @@
-# Race Condition Elimination Lab
+# Memory-Mapped I/O Lab
 
-[//]: # (DuplicatorLab © 2022-25 Christopher A. Bohn)
+[//]: # (ControlPanelLab © 2021-25 Christopher A. Bohn)
 
-In this assignment, you will remove a race condition in concurrent code by using a mutual exclusion token.
-There is only a small amount of design effort required for this lab assignment, and you should be able to complete much of it during lab time.
+In this assignment, you will write functions to use the input and output devices on a Cow Pi development board with a RP2040 microcontroller.
 
-This assignment is worth 20 points.
+This assignment is worth XX points.
 
 ## Front Matter
 
 ### Submission Deadline
 
-This assignment is due **the week of November 3, before the start of your lab section**.
+This assignment is due **the week of November 10, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
@@ -37,18 +36,21 @@ No other use of generative AI is permitted on this assignment without explicit p
 ### Table of Contents
 
 - [Getting Started](doc/01-getting-started.md)
-- [About the Duplicator](doc/02-about-duplicator.md)
-- [Understand the Starter Code](doc/03-understanding-code.md)
-- [Understand the Race Condition](doc/04-understand-race-condition.md)
-- [Remove the Race Condition](doc/05-remove-race-condition.md)
+- [Debouncing and Debugging](doc/02-debouncing-debugging.md)
+- [Initial Changes to the Code](doc/03-labtime.md)
+- [Time, and Simple Memory-Mapped Input/Output](doc/04-simple-io.md)
+- [Scanning the Matrix Keypad](doc/05-keypad.md)
 - [Turn-In and Grading](doc/06-grading.md)
+- [Appendix A: Lab Checkoff](doc/AA-checkoff.md)
+- [Appendix B: Links to the Cow Pi Datasheet](doc/BB-datasheet-links.md)
+- [Appendix C: Variable Modifiers](doc/CC-variable-modifiers.md)
 
 ### Learning Objectives
 
 After successful completion of this assignment, students will be able to:
-- Describe valid interleavings of concurrent systems
-- Explain how mutual exclusion techniques can prevent undesired interleavings
-- Manage a mutual exclusion token provided by the POSIX `pthreads` library
+- Use memory-mapped I/O to obtain inputs from peripheral devices
+- Use memory-mapped I/O to send outputs to peripheral devices
+- Scan a matrix keypad
 
 ### Assignment Summary
 
@@ -62,17 +64,37 @@ This assignment also introduces a couple of concepts that aren’t central this 
 
 #### Constraints
 
-Do not add any lines of code other than those specified by the assignment.
-Do not edit, delete, or move any lines of code that are present in the starter code.
+You may use any features that are part of the C standard if they are supported by the compiler.
 
-<!--
+> ⓘ **Note**
+> 
+> The compiler currently used by PlatformIO for the RP2040 microcontroller does not support many C23 features.
+> It does support binary literals, but in most other regards you should consider it to be a C11 compiler.
+
+You may use the constants and functions provided in the starter code.
+
+You may not use any libraries, functions, macros, types, or constants from the [Arduino core](https://www.arduino.cc/reference/en/).
+You may not use any functions, macros, types or constants from the [Pico SDK](https://www.raspberrypi.com/documentation/pico-sdk/) that have been imported by Mbed OS.
+You may not use any functions, macros, types or constants from [Mbed OS](https://os.mbed.com/docs/mbed-os/v6.16/introduction/index.html) that are not part of the C standard.
+
+To receive credit for the memory-mapped I/O portion of this lab, all input and output must be accomplished using the memory-mapped I/O registers.
+The starter code calls `cowpi_setup()` for you.
+You also may use [`cowpi_debounce_byte()` and `cowpi_debounce_long()`](https://cow-pi.readthedocs.io/en/latest/CowPi/inputs.html#debouncing).
+You may not use any other functions described in the [CowPi Library](https://cow-pi.readthedocs.io/en/latest/library.html) portion of the Cow&nbsp;Pi datasheet.
+
+You may not use any libraries beyond those explicitly identified here.
+
+
 ### No Spaghetti Code Allowed
 
 In the interest of keeping your code readable, you may not use any `goto` statements,
 nor may you use any `break` statements to exit from a loop,
 nor may you have any functions `return` from within a loop.
+<!--
 You can use the command `ctest --test-dir build --output-on-failure` to check whether you inadvertently violated this constraint.
 -->
+
+[//]: # (TODO: get the test to work, or replace with the old-style python command)
 
 ---
 
