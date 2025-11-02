@@ -109,7 +109,7 @@ P.     return nullptr;
 Q. }
 ```
 
-Much like `read_original()`, the `write_copy()` function loops until `read_original()` indicates that there are no more lines to by copied on line&nbsp;11;
+Much like `read_original()`, the `write_copy()` function loops until `read_original()` indicates that there are no more lines to be copied on line&nbsp;11;
 when this is detected, `write_copy()` sets its loop termination condition on line&nbsp;K.
 In each iteration, if `status` indicates that `read_original()` placed a line of text in `shared_buffer` (line&nbsp;F), then `write_copy()` changes `status` (line&nbsp;G).
 The function then copies the contents of `shared_buffer` into `local_buffer` (line&nbsp;H) and then writes the contents of `local_buffer` to the destination file on line&nbsp;I.

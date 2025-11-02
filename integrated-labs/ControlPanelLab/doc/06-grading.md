@@ -47,20 +47,18 @@ After you have exhausted your late days, any work turned in more than one hour l
 
 ### Rubric
 
-This assignment is worth 19 points.
+This assignment is worth 15 points.
 
-TODO: make it a nice, round number
-
-- [ ] **+1** The `keys` nested array is correctly populated
+- [ ] **+½** The `keys` nested array is correctly populated
 - [ ] **+1** The correct addresses are assigned to `ioport` and `timer`
-- [ ] **+2** The `key_is_pressed()` function is correctly implemented
-- [ ] **+2** The `set_left_led()` function is correctly implemented
-- [ ] **+2** The `get_microseconds()` function is correctly implemented
+- [ ] **+1** The `key_is_pressed()` function is correctly implemented
+- [ ] **+1** The `set_left_led()` function is correctly implemented
+- [ ] **+¾** The `get_microseconds()` function is correctly implemented
 - [ ] **+½** The `left_switch_is_in_right_position()` function is correctly implemented
 - [ ] **+½** The `right_switch_is_in_right_position()` function is correctly implemented
 - [ ] **+½** The `left_button_is_pressed()` function is correctly implemented
 - [ ] **+½** The `right_button_is_pressed()` function is correctly implemented
-- [ ] **+1** The `set_right_led()` function is correctly implemented
+- [ ] **+¾** The `set_right_led()` function is correctly implemented
 - [ ] **+8** The `get_keypress()` function is correctly implemented (½ point for each key)
 - Bonus:
   - [ ] **+1** Get the assigned [checked-off](AA-checkoff.md) by a TA or professor during office hours *before* it is due

@@ -1,0 +1,124 @@
+{
+  "targetFiles": [
+    "src/io_functions.c"
+  ],
+  "targetFile Remark": "Omitting '../' because the script is being run from the project directory instead of the test directory",
+  "commentDelimiters": {
+    "inlineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "codeBlockDelimiters": [
+    "{",
+    "}"
+  ],
+  "codeBlockKeywords": {
+    "loops": [
+      "do",
+      "while",
+      "for"
+    ],
+    "benignBlockTerminations": {
+      "break": "switch"
+    }
+  },
+  "operators": {
+    "all": [
+      "++",
+      "--",
+      ".",
+      "->",
+      "!",
+      "~",
+      "*",
+      "/",
+      "%",
+      "+",
+      "-",
+      "<<",
+      ">>",
+      "<",
+      "<=",
+      ">",
+      ">=",
+      "==",
+      "!=",
+      "&",
+      "^",
+      "|",
+      "&&",
+      "||",
+      "?",
+      "=",
+      "+=",
+      "-=",
+      "*=",
+      "/=",
+      "%=",
+      "<<=",
+      ">>=",
+      "&=",
+      "^=",
+      "|=",
+      ","
+    ],
+    "disallowed": []
+  },
+  "disallowedCalls": [],
+  "disallowedCalls Remark": "the script can't handle disallowedCalls yet, but doesn't distinguish between actual keywords and function calls in disallowedKeywords",
+  "disallowedKeywords": [
+    "goto",
+    "digitalRead",
+    "digitalWrite",
+    "millis",
+    "micros",
+    "delay",
+    "delayMicroseconds",
+    "time_us_32",
+    "time_us_64",
+    "busy_wait_us_32",
+    "busy_wait_us",
+    "busy_wait_ms",
+    "timer_hw_t",
+    "absolute_time_t",
+    "gpio_get",
+    "gpio_get_all",
+    "gpio_get_all64",
+    "gpio_put",
+    "gpio_put_all",
+    "gpio_put_all64",
+    "gpio_put_masked",
+    "gpio_put_masked64",
+    "gpio_put_masked_n",
+    "gpio_set_mask",
+    "gpio_set_mask64",
+    "gpio_set_mask_n",
+    "gpio_clr_mask",
+    "gpio_clr_mask64",
+    "gpio_clr_mask_n",
+    "gpio_xor_mask",
+    "gpio_xor_mask64",
+    "gpio_xor_mask_n",
+    "cowpi_left_button_is_pressed",
+    "cowpi_right_button_is_pressed",
+    "cowpi_left_switch_is_in_left_position",
+    "cowpi_right_switch_is_in_left_position",
+    "cowpi_left_switch_is_in_right_position",
+    "cowpi_right_switch_is_in_right_position",
+    "cowpi_get_keypress",
+    "cowpi_get_keypresses",
+    "cowpi_illuminate_right_led",
+    "cowpi_illuminate_left_led",
+    "cowpi_deluminate_right_led",
+    "cowpi_deluminate_left_led"
+  ],
+  "limitedLoopTerminations": {
+    "0": [
+      "break",
+      "return"
+    ]
+  },
+  "limitedCharacters": {}
+}

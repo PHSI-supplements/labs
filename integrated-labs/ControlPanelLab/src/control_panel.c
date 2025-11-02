@@ -23,26 +23,16 @@
 #include "display.h"
 #include "io_functions.h"
 
-FILE *seven_segment;
-
 void setup() {
-    seven_segment = cowpi_setup(0,
-            (cowpi_display_module_t) {
-                    .display_module = SEVEN_SEGMENT
-            },
-            (cowpi_display_module_protocol_t) {
-                    .protocol = COWPI_SPI,
-                    .data_pin = 19,
-                    .clock_pin = 18,
-                    .select_pin = 17
-            }
-    );
+    cowpi_setup(0,
+                (cowpi_display_module_t) {.display_module = NO_MODULE},
+                (cowpi_display_module_protocol_t) {.protocol = NO_PROTOCOL}
+               );
     initialize_display(16);
     draw_logo();
     delay(1000);
     clear_display();
     initialize_io(cowpi_right_switch_is_in_right_position());
-    fprintf(seven_segment, "foo\n");
 }
 
 void loop() {

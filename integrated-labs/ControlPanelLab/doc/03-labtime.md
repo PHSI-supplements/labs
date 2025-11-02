@@ -24,9 +24,7 @@ We want `\#` to produce the hexadecimal value 0xE, and we want `*` to produce th
 
 #### Test your lookup table
 
-[//]: # (TODO: specifically, which code)
-
-You can confirm that you correctly populated the array's initializer by running the test code.
+You can confirm that you correctly populated the array's initializer by running the program on the Cow Pi.
 
 - [ ] Place the **right switch** in the *left* position, and upload your code.
   (Or, if you have already uploaded your code, position the switch and press the RESET button.)
@@ -65,11 +63,10 @@ Similarly, having the right switch in the right position while pressing the righ
 
 ### Determine the Base Addresses of Certain I/O Register Banks
 
-[//]: # (TODO: update references)
+In most of this assignment, you will use a `cowpi_ioport_t` structure to access the memory-mapped I/O registers for the RP2040's data pins.
 
-In Sections&nbsp;\ref{subsec:detectKeyAction}--\ref{subsec:controlLED} and \ref{subsec:simpleIO}--\ref{subsec:ScannedInput}, you will use a `cowpi_ioport_t` structure to access the memory-mapped I/O registers for the \processor's data pins.
+You will also use a pointer to a `cowpi_timer_t` structure to determine how much time has elapsed since the system was powered-up.
 
-In Section&nbsp;\ref{subsec:timer}, you will use a pointer to a `cowpi_timer_t` structure to determine how much time has elapsed since the system was powered-up.
 
 #### Determine the Base Address for the I/O Port Registers
 
@@ -81,8 +78,6 @@ After you have done so,
 - [ ] Uncomment the `ioport = ...` line of the starter code's `initialize_io()` function, and
 - [ ] Assign the appropriate address to the `ioport = ...` pointer on that line.
 
-[//]: # (TODO: admonish students to use the address from the Cow Pi datasheet)
-
 ```c
 48  void initialize_io(bool key_mode) {
 49      show_key_press = key_mode;
@@ -91,6 +86,12 @@ After you have done so,
 52      // timer = (cowpi_timer_t *) (0x00000000);
 53  }
 ```
+
+> ⚠️ **Warning**
+> 
+> If you skipped lab time and need to look up the base address for the I/O port registers on your own,
+> ***consult the section of the Cow&nbsp;Pi datasheet that [discusses the `cowpi_ioport_t` structure](https://cow-pi.readthedocs.io/en/latest/CowPi_rp2040/io_registers.html#structure-for-memory-mapped-input-output).***
+> If you consult a different source, you may find a plausible-sounding but incorrect address.
 
 You can now use the `ioport` pointer to access the microcontroller pins' inputs and outputs.
 
@@ -103,9 +104,7 @@ After you have done so,
 - [ ] Uncomment the `timer = ...` line of the starter code's `initialize_io()` function, and
 - [ ] Assign the appropriate address to the `timer` pointer on that line.
 
-[//]: # (TODO: update reference)
-
-When you get to the assignment's Section&nbsp;\ref{subsec:timer}, you will be able to use the `timer` pointer to access the timer's memory-mapped registers to read its counter.
+Later in this assignment, you will use the `timer` pointer to access the timer's memory-mapped registers to read its counter.
 
 
 ### Detect Whether a Key on the Numeric Keypad Has Been Pressed
@@ -121,10 +120,8 @@ The `key_is_pressed()` function in the starter code is:
 70  }
 ```
 
-[//]: # (TODO: update reference)
-
 Line&nbsp;68 uses the Arduino function `digitalRead()` to read the values on the four pins attached to the keypad's columns.
-If any of those pins has a 0 on it, then a key has been pressed (see Section&nbsp;\ref{subsec:ScannedInput}).
+If any of those pins has a 0 on it, then a key has been pressed (see section of the Cow Pi datasheet that [discusses the matrix keypad](https://cow-pi.readthedocs.io/en/latest/hardware/inputs.html#matrix-keypad)).
 The next line [debounces](02-debouncing-debugging.md#debouncing) that reading.
 
 One problem is that the `digitalRead()` function is part of the Arduino core and, as noted in the [constraints](../README.md#constraints), you may not use functions from the Arduino core.
@@ -144,9 +141,7 @@ If you are not attending your lab period, then work individually to determine th
 
 #### Test your keypress detection
 
-[//]: # (TODO: specifically, which code)
-
-You can confirm that you correctly detected a change on the keypad by running the test code.
+You can confirm that you correctly detected a change on the keypad by running the program on the Cow Pi.
 
 - [ ] Place the **right switch** in the *right* position and upload your code.
   (Or, if you have already uploaded your code, position the switch and press the RESET button.)
