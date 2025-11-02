@@ -42,6 +42,10 @@ This assignment is due before the start of your lab section.
 If you have late days available, you may use one or more to extend your deadline.
 You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](../LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
 
+> 📝 **Grading Note**
+>
+> You are not eligible for the early check-off bonus if you use a late day on this assignment.
+
 After you have exhausted your late days, we will accept late turn-ins up to one hour late, assessing a 10% penalty on these late submissions.
 After you have exhausted your late days, any work turned in more than one hour late will not be graded.
 

@@ -2,9 +2,9 @@
 
 [//]: # (ControlPanelLab © 2021-25 Christopher A. Bohn)
 
-In this assignment, you will write functions to use the input and output devices on a Cow Pi development board with a RP2040 microcontroller.
+In this assignment, you will write functions that use Memory-Mapped I/O to access the input and output devices on a Cow Pi development board with a RP2040 microcontroller.
 
-This assignment is worth XX points.
+This assignment is worth 15 points.
 
 ## Front Matter
 
