@@ -9,7 +9,7 @@ The *duplicator* executable takes two command-line arguments, first the name of 
 even after you get it working correctly, *duplicator* will not accurately copy non-text files.[^1]
 We designed *duplicator* specifically for text files so that it's easier for you to see when it doesn't work right.)
 
-[^1] *duplicator* probably shouldn't be used to copy prehistoric animals' DNA, either.
+[^1]: *duplicator* probably shouldn't be used to copy prehistoric animals' DNA, either.
 
 
 For example, running the program with the command 

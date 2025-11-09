@@ -58,13 +58,21 @@ After successful completion of this assignment, students will be able to:
 
 ### Assignment Summary
 
-This lab assignment requires you to think about valid interleavings of a concurrent program.
-Being able to think about how concurrent processes interleave, and how to constrain those interleavings, will be very valuable in later courses and in your future career.
+This lab assignment requires you to make use of memory-mapped I/O registers.
+There is no special syntax required to access these registers.
+This is (one of) the points of working with memory-mapped I/O registers:
+Any code that can access memory can access memory-mapped I/O registers.
 
-You will use valid interleavings to demonstrate that a race condition is present in the starter code, and
-you will use valid interleavings to find suitable locations to lock and unlock a mutual exclusion token to remove that race condition.
+The closest there is to "special syntax" is:
+- You will need to use the Cow&nbsp;Pi datasheet to find the addresses that the register banks are mapped to,
+  and assign those addresses to the corresponding pointers in the program.
+- You will need to use the read/modify/write pattern when updating the logic values on output pins.
 
-This assignment also introduces a couple of concepts that aren’t central this assignment’s objectives but will re-appear in the input/output lab assignments.
+The final challenge in this assignment will be scanning the matrix keypad to determine which key is being pressed (if one *is* being pressed).
+This will require you to combine writing to an output register and reading from an input register.
+The pseudocode for scanning the keypad is in the Cow&nbsp;Pi datasheet.
+
+With the possible exception of scanning the matrix keypad, **you should be able to complete this lab assignment during lab time**; however, it is not due until the week of November 10, before the start of your lab section.
 
 #### Constraints
 

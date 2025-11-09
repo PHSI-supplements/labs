@@ -70,7 +70,7 @@ static bool key_is_pressed(void) {
 }
 
 /**
- * @brief Tuns the left LED on or off.
+ * @brief Turns the left LED on or off.
  *
  * An LED illuminates when the pin is placed high and deluminates when the pin is placed low.
  *
@@ -173,7 +173,7 @@ bool right_switch_is_in_right_position(void) {
 }
 
 /**
- * @brief Tuns the right LED on or off.
+ * @brief Turns the right LED on or off.
  *
  * An LED illuminates when the pin is placed high and deluminates when the pin is placed low.
  *

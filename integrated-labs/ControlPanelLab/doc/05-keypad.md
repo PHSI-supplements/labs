@@ -15,7 +15,7 @@ After you have done so:
 
 - [ ] Preserve the debouncing code in `get_keypress()`, and
 - [ ] Replace the starter code's call to `cowpi_get_keypress()` and its `switch` statements with code that scans the keyboard.
-  - [ ] Use the ioport` pointer to read from and write to the appropriate pins,
+  - [ ] Use the `ioport` pointer to read from and write to the appropriate pins,
   - [ ] Use a 1&nbsp;µs busy-wait (see below) for the delay shown on line 4 of the pseudocode in the datasheet, and
   - [ ] Use the `keys` nested array to obtain the correct integer value for the key at a given row and column.
 

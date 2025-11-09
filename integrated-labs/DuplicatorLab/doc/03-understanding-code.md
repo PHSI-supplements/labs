@@ -62,7 +62,7 @@ It is very similar to `strncpy()`, except for two differences:
 and `strncpy()` copies $\min\left(\mathtt{strlen(buffer)},\mathtt{BUFFER\_SIZE}\right)$ bytes, whereas `memcpy` copies exactly $\mathtt{BUFFER\_SIZE}$ bytes.
 
 To give an idea of why declaring the shared variables to be `volatile` is important, view `read_original()` from the compiler's perspective (the compiler typically looks at one function at a time when generating assembly code).
-Clearly, `copying` is true the first time that the program reaches line&nbsp;45 so the loop body will execute at least once.
+Clearly, `copying` is true the first time that the program reaches line&nbsp;5 so the loop body will execute at least once.
 If `status` is not `BUFFER_IS_EMPTY` then the compiler doesn't see any way for that to change, and the compiler would expect that case to result in an infinite, do-nothing loop.
 If `status` is `BUFFER_IS_EMPTY`, then `status` will be changed;
 depending on how the file read goes, the function will either return or enter into an infinite, do-nothing loop.

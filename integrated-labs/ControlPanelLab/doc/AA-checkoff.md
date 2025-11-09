@@ -31,7 +31,7 @@ We are, however, offering a small bonus if you complete your assignment early an
     - **+½** The `right_switch_is_in_right_position()` function is correctly implemented
 9. [ ] Demonstrate that when and only when the **left switch** is in the *right* position and the **left button** is *pressed*, the left LED illuminates.
     - **+1** The `set_left_led()` function is correctly implemented
-10. [ ] Demonstrate that when and only when the **right switch** is in the *right* position and the **right button** is *pressed*, the left LED illuminates.
+10. [ ] Demonstrate that when and only when the **right switch** is in the *right* position and the **right button** is *pressed*, the right LED illuminates.
     - **+¾** The `set_right_led()` function is correctly implemented
 11. [ ] Demonstrate that each of the keys on the keypad is correctly detected and that the absence of a keypress is also reported correctly (as `-`, *not* `?`).
     - **+8** The `get_keypress()` function is correctly implemented
