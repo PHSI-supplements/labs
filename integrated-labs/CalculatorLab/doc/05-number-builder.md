@@ -23,8 +23,8 @@ The top row of the Cow&nbsp;Pi's display will simply show `0`.
 In `build_number()`:
 - [ ] Prepare [state machines](04-polling.md#the-input-solution-that-keeps-the-system-responsive) for the keypad, the left pushbutton, and the right pushbutton.
 - [ ] Add code to the keypad state machine to detect a keypress and set `number` to the key's face-value, while keeping the system responsive to other inputs.
-- [ ] Add code to the **left** buton's state machine to detect a button press and negate `number`, while keeping the system responsive to other inputs.
-- [ ] Add code to the **right** buton's state machine to detect a button press and set `number` to 0, while keeping the system responsive to other inputs.
+- [ ] Add code to the **left** button's state machine to detect a button press and negate `number`, while keeping the system responsive to other inputs.
+- [ ] Add code to the **right** button's state machine to detect a button press and set `number` to 0, while keeping the system responsive to other inputs.
 - [ ] Add code to illuminate the **left** LED whenever a key is pressed and deluminate the LED a half-second later, while keeping the system responsive to further inputs.
 - [ ] Add code to illuminate the **right** LED whenever either pushbutton is pressed and deluminate the LED a half-second later, while keeping the system responsive to further inputs.
 
@@ -57,7 +57,7 @@ Then:
 
 In the `build_number()` function:
 - [ ] Add code to [determine which (if any) key is being pressed](04-polling.md#functions-to-read-the-buttons-keypad-and-timer-and-functions-to-write-to-the-leds).
-- [ ] Add either chained `if`/`else if` blocks, or a `switch` statement that will transition `keypad_state` between states according the input state machine [described earlier](04-polling.md#the-input-solution-that-keeps-the-system-responsive).
+- [ ] Add either chained `if`/`else if` blocks, or a `switch` statement that will transition `keypad_state` between states according to the input state machine [described earlier](04-polling.md#the-input-solution-that-keeps-the-system-responsive).
 
 Keep things simple for now, to catch errors when they're easier to troubleshoot.
 - [ ] In the keypad state machine's `RESPOND_TO_PRESS` state, determine whether the character returned by `cowpi_get_keypress()` is a decimal digit.
@@ -80,7 +80,7 @@ Our calculator will use the **left** button to negate a value being entered.
 
 In the `build_number()` function:
 - [ ] Add code to determine whether the **left** pushbutton is being pressed.
-- [ ] Add either chained `if`/`else if` blocks, or a `switch` statement that will transition `left_button_state` between states according the input state machine [described earlier](04-polling.md#the-input-solution-that-keeps-the-system-responsive).
+- [ ] Add either chained `if`/`else if` blocks, or a `switch` statement that will transition `left_button_state` between states according to the input state machine [described earlier](04-polling.md#the-input-solution-that-keeps-the-system-responsive).
 - [ ] In the left button state machine's `RESPOND_TO_PRESS` state, negate `number`.
 
 #### Check your work
@@ -95,7 +95,7 @@ In the `build_number()` function:
 
 In the `build_number()` function:
 - [ ] Add code to determine whether the **right** pushbutton is being pressed.
-- [ ] Add either chained `if`/`else if` blocks, or a `switch` statement that will transition `right_button_state` between states according the input state machine [described earlier](04-polling.md#the-input-solution-that-keeps-the-system-responsive).
+- [ ] Add either chained `if`/`else if` blocks, or a `switch` statement that will transition `right_button_state` between states according to the input state machine [described earlier](04-polling.md#the-input-solution-that-keeps-the-system-responsive).
 - [ ] In the right button state machine's `RESPOND_TO_PRESS` state, set `number` to 0.
 
 #### Check your work
@@ -110,7 +110,7 @@ In the `build_number()` function:
 
 The LEDs should indicate that a button has been pressed.
 We want the left LED to light up in response to the user pressing a key on the keypad,
-and we want the right LED to light up in response ot the user pressing one of the pushbuttons.
+and we want the right LED to light up in response to the user pressing one of the pushbuttons.
 In both cases, we want the LED to remain lit for a half-second and then go dark.
 
 - [ ] Add variables to `build_number()` to track the times of the last key press and the last button press.
@@ -181,7 +181,7 @@ In `build_number()`:
 
 ### Detecting Overflow
 
-In Chapter 3, you learned two ways to detect singed integer overflow: 
+In Chapter 3, you learned two ways to detect signed integer overflow: 
 compare the most significant bit's carry-in and carry-out bits,
 and compare the operands' signs and the result's sign.
 

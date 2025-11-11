@@ -71,7 +71,7 @@ You could implement a state machine using a `switch` statement, or you could imp
 
 ### Measuring the Passage of Time
 
-If you want some duration of time to occur between two actions by the program, you again have to options: blocking and non-blocking.
+If you want some duration of time to occur between two actions by the program, you again have two options: blocking and non-blocking.
 
 #### The timer solution that you will *not* use
 
