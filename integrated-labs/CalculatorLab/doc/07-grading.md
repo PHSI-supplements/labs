@@ -20,7 +20,7 @@
 > "Excellent.
 > Let's have H.Awk... no, not H.Awk Aye."
 > Archie turns to you.
-> "I've got something that I'd like you ato get started right away. 
+> "I've got something that I'd like you to get started right away. 
 > Here’s what I'd like to have built next."
 > 
 > *To be continued...*

@@ -34,14 +34,14 @@
 - [ ] Start your IDE.
 - [ ] Launch the PlatformIO plugin.
 - [ ] Depending on your particular IDE and plugin version, look for a button to "Pick a Folder", "Open Project", or something similar.
-- [ ] Click on that button and navigate to the ControlPanelLab project.
+- [ ] Click on that button and navigate to the CalculatorLab project.
 - [ ] Build the project.
   - There are many parts of MBED&nbsp;OS that generate compiler warnings.
     By building the project now, before you've written any of your own code, you're assured that any compiler warnings that you see in the future will be warnings about *your* code.
 
 #### From the Command Line
 
-- [ ] Use the `cd` command to navigate to the ControlPanelLab directory
+- [ ] Use the `cd` command to navigate to the CalculatorLab directory
 - [ ] Build the project using the command
   ```shell
   pio run

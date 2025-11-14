@@ -216,7 +216,7 @@ In `build_number()`:
 - [ ] Confirm that attempting to build a number greater than 32,767 fails and sets the `overflow` flag.
 - [ ] Confirm that building positive numbers less than 32,768 succeeds.
 - [ ] Confirm that attempting to build a negative number less than -32,768 fails and sets the `overflow` flag.
-- [ ] Confirm that building negative numbers greater than 32,769 succeeds.
+- [ ] Confirm that building negative numbers greater than -32,769 succeeds.
 - [ ] Confirm that clearing a number also clears the `overflow` flag.
 - [ ] Confirm that negating any number other than -32,768 succeeds.
 - [ ] Confirm that attempting to negate -32,768 fails and sets the `overflow` flag

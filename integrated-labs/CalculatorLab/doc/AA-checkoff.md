@@ -24,19 +24,19 @@ We are, however, offering a small bonus if you complete your assignment early an
 
 7. [ ] Place the Cow&nbsp;Pi's **left** switch in the *right* position, and press the RESET button.
 8. [ ] Press 2, then 3.
-    The right LED illuminates for ½ second with each keypress.
+    The left LED illuminates for ½ second with each keypress.
     The display shows `2`, then `23`.
     - **+2** The first digit is correctly detected
     - **+1** Subsequent digits correctly update a positive number
     - **+1½** A keypress or buttonpress is treated as a single press
-    - **+½** The right LED illuminates in response to a keypress
-    - **+1** The right LED deluminates a half-second after illuminating later
+    - **+½** The left LED illuminates in response to a keypress
+    - **+1** The left LED deluminates a half-second after illuminating later
 9. [ ] Press the left pushbutton.
-   The left LED illuminates for ½ second.
+   The right LED illuminates for ½ second.
    The display shows `-23`.
     - **+1** The left pushbutton correctly negates a positive number
-    - **+¼** The left LED illuminates in response to a press of the left button
-    - **+1** The left LED deluminates a half-second after illuminating later
+    - **+¼** The right LED illuminates in response to a press of the left button
+    - **+1** The right LED deluminates a half-second after illuminating later
 10. [ ] Press 4.
     The display shows `-234`.
     - **+1** Subsequent digits correctly update a negative number
@@ -50,10 +50,10 @@ We are, however, offering a small bonus if you complete your assignment early an
 13. [ ] Press 7.
     The display shows `23456 overflow`.
 14. [ ] Press the right pushbutton.
-    The left LED illuminates for ½ second.
+    The right LED illuminates for ½ second.
     The display shows `0`.
     - **+1** The right pushbutton sets the number to 0 and clears the overflow flag
-    - **+¼** The left LED illuminates in response to a press of the right button
+    - **+¼** The right LED illuminates in response to a press of the right button
 15. [ ] Press 3, 2, 7, 6, 8.
     The display shows `3276 overflow`.
 16. [ ] Press the right pushbutton to clear the number, then press 3, left pushbutton, 2, 7, 6, 9.
