@@ -1,0 +1,115 @@
+{
+  "targetFiles": [
+    "src/alarm.c",
+    "src/sensor.c"
+  ],
+  "targetFile Remark": "Omitting '../' because the script is being run from the project directory instead of the test directory",
+  "commentDelimiters": {
+    "inlineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "codeBlockDelimiters": [
+    "{",
+    "}"
+  ],
+  "codeBlockKeywords": {
+    "loops": [
+      "do",
+      "while",
+      "for"
+    ],
+    "benignBlockTerminations": {
+      "break": "switch"
+    }
+  },
+  "operators": {
+    "all": [
+      "++",
+      "--",
+      ".",
+      "->",
+      "!",
+      "~",
+      "*",
+      "/",
+      "%",
+      "+",
+      "-",
+      "<<",
+      ">>",
+      "<",
+      "<=",
+      ">",
+      ">=",
+      "==",
+      "!=",
+      "&",
+      "^",
+      "|",
+      "&&",
+      "||",
+      "?",
+      "=",
+      "+=",
+      "-=",
+      "*=",
+      "/=",
+      "%=",
+      "<<=",
+      ">>=",
+      "&=",
+      "^=",
+      "|=",
+      ","
+    ],
+    "disallowed": []
+  },
+  "disallowedCalls": [],
+  "disallowedCalls Remark": "the script can't handle disallowedCalls yet, but doesn't distinguish between actual keywords and function calls in disallowedKeywords",
+  "disallowedKeywords": [
+    "goto",
+    "digitalRead",
+    "digitalWrite",
+    "millis",
+    "micros",
+    "delay",
+    "delayMicroseconds",
+    "tone",
+    "noTone",
+    "time_us_32",
+    "time_us_64",
+    "busy_wait_us_32",
+    "busy_wait_us",
+    "busy_wait_ms",
+    "timer_hw_t",
+    "absolute_time_t",
+    "gpio_get",
+    "gpio_get_all",
+    "gpio_get_all64",
+    "gpio_put",
+    "gpio_put_all",
+    "gpio_put_all64",
+    "gpio_put_masked",
+    "gpio_put_masked64",
+    "gpio_put_masked_n",
+    "gpio_set_mask",
+    "gpio_set_mask64",
+    "gpio_set_mask_n",
+    "gpio_clr_mask",
+    "gpio_clr_mask64",
+    "gpio_clr_mask_n",
+    "gpio_xor_mask",
+    "gpio_xor_mask64",
+    "gpio_xor_mask_n"
+  ],
+  "limitedLoopTerminations": {
+    "0": [
+      "break",
+      "return"
+    ]
+  },
+  "limitedCharacters": {}
+}
