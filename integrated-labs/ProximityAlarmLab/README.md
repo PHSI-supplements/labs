@@ -46,7 +46,7 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [Generating an Alarm](doc/04-alarm.md)
 - [Measuring the Distance to an Object](doc/05-distance.md)
 - [Building the Sensor's State Machine](doc/06-sensor-state-machine.md)
-  [A Proximity Alarm](doc/07-proximity-alarm.md)
+- [A Proximity Alarm](doc/07-proximity-alarm.md)
 - [Turn-In and Grading](doc/08-grading.md)
 - [Appendix A: Lab Checkoff](doc/AA-checkoff.md)
 - [Appendix B: Attaching and Detaching the Seven-Segment Display Module](doc/BB-peripherals.md)
