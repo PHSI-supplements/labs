@@ -3,9 +3,7 @@
 ### Calculating the Speed of Sound
 
 The speed of sound in air is[^2]
-$$
-    speed = 331.228 \times \sqrt{1 + \frac{T_{^oc}}{273.15}} \frac{m}{s} = 0.0331228 \times \sqrt{1 + \frac{T_{^oc}}{273.15}} \frac{cm}{\mu s}
-$$
+$$speed = 331.228 \times \sqrt{1 + \frac{T_{^oc}}{273.15}} \frac{m}{s} = 0.0331228 \times \sqrt{1 + \frac{T_{^oc}}{273.15}} \frac{cm}{\mu s}$$
 
 [^2]: [https://www.weather.gov/media/epz/wxcalc/speedOfSound.pdf](https://www.weather.gov/media/epz/wxcalc/speedOfSound.pdf)
 
@@ -22,9 +20,7 @@ $$                  = \frac{546.30 + T_{^oc}}{16493.17} \frac{cm}{\mu s}        
 
 The RP2040 has a temperature sensor connected to one of its analog-digital converter (ADC) inputs.
 Section&nbsp;4.9.5 of the RP2040 datasheet[^3] shows that the temperature, in ºC, is:
-$$
-    T = 27 - \frac{ADC\_voltage - 0.706}{0.001721}
-$$
+$$T = 27 - \frac{ADC\_voltage - 0.706}{0.001721}$$
 
 [^3]: [https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf)
 

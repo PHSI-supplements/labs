@@ -17,9 +17,9 @@ Notice that when the right pushbutton responds to a press, it calls the `initiat
   - [ ] Then, busy-wait for 10µs
   - [ ] Finally, set the `TRIGGER_PIN` pin to logic-low
 
-> 💡 **Tip**
->
-> Use `set_pin_high()` and `set_pin_low()`.
+  > 💡 **Tip**
+  >
+  > Use `set_pin_high()` and `set_pin_low()`.
 
 Several microseconds later, the sensor will emit its ultrasound pulse and raise its `ECHO_PIN` line to logic-high.
 

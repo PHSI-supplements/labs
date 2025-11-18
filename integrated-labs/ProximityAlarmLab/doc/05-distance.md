@@ -32,10 +32,7 @@ We will assume the medium is air.
 
 The speed of sound is a function air temperature.
 Assuming the temperature $T$ is measured in ºC, the speed of sound in air is[^1]
-$$
-%            643.855 \times \sqrt{1 + \frac{T}{273.15}} \times 0.5144444
-331.228 \times \sqrt{1 + \frac{T}{273.15}} \frac{m}{s}
-$$
+$$331.228 \times \sqrt{1 + \frac{T}{273.15}} \frac{m}{s}$$
 
 [^1]: [https://www.weather.gov/media/epz/wxcalc/speedOfSound.pdf](https://www.weather.gov/media/epz/wxcalc/speedOfSound.pdf)
 
@@ -58,9 +55,7 @@ A little algebra will tell you that is is the speed of sound when the air temper
 The distance to a detected object is half of the ultrasonic pulse's round-trip distance.
 Using the speed of sound equation from above, we can accurately find the distance to an object:
 
-$$
-distance_{cm} = \frac{time_{\mu s}}{2} \times \left( 331.228 \times \sqrt{1 + \frac{T_{^oc}}{273.15}} \frac{m}{s} \right) \times \frac{s}{1,000,000\mu s} \times \frac{100cm}{m}
-$$
+$$distance_{cm} = \frac{time_{\mu s}}{2} \times \left( 331.228 \times \sqrt{1 + \frac{T_{^oc}}{273.15}} \frac{m}{s} \right) \times \frac{s}{1,000,000\mu s} \times \frac{100cm}{m}$$
 
 
 #### Practical Consideration: Arithmetic
@@ -86,9 +81,7 @@ The equation we'll use incorporates these conversions, so you will only need the
 
 The equation we'll use that accurately computes the distance is:
 
-$$
-distance_{cm} = time_{\mu s} \times \left( 256,108,888 - 121,907 \times ADC\_register\_value \right) \frac{cm}{\mu s} \div 2^{33}
-$$
+$$distance_{cm} = time_{\mu s} \times \left( 256,108,888 - 121,907 \times ADC\_register\_value \right) \frac{cm}{\mu s} \div 2^{33}$$
 
 The derivation of these equation can be found in this assignment's [Appendix C](CC-distance-formulation.md).
 

@@ -17,14 +17,14 @@
 - [ ] Start your IDE.
 - [ ] Launch the PlatformIO plugin.
 - [ ] Depending on your particular IDE and plugin version, look for a button to "Pick a Folder", "Open Project", or something similar.
-- [ ] Click on that button and navigate to the CalculatorLab project.
+- [ ] Click on that button and navigate to the ProximityAlarmLab project.
 - [ ] Build the project.
   - There are many parts of MBED&nbsp;OS that generate compiler warnings.
     By building the project now, before you've written any of your own code, you're assured that any compiler warnings that you see in the future will be warnings about *your* code.
 
 #### From the Command Line
 
-- [ ] Use the `cd` command to navigate to the CalculatorLab directory
+- [ ] Use the `cd` command to navigate to the ProximityAlarmLab directory
 - [ ] Build the project using the command
   ```shell
   pio run
@@ -63,7 +63,7 @@ We have included the code for a simple proximity alarm that makes use of the ala
 After you have correctly implemented those, you will not need to implement any further code for the proximity alarm.
 
 
-### Descriptions of CalculatorLab Files
+### Descriptions of ProximityAlarmLab Files
 
 #### common.h
 
