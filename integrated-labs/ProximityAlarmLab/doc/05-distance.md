@@ -32,6 +32,7 @@ We will assume the medium is air.
 
 The speed of sound is a function air temperature.
 Assuming the temperature $T$ is measured in ºC, the speed of sound in air is[^1]
+
 $$331.228 \times \sqrt{1 + \frac{T}{273.15}} \frac{m}{s}$$
 
 [^1]: [https://www.weather.gov/media/epz/wxcalc/speedOfSound.pdf](https://www.weather.gov/media/epz/wxcalc/speedOfSound.pdf)

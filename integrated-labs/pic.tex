@@ -5,13 +5,14 @@
 
 % latex pic.tex; dvisvgm --clipjoin --bbox=papersize --page=1- pic.dvi ; mv pic.svg filename.svg
 
+
 \newcommand{\sllnode}[3]{
     \draw[black,thick,rotate=#3] (#1,#2) +(-10,0) rectangle +(10,10);
     \draw[rotate=#3] (#1,#2) +(0,5) node {\centering \rotatebox{#3}{Payload}};
     \draw[black,thick,rotate=#3] (#1,#2) +(-10,0) rectangle +(10,-10);
     \draw[rotate=#3] (#1,#2) +(0,-5) node {\centering \rotatebox{#3}{Next}};
 }
-
+ 
 \newcommand{\dllnode}[3]{
     \draw[black,thick,rotate=#3] (#1,#2) +(-10,0) rectangle +(10,10);
     \draw[rotate=#3] (#1,#2) +(0,5) node {\centering \rotatebox{#3}{Payload}};
@@ -20,19 +21,61 @@
     \draw[black,thick,rotate=#3] (#1,#2) +(-10,0) rectangle +(0,-10);
     \draw[rotate=#3] (#1,#2) +(-5,-5) node {\centering \rotatebox{#3}{Prev}};
 }
-
+ 
 \begin{document}
     \begin{tikzpicture} %[x=1.5mm, y=1.5mm]
 
-        \node[state, initial] at (-4, -3)  (notPressed){Not Pressed};
-        \node[state]          at (4, -3)   (respondingToPress){Respond to Press};
-        \node[state]          at (3, -7)   (pressed){Pressed};
-        \node[state]          at (-3, -7)  (respondingToRelease){Respond to Release};
-        \draw   (notPressed)          edge[-Latex, bend left, above] node{\textcolor{blue}{[button / keypad is pressed]}} (respondingToPress)
-        (respondingToPress)   edge[-Latex, bend left] (pressed)
-        (pressed)             edge[-Latex, bend left, below] node{\textcolor{blue}{[button / keypad is released]}} (respondingToRelease)
-        (respondingToRelease) edge[-Latex, bend left] (notPressed);
 
+
+%%% DIAGRAM 4
+
+
+%             \draw (0,0) -- ++(2.5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(2.5,0);
+%             \draw (-5, 2.5) node[left]{\Huge A};
+%             \draw (-1, 0) node[left]{\huge 0};
+%             \draw (-1, 5) node[left]{\huge 1};
+%             \draw (0,0) ++(0,-10) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- ++(5,0);
+%             \draw (-5, -7.5) node[left]{\Huge B};
+%             \draw (-1, -10) node[left]{\huge 0};
+%             \draw (-1, -5) node[left]{\huge 1};
+%             \draw[arrows={-Latex[scale=4]}] (10, 10) -- ++(5,0) node[right]{\Huge clockwise};
+%             \draw[arrows={Latex[scale=4]-}] (10, 8) -- ++(5,0) node[right]{\Huge counterclockwise};
+%             \draw[dashed] (3.75, -11) -- ++(0, 21) node[above] {\huge detent};
+%             \draw[dashed] (3.75, -11) ++(10, 0) -- ++(0, 17);
+%             \draw[dashed] (3.75, -11) ++(20, 0) -- ++(0, 17);
+
+
+
+%%% DIAGRAM 3
+
+
+            \draw (0,0) -- (5,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- (25,0) -- ++(0,5) -- ++(5,0) -- ++(0,-5) -- (45,0)-- ++(0,5) -- ++(5,0) -- ++(0,-5) -- (65,0)-- ++(0,5) -- ++(5,0) -- ++(0,-5) -- (75,0);
+            \draw (-1, 0) node[left, scale=2]{\Huge 0};
+            \draw (-1, 5) node[left, scale=2]{\Huge 1};
+            \draw (25, -3) -- ++(0,-6);
+            \draw (45, -3) -- ++(0,-6);
+            \draw[arrows={Latex[scale=4]-Latex[scale=4]}] (26, -6) -- (44,-6) node[pos=.5, scale=2]{\Huge \parbox{1.8cm}{\centering signal\\period}};
+            \draw (45, 8) -- ++(0, 6);
+            \draw (50, 8) -- ++(0, 6);
+            \draw[arrows={Latex[scale=4]-}] (44, 11) -- ++(-3, 0);
+            \draw[arrows={Latex[scale=4]-}] (51, 11) -- ++(3, 0);
+            \draw (47.5, 11) node[scale=2]{\Huge \parbox{1.8cm}{\centering pulse\\width}};
+
+
+%%% DIAGRAM 2
+
+
+%         \node[state, initial] at (-4, -3)  (notPressed){Not Pressed};
+%         \node[state]          at (4, -3)   (respondingToPress){Respond to Press};
+%         \node[state]          at (3, -7)   (pressed){Pressed};
+%         \node[state]          at (-3, -7)  (respondingToRelease){Respond to Release};
+%         \draw   (notPressed)          edge[-Latex, bend left, above] node{\textcolor{blue}{[button / keypad is pressed]}} (respondingToPress)
+%         (respondingToPress)   edge[-Latex, bend left] (pressed)
+%         (pressed)             edge[-Latex, bend left, below] node{\textcolor{blue}{[button / keypad is released]}} (respondingToRelease)
+%         (respondingToRelease) edge[-Latex, bend left] (notPressed);
+
+
+%%% DIAGRAM 1
 
 
 %        \draw[thick] (0,0) rectangle (25,26);

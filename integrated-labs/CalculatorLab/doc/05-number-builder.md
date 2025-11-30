@@ -208,7 +208,7 @@ In `build_number()`:
 - [ ] If the value overflowed, then set `overflow` to `true`, and do *not* update `number`.
 - [ ] Modify the left button state machine's `RESPOND_TO_PRESS` state to determine whether negating `number` would overflow.
 - [ ] If negation causes overflow, then set `overflow` to `true`, and do *not* update `number`.
-- [ ] Modify the left button state machine's `RESPOND_TO_PRESS` state to set `overflow` to `false` 
+- [ ] Modify the right button state machine's `RESPOND_TO_PRESS` state to set `overflow` to `false` 
 
 #### Check your work
 

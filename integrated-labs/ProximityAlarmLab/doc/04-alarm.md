@@ -26,7 +26,7 @@ Notice that when the right pushbutton responds to a press, it sets `sound_alarm`
 - [ ] [Attach the Piezobuzzer Module to the Cow Pi](BB-peripherals.md#attach-the-piezobuzzer-module-to-the-cow-pi).
 - [ ] Place both switches in the *left* position.
   Compile and upload the program to the Cow Pi.
-- [ ] Confirm that the LEDs turn on when you press the **left** pushbutton and that they turn off when you release the pushbutton.
+- [ ] Confirm that the LEDs turn on when you press the **right** pushbutton and that they turn off when you release the pushbutton.
 
 #### Generate a tone
 
@@ -50,7 +50,7 @@ On alternating interrupts, we want the tone to transition from trough-to-peak an
 
 - [ ] Double-check that both switches in the *left* position.
   Compile and upload the program to the Cow Pi.
-- [ ] Confirm that the piezobuzzer generates a 1kHz tone (and the LEDs turn on) when you press the **left** pushbutton and that the piezobuzzer is silent (and the LEDs turn off) when you release the pushbutton.
+- [ ] Confirm that the piezobuzzer generates a 1kHz tone (and the LEDs turn on) when you press the **right** pushbutton and that the piezobuzzer is silent (and the LEDs turn off) when you release the pushbutton.
 
 
 ### Chirping the Piezobuzzer and Strobing the LEDs
@@ -72,7 +72,7 @@ Notice also that there is a `silence_buzzer_at` global variable that you have no
 
 - [ ] Double-check that both switches in the *left* position.
   Compile and upload the program to the Cow Pi.
-- [ ] Confirm that when you press the **right** pushbutton, the piezobuzzer emits a tone and the LEDs illuminate for a tenth of a second and go silent and dark after that.
+- [ ] Confirm that when you press the **left** pushbutton, the piezobuzzer emits a tone and the LEDs illuminate for a tenth of a second and go silent and dark after that.
 
 
 ---
