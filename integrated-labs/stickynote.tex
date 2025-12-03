@@ -1,0 +1,52 @@
+\documentclass[dvisvgm,tikz]{standalone}
+\usepgflibrary{arrows.meta}
+\usetikzlibrary{automata,positioning,arrows}
+\renewcommand{\familydefault}{\sfdefault}
+
+% latex pic.tex; dvisvgm --clipjoin --bbox=papersize --page=1- pic.dvi ; mv pic.svg filename.svg
+
+
+%%% StickyNote from https://tex.stackexchange.com/questions/159679/sticky-notes-image
+\usepackage{xparse}
+% \usepackage{fontspec}
+% \setmainfont{Humor Sans}
+\usepackage{tikz}
+\usetikzlibrary{shadows}
+\usepackage{lipsum}\usepackage{array,color,colortbl}
+%\usepackage{listings}
+%\usepackage{lstlangarm}
+\definecolor{LightGreen}{rgb}{0.88,1,0.88}
+
+\definecolor{myyellow}{RGB}{242,226,149}
+
+\NewDocumentCommand\StickyNote{O{6cm}mO{6cm}}{%
+    \begin{tikzpicture}
+        \node[
+            drop shadow={
+                shadow xshift=2pt,
+                shadow yshift=-4pt
+            },
+            inner xsep=7pt,
+            fill=myyellow,
+            xslant=-0.1,
+            yslant=0.1,
+            inner ysep=10pt
+        ] {\parbox[t][#1][c]{#3}{#2}};
+    \end{tikzpicture}%
+}
+%%%
+
+ 
+\begin{document}
+
+
+    \StickyNote[5cm]{\begin{center}
+        i\textsc{Suck \\ Robot Vacuum Cleaner \\ \phantom{x}}
+    \end{center}\begin{flushleft}
+        CAUTION! Stuck in ``Malevolent Sentience'' mode. \\ \phantom{x} \\
+        Do \underline{\underline{not}} turn on until after
+        troubleshooting the problem and uploading new software.
+    \end{flushleft}}[7cm]
+
+
+\end{document}
