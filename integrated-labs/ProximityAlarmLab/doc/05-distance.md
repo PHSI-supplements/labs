@@ -63,7 +63,7 @@ $$distance_{cm} = \frac{time_{\mu s}}{2} \times \left( 331.228 \times \sqrt{1 + 
 
 As our microcontroller does not have a floating point unit (FPU), we want to avoid floating point calculations, which are computationally expensive when performed entirely in software.
 The RP2040 has an integer divider that requires 8 processor clock cycles to perform division, so we might allow integer division with the new hardware -- but won't have to.
-The equation we'll use not only avoid floating point arithmetic, it also (if you are able to recall Chapter 3 material) does not require integer division.
+The equation we'll use not only avoids floating point arithmetic, it also (if you are able to recall Chapter 3 material) does not require integer division.
 
 #### Practical Consideration: Temperature
 

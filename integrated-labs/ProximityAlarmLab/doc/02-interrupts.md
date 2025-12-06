@@ -30,7 +30,7 @@ The admonition also doesn't *just* mean to write as few lines as possible:
 the lines that you write must also be fast.
 Some functions such as `sprintf()`, `refresh_display()`, and `count_visits()` are particularly long-running and should not be called inside an ISR.
 A call to `display_string()` with a string literal might be okay.
-If you need to send information to the user, it would be better to set a variable, and have code the main control loop use that variable to send information to the user.
+If you need to send information to the user, it would be better to set a variable, and to have code that is in the main control loop use that variable to send information to the user.
 
 
 ### Registering Interrupt Service Routines

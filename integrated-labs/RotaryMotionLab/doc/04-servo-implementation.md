@@ -16,7 +16,7 @@ There are four named constants that will be useful when controlling the servo.
 
 ### How You'll Specify the Servo's Position
 
-In RangeFinderLab, the alarm timer's interrupt period was half of the signal period.
+In ProximityAlarmLab, the alarm timer's interrupt period was half of the signal period.
 In this assignment, the interrupt period is a small fraction of the signal period.
 This is necessary because the length of the peak (aka, the pulse) varies.
 

@@ -23,14 +23,14 @@
 - [ ] Start your IDE.
 - [ ] Launch the PlatformIO plugin.
 - [ ] Depending on your particular IDE and plugin version, look for a button to "Pick a Folder", "Open Project", or something similar.
-- [ ] Click on that button and navigate to the CalculatorLab project.
+- [ ] Click on that button and navigate to the RotaryMotionLab project.
 - [ ] Build the project.
   - There are many parts of MBED&nbsp;OS that generate compiler warnings.
     By building the project now, before you've written any of your own code, you're assured that any compiler warnings that you see in the future will be warnings about *your* code.
 
 #### From the Command Line
 
-- [ ] Use the `cd` command to navigate to the CalculatorLab directory
+- [ ] Use the `cd` command to navigate to the RotaryMotionLab directory
 - [ ] Build the project using the command
   ```shell
   pio run
@@ -50,13 +50,13 @@ The mode of operation is determined by the positions of the switches when the Co
 
 In this mode, the servo will repeatedly move back and forth in small increments.
 
-#### Test Number Builder
+#### Test the rotary encoder
 
 - **Right** switch in the *left* position, and the **left** switch in the *right* position.
 
 In this mode, the display module will show how many times the rotary encoder has been turned clockwise and how many times it's been turned counterclockwise.
 
-#### Four-Function Calculator
+#### "Remotely" control the servo using the rotary encoder
 
 - **Right** switch in the *right* position.
 

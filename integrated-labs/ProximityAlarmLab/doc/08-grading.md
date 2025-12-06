@@ -1,6 +1,6 @@
 > 📇 **Epilogue**
 >
-> A technician installing a proximity alaram outside the lab door briefly sets off the alarm, but then the proximity alarm falls quiet and faithfully reports that nothing is approaching.
+> A technician installing a proximity alarm outside the lab door briefly sets off the alarm, but then the proximity alarm falls quiet and faithfully reports that nothing is approaching.
 > As reports come in of facilities getting secured with Cow&nbsp;Pi-based locks, and of accurate specimen counts accomplished with Cow&nbsp;Pi-based calculators, Archie smiles and tells you that this was a job well done.
 > With all of the excitement neatly wrapped-up and arriving at a satisfactory conclusion, you look forward to a boring career in which there’s absolutely no screaming and running for your life.
 > 
