@@ -1,0 +1,175 @@
+%%
+%% labs/common/assignment.tex
+%% (c) 2021-23 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\usepackage{addfont}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{bold-extra}
+\usepackage{cancel}
+\usepackage{caption}
+\usepackage{ccicons}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[procnames]{listings}
+%\usepackage{media9}
+\usepackage{multicol}
+\usepackage{subfig}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usepackage[americanresistor]{circuitikz}
+%\usepackage{tikz-uml}
+\usetikzlibrary{automata,positioning,arrows}
+\usepackage[normalem]{ulem}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+%\usepackage[dvipsnames]{xcolor}
+\definecolor{LightGreen}{rgb}{0.88,1,0.88}
+
+\lstset{language=C, tabsize=4, upquote=true, basicstyle=\ttfamily}
+\newcommand{\function}[1]{\textbf{\lstinline{#1}}}
+\setlength{\headsep}{0.7cm}
+\hypersetup{colorlinks=true}
+
+%% CREDIT FOR MARKERLESSFOOTNOTE WHERE CREDIT IS DUE: https://tex.stackexchange.com/questions/30720/footnote-without-a-marker?answertab=scoredesc#tab-top
+\newcommand\markerlessfootnote[1]{%
+    \begingroup
+    \renewcommand\thefootnote{}\footnote{#1}%
+    \addtocounter{footnote}{-1}%
+    \endgroup
+}
+
+\newcommand{\pagelayout}{
+    \pagestyle{fancy}
+    \fancyhf{}
+    \lhead{\coursenumber}
+    \chead{\ Lab \labnumber: \labname}
+    \rhead{\courseterm}
+    \cfoot{\shortlabname-\thepage}
+}
+
+\newcommand{\labidentifier}{
+    \title{\ Lab \labnumber}
+    \author{\labname}
+    \date{Due: \duedate}
+    \maketitle
+
+    \textit{\collaborationrules}
+    \markerlessfootnote{\tiny{\ifdefstring{\instructorname}{Christopher A. Bohn}{Assignment}{Original assignment} and starter code \copyright\ Christopher A. Bohn, licensed under the Creative Commons Attribution 4.0 International License~\ccby\ and under the Apache License Version 2.0, respectively.}}
+    \ifdefstring{\instructorname}{Christopher A. Bohn}{}{\markerlessfootnote{\tiny{Configured for \coursenumber\ at \institutename\ by \instructorname.}}}
+
+    \begin{description}
+        \item[Obtaining the starter code] \filesource
+        \item[Runtime environment] We will grade this assignment by compiling and running it on \runtimeenvironment;
+            you should compile and test your code on \runtimeenvironment\ before turning it in.
+        \item[Submitting your work] \filesubmission
+    \end{description}
+}
+
+% display module fonts for hardware kit
+% use with the Capital baseball "matrix printer" font collection (https://www.ctan.org/tex-archive/fonts/capbas/)
+% Identifying the specific font in the assignment sheet is deprecated
+%   -- instead, set the `usedisplayfont` boolean and the `displaymodule` variable in semester.tex,
+%      and \display{...} in the assignment sheet
+
+\addfont{OT1}{d7seg}{\dviiseg}
+\addfont{OT1}{deseg}{\deseg}
+\addfont{OT1}{necker}{\necker}
+
+\providebool{usedisplayfont}
+
+\newcommand{\display}[1]{
+    \ifboolexpe{bool{usedisplayfont}}{
+        \ifdefstring{\displaymodule}{MAX7219digits}{{\dviiseg #1}}{}
+        \ifdefstring{\displaymodule}{MAX7219matrix}{{\deseg #1}}{}
+        \ifdefstring{\displaymodule}{LCD1602}{{\necker #1}}{}
+        % We don't yet have a Cow Pi configuration with 14-segment displays, so no \deseg yet
+    }{
+        \texttt{#1}
+    }
+}
+
+\newcommand{\rubricitem}[2]{\item[\underline{\hspace{1cm}} +#1] #2}
+\newcommand{\bonusitem}[2]{\item[\underline{\hspace{1cm}} Bonus +#1] #2}
+\newcommand{\penaltyitem}[2]{\item[\underline{\hspace{1cm}} -#1] #2}
+\newcommand{\checkoffitem}[1]{\item (\phantom{xxx}) #1}
+\newcommand{\precheckoffitem}[1]{\item [] (\phantom{xxx}) #1}
+
+\newcommand{\institutename}{University of Nebraska-Lincoln}
+\newcommand{\instructorname}{Christopher A. Bohn}
+\newcommand{\coursenumber}{CSCE~231}
+\newcommand{\cstwo}{CSCE~156, RAIK~184H, or SOFT~161}
+\newcommand{\courseterm}{Spring 2025}
+\newcommand{\labnumber}{1}
+\newcommand{\labname}{C Programming Familiarization Lab}
+\newcommand{\shortlabname}{PokerLab}
+\newcommand{\duedate}{Week of January 27, before the start of your lab section}
+\newcommand{\filesource}{Download \startercode\ from Canvas, or copy \startercode\ from {\footnotesize$\sim$}cbohn2/csce231 on \textit{nuros.unl.edu}}
+\newcommand{\filesubmission}{When you have completed this assignment, submit \requiredfiles\ to the assignment in Canvas.}
+\newcommand{\runtimeenvironment}{the \textit{nuros.unl.edu} Linux server}
+\newcommand{\startercode}{pokerlab.zip or pokerlab.tar}
+\newcommand{\requiredfiles}{your screenshot, \textit{card.c}, \textit{poker.c}, and \textit{answers.txt}}
+\newcommand{\buildsystem}{make}
+\newcommand{\processor}{x86-64}
+\newcommand{\lowercaseprocessor}{x86-64}
+\newcommand{\collaborationrules}{Sections~\ref{sec:connecting}, \ref{subsec:terminology}, \ref{sec:gettingstarted}, \ref{subsec:typesofpokerhands}, and~\ref{subsec:studythecode}: In addition to the professor and the TAs, you may freely seek help on these sections from other students.
+
+    Sections~\ref{sec:completingcard} and~\ref{subsec:completepoker}: These sections are individual-effort only.
+    You may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.
+    Sharing code with or copying code from another student or the internet is prohibited.}
+\newcommand{\policyforcodethatdoesnotcompile}{\subsection*{Normally No Credit for Uncompilable Code}
+    If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
+    For most lab assignments, this would mean that you would earn very few, if any, points.\footnote{
+        At the TA's discretion, if they can make your code compile with \textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\% penalty on the resulting score.
+        The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.
+        If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.
+    }
+    For \textit{this} lab assignment, you will still receive the credit you earned for attempting the assignment, even if it does not compile.
+    Before turning in your code, be sure to compile and test your code on \runtimeenvironment\ without changing any files that you were instructed not to change.}
+\newcommand{\latepolicy}{\subsection*{Late Submissions}
+    This assignment is due before the start of your lab section.
+     After you have exhausted your grace days, we will accept late turn-ins up to one hour late, assessing a 10\% penalty on these late submissions.
+    After you have exhausted your grace days, any work turned in more than one hour late will not be graded.}
+\newcommand{\softwareengineeringfrontmatter}{\section*{No Spaghetti Code Allowed}
+        In the interest of keeping your code readable, you may \textit{not} use
+        any \lstinline{goto} statements, nor may you use any
+        \lstinline{continue} statements, nor may you use any \lstinline{break}
+        statements to exit from a loop, nor may you have any functions
+        \lstinline{return} from within a loop.}
+\newcommand{\softwareengineeringpenalties}{\penaltyitem{1}{for each \lstinline{goto} statement,
+            \lstinline{continue} statement, \lstinline{break} statement used to
+            exit from a loop, or \lstinline{return} statement that occurs within
+            a loop.}}
+\newcommand{\scenariointroduction}{\begin{wrapfigure}{r}{0.33\textwidth}
+        \centering
+        \includegraphics[width=.4\textwidth]{archie}
+        \caption{Archie.\\ \footnotesize{Photograph by Bohn.}}
+    \end{wrapfigure}
+
+    You're relaxing at your favorite hangout when another customer catches your attention.
+    He's rather large (dare I say, \textit{mammoth}), a bit hairy, and looking frustrated in front of his laptop.
+``I'm Archie,'' he says, ``and I'm trying to teach myself this card game called \textit{Poker}.
+    I found this source code that I thought I could use to understand Poker better, but the code is incomplete, and I don't entirely understand what's there.
+    Could you explain the code to me, please?''}
+\newcommand{\scenariowrapup}{Archie's face lights up in a very big smile.
+    ``Thanks!''
+    After pausing in thought for a moment, he says, ``Say, I've got a new startup company that could really use your help.
+    Are you interested?
+    It'll be exciting!''}

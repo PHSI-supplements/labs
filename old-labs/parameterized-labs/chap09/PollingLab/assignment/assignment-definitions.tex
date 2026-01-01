@@ -1,0 +1,190 @@
+%%
+%% labs/common/assignment.tex
+%% (c) 2021-23 Christopher A. Bohn
+%%
+%% Licensed under the Apache License, Version 2.0 (the "License");
+%% you may not use this file except in compliance with the License.
+%% You may obtain a copy of the License at
+%%     http://www.apache.org/licenses/LICENSE-2.0
+%% Unless required by applicable law or agreed to in writing, software
+%% distributed under the License is distributed on an "AS IS" BASIS,
+%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%% See the License for the specific language governing permissions and
+%% limitations under the License.
+%%
+
+\usepackage{addfont}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{bold-extra}
+\usepackage{cancel}
+\usepackage{caption}
+\usepackage{ccicons}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[procnames]{listings}
+%\usepackage{media9}
+\usepackage{multicol}
+\usepackage{subfig}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usepackage[americanresistor]{circuitikz}
+%\usepackage{tikz-uml}
+\usetikzlibrary{automata,positioning,arrows}
+\usepackage[normalem]{ulem}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+%\usepackage[dvipsnames]{xcolor}
+\definecolor{LightGreen}{rgb}{0.88,1,0.88}
+
+\lstset{language=C, tabsize=4, upquote=true, basicstyle=\ttfamily}
+\newcommand{\function}[1]{\textbf{\lstinline{#1}}}
+\setlength{\headsep}{0.7cm}
+\hypersetup{colorlinks=true}
+
+%% CREDIT FOR MARKERLESSFOOTNOTE WHERE CREDIT IS DUE: https://tex.stackexchange.com/questions/30720/footnote-without-a-marker?answertab=scoredesc#tab-top
+\newcommand\markerlessfootnote[1]{%
+    \begingroup
+    \renewcommand\thefootnote{}\footnote{#1}%
+    \addtocounter{footnote}{-1}%
+    \endgroup
+}
+
+\newcommand{\pagelayout}{
+    \pagestyle{fancy}
+    \fancyhf{}
+    \lhead{\coursenumber}
+    \chead{\ Lab \labnumber: \labname}
+    \rhead{\courseterm}
+    \cfoot{\shortlabname-\thepage}
+}
+
+\newcommand{\labidentifier}{
+    \title{\ Lab \labnumber}
+    \author{\labname}
+    \date{Due: \duedate}
+    \maketitle
+
+    \textit{\collaborationrules}
+    \markerlessfootnote{\tiny{\ifdefstring{\instructorname}{Christopher A. Bohn}{Assignment}{Original assignment} and starter code \copyright\ Christopher A. Bohn, licensed under the Creative Commons Attribution 4.0 International License~\ccby\ and under the Apache License Version 2.0, respectively.}}
+    \ifdefstring{\instructorname}{Christopher A. Bohn}{}{\markerlessfootnote{\tiny{Configured for \coursenumber\ at \institutename\ by \instructorname.}}}
+
+    \begin{description}
+        \item[Obtaining the starter code] \filesource
+        \item[Runtime environment] We will grade this assignment by compiling and running it on \runtimeenvironment;
+            you should compile and test your code on \runtimeenvironment\ before turning it in.
+        \item[Submitting your work] \filesubmission
+    \end{description}
+}
+
+% display module fonts for hardware kit
+% use with the Capital baseball "matrix printer" font collection (https://www.ctan.org/tex-archive/fonts/capbas/)
+% Identifying the specific font in the assignment sheet is deprecated
+%   -- instead, set the `usedisplayfont` boolean and the `displaymodule` variable in semester.tex,
+%      and \display{...} in the assignment sheet
+
+\addfont{OT1}{d7seg}{\dviiseg}
+\addfont{OT1}{deseg}{\deseg}
+\addfont{OT1}{necker}{\necker}
+
+\providebool{usedisplayfont}
+
+\newcommand{\display}[1]{
+    \ifboolexpe{bool{usedisplayfont}}{
+        \ifdefstring{\displaymodule}{MAX7219digits}{{\dviiseg #1}}{}
+        \ifdefstring{\displaymodule}{MAX7219matrix}{{\deseg #1}}{}
+        \ifdefstring{\displaymodule}{LCD1602}{{\necker #1}}{}
+        % We don't yet have a Cow Pi configuration with 14-segment displays, so no \deseg yet
+    }{
+        \texttt{#1}
+    }
+}
+
+\newcommand{\rubricitem}[2]{\item[\underline{\hspace{1cm}} +#1] #2}
+\newcommand{\bonusitem}[2]{\item[\underline{\hspace{1cm}} Bonus +#1] #2}
+\newcommand{\penaltyitem}[2]{\item[\underline{\hspace{1cm}} -#1] #2}
+\newcommand{\checkoffitem}[1]{\item (\phantom{xxx}) #1}
+\newcommand{\precheckoffitem}[1]{\item [] (\phantom{xxx}) #1}
+
+\newcommand{\institutename}{University of Nebraska-Lincoln}
+\newcommand{\instructorname}{Christopher A. Bohn}
+\newcommand{\coursenumber}{CSCE~231}
+\newcommand{\cstwo}{CSCE~156, RAIK~184H, or SOFT~161}
+\newcommand{\courseterm}{Spring 2025}
+\newcommand{\labnumber}{10}
+\newcommand{\labname}{Using Polling with Memory-Mapped Input/Output}
+\newcommand{\shortlabname}{PollingLab}
+\newcommand{\duedate}{Week of April 14, before the start of your lab section}
+\newcommand{\pathone}{chap09/io/memory-mapped}
+\newcommand{\pathtwo}{chap09/system-descriptions/number-builder}
+\newcommand{\filesource}{Download \startercode\ from Canvas, or copy \startercode\ from {\footnotesize$\sim$}cbohn2/csce231 on \textit{nuros.unl.edu}}
+\newcommand{\filesubmission}{When you have completed this assignment, submit \requiredfiles\ to the assignment in Canvas.}
+\newcommand{\runtimeenvironment}{a Cow Pi development board with a \processor\ microcontroller}
+\newcommand{\startercode}{pollinglab.zip or pollinglab.tar}
+\newcommand{\requiredfiles}{\textit{io\_functions.c} and \textit{number\_builder.c}}
+\newcommand{\buildsystem}{platformio}
+\newcommand{\processor}{RP2040}
+\newcommand{\lowercaseprocessor}{rp2040}
+\newcommand{\collaborationrules}{During your scheduled lab time, you may, \textbf{but are not required to}, form a partner group of 2 students.
+    When necessary, there may be a group of 3 students.
+    During your scheduled lab time, and until the end of your lab day, you may discuss problem decomposition and solution design with your lab partner.
+    After your scheduled lab day, you may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.
+    Sharing code with or copying code from another student or the internet is prohibited.
+}
+\newcommand{\policyforcodethatdoesnotcompile}{\subsection*{No Credit for Uncompilable Code}
+    If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.\footnote{
+        At the TA's discretion, if they can make your code compile with \textit{one} edit (such as introducing a missing semicolon) then they may do so and then assess a 10\% penalty on the resulting score.
+        The TA is under no obligation to do so, and you should not rely on the TA's willingness to edit your code for grading.
+        If there are multiple options for a single edit that would make your code compile, there is no guarantee that the TA will select the option that would maximize your score.
+    }
+    Before turning in your code, be sure to compile and test your code on \runtimeenvironment\ with the original driver code, the original header file(s), and the original \textit{Makefile}.}
+\newcommand{\latepolicy}{\subsection*{Late Submissions}
+    This assignment is due before the start of your lab section.
+     After you have exhausted your grace days, we will accept late turn-ins up to one hour late, assessing a 10\% penalty on these late submissions.
+    After you have exhausted your grace days, any work turned in more than one hour late will not be graded.}
+\newcommand{\softwareengineeringfrontmatter}{\section*{No Spaghetti Code Allowed}
+        In the interest of keeping your code readable, you may \textit{not} use
+        any \lstinline{goto} statements, nor may you use any
+        \lstinline{continue} statements, nor may you use any \lstinline{break}
+        statements to exit from a loop, nor may you have any functions
+        \lstinline{return} from within a loop.}
+\newcommand{\softwareengineeringpenalties}{\penaltyitem{1}{for each \lstinline{goto} statement,
+            \lstinline{continue} statement, \lstinline{break} statement used to
+            exit from a loop, or \lstinline{return} statement that occurs within
+            a loop.}}
+\newcommand{\scenariointroduction}{    Archie walks up to you, along with Herb Bee from Eclectic Electronics.
+    Herb is holding a tangled mess of electronics.
+    Archie explains, ``Herb here has developed a prototype of a device that he thinks will be useful for our physical security needs, as well as a few other applications around here. He calls it the \textit{Cow Pi}.''
+
+    You look at the device in Herb's hands and see the Raspberry Pi Pico central to the circuit.
+    ``I suppose the `\textit{-Pi}' suffix is because it uses a Raspberry Pi Pico?''
++        
+    Herb replies, ``Um, yeah, sure.
+ We considered using an Arduino Nano, but \textit{Cowduino} isn't very punny, is it?''
+
+    Archie chimes in, ``Maybe with the right emphasis: \textit{Cow-DOO-ino}.''
+
+    ``That's kind of subtle, don't you think? How will people know to put the emPHAsis on that sylLAble?''
+    
+    ``I think we're getting off topic here,'' you point out.
+    ``How can I help?''
+
+    ``Oh, right,'' Herb says, ``We'd like you to kick its proverbial tires.
+    Let's start off with something simple, like a number builder tool.''}
+\newcommand{\scenariowrapup}{Herb looks over your work.
+    ``Hmm, yes. I think this is coming along nicely.
+    Let's run a few more tests.''
+
+    Archie storms into the room.
+    ``We have \textit{got} to do something about security!
+    How's that doodad coming along? 
+    Because there's now a half-man/half-fly in the labs going on-and-on about Chaos Theory and how if we just give him a MacBook and a spaceship then he'll be able to get the Lord of Thunder to travel across the 8th Dimension.
+    Is that thing just about ready?''
+
+    Herb shakes his head, ``No, not quite yet. It should be ready in about a week.''}
