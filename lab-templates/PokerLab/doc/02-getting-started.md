@@ -39,7 +39,7 @@ Most IDEs will be able to configure the compilation settings from *CMakeLists.tx
   cmake --build build
   ```
 
-When you compile the starter code, it will generate a warning:
+When you compile the starter code, the compiler will generate a warning:
 
 ```text
 card.c:63:30: warning: format string is empty [-Wformat-zero-length]
@@ -48,6 +48,7 @@ sprintf(valueString, "", value);
 ```
 
 <font color="red">You should get in the habit of correcting *any* code that generates a warning!</font>
+On the next page, you will address this compiler warning.
 
 ---
 

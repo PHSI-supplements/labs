@@ -97,6 +97,7 @@ This effectively makes `partial_hand` an array such that $\forall j : partial\_h
 
 - [ ] Examine the remaining starter code in *poker.c* to make sure you understand it.
 
+
 ---
 
 |            [⬅️](04-creating-deck-of-cards.md)            |      [⬆️](../README.md)      |             [➡️](06-characterize-hands.md)              |

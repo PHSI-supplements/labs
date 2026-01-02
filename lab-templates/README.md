@@ -1,6 +1,11 @@
 # CSCE 231 Lab Assignments
 
-We will place the assignments and starter code for most of the labs in this directory.
+We will place the assignments and starter code for most of the coding assignments in this repository.
+
+## Student
+
+- Name: 
+- Lab Section: 
 
 ## Table of Contents
 
@@ -16,16 +21,15 @@ We will place the assignments and starter code for most of the labs in this dire
   - [Git Grumpiness: `git merge`](#git-grumpiness-git-merge)
   - [Git Grumpiness: `git commit`](#git-grumpiness-git-commit)
   - [Git Grumpiness: `git push`](#git-grumpiness-git-push)
-  - [Git Grumpiness: `git pull --no-ff`](#git-grumpiness-git-pull---no-ff)
+  - [Git Grumpiness: `git pull --ff`](#git-grumpiness-git-pull---ff)
   - [Git Grumpiness: `git pull --rebase`](#git-grumpiness-git-pull---rebase)
 
 ## Retrieving the Lab
 
-The first lab, PokerLab, is available at the start of the semester.
-We will place subsequent labs in branches so that doing so does not cause any confusion while you're finishing up another assignment.
-When you are ready to work on the next lab, notionally *FooLab*, you can retrieve the assignment and starter code:
+We will place each coding assignment in a non-`main` branch so that adding a new assignment does not interfere with the assignment you're working on.
+When you are ready to work on a coding assignment, notionally *FooLab*, you can retrieve the assignment's instructions and starter code:
 
-- First, make sure your repository is ready to receive the *FooLab*.
+- First, make sure your repository is ready to receive the *FooLab* and that you are on the `main` branch.
   ```shell
   git status
   ```
@@ -36,30 +40,41 @@ When you are ready to work on the next lab, notionally *FooLab*, you can retriev
   
   nothing to commit, working tree clean
   ```
+  The important parts are that you are on `main` and that your working tree is clean.
   If you see something different, see [the corrective steps below](#git-grumpiness-git-status).
-- Next, retrieve the FooLab branch (replace `FooLab` with the actual, correct branch name).
+- Next, retrieve the latest branches from the remote copy of your repository:
   ```shell
-  git fetch origin FooLab
+  git fetch origin
   ```
-  You should see something like this:
+  If there are no new branches to retrieve, then there will be no output.
+  If the instructor has added a new assignment, then you should see something like this:
   ```
-  From git.unl.edu:csce231/fall2025/your-repo.git
-  * branch            FooLab     -> FETCH_HEAD
+  From git.unl.edu:csce231/spring2026/your-repo.git
+  * [new branch]      FooLab     -> origin/FooLab
   ```
-  If you see something different, see [the corrective steps below](#git-grumpiness-git-status).
-- Finally, and merge the *FooLab* branch into your `main` branch.
+  If you see something different, see [the corrective steps below](#git-grumpiness-git-fetch).
+- Finally, merge the *FooLab* branch into your `main` branch.
   ```shell
-  git merge --no-ff origin/FooLab
+  git merge --ff origin/FooLab
   ```
-  If everything is clean, you should see a message like:
-  ```
-  Updating abc1234..def5678
-  Merge made by the 'ort' strategy.
-  FooLab/README.md   | 10 ++++++++++
-  FooLab/src/main.c  | 42 ++++++++++++++++++++++++++++++++++++++++++
-  ...
-  ```
-  and a new commit will be created for the merge.
+  If everything is clean, you should see one of two types of messages.
+  - If Git can fast-forward through the merge, you will see:
+    ```
+    Updating abc1234..def5678
+    Fast-forward
+    FooLab/README.md   | 10 ++++++++++
+    FooLab/src/main.c  | 42 ++++++++++++++++++++++++++++++++++++++++++
+    ...
+    ```
+  - If Git needs to perform an explicit merge, you will see:
+    ```
+    Updating abc1234..def5678
+    Merge made by the 'ort' strategy.
+    FooLab/README.md   | 10 ++++++++++
+    FooLab/src/main.c  | 42 ++++++++++++++++++++++++++++++++++++++++++
+    ...
+    ```
+    and a new commit will be created for the merge.
   
   If you see something different, see [the corrective steps below](#git-grumpiness-git-merge).
 
@@ -85,9 +100,10 @@ FooLab/
  │
  ├── CMakeLists.txt                         # configuration file
  ├── CMakePresets.json                      # configuration file
- ├── LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt  # used to indicate if you're exercising late days
- ├── README.md                              # Assignment front matter 
+ ├── submission_metadata.json               # used to indicate if you're exercising late days, had a lab partner, or consulted external references
+ ├── README.md                              # Assignment front matter
  ├── build/...                              # Will appear after you configure the project
+ ├── data/...                               # Files that are neither code nor documentation (not present in all assignments)
  ├── doc/...                                # The pages describing the assignment's tasks
  ├── src/...                                # The source code
  └── test/...                               # Constraint Check Tests
@@ -178,11 +194,11 @@ Be sure to have those completed before the assignment is due.
 
 You turn in the code simply by pushing your completed lab to your repository.
 You *should* make a habit of committing successful changes along the way, but at a minimum, push your completed code before the assignment is due.
-If you are exercising one or more late days, be sure to also edit and push LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt.
+If you are exercising one or more late days, be sure to also edit and push submission_metadata.json.
 
 If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has CMakeLists.txt) and run the commands:
 ```shell
-git add .                                   # will stage both src/ directory and LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt
+git add .                                   # will stage both src/ directory and submission_metadata.json
 git commit
 ```
 An editor should open for you to provide a commit message.  
@@ -211,7 +227,7 @@ If you see something different, see [the corrective steps below](#git-grumpiness
 
 ### Git Grumpiness: `git status`
 
-You made sure your repository is ready to receive the *FooLab*.
+You tried to make sure your repository is ready to receive the *FooLab*.
 ```shell
 git status
 ```
@@ -223,16 +239,17 @@ Your branch is up to date with 'origin/main'.
 nothing to commit, working tree clean
 ```
 But you saw something different.
-- If you get a *fatal: not a git repository* error, then navigate to your repository's directory and try again.
+- If you get a *fatal: not a git repository* error, then `cd` into your repository's directory and try again.
 - If it does not say *On branch main*, then switch back to the main branch:
   ```shell
   git checkout main
   ```
 - If it does not say *Your branch is up to date with 'origin/main'*, then update it:
   ```shell
-  git pull --no-ff
+  git pull --ff
   ```
-- If it does not say *nothing to commit, working tree clean*, then commit your changes (or stash them if you prefer) before continuing.
+- If it does not say *nothing to commit, working tree clean*, then commit your changes before continuing.
+  (You *can* stash changes instead, but do that only if you know how to re-apply them later, or if you are intentionally abandoning all changes since your last commit.)
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
 
@@ -251,19 +268,25 @@ You expected to see something like this:
   ```
 But you saw something different.
 If the error is:
-- *fatal: couldn't find remote ref FooLab*, or  
-  *fatal: Not a valid object name: 'origin/FooLab'*, then  
+- *fatal: couldn't find remote ref FooLab*, then  
   either the instructor hasn’t released this lab yet, or you mistyped the branch name.
   Double-check spelling and capitalization.
-  You can list all remote branches with:
+  To check whether the branch exists on the remote:
+  ```shell
+  git ls-remote --heads origin FooLab
+  ```
+  You can list *all* remote branches with:
   ```shell
   git ls-remote --heads origin
   ```
 - *ssh: Could not resolve hostname git.unl.edu: Name or service not known*, or  
-  *fatal: Could not read from remote repository*, or  
   *ssh: connect to host git.unl.edu port 22: Connection timed out*, then  
   this is a connectivity problem.
   Check the network.
+- *Permission denied (publickey)*, or
+  *fatal: Could not read from remote repository* (**without** timeouts/DNS errors), then
+  this is usually a login/SSH key issue.
+  A TA or the instructor can help you troubleshoot this issue.
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
 
@@ -271,27 +294,34 @@ If you cannot resolve the problem(s) yourself, then talk with a TA or the instru
 
 ### Git Grumpiness: `git merge`
 
-You attempted merge the *FooLab* branch into your `main` branch.
+You attempted to merge the *FooLab* branch into your `main` branch.
 ```shell
-git merge --no-ff origin/FooLab
+git merge --ff origin/FooLab
 ```
 You expected to see a message like:
 ```
 Updating abc1234..def5678
+Fast-forward
+# or
 Merge made by the 'ort' strategy.
 FooLab/README.md   | 10 ++++++++++
 FooLab/src/main.c  | 42 ++++++++++++++++++++++++++++++++++++++++++
 ...
 ```
 But you saw something different.
-- If you get a *fatal: Not something we can merge* error, you may have mistyped the branch name.
+- If you get an error like:<br>
+  *fatal: Not something we can merge*, or<br>
+  *fatal: Not a valid object name: 'origin/FooLab'*, or<br>
+  *fatal: 'origin/FooLab' does not point to a commit*, then
+  the branch name is wrong or the branch was not fetched correctly.
   Double-check the capitalization and try again.
-- If you get a message about *untracked working tree files would be overwritten*, you have files in your working directory that conflict with the lab.
+- If you get a message about *untracked working tree files would be overwritten by merge*, then
+  you have files in your working directory that conflict with the lab.
   Move, rename, or remove them, then try again.
-- If Git reports *Automatic merge failed; fix conflicts and then commit the result*, then you have a real merge conflict:
-  1. Open the conflicting files -- Git will mark the conflicting lines with `<<<<<<<`, `=======`, and `>>>>>>>`.
+- If Git reports *Automatic merge failed; fix conflicts and then commit the result*, then you have a merge conflict that Git cannot resolve automatically:
+  1. Open the conflicting files -- Git marks the conflicting lines with `<<<<<<<`, `=======`, and `>>>>>>>`.
   2. Edit the file(s) to keep the correct code.
-  3. Mark them resolved:
+  3. Mark each file's conflicts as resolved as you go:
      ```shell
      git add path/to/conflicted-file
      ```
@@ -299,8 +329,10 @@ But you saw something different.
      ```shell
      git commit
      ```
-  This completes the merge.
-- If you get an error saying *fatal: refusing to merge unrelated histories*, let a TA or the instructor know — that indicates something unusual in your repository setup.
+  Save and close the editor to complete the merge.
+- If you see *Already up to date*, then the lab has already been merged (or there was nothing new to add).
+  You can continue.
+- If you get an error saying *fatal: refusing to merge unrelated histories*, let a TA or the instructor know — this indicates something unusual in your repository setup.
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
 
@@ -315,6 +347,12 @@ git commit
 ```
 You expected the editor should open for you to provide a commit message, but it didn't.
 - If `git commit` exits with *nothing to commit, working tree clean*, then either you forgot to run `git add`, or there were no changes to stage when you ran `git add`.
+  Run `git status` to see what (if anything) is changed.
+- If the screen changed but looks "stuck," then Git has probably opened a text editor in the terminal (often Vim or Nano) and is waiting fo ryou to type a commit message.
+  Type a short message describing your changes, then save and exit the editor
+- If you see *Aborting commit due to empty commit message*, then the editor was closed without you having entered a commit message.
+  Run `git commit` again and include a commit message.
+- If an editor opened outside the terminal, then switch to that window to enter your commit message.
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
 
@@ -338,6 +376,11 @@ To git.unl.edu:csce231/fall2025/your-repo.git
    abc1234..def5678  main -> main
 ```
 But you saw something different.
+- If you see
+  ```
+  Everything up-to-date
+  ```
+  then there was nothing new to push. This is not an error.
 - If you received the message
   ```
   To git.unl.edu:csce231/fall2025/your-repo.git
@@ -353,7 +396,7 @@ But you saw something different.
   and how to fix it (`git pull ...`)
   - If you're new to Git, I recommend using
     ```shell
-    git pull --no-ff
+    git pull --ff
     ```
     which will highlight merge conflicts for you. If you're more comfortable with Git, you may use
     ```shell
@@ -366,16 +409,24 @@ But you saw something different.
   - *ssh: connect to host git.unl.edu port 22: Connection timed out*, then  
   this is a connectivity problem.
   Check the network.
+- If you see netowrk-related errors such as: *ssh: Could not resolve hostname git.unl.edu: Name or service not known*, or  
+    *ssh: connect to host git.unl.edu port 22: Connection timed out*, then  
+    this is a connectivity problem.
+    Check the network.
+- If you see authentication errors such as: *Permission denied (publickey)*, or
+  *fatal: Could not read from remote repository* (**without** timeouts/DNS errors), then
+  this is usually a login/SSH key issue.
+  A TA or the instructor can help you troubleshoot this issue.
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
 
 [Back to "Turning in the Completed Lab"](#turning-in-the-completed-lab)
 
-### Git Grumpiness: `git pull --no-ff`
+### Git Grumpiness: `git pull --ff`
 
 You retrieved changes from the remote copy of your repository with:
 ```shell
-git pull --no-ff
+git pull --ff
 ```
 and expected to see something similar to:
 ```
@@ -388,11 +439,17 @@ Or possibly:
 ```
 Updating abc1234..def5678
 Auto-merging src/main.c
-Merge made by the 'recursive' strategy.
+Merge made by the 'ort' strategy.
  src/main.c | 2 ++
  1 file changed, 2 insertions(+)
 ```
 But instead you saw something different.
+- If you saw:
+  ```
+  Already up to date.
+  ```
+  then there were no new changes to pull.
+  This is not an error.
 - If you saw
   ```
   error: Your local changes to the following files would be overwritten by merge:
@@ -408,7 +465,8 @@ But instead you saw something different.
   CONFLICT (content): Merge conflict in src/main.c
   Automatic merge failed; fix conflicts and then commit the result.
   ```
-  Then some of the changes in the remote copy overlap with changes in the local copy.
+  then some of the changes in the remote copy overlap with changes in the local copy,
+  and Git could not resolve them automatically.
   1. Open the conflicting files -- Git will mark the conflicting lines with `<<<<<<<`, `=======`, and `>>>>>>>`.
   2. Edit the file(s) to keep the correct code.
   3. Mark them resolved:
@@ -436,11 +494,12 @@ Applying: Add new function to src/main.c
 Applying: Rename variable in src/xyzzy.c
 ```
 But instead you saw something different.
-- If you saw
+- If you saw an error like
   ```
   Cannot rebase: You have unstaged changes.
   Please commit or stash them.
   ```
+  (or any other message that says you have uncommitted changes),
   then you have uncommitted changes in the local copy of your repository.
   Stage (`git add ...`) and commit (`git commit`) the changes, or stash (`git stash`) them if you prefer.
 - If you saw something similar to:
@@ -453,13 +512,19 @@ But instead you saw something different.
   Resolve all conflicts manually, mark them as resolved with
   "git add <file>", then run "git rebase --continue".
   ```
+  then there is a conflict while replaying commits.
   1. Open the conflicting file -- Git will mark the conflicting lines with `<<<<<<<`, `=======`, and `>>>>>>>`.
   2. Edit the file to keep the correct code.
-  3. Mark it resolved:
+  3. Mark it resolved and continue the rebase:
      ```shell
      git add path/to/conflicted-file
      git rebase --continue
      ```
   4. Repeat the process for any additional merge conflicts.
+  
+  If you get stuck and want to cancel the rebase and return to where you started:
+  ```shell
+  git rebase --abort
+  ```
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.

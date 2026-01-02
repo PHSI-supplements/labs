@@ -27,7 +27,7 @@ There are other setup actions you can take while you wait for the TAs.
 #### Prepare an SSH keypair
 
 If you have not already prepared an SSH keypair to authenticate with git.unl.edu from nuros.unl.edu:
-- [ ] Log into nuros.unl.edu (see the [discussion below](#the-development-environment))
+- [ ] Log into nuros.unl.edu using a secure shell terminal (see the [discussion below](#the-development-environment))
 - [ ] Run the command
   ```
   ssh-keygen -t rsa -b 4096 -C "CSCE 231"
@@ -79,7 +79,7 @@ where *username* is your UNL username.
 See the "Working Remotely" section of [The School of Computing's Support FAQ](https://computing.unl.edu/faq/), 
 specifically "Connecting to cse.unl.edu and other Unix servers with SSH from...", for instructions.
 
--  Instead of using *cse.unl.edu* has the Host Name, use *nuros.unl.edu*.
+-  Instead of using *cse.unl.edu* as the Host Name, use *nuros.unl.edu*.
 -  Instead of using your SoC username and password, use your UNL username and password.
 
 #### From Windows
@@ -210,7 +210,7 @@ navigate to that URL in your web browser to confirm that you have access.
   - Select **Remote-SSH: Connect to Host...** from the Command Palette.
   - Use USERNAME@nuros.unl.edu
   - After the connection is established, use **File** ⇒ **Open...** to navigate to PokerLab.
-    - Navigate to the directory that has the *README.md* file and the *CMakeLists.txt* file.
+    - Navigate to the directory that has the *CMakeLists.txt* file and the *CMakePresets.json* file.
 - [ ] Open *README.md*
   - Option 1: Open *README.md* in the web interface for your Git repository
   - Option 2: In VS Code's "Explorer" pane, right-click on *README.md* and select **Open Preview**

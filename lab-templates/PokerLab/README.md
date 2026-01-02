@@ -9,12 +9,12 @@ This assignment is worth 10 points.
 
 ### Submission Deadline
 
-This assignment is due **the week of September 1, before the start of your lab section**.
+This assignment is due **the week of January 19, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 A portion of this assignment is on Canvas; that must also be completed before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
-You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+You can exercise a late day (or days) by editing the [submission_metadata.json](submission_metadata.json) file and including the update with your code.
 
 ### Collaboration Rules
 
@@ -24,11 +24,15 @@ During your scheduled lab time, and until the end of your lab day, you may discu
 After your scheduled lab day, you may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.
 Sharing code with or copying code from another student or the internet is prohibited.
 
-If you work with a lab partner, be sure to commit your code at the end of lab, and also at the end of the day if you continue to work with them after lab.
+If you work with a lab partner, be sure to:
+- Add your partner to [submission_metadata.json](submission_metadata.json),
+- Commit your code (including submission_metadata.json) at the end of lab, and
+- Commit your code at the end of the day if you continue to work with your partner after lab.
 
 ### Generative AI Rules
 
-You may use the CodeHelp.app "virtual TA" for help without restriction.
+You may use the CodeHelp.app "virtual TA" for help, and
+you may use "Oscar the AI Tutor" built into the course's textbook.
 You may use other generative AI tools to translate this assignment into another human language.
 No other use of generative AI is permitted on this assignment without explicit permission from Dr. Bohn.
 
@@ -68,7 +72,7 @@ There are other differences beyond what we'll see in this course's labs;
 our coverage of the C language is necessarily focused on what you need for this course.
 We encourage you to learn more about the C language on your own.
 
-### No Spaghetti Code Allowed
+### Structured Control Flow Only
 
 In the interest of keeping your code readable, you may not use any `goto` statements,
 nor may you use any `break` statements to exit from a loop,

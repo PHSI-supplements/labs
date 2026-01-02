@@ -19,6 +19,6 @@ If you distribute assignments through Git repositories, then you have a bootstra
 You need to distribute the instructions for setting up the environment (including the repository) before students have access to the repository you created (or, alternatively, before the students provide you with access to a repository they created).
 For this reason, I've separated the instructions for setting up the environment from the code assignment.
 
-I've provided an [example](UNL-CSCE231/UNL-CSCE231.md) set of instructions.
+I've provided an [example](UNL-CSCE231/UNL-CSCE231-setup.md) set of instructions.
 Feel free to adapt it to how you like to run your course, or write entirely new instructions if the example is too far removed from your preferences.
 You can then copy the rendered instructions into an assignment on your LMS, solving your bootstrapping problem.

@@ -51,6 +51,16 @@ You will receive full credit for these functions if you implement them correctly
 
 ---
 
+### Save Your Progress
+
+- [ ] Use `git add` (or your IDE's equivalent) to stage *poker.c* (and any other files you have edited).
+- [ ] Use `git commit` (or your IDE's equivalent) to commit the update to the local copy of your repository.
+  Be sure to use a descriptive commit message.
+- [ ] Use `git push` (or your IDE's equivalent) to push the commit to git.unl.edu.
+
+
+---
+
 |             [⬅️](05-code-reading.md)              |      [⬆️](../README.md)      |         [➡️](07-grading.md)          |
 |:-------------------------------------------------:|:----------------------------:|:------------------------------------:|
 | [Study the Code in *poker.c*](05-code-reading.md) | [Front Matter](../README.md) | [Turn-In and Grading](07-grading.md) |

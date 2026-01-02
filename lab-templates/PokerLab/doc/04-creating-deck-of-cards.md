@@ -20,11 +20,21 @@ Catching errors now will be easier than trying to catch them after you've starte
 - [ ] Examine the remaining starter code in *card.c* to make sure you understand it.
 
 
-### Write the code for `populate_deck()`
+### Write the Code for `populate_deck()`
 
 - [ ] Using `create_card()` from *card.c*, create cards corresponding to the 52 standard playing cards and add them to the `deck[]` array.
 - [ ] Compile and run your program.
     - Confirm that you wrote `populate_deck()` correctly by selecting option 2 to print out all 52 cards in `deck[]`.
+
+---
+
+### Save Your Progress
+
+- [ ] Use `git add` (or your IDE's equivalent) to stage *card.c* (and any other files you have edited).
+- [ ] Use `git commit` (or your IDE's equivalent) to commit the update to the local copy of your repository.
+      Be sure to use a descriptive commit message.
+- [ ] Use `git push` (or your IDE's equivalent) to push the commit to git.unl.edu.
+
 
 ---
 
