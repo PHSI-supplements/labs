@@ -16,18 +16,18 @@ and that you fully understand <u>how the inputs to C's logical boolean operation
 
 #### Simple Boolean Logic Example 1
 
-- [ ] Look at the code for `is_pair()`.
+- [ ] Look at the code for `is_three_of_kind()`.
 
 Notice that the parameter `hand`'s type is `card_t *`;
 that is, `hand` is a pointer to a `card_t`.
 In the code, though, we treat `hand` as though it were an array.
 This is because in C, array variables are pointers, and we can treat pointers as array variables.
 Notice also that `hand` is modified with the `const` keyword;
-this states that the `is_pair()` function should treat the `hand` as a read-only array.
-Now look at the rest of the code in `is_pair()`.
+this states that the `is_three_of_kind()` function should treat the `hand` as a read-only array.
+Now look at the rest of the code in `is_three_of_kind()`.
 
-Why does `is_pair()` return a **1** when the hand contains at least one pair?
-Why does it return a **0** when the hand contains no pairs?
+Why does `is_three_of_kind()` return a **1** when the hand contains at least three cards with the same value?
+Why does it return a **0** when the hand does not contain three cards with the same value?
 If you can't determine this on your own, you may talk it over with other students or the TA.
 
 <!-- - [ ] Type your answer in *answers.txt*. -->
@@ -80,20 +80,48 @@ If you can't determine this on your own, you may talk it over with other student
 <!-- - [ ] Type your answer in *answers.txt*. -->
 - [ ] Type your answer in the Canvas quiz.
 
+#### Double Negation Example
+
+- [ ] Look at the code for `is_pair()`.
+
+> 💡 **Food for Thought**
+>
+> In Java, the expression `!!pair` would be silly.
+> In C, however, it demonstrates an idiom.
+> What does `!!` do?
+
+Why does `is_pair()` return a **1** when the hand contains at least one pair?
+Why does it return a **0** when the hand contains no pairs?
+If you can't determine this on your own, you may talk it over with other students or the TA.
+
+*Suggestion*: walk through the code to reason-out `pair`'s value with the hand 3♥️ 3♠️ 3♦️ 4♣️ 5♣️.
+
+<!-- - [ ] Type your answer in *answers.txt*. -->
+- [ ] Type your answer in the Canvas quiz.
+
 #### Pointer Arithmetic
 
-- [ ] Look at the code for `is_two_pair()`.
+- [ ] Look at the code for `is_full_house()`.
 
 Recall that in C, array variables are pointers.
-The assignment `partial_hand = hand + i` makes use of *pointer arithmetic*.
-- If the assignment were `partial_hand = hand` then it would assign `hand`'s base address to `partial_hand`,
-  and so `partial_hand` would point to the $0^{th}$ element of `hand`.
-- The expression $hand+i$ generates the address for the $i^{th}$ element of `hand`,
-  and so `partial_hand = hand + i` assigns to `partial_hand` the address of the $i^{th}$ element of `hand`.
+The assignment `partial_hand = hand` makes a copy of the array's address, not a copy of the array itself;
+`partial_hand` and `hand` point to the $0^{th}$ element of the `hand` array.
+In the `if` branch, the assignment `partial_hand = partial_hand + 3` makes use of *pointer arithmetic*.
+- The expression $hand+3$ generates the address for the $3^{rd}$ element of the `hand` array,
+  and so `partial_hand = hand + 3` assigns to `partial_hand` the address of the $3^{rd}$ element of `hand`.
+- The update to `partial_hand` did not change the address in `hand` -- `hand` still points to the $0^{th}$ element of the `hand` array.
 
-This effectively makes `partial_hand` an array such that $\forall j : partial\_hand[j] = hand[i+j]$.
+This effectively makes `partial_hand` an array such that $\forall i : partial\_hand[i] = hand[i+3]$.
 
-[//]: # (You may find it interesting to set a breakpoint in `is_to_pair&#40;&#41;` and use the debugger to observe the changes to the address stored in `partial_hand`.)
+A `card_t` object occupies 8 bytes in memory.
+Assuming the `else` branch runs in the loop's first iteration:
+after `partial_hand = partial_hand + 1;` in the `else` branch executes the first time, does `partial_hand` point to one byte after the start of `hand` or to eight bytes after the start of `hand`?
+Why?
+
+<!-- - [ ] Type your answer in *answers.txt*. -->
+- [ ] Type your answer in the Canvas quiz.
+
+
 
 - [ ] Examine the remaining starter code in *poker.c* to make sure you understand it.
 

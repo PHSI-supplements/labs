@@ -25,23 +25,16 @@ decide for yourself whether this is best characterized as a known bug or as a fe
 For now, the program does not correctly characterize a hand that is a three of a kind, a full house, or a four of a kind.
 
 
-### Write `is_three_of_kind()`
-
-- [ ] Implement and test `is_three_of_kind()`.
-  - Do three cards all have the same value?
-  - You may assume that `hand` is pre-sorted from the least value to the greatest value
-
-### Write `is_full_house()`
-
-- [ ] Implement and test `is_full_house()`.
-  - Does the hand contain a three of a kind and also contain a pair with a different value than that of the other three cards?
-    - The card value of the pair might be less than the card value of the three of a kind, or it might be greater than the card value of the three of a kind. 
-  - You may assume that `hand` is pre-sorted from the least value to the greatest value
-
 ### Write `is_four_of_kind()`
 
 - [ ] Implement and test `is_four_of_kind()`.
   - Do four cards all have the same value?
+  - You may assume that `hand` is pre-sorted from the least value to the greatest value
+
+### Write `is_two_pair()`
+
+- [ ] Implement and test `is_two_pair()`.
+  - Do two cards form a pair and a different two cards also form a pair?
   - You may assume that `hand` is pre-sorted from the least value to the greatest value
 
 ---    

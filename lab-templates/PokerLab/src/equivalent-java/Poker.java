@@ -46,7 +46,7 @@ public class Poker {
      * Sorts an array of {@link Card}s in-place from the least value to the greatest value.
      *
      * <ul>
-     *     <li>Postcondition: The subdeck has its initial `card_t`s, sorted from the least value to the greatest value.</li>
+     *     <li>Postcondition: The subdeck has its initial `Card`s, sorted from the least value to the greatest value.</li>
      * </ul>
      *
      * @param subdeck the {@link Card}s to be sorted; it might not be the full deck
@@ -71,12 +71,12 @@ public class Poker {
     }
 
     /**
-     * Randomly selects {@code size_of_hand} {@link Card}s and returns them
+     * Randomly selects {@code sizeOfHand} {@link Card}s and returns them
      *      sorted from the least value to the greatest value.
      *
      * <ul>
-     *     <li>Precondition:  The destination must have space for at least `size_of_hand` `card_t`s.</li>
-     *     <li>Postcondition: The destination has `size_of_hand` `card_t`s, sorted from the least value to the greatest value.</li>
+     *     <li>Precondition:  The destination must have space for at least `sizeOfHand` `Card`s.</li>
+     *     <li>Postcondition: The destination has `sizeOfHand` `Card`s, sorted from the least value to the greatest value.</li>
      * </ul>
      *
      * @param sizeOfHand the number of {@link Card}s to be placed in the hand
@@ -100,8 +100,8 @@ public class Poker {
      *      the least value to the greatest value.
      *
      * <ul>
-     *     <li>Precondition:  The destination must have space for at least `size_of_hand` `card_t`s.</li>
-     *     <li>Postcondition: The destination has `size_of_hand` `card_t`s, sorted from the least value to the greatest value.</li>
+     *     <li>Precondition:  The destination must have space for at least `sizeOfHand` `Card`s.</li>
+     *     <li>Postcondition: The destination has `sizeOfHand` `Card`s, sorted from the least value to the greatest value.</li>
      * </ul>
      *
      * @param indices specifies which {@link Card}s from {@link #deck} are to be
@@ -137,9 +137,9 @@ public class Poker {
         int sizeOfHand = hand.length;
         boolean pair = false;
         for (int i = 0; i < sizeOfHand - 1; i++) {
-            pair = pair || (hand[i].value == hand[i + 1].value);    // because hand is sorted, a pair must be two
-        }                                                           // adjacent cards
-        return pair;
+            pair += (hand[i].value == hand[i + 1].value);   // because hand is sorted, a pair must be two adjacent cards
+        }
+        return (pair != 0);
     }
 
     /**
@@ -155,22 +155,9 @@ public class Poker {
      * @return {@code true} if and only if {@code hand} contains "two pair"
      */
     public static boolean isTwoPair(Card[] hand) {
-        int sizeOfHand = hand.length;
-        int numberOfPairs = 0;
-        Card[] partialHand;
-        int i = 0;
-        while (i < sizeOfHand - 1) {
-            partialHand = Arrays.copyOfRange(hand, i, i + 2);   /* THIS IS MAKES A COPY OF PART OF THE ARRAY.
-                                                                       THE C CODE DOES NOT MAKE A COPY BUT INSTEAD
-                                                                       ALIASES PART OF THE EXISTING ARRAY. */
-            if (isPair(partialHand)) {
-                numberOfPairs++;
-                i += 2;
-            } else {
-                i++;
-            }
-        }
-        return (numberOfPairs == 2);
+        /* IF THIS WERE THE C CODE, YOU WOULD WRITE THIS METHOD.
+           BECAUSE THIS ISN'T THE C CODE, YOU DO NOT NEED TO DO SO UNLESS IT HELPS YOU. */
+        return true;
     }
 
     /**
@@ -186,9 +173,12 @@ public class Poker {
      * @return {@code true} if and only if {@code hand} contains "three of a kind"
      */
     public static boolean isThreeOfKind(Card[] hand) {
-        /* IF THIS WERE THE C CODE, YOU WOULD WRITE THIS METHOD.
-           BECAUSE THIS ISN'T THE C CODE, YOU DO NOT NEED TO DO SO UNLESS IT HELPS YOU. */
-        return true;
+        int sizeOfHand = hand.length;
+        boolean trio = false;
+        for (int i = 0; i < sizeOfHand - 2; i++) {
+            trio = trio || ((hand[i].value == hand[i + 1].value) && (hand[i].value == hand[i + 2].value));
+        }
+        return trio;
     }
 
     /**
@@ -205,11 +195,11 @@ public class Poker {
      */
     public static boolean isStraight(Card[] hand) {
         int sizeOfHand = hand.length;
-        int not_straight = 0;
+        int notStraight = 0;
         for (int i = 0; i < sizeOfHand - 1; i++) {
-            not_straight = not_straight + Math.abs(hand[i + 1].value - hand[i].value - 1);
+            notStraight = notStraight + Math.abs(hand[i + 1].value - hand[i].value - 1);
         }
-        return (not_straight == 0);
+        return (notStraight == 0);
     }
 
     /**
@@ -245,13 +235,30 @@ public class Poker {
      * </ul>
      *
      * @param hand the {@link Card}s to be assessed
-     * @return {@code true} if and only if {@code hand} contains a "flush"
+     * @return {@code true} if and only if {@code hand} contains a "full house"
      */
     public static boolean isFullHouse(Card[] hand) {
-        /* IF THIS WERE THE C CODE, YOU WOULD WRITE THIS METHOD.
-           BECAUSE THIS ISN'T THE C CODE, YOU DO NOT NEED TO DO SO UNLESS IT HELPS YOU. */
-        return true;
+        int cardsRemaining = hand.length;
+        int startOfPartialHand = 0;
+        while (cardsRemaining >= 5) {
+            /* In C, `partial_hand` is another pointer into the same array (no copying).
+             * In Java, `Arrays.copyOfRange()` allocates a new array and copies elements. */
+            if (isThreeOfKind(Arrays.copyOfRange(hand, startOfPartialHand, startOfPartialHand + 3))) {
+                startOfPartialHand = startOfPartialHand + 3;
+                cardsRemaining = cardsRemaining - 3;
+                return isPair(Arrays.copyOfRange(hand, startOfPartialHand, startOfPartialHand + cardsRemaining));
+            } else if (isPair(Arrays.copyOfRange(hand, startOfPartialHand, startOfPartialHand + 2))) {
+                startOfPartialHand = startOfPartialHand + 2;
+                cardsRemaining = cardsRemaining - 2;
+                return isThreeOfKind(Arrays.copyOfRange(hand, startOfPartialHand, startOfPartialHand + cardsRemaining));
+            } else {
+                startOfPartialHand = startOfPartialHand + 1;
+                cardsRemaining = cardsRemaining - 1;
+            }
+        }
+        return false;
     }
+
 
     /**
      * Returns {@code true} if four of the {@link Card}s have the same value;

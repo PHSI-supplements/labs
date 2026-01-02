@@ -39,13 +39,12 @@ After you have exhausted your late days, any work turned in more than one hour l
 
 This assignment is worth 10 points.
 
-- [ ] **+1** The student has successfully connected to Nuros, as evidenced in the <!--screenshot--> [Connection to Nuros](https://canvas.unl.edu/courses/200913/assignments/2094033) Canvas assignment
-- [ ] **+1** The student's answers in <!--*answers.txt*--> the [PokerLab Code Study](https://canvas.unl.edu/courses/200913/quizzes/468941) Canvas quiz demonstrate an understanding of C's logical boolean operations
+- [ ] **+1** The student has successfully claimed their git.unl.edu account and connected to Nuros, as evidenced in the <!--screenshot--> [Connection to Nuros](https://canvas.unl.edu/courses/200913/assignments/2094033) Canvas assignment
+- [ ] **+2** The student's answers in <!--*answers.txt*--> the [PokerLab Code Study](https://canvas.unl.edu/courses/200913/quizzes/468941) Canvas quiz demonstrate an understanding of C's logical boolean operations and pointer arithmetic
 - [ ] **+1** `create_card()` populates a card's fields
 - [ ] **+1** `card_to_string()` generates the printable representation of a card
 - [ ] **+1** `populate_deck()` creates a deck of 52 cards
-- [ ] **+1** `is_three_of_kind()` determines whether a hand is a three of a kind
-- [ ] **+1** `is_full_house()` determines whether a hand is a full house
+- [ ] **+1** `is_two_pair()` determines whether a hand is a two pair
 - [ ] **+1** `is_four_of_kind()` determines whether a hand is a four of a kind
 - [ ] **+2** `characterize_hand()` prints the hand and determines the best-possible characterization of the hand
 

@@ -133,10 +133,9 @@ int is_pair(card_t const *hand, int size_of_hand) {
     /* STUDY THIS CODE.  WHY DOES IT PRODUCE THE INTENDED RESULT? */
     int pair = 0;
     for (int i = 0; i < size_of_hand - 1; i++) {
-        pair = pair ||
-               (hand[i].value == hand[i + 1].value);    // because hand is sorted, a pair must be two adjacent cards
+        pair += (hand[i].value == hand[i + 1].value);   // because hand is sorted, a pair must be two adjacent cards
     }
-    return pair;
+    return !!pair;
 }
 
 /**
@@ -152,19 +151,8 @@ int is_pair(card_t const *hand, int size_of_hand) {
  * @return 1 if and only if `hand` contains "two pair"
  */
 int is_two_pair(card_t const *hand, int size_of_hand) {
-    int number_of_pairs = 0;
-    card_t const *partial_hand;
-    int i = 0;
-    while (i < size_of_hand - 1) {  /* RECALL THAT ARRAYS ARE POINTERS */
-        partial_hand = hand + i;    /* THIS IS CHANGING THE ADDRESS IN THE `PARTIAL_HAND` POINTER TO ANOTHER PART OF THE ARRAY */
-        if (is_pair(partial_hand, 2)) {
-            number_of_pairs++;
-            i += 2;
-        } else {
-            i++;
-        }
-    }
-    return (number_of_pairs >= 2);
+    /* WRITE THIS FUNCTION */
+    return -1;
 }
 
 /**
@@ -179,8 +167,12 @@ int is_two_pair(card_t const *hand, int size_of_hand) {
  * @return 1 if and only if `hand` contains "three of a kind"
  */
 int is_three_of_kind(card_t const *hand, int size_of_hand) {
-    /* WRITE THIS FUNCTION */
-    return -1;
+    /* STUDY THIS CODE.  WHY DOES IT PRODUCE THE INTENDED RESULT? */
+    int trio = 0;
+    for (int i = 0; i < size_of_hand - 2; i++) {
+        trio = trio || ((hand[i].value == hand[i + 1].value) && (hand[i].value == hand[i + 2].value));
+    }
+    return trio;
 }
 
 /**
@@ -232,9 +224,27 @@ int is_flush(card_t const *hand, int size_of_hand) {
  * @param size_of_hand the number of `card_t`s in the hand
  * @return 1 if and only if `hand` contains a "full house"
  */
-int is_full_house(card_t const *hand, int size_of_hand) {
-    /* WRITE THIS FUNCTION */
-    return -1;
+int is_full_house(card_t const *hand, int size_of_hand) {   /* RECALL THAT ARRAYS ARE POINTERS */
+    int full_house = 0;
+    int cards_remaining = size_of_hand;
+    card const *partial_hand = hand;                        /* THIS IS AN **ALIAS** -- TWO POINTERS THAT HOLD THE SAME ADDRESS */
+    while (cards_remaining >= 5) {      // need five cards to make a full house
+        if (is_three_of_kind(partial_hand, 3)) {
+            partial_hand = partial_hand + 3;                /* THIS IS CHANGING THE ADDRESS IN THE `PARTIAL_HAND` POINTER TO ANOTHER PART OF THE ARRAY */
+            cards_remaining = cards_remaining - 3;
+            full_house = is_pair(partial_hand, cards_remaining);
+            cards_remaining = 0;
+        } else if (is_pair(partial_hand, 2)) {
+            partial_hand = partial_hand + 2;
+            cards_remaining = cards_remaining - 2;
+            full_house = is_three_of_kind(partial_hand, cards_remaining);
+            cards_remaining = 0;
+        } else {
+            partial_hand = partial_hand + 1;
+            cards_remaining = cards_remaining - 1;
+        }
+    }
+    return full_house;
 }
 
 /**
