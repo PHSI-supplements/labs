@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * PokerLab Assignment and starter code (c) 2018-23 Christopher A. Bohn
+ * PokerLab Assignment and starter code (c) 2018-26 Christopher A. Bohn
  */
 
 #ifndef POKER_H

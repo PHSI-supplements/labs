@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * PokerLab Assignment and starter code (c) 2018-23 Christopher A. Bohn
+ * PokerLab Assignment and starter code (c) 2018-26 Christopher A. Bohn
  */
 
 #include <stdio.h>
@@ -34,17 +34,14 @@ void test_card(int value, suit_t suit) {
 
 int get_value_input(void) {
     int value, result;
+    char buffer[8];
     do {
         printf("Enter card value: ");
         fflush(stdout);
-        result = scanf("%d", &value);
+        fgets(buffer, 8, stdin);
+        result = sscanf(buffer, "%d", &value);
         if (result == 0) {
-            printf("Invalid input: ");
-            int c;
-            while ((c = getchar()) != '\n' && c != EOF) {
-                putchar(c);
-            }
-            printf("\n");
+            printf("Invalid input: %s\n", buffer);
         }
     } while (result == 0);
     return value;
@@ -56,17 +53,14 @@ suit_t get_suit_input(void) {
     for (int i = 0; i < NUMBER_OF_SUITS; i++) {
         printf("\t%d. %s\n", i + 1, suit_to_string[i]);
     }
+    char buffer[8];
     do {
         printf("Select suit (1-%d): ", NUMBER_OF_SUITS);
         fflush(stdout);
-        int result = scanf("%u", &suit);
+        fgets(buffer, 8, stdin);
+        int result = sscanf(buffer, "%u", &suit);
         if (result == 0) {
-            printf("Invalid input: ");
-            int c;
-            while ((c = getchar()) != '\n' && c != EOF) {
-                putchar(c);
-            }
-            printf("\n");
+            printf("Invalid input: %s\n", buffer);
         } else if (suit <= 0 || suit > NUMBER_OF_SUITS) {
             printf("Invalid option: %d. Select a number between 1 and %d.\n", suit, NUMBER_OF_SUITS);
             suit += NUMBER_OF_SUITS;
@@ -80,11 +74,12 @@ suit_t get_suit_input(void) {
 
 int main(void) {
     int const size_of_hand = 5;
-    const char index_format_string[] = "%d %d %d %d %d";
+    const char index_format_string[] = "%d%*[^0-9]%d%*[^0-9]%d%*[^0-9]%d%*[^0-9]%d";    // hard-coded to five integers
     card_t hand[size_of_hand];
     int indices[size_of_hand];
-    srand(time(NULL));
+    srand(time(nullptr));
     int choice = -1;
+    char buffer[80];
     do {
         printf("Options:\n");
         printf("\t0. Quit\n");
@@ -94,34 +89,38 @@ int main(void) {
         printf("\t4. Characterize a random %d-card hand\n", size_of_hand);
         printf("Select your option: ");
         fflush(stdout);
-        scanf("%d", &choice);
-        switch (choice) {
-            case 0:
-                printf("Goodbye\n");
-                break;
-            case 1:
-                test_card(get_value_input(), get_suit_input());
-                break;
-            case 2:
-                print_deck();
-                break;
-            case 3:
-                printf("Enter %d indices (0-%d): ", size_of_hand, NUMBER_OF_SUITS * MAXIMUM_VALUE - 1);
-                fflush(stdout);
-                int result = scanf(index_format_string, indices, indices + 1, indices + 2, indices + 3, indices + 4);
-                if (result != size_of_hand) {
-                    printf("Bad input; only %d indices were parsed.\n", result);
-                    int c;
-                    while ((c = getchar()) != '\n' && c != EOF) {}   // consume the rest of the input
-                } else {
-                    characterize_hand(get_specific_hand(hand, indices, size_of_hand), size_of_hand);
-                }
-                break;
-            case 4:
-                characterize_hand(get_random_hand(hand, size_of_hand), size_of_hand);
-                break;
-            default:
-                printf("Invalid choice %d. Please select a choice between 0 and 4.\n", choice);
+        fgets(buffer, 8, stdin);
+        int result = sscanf(buffer, "%d", &choice);
+        if (result == 0) {
+            printf("Invalid input: %s\n", buffer);
+        } else {
+            switch (choice) {
+                case 0:
+                    printf("Goodbye\n");
+                    break;
+                case 1:
+                    test_card(get_value_input(), get_suit_input());
+                    break;
+                case 2:
+                    print_deck();
+                    break;
+                case 3:
+                    printf("Enter %d indices (0-%d): ", size_of_hand, NUMBER_OF_SUITS * MAXIMUM_VALUE - 1);
+                    fflush(stdout);
+                    fgets(buffer, 80, stdin);
+                    result = sscanf(buffer, index_format_string, indices, indices + 1, indices + 2, indices + 3, indices + 4);
+                    if (result != size_of_hand) {
+                        printf("Bad input; only %d indices were parsed.\n", result);
+                    } else {
+                        characterize_hand(get_specific_hand(hand, indices, size_of_hand), size_of_hand);
+                    }
+                    break;
+                case 4:
+                    characterize_hand(get_random_hand(hand, size_of_hand), size_of_hand);
+                    break;
+                default:
+                    printf("Invalid choice %d. Please select a choice between 0 and 4.\n", choice);
+            }
         }
         printf("\n");
     } while (choice);

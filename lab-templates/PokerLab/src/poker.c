@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 /*
- * PokerLab assignment and starter code (c) 2018-23 Christopher A. Bohn
+ * PokerLab assignment and starter code (c) 2018-26 Christopher A. Bohn
  * PokerLab solution (c) the above-named student
  */
 
@@ -227,7 +227,7 @@ int is_flush(card_t const *hand, int size_of_hand) {
 int is_full_house(card_t const *hand, int size_of_hand) {   /* RECALL THAT ARRAYS ARE POINTERS */
     int full_house = 0;
     int cards_remaining = size_of_hand;
-    card const *partial_hand = hand;                        /* THIS IS AN **ALIAS** -- TWO POINTERS THAT HOLD THE SAME ADDRESS */
+    card_t const *partial_hand = hand;                      /* THIS IS AN **ALIAS** -- TWO POINTERS THAT HOLD THE SAME ADDRESS */
     while (cards_remaining >= 5) {      // need five cards to make a full house
         if (is_three_of_kind(partial_hand, 3)) {
             partial_hand = partial_hand + 3;                /* THIS IS CHANGING THE ADDRESS IN THE `PARTIAL_HAND` POINTER TO ANOTHER PART OF THE ARRAY */
