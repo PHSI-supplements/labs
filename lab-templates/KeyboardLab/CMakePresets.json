@@ -3,7 +3,7 @@
   "configurePresets": [
     {
       "name": "default",
-      "displayName": "Default (server) build with gcc-13",
+      "displayName": "Default (server) build with gcc-15",
       "binaryDir": "${sourceDir}/build",
       "condition": {
         "type": "equals",
@@ -11,8 +11,8 @@
         "rhs": "Linux"
       },
       "cacheVariables": {
-        "CMAKE_C_COMPILER": "/usr/bin/gcc-13",
-        "CMAKE_CXX_COMPILER": "/usr/bin/g++-13"
+        "CMAKE_C_COMPILER": "/usr/bin/gcc-15",
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++-15"
       }
     },
     {

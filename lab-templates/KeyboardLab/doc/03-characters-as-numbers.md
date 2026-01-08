@@ -60,7 +60,7 @@ You will receive no credit if you simply hard-code a return value, such as `retu
 The `decapitalize()` function is worth four points, two for converting uppercase letters to lowercase, one for returning unmodified lowercase letters, and one for returning unmodified non-letter characters.
 You will receive no credit if you always return the original character, such as `return character` or otherwise do not attempt the task.
 
-[//]: # (You will receive one bonus point if your correct solutions to `iz_digit&#40;&#41;` and `decapitalize&#40;&#41;` do not depend on specific ASCII values, nor in the relative positions of upper- and lowercase letters in the ASCII table.)
+[//]: # (TODO You will receive one bonus point if your correct solutions to `iz_digit&#40;&#41;` and `decapitalize&#40;&#41;` do not depend on specific ASCII values, nor in the relative positions of upper- and lowercase letters in the ASCII table.)
 
 ---
 

@@ -16,8 +16,6 @@ They will place the URL in a comment in the "git.unl.edu username" Canvas assign
 ---
 
 On the Canvas page for this assignment:
-- Click on the `Submit Assignment` button in the upper-right corner.
-  This will make a text entry field appear at the bottom of the page.
 - Type your git.unl.edu username in the text entry field, and click on the new `Submit Assignment` button.
 
 ---

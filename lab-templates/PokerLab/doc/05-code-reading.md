@@ -1,6 +1,6 @@
 ## Study the Code in *poker.c*
 
-- [ ] Open the [ListLab Code Study](https://canvas.unl.edu/courses/200913/quizzes/479615) quiz in Canvas.
+- [ ] Open the [PokerLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190073) quiz in Canvas.
 
 When you provide your answers in <!-- *answers.txt* --> the Canvas quiz, bear in mind that while it's good to know that you can read code, <font color="red">what we're really looking for is that you understand C's logical boolean operations</font>.
 Not boolean operations in general, but <u>C's logical boolean operations</u>.

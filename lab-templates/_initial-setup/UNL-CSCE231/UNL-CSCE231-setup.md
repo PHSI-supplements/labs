@@ -180,13 +180,7 @@ navigate to that URL in your web browser to confirm that you have access.
   git clone git@git.unl.edu:csce231/...
   ```
   where *git@git.unl.edu:csce231/...* is the "Clone with SSH" link that you copied.
-- [ ] After the clone is complete, run these three commands:
-  ```
-  cat /etc/hostname
-  whoami
-  ls
-  ```
-- [ ] Open the [Connection to Nuros](https://canvas.unl.edu/courses/200913/assignments/2094033) Canvas assignment and copy the responses into the text entry field.
+- [ ] Open the [Connection to Nuros](https://canvas.unl.edu/courses/200913/assignments/2094033) Canvas assignment and complete its steps.
 
 ## Connect to the Starter Code and Start PokerLab
 
@@ -206,6 +200,11 @@ navigate to that URL in your web browser to confirm that you have access.
 [//]: # (        - After you have the connection configured, you can access it from "SSH" under "Connections")
 [//]: # (    - [ ] )
 
+- [ ] Navigate your web browser to your git.unl.edu repository.
+  - Go to the "Retrieving the Lab" section in the top-level README.md file.
+  - Review those steps to retrieve a lab assignment.
+  - Using an SSH terminal, connect to your account on nuros.unl.edu, and use the cd command to navigate to your repository.
+  - Complete the "Retrieving the Lab" steps to fetch PokerLab and to merge it into the main branch.
 - [ ] In VS Code (or your preferred IDE), connect to nuros.unl.edu for remote development.
   - Select **Remote-SSH: Connect to Host...** from the Command Palette.
   - Use USERNAME@nuros.unl.edu

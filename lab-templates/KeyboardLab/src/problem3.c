@@ -12,7 +12,7 @@
  ******************************************************************************/
 
 /*
- * KeyboardLab assignment and starter code (c) 2021-23 Christopher A. Bohn
+ * KeyboardLab assignment and starter code (c) 2021-26 Christopher A. Bohn
  * KeyboardLab solution (c) the above-named student(s)
  */
 

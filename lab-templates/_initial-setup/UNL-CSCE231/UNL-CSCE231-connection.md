@@ -52,13 +52,12 @@ After the TAs have placed the URL for your Git repository in the comments of the
   cat /etc/hostname
   whoami
   ls
-  git log
+  git --no-pager log
   ```
 
 ---
 
 On the Canvas page for this assignment:
-- Click on the `Submit Assignment` button in the upper-right corner. This will make a text entry field appear at the bottom of the page.
 - Copy/paste the responses to the `cat`, `whoami`, `ls`, and `git log` commands into the text entry field, and click on the new `Submit Assignment` button.
 
 ---

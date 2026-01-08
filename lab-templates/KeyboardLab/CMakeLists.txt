@@ -5,7 +5,7 @@ project(keyboardlab C)
 include(CTest)
 enable_testing()
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
@@ -32,7 +32,7 @@ if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
             -Wall
             -Wextra
             -Wno-unused-parameter
-            -Wno-unused-value
+            -Wno-unused-value       # The starter code has two "statements with no effect"
         )
     endif()
     target_compile_options(keyboardlab PRIVATE -Og)

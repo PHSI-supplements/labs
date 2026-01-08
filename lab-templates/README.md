@@ -12,8 +12,10 @@ We will place the assignments and starter code for most of the coding assignment
 - [Retrieving the Lab](#retrieving-the-lab)
 - [Reading the Assignment](#reading-the-assignment)
 - [How Long will the Lab Take?](#how-long-will-the-lab-take)
-- [Typical Lab Directory Structure](#typical-lab-directory-structure)
-- [Configuring, Compiling, Running, and Testing](#configuring-compiling-running-and-testing)
+- [Typical Lab Directory Structure (Linux-Native Code)](#typical-lab-directory-structure-linux-native-code)
+- [Configuring, Compiling, Running, and Testing (Linux-Native Code)](#configuring-compiling-running-and-testing-linux-native-code)
+- [Typical Lab Directory Structure (Cow Pi Code)](#typical-lab-directory-structure-cow-pi-code)
+- [Configuring, Compiling, and Uploading (Cow Pi Code)](#configuring-compiling-and-uploading-cow-pi-code)
 - [Turning in the Completed Lab](#turning-in-the-completed-lab)
 - [When Git Gets Grumpy](#when-git-gets-grumpy)
   - [Git Grumpiness: `git status`](#git-grumpiness-git-status)
@@ -93,7 +95,7 @@ A good rule of thumb is to pay attention to how many points the lab is worth.
 - **50+ points** - a multi-week lab
   - You should not expect to be able to start a multi-week lab the day before it's due and still be able to finish it.
 
-## Typical Lab Directory Structure
+## Typical Lab Directory Structure (Linux-Native Code)
 
 ```
 FooLab/
@@ -109,7 +111,7 @@ FooLab/
  └── test/...                               # Constraint Check Tests
 ```
 
-## Configuring, Compiling, Running, and Testing
+## Configuring, Compiling, Running, and Testing (Linux-Native Code)
 
 ### Configuring the Project
 
@@ -186,6 +188,58 @@ ctest --test-dir build --output-on-failure
 ```
 
 Any constraint violations will result in a failed test, and `--output-on-failure` will show you what the constraint violations are.
+
+## Typical Lab Directory Structure (Cow Pi Code)
+
+```
+FooLab/
+ │
+ ├── platformio.ini                         # configuration file
+ ├── rename_uf2.py                          # post-processing file
+ ├── submission_metadata.json               # used to indicate if you're exercising late days, had a lab partner, or consulted external references
+ ├── README.md                              # Assignment front matter
+ ├── build/...                              # Will appear after you configure the project
+ ├── data/...                               # Files that are neither code nor documentation (not present in all assignments)
+ ├── doc/...                                # The pages describing the assignment's tasks
+ ├── include/...                            # Unused, but required by the build system
+ ├── lib/...                                # Unused, but required by the build system
+ ├── src/...                                # The source code
+ └── test/...                               # Constraint Check Tests
+```
+
+## Configuring, Compiling, and Uploading (Cow Pi Code)
+
+### Configuring the Project
+
+If you're using an IDE, open the project in the *FooLab* directory (the same directory that has platformio.ini).
+It should configure the project for you.
+If it does not, then launch the PlatformIO plugin, select "Open Project" from the PlatformIO Home, and navigate to the *FooLab* directory.
+
+If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has platformio.ini).
+Further configuration will occur the first time that you compile the project.
+
+### Compiling the Project
+
+If you're using an IDE, click on the Checkmark icon on the PlatformIO toolbar.
+
+If you're working from the command line, then navigate to the *FooLab* directory (the same directory that has platformio.ini) and run the command:
+```shell
+pio run
+```
+- There are many parts of MBED&nbsp;OS that generate compiler warnings the first time that you build the project.
+
+Regardless of whether you use an IDE or the command line, the constraint checker will run automatically at the end of the build process.
+After a successful build, any constraint violations will be listed after any compiler warnings and before the `[SUCCESS]` message.
+
+### Uploading the Program to the Cow Pi Board
+
+1. Press the RESET button
+2. While still pressing the RESET button, press the BOOTSEL button
+3. Release the RESET button
+4. Release the BOOTSEL button
+   - This will present the microcontroller's flash memory to your computer as a USB mass storage device.
+5. Drag & drop the .uf2 file from the *FooLab/build* directory to the USB mass storage device.
+   - After the upload has finished, the USB mass storage device will disconnect.
 
 ## Turning in the Completed Lab
 

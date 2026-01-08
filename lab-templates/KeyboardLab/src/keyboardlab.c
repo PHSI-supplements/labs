@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * KeyboardLab (c) 2021-23 Christopher A. Bohn
+ * KeyboardLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -22,7 +22,6 @@
 #include <ctype.h>
 #include <errno.h>
 #include <math.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -85,12 +84,12 @@ int produce_multiple_of_ten_reference(int seed) {
 }
 
 void check_problem1(void) {
-    const char desired_message[] =                              // I'm looking forward to the C23 `#embed` feature
-            "TO\tArchie\n"
-            "RE\tI Need a Working Keyboard\n"
-            "\n"
-            "Please order a new keyboard for me. This one is broken.\n";
-    const int buffer_length = 3 * sizeof(desired_message);      // this works because desired_message is constant
+    char const desired_message[] =
+            {
+#embed "../data/problem1oracle.txt"
+            , '\0'
+            };
+    int const buffer_length = 3 * sizeof(desired_message);
     // pre-fill the buffer with `\0`s so students don't need to worry about that
     char *buffer = calloc(buffer_length, sizeof(char));
     buffer = generate_email(buffer, buffer_length);
@@ -103,7 +102,6 @@ void check_problem1(void) {
             printf("*** Your string matches the desired message. ***\n");
         } else {
             printf("*** Your string differs from the desired message. ***\n");
-//            printf("%s", desired_message);
             int i = 0;
             while (buffer[i] == desired_message[i]) {
                 i++;
@@ -131,13 +129,14 @@ void check_problem1(void) {
             printf("^ (ASCII 0x%02X)\n", desired_message[i]);
         }
     }
+    free(buffer);
 }
 
 void check_problem2(void) {
     printf("Enter character: ");
     char c;
     while ((c = (char) getchar()) == '\n') {}
-    printf("Reference:\tisdigit('%c') =  %d\t\ttolower('%c') =      %c\n", c, !!isdigit(c) != 0, c, tolower(c));
+    printf("Reference:\tisdigit('%c') =  %d\t\ttolower('%c') =      %c\n", c, !!isdigit(c), c, tolower(c));
     printf("Your code:\tiz_digit('%c') = %d\t\tdecapitalize('%c') = %c\n", c, iz_digit(c), c, decapitalize(c));
 }
 
@@ -145,7 +144,7 @@ void check_problem3(void) {
     char buffer[80];
     printf("Enter a number: ");
     scanf("%79s", buffer);
-    int number = (int) strtol(buffer, NULL, 10);
+    int number = (int) strtol(buffer, nullptr, 10);
     printf("Reference:\t%d %s even\t\t", number, number % 2 == 0 ? "is" : "is not");
     printf("produce_multiple_of_ten(%d) = %d\n", number, produce_multiple_of_ten_reference(number));
     printf("Your code:\t%d %s even\t\t", number, is_even(number) ? "is" : "is not");
@@ -154,7 +153,7 @@ void check_problem3(void) {
 
 int main() {
     void (*problem_checkers[NUMBER_OF_PROBLEMS + 1 ])(void) = {
-            NULL,
+            nullptr,
             check_problem1,
             check_problem2,
             check_problem3
@@ -168,7 +167,7 @@ int main() {
         printf("0) Quit\n");
         printf("Select the problem you wish to check: ");
         scanf("%79s", buffer);
-        int option = (int) strtol(buffer, NULL, 10);
+        int option = (int) strtol(buffer, nullptr, 10);
         printf("\n");
         if (option < 0 || option > NUMBER_OF_PROBLEMS) {
             printf("Invalid choice %d. Please select a choice between 0 and %d.\n", option, NUMBER_OF_PROBLEMS);
