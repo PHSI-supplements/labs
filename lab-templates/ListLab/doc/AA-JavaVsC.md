@@ -86,7 +86,7 @@ As I was already logged in, I was able to kill the process as the system adminis
 The system administrator later commented about the resources it consumed, "You ought never to see a 'T' in the memory column."
 
 ![Screenshot showing a student's program consuming 0.022 terabytes of physical memory;
-the allocated virtual memory is not visible in the image.](too-much-memory-used.png)
+the allocated virtual memory is not visible in the image.](images/too-much-memory-used.png)
 
 
 ### Declaration vs Definition

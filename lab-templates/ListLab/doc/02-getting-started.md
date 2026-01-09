@@ -75,19 +75,19 @@ If you want to run both versions of the program side-by-side, you'll need to do 
 
 ### The Books
 
-The starter code includes six files that you can use as inputs.
+The `data/` directory includes six files that you can use as inputs.
 Three are pre-sorted, and three aren't.
 Two are short, only 7 words, which can be useful for debugging.
-- "Animals"  (sorted, 7 words)
-- "Plants" (unsorted, 7 words)
+- "data/Animals"  (sorted, 7 words)
+- "data/Plants" (unsorted, 7 words)
 
 Two are moderate-sized, 74-125 words, to give you confidence in the correctness of your solution.
-- "Cars"   (sorted,  74 words)
-- "Food" (unsorted, 125 words)
+- "data/Cars"   (sorted,  74 words)
+- "data/Food" (unsorted, 125 words)
 
 Two are real books;[^gutenberg] they are large, in excess of 74,000 words, and they are useful to reveal whether you have any memory leaks in your code.
-- Mary Shelly's [*Frankenstein; Or, The Modern Prometheus*](https://www.gutenberg.org/ebooks/84) (sorted, 74,363 words, filename: "Frankenstein")
-- Arthur Conan Doyle's [*The Lost World*](https://www.gutenberg.org/ebooks/139) (unsorted, 77,268 words, filename "TheLostWorld")
+- Mary Shelly's [*Frankenstein; Or, The Modern Prometheus*](https://www.gutenberg.org/ebooks/84) (sorted, 74,363 words, filename: "data/Frankenstein")
+- Arthur Conan Doyle's [*The Lost World*](https://www.gutenberg.org/ebooks/139) (unsorted, 77,268 words, filename "data/TheLostWorld")
 
 [This assignment's Appendix C](CC-word-tables.md) has a table for each of these book files.
 The tables have the challenge words and the number of occurrences for each challenge word.

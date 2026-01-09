@@ -14,12 +14,12 @@ You can access a specific element only by following pointers from one node to th
 The simplest linked list is a *singly-linked list*.
 A node consists of a *payload* (the data that we care about) and a reference to the *next* node:
 
-![Nodes in a singly-linked list consist of the payload data and a reference that points to the next node.](sll.svg)
+![Nodes in a singly-linked list consist of the payload data and a reference that points to the next node.](images/sll.svg)
 
 A linked list's greatest advantage over an array is that inserting and removing a node at an arbitrary location takes constant time, whereas inserting an element into an array (assuming there is sufficient memory allocated for the array) or removing an element from an array requires moving all the elements that follow the element's index.
 Inserting a new node, $C$, between adjacent nodes $A$ and $B$ (where $B = A.next$) requires connecting $C.next$ to $B$ and re-assigning $A.next$ to $C$:
 
-![Inserting a new node into a singly-linked list only requires assignments to the affected *next* pointers.](sll-insert.svg)
+![Inserting a new node into a singly-linked list only requires assignments to the affected *next* pointers.](images/sll-insert.svg)
 
 As with an array, you do need to maintain a variable that points to the list.
 Conventionally, this is a reference to the *head* of the list.
@@ -31,7 +31,7 @@ It is not uncommon to also maintain a reference to the *tail* of the list.
 A *doubly-linked list* is a linked list with the property that each node maintains a link not only to the `next` node but also a link to the `previous` node.
 In C, these links are pointers.
 
-![Nodes in a doubly-linked list consist of the payload data and references that point to the previous and next nodes.](dll.svg)
+![Nodes in a doubly-linked list consist of the payload data and references that point to the previous and next nodes.](images/dll.svg)
 
 Inserting new node, $C$, between adjacent nodes $A$ and $B$ (where $B = A.next$ and $A = B.previous$) requires connecting $C.previous$ to $A$ and $C.next$ to $B$, and re-assigning $A.next$ to $C$ and $B.previous$ to $C$.
 
@@ -165,22 +165,22 @@ The code that you will need to add to `create_list()` is even simpler: a newly-c
 
 #### word_entry_t
 
-![A visualization of the layout of a word entry](word-entry.svg)
+![A visualization of the layout of a word entry](images/word-entry.svg)
 
 
 #### node_t
 
-![A visualization of the layout of a linked list node](node.svg)
+![A visualization of the layout of a linked list node](images/node.svg)
 
 
 #### list_t as an array-backed list
 
-![A visualization of the layout of a notional array-backed list](arraybackedlist.svg)
+![A visualization of the layout of a notional array-backed list](images/arraybackedlist.svg)
 
 
 #### list_t as a linked list
 
-![A visualization of the layout of a notional linked list](linkedlist.svg)
+![A visualization of the layout of a notional linked list](images/linkedlist.svg)
 
 ---
 

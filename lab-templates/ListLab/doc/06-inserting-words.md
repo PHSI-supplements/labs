@@ -51,7 +51,7 @@ You will receive half of the credit for `insert_word()` if it works on pre-sorte
 
 > 📽️ **Optional Videos**
 > 
-> Consider reviewing [these videos](https://canvas.unl.edu/courses/200913/pages/insertion-sort) about Insertion Sort.
+> Consider reviewing [these videos](https://canvas.unl.edu/courses/209782/pages/insertion-sort) about Insertion Sort.
 
 While you probably learned about sorting in CSCE 156, RAIK 184H, or SOFT 161, you may not have learned about *Insertion Sort*.
 If you did learn about Insertion Sort, you probably learned to use it to sort an array or list in-place, and that it's a $\mathcal{O}(n^2)$ algorithm that is less efficient than $\mathcal{O}(n \log n)$ sorting algorithms such as Merge Sort and Quick Sort.
@@ -111,12 +111,12 @@ You can use the "*file*-table.md" files to confirm the correctness of the result
 
 As a reminder, the book files are:
 
-- "Animals" (sorted, 7 words)
-- "Plants" (unsorted, 7 words)
-- "Cars" (sorted, 74 words)
-- "Food" (unsorted, 125 words)
-- "Frankenstein" (sorted, 74,363 words)
-- "TheLostWorld" (unsorted, 77,268 words)
+- "data/Animals" (sorted, 7 words)
+- "data/Plants" (unsorted, 7 words)
+- "data/Cars" (sorted, 74 words)
+- "data/Food" (unsorted, 125 words)
+- "data/Frankenstein" (sorted, 74,363 words)
+- "data/TheLostWorld" (unsorted, 77,268 words)
 
 ---
 

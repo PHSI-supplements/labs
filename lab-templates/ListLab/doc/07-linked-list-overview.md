@@ -72,7 +72,7 @@ This will allow you to compare the results with your linked list implementation 
 
 <!-- ![Screenshots of two terminal windows, showing the arraylist executable and the linkedlist executable being tested.](SideBySideTesting.png) -->
 <figure>
-    <img src="SideBySideTesting.png" alt="Screenshots of two terminal windows, showing the arraylist executable and the linkedlist executable being tested.">
+    <img src="images/SideBySideTesting.png" alt="Screenshots of two terminal windows, showing the arraylist executable and the linkedlist executable being tested.">
     <figcaption>Testing an array-backed list (left) and a linked list (right) side-by-side.</figcaption>
 </figure>
 

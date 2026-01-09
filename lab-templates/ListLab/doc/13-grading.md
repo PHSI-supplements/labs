@@ -29,7 +29,7 @@ Be sure to compile and test your code on the nuros.unl.edu Linux server with the
 
 This assignment is due before the start of your lab section.
 If you have late days available, you may use one or more to extend your deadline.
-You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](../LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+You can exercise a late day (or days) by editing the [submission_metadata.json](../submission_metadata.json) file and including the update with your code.
 
 After you have exhausted your late days, we will accept late turn-ins up to one hour late, assessing a 10% penalty on these late submissions.
 After you have exhausted your late days, any work turned in more than one hour late will not be graded.
@@ -41,8 +41,8 @@ After you have exhausted your late days, any work turned in more than one hour l
 This assignment is worth 35 points.
 
 <!-- Archie's Code - 5 -->
-- [ ] **+2** Student's answers in *answers.txt* demonstrate an understanding of the bug in the "Pleistocene Petting Zoo Marquee" code and how to correct it.
-- [ ] **+3** Student's answer in *answers.txt* demonstrate an understanding of the bug in the "Math Doesn't Work Right ... Or Does It?" code.
+- [ ] **+2** Student's answers in <!--*answers.txt*--> the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) Canvas quiz demonstrate an understanding of the bug in the "Pleistocene Petting Zoo Marquee" code and how to correct it.
+- [ ] **+3** Student's answers in <!--*answers.txt*--> the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) Canvas quiz demonstrate an understanding of the bug in the "Math Doesn't Work Right ... Or Does It?" code.
 <!-- Word Entries - 2 -->
 - [ ] **+½** `create_word_entry` initializes `word_entry` as specified.
 - [ ] **+½** `increment_count()` increases the number of occurrences by one.

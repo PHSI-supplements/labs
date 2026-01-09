@@ -61,12 +61,12 @@ You can use the "*file*-table.md" files to confirm the correctness of the result
 
 As a reminder, the book files are:
 
-- "Animals" (sorted, 7 words)
-- "Plants" (unsorted, 7 words)
-- "Cars" (sorted, 74 words)
-- "Food" (unsorted, 125 words)
-- "Frankenstein" (sorted, 74,363 words)
-- "TheLostWorld" (unsorted, 77,268 words)
+- "data/Animals" (sorted, 7 words)
+- "data/Plants" (unsorted, 7 words)
+- "data/Cars" (sorted, 74 words)
+- "data/Food" (unsorted, 125 words)
+- "data/Frankenstein" (sorted, 74,363 words)
+- "data/TheLostWorld" (unsorted, 77,268 words)
 
 Your code might already be able to handle large files in just a few seconds, in which case you are finished.
 
