@@ -1,5 +1,7 @@
 # ListLab
 
+[//]: # (ListLab © 2021-25 Christopher A. Bohn)
+
 The purpose of this assignment is to give you more confidence in C programming and to begin your exposure to pointers and to file input/output.
 
 This assignment is worth 35 points.

@@ -1,5 +1,7 @@
 # KeyboardLab
 
+[//]: # (KeyboardLab © 2021-26 Christopher A. Bohn)
+
 The purpose of this assignment is to give you more confidence in C programming and to begin your exposure to the underlying bit-level representation of data.
 
 This assignment is worth 20 points.
