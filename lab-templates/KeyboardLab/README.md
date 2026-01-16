@@ -61,6 +61,16 @@ First, you will need to use some characters' ASCII values -- that is, integers -
 Next, you will need to use characters as though they were integers and perform arithmetic upon them.
 Finally, you will manipulate integers using bit operations.
 
+### Unit Tests
+
+KeyboardLab's driver code is designed to facilitate testing by accepting input and showing you the comparison of your functions' outputs with that of reference sources.
+You may, if you wish, create automated unit tests.
+The file `test/unit_test.c` provides a simple framework.
+Add a test by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
+Return `true` when the test passes, and `false` when the test fails.
+Register the test by placing the test function name in the `test_cases` array.
+After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.
+
 #### Constraints
 
 Each section restricts the use of certain characters on your keyboard.

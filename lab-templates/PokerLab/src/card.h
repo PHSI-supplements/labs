@@ -24,7 +24,8 @@ typedef enum {
     CLUBS = 0,
     DIAMONDS,
     HEARTS,
-    SPADES
+    SPADES,
+    NUMBER_OF_SUITS
 } suit_t;
 
 typedef struct {
@@ -33,12 +34,17 @@ typedef struct {
 } card_t;
 
 static char *const suit_to_string[] = {"CLUBS", "DIAMONDS", "HEARTS", "SPADES"};
-#define NUMBER_OF_SUITS     (4)
-#define MINIMUM_FACE_VALUE  (2)
-#define MAXIMUM_FACE_VALUE  (10)
-#define MINIMUM_VALUE       (MINIMUM_FACE_VALUE - 1)
-#define MAXIMUM_VALUE       (MAXIMUM_FACE_VALUE + 3)
-#define NUMBER_OF_CARDS     (52)
+constexpr int MINIMUM_NUMBER_VALUE  = 2;
+constexpr int MAXIMUM_NUMBER_VALUE  = 10;
+enum face_cards {
+    ACE = 1,
+    JACK = 11,
+    QUEEN,
+    KING
+};
+constexpr int MINIMUM_VALUE         = ACE;
+constexpr int MAXIMUM_VALUE         = KING;
+constexpr int SIZE_OF_DECK          = NUMBER_OF_SUITS * (MAXIMUM_NUMBER_VALUE - MINIMUM_VALUE + 1);
 
 card_t *create_card(int value, suit_t suit, card_t *destination);
 char *card_to_string(const card_t *card, char *destination);

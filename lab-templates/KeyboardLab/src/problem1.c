@@ -3,7 +3,6 @@
  * @file problem1.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Function that students must implement for KeyboardLab to demonstrate
  *      understanding that integers can be used as characters.
@@ -12,7 +11,7 @@
 
 /*
  * KeyboardLab assignment and starter code (c) 2021-26 Christopher A. Bohn
- * KeyboardLab solution (c) the above-named student(s)
+ * KeyboardLab solution (c) the above-named student
  */
 
 #include <stdio.h>

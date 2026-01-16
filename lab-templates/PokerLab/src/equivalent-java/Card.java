@@ -12,11 +12,11 @@
  ******************************************************************************/
 public class Card {
 
-    public static final int MINIMUM_FACE_VALUE = 2;
-    public static final int MAXIMUM_FACE_VALUE = 10;
-    public static final int MINIMUM_VALUE = MINIMUM_FACE_VALUE - 1;
-    public static final int MAXIMUM_VALUE = MAXIMUM_FACE_VALUE + 3;
-    public static final int NUMBER_OF_CARDS = 52;
+    public static final int MINIMUM_NUMBER_VALUE = 2;
+    public static final int MAXIMUM_NUMBER_VALUE = 10;
+    public static final int MINIMUM_VALUE = MINIMUM_NUMBER_VALUE - 1;
+    public static final int MAXIMUM_VALUE = MAXIMUM_NUMBER_VALUE + 3;
+    public static final int SIZE_OF_DECK = 52;
 
     public enum Suit {CLUBS, DIAMONDS, HEARTS, SPADES}
 
@@ -44,7 +44,7 @@ public class Card {
         String suitsString = suit.toString();
         if (value < MINIMUM_VALUE || value > MAXIMUM_VALUE) {                           // Illegal values
             valueString = "UNKNOWN";
-        } else if ((value >= MINIMUM_FACE_VALUE) && (value <= MAXIMUM_FACE_VALUE)) {    // Number card
+        } else if ((value >= MINIMUM_NUMBER_VALUE) && (value <= MAXIMUM_NUMBER_VALUE)) {    // Number card
             valueString = Integer.toString(value);
         } else {                                                                        // Ace or face card
             switch (value) {

@@ -3,7 +3,6 @@
  * @file problem2.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions that students must implement for KeyboardLab to demonstrate
  *      understanding that characters are integers.
@@ -12,7 +11,7 @@
 
 /*
  * KeyboardLab assignment and starter code (c) 2021-26 Christopher A. Bohn
- * KeyboardLab solution (c) the above-named student(s)
+ * KeyboardLab solution (c) the above-named student
  */
 
 
@@ -49,5 +48,5 @@ int iz_digit(char character) {
  */
 char decapitalize(char character) {
     /* WRITE THIS FUNCTION */
-    return '\a';
+    return (char)0x7;
 }

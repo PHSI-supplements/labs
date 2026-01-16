@@ -14,7 +14,7 @@ import java.util.Random;
  *
  ******************************************************************************/
 public class Poker {
-    public static Card[] deck = new Card[Card.NUMBER_OF_CARDS];  // a "deck" of 52 cards
+    public static Card[] deck = new Card[Card.SIZE_OF_DECK];  // a "deck" of 52 cards
     public static Random randomIntegerGenerator = new Random();
 
     /**

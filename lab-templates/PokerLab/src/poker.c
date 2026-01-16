@@ -20,7 +20,7 @@
 #include "poker.h"
 
 
-card_t deck[NUMBER_OF_CARDS];           // a "deck" of 52 cards
+card_t deck[SIZE_OF_DECK];           // a "deck" of 52 cards
 int deck_is_populated = 0;
 
 
@@ -44,7 +44,7 @@ void print_deck(void) {
         populate_deck();
     }
     char *s = malloc(21);
-    for (int i = 0; i < NUMBER_OF_CARDS; i++) {
+    for (int i = 0; i < SIZE_OF_DECK; i++) {
         printf("deck[%02d] is the %s\n", i, card_to_string(deck + i, s));
     }
     free(s);
@@ -131,7 +131,7 @@ card_t *get_specific_hand(card_t *destination, int const *indices, int size_of_h
  */
 int is_pair(card_t const *hand, int size_of_hand) {
     /* STUDY THIS CODE.  WHY DOES IT PRODUCE THE INTENDED RESULT? */
-    int pair = 0;
+    int pair = 0;   // base case: zero cards cannot contain two matching cards
     for (int i = 0; i < size_of_hand - 1; i++) {
         pair += (hand[i].value == hand[i + 1].value);   // because hand is sorted, a pair must be two adjacent cards
     }
@@ -168,7 +168,7 @@ int is_two_pair(card_t const *hand, int size_of_hand) {
  */
 int is_three_of_kind(card_t const *hand, int size_of_hand) {
     /* STUDY THIS CODE.  WHY DOES IT PRODUCE THE INTENDED RESULT? */
-    int trio = 0;
+    int trio = 0;   // base case: zero cards cannot contain three matching cards
     for (int i = 0; i < size_of_hand - 2; i++) {
         trio = trio || ((hand[i].value == hand[i + 1].value) && (hand[i].value == hand[i + 2].value));
     }
@@ -187,7 +187,7 @@ int is_three_of_kind(card_t const *hand, int size_of_hand) {
  */
 int is_straight(card_t const *hand, int size_of_hand) {
     /* STUDY THIS CODE.  WHY DOES IT PRODUCE THE INTENDED RESULT? */
-    int not_straight = 0;
+    int not_straight = 0;   // base case: zero cards are vacuously straight
     for (int i = 0; i < size_of_hand - 1; i++) {
         not_straight = not_straight + abs(hand[i + 1].value - hand[i].value - 1);
     }
@@ -205,8 +205,8 @@ int is_straight(card_t const *hand, int size_of_hand) {
  */
 int is_flush(card_t const *hand, int size_of_hand) {
     /* STUDY THIS CODE.  WHY DOES IT PRODUCE THE INTENDED RESULT? */
-    int flush = 1;
     suit_t suit = hand[0].suit;
+    int flush = 1;  // base case: one card is the same suit as itself
     for (int i = 1; i < size_of_hand; i++) {
         flush = flush && (hand[i].suit == suit);
     }
@@ -225,7 +225,7 @@ int is_flush(card_t const *hand, int size_of_hand) {
  * @return 1 if and only if `hand` contains a "full house"
  */
 int is_full_house(card_t const *hand, int size_of_hand) {   /* RECALL THAT ARRAYS ARE POINTERS */
-    int full_house = 0;
+    int full_house = 0; // base case: zero cards cannot contain a full house
     int cards_remaining = size_of_hand;
     card_t const *partial_hand = hand;                      /* THIS IS AN **ALIAS** -- TWO POINTERS THAT HOLD THE SAME ADDRESS */
     while (cards_remaining >= 5) {      // need five cards to make a full house

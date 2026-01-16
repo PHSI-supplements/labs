@@ -11,18 +11,22 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 option(INSTRUCTOR_BUILD "Suppress warnings for grading" OFF)
 
-### Executables
-
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 endif()
 
-file(GLOB SRC_FILES CONFIGURE_DEPENDS src/*.c)
-file(GLOB HDR_FILES CONFIGURE_DEPENDS src/*.h)      # some IDEs need this
+add_library(student_code STATIC
+        src/keyboardlab.h
+        src/problem1.c
+        src/problem2.c
+        src/problem3.c
+)
 
-add_executable(keyboardlab ${SRC_FILES} ${HDR_FILES})
+### Executables
 
-target_link_libraries(keyboardlab PRIVATE m)
+add_executable(keyboardlab src/keyboardlab.c)
+
+target_link_libraries(keyboardlab PRIVATE student_code m)
 
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)
@@ -37,6 +41,12 @@ if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     endif()
     target_compile_options(keyboardlab PRIVATE -Og)
 endif()
+
+### Unit Tests
+
+add_executable(tests test/unit_tests.c)
+target_link_libraries(tests PRIVATE student_code m)
+add_test(NAME unit_tests COMMAND tests)
 
 ### Constraint Check
 

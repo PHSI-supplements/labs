@@ -3,7 +3,6 @@
  * @file problem3.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions that students must implement for KeyboardLab to demonstrate
  *      understanding of integer bit representation and of bit operations
@@ -13,7 +12,7 @@
 
 /*
  * KeyboardLab assignment and starter code (c) 2021-26 Christopher A. Bohn
- * KeyboardLab solution (c) the above-named student(s)
+ * KeyboardLab solution (c) the above-named student
  */
 
 #include <stdio.h>
@@ -28,7 +27,7 @@
  */
 int is_even(int value) {
     /* WRITE THIS FUNCTION */
-    return -1;
+    return 10000;
 }
 
 /**

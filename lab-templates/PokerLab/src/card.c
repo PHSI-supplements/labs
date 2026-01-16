@@ -57,22 +57,22 @@ char *card_to_string(card_t const *card, char *destination) {
     char buffer[3];
     if ((value < MINIMUM_VALUE) || (value > MAXIMUM_VALUE)) {                       // Illegal values
         value_string = "UNKNOWN";
-    } else if ((value >= MINIMUM_FACE_VALUE) && (value <= MAXIMUM_FACE_VALUE)) {    // Number card
+    } else if ((value >= MINIMUM_NUMBER_VALUE) && (value <= MAXIMUM_NUMBER_VALUE)) {    // Number card
         value_string = buffer;
         /* THE SECOND ARGUMENT NEEDS THE CONVERSION SPECIFIER THAT YOU WOULD USE TO PRINT AN INTEGER */
         sprintf(value_string, "", value);
     } else {                                                                        // Ace or face card
         switch (value) {
-            case MINIMUM_VALUE:
+            case ACE:
                 value_string = "ACE";
                 break;
-            case MAXIMUM_VALUE - 2:
+            case JACK:
                 value_string = "JACK";
                 break;
-            case MAXIMUM_VALUE - 1:
+            case QUEEN:
                 value_string = "QUEEN";
                 break;
-            case MAXIMUM_VALUE:
+            case KING:
                 value_string = "KING";
                 break;
             default:
