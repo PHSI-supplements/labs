@@ -42,7 +42,8 @@ This assignment is worth 35 points.
 
 <!-- Archie's Code - 5 -->
 - [ ] **+2** Student's answers in <!--*answers.txt*--> the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) Canvas quiz demonstrate an understanding of the bug in the "Pleistocene Petting Zoo Marquee" code and how to correct it.
-- [ ] **+3** Student's answers in <!--*answers.txt*--> the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) Canvas quiz demonstrate an understanding of the bug in the "Math Doesn't Work Right ... Or Does It?" code.
+- [ ] **+2** Student's answers in <!--*answers.txt*--> the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) Canvas quiz demonstrate an understanding of the bug in the "Math Doesn't Work Right ... Or Does It?" code.
+- [ ] **+1** Student's answer in <!--*answers.txt*--> the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) Canvas quiz demonstrates an understanding of the importance of compiler warnings.
 <!-- Word Entries - 2 -->
 - [ ] **+½** `create_word_entry` initializes `word_entry` as specified.
 - [ ] **+½** `increment_count()` increases the number of occurrences by one.

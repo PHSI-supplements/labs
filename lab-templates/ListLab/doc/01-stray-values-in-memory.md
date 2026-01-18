@@ -131,6 +131,26 @@ Without changing the function signatures, how can Archie's code be fixed?
 
 - [ ] Type your answers in the Canvas quiz.
 
+
+### The Compiler Is Trying to Tell You Something
+
+> ⚠️ When the compiler is worried, you should be too.
+
+The functions from the previous discussion examples can be seen at [this Compiler Explorer](https://godbolt.org/z/8xvM43K6W) page.
+You don't need to look at the generated assembly code.
+
+- [ ] Look at the compilers' outputs.
+
+The program compiles without errors, but both compilers generate warnings.
+The problems that the warnings identify can be found by testing the code, as Archie did.
+
+Why does the compiler generate warnings for problems that can be discovered through testing?
+What advantage do compiler warnings provide over relying on testing alone?
+
+- [ ] Type your answers in the Canvas quiz.
+
+
+
 ---
 
 |                 |      [⬆️](../README.md)      |              [➡️](02-getting-started.md)              |
