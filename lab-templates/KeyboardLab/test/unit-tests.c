@@ -52,7 +52,7 @@ END_TEST
 //    generate_email(actual_message, buffer_length);
 //    int is_different;
 //    char *terminator = strchr(actual_message, '\0');        // strchr will eventually find a NUL character
-//    if (terminator - actual_message >= buffer_length) {     // does the NUL appear within the actual_message?
+//    if (terminator - actual_message >= buffer_length) {     // does the NUL appear within the actual message?
 //        is_different = true;
 //    } else {
 //        is_different = strcmp(expected_message, actual_message);

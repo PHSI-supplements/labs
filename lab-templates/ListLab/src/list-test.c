@@ -14,13 +14,13 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-25 Christopher A. Bohn
+ * LinkedListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -43,6 +43,7 @@ static int select_function(char const *function_names[], int number_of_functions
         }
         printf("Select the function you wish to check: ");
         scanf("%79s", buffer);
+        errno = 0;
         option = (int) strtol(buffer, nullptr, 10);
         if (option == 0 && errno == EINVAL) {
             printf("Invalid choice (%s). Please select a number between 0 and %d.\n\n", buffer, number_of_functions);
@@ -104,7 +105,7 @@ void test_list(void) {
     };
     char buffer[80];
     word_entry_t *word_entry = nullptr;
-    list_t *list = nullptr;
+    list_t *list = nullptr, *new_list = nullptr;
     iterator_t *iterator = nullptr;
     int option = select_function(function_names, NUMBER_OF_LIST_FUNCTIONS);
     printf("\n");
@@ -122,10 +123,16 @@ void test_list(void) {
                     printf("There is no list to destroy.\n");
                 } else {
                     destroy_list(list, true);
+                    list = nullptr;
+                    iterator = nullptr;
                 }
                 break;
             case GET_ITERATOR:
                 printf("Retrieving iterator from list at %p.\n", list);
+                if (!list) {
+                    printf("Cannot get iterator for a null list.\n");
+                    break;
+                }
                 iterator = get_iterator(list);
                 if (!iterator) {
                     printf("get_iterator() returned nullptr.\n");
@@ -143,21 +150,37 @@ void test_list(void) {
             case HAS_NEXT:
                 printf("The iterator ");
                 fflush(stdout);
+                if (!iterator) {
+                    printf(" is null (vacuously does not have a next element).\n");
+                    break;
+                }
                 printf(has_next(iterator) ? "has" : "does not have");
                 printf(" a next element.\n");
                 break;
             case HAS_PREVIOUS:
                 printf("The iterator ");
                 fflush(stdout);
+                if (!iterator) {
+                    printf(" is null (vacuously does not have a previous element).\n");
+                    break;
+                }
                 printf(has_previous(iterator) ? "has" : "does not have");
                 printf(" a previous element.\n");
                 break;
             case ITERATE_NEXT:
+                if (!iterator) {
+                    printf("Cannot iterate with a null iterator.\n");
+                    break;
+                }
                 printf("Iterating forward.\n");
                 iterator = iterate_next(iterator);
                 print(list);
                 break;
             case ITERATE_PREVIOUS:
+                if (!iterator) {
+                    printf("Cannot iterate with a null iterator.\n");
+                    break;
+                }
                 printf("Iterating backward.\n");
                 iterator = iterate_previous(iterator);
                 print(list);
@@ -166,72 +189,160 @@ void test_list(void) {
                 printf("Prepending word_entry. First we need a word_entry. Enter a word: ");
                 scanf("%79s", buffer);
                 word_entry = create_word_entry(buffer);
+                if (!word_entry) {
+                    printf("create_word_entry() returned nullptr; cannot prepend.\n");
+                    break;
+                }
                 if (get_count(word_entry) == 0) { increment_count(word_entry); }
                 printf("Created --     %s\n", word_entry_to_string(buffer, word_entry));
-                printf("Now prepending:\n");
-                iterator = prepend(list, word_entry);
+                if (list) {
+                    printf("Now prepending:\n");
+                    iterator = prepend(list, word_entry);
+                } else {
+                    printf("Cannot prepend to a null list.\n");
+                }
                 print(list);
                 break;
             case APPEND:
                 printf("Appending word_entry. First we need a word_entry. Enter a word: ");
                 scanf("%79s", buffer);
                 word_entry = create_word_entry(buffer);
+                if (!word_entry) {
+                    printf("create_word_entry() returned nullptr; cannot append.\n");
+                    break;
+                }
                 if (get_count(word_entry) == 0) { increment_count(word_entry); }
                 printf("Created --     %s\n", word_entry_to_string(buffer, word_entry));
-                printf("Now appending:\n");
-                iterator = append(list, word_entry);
+                if (list) {
+                    printf("Now appending:\n");
+                    iterator = append(list, word_entry);
+                } else {
+                    printf("Cannot append to a null list.\n");
+                }
                 print(list);
                 break;
             case INSERT:
                 printf("Inserting word_entry. First we need a word_entry. Enter a word: ");
                 scanf("%79s", buffer);
                 word_entry = create_word_entry(buffer);
+                if (!word_entry) {
+                    printf("create_word_entry() returned nullptr; cannot insert.\n");
+                    break;
+                }
                 if (get_count(word_entry) == 0) { increment_count(word_entry); }
                 printf("Created --     %s\n", word_entry_to_string(buffer, word_entry));
-                printf("Now inserting:\n");
-                list = insert(iterator, word_entry);
+                if (iterator) {
+                    printf("Now inserting:\n");
+                    new_list = insert(iterator, word_entry);
+                } else {
+                    printf("Cannot insert using a null iterator.\n");
+                }
+                if (!new_list) {
+                    printf("insert() returned a null list.\n");
+                } else if (new_list != list) {
+                    printf("insert() returned a different list.\n");
+                } else {}
+                list = new_list;
                 print(list);
                 break;
             case DELETE:
+                if (!iterator) {
+                    printf("Cannot delete using a null iterator.\n");
+                    break;
+                }
                 printf("Deleting element\n");
-                list = delete(iterator, true);
+                new_list = delete(iterator, true);
+                if (!new_list) {
+                    printf("delete() returned a null list.\n");
+                } else if (new_list != list) {
+                    printf("delete() returned a different list.\n");
+                } else {}
+                list = new_list;
                 print(list);
                 break;
             case GET_WORD_ENTRY:
+                if (!iterator) {
+                    printf("Cannot get a word entry using a null iterator.\n");
+                    break;
+                }
                 printf("Getting word entry: ");
                 fflush(stdout);
                 printf("%s\n", word_entry_to_string(buffer, get_word_entry(iterator)));
                 break;
             case GET_NEXT_WORD_ENTRY:
+                if (!iterator) {
+                    printf("Cannot get the next word entry using a null iterator.\n");
+                    break;
+                }
                 printf("Getting next word entry: ");
                 fflush(stdout);
                 printf("%s\n", word_entry_to_string(buffer, get_next_word_entry(iterator)));
                 break;
             case GET_PREVIOUS_WORD_ENTRY:
+                if (!iterator) {
+                    printf("Cannot get the previous word entry using a null iterator.\n");
+                    break;
+                }
                 printf("Getting previous word entry: ");
                 fflush(stdout);
                 printf("%s\n", word_entry_to_string(buffer, get_previous_word_entry(iterator)));
                 break;
             case SWAP_NEXT:
+                if (!iterator) {
+                    printf("Cannot swap using a null iterator.\n");
+                    break;
+                }
+                if (!has_next(iterator)) {
+                    printf("Warning: there is not a `next` element. The behavior is undefined.\n");
+                }
+                fflush(stdout);
                 printf("Swapping %s", word_entry_to_string(buffer, get_word_entry(iterator)));
+                fflush(stdout);
                 printf(" and %s\n", word_entry_to_string(buffer, get_next_word_entry(iterator)));
                 iterator = swap_next(iterator);
                 print(list);
                 break;
             case SWAP_PREVIOUS:
+                if (!iterator) {
+                    printf("Cannot swap using a null iterator.\n");
+                    break;
+                }
+                if (!has_previous(iterator)) {
+                    printf("Warning: there is not a `previous` element. The behavior is undefined.\n");
+                }
+                fflush(stdout);
                 printf("Swapping %s", word_entry_to_string(buffer, get_word_entry(iterator)));
+                fflush(stdout);
                 printf(" and %s\n", word_entry_to_string(buffer, get_previous_word_entry(iterator)));
                 iterator = swap_previous(iterator);
                 print(list);
                 break;
             case MERGE_NEXT:
+                if (!iterator) {
+                    printf("Cannot merge using a null iterator.\n");
+                    break;
+                }
+                if (!has_next(iterator)) {
+                    printf("Warning: there is not a `next` element. The behavior is undefined.\n");
+                }
+                fflush(stdout);
                 printf("Merging %s", word_entry_to_string(buffer, get_word_entry(iterator)));
+                fflush(stdout);
                 printf(" and %s\n", word_entry_to_string(buffer, get_next_word_entry(iterator)));
                 iterator = merge_next(iterator);
                 print(list);
                 break;
             case MERGE_PREVIOUS:
+                if (!iterator) {
+                    printf("Cannot merge using a null iterator.\n");
+                    break;
+                }
+                if (!has_previous(iterator)) {
+                    printf("Warning: there is not a `previous` element. The behavior is undefined.\n");
+                }
+                fflush(stdout);
                 printf("Merging %s", word_entry_to_string(buffer, get_word_entry(iterator)));
+                fflush(stdout);
                 printf(" and %s\n", word_entry_to_string(buffer, get_previous_word_entry(iterator)));
                 iterator = merge_previous(iterator);
                 print(list);
@@ -240,6 +351,7 @@ void test_list(void) {
                 // include this here in case we change NUMBER_OF_LIST_FUNCTIONS without adding all the required cases
                 fprintf(stderr, "Reached unreachable code with option value %d (file %s, line %d in function %s).\n",
                         option, __FILE__, __LINE__, __func__);
+                unreachable();
         }
         printf("\n");
         option = select_function(function_names, NUMBER_OF_LIST_FUNCTIONS);

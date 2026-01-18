@@ -16,7 +16,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-25 Christopher A. Bohn
+ * LinkedListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -549,10 +549,17 @@ iterator_t *merge_previous(iterator_t *iterator) {
  * @param list the list to be printed
  */
 void print(list_t *list) {
+    if (!list) {
+        printf("Null List\n");
+        return;
+    }
     char string[MAXIMUM_WORD_LENGTH + 15];
-    printf("index: %zu\tlength: %zu (%zu elements allocated)\n", list->iterator->index, list->length, list->allocation);
+    printf("index: %zu\tlength: %zu (%zu elements allocated)\n",
+           list->iterator ? list->iterator->index : SIZE_MAX,
+           list->length,
+           list->allocation);
     for (size_t i = 0; i < list->length; i++) {
-        if (i == list->iterator->index) {
+        if (list->iterator && i == list->iterator->index) {
             printf("[%5zu] **index**\n", i);
         }
         printf("[%5zu] ", i);

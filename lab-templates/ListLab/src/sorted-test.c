@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-25 Christopher A. Bohn
+ * LinkedListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -39,8 +39,15 @@ static void timeout_handler(int signum) {
 
 static char *get_input(char *destination, const char *prompt) {
     printf("%s: ", prompt);
-    fgets(destination, MAXIMUM_WORD_LENGTH, stdin);
-    destination[strlen(destination) - 1] = '\0';    // eliminates the undesired newline character
+    if (fgets(destination, MAXIMUM_WORD_LENGTH, stdin) == nullptr) {
+        printf("Input error or EOF.\n");
+        destination[0] = '\0';
+        return destination;
+    }
+    size_t input_length = strlen(destination);
+    if (input_length > 0 && destination[input_length - 1] == '\n') {
+        destination[input_length - 1] = '\0';
+    }
     return destination;
 }
 
@@ -63,65 +70,136 @@ void test_alphabetical_functions(void) {
 }
 
 void test_insert_word_empty_list(void) {
-    printf("Creating an empty list for the test.\n");
-    list_t *list = create_list();
-    print(list);
+    printf("Creating an empty original_list for the test.\n");
+    list_t *original_list = create_list();
+    if (!original_list) {
+        printf("create_list() returned nullptr; the test cannot continue.");
+        return;
+    }
+    print(original_list);
     printf("\n");
     char word[MAXIMUM_WORD_LENGTH + 1];
     get_input(word, "Enter the word to be inserted into the list");
-    timed_test(list = insert_word(list, word));
+    list_t *new_list;
+    timed_test(new_list = insert_word(original_list, word));
     printf("\n");
-    print(list);
-    destroy_list(list, true);
+    if (!new_list) {
+        printf("insert_word() returned a null list.\n");
+    } else if (new_list != original_list) {
+        printf("insert_word() returned a different list.\n");
+    }
+    print(new_list);
+    if (new_list) {
+        destroy_list(original_list, true);
+    }
 }
 
 void test_insert_word_singleton_list(void) {
-    printf("Creating and populating a singleton list for the test.\n");
-    list_t *list = create_list();
+    printf("Creating and populating a singleton original_list for the test.\n");
+    list_t *original_list = create_list();
+    if (!original_list) {
+        printf("create_list() returned nullptr; the test cannot continue.");
+        return;
+    }
     word_entry_t *word_entry = create_word_entry("thud");
+    if (!word_entry) {
+        printf("create_word_entry() returned nullptr; the test cannot continue.\n");
+        destroy_list(original_list, false);
+        return;
+    }
     // I'm going to break encapsulation for the benefit of the test...
     word_entry->occurrences = 12;
-    append(list, word_entry);
-    print(list);
+    append(original_list, word_entry);
+    print(original_list);
     printf("\n");
     char word[MAXIMUM_WORD_LENGTH + 1];
     get_input(word, "Enter the word to be inserted into the list");
-    timed_test(list = insert_word(list, word));
+    list_t *new_list;
+    timed_test(new_list = insert_word(original_list, word));
     printf("\n");
-    print(list);
-    destroy_list(list, true);
+    if (!new_list) {
+        printf("insert_word() returned a null list.\n");
+    } else if (new_list != original_list) {
+        printf("insert_word() returned a different list.\n");
+    }
+    print(new_list);
+    if (new_list) {
+        destroy_list(original_list, true);
+    }
 }
 
 void test_insert_word_populated_list(void) {
-    printf("Creating and populating a list for the test.\n");
-    list_t *list = create_list();
+    printf("Creating and populating a original_list for the test.\n");
+    list_t *original_list = create_list();
+    if (!original_list) {
+        printf("create_list() returned nullptr; the test cannot continue.");
+        return;
+    }
     word_entry_t *word_entry = create_word_entry("bar");
+    if (!word_entry) {
+        printf("create_word_entry() returned nullptr; the test cannot continue.\n");
+        destroy_list(original_list, false);
+        return;
+    }
     // I'm going to break encapsulation for the benefit of the test...
     word_entry->occurrences = 2;
-    append(list, word_entry);
+    append(original_list, word_entry);
     word_entry = create_word_entry("baz");
+    if (!word_entry) {
+        printf("create_word_entry() returned nullptr; the test cannot continue.\n");
+        destroy_list(original_list, false);
+        return;
+    }
     word_entry->occurrences = 3;
-    append(list, word_entry);
+    append(original_list, word_entry);
     word_entry = create_word_entry("foo");
+    if (!word_entry) {
+        printf("create_word_entry() returned nullptr; the test cannot continue.\n");
+        destroy_list(original_list, false);
+        return;
+    }
     word_entry->occurrences = 1;
-    append(list, word_entry);
+    append(original_list, word_entry);
     word_entry = create_word_entry("plugh");
+    if (!word_entry) {
+        printf("create_word_entry() returned nullptr; the test cannot continue.\n");
+        destroy_list(original_list, false);
+        return;
+    }
     word_entry->occurrences = 6;
-    append(list, word_entry);
+    append(original_list, word_entry);
     word_entry = create_word_entry("quux");
+    if (!word_entry) {
+        printf("create_word_entry() returned nullptr; the test cannot continue.\n");
+        destroy_list(original_list, false);
+        return;
+    }
     word_entry->occurrences = 5;
-    append(list, word_entry);
+    append(original_list, word_entry);
     word_entry = create_word_entry("xyzzy");
+    if (!word_entry) {
+        printf("create_word_entry() returned nullptr; the test cannot continue.\n");
+        destroy_list(original_list, false);
+        return;
+    }
     word_entry->occurrences = 4;
-    append(list, word_entry);
-    print(list);
+    append(original_list, word_entry);
+    print(original_list);
     printf("\n");
     char word[MAXIMUM_WORD_LENGTH + 1];
     get_input(word, "Enter the word to be inserted into the list");
-    timed_test(list = insert_word(list, word));
+    list_t *new_list;
+    timed_test(new_list = insert_word(original_list, word));
     printf("\n");
-    print(list);
-    destroy_list(list, true);
+    if (!new_list) {
+        printf("insert_word() returned a null list.\n");
+    } else if (new_list != original_list) {
+        printf("insert_word() returned a different list.\n");
+    }
+    print(new_list);
+    if (new_list) {
+        destroy_list(original_list, true);
+    }
 }
 
 void test_build_list(void) {
@@ -130,8 +208,13 @@ void test_build_list(void) {
     printf("Building the list.\n");
     list_t *list;
     timed_test(list = build_list(input));
+    if (!list) {
+        printf("build_list() returned a null list.\n");
+    }
     print(list);
-    destroy_list(list, true);
+    if (list) {
+        destroy_list(list, true);
+    }
 }
 
 void print_table(void) {

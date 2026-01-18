@@ -13,13 +13,12 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-25 Christopher A. Bohn
+ * LinkedListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>

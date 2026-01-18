@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab assignment and starter code (c) 2021-25 Christopher A. Bohn
+ * LinkedListLab assignment and starter code (c) 2021-26 Christopher A. Bohn
  * LinkedListLab solution (c) the above-named student(s)
  */
 
@@ -454,13 +454,20 @@ iterator_t *merge_previous(iterator_t *iterator) {
  * @param list the list to be printed
  */
 void print(list_t *list) {
+    if (!list) {
+        printf("Null List\n");
+        return;
+    }
     char string[MAXIMUM_WORD_LENGTH + 15];
-    printf("head: %p\tcurrent_node: %p\ttail: %p\n", list->head, list->iterator->current_node, list->tail);
+    printf("head: %p\tcurrent_node: %p\ttail: %p\n",
+           list->head,
+           list->iterator ? list->iterator->current_node : nullptr,
+           list->tail);
     node_t *node = list->head;
     if (node != nullptr) {
         printf("[%p] **head**\n", list->head);
         do {
-            if (node == list->iterator->current_node) {
+            if (list->iterator && node == list->iterator->current_node) {
                 printf("[%p] **current node**\n", list->iterator->current_node);
             }
             printf("[%p] %s\n", node, word_entry_to_string(string, node->word_entry));
@@ -469,7 +476,7 @@ void print(list_t *list) {
         } while (node != nullptr && node->previous != list->tail);
         printf("[%p] **tail**\n", list->tail);
     }
-    if (list->iterator->current_node == nullptr) {
+    if (!list->iterator || !list->iterator->current_node) {
         printf("[--nullptr--] **current_node**\n");
     }
 }

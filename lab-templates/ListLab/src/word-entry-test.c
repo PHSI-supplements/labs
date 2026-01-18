@@ -13,19 +13,20 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-25 Christopher A. Bohn
+ * LinkedListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include "word-entry-test.h"
 #include "word-entry.h"
 
-#define NUMBER_OF_WORD_ENTRY_FUNCTIONS (5)
+constexpr size_t NUMBER_OF_WORD_ENTRY_FUNCTIONS = 5;
 
 void test_word_entry(void) {
     printf("\nTesting word_entry functions...\n");
@@ -46,16 +47,17 @@ void test_word_entry(void) {
         }
         printf("Select the function you wish to check: ");
         scanf("%79s", buffer);
+        errno = 0;
         int option = (int) strtol(buffer, nullptr, 10);
         printf("\n");
         if (option < 0 || option > NUMBER_OF_WORD_ENTRY_FUNCTIONS) {
-            printf("Invalid choice %d. Please select a choice between 0 and %d.\n", option,
+            printf("Invalid choice %d. Please select a choice between 0 and %zu.\n", option,
                    NUMBER_OF_WORD_ENTRY_FUNCTIONS);
         } else {
             switch (option) {
                 case 0:
                     if (errno == EINVAL) {
-                        printf("Invalid choice (%s). Please select a number between 0 and %d.\n", buffer,
+                        printf("Invalid choice (%s). Please select a number between 0 and %zu.\n", buffer,
                                NUMBER_OF_WORD_ENTRY_FUNCTIONS);
                         errno = 0;
                     } else {
@@ -83,8 +85,9 @@ void test_word_entry(void) {
                     if (word_entry == nullptr) {
                         printf("There is no word_entry to increment count.\n");
                     } else {
+                        printf("Before increment -- %s\n", word_entry_to_string(buffer, word_entry));
                         increment_count(word_entry);
-                        printf("Incremented -- %s\n", word_entry_to_string(buffer, word_entry));
+                        printf("After increment --  %s\n", word_entry_to_string(buffer, word_entry));
                     }
                     break;
                 case 4:
@@ -100,15 +103,16 @@ void test_word_entry(void) {
                     if (word_entry == nullptr) {
                         printf("Null Pointer\n");
                     } else {
-                        printf("%s\n", get_word(word_entry));
+                        char const *word = get_word(word_entry);
+                        printf("%s\n", word ? word : "get_word() returned nullptr.");
                     }
                     break;
                 default:
                     // include this here in case we change NUMBER_OF_WORD_ENTRY_FUNCTIONS without adding all the required cases
                     fprintf(stderr, "Reached unreachable code with option value %d (file %s, line %d in function %s).\n", option, __FILE__, __LINE__, __func__);
+                    unreachable();
             }
         }
         printf("\n");
     }
-
 }

@@ -2,7 +2,7 @@
  *
  * @file unit-tests.h
  *
- * @author (TYPE YOUR NAME HERE)
+ * @author Christopher A. Bohn
  *
  * @brief Test function structure and runner.
  *

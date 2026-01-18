@@ -11,7 +11,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab assignment and starter code (c) 2021-25 Christopher A. Bohn
+ * LinkedListLab assignment and starter code (c) 2021-26 Christopher A. Bohn
  * LinkedListLab solution (c) the above-named student(s)
  */
 
