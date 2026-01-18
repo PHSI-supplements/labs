@@ -4,7 +4,7 @@
 
 /**************************************************************************//**
  *
- * @file sorted_word_entries.h
+ * @file sorted-word-entries.h
  *
  * @author Christopher A. Bohn
  *

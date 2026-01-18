@@ -61,21 +61,24 @@ First, you will need to use some characters' ASCII values -- that is, integers -
 Next, you will need to use characters as though they were integers and perform arithmetic upon them.
 Finally, you will manipulate integers using bit operations.
 
-### Unit Tests
-
-KeyboardLab's driver code is designed to facilitate testing by accepting input and showing you the comparison of your functions' outputs with that of reference sources.
-You may, if you wish, create automated unit tests.
-The file `test/unit_test.c` provides a simple framework.
-Add a test by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
-Return `true` when the test passes, and `false` when the test fails.
-Register the test by placing the test function name in the `test_cases` array.
-After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.
-
 #### Constraints
 
 Each section restricts the use of certain characters on your keyboard.
 These restrictions do not prohibit the use of those characters in comments, but you may not use those characters in your code.
 You can use the command `ctest --test-dir build --output-on-failure` to check whether you inadvertently used one of those characters.
+
+### Unit Tests
+
+KeyboardLab's driver code is designed to facilitate testing by accepting input and showing you the comparison of your functions' outputs with that of reference sources.
+You may, if you wish, create automated unit tests.
+The file *test/unit-tests.h* provides a simple framework.
+Add a test to *test/unit-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
+Return `true` when the test passes, and `false` when the test fails.
+(If you have more than 128 tests, you will need to modify `MAXIMUM_NUMBER_OF_TESTS`'s definition in *test/unit-tests.h*.)
+
+In *test/unit-tests.c* you'll find an example test that always passes, a commented-out example test that always fails, and a commented-out test for problem&nbsp;1.
+
+After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.
 
 ### Structured Control Flow Only
 

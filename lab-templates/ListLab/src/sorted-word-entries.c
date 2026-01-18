@@ -1,6 +1,6 @@
 /**************************************************************************//**
  *
- * @file sorted_word_entries.c
+ * @file sorted-word-entries.c
  *
  * @author (TYPE YOUR NAME HERE)
  * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
@@ -18,7 +18,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <time.h>
-#include "sorted_word_entries.h"
+#include "sorted-word-entries.h"
 
 
 /*                   *

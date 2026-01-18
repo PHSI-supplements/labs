@@ -24,7 +24,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include "sorted-test.h"
-#include "sorted_word_entries.h"
+#include "sorted-word-entries.h"
 
 #ifdef TIMEOUT
 #define timed_test(action) do { fprintf(stderr, "[INFO]  10-second timeout enabled.\n"); signal(SIGALRM, timeout_handler); alarm(10); action; alarm(0); } while(0)

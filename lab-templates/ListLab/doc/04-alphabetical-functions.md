@@ -20,7 +20,7 @@
 ### Making a Lowercase Copy of a Word
 
 Because the book's words should be insensitive to capitalization, we will store the words with all of their letters in lowercase.
-In *sorted_word_entries.c*, there is a `word_to_lowercase()` function to do just that.
+In *sorted-word-entries.c*, there is a `word_to_lowercase()` function to do just that.
 
 - [ ] Implement the `word_to_lowercase()` function.
 
@@ -29,7 +29,7 @@ Unlike KeyboardLab, you can use [the `tolower()` function](https://en.cppreferen
 ### Comparing Words
 
 Because the book's words need to be sorted, we need to be able to compare words.
-In *sorted_word_entries.c*, there are three functions to do that:
+In *sorted-word-entries.c*, there are three functions to do that:
 
 - `words_are_equal()` which returns `true` if and only if the two words are indistinguishable
 - `word1_is_earlier_than_word2()` which returns `true` if and only if the first word precedes the second word in an alphabetically-sorted list

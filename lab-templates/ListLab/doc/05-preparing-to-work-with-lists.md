@@ -6,7 +6,7 @@
 ## Preparing to Work with Lists
 
 Like `word_entry_t`, the `list_t` and the `iterator_t` datatypes have functions to encapsulate them.
-In the case of `list_t` and `iterator_t`, however, this encapsulation is essential because the code in *sorted_word_entries.c* has access to the type declaration but not the type definition.
+In the case of `list_t` and `iterator_t`, however, this encapsulation is essential because the code in *sorted-word-entries.c* has access to the type declaration but not the type definition.
 
 - [ ] Review the datatypes and functions declared in *list.h*.
 

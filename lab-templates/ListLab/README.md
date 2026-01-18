@@ -81,9 +81,23 @@ This will require you to allocate space for the list's nodes and manipulate poin
 There are no particular restrictions on uses of C's features in this assignment other than those common to most lab assignments in this course.
 
 Some operations on a list have "undefined behavior" when performed using an invalid iterator.
-When the behavior is undefined, any result is acceptable \textit{except} crashing the program.
+When the behavior is undefined, any result is acceptable *except* crashing the program.
 Specifically, you may not dereference a null pointer.
 The constraint-checking test will not check for this; however, you can test for it using the code provided to you.
+
+### Unit Tests
+
+ListLab's driver code is designed to facilitate testing through a menuing system.
+You may, if you wish, create automated unit tests.
+The file *test/unit-tests.h* provides a simple framework.
+Add a test to *test/word-entry-tests.c*, *test/insertion-sort-tests.c*, or *linkedlist-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
+Return `true` when the test passes, and `false` when the test fails.
+(If you have more than 128 tests, you will need to modify `MAXIMUM_NUMBER_OF_TESTS`'s definition in *test/unit-tests.h*.)
+
+In the *test/\*tests.c* test files you'll find an example test that always passes, a commented-out example test that always fails, and a commented-out example test that always times-out.
+Note that the unit tests in *test/insertion-sort-tests.c* will run twice, once using the array-backed list provided in the starter code, and once using the linked list that you'll create.
+
+After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.
 
 ### Structured Control Flow Only
 

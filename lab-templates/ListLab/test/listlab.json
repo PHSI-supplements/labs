@@ -1,6 +1,6 @@
 {
   "targetFiles": [
-    "../src/sorted_word_entries.c",
+    "../src/sorted-word-entries.c",
     "../src/linked-list.c"
   ],
   "commentDelimiters": {

@@ -19,7 +19,6 @@
  * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>

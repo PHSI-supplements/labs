@@ -6,7 +6,7 @@
 
 ### Definitions
 
-In *list.h*, we use a forward declaration to make the code in *sorted_word_entries.c* aware of the types.
+In *list.h*, we use a forward declaration to make the code in *sorted-word-entries.c* aware of the types.
 
 ```c
 typedef struct list_definition list_t;
@@ -53,7 +53,7 @@ struct node_definition {
 >
 > Here the forward declaration is necessary so that `node_t` can be used when defining the node structure.
 
-When writing functions in *sorted_word_entries.c*, you had to rely on `list_t`'s and `iterator_t`'s encapsulation and could not assume any particular list & iterator definitions.
+When writing functions in *sorted-word-entries.c*, you had to rely on `list_t`'s and `iterator_t`'s encapsulation and could not assume any particular list & iterator definitions.
 **Whenever you are writing a function in *linked-list.c*, you can treat `list_t` and `iterator_t` as though they have the linked list definitions.**
 
 ### Building and Testing Your Linked List Implementation

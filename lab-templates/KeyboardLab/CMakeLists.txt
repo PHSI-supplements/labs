@@ -44,9 +44,9 @@ endif()
 
 ### Unit Tests
 
-add_executable(tests test/unit_tests.c)
-target_link_libraries(tests PRIVATE student_code m)
-add_test(NAME unit_tests COMMAND tests)
+add_executable(unit_tests test/unit-tests.c test/unit-tests.h)
+target_link_libraries(unit_tests PRIVATE student_code m)
+add_test(NAME UnitTests COMMAND unit_tests)
 
 ### Constraint Check
 

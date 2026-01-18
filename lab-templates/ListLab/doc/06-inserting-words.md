@@ -1,9 +1,9 @@
 ## Inserting Words
 
-The `build_list()` function in *sorted_word_entries.c* reads words from a "book" and sends them to `insert_word()`.
+The `build_list()` function in *sorted-word-entries.c* reads words from a "book" and sends them to `insert_word()`.
 You do not need to implement `build_list()`.
 
-The `insert_word()` function in *sorted_word_entries.c* finds the correct place in the list for a lowercase copy of the word.
+The `insert_word()` function in *sorted-word-entries.c* finds the correct place in the list for a lowercase copy of the word.
 If the word is already in the list, then it increments the word's count;
 otherwise, it inserts the word into the list.
 You will implement `insert_word()`.
