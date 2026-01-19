@@ -3,7 +3,6 @@
  * @file alu.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions that students must implement for IntegerLab to demonstrate
  * understanding of boolean logic and bit-limited integer arithmetic.
@@ -11,8 +10,8 @@
  ******************************************************************************/
 
 /*
- * IntegerLab assignment and starter code (c) 2018-25 Christopher A. Bohn
- * IntegerLab solution (c) the above-named student(s)
+ * IntegerLab assignment and starter code (c) 2018-26 Christopher A. Bohn
+ * IntegerLab solution (c) the above-named student
  */
 
 #include "alu.h"
@@ -147,6 +146,7 @@ alu_result_t subtract(uint16_t menuend, uint16_t subtrahend) {
  * @return the full product of the two arguments
  */
 uint32_t multiply_by_power_of_two(uint16_t value, uint16_t power_of_two) {
+    assert(is_zero(power_of_two) || is_power_of_two(power_of_two));
     return 0;
 }
 

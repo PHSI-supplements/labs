@@ -22,11 +22,13 @@ add_library(student_code STATIC
         src/problem3.c
 )
 
+set(STD_LIB  m)
+
 ### Executables
 
 add_executable(keyboardlab src/keyboardlab.c)
 
-target_link_libraries(keyboardlab PRIVATE student_code m)
+target_link_libraries(keyboardlab PRIVATE student_code ${STD_LIB})
 
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)
@@ -44,9 +46,14 @@ endif()
 
 ### Unit Tests
 
-add_executable(unit_tests test/unit-tests.c test/unit-tests.h)
-target_link_libraries(unit_tests PRIVATE student_code m)
-add_test(NAME UnitTests COMMAND unit_tests)
+file (GLOB TEST_SOURCES CONFIGURE_DEPENDS test/*.c)
+
+foreach (test_src ${TEST_SOURCES})
+    get_filename_component(test_name ${test_src} NAME_WE)
+    add_executable(${test_name} ${test_src} test/unit-tests.h)
+    target_link_libraries(${test_name} PRIVATE student_code ${STD_LIB})
+    add_test(NAME ${test_name} COMMAND ${test_name})
+endforeach ()
 
 ### Constraint Check
 

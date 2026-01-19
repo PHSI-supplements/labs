@@ -85,13 +85,14 @@ def operator_is_present(operator: str, line: str, all_operators: Iterable[str]) 
             possible_other_operators = {op for op in all_operators if operator in op and operator != op}
             for other_operator in possible_other_operators:
                 # TODO: handle 3-character operators
-                assert len(operator) == 1 and len(other_operator) == 2
-                for i in range(1, len(fragments)):
-                    next_character = operator[0] if len(fragments[i]) == 0 else fragments[i][0]
-                    previous_character = operator[0] if len(fragments[i-1]) == 0 else fragments[i - 1][-1]
-                    if operator[0] == other_operator[0] and other_operator[1] == next_character \
-                            or operator[0] == other_operator[1] and other_operator[0] == previous_character:
-                        part_of_another_operator = True
+                # assert len(operator) == 1 and len(other_operator) == 2
+                if len(other_operator) == 2:
+                    for i in range(1, len(fragments)):
+                        next_character = operator[0] if len(fragments[i]) == 0 else fragments[i][0]
+                        previous_character = operator[0] if len(fragments[i-1]) == 0 else fragments[i - 1][-1]
+                        if operator[0] == other_operator[0] and other_operator[1] == next_character \
+                                or operator[0] == other_operator[1] and other_operator[0] == previous_character:
+                            part_of_another_operator = True
             found_operator = not is_a_character and not part_of_a_pointer and not part_of_another_operator
     return found_operator
 

@@ -74,6 +74,7 @@ You may, if you wish, create automated unit tests.
 The file *test/unit-tests.h* provides a simple framework.
 Add a test to *test/unit-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
 Return `true` when the test passes, and `false` when the test fails.
+You *may* violate the assignment's constraints in *test/unit-tests.c*, because this file will not be graded.
 (If you have more than 128 tests, you will need to modify `MAXIMUM_NUMBER_OF_TESTS`'s definition in *test/unit-tests.h*.)
 
 In *test/unit-tests.c* you'll find an example test that always passes, a commented-out example test that always fails, and a commented-out test for problem&nbsp;1.

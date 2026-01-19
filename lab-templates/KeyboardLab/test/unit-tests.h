@@ -89,7 +89,9 @@ static inline int run_tests(unsigned int timeout_seconds) {
                     printf("TERMINATED:   %s\n", test_cases[i].name);
                     break;
                 default:
-                    printf("%s: %s\n", strsignal(signal_number), test_cases[i].name);
+                    // printf("%s: %s\n", strsignal(signal_number), test_cases[i].name);
+                    // nuros doesn't seem to have the POSIX strsignal() function -- that's odd
+                    printf("Signal %d: %s\n", signal_number, test_cases[i].name);
             }
             exit_code = 1;
         } else if (WIFEXITED(status)) {

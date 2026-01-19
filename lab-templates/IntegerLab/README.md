@@ -1,6 +1,6 @@
 # IntegerLab
 
-[//]: # (IntegerLab © 2018-25 Christopher A. Bohn)
+[//]: # (IntegerLab © 2018-26 Christopher A. Bohn)
 
 In this assignment, you will become more familiar with bit-level representations of integers.
 You'll do this by implementing integer arithmetic for 16-bit signed and unsigned integers using only bitwise operators.
@@ -86,7 +86,7 @@ You may not use C's built-in arithmetic and logical boolean operations.
 Specifically, you may not use addition (+), increment (++), subtraction(-), decrement(--), multiplication(*), division(/), modulo (%), logical NOT (!), logical AND (&&), or logical OR (||).
 You may not use arithmetic-and-assignment operators (`+=`, `-=`, `*=`, `/=`, `%=`).
 You may not use C's comparators;
-specifically, you are not permitted to use equals (==), not-equals (!=), less-than (<), less-than-or-equal-to (<=), greater-than-or-equal-to (>=), or greater-than (>).
+specifically, you are not permitted to use equals (`==`), not-equals (`!=`), less-than (`<`), less-than-or-equal-to (`<=`), greater-than-or-equal-to (`>=`), or greater-than (`>`).
 You may not use floating-point operators as a substitute for integer operators.
 
 You may not use arrays as truth tables.
@@ -110,6 +110,22 @@ You may use loops, conditionals, function calls, structs, and (except as noted a
 And, of course, you may use any of the provided starter code and any code that you write by yourself for this assignment.
 
 You can use the command `ctest --test-dir build --output-on-failure` to check whether you're using a disallowed arithmetic, logical, or comparison operator.
+
+### Unit Tests
+
+IntegerLab's driver code is designed to facilitate testing by accepting input and showing you the comparison of your functions' outputs with that of reference sources.
+You may, if you wish, create automated unit tests.
+The file *test/unit-tests.h* provides a simple framework.
+Add a test to *test/unit-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
+Return `true` when the test passes, and `false` when the test fails.
+You *may* violate the assignment's constraints in *test/unit-tests.c*, because this file will not be graded.
+(If you have more than 128 tests, you will need to modify `MAXIMUM_NUMBER_OF_TESTS`'s definition in *test/unit-tests.h*.)
+
+In *test/unit-tests.c* you'll find an example test that always passes and a commented-out example test that always fails.
+
+The file *test/appendix-tests.c* contains commented-out unit tests that correspond to the example tests in [this assignment's appendix](doc/AA-example-tests.md).
+
+After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.
 
 ### Structured Control Flow Only
 

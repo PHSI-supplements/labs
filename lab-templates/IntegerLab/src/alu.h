@@ -22,8 +22,8 @@
 #ifndef ALU_H
 #define ALU_H
 
+#include <assert.h>
 #include <stdint.h>
-#include <stdbool.h>
 #include <stdio.h>
 
 typedef struct {
@@ -46,15 +46,17 @@ typedef struct {
  * PREDEFINED MACROS THAT DO NOT DEPEND ON STUDENT CODE
  */
 
-#define is_zero(number)     (!(number))
-#define is_not_zero(number) (!!(number))
+#define is_zero(number)         (!(number))
+#define is_not_zero(number)     (!!(number))
+#define is_power_of_two(number) (__builtin_popcount(number) == 1)
+#define LOWER_BITS_MASK(n)      ((UINT64_C(1) << (n)) - UINT64_C(1))
 
 /*
  * UTILITY FUNCTIONS
  */
 
-uint32_t exponentiate(int exponent);
-int lg(uint32_t power_of_two);
+uint32_t exponentiate(unsigned int exponent);
+unsigned int lg(uint32_t power_of_two);
 bool is_negative(uint16_t value);
 
 /*

@@ -3,7 +3,6 @@
  * @file basetwo.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions that students must implement for IntegerLab to demonstrate
  * understanding of base two exponentiation and logarithms.
@@ -11,8 +10,8 @@
  ******************************************************************************/
 
 /*
- * IntegerLab assignment and starter code (c) 2018-25 Christopher A. Bohn
- * IntegerLab solution (c) the above-named student(s)
+ * IntegerLab assignment and starter code (c) 2018-26 Christopher A. Bohn
+ * IntegerLab solution (c) the above-named student
  */
 
 #include "alu.h"
@@ -23,7 +22,8 @@
  * @param exponent the exponent to which 2 will be raised
  * @return 2 raised to the power of <code>exponent</code>
  */
-uint32_t exponentiate(int exponent) {
+uint32_t exponentiate(unsigned int exponent) {
+    assert(!(exponent & ~LOWER_BITS_MASK(5)));     // assert(exponent < 32)
     return 0;
 }
 
@@ -33,7 +33,8 @@ uint32_t exponentiate(int exponent) {
  * @param power_of_two the value whose logarithm will be determined
  * @return base-2 logarithm of the argument
  */
-int lg(uint32_t power_of_two) {
+unsigned int lg(uint32_t power_of_two) {
+    assert(is_power_of_two(power_of_two));
     switch (power_of_two) {
         case 0x1 :
             return 0;
@@ -41,6 +42,6 @@ int lg(uint32_t power_of_two) {
             return 1;
         // COMPLETE THE REST OF THE SWITCH STATEMENT
         default :
-            return (int) 0xFFFF'FFFF;
+            return 0xFFFF'FFFF;
     }
 }
