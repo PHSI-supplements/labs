@@ -55,6 +55,6 @@ This assignment is worth 20 points.
 
 ---
 
-|             [⬅️](06-characterize-hands.md)              |      [⬆️](../README.md)      |                         |
-|:-------------------------------------------------------:|:----------------------------:|:-----------------------:|
-| [Characterizing a Poker Hand](06-characterize-hands.md) | [Front Matter](../README.md) |                         |
+|                [⬅️](04-bit-operations.md)                |      [⬆️](../README.md)      |                         |
+|:--------------------------------------------------------:|:----------------------------:|:-----------------------:|
+| [Using Bitmasks and Shifting Bits](04-bit-operations.md) | [Front Matter](../README.md) |                         |

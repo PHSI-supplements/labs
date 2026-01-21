@@ -51,7 +51,103 @@ static inline void register_test(test_function function, char const *name) {
     }                                       \
     static bool name(void) {
 
-#define END_TEST    }
+#define END_TEST    return true; }
+
+#define FORMAT(x) _Generic((x),     \
+    char: "%c",                     \
+    signed char: "%hhd",            \
+    unsigned char: "%hhu",          \
+    short: "%hd",                   \
+    unsigned short: "%hu",          \
+    int: "%d",                      \
+    unsigned int: "%u",             \
+    long: "%ld",                    \
+    unsigned long: "%lu",           \
+    long long: "%lld",              \
+    unsigned long long: "%llu",     \
+    float: "%f",                    \
+    double: "%f",                   \
+    default: "%p"                   \
+)
+
+#define PRINT_HEX(x) _Generic((x),                                              \
+    char:               fprintf(stderr, " (0x%02hhX)", (unsigned char)(x)),     \
+    signed char:        fprintf(stderr, " (0x%02hhX)", (unsigned char)(x)),     \
+    unsigned char:      fprintf(stderr, " (0x%02hhX)", (signed char)(x)),       \
+    short:              fprintf(stderr, " (0x%04hX)", (unsigned short)(x)),     \
+    unsigned short:     fprintf(stderr, " (0x%04hX)", (unsigned short)(x)),     \
+    int:                fprintf(stderr, " (0x%08X)", (unsigned int)(x)),        \
+    unsigned int:       fprintf(stderr, " (0x%08X)", (unsigned int)(x)),        \
+    long:               fprintf(stderr, " (0x%lX)", (unsigned long)(x)),        \
+    unsigned long:      fprintf(stderr, " (0x%lX)", (unsigned long)(x)),        \
+    long long:          fprintf(stderr, " (0x%llX)", (unsigned long long)(x)),  \
+    unsigned long long: fprintf(stderr, " (0x%llX)", (unsigned long long)(x)),  \
+    default:            ((void)0)                                               \
+)
+
+#define ASSERT_TRUE(expression) do {                                                        \
+        if (!(expression)) {                                                                \
+            fprintf(stderr, "Expected true, got false at %s:%d.\n", __FILE__, __LINE__);    \
+            return false;                                                                   \
+        }                                                                                   \
+    } while (0)
+
+#define ASSERT_FALSE(expression) do {                                                       \
+        if ((expression)) {                                                                 \
+            fprintf(stderr, "Expected false, got true at %s:%d.\n", __FILE__, __LINE__);    \
+            return false;                                                                   \
+        }                                                                                   \
+    } while (0)
+
+#define ASSERT_EQUAL(expected, actual) do {                         \
+        auto _expected = (expected);                                \
+        auto _actual = (actual);                                    \
+        if (_expected != _actual) {                                 \
+            fprintf(stderr, "Expected ");                           \
+            fprintf(stderr, FORMAT(_expected), _expected);          \
+            PRINT_HEX(_expected);                                   \
+            fprintf(stderr, ", got ");                              \
+            fprintf(stderr, FORMAT(_actual), _actual);              \
+            PRINT_HEX(_actual);                                     \
+            fprintf(stderr, " at %s:%d.\n", __FILE__, __LINE__);    \
+            return false;                                           \
+        }                                                           \
+    } while (0)
+
+#define ASSERT_ALMOST_EQUAL(expected, actual, delta) do {                           \
+        auto _expected = (expected);                                                \
+        auto _actual = (actual);                                                    \
+        auto _delta = (delta);                                                      \
+        if ((_actual < _expected - _delta) ||                                       \
+            (_actual > _expected + _delta)) {                                       \
+            fprintf(stderr, "Expected ");                                           \
+            fprintf(stderr, FORMAT(_expected), _expected);                          \
+            fprintf(stderr, " ± ");                                                 \
+            fprintf(stderr, FORMAT(_delta), _delta);                                \
+            fprintf(stderr, ", got ");                                              \
+            fprintf(stderr, FORMAT(_actual), _actual);                              \
+            fprintf(stderr, " at %s:%d.\n", __FILE__, __LINE__);                    \
+            return false;                                                           \
+        }                                                                           \
+    } while (0)
+
+#define ASSERT_EQUAL_STRINGS(expected, actual) do {                 \
+        char const * _expected = expected;                          \
+        char const * _actual = actual;                              \
+        if (strcmp(_expected, _actual) != 0) {                      \
+            fprintf(stderr, "Expected: %s\n", _expected);           \
+            fprintf(stderr, "Got:      %s\n", _actual);             \
+            fprintf(stderr, "At %s:%d.\n", __FILE__, __LINE__);     \
+            return false;                                           \
+        }                                                           \
+    } while (0)
+
+#define ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes) do {                                  \
+        if (memcmp((expected_ptr), (actual_ptr), size_bytes) != 0) {                                    \
+            fprintf(stderr, "The specified memory regions differ at %s:%d.\n", __FILE__, __LINE__);     \
+            return false;                                                                               \
+        }                                                                                               \
+    } while(0)
 
 static inline int run_tests(unsigned int timeout_seconds) {
     int exit_code = 0;
@@ -103,6 +199,7 @@ static inline int run_tests(unsigned int timeout_seconds) {
             }
         } else {
             printf("ABNORMAL TEST TERMINATION: %s\n", test_cases[i].name);
+            exit_code = 1;
         }
     }
     return exit_code;

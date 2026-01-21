@@ -1,5 +1,5 @@
 /*
- * PokerLab assignment and starter code (c) 2018-23 Christopher A. Bohn
+ * PokerLab assignment and starter code (c) 2018-26 Christopher A. Bohn
  */
 
 import java.util.Arrays;

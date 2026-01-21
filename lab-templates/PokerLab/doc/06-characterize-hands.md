@@ -39,7 +39,7 @@ For now, the program does not correctly characterize a hand that is a three of a
 
 ---    
 
-You will receive half-credit for `characterize_hand()`, `is_three_of_kind()`, `is_full_house()`, and `is_four_of_kind()` if you make a good-faith effort at implementing these functions as specified.
+You will receive half-credit for `characterize_hand()`, `is_four_of_kind()`, and `is_two_pair()` if you make a good-faith effort at implementing these functions as specified.
 You will receive full credit for these functions if you implement them correctly.
 
 ---

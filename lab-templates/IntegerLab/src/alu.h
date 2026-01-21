@@ -42,6 +42,12 @@ typedef struct {
     uint8_t divide_by_zero      : 1;
 } alu_result_t;
 
+typedef enum {
+    ONE_BYTE    = 8,
+    TWO_BYTES   = 16,
+    FOUR_BYTES  = 32,
+} data_size_t;
+
 /*
  * PREDEFINED MACROS THAT DO NOT DEPEND ON STUDENT CODE
  */
@@ -58,6 +64,8 @@ typedef struct {
 uint32_t exponentiate(unsigned int exponent);
 unsigned int lg(uint32_t power_of_two);
 bool is_negative(uint16_t value);
+uint32_t zero_extend(uint32_t value, data_size_t from_size, data_size_t to_size);
+uint32_t sign_extend(uint32_t value, data_size_t from_size, data_size_t to_size);
 
 /*
  * LOGICAL BOOLEAN FUNCTIONS

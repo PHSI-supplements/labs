@@ -28,17 +28,25 @@ int main() {
 /*
 TEST(test_name_must_be_a_valid_function_name)
     test function body goes here
-    return true for passing test
-    return false for failing test
+    available assertions:
+        ASSERT_TRUE(expression)
+        ASSERT_FALSE(expression)
+        ASSERT_EQUAL(expected, actual)
+        ASSERT_ALMOST_EQUAL(expected, actual, delta)
+        ASSERT_EQUAL_STRINGS(expected, actual)
+        ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes)
+    alternatively:
+        return true for passing test
+        return false for failing test
 END_TEST
 */
 
 TEST(test_passing)
-    return true;
+    ASSERT_TRUE(true);
 END_TEST
 
 //TEST(test_failing)
-//    return false;
+//    ASSERT_FALSE(true);
 //END_TEST
 
 //TEST(test_problem1)
@@ -48,15 +56,7 @@ END_TEST
 //                    , '\0'
 //            };
 //    int const buffer_length = 3 * sizeof(expected_message);
-//    char *actual_message = calloc(buffer_length, sizeof(char));
+//    char actual_message[buffer_length];     // VLA
 //    generate_email(actual_message, buffer_length);
-//    int is_different;
-//    char *terminator = strchr(actual_message, '\0');        // strchr will eventually find a NUL character
-//    if (terminator - actual_message >= buffer_length) {     // does the NUL appear within the actual message?
-//        is_different = true;
-//    } else {
-//        is_different = strcmp(expected_message, actual_message);
-//    }
-//    free(actual_message);
-//    return !is_different;
+//    ASSERT_EQUAL_STRINGS(expected_message, actual_message);
 //END_TEST

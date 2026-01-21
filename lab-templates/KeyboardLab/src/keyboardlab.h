@@ -22,6 +22,8 @@
 #ifndef KEYBOARDLAB_H
 #define KEYBOARDLAB_H
 
+#include <stddef.h>
+
 char *generate_email(char *destination, size_t destination_size);
 int iz_digit(char character);
 char decapitalize(char character);
