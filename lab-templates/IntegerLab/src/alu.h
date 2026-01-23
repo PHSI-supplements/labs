@@ -54,7 +54,7 @@ typedef enum {
 
 #define is_zero(number)         (!(number))
 #define is_not_zero(number)     (!!(number))
-#define is_power_of_two(number) (__builtin_popcount(number) == 1)
+#define is_power_of_two(number) (__builtin_popcount(number) == 1)       // stdbit.h --(stdc_count_ones(number) == 1)
 #define LOWER_BITS_MASK(n)      ((UINT64_C(1) << (n)) - UINT64_C(1))
 
 /*

@@ -216,6 +216,6 @@ The expected results (including the remainder) come directly from the registers 
 
 ---
 
-|            [⬅️](06-addition-subtraction.md)            |      [⬆️](../README.md)      |                 [➡️](08-signed-multiplication-division.md)                 |
+|            [⬅️](07-addition-subtraction.md)            |      [⬆️](../README.md)      |                 [➡️](08-signed-multiplication-division.md)                 |
 |:------------------------------------------------------:|:----------------------------:|:--------------------------------------------------------------------------:|
-| [Addition and Subtraction](06-addition-subtraction.md) | [Front Matter](../README.md) | [Signed Multiplication and Division](08-signed-multiplication-division.md) |
+| [Addition and Subtraction](07-addition-subtraction.md) | [Front Matter](../README.md) | [Signed Multiplication and Division](08-signed-multiplication-division.md) |

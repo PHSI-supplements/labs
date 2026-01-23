@@ -17,10 +17,12 @@
 #define UNIT_TESTS_H
 
 #include <assert.h>
+#include <inttypes.h>
 #include <signal.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
@@ -53,36 +55,22 @@ static inline void register_test(test_function function, char const *name) {
 
 #define END_TEST    return true; }
 
-#define FORMAT(x) _Generic((x),     \
-    char: "%c",                     \
-    signed char: "%hhd",            \
-    unsigned char: "%hhu",          \
-    short: "%hd",                   \
-    unsigned short: "%hu",          \
-    int: "%d",                      \
-    unsigned int: "%u",             \
-    long: "%ld",                    \
-    unsigned long: "%lu",           \
-    long long: "%lld",              \
-    unsigned long long: "%llu",     \
-    float: "%f",                    \
-    double: "%f",                   \
-    default: "%p"                   \
-)
-
-#define PRINT_HEX(x) _Generic((x),                                              \
-    char:               fprintf(stderr, " (0x%02hhX)", (unsigned char)(x)),     \
-    signed char:        fprintf(stderr, " (0x%02hhX)", (unsigned char)(x)),     \
-    unsigned char:      fprintf(stderr, " (0x%02hhX)", (signed char)(x)),       \
-    short:              fprintf(stderr, " (0x%04hX)", (unsigned short)(x)),     \
-    unsigned short:     fprintf(stderr, " (0x%04hX)", (unsigned short)(x)),     \
-    int:                fprintf(stderr, " (0x%08X)", (unsigned int)(x)),        \
-    unsigned int:       fprintf(stderr, " (0x%08X)", (unsigned int)(x)),        \
-    long:               fprintf(stderr, " (0x%lX)", (unsigned long)(x)),        \
-    unsigned long:      fprintf(stderr, " (0x%lX)", (unsigned long)(x)),        \
-    long long:          fprintf(stderr, " (0x%llX)", (unsigned long long)(x)),  \
-    unsigned long long: fprintf(stderr, " (0x%llX)", (unsigned long long)(x)),  \
-    default:            ((void)0)                                               \
+#define PRINT_VALUE(x) _Generic((x),                                                                            \
+    bool:               fprintf(stderr, "%s",               (bool)(x) ? "true" : "false"),                      \
+    char:               fprintf(stderr, "%c (0x%02hhX)",    (char)(x), (unsigned char)(x)),                     \
+    signed char:        fprintf(stderr, "%hhd (0x%02hhX)",  (signed char)(x), (unsigned char)(x)),              \
+    unsigned char:      fprintf(stderr, "%hhu (0x%02hhX)",  (unsigned char)(x), (unsigned char)(x)),            \
+    short:              fprintf(stderr, "%hd (0x%04hX)",    (short)(x), (unsigned short)(x)),                   \
+    unsigned short:     fprintf(stderr, "%hu (0x%04hX)",    (unsigned short)(x), (unsigned short)(x)),          \
+    int:                fprintf(stderr, "%d (0x%08X)",      (int)(x), (unsigned int)(x)),                       \
+    unsigned int:       fprintf(stderr, "%u (0x%08X)",      (unsigned int)(x), (unsigned int)(x)),              \
+    long:               fprintf(stderr, "%ld (0x%lX)",      (long)(x), (unsigned long)(x)),                     \
+    unsigned long:      fprintf(stderr, "%lu (0x%lX)",      (unsigned long)(x), (unsigned long)(x)),            \
+    long long:          fprintf(stderr, "%lld (0x%llX)",    (long long)(x), (unsigned long long)(x)),           \
+    unsigned long long: fprintf(stderr, "%llu (0x%llX)",    (unsigned long long)(x), (unsigned long long)(x)),  \
+    float:              fprintf(stderr, "%f",               (float)(x)),                                        \
+    double:             fprintf(stderr, "%f",               (double)(x)),                                       \
+    default:            fprintf(stderr, "0x%" PRIxPTR,      (uintptr_t)(x))                                     \
 )
 
 #define ASSERT_TRUE(expression) do {                                                        \
@@ -100,35 +88,33 @@ static inline void register_test(test_function function, char const *name) {
     } while (0)
 
 #define ASSERT_EQUAL(expected, actual) do {                         \
-        auto _expected = (expected);                                \
-        auto _actual = (actual);                                    \
+        typeof_unqual(expected) _expected = (expected);             \
+        typeof_unqual(actual) _actual = (actual);                   \
         if (_expected != _actual) {                                 \
             fprintf(stderr, "Expected ");                           \
-            fprintf(stderr, FORMAT(_expected), _expected);          \
-            PRINT_HEX(_expected);                                   \
+            PRINT_VALUE(_expected);                                 \
             fprintf(stderr, ", got ");                              \
-            fprintf(stderr, FORMAT(_actual), _actual);              \
-            PRINT_HEX(_actual);                                     \
+            PRINT_VALUE(_actual);                                   \
             fprintf(stderr, " at %s:%d.\n", __FILE__, __LINE__);    \
             return false;                                           \
         }                                                           \
     } while (0)
 
-#define ASSERT_ALMOST_EQUAL(expected, actual, delta) do {                           \
-        auto _expected = (expected);                                                \
-        auto _actual = (actual);                                                    \
-        auto _delta = (delta);                                                      \
-        if ((_actual < _expected - _delta) ||                                       \
-            (_actual > _expected + _delta)) {                                       \
-            fprintf(stderr, "Expected ");                                           \
-            fprintf(stderr, FORMAT(_expected), _expected);                          \
-            fprintf(stderr, " ± ");                                                 \
-            fprintf(stderr, FORMAT(_delta), _delta);                                \
-            fprintf(stderr, ", got ");                                              \
-            fprintf(stderr, FORMAT(_actual), _actual);                              \
-            fprintf(stderr, " at %s:%d.\n", __FILE__, __LINE__);                    \
-            return false;                                                           \
-        }                                                                           \
+#define ASSERT_ALMOST_EQUAL(expected, actual, delta) do {           \
+        typeof_unqual(expected) _expected = (expected);             \
+        typeof_unqual(actual) _actual = (actual);                   \
+        typeof_unqual(delta) _delta = (delta);                      \
+        if ((_actual < _expected - _delta) ||                       \
+            (_actual > _expected + _delta)) {                       \
+            fprintf(stderr, "Expected ");                           \
+            PRINT_VALUE(_expected);                                 \
+            fprintf(stderr, " ± ");                                 \
+            PRINT_VALUE(_delta);                                    \
+            fprintf(stderr, ", got ");                              \
+            PRINT_VALUE(_actual);                                   \
+            fprintf(stderr, " at %s:%d.\n", __FILE__, __LINE__);    \
+            return false;                                           \
+        }                                                           \
     } while (0)
 
 #define ASSERT_EQUAL_STRINGS(expected, actual) do {                 \

@@ -100,6 +100,6 @@ actual:   0x76543210 + 0x89ABCDEF + 1 = 0x00000000
 
 ---
 
-|         [⬅️](04-logical-operations.md)         |      [⬆️](../README.md)      |            [➡️](06-addition-subtraction.md)            |
-|:----------------------------------------------:|:----------------------------:|:------------------------------------------------------:|
-| [Logical Operations](04-logical-operations.md) | [Front Matter](../README.md) | [Addition and Subtraction](06-addition-subtraction.md) |
+|            [⬅️](05-zero-sign-extend.md)            |      [⬆️](../README.md)      |            [➡️](07-addition-subtraction.md)            |
+|:--------------------------------------------------:|:----------------------------:|:------------------------------------------------------:|
+| [Zero- and Sign-Extension](05-zero-sign-extend.md) | [Front Matter](../README.md) | [Addition and Subtraction](07-addition-subtraction.md) |

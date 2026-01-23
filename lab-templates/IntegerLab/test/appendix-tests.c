@@ -30,28 +30,28 @@ int main() {
 //    unsigned int exponent = 10;
 //    uint32_t expected_result = 1024;
 //    uint32_t actual_result = exponentiate(exponent);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_lg)
 //    uint32_t power_of_two = 32;
 //    unsigned int expected_result = 5;
 //    unsigned int actual_result = lg(power_of_two);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_is_negative_when_positive)
 //    uint16_t value = 0x2000;
 //    bool expected_result = false;
 //    bool actual_result = is_negative(value);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_is_negative_when_negative)
 //    uint16_t value = 0xA000;
 //    bool expected_result = true;
 //    bool actual_result = is_negative(value);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_equal_when_equal)
@@ -59,7 +59,7 @@ int main() {
 //    uint16_t value2 = 0x3000;
 //    bool expected_result = true;
 //    bool actual_result = equal(value1, value2);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_equal_when_not_equal)
@@ -67,7 +67,7 @@ int main() {
 //    uint16_t value2 = 0x5555;
 //    bool expected_result = false;
 //    bool actual_result = equal(value1, value2);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_not_equal_when_equal)
@@ -75,7 +75,7 @@ int main() {
 //    uint16_t value2 = 0x3000;
 //    bool expected_result = false;
 //    bool actual_result = not_equal(value1, value2);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_not_equal_when_not_equal)
@@ -83,21 +83,21 @@ int main() {
 //    uint16_t value2 = 0x5555;
 //    bool expected_result = true;
 //    bool actual_result = not_equal(value1, value2);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_logical_not_when_zero)
 //    uint32_t value = 0;
 //    bool expected_result = true;
 //    bool actual_result = logical_not(value);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_logical_not_when_nonzero)
 //    uint32_t value = 50;
 //    bool expected_result = false;
 //    bool actual_result = logical_not(value);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_logical_and)
@@ -105,20 +105,19 @@ int main() {
 //    uint32_t value2 = 0;
 //    bool expected_result = false;
 //    bool actual_result = logical_and(value1, value2);
-//    bool test_passes = (expected_result == actual_result);
+//    ASSERT_EQUAL(expected_result, actual_result);
 //    value1 = 50;
 //    expected_result = false;
 //    actual_result = logical_and(value1, value2);
-//    test_passes &= (expected_result == actual_result);
+//    ASSERT_EQUAL(expected_result, actual_result);
 //    value2 = 50;
 //    expected_result = true;
 //    actual_result = logical_and(value1, value2);
-//    test_passes &= (expected_result == actual_result);
+//    ASSERT_EQUAL(expected_result, actual_result);
 //    value1 = 0;
 //    expected_result = false;
 //    actual_result = logical_and(value1, value2);
-//    test_passes &= (expected_result == actual_result);
-//    return test_passes;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_logical_or)
@@ -126,20 +125,127 @@ int main() {
 //    uint32_t value2 = 0;
 //    bool expected_result = false;
 //    bool actual_result = logical_or(value1, value2);
-//    bool test_passes = (expected_result == actual_result);
+//    ASSERT_EQUAL(expected_result, actual_result);
 //    value1 = 50;
 //    expected_result = true;
 //    actual_result = logical_or(value1, value2);
-//    test_passes &= (expected_result == actual_result);
+//    ASSERT_EQUAL(expected_result, actual_result);
 //    value2 = 50;
 //    expected_result = true;
 //    actual_result = logical_or(value1, value2);
-//    test_passes &= (expected_result == actual_result);
+//    ASSERT_EQUAL(expected_result, actual_result);
 //    value1 = 0;
 //    expected_result = true;
 //    actual_result = logical_or(value1, value2);
-//    test_passes &= (expected_result == actual_result);
-//    return test_passes;
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_zero_extend_positive_8_16)
+//    uint32_t value = 0xABCD'EF30;
+//    data_size_t from_size = ONE_BYTE;
+//    data_size_t to_size = TWO_BYTES;
+//    uint32_t expected_result = 0xABCD'0030;
+//    uint32_t actual_result = zero_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_zero_extend_positive_8_32)
+//    uint32_t value = 0xABCD'EF30;
+//    data_size_t from_size = ONE_BYTE;
+//    data_size_t to_size = FOUR_BYTES;
+//    uint32_t expected_result = 0x0000'0030;
+//    uint32_t actual_result = zero_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_zero_extend_positive_16_32)
+//    uint32_t value = 0xABCD'2030;
+//    data_size_t from_size = TWO_BYTES;
+//    data_size_t to_size = FOUR_BYTES;
+//    uint32_t expected_result = 0x0000'2030;
+//    uint32_t actual_result = zero_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_zero_extend_negative_8_16)
+//    uint32_t value = 0xABCD'EF90;
+//    data_size_t from_size = ONE_BYTE;
+//    data_size_t to_size = TWO_BYTES;
+//    uint32_t expected_result = 0xABCD'0090;
+//    uint32_t actual_result = zero_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_zero_extend_negative_8_32)
+//    uint32_t value = 0xABCD'EF90;
+//    data_size_t from_size = ONE_BYTE;
+//    data_size_t to_size = FOUR_BYTES;
+//    uint32_t expected_result = 0x0000'0090;
+//    uint32_t actual_result = zero_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_zero_extend_negative_16_32)
+//    uint32_t value = 0xABCD'9080;
+//    data_size_t from_size = TWO_BYTES;
+//    data_size_t to_size = FOUR_BYTES;
+//    uint32_t expected_result = 0x0000'9080;
+//    uint32_t actual_result = zero_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_sign_extend_positive_8_16)
+//    uint32_t value = 0xABCD'EF30;
+//    data_size_t from_size = ONE_BYTE;
+//    data_size_t to_size = TWO_BYTES;
+//    uint32_t expected_result = 0xABCD'0030;
+//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_sign_extend_positive_8_32)
+//    uint32_t value = 0xABCD'EF30;
+//    data_size_t from_size = ONE_BYTE;
+//    data_size_t to_size = FOUR_BYTES;
+//    uint32_t expected_result = 0x0000'0030;
+//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_sign_extend_positive_16_32)
+//    uint32_t value = 0xABCD'2030;
+//    data_size_t from_size = TWO_BYTES;
+//    data_size_t to_size = FOUR_BYTES;
+//    uint32_t expected_result = 0x0000'2030;
+//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_sign_extend_negative_8_16)
+//    uint32_t value = 0xABCD'EF90;
+//    data_size_t from_size = ONE_BYTE;
+//    data_size_t to_size = TWO_BYTES;
+//    uint32_t expected_result = 0xABCD'FF90;
+//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_sign_extend_negative_8_32)
+//    uint32_t value = 0xABCD'EF90;
+//    data_size_t from_size = ONE_BYTE;
+//    data_size_t to_size = FOUR_BYTES;
+//    uint32_t expected_result = 0xFFFF'FF90;
+//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
+//END_TEST
+//
+//TEST(test_sign_extend_negative_16_32)
+//    uint32_t value = 0xABCD'9080;
+//    data_size_t from_size = TWO_BYTES;
+//    data_size_t to_size = FOUR_BYTES;
+//    uint32_t expected_result = 0xFFFF'9080;
+//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_one_bit_full_addition)
@@ -162,10 +268,8 @@ int main() {
 //        bits.sum = 0;
 //        bits.c_out = 0;   // make sure the function computes the results
 //        one_bit_adder_t result = one_bit_full_addition(bits);
-//        test_passes &= (
-//                   result.sum   == truth_table[i].sum
-//                && result.c_out == truth_table[i].c_out
-//        );
+//        ASSERT_EQUAL((uint8_t) truth_table[i].sum, (uint8_t) result.sum);
+//        ASSERT_EQUAL((uint8_t) truth_table[i].c_out, (uint8_t) result.c_out);
 //    }
 //    return test_passes;
 //END_TEST
@@ -176,7 +280,7 @@ int main() {
 //    uint8_t carry_in = 0;
 //    uint32_t expected_result = 0x12345678;
 //    uint32_t actual_result = ripple_carry_addition(value1, value2, carry_in);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_ripple_carry_addition_overflows_32_bit_sum)
@@ -185,7 +289,7 @@ int main() {
 //    uint8_t carry_in = 0;
 //    uint32_t expected_result = 0x10000000;
 //    uint32_t actual_result = ripple_carry_addition(value1, value2, carry_in);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_ripple_carry_addition_maximum_sum_without_overflow)
@@ -194,7 +298,7 @@ int main() {
 //    uint8_t carry_in = 0;
 //    uint32_t expected_result = 0xFFFFFFFF;
 //    uint32_t actual_result = ripple_carry_addition(value1, value2, carry_in);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_ripple_carry_addition_with_initial_carry)
@@ -203,193 +307,221 @@ int main() {
 //    uint8_t carry_in = 1;
 //    uint32_t expected_result = 0x22222222;
 //    uint32_t actual_result = ripple_carry_addition(value1, value2, carry_in);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_add_normal)
 //    uint16_t augend = 0x1234;
 //    uint16_t addend = 0x5678;
-//    alu_result_t result = add(augend, addend);
-//    return result.result == 0x68AC && !result.unsigned_overflow && !result.signed_overflow;
+//    uint16_t expected_sum = 0x68AC;
+//    alu_result_t actual_result = add(augend, addend);
+//    ASSERT_EQUAL(expected_sum, actual_result.result);
+//    ASSERT_FALSE(actual_result.unsigned_overflow);
+//    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_add_unsigned_overflow)
 //    uint16_t augend = 0xE000;
 //    uint16_t addend = 0x7000;
-//    alu_result_t result = add(augend, addend);
-//    return result.result == 0x5000 && result.unsigned_overflow && !result.signed_overflow;
+//    uint16_t expected_sum = 0x5000;
+//    alu_result_t actual_result = add(augend, addend);
+//    ASSERT_EQUAL(expected_sum, actual_result.result);
+//    ASSERT_TRUE(actual_result.unsigned_overflow);
+//    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_add_signed_overflow)
 //    uint16_t augend = 0x3000;
 //    uint16_t addend = 0x7000;
-//    alu_result_t result = add(augend, addend);
-//    return result.result == 0xA000 && !result.unsigned_overflow && result.signed_overflow;
+//    uint16_t expected_sum = 0xA000;
+//    alu_result_t actual_result = add(augend, addend);
+//    ASSERT_EQUAL(expected_sum, actual_result.result);
+//    ASSERT_FALSE(actual_result.unsigned_overflow);
+//    ASSERT_TRUE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_subtract_identity_result)
 //    uint16_t menuend = 0xD000;
 //    uint16_t subtrahend = 0;
-//    alu_result_t result = subtract(menuend, subtrahend);
-//    return result.result == 0xD000 && !result.unsigned_overflow && !result.signed_overflow;
+//    uint16_t expected_difference = menuend;
+//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    ASSERT_EQUAL(expected_difference, actual_result.result);
+//    ASSERT_FALSE(actual_result.unsigned_overflow);
+//    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_subtract_zero_result)
 //    uint16_t menuend = 0xD000;
 //    uint16_t subtrahend = 0xD000;
-//    alu_result_t result = subtract(menuend, subtrahend);
-//    return result.result == 0x0000 && !result.unsigned_overflow && !result.signed_overflow;
+//    uint16_t expected_difference = 0;
+//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    ASSERT_EQUAL(expected_difference, actual_result.result);
+//    ASSERT_FALSE(actual_result.unsigned_overflow);
+//    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_subtract_signed_no_overflow)
 //    uint16_t menuend = 0xD000;
 //    uint16_t subtrahend = 0xA000;
-//    alu_result_t result = subtract(menuend, subtrahend);
-//    return result.result == 0x3000 && !result.unsigned_overflow && !result.signed_overflow;
+//    uint16_t expected_difference = 0x3000;
+//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    ASSERT_EQUAL(expected_difference, actual_result.result);
+//    ASSERT_FALSE(actual_result.unsigned_overflow);
+//    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_subtract_unsigned_overflow)
 //    uint16_t menuend = 0x4000;
 //    uint16_t subtrahend = 0xD000;
-//    alu_result_t result = subtract(menuend, subtrahend);
-//    return result.result == 0x7000 && result.unsigned_overflow && !result.signed_overflow;
+//    uint16_t expected_difference = 0x7000;
+//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    ASSERT_EQUAL(expected_difference, actual_result.result);
+//    ASSERT_TRUE(actual_result.unsigned_overflow);
+//    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_subtract_signed_overflow)
 //    uint16_t menuend = 0x9000;
 //    uint16_t subtrahend = 0x5000;
-//    alu_result_t result = subtract(menuend, subtrahend);
-//    return result.result == 0x4000 && !result.unsigned_overflow && result.signed_overflow;
+//    uint16_t expected_difference = 0x4000;
+//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    ASSERT_EQUAL(expected_difference, actual_result.result);
+//    ASSERT_FALSE(actual_result.unsigned_overflow);
+//    ASSERT_TRUE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_multiply_by_power_of_two_zero_result)
 //    uint16_t value = 15;
 //    uint16_t power_of_two = 0x0;
-//    uint32_t expected_result = 0;
+//    uint32_t expected_product = 0;
 //    uint32_t actual_result = multiply_by_power_of_two(value, power_of_two);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_product, actual_result);
 //END_TEST
 //
 //TEST(test_multiply_by_power_of_two_identity_result)
 //    uint16_t value = 15;
 //    uint16_t power_of_two = 0x1;
-//    uint32_t expected_result = 15;
+//    uint32_t expected_product = 15;
 //    uint32_t actual_result = multiply_by_power_of_two(value, power_of_two);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_product, actual_result);
 //END_TEST
 //
 //TEST(test_multiply_by_power_of_two_large)
 //    uint16_t value = 15;
 //    uint16_t power_of_two = 0x200;
-//    uint32_t expected_result = 15 * 0x200;
+//    uint32_t expected_product = 15 * 0x200;
 //    uint32_t actual_result = multiply_by_power_of_two(value, power_of_two);
-//    return expected_result == actual_result;
+//    ASSERT_EQUAL(expected_product, actual_result);
 //END_TEST
 //
 //TEST(test_unsigned_multiply_small)
 //    uint16_t multiplicand = 9000;
 //    uint16_t multiplier = 3;
-//    alu_result_t expected = { .result = 27000, .supplemental_result = 0 };
-//    alu_result_t actual = unsigned_multiply(multiplicand, multiplier);
-//    return expected.result == actual.result && expected.supplemental_result == actual.supplemental_result;
+//    alu_result_t expected_result = { .result = 27000, .supplemental_result = 0 };
+//    alu_result_t actual_result = unsigned_multiply(multiplicand, multiplier);
+//    ASSERT_EQUAL(expected_result.result, actual_result.result);
+//    ASSERT_EQUAL(expected_result.supplemental_result, actual_result.supplemental_result);
 //END_TEST
 //
 //TEST(test_unsigned_multiply_large)
 //    uint16_t multiplicand = 30000;
 //    uint16_t multiplier = 3;
 //    uint32_t full_product = 30000uL * 3uL;
-//    alu_result_t expected = {
+//    alu_result_t expected_result = {
 //            .result              = (uint16_t)(full_product & 0xFFFF),
 //            .supplemental_result = (uint16_t)(full_product >> 16)
 //    };
-//    alu_result_t actual = unsigned_multiply(multiplicand, multiplier);
-//    return expected.result == actual.result && expected.supplemental_result == actual.supplemental_result;
+//    alu_result_t actual_result = unsigned_multiply(multiplicand, multiplier);
+//    ASSERT_EQUAL(expected_result.result, actual_result.result);
+//    ASSERT_EQUAL(expected_result.supplemental_result, actual_result.supplemental_result);
 //END_TEST
 //
 //TEST(test_unsigned_divide_by_zero)
 //    uint16_t dividend = 500;
 //    uint16_t divisor = 0;
-//    alu_result_t expected = { .divide_by_zero = 1 };
-//    alu_result_t actual = unsigned_divide(dividend, divisor);
-//    return expected.divide_by_zero == actual.divide_by_zero;
+//    alu_result_t result = unsigned_divide(dividend, divisor);
+//    ASSERT_TRUE(result.divide_by_zero);
 //END_TEST
 //
 //TEST(test_unsigned_divide_exact)
 //    uint16_t dividend = 256;
 //    uint16_t divisor = 4;
-//    alu_result_t expected = { .result = 64, .supplemental_result = 0, .divide_by_zero = 0 };
-//    alu_result_t actual = unsigned_divide(dividend, divisor);
-//    return expected.result == actual.result
-//        && expected.supplemental_result == actual.supplemental_result
-//        && expected.divide_by_zero      == actual.divide_by_zero;
+//    alu_result_t expected_result = { .result = 64, .supplemental_result = 0, .divide_by_zero = 0 };
+//    alu_result_t actual_result = unsigned_divide(dividend, divisor);
+//    ASSERT_EQUAL(expected_result.result, actual_result.result);
+//    ASSERT_EQUAL(expected_result.supplemental_result, actual_result.supplemental_result);
+//    ASSERT_FALSE(actual_result.divide_by_zero);
 //END_TEST
 //
 //TEST(test_unsigned_divide_non_exact)
 //    uint16_t dividend = 500;
 //    uint16_t divisor = 16;
-//    alu_result_t expected = { .result = 31, .supplemental_result = 4, .divide_by_zero = 0 };
-//    alu_result_t actual = unsigned_divide(dividend, divisor);
-//    return expected.result              == actual.result
-//        && expected.supplemental_result == actual.supplemental_result
-//        && expected.divide_by_zero      == actual.divide_by_zero;
+//    alu_result_t expected_result = { .result = 31, .supplemental_result = 4, .divide_by_zero = 0 };
+//    alu_result_t actual_result = unsigned_divide(dividend, divisor);
+//    ASSERT_EQUAL(expected_result.result, actual_result.result);
+//    ASSERT_EQUAL(expected_result.supplemental_result, actual_result.supplemental_result);
+//    ASSERT_FALSE(actual_result.divide_by_zero);
 //END_TEST
 //
 //TEST(test_signed_multiply_positive)
 //    int16_t multiplicand = 30000;
 //    int16_t multiplier = 3;
 //    int32_t full_product = (int32_t) multiplicand * (int32_t) multiplier;
-//    alu_result_t expected = {
+//    alu_result_t expected_result = {
 //            .result              = (uint16_t) ( full_product        & 0xFFFF),
 //            .supplemental_result = (uint16_t) ((full_product >> 16) & 0xFFFF),
 //    };
-//    alu_result_t actual = signed_multiply((uint16_t) multiplicand, (uint16_t) multiplier);
-//    return expected.result == actual.result && expected.supplemental_result == actual.supplemental_result;
+//    alu_result_t actual_result = signed_multiply((uint16_t) multiplicand, (uint16_t) multiplier);
+//    ASSERT_EQUAL(expected_result.result, actual_result.result);
+//    ASSERT_EQUAL(expected_result.supplemental_result, actual_result.supplemental_result);
 //END_TEST
 //
 //TEST(test_signed_multiply_negative_times_positive)
 //    int16_t multiplicand = -25633;
 //    int16_t multiplier = 12;
 //    int32_t full_product = (int32_t) multiplicand * (int32_t) multiplier;
-//    alu_result_t expected = {
+//    alu_result_t expected_result = {
 //            .result              = (uint16_t) ( full_product        & 0xFFFF),
 //            .supplemental_result = (uint16_t) ((full_product >> 16) & 0xFFFF),
 //    };
-//    alu_result_t actual = signed_multiply((uint16_t) multiplicand, (uint16_t) multiplier);
-//    return expected.result == actual.result && expected.supplemental_result == actual.supplemental_result;
+//    alu_result_t actual_result = signed_multiply((uint16_t) multiplicand, (uint16_t) multiplier);
+//    ASSERT_EQUAL(expected_result.result, actual_result.result);
+//    ASSERT_EQUAL(expected_result.supplemental_result, actual_result.supplemental_result);
 //END_TEST
 //
 //TEST(test_signed_multiply_positive_times_negative)
 //    int16_t multiplicand = 9;
 //    int16_t multiplier = -25633;
 //    int32_t full_product = (int32_t) multiplicand * (int32_t) multiplier;
-//    alu_result_t expected = {
+//    alu_result_t expected_result = {
 //            .result              = (uint16_t) ( full_product        & 0xFFFF),
 //            .supplemental_result = (uint16_t) ((full_product >> 16) & 0xFFFF),
 //    };
-//    alu_result_t actual = signed_multiply((uint16_t) multiplicand, (uint16_t) multiplier);
-//    return expected.result == actual.result && expected.supplemental_result == actual.supplemental_result;
+//    alu_result_t actual_result = signed_multiply((uint16_t) multiplicand, (uint16_t) multiplier);
+//    ASSERT_EQUAL(expected_result.result, actual_result.result);
+//    ASSERT_EQUAL(expected_result.supplemental_result, actual_result.supplemental_result);
 //END_TEST
 //
 //TEST(test_signed_divide_positive)
 //    int16_t dividend = 500;
 //    int16_t divisor = 16;
-//    alu_result_t expected = { .result = 31, .supplemental_result = 4, .divide_by_zero = 0 };
-//    alu_result_t actual = signed_divide((uint16_t) dividend, (uint16_t) divisor);
-//    return expected.result == actual.result
-//        && expected.supplemental_result == actual.supplemental_result
-//        && expected.divide_by_zero      == actual.divide_by_zero;
+//    alu_result_t expected_result = { .result = 31, .supplemental_result = 4, .divide_by_zero = 0 };
+//    alu_result_t actual_result = signed_divide((uint16_t) dividend, (uint16_t) divisor);
+//    ASSERT_EQUAL(expected_result.result, actual_result.result);
+//    ASSERT_EQUAL(expected_result.supplemental_result, actual_result.supplemental_result);
+//    ASSERT_FALSE(actual_result.divide_by_zero);
 //END_TEST
 //
 //TEST(test_signed_divide_negative)
 //    int16_t dividend = -24577;
 //    int16_t divisor = 0x40;
-//    alu_result_t expected = {
+//    alu_result_t expected_result = {
 //            .result              = (uint16_t) (dividend / divisor),
 //            .supplemental_result = (uint16_t) (dividend % divisor),
 //            .divide_by_zero      = 0
 //    };
-//    alu_result_t actual = signed_divide((uint16_t) dividend, (uint16_t) divisor);
-//    return expected.result              == actual.result
-//        && expected.supplemental_result == actual.supplemental_result
-//        && expected.divide_by_zero      == actual.divide_by_zero;
+//    alu_result_t actual_result = signed_divide((uint16_t) dividend, (uint16_t) divisor);
+//    ASSERT_EQUAL(expected_result.result, actual_result.result);
+//    ASSERT_EQUAL(expected_result.supplemental_result, actual_result.supplemental_result);
+//    ASSERT_FALSE(actual_result.divide_by_zero);
 //END_TEST

@@ -84,6 +84,6 @@ whenever the dividend is negative you need to introduce a bias toward positive i
 
 ---
 
-|                  [⬅️](07-unsigned-multiplication-division.md)                  |      [⬆️](../README.md)      |         [➡️](09-grading.md)          |
+|                  [⬅️](10-unsigned-multiplication-division.md)                  |      [⬆️](../README.md)      |         [➡️](09-grading.md)          |
 |:------------------------------------------------------------------------------:|:----------------------------:|:------------------------------------:|
-| [Unsigned Multiplication and Division](07-unsigned-multiplication-division.md) | [Front Matter](../README.md) | [Turn-In and Grading](09-grading.md) |
+| [Unsigned Multiplication and Division](10-unsigned-multiplication-division.md) | [Front Matter](../README.md) | [Turn-In and Grading](09-grading.md) |

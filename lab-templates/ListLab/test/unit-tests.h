@@ -17,10 +17,12 @@
 #define UNIT_TESTS_H
 
 #include <assert.h>
+#include <inttypes.h>
 #include <signal.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
@@ -51,18 +53,99 @@ static inline void register_test(test_function function, char const *name) {
     }                                       \
     static bool name(void) {
 
-#define END_TEST    }
+#define END_TEST    return true; }
+
+#define PRINT_VALUE(x) _Generic((x),                                                                            \
+    bool:               fprintf(stderr, "%s",               (bool)(x) ? "true" : "false"),                      \
+    char:               fprintf(stderr, "%c (0x%02hhX)",    (char)(x), (unsigned char)(x)),                     \
+    signed char:        fprintf(stderr, "%hhd (0x%02hhX)",  (signed char)(x), (unsigned char)(x)),              \
+    unsigned char:      fprintf(stderr, "%hhu (0x%02hhX)",  (unsigned char)(x), (unsigned char)(x)),            \
+    short:              fprintf(stderr, "%hd (0x%04hX)",    (short)(x), (unsigned short)(x)),                   \
+    unsigned short:     fprintf(stderr, "%hu (0x%04hX)",    (unsigned short)(x), (unsigned short)(x)),          \
+    int:                fprintf(stderr, "%d (0x%08X)",      (int)(x), (unsigned int)(x)),                       \
+    unsigned int:       fprintf(stderr, "%u (0x%08X)",      (unsigned int)(x), (unsigned int)(x)),              \
+    long:               fprintf(stderr, "%ld (0x%lX)",      (long)(x), (unsigned long)(x)),                     \
+    unsigned long:      fprintf(stderr, "%lu (0x%lX)",      (unsigned long)(x), (unsigned long)(x)),            \
+    long long:          fprintf(stderr, "%lld (0x%llX)",    (long long)(x), (unsigned long long)(x)),           \
+    unsigned long long: fprintf(stderr, "%llu (0x%llX)",    (unsigned long long)(x), (unsigned long long)(x)),  \
+    float:              fprintf(stderr, "%f",               (float)(x)),                                        \
+    double:             fprintf(stderr, "%f",               (double)(x)),                                       \
+    default:            fprintf(stderr, "0x%" PRIxPTR,      (uintptr_t)(x))                                     \
+)
+
+#define ASSERT_TRUE(expression) do {                                                        \
+        if (!(expression)) {                                                                \
+            fprintf(stderr, "Expected true, got false at %s:%d.\n", __FILE__, __LINE__);    \
+            return false;                                                                   \
+        }                                                                                   \
+    } while (0)
+
+#define ASSERT_FALSE(expression) do {                                                       \
+        if ((expression)) {                                                                 \
+            fprintf(stderr, "Expected false, got true at %s:%d.\n", __FILE__, __LINE__);    \
+            return false;                                                                   \
+        }                                                                                   \
+    } while (0)
+
+#define ASSERT_EQUAL(expected, actual) do {                         \
+        typeof_unqual(expected) _expected = (expected);             \
+        typeof_unqual(actual) _actual = (actual);                   \
+        if (_expected != _actual) {                                 \
+            fprintf(stderr, "Expected ");                           \
+            PRINT_VALUE(_expected);                                 \
+            fprintf(stderr, ", got ");                              \
+            PRINT_VALUE(_actual);                                   \
+            fprintf(stderr, " at %s:%d.\n", __FILE__, __LINE__);    \
+            return false;                                           \
+        }                                                           \
+    } while (0)
+
+#define ASSERT_ALMOST_EQUAL(expected, actual, delta) do {           \
+        typeof_unqual(expected) _expected = (expected);             \
+        typeof_unqual(actual) _actual = (actual);                   \
+        typeof_unqual(delta) _delta = (delta);                      \
+        if ((_actual < _expected - _delta) ||                       \
+            (_actual > _expected + _delta)) {                       \
+            fprintf(stderr, "Expected ");                           \
+            PRINT_VALUE(_expected);                                 \
+            fprintf(stderr, " ± ");                                 \
+            PRINT_VALUE(_delta);                                    \
+            fprintf(stderr, ", got ");                              \
+            PRINT_VALUE(_actual);                                   \
+            fprintf(stderr, " at %s:%d.\n", __FILE__, __LINE__);    \
+            return false;                                           \
+        }                                                           \
+    } while (0)
+
+#define ASSERT_EQUAL_STRINGS(expected, actual) do {                 \
+        char const * _expected = expected;                          \
+        char const * _actual = actual;                              \
+        if (strcmp(_expected, _actual) != 0) {                      \
+            fprintf(stderr, "Expected: %s\n", _expected);           \
+            fprintf(stderr, "Got:      %s\n", _actual);             \
+            fprintf(stderr, "At %s:%d.\n", __FILE__, __LINE__);     \
+            return false;                                           \
+        }                                                           \
+    } while (0)
+
+#define ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes) do {                                  \
+        if (memcmp((expected_ptr), (actual_ptr), size_bytes) != 0) {                                    \
+            fprintf(stderr, "The specified memory regions differ at %s:%d.\n", __FILE__, __LINE__);     \
+            return false;                                                                               \
+        }                                                                                               \
+    } while(0)
 
 static inline int run_tests(unsigned int timeout_seconds) {
     int exit_code = 0;
     for (size_t i = 0; i < number_of_tests; i++) {
         pid_t pid = fork();
         if (!pid) {
+            // test runs in the child process
             alarm(timeout_seconds);
             bool test_passes = test_cases[i].function();
             _exit(!test_passes);    // ctest follows Unix convention of exit status 0 for success
         }
-        // else
+        // the parent process waits for the result
         int status;
         waitpid(pid, &status, 0);
         if (WIFSIGNALED(status)) {
@@ -102,6 +185,7 @@ static inline int run_tests(unsigned int timeout_seconds) {
             }
         } else {
             printf("ABNORMAL TEST TERMINATION: %s\n", test_cases[i].name);
+            exit_code = 1;
         }
     }
     return exit_code;

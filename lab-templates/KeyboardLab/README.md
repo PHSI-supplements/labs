@@ -73,7 +73,16 @@ KeyboardLab's driver code is designed to facilitate testing by accepting input a
 You may, if you wish, create automated unit tests.
 The file *test/unit-tests.h* provides a simple framework.
 Add a test to *test/unit-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
-Return `true` when the test passes, and `false` when the test fails.
+The available assertions are:
+```
+ASSERT_TRUE(expression)
+ASSERT_FALSE(expression)
+ASSERT_EQUAL(expected, actual)
+ASSERT_ALMOST_EQUAL(expected, actual, delta)
+ASSERT_EQUAL_STRINGS(expected, actual)
+ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes)
+```
+Alternatively, you can return `true` when the test passes, and `false` when the test fails.
 You *may* violate the assignment's constraints in *test/unit-tests.c*, because this file will not be graded.
 (If you have more than 128 tests, you will need to modify `MAXIMUM_NUMBER_OF_TESTS`'s definition in *test/unit-tests.h*.)
 

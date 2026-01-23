@@ -66,6 +66,6 @@ actual:   0 || 73 = 1
 
 ---
 
-|                     [⬅️](03-negative-and-equality.md)                      |      [⬆️](../README.md)      |        [➡️](05-adders.md)        |
-|:--------------------------------------------------------------------------:|:----------------------------:|:--------------------------------:|
-| [Checking the Sign, and Testing for Equality](03-negative-and-equality.md) | [Front Matter](../README.md) | [Adder "Hardware"](05-adders.md) |
+|                     [⬅️](03-negative-and-equality.md)                      |      [⬆️](../README.md)      |            [➡️](05-zero-sign-extend.md)            |
+|:--------------------------------------------------------------------------:|:----------------------------:|:--------------------------------------------------:|
+| [Checking the Sign, and Testing for Equality](03-negative-and-equality.md) | [Front Matter](../README.md) | [Zero- and Sign-Extension](05-zero-sign-extend.md) |

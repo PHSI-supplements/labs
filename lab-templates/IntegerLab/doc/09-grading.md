@@ -33,7 +33,7 @@ After you have exhausted your late days, any work turned in more than one hour l
 
 ### Rubric
 
-This assignment is worth 36 points.
+This assignment is worth 38 points.
 
 - [ ] **+1** The `exponentiate()` function produces the correct powers of two.
 - [ ] **+1** The `lg()` function produces the correct base-2 logarithms.
@@ -43,6 +43,8 @@ This assignment is worth 36 points.
 - [ ] **+1** The `logical_not()` function correctly produces the logical inverse of its argument.
 - [ ] **+1** The `logical_and()` function correctly produces the logical conjunction of its arguments.
 - [ ] **+1** The `logical_or()` function correctly produces the logical disjunction of its arguments.
+- [ ] **+1** The `zero_extend()` function correctly zero-extends a value from its initial size to its new size.
+- [ ] **+1** The `sign_extend()` function correctly sign-extends a value from its initial size to its new size.
 - [ ] **+1** The `one_bit_full_addition()` function correctly determines the `sum` and `c_out` bits for a 1-bit full adder.
 - [ ] **+5** The `ripple_carry_addition()` function correctly implements a 32-bit ripple-carry adder.
 - [ ] **+2** The `add()` function correctly performs 16-bit integer addition.
@@ -64,6 +66,7 @@ This assignment is worth 36 points.
     - `exponentiate()`, `lg()`,
       `is_negative()`, `equal()`, `not_equal()`,
       `logical_not()`, `logical_and()`, `logical_or()`,
+      `zero_extend()`, `sign_extend()`,
       `one_bit_full_addition()`, `multiply_by_power_of_two()`, `unsigned_divide()`
   - [ ] **no credit** for `ripple_carry_addition()` if `ripple_carry_addition()` or `one_bit_full_addition()` violate a constraint.
   - [ ] **no credit** for `add()` if `add()`, `ripple_carry_addition()`, or `one_bit_full_addition()` violate a constraint.

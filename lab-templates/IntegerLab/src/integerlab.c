@@ -20,7 +20,6 @@
  */
 
 #include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdint.h>
@@ -31,11 +30,12 @@
 #include "profiler.h"
 
 [[gnu::no_instrument_function]] bool read_evaluate_print();
-[[gnu::no_instrument_function]] char *parse_operand(const char *buffer, uint32_t *operand);
-[[gnu::no_instrument_function]] char *parse_operator(const char *buffer, char operator[static 3]);
-[[gnu::no_instrument_function]] void evaluate_print_one_bit_adder(const char *input_buffer);
-[[gnu::no_instrument_function]] void evaluate_print_thirty_two_bit_adder(const char *input_buffer);
-[[gnu::no_instrument_function]] void evaluate_print_power_of_two_multiplier(const char *input_buffer);
+[[gnu::no_instrument_function]] char *parse_operand(char const *restrict buffer, uint32_t *restrict operand);
+[[gnu::no_instrument_function]] char *parse_operator(char const *buffer, char operator[static 3]);
+[[gnu::no_instrument_function]] void evaluate_print_zero_sign_extend(char const *input_buffer);
+[[gnu::no_instrument_function]] void evaluate_print_one_bit_adder(char const *input_buffer);
+[[gnu::no_instrument_function]] void evaluate_print_thirty_two_bit_adder(char const *input_buffer);
+[[gnu::no_instrument_function]] void evaluate_print_power_of_two_multiplier(char const *input_buffer);
 [[gnu::no_instrument_function]] void evaluate_print_arithmetic(uint16_t operand1, char operator, uint16_t operand2);
 
 int main() {
@@ -48,22 +48,22 @@ int main() {
     return 0;
 }
 
-char *parse_operand(const char *buffer, uint32_t *operand) {
+char *parse_operand(char const *restrict buffer, uint32_t *restrict operand) {
     char *end_pointer[1];
-    while (*buffer == ' ' || *buffer == '\t') {
+    while (*buffer && isspace(*buffer)) {
         buffer++;
     }
     *operand = strtol(buffer, end_pointer, (strncmp(buffer, "0x", 2) ? 10 : 16));
     return end_pointer[0];
 }
 
-char *parse_operator(const char *buffer, char operator[static 3]) {
+char *parse_operator(char const *buffer, char operator[static 3]) {
     const char *end_pointer = buffer;
-    while (*end_pointer == ' ' || *end_pointer == '\t') {
+    while (*end_pointer && isspace(*end_pointer)) {
         end_pointer++;
     }
     operator[0] = *end_pointer++;
-    if (*end_pointer == ' ' || *end_pointer == '\t' || isdigit(*end_pointer)) {
+    if (isspace(*end_pointer) || isdigit(*end_pointer)) {
         operator[1] = '\0';
     } else {
         operator[1] = *end_pointer++;
@@ -72,7 +72,138 @@ char *parse_operator(const char *buffer, char operator[static 3]) {
     return (char *) end_pointer;
 }
 
-void evaluate_print_one_bit_adder(const char *input_buffer) {
+void evaluate_print_zero_sign_extend(char const *input_buffer) {
+    uint32_t value;
+    int from_size = 0, to_size = 0;
+    uint32_t placeholder_size;
+    char const *next = parse_operand(input_buffer + 6, &value);
+    char const *end = input_buffer;
+    while (*next && isspace(*next)) {
+        next++;
+    }
+    if (isdigit(*next)) {
+        next = parse_operand(next, &placeholder_size);
+        from_size = (int) placeholder_size;
+    } else if (!strncmp(next, "one_byte", 8)) {
+        from_size = ONE_BYTE;
+        next += 8;
+    } else if (!strncmp(next, "two_bytes", 9)) {
+        from_size = TWO_BYTES;
+        next += 9;
+    } else if (!strncmp(next, "four_bytes", 10)) {
+        from_size = FOUR_BYTES;
+        next += 10;
+    } else {
+        end = next;
+        while (*end && !isspace(*end)) {
+            end++;
+        }
+        printf("Unrecognized argument: %.*s\n", (int) (end - next), next);
+    }
+    next = next > end ? next : end;
+    while (*next && isspace(*next)) {
+        next++;
+    }
+    if (isdigit(*next)) {
+        next = parse_operand(next, &placeholder_size);
+        to_size = (int) placeholder_size;
+    } else if (!strncmp(next, "one_byte", 8)) {
+        to_size = ONE_BYTE;
+        next += 8;
+    } else if (!strncmp(next, "two_bytes", 9)) {
+        to_size = TWO_BYTES;
+        next += 9;
+    } else if (!strncmp(next, "four_bytes", 10)) {
+        to_size = FOUR_BYTES;
+        next += 10;
+    } else {
+        end = next;
+        while (*end && !isspace(*end)) {
+            end++;
+        }
+        printf("Unrecognized argument: %.*s\n", (int) (end - next), next);
+    }
+    if (from_size && to_size) {
+        uint32_t raw_unsigned_result = zero_extend(value, from_size, to_size);
+        uint32_t initial_unsigned_value = 0;
+        uint32_t expected_raw_unsigned_result = 0;
+        uint32_t expected_unsigned_result = 0;
+        uint32_t actual_unsigned_result = 0;
+        uint32_t raw_signed_result = sign_extend(value, from_size, to_size);
+        int32_t initial_signed_value = 0;
+        uint32_t expected_raw_signed_result = 0;
+        int32_t expected_signed_result = 0;
+        int32_t actual_signed_result = 0;
+        if (from_size == ONE_BYTE) {
+            uint8_t downcast_unsigned_value = (uint8_t) value;
+            initial_unsigned_value = (uint32_t) downcast_unsigned_value;
+            int8_t downcast_signed_value = (int8_t) value;
+            initial_signed_value = (int32_t) downcast_signed_value;
+            if (to_size == FOUR_BYTES) {
+                expected_unsigned_result = (uint32_t) downcast_unsigned_value;
+                expected_raw_unsigned_result = (uint32_t) downcast_unsigned_value;
+                expected_signed_result = (int32_t) downcast_signed_value;
+                expected_raw_signed_result = (uint32_t) expected_signed_result;
+                actual_unsigned_result = raw_unsigned_result & 0xFFFF'FFFF;
+                actual_signed_result = (int32_t) (raw_signed_result & 0xFFFF'FFFF);
+            } else if (to_size == TWO_BYTES) {
+                uint16_t intermediate_unsigned_result = (uint16_t) downcast_unsigned_value;
+                expected_unsigned_result = intermediate_unsigned_result;
+                expected_raw_unsigned_result = ((value >> 16) << 16) | intermediate_unsigned_result;
+                int16_t intermediate_signed_result = (int16_t) downcast_signed_value;
+                expected_signed_result = (int32_t) intermediate_signed_result;
+                expected_raw_signed_result = ((value >> 16) << 16) | (((uint32_t) (intermediate_signed_result) & 0x0000'FFFF));
+                actual_unsigned_result = raw_unsigned_result & 0xFFFF;
+                actual_signed_result = (int16_t) raw_signed_result;
+            } else {
+                expected_unsigned_result = downcast_unsigned_value;
+                expected_raw_unsigned_result = value;
+                expected_signed_result = (int32_t) downcast_signed_value;
+                expected_raw_signed_result = value;
+                actual_unsigned_result = raw_unsigned_result & 0xFF;
+                actual_signed_result = (int32_t) (raw_signed_result & 0xFF);
+            }
+        } else if (from_size == TWO_BYTES) {
+            uint16_t downcast_unsigned_value = (uint16_t) value;
+            initial_unsigned_value = (uint32_t) downcast_unsigned_value;
+            int16_t downcast_signed_value = (int16_t) value;
+            initial_signed_value = (int32_t) downcast_signed_value;
+            if (to_size == FOUR_BYTES) {
+                expected_unsigned_result = (uint32_t) downcast_unsigned_value;
+                expected_raw_unsigned_result = (uint32_t) downcast_unsigned_value;
+                expected_signed_result = (int32_t) downcast_signed_value;
+                expected_raw_signed_result = (uint32_t) expected_signed_result;
+                actual_unsigned_result = raw_unsigned_result & 0xFFFF'FFFF;
+                actual_signed_result = (int32_t) (raw_signed_result & 0xFFFF'FFFF);
+            } else {
+                expected_unsigned_result = downcast_unsigned_value;
+                expected_raw_unsigned_result = value;
+                expected_signed_result = (int32_t) downcast_signed_value;
+                expected_raw_signed_result = value;
+                actual_unsigned_result = raw_unsigned_result & 0xFFFF;
+                actual_signed_result = (int16_t) raw_signed_result;
+            }
+        } else {
+            initial_unsigned_value = value;
+            expected_unsigned_result = value;
+            expected_raw_unsigned_result = value;
+            actual_unsigned_result = raw_unsigned_result;
+            initial_signed_value = (int32_t) value;
+            expected_signed_result = (int32_t) value;
+            expected_raw_signed_result = (uint32_t) expected_signed_result;
+            actual_signed_result = (int32_t) raw_unsigned_result;
+        }
+        printf("Bit vector: %#010x\n", value);
+        printf("Unsigned: initial %d-bit value: %11u\n", from_size, initial_unsigned_value);
+        printf("\tExpected %d-bit value: %11u (%#010x)", to_size, expected_unsigned_result, expected_raw_unsigned_result);
+        printf("\tActual %d-bit value: %11u (%#010x)\n", to_size, actual_unsigned_result, raw_unsigned_result);
+        printf("Signed: initial %d-bit value:   %11d\n", from_size, initial_signed_value);
+        printf("\tExpected %d-bit value: %11d (%#010x)", to_size, expected_signed_result, expected_raw_signed_result);
+        printf("\tActual %d-bit value: %11d (%#010x)\n", to_size, actual_signed_result, raw_signed_result);
+    }
+}
+
+void evaluate_print_one_bit_adder(char const *input_buffer) {
     /* !!! STUDENTS ARE NOT ALLOWED TO USE A LOOKUP TABLE FOR THEIR ONE-BIT ADDER !!! */
     bool sums[2][2][2] = {{{false, true},  {true,  false}},
                           {{true,  false}, {false, true}}};
@@ -93,7 +224,7 @@ void evaluate_print_one_bit_adder(const char *input_buffer) {
     printf("actual:   %d + %d + %d = %d carry %d\n", result.a, result.b, result.c_in, result.sum, result.c_out);
 }
 
-void evaluate_print_thirty_two_bit_adder(const char *input_buffer) {
+void evaluate_print_thirty_two_bit_adder(char const *input_buffer) {
     reset_call_counts();
     uint32_t operand1, operand2;
     int carry_in;
@@ -105,7 +236,7 @@ void evaluate_print_thirty_two_bit_adder(const char *input_buffer) {
     printf("\t\tNumber of calls to one_bit_full_addition:    %d\n", get_call_counts(one_bit_full_addition));
 }
 
-void evaluate_print_power_of_two_multiplier(const char *input_buffer) {
+void evaluate_print_power_of_two_multiplier(char const *input_buffer) {
     uint16_t operand1, operand2;
     sscanf(input_buffer + 5, "%hx %hx", &operand1, &operand2); // NOLINT(*-err34-c)
     uint32_t expected_result = (int32_t) operand1 * (int32_t) operand2;
@@ -257,6 +388,7 @@ bool read_evaluate_print() {
            "    a two-operand comparison expression, a two-operand arithmetic expression,\n"
            "    \"lg <value>\" or \"exponentiate <value>\" to test your powers-of-two code,\n"
            "    \"is_negative <value>\" to determine if 2's complement value is negative,\n"
+           "    \"extend <value> <from_size> <to_size>\" to zero- and sign-extend a value,\n"
            "    \"add1 <binary_value1> <binary_value2> <carry_in>\" for 1-bit full adder,\n"
            "    \"add32 <hex_value1> <hex_value2> <carry_in>\" for 32-bit ripple-carry adder,\n"
            "    \"mul2 <hex_value> <hex_power_of_two>\" for power-of-two multiplier,\n"
@@ -288,6 +420,8 @@ bool read_evaluate_print() {
                (int16_t) operand1, (uint16_t) operand1, ((int16_t) operand1 < 0 ? "is" : "is not"));
         printf("actual:   %hd (0x%04hX) %s negative\n",
                (int16_t) operand1, (uint16_t) operand1, (is_negative((uint16_t) operand1) ? "is" : "is not"));
+    } else if (!strncmp(input_buffer, "extend", 6)) {
+        evaluate_print_zero_sign_extend(input_buffer);
     } else if (!strncmp(input_buffer, "add1", 4)) {
         evaluate_print_one_bit_adder(input_buffer);
     } else if (!strncmp(input_buffer, "add32", 5)) {

@@ -62,6 +62,7 @@ Enter a one- or two-operand logical expression,
     a two-operand comparison expression, a two-operand arithmetic expression,
     "lg <value>" or "exponentiate <value>" to test your powers-of-two code,
     "is_negative <value>" to determine if 2's complement value is negative,
+    "extend <value> <from_size> <to_size>" to zero- and sign-extend a value,
     "add1 <binary_value1> <binary_value2> <carry_in>" for 1-bit full adder,
     "add32 <hex_value1> <hex_value2> <carry_in>" for 32-bit ripple-carry adder,
     "mul2 <hex_value> <hex_power_of_two>" for power-of-two-multiplier,
@@ -69,7 +70,7 @@ Enter a one- or two-operand logical expression,
 ```
 
 When you enter a value, if it is prepended with `0x` then the parser will parse it as a hexadecimal value;
-otherwise, except as noted in the [sections for the one-bit full adder and the ripple-carry adder](05-adders.md), the parser will treat it as a decimal value.
+otherwise, except as noted in the [sections for the one-bit full adder and the ripple-carry adder](06-adders.md), the parser will treat it as a decimal value.
 
 ### Problem Decomposition
 
@@ -102,7 +103,7 @@ Implementing division requires that you be able to determine whether the divisor
 
 Do not edit *alu.h*.
 
-This header file contains two type definitions:
+This header file contains three type definitions:
 
 - `one_bit_adder_t` is a structure to hold the 1-bit inputs (`a`, `b`, `c_in`) and 1-bit outputs (`sum`, `c_out`) of a one-bit full adder.
 - `alu_result_t` is a structure to hold the outputs from an arithmetic logic unit.
@@ -112,10 +113,15 @@ This header file contains two type definitions:
   - `unsigned_overflow`, a 1-bit flag to indicate whether overflow occurred when interpreting the source operands as unsigned values
   - `signed_overflow`, a 1-bit flag to indicate whether overflow occurred when interpreting the source operands as signed values
   - `divide_by_zero`, a 1-bit flag to indicate whether there was an attempt to divide by zero.
+- `data_size_t` is an enumerated type to represent data sizes: 8 bits (`ONE_BYTE`), 16 bits (`TWO_BYTES`), and 32 bits (`FOUR_BYTES`).
+  Its primary use is to support calls to `zero_extend()` and `sign_extend()`.
 
-The header file also contains two macros, `is_zero()` and `is_not_zero()` to bootstrap your ALU code.
-These macros act like functions and return a boolean value to indicate whether an integer is 0 or not.
+The header file also contains four macros, `is_zero()`, `is_not_zero()`, `is_power_of_two()` and `LOWER_BITS_MASK()` to bootstrap your ALU code.
+The `is_zero()` and `is_not_zero()` macros act like functions and return a boolean value to indicate whether an integer is 0 or not.
 <small>(The astute student will quickly realize that `is_not_zero()` is not necessary and, with a little thought, will realize that they can write `is_zero()` as a function within the constraints of this assignment.)</small>
+The `is_power_of_two()` macro checks whether a value is a power of two; it exists primarily to for some precondition checks in the starter code, but you may use it as well.
+The `LOWER_BITS_MASK()` macro will generate a bit vector whose lower $n$ bits are 1s and whose remaining bits are 0s
+(for example, `LOWER_BITS_MASK(5)` will produce `0x1F`).
 
 Finally, the header file contains eight inequality comparison functions for 16-bit integers that you can use;
 however, <font color="red">these functions will *not* work until you have implemented `subtract()`</font>.
@@ -154,6 +160,11 @@ This file will contain most of the code that you write, and the functions in *al
   - `logical_not()` returns the logical inverse of the argument
   - `logical_and()` returns the logical conjunction of the two arguments
   - `logical_or()` returns the logical disjunction of the two arguments
+- Zero- and sign-extension
+  - `zero_extend()` will interpret its `value` argument as an 8- or 16-bit unsigned integer
+    and zero-extend the value so that the bit vector returned can be interpreted as a 16- or 32-bit unsigned integer
+  - `sign_extend()` will interpret its `value` argument as an 8- or 16-bit signed integer
+    and sign-extend the value so that the bit vector returned can be interpreted as a 16- or 32-bit signed integer
 - Addition and subtraction
   - `one_bit_full_addition()` performs addition for one bit position, determining both the sum bit and the carry-out bit
   - `ripple_carry_addition()` adds two 32-bit values to each other and to a carry-in bit

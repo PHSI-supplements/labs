@@ -142,6 +142,6 @@ As with addition, the expected overflow flags are obtained directly from flags s
 
 ---
 
-|        [⬅️](05-adders.md)        |      [⬆️](../README.md)      |                  [➡️](07-unsigned-multiplication-division.md)                  |
+|        [⬅️](06-adders.md)        |      [⬆️](../README.md)      |                  [➡️](10-unsigned-multiplication-division.md)                  |
 |:--------------------------------:|:----------------------------:|:------------------------------------------------------------------------------:|
-| [Adder "Hardware"](05-adders.md) | [Front Matter](../README.md) | [Unsigned Multiplication and Division](07-unsigned-multiplication-division.md) |
+| [Adder "Hardware"](06-adders.md) | [Front Matter](../README.md) | [Unsigned Multiplication and Division](10-unsigned-multiplication-division.md) |

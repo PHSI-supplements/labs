@@ -91,11 +91,21 @@ ListLab's driver code is designed to facilitate testing through a menuing system
 You may, if you wish, create automated unit tests.
 The file *test/unit-tests.h* provides a simple framework.
 Add a test to *test/word-entry-tests.c*, *test/insertion-sort-tests.c*, or *linkedlist-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
-Return `true` when the test passes, and `false` when the test fails.
+The available assertions are:
+```
+ASSERT_TRUE(expression)
+ASSERT_FALSE(expression)
+ASSERT_EQUAL(expected, actual)
+ASSERT_ALMOST_EQUAL(expected, actual, delta)
+ASSERT_EQUAL_STRINGS(expected, actual)
+ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes)
+```
+Alternatively, you can return `true` when the test passes, and `false` when the test fails.
 You *may* violate the assignment's constraints in *test/word-entry-tests.c*, *test/insertion-sort-tests.c*, and *linkedlist-tests.c*, because these files will not be graded.
 (If you have more than 128 tests, you will need to modify `MAXIMUM_NUMBER_OF_TESTS`'s definition in *test/unit-tests.h*.)
 
 In the *test/\*tests.c* test files you'll find an example test that always passes, a commented-out example test that always fails, and a commented-out example test that always times-out.
+The *tests/word-entry-tests.c* file also has a commented-out demonstration of how you can compare `struct` objects *if* the code has access to the `struct`'s definition.
 Note that the unit tests in *test/insertion-sort-tests.c* will run twice, once using the array-backed list provided in the starter code, and once using the linked list that you'll create.
 
 After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.

@@ -55,6 +55,7 @@ Enter a one- or two-operand logical expression,
     a two-operand comparison expression, a two-operand arithmetic expression,
     "lg <value>" or "exponentiate <value>" to test your powers-of-two code,
     "is_negative <value>" to determine if 2's complement value is negative,
+    "extend <value> <from_size> <to_size>" to zero- and sign-extend a value,
     "add1 <binary_value1> <binary_value2> <carry_in>" for 1-bit full adder,
     "add32 <hex_value1> <hex_value2> <carry_in>" for 32-bit ripple-carry adder,
     or "quit": exponentiate 10

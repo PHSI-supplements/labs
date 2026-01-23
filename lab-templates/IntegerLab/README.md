@@ -43,9 +43,10 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [Utility Functions](doc/02-utility-functions.md)
 - [Checking the Sign, and Testing for Equality](doc/03-negative-and-equality.md)
 - [Logical Operations](doc/04-logical-operations.md)
-- [Adder "Hardware"](doc/05-adders.md)
-- [Addition and Subtraction](doc/06-addition-subtraction.md)
-- [Unsigned Multiplication and Division](doc/07-unsigned-multiplication-division.md)
+- [Zero- and Sign-Extension](doc/05-zero-sign-extend.md)
+- [Adder "Hardware"](doc/06-adders.md)`
+- [Addition and Subtraction](doc/07-addition-subtraction.md)
+- [Unsigned Multiplication and Division](doc/10-unsigned-multiplication-division.md)
 - [Signed Multiplication and Division (Bonus Credit)](doc/08-signed-multiplication-division.md)
 - [Turn-In and Grading](doc/09-grading.md)
 - [Appendix: Example Tests](doc/AA-example-tests.md)
@@ -117,7 +118,16 @@ IntegerLab's driver code is designed to facilitate testing by accepting input an
 You may, if you wish, create automated unit tests.
 The file *test/unit-tests.h* provides a simple framework.
 Add a test to *test/unit-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
-Return `true` when the test passes, and `false` when the test fails.
+The available assertions are:
+```
+ASSERT_TRUE(expression)
+ASSERT_FALSE(expression)
+ASSERT_EQUAL(expected, actual)
+ASSERT_ALMOST_EQUAL(expected, actual, delta)
+ASSERT_EQUAL_STRINGS(expected, actual)
+ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes)
+```
+Alternatively, you can return `true` when the test passes, and `false` when the test fails.
 You *may* violate the assignment's constraints in *test/unit-tests.c*, because this file will not be graded.
 (If you have more than 128 tests, you will need to modify `MAXIMUM_NUMBER_OF_TESTS`'s definition in *test/unit-tests.h*.)
 
