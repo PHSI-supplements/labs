@@ -28,6 +28,7 @@ it might be zero.
 
 You will use `ieee754_to_string()` to test your code.
 
+
 #### Check Your Work
 
 - [ ] Compile and run *floatlab*, trying a few values, starting with values whose IEEE 754 representation are easy to check.
@@ -37,13 +38,13 @@ For example:
 Enter a value, a two-operand arithmetic expression,
     "decode <value>", "recode <value>",
     or "quit": 1
-0x3f800000	+1.0000,0000,0000,0000,0000,000_{2} x 2^{0}
+0x3f800000	+1.0000'0000'0000'0000'0000'000_{2} x 2^{0}
 
 Enter a value, ... or "quit": .25
-0x3e800000	+1.0000,0000,0000,0000,0000,000_{2} x 2^{-2}
+0x3e800000	+1.0000'0000'0000'0000'0000'000_{2} x 2^{-2}
 
 Enter a value, ... or "quit": 15.625
-0x417a0000	+1.1111,0100,0000,0000,0000,000_{2} x 2^{3}
+0x417a0000	+1.1111'0100'0000'0000'0000'000_{2} x 2^{3}
 ```
 
 - [ ] Try a few more on your own.
@@ -52,14 +53,14 @@ Enter a value, ... or "quit": 15.625
 For example:
 ```
 Enter a value, ... or "quit": 0xF22AAAAA
-0xf22aaaaa	-1.0101,0101,0101,0101,0101,010_{2} x 2^{101}
+0xf22aaaaa	-1.0101'0101'0101'0101'0101'010_{2} x 2^{101}
 ```
 
 Don't forget to check subnormal numbers, too.
 For example:
 ```
 Enter a value, ... or "quit": 5e-40
-0x000571cc	+0.0000,1010,1110,0011,1001,100_{2} x 2^{-126}
+0x000571cc	+0.0000'1010'1110'0011'1001'100_{2} x 2^{-126}
 ```
 
 
@@ -109,10 +110,10 @@ In these examples, assume that all numbers are stored in `unnormal_t` data struc
 - **shift_right($10.0001'0111'1101'1_{2} \times 2^{15}$, 4)** will return \
   $0.0010'0001'0111'1101'1_{2} \times 2^{19}$:
   the significand's bits have been right-shifted by four, and the fraction has increased by four.
-- **place_all_bits_in_integer($0.0010'0001'0111,1101'1_{2} \times 2^{19}$)** will return \
+- **place_all_bits_in_integer($0.0010'0001'0111'1101'1_{2} \times 2^{19}$)** will return \
   $100'0010'1111'1011.0_{2} \times 2^{2}$.
 - **set_exponent($100'0010'1111'1011.0_{2} \times 2^{2}$, 0)** will return \
-  $1,0000'1011'1110'1100.0_{2} \times 2^{0}$.
+  $1'0000'1011'1110'1100.0_{2} \times 2^{0}$.
 - **set_integer($1'0000'1011'1110'1100.0_{2} \times 2^{0}$, 1)** will return \
   $1.0000'1011'1110'11_{2} \times 2^{16}$.
 

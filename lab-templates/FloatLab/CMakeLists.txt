@@ -11,16 +11,21 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 option(INSTRUCTOR_BUILD "Suppress warnings for grading" OFF)
 
-### Executables
-
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 endif()
 
-file(GLOB SRC_FILES CONFIGURE_DEPENDS src/*.c)
-file(GLOB HDR_FILES CONFIGURE_DEPENDS src/*.h)      # some IDEs need this
+add_library(student_code STATIC
+        src/bits-to-string.h    src/bits-to-string.c
+        src/fpu.h               src/fpu.c
+        src/unnormal.h          src/unnormal.c
+)
 
-add_executable(floatlab ${SRC_FILES} ${HDR_FILES})
+### Executables
+
+add_executable(floatlab src/floatlab.c)
+
+target_link_libraries(floatlab PRIVATE student_code)
 
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)
@@ -34,6 +39,17 @@ if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     endif()
     target_compile_options(floatlab PRIVATE -Og)
 endif()
+
+### Unit Tests
+
+file (GLOB TEST_SOURCES CONFIGURE_DEPENDS test/*.c)
+
+foreach (test_src ${TEST_SOURCES})
+    get_filename_component(test_name ${test_src} NAME_WE)
+    add_executable(${test_name} ${test_src} test/unit-tests.h)
+    target_link_libraries(${test_name} PRIVATE student_code)
+    add_test(NAME ${test_name} COMMAND ${test_name})
+endforeach ()
 
 ### Constraint Check
 

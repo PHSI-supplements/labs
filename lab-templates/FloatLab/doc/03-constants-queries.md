@@ -24,6 +24,32 @@ The remaining query function determines whether an `ieee754_t` floating point va
 - [ ] Implement `is_zero()` to detect whether a value is zero without regard to the value's sign.
 - [ ] Implement `is_negative()` to detect whether a value is negative.
 
+You will use `ieee754_to_string()` to test your code.
+
+
+#### Check Your Work
+
+- [ ] Compile and run *floatlab*, testing the query functions with a few values.
+
+For example:
+
+`Enter a value, ... or "quit":`
+
+| Input | Characterization |
+|:-----:|-----------------:|
+|   0   |             +0.0 |
+|  -0   |             -0.0 |
+|  inf  |        +Infinity |
+| -inf  |        -Infinity |
+|  nan  |    +Not a Number |
+| -nan  |    -Not a Number |
+
+> 🪢 **Reminder**
+> 
+> `is_nan()` must return `true` for *all* valid NaN bit vectors.
+> You may want to test `is_nan()` with hexadecimal constants other than what is produced by with the input "nan".
+
+
 ---
 
 |               [⬅️](02-unnormal_t.md)               |      [⬆️](../README.md)      |                 [➡️](04-examining-numbers.md)                  |

@@ -21,12 +21,13 @@
 #include <signal.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
-constexpr size_t MAXIMUM_NUMBER_OF_TESTS = 128;
+//constexpr size_t MAXIMUM_NUMBER_OF_TESTS = 128;
 
 typedef bool (*test_function)(void);
 
@@ -35,14 +36,29 @@ typedef struct {
     char const *name;
 } test_case_t;
 
-static test_case_t test_cases[MAXIMUM_NUMBER_OF_TESTS];
-static size_t number_of_tests = 0;
+static test_case_t *test_cases = nullptr;
 
 static inline void register_test(test_function function, char const *name) {
-    assert(number_of_tests < MAXIMUM_NUMBER_OF_TESTS);
+    constexpr size_t growth_rate = 64;
+    static size_t number_of_tests = 0;
+    static size_t test_cases_length = 0;
+    // is there room for one more test case plus a sentinel?
+    if (test_cases_length < number_of_tests + 2) {
+        size_t new_length = test_cases_length + growth_rate;
+        test_case_t *new_allocation = realloc(test_cases, new_length * sizeof(test_case_t));
+        if (new_allocation) {
+            test_cases = new_allocation;
+            test_cases_length = new_length;
+        } else {
+            fprintf(stderr, "Warning: Unable to register more than %zu test cases.\n", number_of_tests);
+            return;
+        }
+    }
     test_cases[number_of_tests].function = function;
     test_cases[number_of_tests].name = name;
     number_of_tests++;
+    test_cases[number_of_tests].function = nullptr;
+    test_cases[number_of_tests].name = nullptr;
 }
 
 #define TEST(name)                          \
@@ -68,9 +84,10 @@ static inline void register_test(test_function function, char const *name) {
     unsigned long:      fprintf(stderr, "%lu (0x%lX)",      (unsigned long)(x), (unsigned long)(x)),            \
     long long:          fprintf(stderr, "%lld (0x%llX)",    (long long)(x), (unsigned long long)(x)),           \
     unsigned long long: fprintf(stderr, "%llu (0x%llX)",    (unsigned long long)(x), (unsigned long long)(x)),  \
-    float:              fprintf(stderr, "%f",               (float)(x)),                                        \
-    double:             fprintf(stderr, "%f",               (double)(x)),                                       \
-    default:            fprintf(stderr, "0x%" PRIxPTR,      (uintptr_t)(x))                                     \
+    _Float16:           fprintf(stderr, "%.5g (%a)",        (double)(x), (double)(x)),                          \
+    float:              fprintf(stderr, "%.8g (%a)",        (double)(x), (double)(x)),                          \
+    double:             fprintf(stderr, "%.17g (%a)",       (double)(x), (double)(x)),                          \
+    default:            fprintf(stderr, "Unsupported type")                                                     \
 )
 
 #define ASSERT_TRUE(expression) do {                                                        \
@@ -137,12 +154,16 @@ static inline void register_test(test_function function, char const *name) {
 
 static inline int run_tests(unsigned int timeout_seconds) {
     int exit_code = 0;
-    for (size_t i = 0; i < number_of_tests; i++) {
+    if (!test_cases) {
+        printf("No tests registered.\n");
+        return exit_code;
+    }
+    for (test_case_t *test_case = test_cases ; test_case->function; test_case++) {
         pid_t pid = fork();
         if (!pid) {
             // test runs in the child process
             alarm(timeout_seconds);
-            bool test_passes = test_cases[i].function();
+            bool test_passes = test_case->function();
             _exit(!test_passes);    // ctest follows Unix convention of exit status 0 for success
         }
         // the parent process waits for the result
@@ -152,39 +173,39 @@ static inline int run_tests(unsigned int timeout_seconds) {
             int signal_number = WTERMSIG(status);
             switch (signal_number) {
                 case SIGALRM:
-                    printf("TIMEOUT:      %s\n", test_cases[i].name);
+                    printf("TIMEOUT:      %s\n", test_case->name);
                     break;
                 case SIGBUS:
                 case SIGSEGV:
-                    printf("MEMORY ERROR: %s\n", test_cases[i].name);
+                    printf("MEMORY ERROR: %s\n", test_case->name);
                     break;
                 case SIGABRT:
-                    printf("ABORT:        %s\n", test_cases[i].name);
+                    printf("ABORT:        %s\n", test_case->name);
                     break;
                 case SIGFPE:
-                    printf("MATH ERROR:   %s\n", test_cases[i].name);
+                    printf("MATH ERROR:   %s\n", test_case->name);
                     break;
                 case SIGPIPE:
-                    printf("BROKEN PIPE:  %s\n", test_cases[i].name);
+                    printf("BROKEN PIPE:  %s\n", test_case->name);
                     break;
                 case SIGTERM:
-                    printf("TERMINATED:   %s\n", test_cases[i].name);
+                    printf("TERMINATED:   %s\n", test_case->name);
                     break;
                 default:
-                    // printf("%s: %s\n", strsignal(signal_number), test_cases[i].name);
+                    // printf("%s: %s\n", strsignal(signal_number), test_case->name);
                     // nuros doesn't seem to have the POSIX strsignal() function -- that's odd
-                    printf("Signal %d: %s\n", signal_number, test_cases[i].name);
+                    printf("Signal %d: %s\n", signal_number, test_case->name);
             }
             exit_code = 1;
         } else if (WIFEXITED(status)) {
             if (WEXITSTATUS(status) == 0) {
-                printf("PASS:         %s\n", test_cases[i].name);
+                printf("PASS:         %s\n", test_case->name);
             } else {
-                printf("FAIL:         %s\n", test_cases[i].name);
+                printf("FAIL:         %s\n", test_case->name);
                 exit_code = 1;
             }
         } else {
-            printf("ABNORMAL TEST TERMINATION: %s\n", test_cases[i].name);
+            printf("ABNORMAL TEST TERMINATION: %s\n", test_case->name);
             exit_code = 1;
         }
     }

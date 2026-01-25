@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * FloatLab (c) 2019-25 Christopher A. Bohn
+ * FloatLab (c) 2019-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -23,7 +23,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <assert.h>
 #include "fpu.h"
 #include "unnormal.h"
 
@@ -156,30 +155,3 @@ bool read_evaluate_print() {
         return true;
     }
 }
-
-char *bits_to_string(char *destination, uint64_t bits, int start_bit,
-                     int end_bit, enum bit_divider_direction bit_dividers) {
-    assert(start_bit < 64 && start_bit >= 0 && end_bit < 64 && end_bit >= 0);
-    if (start_bit < end_bit) {
-        int placeholder = start_bit;
-        start_bit = end_bit;
-        end_bit = placeholder;
-    }
-    uint64_t mask = (uint64_t) 1 << start_bit;
-    char *destination_bit = destination;
-    int place_counter = (bit_dividers == FROM_LEFT) ? 0 : (end_bit - start_bit - 1) % 4;
-    for (int bit = start_bit; bit >= end_bit; bit--) {
-        *destination_bit++ = (bits & mask) ? '1' : '0';
-        mask = mask >> 1;
-        place_counter = (place_counter + 1) % 4;
-        if (!place_counter && (bit_dividers != NONE)) {
-            *destination_bit++ = '\'';
-        }
-    }
-    if (*(destination_bit - 1) == '\'') {
-        destination_bit--;
-    }
-    *destination_bit = '\0';
-    return destination;
-}
-

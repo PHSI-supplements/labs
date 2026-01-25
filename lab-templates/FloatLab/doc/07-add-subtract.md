@@ -63,6 +63,16 @@ however, *you must take care that the most significant bit does not get truncate
 > If the two operands have the same sign, add the significands;
 > if the two operands have different signs, subtract the significands' magnitudes.
 
+> ⓘ **Note**
+>
+> Do *not* implement re-normalization and rounding in the `add()` function.
+> Notice this code at the end of `add()`:
+> ```c
+>     unnormal_t sum = unnormal(...);
+>     return encode(sum);
+> ```
+> That code will take care of re-normalization and, eventually, rounding.
+
 > 📝 **Grading Note**
 > 
 > For the `add()* function, we will not deduct points if you have the wrong sign for Zero or for Not-a-Number` because the appropriate sign is usually indeterminate.
@@ -118,8 +128,9 @@ Be sure to check:
 
 > ⓘ Note
 >
-> When you try your own values for testing, if the *expected* value's LSB is 1 and the *actual* value's LSB is 0,
-> but the two values are otherwise identical, then this is a rounding error.
+> When you try your own values for testing,
+> if the *expected* value can become the *actual* value by adding 1 to the LSB,
+> then this is a rounding error.
 > You will implement rounding [on the next page](08-rounding.md).
 
 ---

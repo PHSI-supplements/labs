@@ -11,7 +11,7 @@
  ******************************************************************************/
 
 /*
- * IntegerLab assignment and starter code (c) 2021-26 Christopher A. Bohn
+ * IntegerLab assignment and starter code (c) 2018-26 Christopher A. Bohn
  */
 
 #include <stdint.h>

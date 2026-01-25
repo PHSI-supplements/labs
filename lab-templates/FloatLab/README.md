@@ -1,6 +1,6 @@
 # FloatLab
 
-[//]: # (FloatLab © 2019-25 Christopher A. Bohn)
+[//]: # (FloatLab © 2019-26 Christopher A. Bohn)
 
 In this assignment, you will become more familiar with bit-level representations of floating point numbers.
 You'll do this by implementing floating point arithmetic for 32-bit floating point numbers using only bitwise operators and integer arithmetic.
@@ -49,6 +49,7 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [Rounding](doc/08-rounding.md)
 - [Bonus Credit: Arbitrary Division](doc/09-arbitrary-division.md)
 - [Turn-In and Grading](doc/10-grading.md)
+- [Unit Test Discussino](doc/AA-unit-test-discussion.md)
 
 ### Learning Objectives
 
@@ -99,6 +100,31 @@ You may use loops, conditionals, function calls, structs, and arrays.
 And, of course, you may use any of the provided starter code and any code that you write by yourself for this assignment.
 
 You can use the command `ctest --test-dir build --output-on-failure` to check whether you're using `float` or `double`, whether you're defining a `union`, and whether you're using a floating point literal.
+
+### Unit Tests
+
+FloatLab's driver code is designed to facilitate testing by accepting input and showing you the comparison of your functions' outputs with that of reference sources.
+You may, if you wish, create automated unit tests.
+The file *test/unit-tests.h* provides a simple framework.
+Add a test to *test/unit-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
+The available assertions are:
+```
+ASSERT_TRUE(expression)
+ASSERT_FALSE(expression)
+ASSERT_EQUAL(expected, actual)
+ASSERT_ALMOST_EQUAL(expected, actual, delta)
+ASSERT_EQUAL_STRINGS(expected, actual)
+ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes)
+```
+Alternatively, you can return `true` when the test passes, and `false` when the test fails.
+You *may* violate the assignment's constraints in *test/unit-tests.c*, because this file will not be graded.
+
+In *test/unit-tests.c* you'll find four commented-out unit tests that demonstrate some options when testing.
+If you plan to write unit tests, please read this [Unit Test Discussion](doc/AA-unit-test-discussion.md).
+
+The file *test/example-tests.c* contains commented-out unit tests that correspond to the example tests included in the assignment's write-up.
+
+After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.
 
 ### Structured Control Flow Only
 

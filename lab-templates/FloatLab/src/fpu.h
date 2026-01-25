@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * FloatLab (c) 2019-25 Christopher A. Bohn
+ * FloatLab (c) 2019-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -27,9 +27,8 @@
 
 typedef uint32_t ieee754_t;
 
-enum bit_divider_direction {
-    NONE, FROM_LEFT, FROM_RIGHT
-};
+typedef __uint128_t __attribute__((deprecated("Advisory: using __uint128_t indicates that your solution is more complicated than necessary. Please consult the assignment instructions."))) student_uint128_t;
+#define __uint128_t student_uint128_t
 
 bool is_infinity(ieee754_t number);
 bool is_nan(ieee754_t number);
@@ -40,8 +39,6 @@ uint8_t get_754_integer(ieee754_t number);
 uint32_t get_754_fraction(ieee754_t number);
 int8_t get_754_exponent(ieee754_t number);
 
-char *bits_to_string(char *destination, uint64_t bits, int start_bit,
-                     int end_bit, enum bit_divider_direction bit_dividers);
 char *ieee754_to_string(char *destination, ieee754_t number);
 
 unnormal_t decode(ieee754_t number);

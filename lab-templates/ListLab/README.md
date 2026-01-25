@@ -102,7 +102,6 @@ ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes)
 ```
 Alternatively, you can return `true` when the test passes, and `false` when the test fails.
 You *may* violate the assignment's constraints in *test/word-entry-tests.c*, *test/insertion-sort-tests.c*, and *linkedlist-tests.c*, because these files will not be graded.
-(If you have more than 128 tests, you will need to modify `MAXIMUM_NUMBER_OF_TESTS`'s definition in *test/unit-tests.h*.)
 
 In the *test/\*tests.c* test files you'll find an example test that always passes, a commented-out example test that always fails, and a commented-out example test that always times-out.
 The *tests/word-entry-tests.c* file also has a commented-out demonstration of how you can compare `struct` objects *if* the code has access to the `struct`'s definition.

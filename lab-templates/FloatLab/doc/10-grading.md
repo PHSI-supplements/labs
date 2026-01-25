@@ -62,13 +62,13 @@ This assignment is worth 35 points.
 - [ ] **+1** `divide()` provides correct answers for its special cases
 - [ ] **+1** `divide()` can divide when the divisor is of the form $\pm 2^n, -126 \le n \le 127$
 - [ ] **+1** `divide()` can divide when the dividend's significand is a multiple of the divisor's significand
-- [ ] **+1** `add()` demonstrates that `encode()` rounds down when the truncated part of the significand is less than halfway between representable values
-- [ ] **+1** `add()` demonstrates that `encode()` rounds up when the truncated part of the significand is more than halfway between representable values
-- [ ] **+2** `add()` demonstrates that `encode()` rounds to the nearest-even when the truncated part of the significand is exactly halfway between representable values
+- [ ] **+1** `round_to_nearest_even()` rounds down when the truncated part of the significand is less than halfway between representable values
+- [ ] **+1** `round_to_nearest_even()` rounds up when the truncated part of the significand is more than halfway between representable values
+- [ ] **+2** `round_to_nearest_even()` rounds to the nearest-even when the truncated part of the significand is exactly halfway between representable values
 - [ ] **+1** Rounding can carry into the exponent
-- [ ] **+1** `add()` and/or `multiply()` demonstrate that `encode()` overflows to infinity
-- [ ] **+1** `add()`, `multiply()`, and/or `divide()` demonstrate that `encode()` gracefully underflows through subnormal numbers
-- [ ] **+1** `multiply()` and/or `divide()` demonstrate that `encode() underflows to zero`
+- [ ] **+1** `encode()` overflows to infinity
+- [ ] **+1** `encode()` gracefully underflows through subnormal numbers
+- [ ] **+1** `encode() underflows to zero`
 
 
 - Bonus:
@@ -83,6 +83,6 @@ This assignment is worth 35 points.
 
 ---
 
-|                [⬅️](09-arbitrary-division.md)                |      [⬆️](../README.md)      |                              |
-|:------------------------------------------------------------:|:----------------------------:|:----------------------------:|
-| [Bonus Credit: Arbitrary Division](09-arbitrary-division.md) | [Front Matter](../README.md) |                              |
+|                [⬅️](09-arbitrary-division.md)                |      [⬆️](../README.md)      |               [➡️](AA-unit-test-discussion.md)               |
+|:------------------------------------------------------------:|:----------------------------:|:------------------------------------------------------------:|
+| [Bonus Credit: Arbitrary Division](09-arbitrary-division.md) | [Front Matter](../README.md) | [Appendix: Unit Test Discussion](AA-unit-test-discussion.md) |

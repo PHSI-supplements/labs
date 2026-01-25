@@ -42,6 +42,16 @@ Because you do not need to give the two operands the same exponent, you do not n
 
 - [ ] Multiply the two operands together using integer arithmetic.
 
+> ⓘ **Note**
+>
+> Do *not* implement re-normalization and rounding in the `multiply()` function.
+> Notice this code at the end of `multiply()`:
+> ```c
+>     unnormal_t product = unnormal(...);
+>     return encode(product);
+> ```
+> That code will take care of re-normalization and, eventually, rounding.
+
 > 📝 **Grading Note**
 >
 > For the `multiply()` function, we will not deduct points if you have the wrong sign for Not-a-Number.
@@ -92,9 +102,11 @@ The first of these requires rounding up
 
 > ⓘ Note
 > 
-> When you try your own values for testing, if the *expected* value's LSB is 1 and the *actual* value's LSB is 0,
-> but the two values are otherwise identical, then this is a rounding error.
+> When you try your own values for testing,
+> if the *expected* value can become the *actual* value by adding 1 to the LSB,
+> then this is a rounding error.
 > You will implement rounding [later](08-rounding.md).
+
 
 ### Division
 
@@ -110,6 +122,16 @@ This limitation guarantees that if the `unnormal_t` operands' significands are f
 
 - [ ] Produce the appropriate return values for the guard clauses.
 - [ ] Divide $dividend \div divisor$ using integer arithmetic.
+
+> ⓘ **Note**
+>
+> Do *not* implement re-normalization and rounding in the `divide()` function.
+> Notice this code at the end of `divide()`:
+> ```c
+>     unnormal_t quotient = unnormal(...);
+>     return encode(quotient);
+> ```
+> That code will take care of re-normalization and, eventually, rounding.
 
 > 📝 **Grading Note**
 >
@@ -151,8 +173,9 @@ Be sure to check:
 
 > ⓘ Note
 >
-> When you try your own values for testing, if the *expected* value's LSB is 1 and the *actual* value's LSB is 0,
-> but the two values are otherwise identical, then this is a rounding error.
+> When you try your own values for testing,
+> if the *expected* value can become the *actual* value by adding 1 to the LSB,
+> then this is a rounding error.
 > You will implement rounding [later](08-rounding.md).
 
 ---

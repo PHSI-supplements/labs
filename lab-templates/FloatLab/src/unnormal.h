@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * FloatLab (c) 2019-25 Christopher A. Bohn
+ * FloatLab (c) 2019-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).

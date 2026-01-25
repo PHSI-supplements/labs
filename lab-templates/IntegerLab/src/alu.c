@@ -95,10 +95,7 @@ bool logical_or(uint32_t value1, uint32_t value2) {
  * @return          The zero-extended value.
  */
 uint32_t zero_extend(uint32_t value, data_size_t from_size, data_size_t to_size) {
-    assert(to_size >= from_size);
-    uint32_t lower_preservation_mask = LOWER_BITS_MASK(from_size);
-    uint32_t upper_preservation_mask = 0xFFFF'FFFFuL << to_size;
-    return (value & upper_preservation_mask) | (value & lower_preservation_mask);
+    return 0;
 }
 
 /**
@@ -123,17 +120,7 @@ uint32_t zero_extend(uint32_t value, data_size_t from_size, data_size_t to_size)
  * @return          The sign-extended value.
  */
 uint32_t sign_extend(uint32_t value, data_size_t from_size, data_size_t to_size) {
-    assert(to_size >= from_size);
-    uint32_t lower_preservation_mask = LOWER_BITS_MASK(from_size);
-    uint32_t upper_preservation_mask = 0xFFFF'FFFFuL << to_size;
-    uint32_t sign_bit = value & (1L << (from_size - 1));    /* some students may prefer to check the from_size and use (1<<7) or (1<<15) accordingly */
-    uint32_t sign_extension;
-    if (sign_bit) {
-        sign_extension = 0xFFFF'FFFF & ~upper_preservation_mask & ~lower_preservation_mask;
-    } else {
-        sign_extension = 0;
-    }
-    return (value & upper_preservation_mask) | sign_extension | (value & lower_preservation_mask);
+    return 0;
 }
 
 /**
