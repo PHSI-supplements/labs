@@ -3,7 +3,6 @@
  * @file sorted-word-entries.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions for a sorted list of word entries.
  *
@@ -11,7 +10,6 @@
 
 /*
  * LinkedListLab assignment and starter code (c) 2021-26 Christopher A. Bohn
- * LinkedListLab solution (c) the above-named student(s)
  */
 
 #include <assert.h>

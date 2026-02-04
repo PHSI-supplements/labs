@@ -1,10 +1,10 @@
 ##############################################################################
 #
-# @file caesarcipher.s
+# @file caesarcipher-x86-64.s
 #
 # @author (TYPE YOUR NAME HERE)
 #
-# @brief Code for the Caesar Cipher in AddressingLab.
+# @brief Code for the Caesar Cipher in AddressingLab (x86-64 version).
 #
 ##############################################################################
 

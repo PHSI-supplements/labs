@@ -61,7 +61,7 @@ int main(void) {
         scanf("%79s", buffer);
         unsigned int option = (unsigned int) strtol(buffer, nullptr, 10);
         printf("\n");
-        if (option < 0 || option > NUMBER_OF_TESTS) {
+        if (option > NUMBER_OF_TESTS) {
             printf("Invalid choice %d. Please select a choice between 0 and %zu.\n", option, NUMBER_OF_TESTS);
         } else if (option == 0) {
             if (errno == EINVAL) {

@@ -135,8 +135,8 @@ static inline void register_test(test_function function, char const *name) {
     } while (0)
 
 #define ASSERT_EQUAL_STRINGS(expected, actual) do {                 \
-        char const * _expected = expected;                          \
-        char const * _actual = actual;                              \
+        char const * _expected = (expected);                        \
+        char const * _actual = (actual);                            \
         if (strcmp(_expected, _actual) != 0) {                      \
             fprintf(stderr, "Expected: %s\n", _expected);           \
             fprintf(stderr, "Got:      %s\n", _actual);             \

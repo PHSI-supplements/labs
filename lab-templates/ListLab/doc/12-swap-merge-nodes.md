@@ -13,7 +13,7 @@ repeated calls to `swap_next()` or `swap_previous()` can move a node to any posi
 - [ ] Build and run *build/linkedlist* (and, optionally, *build/arraylist* in another terminal window)
 - [ ] Create a list by selecting option 2 ("Test list") and function 1 ("create_list()").
 - [ ] Add a node by selecting function 10 ("append()"), and test that `swap_next()` does not crash the program when there is no next node, by selecting function 16 ("swap_next()").
-- [ ] Get a valid iterator (function 3), and test that `swap_previous()` does not crash the program when there is no next node, by selecting function 17 ("swap_previous()").
+- [ ] Get a valid iterator (function 3), and test that `swap_previous()` does not crash the program when there is no previous node, by selecting function 17 ("swap_previous()").
 - [ ] Prepend (function 9) two more nodes.
 - [ ] Test that you can move the head node to the tail by swapping next (function 16) twice.
 - [ ] Test that you can move the tail node to the head by swapping previous (function 17) twice.
@@ -36,7 +36,7 @@ If that happens, then the word entries should be merged, resulting in one word e
 - [ ] Build and run *build/linkedlist* (and, optionally, *build/arraylist* in another terminal window)
 - [ ] Create a list by selecting option 2 ("Test list") and function 1 ("create_list()").
 - [ ] Add a node by selecting function 10 ("append()"), and test that `merge_next()` does not crash the program when there is no next node, by selecting function 18 ("merge_next()").
-- [ ] Get a valid iterator (function 3), and test that `merge()` does not crash the program when there is no next node, by selecting function 19 ("merge_previous()").
+- [ ] Get a valid iterator (function 3), and test that `merge_previous()` does not crash the program when there is no previous node, by selecting function 19 ("merge_previous()").
 - [ ] Prepend (function 9) four more nodes, and iterate (function 7) to the third of the five nodes.
 - [ ] Test that you can merge the current node with its next node by selecting function 18 ("merge_next()").
 - [ ] Test that you can merge the current node with its previous node by selecting function 19 ("merge_previous()").

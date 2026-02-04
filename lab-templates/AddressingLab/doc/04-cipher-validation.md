@@ -7,43 +7,112 @@ the inverse of the package's `key` field will decipher the ciphertext back to th
 Here is the equivalent C code:
 
 ```c
-47. bool validate_cipher(struct cipher_package *package) {
-48.     bool is_valid = (strlen(package->plaintext) == (size_t) package->sentence_length);
-49.     is_valid = is_valid && (strlen(package->ciphertext) == (size_t) package->sentence_length);
-50.     char deciphered_text[MAXIMUM_INPUT_LENGTH];
-51.     caesar_cipher(deciphered_text, package->ciphertext, -(package->key));
-52.     is_valid = is_valid && !strncmp(package->plaintext, deciphered_text, package->sentence_length);
-53.     return is_valid;
-54. }
+55. bool validate_cipher(struct cipher_package *package) {
+56.     bool is_valid = (strlen(package->plaintext) == (size_t) package->sentence_length);
+57.     is_valid = is_valid && (strlen(package->ciphertext) == (size_t) package->sentence_length);
+58.     char deciphered_text[MAXIMUM_INPUT_LENGTH];
+59.     caesar_cipher(deciphered_text, package->ciphertext, -(package->key));
+60.     is_valid = is_valid && !strncmp(package->plaintext, deciphered_text, package->sentence_length);
+61.     return is_valid;
+62. }
 ```
 
 
-### Access Fields in a Struct
+### Store a Value to the Program Stack
 
-[//]: # (Task 7)
+[//]: # (Task 9)
 
-Your final task is to position arguments into the correct registers for the call to `caesar_cipher` in line&nbsp;51.
-The `deciphered_text` pointer has already been placed in the correct register; 
-you do not need to take care of that. 
-Each of the other two arguments is a field in the `cipher_package` structure. 
-The base address for `package` is in `%rbx`.
+This task does not correspond to any line of C code.
+Instead, it is part of the code that places a "canary" on the program stack to detect possible buffer overflow attacks.
+We will discuss buffer overflows and stack canaries further in Chapter 7.
 
-- [ ] Find the line in *caesarcipher.s* that says
+Writing a value to, or reading a value from, a stack frame is typically done by producing an offset either from the stack pointer or from the frame pointer.
+The stack pointer points to the top of the stack, which is at one end of the stack frame.
+The frame pointer, if present, points to the other end of the stack frame.
+
+> ⓘ **Note**
+>
+> If you get the other tasks incorrect, your program will be buggy.
+> If you get Task 9 incorrect, your program will abort to protect the computer due to a suspected buffer overflow attack.
+
+
+<!-- x86-64 -->
+Modern x86 assembly code rarely uses a frame pointer except when the programmer explicitly requests no optimization,
+and this assembly code is no different.
+Because the frame pointer is not available, the canary's position in the stack frame is relative to the stack pointer.
+
+- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
   ```asm
-  ##### PLACE INSTRUCTIONS FOR TASK 7 ON NEXT TWO LINES #####
+  ##### PLACE INSTRUCTION FOR TASK 9 ON NEXT LINE #####
   ```
-- [ ] On the next line, use a `movq` instruction to copy `package->ciphertext` into `%rsi`. 
-  Use the displacement addressing mode in the source operand. 
-  The base address is `%rbx`, and the `ciphertext` field is positioned 8 bytes after the base address.
+- [ ] On the next line, use a `movq` instruction to copy the canary onto the stack using displacement addressing.
+  The canary is in `%rax`.
+  The destination's base address is in `%rsp`,
+  and the displacement is 256 bytes.
 
-On the next line after that, you need to place `-(package->key)` into `%edx`. 
-Register `%edx` contains the value `0`, so we can generate `-(package->key)` by subtracting `package->key` from the content of `%edx` and placing the result in `%edx`.
-- [ ] Insert a `subl` instruction to accomplish this. 
-  Use displacement mode addressing to access `package->key`, which is $20_{10}$ bytes after the base address that is in `%rbx`.
-
-Do not delete the `##### PLACE INSTRUCTIONS...` comment,
+Do not delete the `##### PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
 
+<!-- A64 
+Modern x86 assembly code rarely uses a frame pointer except when the programmer explicitly requests no optimization,
+and this assembly code is no different.
+Because the frame pointer is not available, the canary's position in the stack frame is relative to the stack pointer.
+
+- [ ] Find the line in *caesarcipher-A64-linux.s* that says
+  ```asm
+  ///// PLACE INSTRUCTION FOR TASK 9 ON NEXT LINE /////
+  ```
+- [ ] On the next line, use a `str` instruction to copy the canary onto the stack using offset addressing.
+  The canary is in `x10`.
+  The destination's base address is in `fp`,
+  and the offset is -40 bytes.
+
+Do not delete the `///// PLACE INSTRUCTION...` comment,
+and do not delete or modify any other instructions.
+-->
+
+
+### Load a Value from a Struct Field
+
+[//]: # (Task 10)
+
+The struct used by `validate_cipher()` is:
+
+```c
+struct cipher_package {
+    char *plaintext;
+    char *ciphertext; 
+    int sentence_length;
+    int key;
+};
+```
+
+Your final task is to place copy the `ciphertext` pointer into the correct register for the call to `strlen()` in line 57 of the C code.
+
+<!-- x86-64 -->
+- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
+  ```asm
+  ##### PLACE INSTRUCTION FOR TASK 10 ON NEXT LINE #####
+  ```
+- [ ] On the next line, use a `movq` instruction to copy `package->ciphertext` into `%rdi`. 
+  Use the displacement addressing mode in the source operand. 
+  The base address is in `%rbx`, and the `ciphertext` field is positioned 8 bytes after the base address.
+
+Do not delete the `##### PLACE INSTRUCTION...` comment,
+and do not delete or modify any other instructions.
+
+<!-- A64
+- [ ] Find the line in *caesarcipher-A64-linux.s* that says
+  ```asm
+  ///// PLACE INSTRUCTION FOR TASK 10 ON NEXT LINE /////
+  ```
+- [ ] On the next line, use a `ldr` instruction to copy `package->ciphertext` into `x0`.
+  Use the offset addressing mode.
+  The base address is in `x20`, and the `ciphertext` field is positioned 8 bytes after the base address.
+
+Do not delete the `///// PLACE INSTRUCTION...` comment,
+and do not delete or modify any other instructions.
+-->
 
 ### Check Your Work
 

@@ -6,7 +6,7 @@
 >
 > All work at the Pleistocene Petting Zoo has stopped while Archie tries to find a reasonable insurance company.
 > Rather than furloughing staff, he's asked everybody to help out with his other startup companies for a week or two.
-> he specifically asked that you help out with Eclectic Electronics.
+> He specifically asked that you help out with Eclectic Electronics.
 > 
 > Herb Bee, the chief engineer, explains that Eclectic Electronics is developing a patent-pending C-licon tool that will convert C code into an integrated circuit that has the same functionality as the original C code.
 > To test it out, he tasked you with writing the code to implement an Arithmetic Logic Unit (ALU).

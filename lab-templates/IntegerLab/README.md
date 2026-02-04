@@ -5,7 +5,7 @@
 In this assignment, you will become more familiar with bit-level representations of integers.
 You'll do this by implementing integer arithmetic for 16-bit signed and unsigned integers using only bitwise operators.
 
-This assignment is worth 36 points.
+This assignment is worth 38 points.
 
 ## Front Matter
 

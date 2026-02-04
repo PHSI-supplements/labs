@@ -3,7 +3,6 @@
  * @file word-entry.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Structure definition and function prototypes for word entries to be
  *      used in lists for the "challenge/response" application.
@@ -12,7 +11,6 @@
 
 /*
  * LinkedListLab assignment and starter code (c) 2021-26 Christopher A. Bohn
- * LinkedListLab solution (c) the above-named student(s)
  */
 
 #include <stdio.h>

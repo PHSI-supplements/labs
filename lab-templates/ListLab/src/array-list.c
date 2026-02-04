@@ -23,6 +23,7 @@
  */
 
 #include <stdio.h>
+#include <stdint.h>
 #include "array-list.h"
 #include "hobbled_alloc.h"
 

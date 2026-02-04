@@ -14,6 +14,13 @@
  *
  ******************************************************************************/
 
+/*
+ * AddressingLab (c) 2019-26 Christopher A. Bohn
+ *
+ * Starter code licensed under the Apache License, Version 2.0
+ * (http://www.apache.org/licenses/LICENSE-2.0).
+ */
+
 #include <ctype.h>
 #include <string.h>
 #include "../src/caesarcipher.h"
@@ -41,6 +48,7 @@ char *sentence_to_uppercase(char *restrict destination, char const *restrict sen
     for (size_t i = 0; i < length; i++) {
         destination[i] = (char) toupper(sentence[i]);
     }
+    destination[length] = '\0';
     return destination;
 }
 

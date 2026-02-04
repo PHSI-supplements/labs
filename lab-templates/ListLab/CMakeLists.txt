@@ -44,8 +44,8 @@ target_link_libraries(arraylist     PRIVATE arraylist_code)
 target_link_libraries(linkedlist    PRIVATE linkedlist_code)
 
 if(TIMEOUT)
-    target_compile_definitions(arraylist    PRIVATE TIMEOUT)
-    target_compile_definitions(linkedlist   PRIVATE TIMEOUT)
+    target_compile_definitions(arraylist_code  PUBLIC TIMEOUT)
+    target_compile_definitions(linkedlist_code PUBLIC TIMEOUT)
 endif()
 
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")

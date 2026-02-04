@@ -173,23 +173,26 @@ static inline int run_tests(unsigned int timeout_seconds) {
             int signal_number = WTERMSIG(status);
             switch (signal_number) {
                 case SIGALRM:
-                    printf("TIMEOUT:      %s\n", test_case->name);
+                    printf("TIMEOUT:             %s\n", test_case->name);
                     break;
                 case SIGBUS:
                 case SIGSEGV:
-                    printf("MEMORY ERROR: %s\n", test_case->name);
+                    printf("MEMORY ERROR:        %s\n", test_case->name);
                     break;
                 case SIGABRT:
-                    printf("ABORT:        %s\n", test_case->name);
+                    printf("ABORT:               %s\n", test_case->name);
                     break;
                 case SIGFPE:
-                    printf("MATH ERROR:   %s\n", test_case->name);
+                    printf("MATH ERROR:          %s\n", test_case->name);
                     break;
                 case SIGPIPE:
-                    printf("BROKEN PIPE:  %s\n", test_case->name);
+                    printf("BROKEN PIPE:         %s\n", test_case->name);
                     break;
                 case SIGTERM:
-                    printf("TERMINATED:   %s\n", test_case->name);
+                    printf("TERMINATED:          %s\n", test_case->name);
+                    break;
+                case SIGILL:
+                    printf("ILLEGAL INSTRUCTION: %s\n", test_case->name);
                     break;
                 default:
                     // printf("%s: %s\n", strsignal(signal_number), test_case->name);

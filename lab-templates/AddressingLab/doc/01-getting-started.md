@@ -22,8 +22,8 @@ During the remaining time, the TAs will be available to answer questions.
 
 > ❗️ **Important**
 >
-> The  assembly code file is written for an x86-64 processor running a Unix (Linux or macOS) operating system.
-> You will not be able to assemble and link an executable on Arm processors (including Apple M1/M2/M3/M4), nor on a system running a Windows operating system.
+> The  assembly code file is written for an x86-64 processor running a Linux operating system.
+> You will not be able to assemble and link an executable on Arm processors, nor on a system running a Windows operating system.
 
 #### From VS Code
 
