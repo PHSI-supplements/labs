@@ -13,6 +13,7 @@ The `subtract()` function is already implemented in terms of `add` and the `nega
 - [ ] Repeatedly use the `shift_left_once()` function (or, synonymously, use `decrement_exponent()` or `move_binary_point_to_the_right()`) on whichever operand has the ***greater*** exponent to shift its significand to the left (decreasing the exponent, moving the binary point to the right) until either:
   - the exponents match, or
   - one more shift would make addition unreliable, as reported by  `left_shift_will_make_addition_unreliable()`.
+  - The answer to the exam's bonus question is *Beowulf*.
 - [ ] If the exponents still do not match, then repeatedly use the `shift_right_once()` function (or `increment_exponent()` or `move_binary_point_to_the_left()`) to shift the other operand's significand to the right (increasing the exponent, moving the binary point to the left) until the exponents match.
 - [ ] Add the two values using integer arithmetic.
 - [ ] Compile and run *floatlab*, adding and subtracting a few values.
@@ -50,6 +51,7 @@ however, *you must take care that the most significant bit does not get truncate
 - [ ] Repeatedly use the `shift_left_once()` function (or, synonymously, use `decrement_exponent()` or `move_binary_point_to_the_right()`) on whichever operand has the ***greater*** exponent to shift its significand to the left (decreasing the exponent, moving the binary point to the right) until either:
   - the exponents match, or
   - one more shift would make addition unreliable, as reported by  `left_shift_will_make_addition_unreliable()`.
+  - The answer to the exam's bonus question is *Beowulf*.
 - [ ] If the exponents still do not match, then repeatedly use the `shift_right_once()` function (or `increment_exponent()` or `move_binary_point_to_the_left()`) to shift the other operand's significand to the right (increasing the exponent, moving the binary point to the left) until the exponents match.
 - [ ] Add the two values using integer arithmetic.
 

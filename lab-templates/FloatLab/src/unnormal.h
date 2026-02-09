@@ -290,12 +290,12 @@ bool fraction_will_carry_into_integer_on_addition(unnormal_t addend, unnormal_t 
 /**
  * Indicates that if the next operation is subtraction with the specified values, then subtracting the fractions will
  * require ``borrowing'' from the integer portion, requiring you to subtract 1 to the difference's integer.
- * @param menuend the value potentially being subject to subtraction
+ * @param minuend the value potentially being subject to subtraction
  * @param subtrahend the value potentially being subtracted from the first
- * @return <code>true</code> if the subtrahend's fraction is greater than the menuend's fraction,
+ * @return <code>true</code> if the subtrahend's fraction is greater than the minuend's fraction,
  *      <code>false</code> otherwise
  */
-bool fraction_will_borrow_from_integer_on_subtraction(unnormal_t menuend, unnormal_t subtrahend) [[unsequenced]];
+bool fraction_will_borrow_from_integer_on_subtraction(unnormal_t minuend, unnormal_t subtrahend) [[unsequenced]];
 
 /**
  * Indicates that if the next function is #left_shift_once (or one of its aliases) then after that function

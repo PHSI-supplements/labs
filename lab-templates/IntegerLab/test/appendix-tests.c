@@ -341,50 +341,50 @@ int main() {
 //END_TEST
 //
 //TEST(test_subtract_identity_result)
-//    uint16_t menuend = 0xD000;
+//    uint16_t minuend = 0xD000;
 //    uint16_t subtrahend = 0;
-//    uint16_t expected_difference = menuend;
-//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    uint16_t expected_difference = minuend;
+//    alu_result_t actual_result = subtract(minuend, subtrahend);
 //    ASSERT_EQUAL(expected_difference, actual_result.result);
 //    ASSERT_FALSE(actual_result.unsigned_overflow);
 //    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_subtract_zero_result)
-//    uint16_t menuend = 0xD000;
+//    uint16_t minuend = 0xD000;
 //    uint16_t subtrahend = 0xD000;
 //    uint16_t expected_difference = 0;
-//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    alu_result_t actual_result = subtract(minuend, subtrahend);
 //    ASSERT_EQUAL(expected_difference, actual_result.result);
 //    ASSERT_FALSE(actual_result.unsigned_overflow);
 //    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_subtract_signed_no_overflow)
-//    uint16_t menuend = 0xD000;
+//    uint16_t minuend = 0xD000;
 //    uint16_t subtrahend = 0xA000;
 //    uint16_t expected_difference = 0x3000;
-//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    alu_result_t actual_result = subtract(minuend, subtrahend);
 //    ASSERT_EQUAL(expected_difference, actual_result.result);
 //    ASSERT_FALSE(actual_result.unsigned_overflow);
 //    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_subtract_unsigned_overflow)
-//    uint16_t menuend = 0x4000;
+//    uint16_t minuend = 0x4000;
 //    uint16_t subtrahend = 0xD000;
 //    uint16_t expected_difference = 0x7000;
-//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    alu_result_t actual_result = subtract(minuend, subtrahend);
 //    ASSERT_EQUAL(expected_difference, actual_result.result);
 //    ASSERT_TRUE(actual_result.unsigned_overflow);
 //    ASSERT_FALSE(actual_result.signed_overflow);
 //END_TEST
 //
 //TEST(test_subtract_signed_overflow)
-//    uint16_t menuend = 0x9000;
+//    uint16_t minuend = 0x9000;
 //    uint16_t subtrahend = 0x5000;
 //    uint16_t expected_difference = 0x4000;
-//    alu_result_t actual_result = subtract(menuend, subtrahend);
+//    alu_result_t actual_result = subtract(minuend, subtrahend);
 //    ASSERT_EQUAL(expected_difference, actual_result.result);
 //    ASSERT_FALSE(actual_result.unsigned_overflow);
 //    ASSERT_TRUE(actual_result.signed_overflow);

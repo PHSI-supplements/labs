@@ -47,7 +47,7 @@ ieee754_t round_to_nearest_even(ieee754_t unrounded_number, uint64_t original_fr
 
 ieee754_t negate(ieee754_t number);
 ieee754_t add(ieee754_t augend, ieee754_t addend);
-ieee754_t subtract(ieee754_t menuend, ieee754_t subtrahend);
+ieee754_t subtract(ieee754_t minuend, ieee754_t subtrahend);
 ieee754_t multiply(ieee754_t multiplicand, ieee754_t multiplier);
 ieee754_t divide(ieee754_t dividend, ieee754_t divisor);
 

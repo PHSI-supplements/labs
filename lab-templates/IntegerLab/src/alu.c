@@ -178,11 +178,11 @@ alu_result_t add(uint16_t augend, uint16_t addend) {
  * This function does not alter the ALU's `supplemental_result` field, and it sets the ALU's
  * `divide_by_zero` flag to 0.
  *
- * @param menuend the number to be subtracted from
- * @param subtrahend the number to be subtracted from the menuend
+ * @param minuend the number to be subtracted from
+ * @param subtrahend the number to be subtracted from the minuend
  * @return the difference in the ALU's `result` field, and the `unsigned_overflow` and `signed_overflow` flags set appropriately
  */
-alu_result_t subtract(uint16_t menuend, uint16_t subtrahend) {
+alu_result_t subtract(uint16_t minuend, uint16_t subtrahend) {
     alu_result_t difference = {};   // empty initializer to suppress uninitialized variable warning in the starter code
     return difference;
 }

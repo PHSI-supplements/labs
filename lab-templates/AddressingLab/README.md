@@ -11,9 +11,27 @@ and **you should be able to complete it during lab time**.
 > The instructions are written assuming you will edit and run the code on nuros.unl.edu.
 > Specifically, the assembly code file is written for an x86-64 processor running a Unix (Linux or macOS) operating system.
 > If you wish, you may edit the code in a different environment; 
-> however, you will not be able to assemble and link an executable on Arm processors (including Apple M1/M2/M3/M4 processors), nor on a system running a Windows operating system.
+> however, you will not be able to assemble and link an executable on Arm processors (including "Apple Silicon" processors), nor on a system running a Windows operating system.
 
 This assignment is worth 10 points.
+
+> 🔬 **Experimental Feature**
+>
+> We are experimenting with the ability to auto-detect the processor and operating system.
+> It won't affect you this semester,
+> but if it works, it will give us more options in future semesters.
+> 
+> The *submission_metadata.json* file includes an "environment" object:
+> ```
+>  "environment": {
+>    "architecture": "@ARCH@",
+>    "os": "@OS@"
+>  },
+> ```
+> CMake *should* replace the placeholder values with the actual values for nuros.
+> **Please do not manually edit the "environment" object.**
+> You may edit the other values as before.
+
 
 ## Front Matter
 

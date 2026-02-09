@@ -78,6 +78,6 @@ This assignment is worth 38 points.
 
 ---
 
-|                 [⬅️](08-signed-multiplication-division.md)                 |      [⬆️](../README.md)      |           [➡️](AA-example-tests.md)            |
+|                 [⬅️](09-signed-multiplication-division.md)                 |      [⬆️](../README.md)      |           [➡️](AA-example-tests.md)            |
 |:--------------------------------------------------------------------------:|:----------------------------:|:----------------------------------------------:|
-| [Signed Multiplication and Division](08-signed-multiplication-division.md) | [Front Matter](../README.md) | [Appendix: Example Tests](AA-example-tests.md) |
+| [Signed Multiplication and Division](09-signed-multiplication-division.md) | [Front Matter](../README.md) | [Appendix: Example Tests](AA-example-tests.md) |

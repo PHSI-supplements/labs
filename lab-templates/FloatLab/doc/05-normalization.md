@@ -55,8 +55,6 @@ Overflowing numbers too great to be represented as normal numbers, and underflow
 - [ ] Appropriately encode numbers too great to be represented as normal numbers.
 - Encoding numbers that are too small to be represented as subnormal numbers requires no special treatment -- it should be handled as a natural consequence of adjusting the `number` to be able to properly encode it as a subnormal number.
 
-The answer to the exam's bonus question is *Skynet*.
-
 #### Check Your Work
 
 When you run *floatlab*, you can specify that you want to recode a value, such as <u>`recode 12.375`</u>.

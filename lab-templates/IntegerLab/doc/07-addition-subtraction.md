@@ -18,7 +18,7 @@
 - [ ] Run the constraint checker: `ctest --test-dir build --output-on-failure`
 
 
-- [ ] Use the 32-bit adder to subtract `subtrahend` from `menuend` (*i.e.*, calculate $menuend - subtrahend$).
+- [ ] Use the 32-bit adder to subtract `subtrahend` from `minuend` (*i.e.*, calculate $minuend - subtrahend$).
   - <font color="red">Apply a `0xFFFF` bitmask to your arguments when you call `ripple_carry_addition()` to make sure that only the 16-bit values are passed to `ripple_carry_addition()`!</font>
 - [ ] Place the 16-bit difference in the `alu_result_t` variable's `result` field.
 - [ ] Assume that the operands are unsigned 16-bit integers and determine whether overflow occurred;
@@ -91,7 +91,7 @@ The expected overflow flags are obtained directly from flags set in the processo
 
 Having implemented a 32-bit adder, you can use it for your 16-bit subtraction function.
 
-- [ ] Use the 32-bit adder to subtract `subtrahend` from `menuend` (*i.e.*, calculate $menuend - subtrahend$).
+- [ ] Use the 32-bit adder to subtract `subtrahend` from `minuend` (*i.e.*, calculate $minuend - subtrahend$).
   - Use the adder using the technique discussed in Chapter~3 and in lecture
   - <font color="red">Apply a `0xFFFF` bitmask to your arguments when you call `ripple_carry_addition()` to make sure that only the 16-bit values are passed to `ripple_carry_addition()`!</font>
     - A subtle, normally-desirable, rule in the bitwise complement's semantics will cause 1s to be placed in $bits_{31..16}$.
@@ -142,6 +142,6 @@ As with addition, the expected overflow flags are obtained directly from flags s
 
 ---
 
-|        [⬅️](06-adders.md)        |      [⬆️](../README.md)      |                  [➡️](10-unsigned-multiplication-division.md)                  |
+|        [⬅️](06-adders.md)        |      [⬆️](../README.md)      |                  [➡️](08-unsigned-multiplication-division.md)                  |
 |:--------------------------------:|:----------------------------:|:------------------------------------------------------------------------------:|
-| [Adder "Hardware"](06-adders.md) | [Front Matter](../README.md) | [Unsigned Multiplication and Division](10-unsigned-multiplication-division.md) |
+| [Adder "Hardware"](06-adders.md) | [Front Matter](../README.md) | [Unsigned Multiplication and Division](08-unsigned-multiplication-division.md) |

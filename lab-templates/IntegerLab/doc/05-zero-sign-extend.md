@@ -4,10 +4,10 @@ When casting a value from a larger integer type to a smaller integer type, we si
 
 When casting a value from a smaller integer type to a larger integer type, we want to preserve its value.
 If the original type is unsigned, then we *zero-extend* the value, placing zeroes in the newly-available bits.
-(For example, zero-extending `0b1010'1000` from 8 bits to 16 bits gives us `0b0000'0000'1010'1100`.)
+(For example, zero-extending `0b1010'1000` from 8 bits to 16 bits gives us `0b0000'0000'1010'1000`.)
 If the original type is signed, then we *sign-extend* the value, copying the original most-significant bit into each of the newly-available bits.
-(For example, sign-extending `0b1010'1000` from 8 bits to 16 bits gives us `0b1111'1111'1010'1100` because the original most significant bit is `1`,
-and sign-extending `0010'1000` to 16 bits gives us `0b0000'0000'0010'1100` because the original most significant bit is `0`.)
+(For example, sign-extending `0b1010'1000` from 8 bits to 16 bits gives us `0b1111'1111'1010'1000` because the original most significant bit is `1`,
+and sign-extending `0010'1000` to 16 bits gives us `0b0000'0000'0010'1000` because the original most significant bit is `0`.)
 
 
 ### Zero-Extension

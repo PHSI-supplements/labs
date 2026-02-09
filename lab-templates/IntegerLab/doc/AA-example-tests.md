@@ -49,6 +49,6 @@
 
 ---
 
-|         [⬅️](09-grading.md)          |      [⬆️](../README.md)      |                   |
+|         [⬅️](10-grading.md)          |      [⬆️](../README.md)      |                   |
 |:------------------------------------:|:----------------------------:|:-----------------:|
-| [Turn-In and Grading](09-grading.md) | [Front Matter](../README.md) |                   |
+| [Turn-In and Grading](10-grading.md) | [Front Matter](../README.md) |                   |

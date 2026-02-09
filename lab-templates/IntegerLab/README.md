@@ -44,11 +44,11 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [Checking the Sign, and Testing for Equality](doc/03-negative-and-equality.md)
 - [Logical Operations](doc/04-logical-operations.md)
 - [Zero- and Sign-Extension](doc/05-zero-sign-extend.md)
-- [Adder "Hardware"](doc/06-adders.md)`
+- [Adder "Hardware"](doc/06-adders.md)
 - [Addition and Subtraction](doc/07-addition-subtraction.md)
-- [Unsigned Multiplication and Division](doc/10-unsigned-multiplication-division.md)
-- [Signed Multiplication and Division (Bonus Credit)](doc/08-signed-multiplication-division.md)
-- [Turn-In and Grading](doc/09-grading.md)
+- [Unsigned Multiplication and Division](doc/08-unsigned-multiplication-division.md)
+- [Signed Multiplication and Division (Bonus Credit)](doc/09-signed-multiplication-division.md)
+- [Turn-In and Grading](doc/10-grading.md)
 - [Appendix: Example Tests](doc/AA-example-tests.md)
 
 ### Learning Objectives

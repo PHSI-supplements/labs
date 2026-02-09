@@ -378,10 +378,10 @@ ieee754_t add(ieee754_t augend, ieee754_t addend) {
 
 /**
  * Subtracts a floating point value from another.
- * @param menuend the first operand
+ * @param minuend the first operand
  * @param subtrahend the second operand
  * @return the difference of the two operands
  */
-ieee754_t subtract(ieee754_t menuend, ieee754_t subtrahend) {
-    return add(menuend, negate(subtrahend));
+ieee754_t subtract(ieee754_t minuend, ieee754_t subtrahend) {
+    return add(minuend, negate(subtrahend));
 }

@@ -43,6 +43,18 @@ message(STATUS "EDIT THIS FILE: ${CMAKE_CURRENT_LIST_DIR}/${asm_file}")
 message(STATUS "=========================================================")
 message(STATUS "")
 
+### Report Environment
+
+set(META_SRC "${CMAKE_CURRENT_LIST_DIR}/submission_metadata.json")
+set(META_TMP "${CMAKE_BINARY_DIR}/submission_metadata.json")
+
+# Only substitute if the placeholders are still present
+file(READ "${META_SRC}" META_CONTENTS)
+if(META_CONTENTS MATCHES "@ARCH@" OR META_CONTENTS MATCHES "@OS@")
+    configure_file("${META_SRC}" "${META_TMP}" @ONLY)
+    file(COPY_FILE "${META_TMP}" "${META_SRC}")
+endif()
+
 ### Executables
 
 add_executable(addressinglab src/addressinglab.c ${asm_file})

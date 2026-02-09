@@ -88,7 +88,7 @@ uint32_t multiply_by_power_of_two(uint16_t value, uint16_t power_of_two);
  */
 
 alu_result_t add(uint16_t augend, uint16_t addend);
-alu_result_t subtract(uint16_t menuend, uint16_t subtrahend);
+alu_result_t subtract(uint16_t minuend, uint16_t subtrahend);
 alu_result_t unsigned_multiply(uint16_t multiplicand, uint16_t multiplier);
 alu_result_t signed_multiply(uint16_t multiplicand, uint16_t multiplier);
 alu_result_t unsigned_divide(uint16_t dividend, uint16_t divisor);

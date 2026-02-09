@@ -306,8 +306,8 @@ bool fraction_will_carry_into_integer_on_addition(unnormal_t addend, unnormal_t 
     return (addend.fraction + augend.fraction < addend.fraction);
 }
 
-bool fraction_will_borrow_from_integer_on_subtraction(unnormal_t menuend, unnormal_t subtrahend) {
-    return (subtrahend.fraction > menuend.fraction);
+bool fraction_will_borrow_from_integer_on_subtraction(unnormal_t minuend, unnormal_t subtrahend) {
+    return (subtrahend.fraction > minuend.fraction);
 }
 
 bool left_shift_will_make_multiplication_unreliable(unnormal_t number) {
