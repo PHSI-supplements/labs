@@ -79,8 +79,7 @@ void evaluate_subtraction(uint16_t operand1, uint16_t operand2, struct authorita
             "cset %w1, eq\n\t"
             "cset %w2, mi\n\t"
             "cset %w3, vs\n\t"
-            // "cset %w4, cs\n\t"    // it seems that Arm is using
-            "cset %w4, cc\n\t"       // "borrow" instead of "carry"
+            "cset %w4, cc\n\t"
             "lsr %w0, %w7, #16"
             :   "=&r"(result->result),
                 "=&r"(result->zero_flag),

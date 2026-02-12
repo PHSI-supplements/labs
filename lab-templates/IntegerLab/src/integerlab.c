@@ -161,7 +161,7 @@ void evaluate_print_zero_sign_extend(char const *input_buffer) {
                 expected_signed_result = (int32_t) downcast_signed_value;
                 expected_raw_signed_result = value;
                 actual_unsigned_result = raw_unsigned_result & 0xFF;
-                actual_signed_result = (int32_t) (raw_signed_result & 0xFF);
+                actual_signed_result = (int8_t) raw_signed_result;
             }
         } else if (from_size == TWO_BYTES) {
             uint16_t downcast_unsigned_value = (uint16_t) value;

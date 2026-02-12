@@ -16,6 +16,7 @@
 
 #include <assert.h>
 #include <stdio.h>
+#include "bits-to-string.h"
 #include "fpu.h"
 #include "unnormal.h"
 

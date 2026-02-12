@@ -84,7 +84,7 @@ The expected overflow flags are obtained directly from flags set in the processo
 - [ ] Check your code with other values, comparing your actual results with the expected results.
   - Use positive and negative operands.
   - Generate sums that produce signed overflow, sums that produce unsigned overflow, and sums that produce neither.
-- [ ] Run the constraint checker: `python constraint-check.py integerlab.json`
+- [ ] Run the constraint checker: `ctest --test-dir build --output-on-failure`
 
 
 ### 16-Bit Subtraction

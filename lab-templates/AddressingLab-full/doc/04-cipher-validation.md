@@ -1,0 +1,131 @@
+## Cipher Validation Function
+
+The third function validates that the plaintext and ciphertext are a valid pair by confirming that 
+they are both the length specified by the package's `sentence_length` field and that 
+the inverse of the package's `key` field will decipher the ciphertext back to the plaintext. 
+(See *caesarcipher.h* for the field details of the `cipher_package` structure.) 
+Here is the equivalent C code:
+
+```c
+55. bool validate_cipher(struct cipher_package *package) {
+56.     bool is_valid = (strlen(package->plaintext) == (size_t) package->sentence_length);
+57.     is_valid = is_valid && (strlen(package->ciphertext) == (size_t) package->sentence_length);
+58.     char deciphered_text[MAXIMUM_INPUT_LENGTH];
+59.     caesar_cipher(deciphered_text, package->ciphertext, -(package->key));
+60.     is_valid = is_valid && !strncmp(package->plaintext, deciphered_text, package->sentence_length);
+61.     return is_valid;
+62. }
+```
+
+
+### Store a Value to the Program Stack
+
+[//]: # (Task 9)
+
+This task does not correspond to any line of C code.
+Instead, it is part of the code that places a "canary" on the program stack to detect possible buffer overflow attacks.
+We will discuss buffer overflows and stack canaries further in Chapter 7.
+
+Writing a value to, or reading a value from, a stack frame is typically done by producing an offset either from the stack pointer or from the frame pointer.
+The stack pointer points to the top of the stack, which is at one end of the stack frame.
+The frame pointer, if present, points to the other end of the stack frame.
+
+> ⓘ **Note**
+>
+> If you get the other tasks incorrect, your program will be buggy.
+> If you get Task 9 incorrect, your program will abort to protect the computer due to a suspected buffer overflow attack.
+
+
+<!-- x86-64 -->
+Modern x86 assembly code rarely uses a frame pointer except when the programmer explicitly requests no optimization,
+and this assembly code is no different.
+Because the frame pointer is not available, the canary's position in the stack frame is relative to the stack pointer.
+
+- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
+  ```asm
+  ##### PLACE INSTRUCTION FOR TASK 9 ON NEXT LINE #####
+  ```
+- [ ] On the next line, use a `movq` instruction to copy the canary onto the stack using displacement addressing.
+  The canary is in `%rax`.
+  The destination's base address is in `%rsp`,
+  and the displacement is 256 bytes.
+
+Do not delete the `##### PLACE INSTRUCTION...` comment,
+and do not delete or modify any other instructions.
+
+<!-- A64 
+Modern x86 assembly code rarely uses a frame pointer except when the programmer explicitly requests no optimization,
+and this assembly code is no different.
+Because the frame pointer is not available, the canary's position in the stack frame is relative to the stack pointer.
+
+- [ ] Find the line in *caesarcipher-A64-linux.s* that says
+  ```asm
+  ///// PLACE INSTRUCTION FOR TASK 9 ON NEXT LINE /////
+  ```
+- [ ] On the next line, use a `str` instruction to copy the canary onto the stack using offset addressing.
+  The canary is in `x10`.
+  The destination's base address is in `fp`,
+  and the offset is -40 bytes.
+
+Do not delete the `///// PLACE INSTRUCTION...` comment,
+and do not delete or modify any other instructions.
+-->
+
+
+### Load a Value from a Struct Field
+
+[//]: # (Task 10)
+
+The struct used by `validate_cipher()` is:
+
+```c
+struct cipher_package {
+    char *plaintext;
+    char *ciphertext; 
+    int sentence_length;
+    int key;
+};
+```
+
+Your final task is to place copy the `ciphertext` pointer into the correct register for the call to `strlen()` in line 57 of the C code.
+
+<!-- x86-64 -->
+- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
+  ```asm
+  ##### PLACE INSTRUCTION FOR TASK 10 ON NEXT LINE #####
+  ```
+- [ ] On the next line, use a `movq` instruction to copy `package->ciphertext` into `%rdi`. 
+  Use the displacement addressing mode in the source operand. 
+  The base address is in `%rbx`, and the `ciphertext` field is positioned 8 bytes after the base address.
+
+Do not delete the `##### PLACE INSTRUCTION...` comment,
+and do not delete or modify any other instructions.
+
+<!-- A64
+- [ ] Find the line in *caesarcipher-A64-linux.s* that says
+  ```asm
+  ///// PLACE INSTRUCTION FOR TASK 10 ON NEXT LINE /////
+  ```
+- [ ] On the next line, use a `ldr` instruction to copy `package->ciphertext` into `x0`.
+  Use the offset addressing mode.
+  The base address is in `x20`, and the `ciphertext` field is positioned 8 bytes after the base address.
+
+Do not delete the `///// PLACE INSTRUCTION...` comment,
+and do not delete or modify any other instructions.
+-->
+
+### Check Your Work
+
+- [ ] Compile and run *addressinglab*.
+- [ ] Select option 3, "sentence_to_uppercase + caesar_cipher + validate_cipher".
+- [ ] Test your code with several plaintext strings and keys.
+
+All cipher packages generated by the `main` function are valid, and so any input you use should produce the report "Cipher package is valid."
+If `validate_cipher` does not perform correctly go back and double-check each of the two instructions you placed in it.
+
+
+---
+
+|               [⬅️](03-capitalization.md)               |      [⬆️](../README.md)      |         [➡️](05-grading.md)          |
+|:------------------------------------------------------:|:----------------------------:|:------------------------------------:|
+| [Sentence to Uppercase Function](03-capitalization.md) | [Front Matter](../README.md) | [Turn-In and Grading](05-grading.md) |
