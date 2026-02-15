@@ -161,7 +161,7 @@ validate_cipher:
     movq    %rdi, %rbx                  # rbx: package
     # set canary
     movq    %fs:40, %rax
-##### PLACE INSTRUCTIONS FOR TASK 9 ON NEXT LINE #####
+##### PLACE INSTRUCTION FOR TASK 9 ON NEXT LINE #####
 
     xorl    %eax, %eax
 #    bool is_valid = (strlen(package->plaintext) == (size_t) package->sentence_length);

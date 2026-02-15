@@ -154,7 +154,7 @@ Register `%r9` holds that address.
 Do not delete the `##### PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
 
-<!-- A64 -->
+<!-- A64
 The next assembly instruction you will introduce performs part of line&nbsp;35.
 Register `w13` holds `(char) (reduced_character+'A')` from line&nbsp;34.
 This character needs to be placed in memory at the address pointed to by the `target` pointer.
@@ -171,6 +171,7 @@ Register `x10` holds that address.
 
 Do not delete the `///// PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
+-->
 
 
 ### Load a Value from Memory
@@ -195,7 +196,7 @@ You will place the character in the 32-bit register `%eax`.
 Do not delete the `##### PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
 
-<!-- A64 -->
+<!-- A64
 Now you will load the next character to be enciphered.
 This character is pointed to by the `text` pointer,
 and this pointer is in register `x1`.
@@ -211,6 +212,7 @@ You will place the character in the 32-bit register `w11`.
 
 Do not delete the `///// PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
+-->
 
 
 ### Check Your Work

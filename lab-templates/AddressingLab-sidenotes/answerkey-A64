@@ -1,0 +1,30 @@
+grep -A 1 INSTRUCTION caesarcipher-A64-linux.s
+///// PLACE INSTRUCTION FOR TASK 1 ON NEXT LINE /////
+    mov x10, x0
+--
+///// PLACE INSTRUCTION FOR TASK 2 ON NEXT LINE /////
+    sub w12, w11, 0x41              // #0x41 is also correct
+--
+///// PLACE INSTRUCTION FOR TASK 3 ON NEXT LINE /////
+    add w12, w12, w2
+--
+///// PLACE INSTRUCTION FOR TASK 4 ON NEXT LINE /////
+    strb w13, [x10]
+--
+///// PLACE INSTRUCTION FOR TASK 5 ON NEXT LINE /////
+    ldrb w11, [x1]
+--
+///// PLACE INSTRUCTION FOR TASK 6 ON NEXT LINE /////
+    ldrb w11, [x21, x10]            // [x21, x10, lsl 0] works but is unconventional
+--
+///// PLACE INSTRUCTION FOR TASK 7 ON NEXT LINE /////
+    ldr w12, [x12, w11, uxtw 2]     // #2 is also correct
+--
+///// PLACE INSTRUCTION FOR TASK 8 ON NEXT LINE /////
+    strb w12, [x20, x10, lsl 0]     // [x20, x10] is more conventional
+--
+///// PLACE INSTRUCTION FOR TASK 9 ON NEXT LINE /////
+    str x10, [fp, #-40]             // [fp, -40] is also correct (can also use x29 instead of fp)
+--
+///// PLACE INSTRUCTION FOR TASK 10 ON NEXT LINE /////
+    ldr x0, [x20, 8]                // [x20, #8] is also correct

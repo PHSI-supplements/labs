@@ -161,8 +161,8 @@ validate_cipher:
     .cfi_offset x21, -8
     mov     x20, x0                     // x20: package
     // set canary
-    adrp    x10, __stack_chk_guard
-    ldr     x10, [x10, #:lo12:__stack_chk_guard]
+    adrp    x10, :got:__stack_chk_guard
+    ldr     x10, [x10, :got_lo12:__stack_chk_guard]
     ldr     x10, [x10]
 ///// PLACE INSTRUCTION FOR TASK 9 ON NEXT LINE /////
 
@@ -201,8 +201,8 @@ validate_cipher:
 .Lfunc3finished:
     // check canary
     ldr     x11, [fp, #-40]
-    adrp    x10, __stack_chk_guard
-    ldr x10, [x10, #:lo12:__stack_chk_guard]
+    adrp    x10, :got:__stack_chk_guard
+    ldr x10, [x10, :got_lo12:__stack_chk_guard]
     ldr x10, [x10]
     cmp     x10, x11
     bne     .Lfunc3badcanary

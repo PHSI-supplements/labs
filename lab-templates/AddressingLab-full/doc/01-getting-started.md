@@ -4,7 +4,7 @@
 >
 > You've settled into a comfortable routine at the Pleistocene Petting Zoo.
 > While your job isn't quite as exciting as that of the saber-toothed tigers' dentist,
-> it still has something new and interesting almost every day.
+> it still has something new and interesting every week.
 > 
 > Archie announces that he heard that hand-crafted assembly code can be faster than high-level language code.
 > You try to explain that while this may have been true decades ago,
@@ -12,18 +12,43 @@
 > Archie doesn't believe you and insists that you write the zoo's new cipher program in x86 assembly code.
 
 During your lab period, the TAs will provide a refresher on
-the format of x86 assembly instructions, including `mov` instructions and arithmetic instructions,
+the format of x86 assembly instructions and Arm assembly instructions,
 of the nomenclature used to specify the operand sizes, 
-and of the role of each component of the most-general form of memory addressing: $D(R_b, R_i, S)$.
+and of the role of each component of:
+- x86's most-general form of memory addressing: $D(R_b, R_i, S)$
+- Arm's forms of memory addressing: $[R_b, D]$ \& $[R_b, R_i, \mathrm{lsl}\ s]$.
 During the remaining time, the TAs will be available to answer questions.
 
 
 ### Configuring the Project
 
-> ❗️ **Important**
+> ⓘ **Note**
 >
-> The  assembly code file is written for an x86-64 processor running a Linux operating system.
-> You will not be able to assemble and link an executable on Arm processors, nor on a system running a Windows operating system.
+> When you initially configure the project,
+> CMake will detect your system's environment and identify the specific assembly code file that you should edit.
+> ```
+> -- The C compiler identification is ...
+> -- The ASM compiler identification is ...
+> -- Found assembler: ...
+> -- Detecting C compiler ABI info
+> -- Detecting C compiler ABI info - done
+> -- Check for working C compiler: ...
+> -- Detecting C compile features
+> -- Detecting C compile features - done
+> --
+> -- ================ Assembly file selection ================
+> -- Processor Architecture: XXX
+> -- Operating System:       YYY
+> -- EDIT THIS FILE: /path/to/AddressingLab/src/caesarcipher-XXX-YYY.s
+> -- =========================================================
+> --
+> -- Configuring done (0.2s)
+> -- Generating done (0.1s)
+> -- Build files have been written to: /path/to/AddressingLab/build
+> ```
+> Editing other assembly code files will have no effect.
+> 
+> If you do not see this message, you can double-check your system's architecture and operating system by looking at *submission_metadata.json*'s "environment" object.
 
 #### From VS Code
 
@@ -64,11 +89,22 @@ Do not edit *caesarcipher.h*.
 
 This header file contains a structure definition and the declarations of the three.
 
-#### caesarcipher.s
+#### caesarcipher-XXX-YYY.s files
 
-This file contains the assembly code for the three functions.
+The files are:
+- caesarcipher-A64-linux.s
+- caesarcipher-A64-macos.s
+- caesarcipher-x86-64-linux.s
+
+These files contain the assembly code for the three functions.
 The code is mostly-complete;
 there are ten lines missing, which you will introduce.
+
+> ❗️ **Important**
+>
+> Edit the file that corresponds to your system.
+> If you do not see CMake's message that identified the correct file,
+> you can double-check your system's architecture and operating system by looking at *submission_metadata.json*'s "environment" object.
 
 
 ---

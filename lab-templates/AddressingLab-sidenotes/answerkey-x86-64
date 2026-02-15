@@ -1,0 +1,30 @@
+grep -A 1 INSTRUCTION caesarcipher-x86-64-linux.s 
+##### PLACE INSTRUCTION FOR TASK 1 ON NEXT LINE #####
+    movq %rdi, %r9
+--
+##### PLACE INSTRUCTION FOR TASK 2 ON NEXT LINE #####
+    subl $0x41, %ecx
+--
+##### PLACE INSTRUCTION FOR TASK 3 ON NEXT LINE #####
+    addl %r8d, %ecx
+--
+##### PLACE INSTRUCTION FOR TASK 4 ON NEXT LINE #####
+    movb %dl, (%r9)
+--
+##### PLACE INSTRUCTION FOR TASK 5 ON NEXT LINE #####
+    movzbl (%rsi), %ecx
+--
+##### PLACE INSTRUCTION FOR TASK 6 ON NEXT LINE #####
+    movzbq (%rbx, %rcx), %rdx   ### could also do (%rbx, %rcx, 1) ###
+--
+##### PLACE INSTRUCTION FOR TASK 7 ON NEXT LINE #####
+    movl (%r8, %rdx, 4), %edx
+--
+##### PLACE INSTRUCTION FOR TASK 8 ON NEXT LINE #####
+    movb %dl, (%rbp, %rcx, 1)   ### could also do (%rbp, %rcx) ###
+--
+##### PLACE INSTRUCTION FOR TASK 9 ON NEXT LINE #####
+    movq %rax, 256(%rsp)
+--
+##### PLACE INSTRUCTION FOR TASK 10 ON NEXT LINE #####
+    movq 8(%rbx), %rdi

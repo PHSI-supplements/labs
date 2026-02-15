@@ -36,7 +36,7 @@ The frame pointer, if present, points to the other end of the stack frame.
 > If you get Task 9 incorrect, your program will abort to protect the computer due to a suspected buffer overflow attack.
 
 
-<!-- x86-64 -->
+#### x86-64
 Modern x86 assembly code rarely uses a frame pointer except when the programmer explicitly requests no optimization,
 and this assembly code is no different.
 Because the frame pointer is not available, the canary's position in the stack frame is relative to the stack pointer.
@@ -53,12 +53,14 @@ Because the frame pointer is not available, the canary's position in the stack f
 Do not delete the `##### PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
 
-<!-- A64 
-Modern x86 assembly code rarely uses a frame pointer except when the programmer explicitly requests no optimization,
-and this assembly code is no different.
-Because the frame pointer is not available, the canary's position in the stack frame is relative to the stack pointer.
+#### A64 
 
-- [ ] Find the line in *caesarcipher-A64-linux.s* that says
+In larger stack frames, such as `validate_cipher()`'s, the stack pointer will point to one end of the frame,
+and the frame pointer will point to the other end.
+This allows variables in the stack frame to be referenced as offsets from either end. 
+Here, the canary's position in the stack frame is relative to the frame pointer.
+
+- [ ] Find the line in *caesarcipher-A64-linux.s* or *caesarcipher-A64-macos.s* (as appropriate) that says
   ```asm
   ///// PLACE INSTRUCTION FOR TASK 9 ON NEXT LINE /////
   ```
@@ -69,7 +71,6 @@ Because the frame pointer is not available, the canary's position in the stack f
 
 Do not delete the `///// PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
--->
 
 
 ### Load a Value from a Struct Field
@@ -89,8 +90,8 @@ struct cipher_package {
 
 Your final task is to place copy the `ciphertext` pointer into the correct register for the call to `strlen()` in line 57 of the C code.
 
-<!-- x86-64 -->
-- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
+#### x86-64
+- [ ] Find the line in *caesarcipher-x86-64-linux.s* or *caesarcipher-A64-macos.s* (as appropriate) that says
   ```asm
   ##### PLACE INSTRUCTION FOR TASK 10 ON NEXT LINE #####
   ```
@@ -101,7 +102,7 @@ Your final task is to place copy the `ciphertext` pointer into the correct regis
 Do not delete the `##### PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
 
-<!-- A64
+#### A64
 - [ ] Find the line in *caesarcipher-A64-linux.s* that says
   ```asm
   ///// PLACE INSTRUCTION FOR TASK 10 ON NEXT LINE /////
@@ -112,7 +113,7 @@ and do not delete or modify any other instructions.
 
 Do not delete the `///// PLACE INSTRUCTION...` comment,
 and do not delete or modify any other instructions.
--->
+
 
 ### Check Your Work
 
