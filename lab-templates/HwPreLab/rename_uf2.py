@@ -8,7 +8,7 @@ Import('env')
 
 
 clean_old_files = True
-open_file_browser = True
+open_file_browser = False
 
 
 def after_build(source, target, env):

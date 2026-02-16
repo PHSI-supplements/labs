@@ -49,6 +49,7 @@ After your Cow Pi is no longer powered-up:
 - [ ] Disconnect the Cow Pi from your computer.
 - [ ] Disconnect the servo adapter's power wire from the Cow Pi.
 - [ ] Remove the servo adapter from the Cow Pi.
+  - We recommend that you leave the servo connected to its adapter.
 - [ ] Optionally, disconnect the power wire from the servo adapter.
 
 

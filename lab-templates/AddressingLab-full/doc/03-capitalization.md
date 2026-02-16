@@ -1,5 +1,10 @@
 ## Sentence to Uppercase Function
 
+> ⓘ **Note**
+>
+> If you are editing caesarcipher-x86-64-linux.s, follow the instructions for **x86-64**.
+> If you are editing caesarcipher-A64-linux.s or caesarcipher-A64-macos.s, follow the instructions for **A64**.
+
 The second of the three functions converts lowercase letters in a sentence to uppercase letters.
 Here is the equivalent C code:
 

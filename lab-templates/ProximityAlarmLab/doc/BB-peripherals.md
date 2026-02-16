@@ -47,7 +47,8 @@ Insert the sensor's four pins into the 4-hole socket in the orientation indicate
 
 - [ ] Disconnect the Cow Pi from your computer.
 - [ ] Disconnect the distance sensor's power wire from the Cow Pi.
-- [ ] Remove the piezobuzzer from the Cow Pi.
+- [ ] Remove the distance sensor's adapter from the Cow Pi.
+  - We recommend that you leave the distance sensor connected to its adapter.
 - [ ] Optionally, disconnect the power wire from the adapter.
 
 

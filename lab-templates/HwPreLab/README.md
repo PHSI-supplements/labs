@@ -44,6 +44,7 @@ You may freely use generative AI tools for the prelabs.
 
 ### Table of Contents
 
+<!--
 - [Inventory the Hardware Kit](https://canvas.unl.edu/courses/200913/assignments/2063425)
 - [Test the Control Panel](https://canvas.unl.edu/courses/200913/assignments/2163571)
 - [Test the Piezobuzzer](https://canvas.unl.edu/courses/200913/assignments/2163681)
@@ -52,7 +53,7 @@ You may freely use generative AI tools for the prelabs.
 - [Test the Servo](https://canvas.unl.edu/courses/200913/assignments/2164129)
 - [Test the Seven-Segment Display](https://canvas.unl.edu/courses/200913/assignments/2164228)
 - [Compile a Program](https://canvas.unl.edu/courses/200913/assignments/2164344)
-<!--
+-->
 - [Inventory the Hardware Kit](doc/01-inventory.md)
 - [Test the Control Panel](doc/02-control-panel.md)
 - [Test the Piezobuzzer](doc/03-piezobuzzer.md)
@@ -61,7 +62,6 @@ You may freely use generative AI tools for the prelabs.
 - [Test the Servo](doc/06-servo.md)
 - [Test the Seven-Segment Display](doc/07-seven-segment.md)
 - [Compile a Program](doc/08-compile-program.md)
--->
 
 ### Learning Objectives
 

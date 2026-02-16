@@ -1,5 +1,10 @@
 ## Caesar Cipher Function
 
+> ⓘ **Note**
+>
+> If you are editing caesarcipher-x86-64-linux.s, follow the instructions for **x86-64**.
+> If you are editing caesarcipher-A64-linux.s or caesarcipher-A64-macos.s, follow the instructions for **A64**.
+
 The first of the three functions is the Caesar Cipher itself.
 Here is the equivalent C code:
 

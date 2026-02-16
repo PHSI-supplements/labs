@@ -1,5 +1,10 @@
 ## Cipher Validation Function
 
+> ⓘ **Note**
+>
+> If you are editing caesarcipher-x86-64-linux.s, follow the instructions for **x86-64**.
+> If you are editing caesarcipher-A64-linux.s or caesarcipher-A64-macos.s, follow the instructions for **A64**.
+
 The third function validates that the plaintext and ciphertext are a valid pair by confirming that 
 they are both the length specified by the package's `sentence_length` field and that 
 the inverse of the package's `key` field will decipher the ciphertext back to the plaintext. 

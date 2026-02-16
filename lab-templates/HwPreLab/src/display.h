@@ -34,6 +34,8 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
+
 /**
  * Initializes the SSD1306 display module.
  *

@@ -23,6 +23,9 @@ ethumbs.db
 cmake-build-*/
 .pio/
 
+# but we'll allow prelab2.uf2 through prelab7.uf2
+!build/prelab?.uf2
+
 # Java
 *.class
 javadoc/
