@@ -55,7 +55,7 @@ This header file contains a named constant (`BUFFER_SIZE`) and function declarat
 This file contains the nearly-complete code that you will edit, as well as variables shared by the program's reading and writing threads.
 
 The `duplicate()` function is called by *duplicatorlab.c*'s `main()` function, launches `read_original()` and `write_copy()` in their own threads, and keeps the process alive until copying is complete.
-The `read_original()` function continuously reads lines from the source file and writes them to the shared buffer, while the `write_copy()` function continuously reads from the shared buffer and writes those lines to the destination file.
+The `read_original()` function continuously reads lines from the source file and writes them to the shared buffer, while the `write_copy()` function continuously reads from the shared buffer and writes those lines to the data_sink file.
 
 ---
 

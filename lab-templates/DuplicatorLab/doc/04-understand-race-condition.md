@@ -1,6 +1,6 @@
 ## Understand the Race Condition
 
-- [ ] Open the [DuplicatorLab Questions/Answers](https://canvas.unl.edu/courses/200913/assignments/2161825) quiz in Canvas.
+- [ ] Open the [DuplicatorLab Questions/Answers](https://canvas.unl.edu/courses/209782/assignments/2190100) quiz in Canvas.
 
 There is a file included with the starter code, *threelines.txt* that contains three lines of text.
 The race condition in the starter code is so pronounced that it can cause errors in the output even when copying only three lines:

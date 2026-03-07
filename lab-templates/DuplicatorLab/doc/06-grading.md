@@ -26,7 +26,7 @@ Be sure to compile and test your code on the nuros.unl.edu Linux server with the
 
 This assignment is due before the start of your lab section.
 If you have late days available, you may use one or more to extend your deadline.
-You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](../LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+You can exercise a late day (or days) by editing the [submission_metadata.json](../submission_metadata.json) file and including the update with your code.
 
 After you have exhausted your late days, we will accept late turn-ins up to one hour late, assessing a 10% penalty on these late submissions.
 After you have exhausted your late days, any work turned in more than one hour late will not be graded.
@@ -35,7 +35,7 @@ After you have exhausted your late days, any work turned in more than one hour l
 
 This assignment is worth 20 points.
 
-- In <!--*answers.txt*--> the [DuplicatorLab Questions/Answers](https://canvas.unl.edu/courses/200913/assignments/2161825) Canvas quiz:
+- In <!--*answers.txt*--> the [DuplicatorLab Questions/Answers](https://canvas.unl.edu/courses/209782/assignments/2190100) Canvas quiz:
   - [ ] **+3** Provides a valid interleaving that produces the specified output
   - [ ] **+2** Proposes reasonable locations to lock the mutex
   - [ ] **+2** Proposes reasonable locations to unlock the mutex

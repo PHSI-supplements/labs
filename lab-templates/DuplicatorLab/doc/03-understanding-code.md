@@ -17,7 +17,7 @@ pthread_mutex_t mutex;
 
 We have three global variables.
 The `shared_buffer` is exactly what it says it is, an array that is used to pass strings from one thread to another.
-The `status` enumerated type is primarily used to communicate whether a new line from the source file has been placed in the shared buffer and whether the contents of the shared buffer have been written to the destination file.
+The `status` enumerated type is primarily used to communicate whether a new line from the source file has been placed in the shared buffer and whether the contents of the shared buffer have been written to the data_sink file.
 The `mutex` variable is a mutual exclusion token that you will use to eliminate the race condition.
 
 Notice that `shared_buffer` and `status` are qualified with the keyword `volatile`.
@@ -59,7 +59,7 @@ But if there was a line in the file, then that line is copied from a local buffe
 You probably haven't seen the `memcpy()` function before.
 It is very similar to `strncpy()`, except for two differences:
 `memcpy()` works on arbitrary memory and not just strings;
-and `strncpy()` copies $\min\left(\mathtt{strlen(buffer)},\mathtt{BUFFER\_SIZE}\right)$ bytes, whereas `memcpy` copies exactly $\mathtt{BUFFER\_SIZE}$ bytes.
+and `strncpy()` copies $\min\left(\mathtt{strlen(buffer)},\mathtt{BUFFER\_SIZE}\right)$ bytes (and pads the destination with 0s if $\mathtt{strlen(buffer)} < \mathtt{BUFFER\_SIZE}$), whereas `memcpy` copies exactly $\mathtt{BUFFER\_SIZE}$ bytes.
 
 To give an idea of why declaring the shared variables to be `volatile` is important, view `read_original()` from the compiler's perspective (the compiler typically looks at one function at a time when generating assembly code).
 Clearly, `copying` is true the first time that the program reaches line&nbsp;5 so the loop body will execute at least once.
@@ -112,10 +112,10 @@ Q. }
 Much like `read_original()`, the `write_copy()` function loops until `read_original()` indicates that there are no more lines to be copied on line&nbsp;11;
 when this is detected, `write_copy()` sets its loop termination condition on line&nbsp;K.
 In each iteration, if `status` indicates that `read_original()` placed a line of text in `shared_buffer` (line&nbsp;F), then `write_copy()` changes `status` (line&nbsp;G).
-The function then copies the contents of `shared_buffer` into `local_buffer` (line&nbsp;H) and then writes the contents of `local_buffer` to the destination file on line&nbsp;I.
+The function then copies the contents of `shared_buffer` into `local_buffer` (line&nbsp;H) and then writes the contents of `local_buffer` to the data_sink file on line&nbsp;I.
 
 The shared buffer was a possible bottleneck.
-If `read_original()` directly placed the source file's contents into `shared_buffer` and `write_copy()` directly moved `shared_buffer`'s contents into the destination file, then either one function would have to wait for the other to finish its file access, or we'd risk both functions accessing the shared buffer at the same time.
+If `read_original()` directly placed the source file's contents into `shared_buffer` and `write_copy()` directly moved `shared_buffer`'s contents into the data_sink file, then either one function would have to wait for the other to finish its file access, or we'd risk both functions accessing the shared buffer at the same time.
 By using local buffers when accessing files, one thread can safely access the shared buffer while the other is accessing a file.
 
 

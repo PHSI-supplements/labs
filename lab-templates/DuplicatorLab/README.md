@@ -11,11 +11,11 @@ This assignment is worth 20 points.
 
 ### Submission Deadline
 
-This assignment is due **the week of November 3, before the start of your lab section**.
+This assignment is due **the week of March 30, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
-You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+You can exercise a late day (or days) by editing the [submission_metadata.json](submission_metadata.json) file and including the update with your code.
 
 ### Collaboration Rules
 
@@ -25,7 +25,10 @@ During your scheduled lab time, and until the end of your lab day, you may discu
 After your scheduled lab day, you may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.
 Sharing code with or copying code from another student or the internet is prohibited.
 
-If you work with a lab partner, be sure to commit your code at the end of lab, and also at the end of the day if you continue to work with them after lab.
+If you work with a lab partner, be sure to:
+- Add your partner to [submission_metadata.json](submission_metadata.json),
+- Commit your code (including submission_metadata.json) at the end of lab, and
+- Commit your code at the end of the day if you continue to work with your partner after lab.
 
 ### Generative AI Rules
 
@@ -65,8 +68,36 @@ This assignment also introduces a couple of concepts that aren’t central this 
 Do not add any lines of code other than those specified by the assignment.
 Do not edit, delete, or move any lines of code that are present in the starter code.
 
+### Unit Tests
+
+FloatLab's driver code opens a file stream to the source file and a file stream to the destination file.
+The lab is designed to attempt to copy the source file into the destination file and then use the `diff` command to determine if there's a difference.
+You may, if you wish, create automated unit tests.
+The file *test/unit-tests.h* provides a simple framework.
+Add a test to *test/unit-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
+The available assertions are:
+```
+ASSERT_TRUE(expression)
+ASSERT_FALSE(expression)
+ASSERT_EQUAL(expected, actual)
+ASSERT_ALMOST_EQUAL(expected, actual, delta)
+ASSERT_EQUAL_STRINGS(expected, actual)
+ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes)
+```
+Alternatively, you can return `true` when the test passes, and `false` when the test fails.
+You *may* violate the assignment's constraints in *test/unit-tests.c*, because this file will not be graded.
+
+The file *test/example-tests.c* contains two unit tests that correspond to the example tests included in the assignment's write-up.
+
+After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.
+
+> ❗️ **Important**
+> 
+> Running the unit tests once is ***not*** sufficient to demonstrate the absence of a race condition.
+> If you can run the unit tests several times without any failures, then you probably have eliminated the race condition in *duplicator.c*. 
+
 <!--
-### No Spaghetti Code Allowed
+### Structured Control Flow Only
 
 In the interest of keeping your code readable, you may not use any `goto` statements,
 nor may you use any `break` statements to exit from a loop,
