@@ -10,11 +10,11 @@ This assignment is worth 15 points.
 
 ### Submission Deadline
 
-This assignment is due **the week of November 10, before the start of your lab section**.
+This assignment is due **the week of April 6, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
-You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+You can exercise a late day (or days) by editing the [submission_metadata.json](submission_metadata.json) file and including the update with your code.
 
 > 📝 **Grading Note**
 > 
@@ -28,7 +28,10 @@ During your scheduled lab time, and until the end of your lab day, you may discu
 After your scheduled lab day, you may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.
 Sharing code with or copying code from another student or the internet is prohibited.
 
-If you work with a lab partner, be sure to commit your code at the end of lab, and also at the end of the day if you continue to work with them after lab.
+If you work with a lab partner, be sure to:
+- Add your partner to [submission_metadata.json](submission_metadata.json),
+- Commit your code (including submission_metadata.json) at the end of lab, and
+- Commit your code at the end of the day if you continue to work with your partner after lab.
 
 ### Generative AI Rules
 
@@ -72,7 +75,7 @@ The final challenge in this assignment will be scanning the matrix keypad to det
 This will require you to combine writing to an output register and reading from an input register.
 The pseudocode for scanning the keypad is in the Cow&nbsp;Pi datasheet.
 
-With the possible exception of scanning the matrix keypad, **you should be able to complete this lab assignment during lab time**; however, it is not due until the week of November 10, before the start of your lab section.
+With the possible exception of scanning the matrix keypad, **you should be able to complete this lab assignment during lab time**; however, it is not due until the week of April 6, before the start of your lab section.
 
 #### Constraints
 
@@ -103,7 +106,7 @@ You may not use any libraries beyond those explicitly identified here.
 > After a successful build, any constraint violations will be listed after any compiler warnings and before the `[SUCCESS]` message.
 
 
-### No Spaghetti Code Allowed
+### Structured Control Flow Only
 
 In the interest of keeping your code readable, you may not use any `goto` statements,
 nor may you use any `break` statements to exit from a loop,
