@@ -3,7 +3,6 @@
  * @file seven_segment_pla.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Code to simulate a seven-segment decoder implemented with a PLA.
  *
@@ -26,61 +25,66 @@ typedef struct {
     uint8_t    : 4;
 } nybble_t;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
 static bool get_segment_A(nybble_t digit) {
-    __attribute__ ((unused)) bool B0 = digit.B0;
-    __attribute__ ((unused)) bool B1 = digit.B1;
-    __attribute__ ((unused)) bool B2 = digit.B2;
-    __attribute__ ((unused)) bool B3 = digit.B3;
+    bool B0 = digit.B0;
+    bool B1 = digit.B1;
+    bool B2 = digit.B2;
+    bool B3 = digit.B3;
     return 0;
 }
 
 static bool get_segment_B(nybble_t digit) {
-    __attribute__ ((unused)) bool B0 = digit.B0;
-    __attribute__ ((unused)) bool B1 = digit.B1;
-    __attribute__ ((unused)) bool B2 = digit.B2;
-    __attribute__ ((unused)) bool B3 = digit.B3;
+    bool B0 = digit.B0;
+    bool B1 = digit.B1;
+    bool B2 = digit.B2;
+    bool B3 = digit.B3;
     return 0;
 }
 
 static bool get_segment_C(nybble_t digit) {
-    __attribute__ ((unused)) bool B0 = digit.B0;
-    __attribute__ ((unused)) bool B1 = digit.B1;
-    __attribute__ ((unused)) bool B2 = digit.B2;
-    __attribute__ ((unused)) bool B3 = digit.B3;
+    bool B0 = digit.B0;
+    bool B1 = digit.B1;
+    bool B2 = digit.B2;
+    bool B3 = digit.B3;
     return 0;
 }
 
 static bool get_segment_D(nybble_t digit) {
-    __attribute__ ((unused)) bool B0 = digit.B0;
-    __attribute__ ((unused)) bool B1 = digit.B1;
-    __attribute__ ((unused)) bool B2 = digit.B2;
-    __attribute__ ((unused)) bool B3 = digit.B3;
+    bool B0 = digit.B0;
+    bool B1 = digit.B1;
+    bool B2 = digit.B2;
+    bool B3 = digit.B3;
     return 0;
 }
 
 static bool get_segment_E(nybble_t digit) {
-    __attribute__ ((unused)) bool B0 = digit.B0;
-    __attribute__ ((unused)) bool B1 = digit.B1;
-    __attribute__ ((unused)) bool B2 = digit.B2;
-    __attribute__ ((unused)) bool B3 = digit.B3;
+    bool B0 = digit.B0;
+    bool B1 = digit.B1;
+    bool B2 = digit.B2;
+    bool B3 = digit.B3;
     return 0;
 }
 
 static bool get_segment_F(nybble_t digit) {
-    __attribute__ ((unused)) bool B0 = digit.B0;
-    __attribute__ ((unused)) bool B1 = digit.B1;
-    __attribute__ ((unused)) bool B2 = digit.B2;
-    __attribute__ ((unused)) bool B3 = digit.B3;
+    bool B0 = digit.B0;
+    bool B1 = digit.B1;
+    bool B2 = digit.B2;
+    bool B3 = digit.B3;
     return 0;
 }
 
 static bool get_segment_G(nybble_t digit) {
-    __attribute__ ((unused)) bool B0 = digit.B0;
-    __attribute__ ((unused)) bool B1 = digit.B1;
-    __attribute__ ((unused)) bool B2 = digit.B2;
-    __attribute__ ((unused)) bool B3 = digit.B3;
+    bool B0 = digit.B0;
+    bool B1 = digit.B1;
+    bool B2 = digit.B2;
+    bool B3 = digit.B3;
     return 0;
 }
+
+#pragma GCC diagnostic pop
 
 uint8_t bcd_to_7segment_pla(uint8_t digit) {
     nybble_t bits = ((union {

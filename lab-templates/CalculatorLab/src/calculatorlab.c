@@ -45,8 +45,6 @@ void setup(void) {
                );
     initialize_display(16);
     draw_logo();
-    delay(1000);
-    clear_display();
     if (cowpi_right_switch_is_in_left_position()) {
         if (cowpi_left_switch_is_in_left_position()) {
             mode = DEMONSTRATE_LOGIC_DESIGN;
@@ -59,6 +57,9 @@ void setup(void) {
         display_string(7, "calculator");
         mode = CALCULATOR;
     }
+    refresh_display();
+    delay(1000);
+    clear_display();
 }
 
 void loop(void) {

@@ -151,11 +151,11 @@ So the new value is
 $$
 new\_number = \left(\sum_{i=0}^{n-1}d_i \times 10^{i+1}\right) + \left(d_{new} \times 1\right)
 $$ $$
-\phantom{new\_number} = \left(\sum_{i=0}^{n-1}d_i \times 10^i \times 10\right) + d_{new}
+new\_number = \left(\sum_{i=0}^{n-1}d_i \times 10^i \times 10\right) + d_{new}
 $$ $$
-\phantom{new\_number} = \left(10 \times \sum_{i=0}^{n-1}d_i \times 10^i\right) + d_{new}
+new\_number = \left(10 \times \sum_{i=0}^{n-1}d_i \times 10^i\right) + d_{new}
 $$ $$
-\phantom{new\_number} =  10 \times number + d_{new}
+new\_number =  10 \times number + d_{new}
 $$
 
 Thus, if you're building a positive decimal number, you update the number by multiplying the old value by 10 and adding the new digit.
@@ -181,34 +181,50 @@ In `build_number()`:
 
 ### Detecting Overflow
 
-In Chapter 3, you learned two ways to detect signed integer overflow: 
+In Chapter 3, you learned two ways to detect signed integer overflow during addition: 
 compare the most significant bit's carry-in and carry-out bits,
 and compare the operands' signs and the result's sign.
-
 You do not have access to the carry bits, so you will need to rely on comparing signs.
-Notice in the [earlier discussion](#building-a-number) that when `number` is positive, you're adding the new digit and should get a new positive number,
-and when `number` is negative, you're subtracting the new digit and should get a new negative number.
-So, a straight-forward overflow check can simply compare the sign of the new and old numbers.
 
-There is an exception: if you negate a number, the new and old numbers will have opposite signs, 
-and you typically wouldn't expect this to cause overflow.
-You might be tempted to not check for overflow when the user negates the number, but there is a special case that must be considered:
-*What value do you get if you negate -32,768 and place it in an `int16_t` variable?*
+#### Due to Processing a Digit
 
-[//]: # (TODO: re-introduce the two-step overflow detection for microcontrollers with 16-bit `int`s)
+Unfortunately, when [building a number](#building-a-number) you are performing two arithmetic operations, multiplication and addition, 
+either one of which could overflow,
+and together might defeat the "examine the sign bits" technique.
+For example, when limited to 16 bits,
+
+$$
+-32,768_{10} \times 10_{10} - 1_{10} = -1_{10}
+$$
+(Go ahead, try to build the number -327,681. I'll wait.)
+
+The solution is to check for overflow caused by each the two arithmetic operations separately.
+First, check to see if multiplication caused overflow:
+is the old number more than a tenth of `INT16_MAX`? Or less than a tenth of `INT16_MIN`?
+
+Because of the nature of the problem, 
+we know that processing a new digit should increase the magnitude of the number being built: 
+a negative number should become more negative, and a positive number should become more positive. 
+If multiplication didn’t cause overflow, then you can now compare the sign bits of the old number and the new number.
 
 Locate the `overflow_occurred()` function.
-- [ ] Add code for the case of `old_number` being `INT16_MIN`.
-- [ ] Add code for the case of all other negations.
-- [ ] Add code for the case of building a positive number.
-- [ ] Add code for the case of building a negative number.
+- [ ] Add code to detect if overflow occurred during the multiplication step.
+- [ ] Add code to detect if overflow occurred during the addition step.
 
 In `build_number()`:
 - [ ] Modify the keypad state machine's `RESPOND_TO_PRESS` state to determine whether the value returned by `process_digit()` overflowed.
 - [ ] If the value overflowed, then set `overflow` to `true`, and do *not* update `number`.
+- [ ] Modify the right button state machine's `RESPOND_TO_PRESS` state to set `overflow` to `false`
+
+#### Due to Negation
+
+Normally, negation doesn’t overflow.
+You might be tempted to not check for overflow when the user negates the number, but there is a special case that must be considered:
+*What value do you get if you negate -32,768 and place it in an `int16_t` variable?*
+
+In `build_number()`:
 - [ ] Modify the left button state machine's `RESPOND_TO_PRESS` state to determine whether negating `number` would overflow.
 - [ ] If negation causes overflow, then set `overflow` to `true`, and do *not* update `number`.
-- [ ] Modify the right button state machine's `RESPOND_TO_PRESS` state to set `overflow` to `false` 
 
 #### Check your work
 

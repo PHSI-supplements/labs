@@ -12,11 +12,11 @@ This assignment is worth 25 points.
 
 ### Submission Deadline
 
-This assignment is due **the week of November 17, before the start of your lab section**.
+This assignment is due **the week of April 13, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
-You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+You can exercise a late day (or days) by editing the [submission_metadata.json](submission_metadata.json) file and including the update with your code.
 
 > 📝 **Grading Note**
 > 
@@ -30,7 +30,10 @@ During your scheduled lab time, and until the end of your lab day, you may discu
 After your scheduled lab day, you may discuss concepts and syntax with other students, but you may discuss solutions only with the professor and the TAs.
 Sharing code with or copying code from another student or the internet is prohibited.
 
-If you work with a lab partner, be sure to commit your code at the end of lab, and also at the end of the day if you continue to work with them after lab.
+If you work with a lab partner, be sure to:
+- Add your partner to [submission_metadata.json](submission_metadata.json),
+- Commit your code (including submission_metadata.json) at the end of lab, and
+- Commit your code at the end of the day if you continue to work with your partner after lab.
 
 ### Generative AI Rules
 
@@ -90,6 +93,9 @@ You may not use any functions, macros, types or constants from [Mbed OS](https:/
 
 You *may* use any functions described in the [CowPi datasheet](https://cow-pi.readthedocs.io/).
 
+To receive credit for the digital logic design portion of this lab, the `return` statements in *seven_segment_pla.c*'s `get_segment_XX()` functions must use expressions that are in the disjunctive normal form (sum-of-products),
+using at most the specified maximum number of product terms. 
+
 You may not use any libraries beyond those explicitly identified here.
 
 > 🔗 **Running the Constraint Checker**
@@ -99,7 +105,7 @@ You may not use any libraries beyond those explicitly identified here.
 > After a successful build, any constraint violations will be listed after any compiler warnings and before the `[SUCCESS]` message.
 
 
-### No Spaghetti Code Allowed
+### Structured Control Flow Only
 
 In the interest of keeping your code readable, you may not use any `goto` statements,
 nor may you use any `break` statements to exit from a loop,

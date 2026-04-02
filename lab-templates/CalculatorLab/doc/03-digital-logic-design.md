@@ -55,7 +55,7 @@ The B segment's Karnaugh map is:
 
   > 📝 **Grading Note**
   >
-  > Use at most three variables in each product term, and use at most three product terms.
+  > When implementing Segment B, use at most three variables in each product term, and use at most three product terms.
 
 - [ ] Express the sum-of-products using the following syntax:
     - Use `!` to invert a variable (do *not* use `~`, or you will get erroneous output)
@@ -64,6 +64,9 @@ The B segment's Karnaugh map is:
     - Join the minterms with `||`
     - For example: `(I && !J && K) || (!I && L) || (J)`
 - [ ] Locate the `get_segment_B()` in *seven_segment_pla.c*, and have the function return the sum-of-products expression.
+  > ❗️ **Important**
+  >
+  > The `return` statement in `get_segment_B()` must use an expression that is in the disjunctive normal form (sum-of-products).
 - [ ] Compile the program and upload it to the Cow Pi.
 - [ ] Compare the on/off states of the B segment between the ROM-driven digit and the PLA-driven digit to confirm that your expression is correct.
 
@@ -72,7 +75,6 @@ The B segment's Karnaugh map is:
 For each of the remaining segments:
 
 - [ ] Prepare a Karnaugh map for that segment.
-- 
   > 🐛 **Bug in Chapter 10 Quiz**
   > 
   > The Karnaugh map for the E segment in the Chapter 10 quiz, question 3, has a bug.
@@ -83,7 +85,18 @@ For each of the remaining segments:
 
   > 📝 **Grading Note**
   >
-  > Use at most three variables in each product term, and use at most three product terms.
+  > Use at most three variables in each product term, and use at most these number of product terms:
+  > - **A** : **4** product terms
+  > - **B** : **3** product terms
+  > - **C** : **3** product terms
+  > - **D** : **5** product terms
+  > - **E** : **2** product terms
+  > - **F** : **4** product terms
+  > - **G** : **4** product terms
+  >
+  >  > ❗️ **Important**
+  >  >
+  >  > The `return` statements in the `get_segment_XX()` functions must use expressions that are in the disjunctive normal form (sum-of-products). 
 
 - [ ] Express the sum-of-products using the syntax described earlier.
 - [ ] Locate the corresponding function in *seven_segment_pla.c*, and have the function return the sum-of-products expression.

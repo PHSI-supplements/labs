@@ -64,7 +64,16 @@ The idea is that each of these inputs is in one of four possible states:
 -  If the input's state machine is in the *Respond to Release* state, then the system takes whatever one-time action (if any) needs to be taken in response to the input being released.
   After this action is complete, the input's state machine transitions to the *Not Pressed* state.
 
-![foo](images/polling/polling-states.svg)
+[//]: # (![A UML state diagram. Initially in "Not Pressed", the state  machine transitions to "Respond to Press" when a button or keypad is pressed. It then transitions to "Pressed". The state machine transitions to "Respond to Release" when a button or keypad is released, and then back to "Not Pressed".]&#40;images/polling/polling-states.svg&#41;)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Not&nbsp;Pressed
+    Not&nbsp;Pressed --> Respond&nbsp;to&nbsp;Press : [button / keypad is pressed]
+    Respond&nbsp;to&nbsp;Press --> Pressed
+    Pressed --> Respond&nbsp;to&nbsp;Release : [button / keypad is released]
+    Respond&nbsp;to&nbsp;Release --> Not&nbsp;Pressed
+```
 
 You could implement a state machine using a `switch` statement, or you could implement a state machine using chained `if/else if/.../else` statements.
 

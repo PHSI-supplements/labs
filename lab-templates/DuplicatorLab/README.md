@@ -70,7 +70,7 @@ Do not edit, delete, or move any lines of code that are present in the starter c
 
 ### Unit Tests
 
-FloatLab's driver code opens a file stream to the source file and a file stream to the destination file.
+DuplicatorLab's driver code opens a file stream to the source file and a file stream to the destination file.
 The lab is designed to attempt to copy the source file into the destination file and then use the `diff` command to determine if there's a difference.
 You may, if you wish, create automated unit tests.
 The file *test/unit-tests.h* provides a simple framework.

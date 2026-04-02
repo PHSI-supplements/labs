@@ -3,7 +3,6 @@
  * @file number_builder.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Code to demonstrate "building" a number by polling inputs.
  *

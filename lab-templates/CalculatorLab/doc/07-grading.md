@@ -32,7 +32,7 @@ Be sure that you have pushed your code to git.unl.edu.
 ### No Credit for Uncompilable Code
 
 If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
-Be sure to compile and test your code on the nuros.unl.edu Linux server with the original driver code, the original header file(s), and the original CMake configuration files.
+Be sure to compile and test your code with the original driver code, the original header file(s), and the original PlatformIO configuration files.
 
 > ✍️ **One Edit Rule**
 >
@@ -44,7 +44,7 @@ Be sure to compile and test your code on the nuros.unl.edu Linux server with the
 
 This assignment is due before the start of your lab section.
 If you have late days available, you may use one or more to extend your deadline.
-You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](../LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+You can exercise a late day (or days) by editing the [submission_metadata.json](../submission_metadata.json) file and including the update with your code.
 
 > 📝 **Grading Note**
 >
