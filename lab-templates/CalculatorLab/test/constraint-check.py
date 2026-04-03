@@ -19,6 +19,7 @@ import os
 import sys
 from numbers import Number
 from typing import Dict, Iterable, IO, List, Optional, Set, Tuple, Union
+from DNF_Checker import check_dnf_return    # just for CalculatorLab
 
 ### BEGIN PLATFORMIO CODE
 Import('env')
@@ -273,6 +274,21 @@ def main(args: List[str]) -> int:
                         report.extend(violations_in_file)
         for violation in report:
             print(violation)
+
+        ## Just for CalculatorLab
+        looking_for_return: bool = False
+        with open('src/seven_segment_pla.c', 'r') as file:
+            for line in file:
+                line = line.strip()
+                if line.startswith('static bool get_segment_'):
+                    looking_for_return = True
+                if looking_for_return and line.startswith('return'):
+                    looking_for_return = False
+                    is_dnf = check_dnf_return(line, 3)
+                    if not is_dnf:
+                        print(f'\t{line}')
+                        violation_count += 1
+
         return 0 if violation_count == 0 else 1
 
 

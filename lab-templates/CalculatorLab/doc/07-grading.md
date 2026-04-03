@@ -74,7 +74,7 @@ This assignment is worth 25 points.
   - [ ] **+1** Get the assigned [checked-off](AA-checkoff.md) by a TA or professor during office hours *before* it is due
 - Penalties:
   - [ ] **no credit** for segment functions whose return value is not computed by a sum-of-products expression
-  - [ ] **no credit** for segment functions whose sum-of-product expression uses more than three variables per product term, or more than three product terms
+  - [ ] **no credit** for segment functions whose sum-of-product expression uses more than three variables per product term<!--, or more than three product terms-->
   - [ ] **no credit** for functions that violate one or more [constraints](../README.md#constraints)
   - [ ] **-1** for each `goto` statement, `break` statement used to exit from a loop, or `return` statement that occurs within a loop
 

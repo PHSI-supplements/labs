@@ -55,7 +55,9 @@ The B segment's Karnaugh map is:
 
   > 📝 **Grading Note**
   >
-  > When implementing Segment B, use at most three variables in each product term, and use at most three product terms.
+  > Use at most three variables in each product term.
+
+[//]: # (  > When implementing Segment B, use at most three variables in each product term, and use at most three product terms.)
 
 - [ ] Express the sum-of-products using the following syntax:
     - Use `!` to invert a variable (do *not* use `~`, or you will get erroneous output)
@@ -85,18 +87,20 @@ For each of the remaining segments:
 
   > 📝 **Grading Note**
   >
-  > Use at most three variables in each product term, and use at most these number of product terms:
-  > - **A** : **4** product terms
-  > - **B** : **3** product terms
-  > - **C** : **3** product terms
-  > - **D** : **5** product terms
-  > - **E** : **2** product terms
-  > - **F** : **4** product terms
-  > - **G** : **4** product terms
+  > Use at most three variables in each product term.
   >
   >  > ❗️ **Important**
   >  >
   >  > The `return` statements in the `get_segment_XX()` functions must use expressions that are in the disjunctive normal form (sum-of-products). 
+
+[//]: # (  > Use at most three variables in each product term, and use at most these number of product terms:)
+[//]: # (  > - **A** : **4** product terms)
+[//]: # (  > - **B** : **3** product terms)
+[//]: # (  > - **C** : **3** product terms)
+[//]: # (  > - **D** : **5** product terms)
+[//]: # (  > - **E** : **2** product terms)
+[//]: # (  > - **F** : **4** product terms)
+[//]: # (  > - **G** : **4** product terms)
 
 - [ ] Express the sum-of-products using the syntax described earlier.
 - [ ] Locate the corresponding function in *seven_segment_pla.c*, and have the function return the sum-of-products expression.
