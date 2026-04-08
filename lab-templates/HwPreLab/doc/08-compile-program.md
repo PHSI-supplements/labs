@@ -119,7 +119,7 @@ Drag & drop *prelab8-yyyymmdd-hhmm.uf2* from the [build/](../build) directory in
 The Cow&nbsp;Pi's display will show information about the tooling used to build the program.
 
 
-### You Are Now Ready for th Labs that Use the Hardware Kit
+### You Are Now Ready for the Labs that Use the Hardware Kit
 
 If you have completed all eight prelabs (including this one) then you are now ready for the labs that use the hardware kit.
 

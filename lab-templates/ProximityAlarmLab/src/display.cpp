@@ -173,6 +173,14 @@ void refresh_display(void) {
     obdDumpBuffer(&display, backbuffer, 0, 0, 0);
 }
 
+uint8_t *get_backbuffer(void) { // just for ProximityAlarmLab
+    return backbuffer;
+}
+
+void refresh_display_no_text(void) {
+    obdDumpBuffer(&display, backbuffer, 0, 0, 0);
+}
+
 
 #elif defined ADAFRUITSSD1306
 

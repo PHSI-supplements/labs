@@ -34,6 +34,8 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
+
 /**
  * Initializes the SSD1306 display module.
  *
@@ -121,6 +123,9 @@ void print_build_timestamps(bool only_most_recent);
  * @param row The display row on which to show the counter
  */
 void count_visits(int row);
+
+uint8_t *get_backbuffer(void); // just for ProximityAlarmLab
+void refresh_display_no_text(void); // just for ProximityAlarmLab
 
 #ifdef __cplusplus
 } // extern "C"

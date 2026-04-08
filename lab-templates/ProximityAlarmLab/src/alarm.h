@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * ProximityAlarmLab (c) 2023-25 Christopher A. Bohn
+ * ProximityAlarmLab (c) 2023-26 Christopher A. Bohn
  *
  * Assignment and starter code licensed under the Apache License,
  * Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).

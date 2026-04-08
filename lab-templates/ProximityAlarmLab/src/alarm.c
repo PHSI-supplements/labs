@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 /*
- * ProximityAlarmLab assignment and starter code (c) 2023-25 Christopher A. Bohn
+ * ProximityAlarmLab assignment and starter code (c) 2023-26 Christopher A. Bohn
  * ProximityAlarmLab solution (c) the above-named student(s)
  */
 

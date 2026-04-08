@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * ProximityAlarmLab (c) 2023-25 Christopher A. Bohn
+ * ProximityAlarmLab (c) 2023-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -40,32 +40,38 @@ void setup(void) {
                 (cowpi_display_module_protocol_t) {.protocol = NO_PROTOCOL}
                );
     initialize_display(16);
-    initialize_alarm();
-    initialize_sensor();
     draw_logo();
-    delay(1000);
-    clear_display();
     if (cowpi_right_switch_is_in_left_position()) {
         if (cowpi_left_switch_is_in_left_position()) {
-            mode = DEMONSTRATE_PIEZOBUZZER;
+            initialize_alarm();
             display_string(7, "piezobuzzer");
+            mode = DEMONSTRATE_PIEZOBUZZER;
         } else {
+            initialize_sensor();
             display_string(7, "ultrasonic");
             mode = DEMONSTRATE_DISTANCE_SENSOR;
         }
     } else {
+        initialize_alarm();
+        initialize_sensor();
+        initialize_sentry();
         display_string(7, "prox alarm");
         mode = PROXIMITY_ALARM;
     }
+    refresh_display();
+    delay(1000);
+    clear_display();
 }
 
 void loop(void) {
     switch (mode) {
         case DEMONSTRATE_PIEZOBUZZER:
             manage_alarm();
+            count_visits(7);
             break;
         case DEMONSTRATE_DISTANCE_SENSOR:
             manage_sensor();
+            count_visits(7);
             break;
         case PROXIMITY_ALARM:
             detect_intruders();
@@ -74,6 +80,6 @@ void loop(void) {
             display_string(0, "****************");
             display_string(1, "Unexpected Mode!");
             display_string(2, "****************");
+            for (;;) {}
     }
-    count_visits(7);
 }
