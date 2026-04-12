@@ -7,10 +7,10 @@
 > I think encoding the logic into a PLA will have a smaller footprint on the silicon die."
 > 
 > Herb pauses for a moment and then continues,
-> "The AND plane in the PLA we're using can handle up to three variables per AND gate,
-> and the OR plane can handle up to three product terms per OR gate.
-> If you can design the logic to be even more compact than that, that'd be nice,
-> but a maximum of three variables per product term and a maximum three product terms per expression are the limits."
+> "The AND plane in the PLA we're using can handle up to three variables per AND gate<!--,
+> and the OR plane can handle up to three product terms per OR gate.--> While there are limits for the OR plane as well, we can add some discrete OR gates to overcome that.
+> If you can design the logic to <!--be even more compact than that--> use as few product terms as possible, that'd be nice,
+> but a maximum of three variables per product term <!--and a maximum three product terms per expression are the limits--> is the limit."
 
 ## Digital Logic Design
 

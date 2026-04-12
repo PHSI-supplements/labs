@@ -79,11 +79,8 @@ actual:   0xFFFF * 0x8000 = 0x7FFF8000
 
 The distributive property of multiplication tells us that if $multiplier = \sum_{i=0}^{31}multiplier_i \times 2^i$ then
 
-$$
-multiplicand \times multiplier = multiplicand \times \sum_{i=0}^{31}multiplier_i \times 2^i
-$$ $$
-\phantom{multiplicand \times multiplier} = \sum_{i=0}^{31} multiplicand \times multiplier_i \times 2^i
-$$
+$$multiplicand \times multiplier = multiplicand \times \sum_{i=0}^{31}multiplier_i \times 2^i$$
+$$multiplicand \times multiplier = \sum_{i=0}^{31} multiplicand \times multiplier_i \times 2^i$$
 
 In the `unsigned_multiply()` function:
 

@@ -93,8 +93,8 @@ You may not use any functions, macros, types or constants from [Mbed OS](https:/
 
 You *may* use any functions described in the [CowPi datasheet](https://cow-pi.readthedocs.io/).
 
-To receive credit for the digital logic design portion of this lab, the `return` statements in *seven_segment_pla.c*'s `get_segment_XX()` functions must use expressions that are in the disjunctive normal form (sum-of-products),
-using at most the specified maximum number of product terms. 
+To receive credit for the digital logic design portion of this lab, the `return` statements in *seven_segment_pla.c*'s `get_segment_XX()` functions must use expressions that are in the disjunctive normal form (sum-of-products)<!--,
+using at most the specified maximum number of product terms-->.
 
 You may not use any libraries beyond those explicitly identified here.
 

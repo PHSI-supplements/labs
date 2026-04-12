@@ -148,15 +148,10 @@ When building a number digit-by-digit, whenever you introduce a new digit, $d_{n
 and all pre-existing digits will increase in significance by one order of magnitude.
 So the new value is
 
-$$
-new\_number = \left(\sum_{i=0}^{n-1}d_i \times 10^{i+1}\right) + \left(d_{new} \times 1\right)
-$$ $$
-new\_number = \left(\sum_{i=0}^{n-1}d_i \times 10^i \times 10\right) + d_{new}
-$$ $$
-new\_number = \left(10 \times \sum_{i=0}^{n-1}d_i \times 10^i\right) + d_{new}
-$$ $$
-new\_number =  10 \times number + d_{new}
-$$
+$$new\_number = \left(\sum_{i=0}^{n-1}d_i \times 10^{i+1}\right) + \left(d_{new} \times 1\right)$$
+$$new\_number = \left(\sum_{i=0}^{n-1}d_i \times 10^i \times 10\right) + d_{new}$$
+$$new\_number = \left(10 \times \sum_{i=0}^{n-1}d_i \times 10^i\right) + d_{new}$$
+$$new\_number =  10 \times number + d_{new}$$
 
 Thus, if you're building a positive decimal number, you update the number by multiplying the old value by 10 and adding the new digit.
 If you're building a negative number, the idea is similar except that you'll subtract the new digit.
@@ -193,9 +188,7 @@ either one of which could overflow,
 and together might defeat the "examine the sign bits" technique.
 For example, when limited to 16 bits,
 
-$$
--32,768_{10} \times 10_{10} - 1_{10} = -1_{10}
-$$
+$$-32,768_{10} \times 10_{10} - 1_{10} = -1_{10}$$
 (Go ahead, try to build the number -327,681. I'll wait.)
 
 The solution is to check for overflow caused by each the two arithmetic operations separately.
