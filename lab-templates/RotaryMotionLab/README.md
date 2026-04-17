@@ -16,7 +16,7 @@ This assignment is due **the week of April 27, before the start of your lab sect
 Your completed assignment must be pushed to git.unl.edu before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
-You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+You can exercise a late day (or days) by editing the [submission_metadata.json](submission_metadata.json) file and including the update with your code.
 
 > 📝 **Grading Note**
 > 

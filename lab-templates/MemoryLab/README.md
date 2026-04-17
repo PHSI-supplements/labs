@@ -11,7 +11,7 @@ This assignment is worth 10 points.
 
 ### Submission Deadline
 
-This assignment is due **the week of December 8, before the end of your lab section**.
+This assignment is due **the week of April 27, before the end of your lab section**.
 *You must complete this lab assignment during lab time*;
 it is due at the end of your scheduled lab session.
 

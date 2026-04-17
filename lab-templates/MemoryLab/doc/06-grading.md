@@ -22,13 +22,13 @@
 
 ## Turn-In and Grading
 
-Be sure that you have pushed your data to git.unl.edu.
+Be sure that you have pushed your data to git.unl.edu and entered your answers into the [MemoryLab assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190114).
 
 ### Late Submissions
 
 This assignment is due at the end of your lab section.
 If you have late days available, you may use one or more to extend your deadline.
-You can exercise a late day (or days) by editing the [LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt](../LATE-DAYS-USED-ON-THIS-ASSIGNMENT.txt) file and including the update with your code.
+You can exercise a late day (or days) by editing the [submission_metadata.json](../submission_metadata.json) file and including the update with your code.
 
 After you have exhausted your late days, we will accept late turn-ins up to one hour late, assessing a 10% penalty on these late submissions.
 After you have exhausted your late days, any work turned in more than one hour late will not be graded.

@@ -30,7 +30,7 @@ The starter code, besides assorted header files and configuration files, consist
 You do not need to (and should not) edit any files other than *CacheCharts.xlsx*.
 
 [//]: # (- [ ] Open *answers.txt*, found in the `data/` directory..)
-- [ ] Open the MemoryLab assignment on Canvas.
+- [ ] Open the [MemoryLab assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190114).
 - [ ] Open *CacheCharts.xlsx*, found in the `data/` directory.
 - [ ] Connect your Cow&nbsp;Pi to your laptop.
 - [ ] Compile the program and upload it to your Cow&nbsp;Pi.
