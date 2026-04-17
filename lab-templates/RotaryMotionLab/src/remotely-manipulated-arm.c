@@ -38,20 +38,21 @@ void setup(void) {
     initialize_display(16);
     initialize_io();
     initialize_timer();
-    center_servo();
     draw_logo();
     delay(1000);
     clear_display();
     if (cowpi_right_switch_is_in_left_position()) {
         if (cowpi_left_switch_is_in_left_position()) {
             display_string(7, "servo");
+            center_servo();
             mode = DEMONSTRATE_SERVO;
         } else {
-            mode = DEMONSTRATE_ROTARY_ENCODER;
             display_string(7, "rotary encoder");
+            mode = DEMONSTRATE_ROTARY_ENCODER;
         }
     } else {
         display_string(7, "remote control");
+        center_servo();
         mode = INPUT_TO_ACTUATION;
     }
 }

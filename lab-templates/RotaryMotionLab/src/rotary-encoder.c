@@ -3,7 +3,6 @@
  * @file rotary-encoder.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Functions to report the direction that the rotary encoder is turning.
  *

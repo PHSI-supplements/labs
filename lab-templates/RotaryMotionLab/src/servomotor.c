@@ -3,7 +3,6 @@
  * @file servomotor.c
  *
  * @author (TYPE YOUR NAME HERE)
- * @author (TYPE YOUR PARTNER'S NAME HERE, IF APPLICABLE)
  *
  * @brief Code to control a servomotor.
  *
