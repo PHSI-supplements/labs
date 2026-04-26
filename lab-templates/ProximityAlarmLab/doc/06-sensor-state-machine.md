@@ -10,7 +10,7 @@ In this part of the assignment, you will prepare the sensor state machine so tha
 
 The `manage_sensor()` function runs in the program's main control loop.
 When you examine it, you'll see that it has an input state machine for the left pushbutton.
-Notice that when the right pushbutton responds to a press, it calls the `initiate_pulse` function.
+Notice that when the left pushbutton responds to a press, it calls the `initiate_pulse` function.
 
 - [ ] In the `initiate_pulse()` function, add code that, if `sensor_state` is `READY`:
   - [ ] First, set the `TRIGGER_PIN` pin to logic-high

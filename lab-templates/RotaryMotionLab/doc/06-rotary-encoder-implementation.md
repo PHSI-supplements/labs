@@ -14,7 +14,7 @@ The second function runs in the main control loop and returns `direction`'s valu
 First, though, we have some preliminaries.
 
 In the `get_quadrature()` function in *io_functions.c*:
-- [ ] Use the `ioport` pointer to read the inputs values on `A_WIPER_PIN` (pin 17) and on `B_WIPER_PIN (pin 16) at the same time.
+- [ ] Use the `ioport` pointer to read the inputs values on `A_WIPER_PIN` (pin 17) and on `B_WIPER_PIN` (pin 16) at the same time.
   > 💡 **Tip**
   >
   > If you don't remember how to read input values, review your work from ControlPanelLab.
@@ -93,7 +93,7 @@ however, we had already set `direction` to `CLOCKWISE`, and so the logic inside 
 > There is a race condition.
 > If `get_direction()` is called while the rotary encoder's wipers are still bouncing,
 > then you could see a single turn produce what appears to be one turn in both directions
-> or what appears to be two `CLOCKWISE` turns (or two `COUNTERCLOCKWISE turns).
+> or what appears to be two `CLOCKWISE` turns (or two `COUNTERCLOCKWISE` turns).
 > 
 > We are choosing to ignore this race condition for now because losing the race is a low-probability/low-impact event.
 > If enough students see this race lost, then I'll update this assignment in future semesters with a slightly more-complex detection design that will always ignore spurious phase changes.

@@ -38,7 +38,7 @@ changing its value will change the servo's position.
 
 ### Shaping the Pulse
 
-In RangeFinderLab, you probably used a simple boolean variable to keep track of whether to set the output pin high or low.
+In ProximityAlarmLab, you probably used a simple boolean variable to keep track of whether to set the output pin high or low.
 In this assignment, you'll need to track time between rising edges of pulses.
 
 > ⏳ **Time**

@@ -20,7 +20,7 @@ We are, however, offering a small bonus if you complete your assignment early an
     - **+¾** `set_servo_pin()` is implemented correctly
     - **+1** `get_quadrature()` is implemented correctly
 4. [ ] Show the TA your *timer.c* to demonstrate that the timer interrupt and its ISR are set up correctly.
-    - **+½** the timer interrupt is correctly configured and its ISR is correctly registered
+    - **+½** The timer interrupt is correctly configured and its ISR is correctly registered
 
 5. [ ] Show the TA your *servomotor.c*.
 6. [ ] Place both of the Cow&nbsp;Pi's switches in the *left* position.
@@ -38,6 +38,7 @@ We are, however, offering a small bonus if you complete your assignment early an
     Including fully-clockwise and fully-counterclockwise, there are 21 "stop" positions.
     That is, the servo advances 20 times before reversing.
     - **+2** There are 20 increments (21 "stop" positions) between the two rotational extremes
+    - **+½** The servo does not experience jitter when it should be stationary.
 
 11. [ ] Show the TA your *rotary-encoder.c*.
     - **+2** The quadrature is sampled
