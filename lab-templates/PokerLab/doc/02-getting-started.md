@@ -3,16 +3,21 @@
 > You’re relaxing at your favorite hangout when another customer catches your attention.
 > He’s rather large (dare I say, mammoth), a bit hairy, and looking frustrated in front of his laptop.
 > 
-> <!--![Archie, the Columbian Mammoth statue outside the Nebraska State Museum of Natural History. Photograph by Bohn.](archie.jpg)-->
 > <figure>
->   <img src="archie.jpg" width="50%" alt="Archie, the Columbian Mammoth statue outside the Nebraska State Museum of Natural History">
+>
+>   <!--<img src="archie.jpg" width="50%" alt="Archie, the Columbian Mammoth statue outside the Nebraska State Museum of Natural History">-->
+>
+>   ![Archie, the Columbian Mammoth statue outside the Nebraska State Museum of Natural History. Photograph by Bohn.](archie.jpg)
 >   <figcaption>Archie. <small>Photograph by Bohn.</small></figcaption>
+>
 > </figure>
 > 
 > "I’m Archie," he says, "and I'm trying to teach myself this card game called Poker.
 > I found this source code that I thought I could use to understand Poker better,
 > but the code is incomplete, and I don’t entirely understand what’s there.
 > Could you explain the code to me, please?"
+
+[//]: # (TODO: scale-down the archie picture)
 
 ## Getting Started
 

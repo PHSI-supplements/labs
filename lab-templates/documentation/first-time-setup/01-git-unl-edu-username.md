@@ -27,7 +27,3 @@ There are other setup actions you can take while you wait for the TAs.
 >
 > If you ever need a refresher on how to use Git, do not hesitate to ask a TA or the professor for help!  
 > CodeHelp.app also has a context for Git that you can use (though a human can more easily look over your shoulder as they guide you).
-
----
-
-You can now return to [Setting Up Your CSCE 231 Development Environment](https://canvas.unl.edu/courses/209782/pages/setting-up-your-csce-231-development-environment) to work on the tasks that do not yet require you to have your Git repository. When you get to the "Clone Your Git Repository" step, check this assignment's comments for the URL to your Git repository.

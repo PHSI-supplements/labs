@@ -1,6 +1,5 @@
 # When Git Gets Grumpy
 
-[//]: # (TODO: should we &#40;*can* we&#41; provide IDE versions of these instructions? If not, explain why here.)
 [//]: # (TODO: be prepared to address interplay between containerization and git)
 
 - [`git status`](#git-grumpiness-git-status)

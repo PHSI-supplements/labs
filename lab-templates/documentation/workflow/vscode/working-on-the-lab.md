@@ -1,8 +1,7 @@
 # Working on the Lab using VS Code
 
-[//]: # (TODO: screenshots)
+These instructions assume that you have already [started the development container](accessing-the-container.md).
 
-- Connecting to the Server
 - Linux-Native Code
     - [Configuring the Project](#configuring-compiling-running-and-testing-linux-native-code)
     - [Compiling the Project](#compiling-the-project-linux-native-code)
@@ -14,88 +13,86 @@
     - [Uploading the Program](#uploading-the-program-to-the-cow-pi-board-cow-pi-code)
 
 
-## Connecting to the Server
-
-Open the project in the *FooLab* directory (the same directory that has CMakeLists.txt).
-- Select **Remote-SSH: Connect to Host...** from the Command Palette.
-- Use USERNAME@nuros.unl.edu
-- After the connection is established, use **File** ⇒ **Open...** to navigate to FooLab.
-
-
 ## Configuring, Compiling, Running, and Testing (Linux-Native Code)
 
 ### Configuring the Project (Linux-Native Code)
 
-Navigate to the directory that has the *CMakeLists.txt* file and the *CMakePresets.json* file.
+You normally only need to configure the project once.
 
-VS Code should configure the project for you.
-If you're working on your personal computer instead of Nuros, you may be prompted to identify the compiler you'll use.
+- [ ] In the Explorer view, click on the *FooLab-VSCode.code-workspace* file.
+  The file will open in an Editor tab, and an "Open Workspace" button will appear in the Editor tab.
+  > ![PokerLab-VSCode.code-workspace opened in an Editor tab. In the lower-right is a blue "Open Workspace" button.](media/open-workspace.png)
+- [ ] Click on the "Open Workspace" button.
+
+VS Code will re-load, still connected to the development container, with *FooLab* as the workspace the root.
+VS Code will then process the *CMakePresets.json* and *CMakeLists.txt* files and configure the project for you.
 
 
 ### Compiling the Project (Linux-Native Code)
 
-There should be a "Build" button.
-You can also select one of these commands from the command palette:
-```
-CMake: Build                                # Builds all targets
-CMake: Build Target                         # Build a specific target
-```
+In VS Code's Status Bar, you will see buttons to build the project, debug the project, and run the project.
 
-[//]: # (TODO: be more specific than "there should be...")
+> ![A portion of VS Code's Status Bar, showing a gear icon with the word "Build", a stylized bug, and a right-facing arrow.](media/build-debug-run.png)
+
+- [ ] Click the `⚙️ Build` button.
+
+Build messages, including compiler warnings and errors, will display in the `Output` tab, and anything that generated a warning or error will also be displayed in the `Problems` tab.
 
 ### Running the Program (Linux-Native Code)
 
-There should be a "Run" button.
-You can also select one of these commands from the command palette:
-```
-CMake: Run Without Debugging
-CMake: Debug
-```
+In VS Code's Status Bar, you will see buttons to build the project, debug the project, and run the project.
 
-[//]: # (TODO: be more specific than "there should be...")
+> ![A portion of VS Code's Status Bar, showing a gear icon with the word "Build", a stylized bug, and a right-facing arrow.](media/build-debug-run.png)
+
+To run the program:
+- [ ] Click the "▶" (Run) button.
+  If the project contains more than one executable file, you will be presented with a list of possible execution targets.
+  Select the one you wish to run.
+
+To debug the program in an interactive debugger:
+- [ ] Click the "🪲" (Debug) button.
+  If the project contains more than one executable file, you will be presented with a list of possible execution targets.
+  Select the one you wish to run.
 
 ### Testing the Program (Linux-Native Code)
 
 We expect you to test your own code.
 Most labs' driver code is designed to facilitate this: provide your inputs, and the driver code will show you the actual output and compare it with the expected output.
+We also provide automated tests that correspond to any examples in the assignment's instructions.
 
-We do, however, provide one automated test.
-Most labs have particular constraints that require you to write your code in a way that will help you attain the learning objectives.
+Further, most labs have particular constraints that require you to write your code in a way that will help you attain the learning objectives.
 We provide an automated test that checks for violations of the assignment's constraints.
 
-There should be controls to run the test.
-You can also select this command from the command palette:
-```
-CMake: Run Tests
-```
+- [ ] Click on the beaker icon on the Activity Bar to open the Testing view.
 
-[//]: # (TODO: be more specific than "there should be...")
+In the testing view, you can run tests, debug tests, and run tests with coverage.
+You can also choose to run all tests or only some tests.
+> ![VS Code's Testing view. Across the top are a series of buttons to select a specific testing action. We also see a list of tests: KeyboardLab is expanded, and under it are ConstraintCheck_keyboardlab1, ConstraintCheck_keyboardlab2, ConstraintCheck_keyboardlab3, and unit-tests.](media/testing-view.png)
 
 
 ## Configuring, Compiling, and Uploading (Cow Pi Code)
 
 ### Configuring the Project (Cow Pi Code)
 
-Open the project in the *FooLab* directory (the same directory that has platformio.ini).
-It should configure the project for you.
-If it does not, then launch the PlatformIO plugin, select "Open Project" from the PlatformIO Home, and navigate to the *FooLab* directory.
+[//]: # (TODO: confirm that a code-workspace file will work for this, too -- it should, but I need to confirm it)
 
 ### Compiling the Project (Cow Pi Code)
 
-Click on the Checkmark icon on the PlatformIO toolbar.
-- There are many parts of MBED&nbsp;OS that generate compiler warnings the first time that you build the project.
-
-The constraint checker will run automatically at the end of the build process.
-After a successful build, any constraint violations will be listed after any compiler warnings and before the `[SUCCESS]` message.
+[//]: # (TODO: copy from Hardware Prelabs)
 
 ### Uploading the Program to the Cow Pi Board (Cow Pi Code)
 
-1. Press the RESET button
-2. While still pressing the RESET button, press the BOOTSEL button
-3. Release the RESET button
-4. Release the BOOTSEL button
+- [ ] Open a file browser on your host computer and navigate to the *FooLab* directory.
+- [ ] Prepare the Cow Pi to receive the program.
+  1. Press the RESET button on the Cow Pi
+  2. While still pressing the RESET button, press the BOOTSEL button on the Cow Pi
+  3. Release the RESET button
+  4. Release the BOOTSEL button
     - This will present the microcontroller's flash memory to your computer as a USB mass storage device.
-5. Drag & drop the .uf2 file from the *FooLab/build* directory to the USB mass storage device.
-    - After the upload has finished, the USB mass storage device will disconnect.
+- [ ] Drag & drop the .uf2 file from the *FooLab/build* directory to the USB mass storage device.
+  - After the upload has finished, the USB mass storage device will disconnect.
 
-[//]: # (TODO: confirm that this can be done from VS Code's file explorer)
+[//]: # (TODO: confirm that drag & drop can be done from VS Code's file explorer)
+
+[//]: # (TODO: should we explain why the upload button won't work from within the container, simply state that it won't work, or simply state that we won't use it this semester? )
+[//]: # (TODO: double-check: maybe we can use the upload button &#40;except on Windows -- Windows USB drivers suck&#41; -- if so, then we'll go with "we won't use it")

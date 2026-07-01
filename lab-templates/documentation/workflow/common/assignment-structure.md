@@ -5,12 +5,29 @@
 The README.md file in each lab's directory has the front matter for the assignment, including links to each page of the assignment.
 The bottom of each page (including README.md) has navigation links to move forward or backward in the assignment.
 
-[//]: # (TODO: Markdown preview from various sources, and index.html)
+You can read the assignment one of three ways:
+- As a website (recommended)
+- On the Git server
+- Using your IDE's Markdown preview
+
+The website view renders everything correctly,
+but the Git server's Markdown engine and the IDEs' Markdown previewers don't support all of the formatting.
+
+- To read the assignment as a website
+  - [ ] Open a terminal window and use `cd` to navigate to your repository's top-level directory
+  - [ ] Launch a container instance that will present the assignment as a website:
+    ```bash
+    docker compose up docs
+    ```
+  - [ ] In a web browser, load `http://localhost:8000`, and select the current assignment from the sidebar menu.
+- When you are finished, close the container by:
+  - [ ] Placing your computer's cursor in the terminal window with the web server, and
+  - [ ] Pressing `Control-C`
 
 
 ## How Long will the Lab Take?
 
-A good rule of thumb is to pay attention to how many points the lab is worth.
+A good rule of thumb is that the number of points indicates about how much effort we think the assignment will require.
 - **10 points** - except for PokerLab, a 10-point assignment is designed to be finished during lab time.
     - PokerLab is a different beast -- the lab itself can easily be finished during lab time, but the time to set up your development environment may throw that off.
 - **20 points** - about half of the class will finish during lab time.
