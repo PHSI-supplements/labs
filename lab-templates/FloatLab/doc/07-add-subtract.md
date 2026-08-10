@@ -115,8 +115,8 @@ Be sure to check:
   - <u>`2 - 5`</u>
   - <u>`3 - -3`</u>
 - Numbers both great and small
-  - <u>`1.65e35 + 2.39e29`</u>
-  - <u>`1.65e-39 + 2.39e-33`</u>
+  - <u>`1.53e35 + 2.39e29`</u>
+  - <u>`1.53e-39 + 2.39e-33`</u>
 - A sufficiently-large sum overflows to infinity
   - <u>`0x7F7FFFFF + 0x73800000`</u>
 - A sufficiently-small difference between normal numbers underflows to subnormal numbers

@@ -20,13 +20,13 @@ You will use the keypair to let git.unl.edu know that messages from you are auth
 - Copy the *public* key
   - [ ] Run the command
     ```bash
-    cat ~/.ssh/id_rsa.pub
+    cat ~/.ssh/id_ed25519.pub
     ```
   - [ ] Highlight the output, and copy it to your computer's clipboard.
 - Add the public key into your git.unl.edu account
   - [ ] In git.unl.edu's web interface, click on your avatar to get a drop-down menu, and select "Edit profile" (alternatively, from your account page, there is an "Edit profile" in the upper-right corner)  
     ![A dropdown menu suspended from a photograph. Highlighted on the dropdown menu is "Edit profile".](media/git-edit-profile.png)
-  - [ ] In the left-side menu, select "SSH Keys".
+  - [ ] In the left-side menu, select "Access" -> "SSH Keys".
   - [ ] Paste the public key that you copied into the "Key" field, and click "Add key"
 - [ ] Confirm that you can now authenticate with git.unl.edu by running the command
   ```bash

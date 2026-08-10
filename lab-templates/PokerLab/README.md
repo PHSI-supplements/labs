@@ -11,7 +11,7 @@ This assignment is worth 10 points.
 
 ### Submission Deadline
 
-This assignment is due **the week of January 19, before the start of your lab section**.
+This assignment is due **the week of August 31, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 A portion of this assignment is on Canvas; that must also be completed before it is due.
 

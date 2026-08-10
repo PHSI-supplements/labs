@@ -725,7 +725,7 @@ union float_converter {
 //END_TEST
 //
 //TEST(test_add_great)
-//    float operand1_float = 1.65e35f;
+//    float operand1_float = 1.53e35f;
 //    float operand2_float = 2.39e29f;
 //    float expected_result_float = operand1_float + operand2_float;
 //    ieee754_t operand1_bit_vector = ((union float_converter) {.reference_value = operand1_float}).bit_vector;
@@ -736,7 +736,7 @@ union float_converter {
 //END_TEST
 //
 //TEST(test_add_small)
-//    float operand1_float = 1.65e-39f;
+//    float operand1_float = 1.53e-39f;
 //    float operand2_float = 2.39e-33f;
 //    float expected_result_float = operand1_float + operand2_float;
 //    ieee754_t operand1_bit_vector = ((union float_converter) {.reference_value = operand1_float}).bit_vector;

@@ -49,7 +49,7 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [Rounding](doc/08-rounding.md)
 - [Bonus Credit: Arbitrary Division](doc/09-arbitrary-division.md)
 - [Turn-In and Grading](doc/10-grading.md)
-- [Unit Test Discussino](doc/AA-unit-test-discussion.md)
+- [Unit Test Discussion](doc/AA-unit-test-discussion.md)
 
 ### Learning Objectives
 

@@ -33,16 +33,23 @@ Finally, the source file *poker.c* is supposed to generate a poker hand of five 
 The only files you will modify in this assignment are <!--*answers.txt*,--> *card.c*<!--,--> and *poker.c*.
 Do *not* modify *pokerlab.c*, *card.h*, *poker.h*, nor *CMakeLists.txt*.
 
-Most IDEs will be able to configure the compilation settings from *CMakeLists.txt*, and you can compile the program by clicking on "Build" or something similar.
+- [ ] **Review the instructions to configure the project for your development environment**
+  - [Using the Terminal](../../documentation/workflow/terminal/working-on-the-lab.md#configuring-compiling-running-and-testing-linux-native-code)
+  - [Using VS Code](../../documentation/workflow/vscode/working-on-the-lab.md#configuring-compiling-running-and-testing-linux-native-code)
+  - [Using CLion](../../documentation/workflow/clion/working-on-the-lab.md#configuring-compiling-running-and-testing-linux-native-code)
+- [ ] **Configure the project**
+- [ ] **Compile the project**
 
-- If you plan to operate from the command line, you can configure the compilation settings with this command:
-  ```
-  cmake --preset=default
-  ```
-  You can then compile the program with this command:
-  ```
-  cmake --build build
-  ```
+[//]: # (Most IDEs will be able to configure the compilation settings from *CMakeLists.txt*, and you can compile the program by clicking on "Build" or something similar.)
+[//]: # ()
+[//]: # (- If you plan to operate from the command line, you can configure the compilation settings with this command:)
+[//]: # (  ```)
+[//]: # (  cmake --preset=default)
+[//]: # (  ```)
+[//]: # (  You can then compile the program with this command:)
+[//]: # (  ```)
+[//]: # (  cmake --build build)
+[//]: # (  ```)
 
 When you compile the starter code, the compiler will generate a warning:
 

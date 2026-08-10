@@ -2,6 +2,8 @@
 
 [//]: # (TODO: be prepared to address interplay between containerization and git)
 
+This guide is organized around what you were attempting to accomplish when you encountered a problem.
+
 - [`git status`](#git-grumpiness-git-status)
 - [`git fetch`](#git-grumpiness-git-fetch)
 - [`git merge`](#git-grumpiness-git-merge)
@@ -39,8 +41,6 @@ But you saw something different.
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
 
-[Back to "Retrieving the Lab"](#retrieving-the-lab)
-
 
 ## Git Grumpiness: `git fetch`
 
@@ -73,11 +73,9 @@ If the error is:
 - *Permission denied (publickey)*, or
   *fatal: Could not read from remote repository* (**without** timeouts/DNS errors), then
   this is usually a login/SSH key issue.
-  A TA or the instructor can help you troubleshoot this issue.
+  See the [SSH troubleshooting page](ssh.md#ssh-silliness-permission-denied).
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
-
-[Back to "Retrieving the Lab"](#retrieving-the-lab)
 
 
 ## Git Grumpiness: `git merge`
@@ -124,8 +122,6 @@ But you saw something different.
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
 
-[Back to "Retrieving the Lab"](#retrieving-the-lab)
-
 
 ## Git Grumpiness: `git commit`
 
@@ -144,8 +140,6 @@ You expected the editor should open for you to provide a commit message, but it 
 - If an editor opened outside the terminal, then switch to that window to enter your commit message.
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
-
-[Back to "Turning in the Completed Lab"](#turning-in-the-completed-lab)
 
 
 ## Git Grumpiness: `git push`
@@ -206,11 +200,9 @@ But you saw something different.
 - If you see authentication errors such as: *Permission denied (publickey)*, or
   *fatal: Could not read from remote repository* (**without** timeouts/DNS errors), then
   this is usually a login/SSH key issue.
-  A TA or the instructor can help you troubleshoot this issue.
+  See the [SSH troubleshooting page](ssh.md#ssh-silliness-permission-denied).
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
-
-[Back to "Turning in the Completed Lab"](#turning-in-the-completed-lab)
 
 
 ## Git Grumpiness: `git pull --ff`

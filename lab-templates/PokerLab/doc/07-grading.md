@@ -11,14 +11,14 @@
 
 ## Turn-In and Grading
 
-Be sure that you have pushed your code to git.unl.edu, and that you have submitted the [Connection to Nuros](https://canvas.unl.edu/courses/209782/assignments/2190096) Canvas assignment and the [PokerLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190073) Canvas quiz.
+Be sure that you have pushed your code to git.unl.edu, and that you have submitted the [PokerLab Code Study](https://mynu.instructure.com/courses/13509/assignments/1028645) Canvas quiz.
 
 ### Normally No Credit for Uncompilable Code
 
 If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
 For most lab assignments, this would mean that you would earn very few, if any, points.
 For this lab assignment, you will still receive some credit for attempting the assignment, even if it does not compile.
-Be sure to compile and test your code on the nuros.unl.edu Linux server with the original driver code, the original header file(s), and the original CMake configuration files.
+Be sure to compile and test your code in the course container with the original driver code, the original header file(s), and the original CMake configuration files.
 
 > ✍️ **One Edit Rule**
 > 
@@ -39,8 +39,8 @@ After you have exhausted your late days, any work turned in more than one hour l
 
 This assignment is worth 10 points.
 
-- [ ] **+1** The student has successfully claimed their git.unl.edu account and connected to Nuros, as evidenced in the <!--screenshot--> [Connection to Nuros](https://canvas.unl.edu/courses/209782/assignments/2190096) Canvas assignment
-- [ ] **+2** The student's answers in <!--*answers.txt*--> the [PokerLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190073) Canvas quiz demonstrate an understanding of C's logical boolean operations and pointer arithmetic
+- [ ] **+1** The student has successfully completed the one-time setup tasks
+- [ ] **+2** The student's answers in <!--*answers.txt*--> the [PokerLab Code Study](https://mynu.instructure.com/courses/13509/assignments/1028645) Canvas quiz demonstrate an understanding of C's logical boolean operations and pointer arithmetic
 - [ ] **+1** `create_card()` populates a card's fields
 - [ ] **+1** `card_to_string()` generates the printable representation of a card
 - [ ] **+1** `populate_deck()` creates a deck of 52 cards

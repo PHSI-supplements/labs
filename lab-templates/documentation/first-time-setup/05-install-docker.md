@@ -71,7 +71,7 @@ If you decide that Docker Engine is for you:
 - [ ] Follow the instructions to install Docker Engine for your Linux distribution:
   https://docs.docker.com/engine/install/.
 - [ ] Follow the instructions to install the Docker Compose plugin for your Linux distribution:
-  https://docs.docker.com/compose/install/linux/
+  https://docs.docker.com/compose/install/linux/.
 
 #### Docker Desktop
 
@@ -82,7 +82,7 @@ Why you would be happy with Docker Desktop:
 - Simplifies emulating other platforms if you decide to work with multi-platform containers (you won't need to in this course)
 
 If you decide that Docker Desktop is for you:
-- [ ] To install Docker Desktop, follow the instructions for your Linux distribution:
+- [ ] Follow the instructions for your Linux distribution:
   https://docs.docker.com/desktop/setup/install/linux/.
 
 

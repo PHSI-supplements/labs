@@ -36,7 +36,7 @@ After you reboot your computer, Docker Desktop may not restart automatically.
 
 In the future, if you run a `docker` command and get an error indicating that Docker cannot connect to the Docker daemon or Docker API, the first thing to check is whether Docker is running.
 - On Windows, macOS, and Linux with Docker Desktop, try restarting Docker Desktop.
-- On Linux with Docker Engine, ensure that the Docker Service is running (see XYZ for details).
+- On Linux with Docker Engine, ensure that the Docker Service is running.
 
 [//]: # (TODO: link to Docker Engine troubleshooting after we create that page.)
 
