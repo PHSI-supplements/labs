@@ -1,0 +1,10 @@
+- [CSCE 231 Lab Assignments](/)
+- [PokerLab](/PokerLab/)
+
+- [Poker Terminology](/PokerLab/doc/01-terminology.md)
+- [Getting Started](/PokerLab/doc/02-getting-started.md)
+- [Print Conversion Specifier](/PokerLab/doc/03-print-conversion-specifier.md)
+- [Creating a Deck of Cards](/PokerLab/doc/04-creating-deck-of-cards.md)
+- [Study the Code in *poker.c*](/PokerLab/doc/05-code-reading.md)
+- [Characterizing a Poker Hand](/PokerLab/doc/06-characterize-hands.md)
+- [Turn-In and Grading](/PokerLab/doc/07-grading.md)

@@ -1,0 +1,23 @@
+services:
+  csce231:
+    build:
+      context: .
+    image: csce231-exp4
+    volumes:
+      - .:/csce231
+      - ${SSH_AUTH_SOCK}:/ssh-agent
+    environment:
+      SSH_AUTH_SOCK: /ssh-agent
+    working_dir: /csce231
+    stdin_open: true
+    tty: true
+
+  docs:
+    image: csce231-exp4
+    volumes:
+      - .:/csce231
+    working_dir: /csce231
+    command: python3 -m http.server 8000 --bind 0.0.0.0
+    ports:
+      - "127.0.0.1:8000:8000"
+

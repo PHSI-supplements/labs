@@ -1,0 +1,17 @@
+{
+  "name": "Lab Container Experiment 4",
+  "dockerComposeFile": "compose.yaml",
+  "service": "csce231",
+  "workspaceFolder": "/csce231",
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "extensions": [
+    "ms-vscode.cpptools",
+    "ms-vscode.cpptools-extension-pack",
+    "ms-vscode.cmake-tools",
+    "ms-vscode.memory-viewer",
+    "platformio.platformio-ide"
+  ],
+  "remoteUser": "root"
+}

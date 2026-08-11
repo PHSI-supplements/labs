@@ -8,8 +8,8 @@
 >   <!--<img src="archie.jpg" width="50%" alt="Archie, the Columbian Mammoth statue outside the Nebraska State Museum of Natural History">-->
 >
 >   ![Archie, the Columbian Mammoth statue outside the Nebraska State Museum of Natural History. Photograph by Bohn.](archie.jpg)
+> 
 >   <figcaption>Archie. <small>Photograph by Bohn.</small></figcaption>
->
 > </figure>
 > 
 > "I’m Archie," he says, "and I'm trying to teach myself this card game called Poker.

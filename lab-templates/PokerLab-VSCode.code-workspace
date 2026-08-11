@@ -1,0 +1,10 @@
+{
+  "folders": [
+    {
+      "path": "PokerLab"
+    }
+  ],
+  "settings": {
+    "cmake.sourceDirectory": "${workspaceFolder}"
+  }
+}
