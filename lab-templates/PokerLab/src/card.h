@@ -44,7 +44,7 @@ enum face_cards {
 };
 constexpr int MINIMUM_VALUE         = ACE;
 constexpr int MAXIMUM_VALUE         = KING;
-constexpr int SIZE_OF_DECK          = NUMBER_OF_SUITS * (MAXIMUM_NUMBER_VALUE - MINIMUM_VALUE + 1);
+constexpr int SIZE_OF_DECK          = NUMBER_OF_SUITS * (MAXIMUM_VALUE - MINIMUM_VALUE + 1);
 
 card_t *create_card(int value, suit_t suit, card_t *destination);
 char *card_to_string(const card_t *card, char *destination);

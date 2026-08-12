@@ -6,5 +6,14 @@
   - ListLab
   - IntegerLab
   - FloatLab
-
+  - AddressingLab
+  - BombLab
+  - HwPreLab
+  - BufferOverflowLab
+  - DuplicatorLab
+  - ControlPanelLab
+  - CalculatorLab
+  - ProximityAlarmLab
+  - RotaryMotionLab
+  - MemoryLab
 

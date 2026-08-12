@@ -75,6 +75,30 @@ There are other differences beyond what we'll see in this course's labs;
 our coverage of the C language is necessarily focused on what you need for this course.
 We encourage you to learn more about the C language on your own.
 
+### Unit Tests
+
+PokerLab's driver code is designed to facilitate testing by accepting input and showing you the comparison of your functions' outputs with that of reference sources.
+You may, if you wish, create automated unit tests.
+The file *test/unit-tests.h* provides a simple framework.
+Add a test to *test/unit-tests.c* by bounding the test function body with the `TEST()` and `END_TEST` macros, providing a test function name as the argument to `TEST()`.
+The available assertions are:
+```
+ASSERT_TRUE(expression)
+ASSERT_FALSE(expression)
+ASSERT_EQUAL(expected, actual)
+ASSERT_ALMOST_EQUAL(expected, actual, delta)
+ASSERT_EQUAL_STRINGS(expected, actual)
+ASSERT_EQUAL_MEMORY(expected_ptr, actual_ptr, size_bytes)
+```
+Alternatively, you can return `true` when the test passes, and `false` when the test fails.
+
+In *test/unit-tests.c* you'll find an example test that always passes and a commented-out example test that always fails.
+
+The file *test/example-tests.c* contains commented-out unit tests that will test some of the functions you need to write.
+The tests in *test/example-tests.c* are not sufficient to establish correctness.
+
+After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.
+
 ### Structured Control Flow Only
 
 In the interest of keeping your code readable, you may not use any `goto` statements,

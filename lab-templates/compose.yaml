@@ -2,7 +2,7 @@ services:
   csce231:
     build:
       context: .
-    image: csce231-exp4
+    image: csce231-1268
     volumes:
       - .:/csce231
       - ${SSH_AUTH_SOCK}:/ssh-agent
@@ -13,7 +13,7 @@ services:
     tty: true
 
   docs:
-    image: csce231-exp4
+    image: csce231-1268
     volumes:
       - .:/csce231
     working_dir: /csce231

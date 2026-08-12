@@ -1,5 +1,5 @@
 {
-  "name": "Lab Container Experiment 4",
+  "name": "CSCE 231 Lab Container",
   "dockerComposeFile": "compose.yaml",
   "service": "csce231",
   "workspaceFolder": "/csce231",

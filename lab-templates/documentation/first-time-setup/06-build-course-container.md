@@ -46,8 +46,8 @@ The first build may take several minutes because Docker must download an Ubuntu 
   ```
   You should see an entry similar to:
   ```text
-  REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
-  csce231-dev  latest    abcdef123456   1 minute ago   ...
+  REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
+  csce231-1268  latest    abcdef123456   1 minute ago   ...
   ```
 
 <!--
