@@ -3,7 +3,7 @@
   "configurePresets": [
     {
       "name": "default",
-      "displayName": "Default (server) build with gcc-15",
+      "displayName": "Default build with gcc-15",
       "binaryDir": "${sourceDir}/build",
       "condition": {
         "type": "equals",
@@ -14,11 +14,6 @@
         "CMAKE_C_COMPILER": "/usr/bin/gcc-15",
         "CMAKE_CXX_COMPILER": "/usr/bin/g++-15"
       }
-    },
-    {
-      "name": "personal-computer",
-      "displayName": "Build on personal computer (system default compiler)",
-      "binaryDir": "${sourceDir}/build"
     }
   ]
 }

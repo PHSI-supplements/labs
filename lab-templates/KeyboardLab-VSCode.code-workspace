@@ -1,0 +1,10 @@
+{
+  "folders": [
+    {
+      "path": "KeyboardLab"
+    }
+  ],
+  "settings": {
+    "cmake.sourceDirectory": "${workspaceFolder}"
+  }
+}

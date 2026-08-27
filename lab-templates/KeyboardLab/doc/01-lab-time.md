@@ -21,6 +21,21 @@ During the remaining time, the TAs will be available to answer questions.
 
 ---
 
+## Workflow Review
+
+If you have forgotten how to retrieve the project and merge it into `main`, review the steps:
+- [Using the Terminal](../../documentation/workflow/terminal/retrieving-the-lab.md)
+- [Using VS Code](../../documentation/workflow/vscode/retrieving-the-lab.md)
+- [Using CLion](../../documentation/workflow/clion/retrieving-the-lab.md)
+
+If you have forgotten how to configure the project, review the steps:
+- [Using the Terminal](../../documentation/workflow/terminal/working-on-the-lab.md#configuring-compiling-running-and-testing-linux-native-code)
+- [Using VS Code](../../documentation/workflow/vscode/working-on-the-lab.md#configuring-compiling-running-and-testing-linux-native-code)
+- [Using CLion](../../documentation/workflow/clion/working-on-the-lab.md#configuring-compiling-running-and-testing-linux-native-code)
+
+
+---
+
 |                 |      [⬆️](../README.md)      |               [➡️](02-numbers-as-characters.md)               |
 |:---------------:|:----------------------------:|:-------------------------------------------------------------:|
 |                 | [Front Matter](../README.md) | [Treating Numbers as Characters](02-numbers-as-characters.md) |

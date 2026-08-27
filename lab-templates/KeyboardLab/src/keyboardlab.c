@@ -22,12 +22,13 @@
 #include <ctype.h>
 #include <errno.h>
 #include <math.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "keyboardlab.h"
 
-#define NUMBER_OF_PROBLEMS 3
+constexpr size_t NUMBER_OF_PROBLEMS = 3;
 
 void print_five_characters(const char *string, int central_position) {
     bool past_terminator = false;

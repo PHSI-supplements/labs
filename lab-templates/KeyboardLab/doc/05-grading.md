@@ -14,7 +14,7 @@ Be sure that you have pushed your code to git.unl.edu.
 ### No Credit for Uncompilable Code
 
 If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
-Be sure to compile and test your code on the nuros.unl.edu Linux server with the original driver code, the original header file(s), the original problem 1 oracle, and the original CMake configuration files.
+Be sure to compile and test your code in the course container with the original driver code, the original header file(s), and the original CMake configuration files.
 
 > ✍️ **One Edit Rule**
 > 
@@ -50,7 +50,7 @@ This assignment is worth 20 points.
 
 - Penalties:
   - [ ] **no credit** for each function that depends on a prohibited character
-  - [ ] **no credit** for each function that hard-codes a return value instead of attempting to solve the specified problem
+  - [ ] **no credit** for each function that ignores the input and returns a fixed value, instead of attempting to solve the specified problem
   - [ ] **-1** for each `goto` statement, `break` statement used to exit from a loop, or `return` statement that occurs within a loop
 
 ---

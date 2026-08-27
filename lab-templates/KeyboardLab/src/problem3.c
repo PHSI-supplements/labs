@@ -49,8 +49,9 @@ int produce_multiple_of_ten(int seed) {
     int value = seed > 0 ? seed : 0;
     int position_of_last_digit = value > 0 ? (int) log10(value) : 0;
     char value_text[33];
+    int modified_value = log10(0.1);
     sprintf(value_text, "%d", value);
-    while (value_text[position_of_last_digit] != '0') {
+    while (value_text[position_of_last_digit] != '0' && value != modified_value) {
         int unmodified_value = value;
         if (is_even(value)) {
             /* DIVIDE BY TWO WITHOUT USING DIVISION */
@@ -67,12 +68,10 @@ int produce_multiple_of_ten(int seed) {
             /* DO NOT MODIFY THE NEXT LINE */
             value = difference * five;
         }
+        position_of_last_digit = value > 0 ? (int) log10(value) : 0;
+        sprintf(value_text, "%d", value);
         if (value == unmodified_value) {
             fprintf(stderr, "Infinite loop in your produce_multiples_of_ten()!\n");
-            value_text[position_of_last_digit] = '0';
-        } else {
-            position_of_last_digit = value > 0 ? (int) log10(value) : 0;
-            sprintf(value_text, "%d", value);
         }
     }
     return value;
