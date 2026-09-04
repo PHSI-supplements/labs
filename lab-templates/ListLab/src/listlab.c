@@ -8,17 +8,18 @@
  *
  * @author Christopher A. Bohn
  *
- * @brief Driver code for LinkedListLab.
+ * @brief Driver code for ListLab.
  *
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-26 Christopher A. Bohn
+ * ListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -54,17 +55,17 @@ int main(void) {
     char buffer[80];
     bool running = true;
     while (running) {
-        for (unsigned int i = 0; i < NUMBER_OF_TESTS + 1; i++) {
-            printf("%d) %s\n", i, test_names[i]);
+        for (size_t i = 0; i < NUMBER_OF_TESTS + 1; i++) {
+            printf("%zu) %s\n", i, test_names[i]);
         }
         printf("Select the task you wish to check: ");
-        scanf("%79s", buffer);
-        unsigned int option = (unsigned int) strtol(buffer, nullptr, 10);
+        int scan_count = scanf("%79s", buffer);
+        size_t option = (size_t) strtol(buffer, nullptr, 10);
         printf("\n");
         if (option > NUMBER_OF_TESTS) {
-            printf("Invalid choice %d. Please select a choice between 0 and %zu.\n", option, NUMBER_OF_TESTS);
-        } else if (option == 0) {
-            if (errno == EINVAL) {
+            printf("Invalid choice %zu. Please select a choice between 0 and %zu.\n", option, NUMBER_OF_TESTS);
+        } else if (option == 0 || scan_count != 1) {
+            if (errno == EINVAL || scan_count != 1) {
                 printf("Invalid choice (%s). Please select a number between 0 and %zu.\n", buffer, NUMBER_OF_TESTS);
                 errno = 0;
             } else {
@@ -73,7 +74,7 @@ int main(void) {
             }
         } else {
             char c;
-            scanf("%c", &c);        // consume the newline character
+            if (scanf("%c", &c)) {} // consume the newline character
             problem_checkers[option]();
         }
         printf("\n");

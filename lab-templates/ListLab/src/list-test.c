@@ -14,7 +14,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-26 Christopher A. Bohn
+ * ListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -289,11 +289,12 @@ void test_list(void) {
                 break;
             case SWAP_NEXT:
                 if (!iterator) {
-                    printf("Cannot swap using a null iterator.\n");
+                    printf("Cannot swap using a null iterator. Terminating test\n");
                     break;
                 }
                 if (!has_next(iterator)) {
-                    printf("Warning: there is not a `next` element. The behavior is undefined.\n");
+                    printf("There is not a `next` element. The behavior is undefined. Terminating test.\n");
+                    break;
                 }
                 fflush(stdout);
                 printf("Swapping %s", word_entry_to_string(buffer, get_word_entry(iterator)));
@@ -304,11 +305,12 @@ void test_list(void) {
                 break;
             case SWAP_PREVIOUS:
                 if (!iterator) {
-                    printf("Cannot swap using a null iterator.\n");
+                    printf("Cannot swap using a null iterator. Terminating test.\n");
                     break;
                 }
                 if (!has_previous(iterator)) {
-                    printf("Warning: there is not a `previous` element. The behavior is undefined.\n");
+                    printf("There is not a `previous` element. The behavior is undefined. Terminating test.\n");
+                    break;
                 }
                 fflush(stdout);
                 printf("Swapping %s", word_entry_to_string(buffer, get_word_entry(iterator)));
@@ -323,7 +325,8 @@ void test_list(void) {
                     break;
                 }
                 if (!has_next(iterator)) {
-                    printf("Warning: there is not a `next` element. The behavior is undefined.\n");
+                    printf("There is not a `next` element. The behavior is undefined. Terminating test.\n");
+                    break;
                 }
                 fflush(stdout);
                 printf("Merging %s", word_entry_to_string(buffer, get_word_entry(iterator)));
@@ -338,7 +341,8 @@ void test_list(void) {
                     break;
                 }
                 if (!has_previous(iterator)) {
-                    printf("Warning: there is not a `previous` element. The behavior is undefined.\n");
+                    printf("There is not a `previous` element. The behavior is undefined. Terminating test.\n");
+                    break;
                 }
                 fflush(stdout);
                 printf("Merging %s", word_entry_to_string(buffer, get_word_entry(iterator)));

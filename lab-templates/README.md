@@ -27,6 +27,12 @@ We will place the assignments and starter code for most of the coding assignment
 - Canvas Page: [Assignment Workflow Walkthrough](https://mynu.instructure.com/courses/13509/pages/assignment-workflow-walkthrough)
   - [Assignment Workflow Walkthrough](documentation/first-time-setup/09-workflow-walkthrough.md)
 
+[//]: # (TODO: Update the setup to enable Windows ssh-agent)
+[//]: # (Because Windows has the OpenSSH Authentication Agent disabled by default.)
+[//]: # (TODO: Update the setup to copy .env file from <someplace> to project root if you're a Windows user)
+[//]: # (SSH_AUTH_SOCK=//./pipe/openssh-ssh-agent)
+[//]: # (Possibly verify with `docker compose config`)
+
 </details>
 
 

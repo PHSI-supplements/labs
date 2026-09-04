@@ -7,7 +7,7 @@
 > At a glance, his code is smellier than the wooly rhinoceros’ enclosure.
 > But you take a closer look anyway to try to understand why his code acts strangely.
 
-- [ ] Open the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) quiz in Canvas.
+- [ ] Open the [ListLab Code Study](https://mynu.instructure.com/courses/13509/assignments/1028638) quiz in Canvas.
 
 ### Pleistocene Petting Zoo Marquee
 

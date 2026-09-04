@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-26 Christopher A. Bohn
+ * ListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -95,7 +95,7 @@ void destroy_list(list_t *list, bool free_word_entries);
 
 /**
  * @brief Provides an iterator over the elements in the list, invalidating all
- * iterate_previous iterators.
+ * previous iterators.
  *
  * If the list is empty, the iterator is valid <i>only</i> for inserting a word
  * entry into the empty list; the behavior is undefined for all other uses.
@@ -249,7 +249,7 @@ word_entry_t const* get_word_entry(iterator_t const *iterator);
  * list.
  *
  * @param iterator the iterator pointing to a valid word entry
- * @returna pointer to the iterate_next word entry
+ * @return a pointer to the next word entry
  */
 word_entry_t const* get_next_word_entry(iterator_t const *iterator);
 
@@ -261,7 +261,7 @@ word_entry_t const* get_next_word_entry(iterator_t const *iterator);
  * list.
  *
  * @param iterator the iterator pointing to a valid word entry
- * @returna pointer to the iterate_previous word entry
+ * @return a pointer to the previous word entry
  */
 word_entry_t const *get_previous_word_entry(iterator_t const *iterator);
 

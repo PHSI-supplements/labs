@@ -10,7 +10,6 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
 option(INSTRUCTOR_BUILD "Suppress warnings for grading" OFF)
-option(TIMEOUT "Enable 10-second timeout to prevent runaway code" ON)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
@@ -42,11 +41,6 @@ add_executable(linkedlist   src/listlab.c)
 
 target_link_libraries(arraylist     PRIVATE arraylist_code)
 target_link_libraries(linkedlist    PRIVATE linkedlist_code)
-
-if(TIMEOUT)
-    target_compile_definitions(arraylist_code  PUBLIC TIMEOUT)
-    target_compile_definitions(linkedlist_code PUBLIC TIMEOUT)
-endif()
 
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)

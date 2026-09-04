@@ -19,6 +19,8 @@ but the Git server's Markdown engine and the IDEs' Markdown previewers don't sup
     ```bash
     docker compose up docs
     ```
+    - *n.b.*, When VS Code runs the course container, it will launch the "csce231" image that’s used for working on the lab, and also the "docs" image that presents the assignment as a website.
+      In this situation, you do not need to manually launch the "docs" image.
   - [ ] In a web browser, load `http://localhost:8000`, and select the current assignment from the sidebar menu.
 - When you are finished, close the container by:
   - [ ] Placing your computer's cursor in the terminal window with the web server, and

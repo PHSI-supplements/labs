@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-26 Christopher A. Bohn
+ * ListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -34,8 +34,8 @@ typedef struct node_definition node_t;
  * The type definition for a linked list node.
  * <ul>
  * <li><code>word_entry</code> the node's payload
- * <li><code>next</code> a pointer to the iterate_next node in the linked list
- * <li><code>previous</code> a pointer to the iterate_previous node in the linked list
+ * <li><code>next</code> a pointer to the next node in the linked list
+ * <li><code>previous</code> a pointer to the previous node in the linked list
  * </ul>
  */
 struct node_definition {

@@ -3,7 +3,7 @@
 - Labs
   - [PokerLab](/PokerLab/README.md)
   - [KeyboardLab](/KeyboardLab/README.md)
-  - ListLab
+  - [ListLab](/ListLab/README.md)
   - IntegerLab
   - FloatLab
   - AddressingLab

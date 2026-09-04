@@ -14,7 +14,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-26 Christopher A. Bohn
+ * ListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).

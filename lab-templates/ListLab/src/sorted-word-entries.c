@@ -9,7 +9,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab assignment and starter code (c) 2021-26 Christopher A. Bohn
+ * ListLab assignment and starter code (c) 2021-26 Christopher A. Bohn
  */
 
 #include <assert.h>

@@ -9,7 +9,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab assignment and starter code (c) 2021-26 Christopher A. Bohn
+ * ListLab assignment and starter code (c) 2021-26 Christopher A. Bohn
  */
 
 #include <stdio.h>
@@ -322,7 +322,7 @@ word_entry_t const *get_word_entry(iterator_t const *iterator) {
  * list.
  *
  * @param iterator the iterator pointing to a valid word entry
- * @returna pointer to the next word entry
+ * @return a pointer to the next word entry
  */
 word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */
@@ -340,7 +340,7 @@ word_entry_t const *get_next_word_entry(iterator_t const *iterator) {
  * list.
  *
  * @param iterator the iterator pointing to a valid word entry
- * @returna pointer to the previous word entry
+ * @return a pointer to the previous word entry
  */
 word_entry_t const *get_previous_word_entry(iterator_t const *iterator) {
     /* IMPLEMENT THIS FUNCTION */

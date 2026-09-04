@@ -22,7 +22,7 @@ Recall from the discussion of the [types of poker hands](01-terminology.md#types
 You can test your code using the program's option 3 (which allows you to specify a particular hand) and option 4 (which generates a random hand).
 (Unlike poker with a "real" deck of cards, this program allows a card to appear more than once in a hand;
 decide for yourself whether this is best characterized as a known bug or as a feature.)
-For now, the program does not correctly characterize a hand that is a three of a kind, a full house, or a four of a kind.
+For now, the program does not correctly characterize a hand that is a two-pair or a four-of-a-kind.
 
 
 ### Write `is_four_of_kind()`

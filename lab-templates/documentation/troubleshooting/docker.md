@@ -4,6 +4,7 @@ This document is organized around what you were attempting to accomplish when yo
 
 - [`docker compose build`](#docker-daffiness-docker-compose-build)
 - [`docker compose run --rm csce231`](#docker-daffiness-docker-compose-run---rm-csce231)
+- [Docker Daffiness: In VS Code, Re-opening the project in the course container](#docker-daffiness-in-vs-code-re-opening-the-project-in-the-course-container)
 - [`docker compose up docs`](#docker-daffiness-docker-compose-up-docs)
 
 
@@ -56,6 +57,32 @@ But you saw something different.
 
 
 If you cannot resolve the problem(s) yourself, then talk with a TA or the instructor.
+
+
+## Docker Daffiness: In VS Code, Re-opening the project in the course container
+
+Opened VS Code and clicked on the "Reopen in Container" button, but VS Code failed to open the container.
+
+Sometimes a container left over from an earlier session can prevent VS Code from successfully opening the project in the course container.
+The fix is simple:
+- Close VS Code
+- In a terminal, navigate to your CSCE 231 repository (the directory containing compose.yaml).
+- Shut down the existing containers:
+  ```shell
+  docker compose down
+  ```
+- Launch VS Code from that directory:
+  ```shell
+  code .
+  ```
+- When VS Code asks if you want to re-open the project in the container, do so.
+
+This is essentially the classic "turn it off and back on again": 
+`docker compose down` takes care of the "turn it off" step, 
+and VS Code takes care of the "turn it back on" step.
+
+
+If this does not resolve the problem, then talk with a TA or the instructor.
 
 
 ## Docker Daffiness: `docker compose up docs`

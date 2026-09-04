@@ -48,6 +48,51 @@ A TA or the instructor can help you troubleshoot this issue.
 - Does `ssh-add -l` show `id_ed25519`?
 
 
+## SSH Silliness: `ssh-agent` is disabled on Windows
+
+Windows has the OpenSSH Authentication Agent disabled by default.
+- In PowerShell, check its status:
+  ```shell
+  Get-Service ssh-agent
+  ```
+- If you see
+  ```text
+  Status   Name               DisplayName
+  ------   ----               -----------
+  Stopped  ssh-agent          OpenSSH Authentication Agent
+  ```
+  then try to start the agent:
+  ```shell
+  Start-Service ssh-agent
+  ```
+
+If PowerShell reports that it cannot start the service, then the service probably is still disabled.
+- Open PowerShell as **Administrator**, and run:
+  ```shell
+  Set-Service -Name ssh-agent -StartupType Automatic
+  Start-Service ssh-agent
+  ```
+- Check its status:
+  ```shell
+  Get-Service ssh-agent
+  ```
+
+If you see:
+```text
+Status   Name               DisplayName
+------   ----               -----------
+Running  ssh-agent          OpenSSH Authentication Agent
+```
+- Load your SSH key into the agent:
+  ```shell
+  ssh-add
+  ```
+- Verify that the key is loaded:
+  ```shell
+  ssh-add -l
+  ```
+
+
 ## SSH Silliness: `SSH_AUTH_SOCK` variable is not set or ssh agent is not running
 
 - **Linux** or **macOS**:<br>
@@ -76,6 +121,26 @@ A TA or the instructor can help you troubleshoot this issue.
   ```bash
   Restart-Service ssh-agent
   ```
+  If PowerShell reports that it cannot start, stop, or restart the service, then the service probably is still disabled.
+  - Open PowerShell as **Administrator**, and run:
+    ```shell
+    Set-Service -Name ssh-agent -StartupType Automatic
+    Start-Service ssh-agent
+    ```
+  - Check its status:
+    ```shell
+    Get-Service ssh-agent
+    ```
+  If its `Status` is `Running`, then:
+  - Create a *.env* file in the same directory as *compose.yaml*, with this line:
+    ```text
+    SSH_AUTH_SOCK=//./pipe/openssh-ssh-agent
+    ```
+  - load your SSH key into the agent and verify that the key is loaded:
+    ```shell
+    ssh-add
+    ssh-add -l
+    ```
 
 
 ## SSH Silliness: ssh-agent is running, but the key isn't loaded

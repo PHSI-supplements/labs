@@ -78,6 +78,6 @@ If your program is allocating more than 1GB, then your program most certainly ha
 
 ---
 
-|           [⬅️](11-examine-word-entries.md)           |      [⬆️](../README.md)      |   [➡️](13-grading.md)    |
-|:----------------------------------------------------:|:----------------------------:|:------------------------:|
-| [Examining Word Entries](11-examine-word-entries.md) | [Front Matter](../README.md) | [Turn-IN and Grading](13-grading.md) |
+|           [⬅️](11-examine-word-entries.md)           |      [⬆️](../README.md)      |         [➡️](13-grading.md)          |
+|:----------------------------------------------------:|:----------------------------:|:------------------------------------:|
+| [Examining Word Entries](11-examine-word-entries.md) | [Front Matter](../README.md) | [Turn-In and Grading](13-grading.md) |

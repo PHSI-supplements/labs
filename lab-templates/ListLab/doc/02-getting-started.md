@@ -19,30 +19,7 @@
 
 ### Compiling and Running
 
-This assignment is a little different from the other assignments, in that it has two build targets instead of one,
-and in that it has a timeout feature that will terminate the program if it runs too long.
-These differences mean there are a few extra options when compiling and running your code.
-
-*We strongly recommend that you leave the timeout feature enabled for most or all of your testing.*
-However, if you are using an interactive debugger, then you will want to disable timeout so that the program doesn't terminate while you're at a breakpoint.
-
-#### Configuring the Project
-
-<u>From the Command Line</u>
-
-- `cmake --preset default` -- developing on nuros, timeout enabled
-- `cmake --preset timeout-disabled` -- developing on nuros, timeout disabled
-- `cmake --preset personal-computer` -- developing on your computer, timeout enabled
-- `cmake --preset personal-computer-timeout-disabled` -- developing on your computer, timeout disabled
-
-<u>From VS Code</u>
-
-From the Command Palette, select `CMake: Select Configure Preset`. Then select the preset of your choice:
-
-- `default` -- developing on nuros, timeout enabled
-- `timeout-disabled` -- developing on nuros, timeout disabled
-- `personal-computer` -- developing on your computer, timeout enabled
-- `personal-computer-timeout-disabled` -- developing on nuros, timeout disabled
+This assignment is a little different from the other assignments, in that it has two build targets instead of one.
 
 #### Compiling the Project
 
@@ -61,6 +38,10 @@ From the Command Palette, either select `CMake: Build Target` and choose one of:
 
 or, to compile both versions of the program, select `CMake: Build`
 
+<u>From CLion</u>
+
+Select `arraylist` or `linkedlist` from the Run/Debug Configurations drop-down menu, and then click the "🔨" (Build) button to the left of the Run/Debug Configurations drop-down menu.
+
 #### Running the Program
 
 <u>From the Command Line</u>
@@ -71,6 +52,11 @@ or, to compile both versions of the program, select `CMake: Build`
 <u>From VS Code</u>
 
 From the Command Pallet, select `Set Launch/Debug Target` and choose either `arraylist` or `linkedlist`, and then click on the "Run" icon as normal.
+If you want to run both versions of the program side-by-side, you'll need to do so from the command line.
+
+<u>From CLion</u>
+
+Select `arraylist` or `linkedlist` from the Run/Debug Configurations drop-down menu, and then click either the "▶" (Run) button or the "🪲" (Debug) button to the right of the Run/Debug Configurations drop-down menu.
 If you want to run both versions of the program side-by-side, you'll need to do so from the command line.
 
 ### The Books
@@ -97,16 +83,12 @@ Throughout the assignment, we note that if building the list takes more than a f
 You should be able to build a list for *Frankenstein* or *The Lost World* in under a second.
 Your code may take longer, but it should not take much longer.
 
-<span style="background-color: yellow;">Some of the tests in *sorted-test.c* will timeout after ten seconds to stop runaway code.
-To disable this timeout (such as when debugging with breakpoints), compile the code with</span>
-```shell
-cmake --preset=timeout-disabled
-cmake --build build
-```
-(to re-enable the timeout, use `cmake --preset=default; cmake --build build`)
-
 You will earn most of the credit for this lab if your code works for pre-sorted files of up to 200 words.
 The remaining credit is for making your code work with unsorted files and, when using files of up to 80,000 words, your code can generate a list and find a word in fewer than 20 seconds.
+
+<span style="background-color: yellow;">You should be able to build a list from a file of up to 200 words in only a couple of seconds.
+If it longer than that, you may have an infinite loop running.
+The longer it takes, the more likely it is that you have an infinite loop.</span>
 
 ### Business Rules
 

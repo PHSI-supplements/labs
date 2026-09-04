@@ -17,7 +17,7 @@ Be sure that you have pushed your code to git.unl.edu.
 ### No Credit for Uncompilable Code
 
 If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
-Be sure to compile and test your code on the nuros.unl.edu Linux server with the original driver code, the original header file(s), and the original CMake configuration files.
+Be sure to compile and test your code in the course container with the original driver code, the original header file(s), and the original CMake configuration files.
 
 > ✍️ **One Edit Rule**
 >
@@ -41,9 +41,9 @@ After you have exhausted your late days, any work turned in more than one hour l
 This assignment is worth 35 points.
 
 <!-- Archie's Code - 5 -->
-- [ ] **+2** Student's answers in <!--*answers.txt*--> the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) Canvas quiz demonstrate an understanding of the bug in the "Pleistocene Petting Zoo Marquee" code and how to correct it.
-- [ ] **+2** Student's answers in <!--*answers.txt*--> the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) Canvas quiz demonstrate an understanding of the bug in the "Math Doesn't Work Right ... Or Does It?" code.
-- [ ] **+1** Student's answer in <!--*answers.txt*--> the [ListLab Code Study](https://canvas.unl.edu/courses/209782/assignments/2190066) Canvas quiz demonstrates an understanding of the importance of compiler warnings.
+- [ ] **+2** Student's answers in <!--*answers.txt*--> the [ListLab Code Study](https://mynu.instructure.com/courses/13509/assignments/1028638) Canvas quiz demonstrate an understanding of the bug in the "Pleistocene Petting Zoo Marquee" code and how to correct it.
+- [ ] **+2** Student's answers in <!--*answers.txt*--> the [ListLab Code Study](https://mynu.instructure.com/courses/13509/assignments/1028638) Canvas quiz demonstrate an understanding of the bug in the "Math Doesn't Work Right ... Or Does It?" code.
+- [ ] **+1** Student's answer in <!--*answers.txt*--> the [ListLab Code Study](https://mynu.instructure.com/courses/13509/assignments/1028638) Canvas quiz demonstrates an understanding of the importance of compiler warnings.
 <!-- Word Entries - 2 -->
 - [ ] **+½** `create_word_entry` initializes `word_entry` as specified.
 - [ ] **+½** `increment_count()` increases the number of occurrences by one.

@@ -144,12 +144,16 @@ void check_problem2(void) {
 void check_problem3(void) {
     char buffer[80];
     printf("Enter a number: ");
-    scanf("%79s", buffer);
-    int number = (int) strtol(buffer, nullptr, 10);
-    printf("Reference:\t%d %s even\t\t", number, number % 2 == 0 ? "is" : "is not");
-    printf("produce_multiple_of_ten(%d) = %d\n", number, produce_multiple_of_ten_reference(number));
-    printf("Your code:\t%d %s even\t\t", number, is_even(number) ? "is" : "is not");
-    printf("produce_multiple_of_ten(%d) = %d\n", number, produce_multiple_of_ten(number));
+    int scan_count = scanf("%79s", buffer);
+    if (scan_count == 0) {
+        printf("Invalid number (%s).", buffer);
+    } else {
+        int number = (int) strtol(buffer, nullptr, 10);
+        printf("Reference:\t%d %s even\t\t", number, number % 2 == 0 ? "is" : "is not");
+        printf("produce_multiple_of_ten(%d) = %d\n", number, produce_multiple_of_ten_reference(number));
+        printf("Your code:\t%d %s even\t\t", number, is_even(number) ? "is" : "is not");
+        printf("produce_multiple_of_ten(%d) = %d\n", number, produce_multiple_of_ten(number));
+    }
 }
 
 int main() {
@@ -162,19 +166,19 @@ int main() {
     char buffer[80];
     bool running = true;
     while (running) {
-        for (int i = 0; i < NUMBER_OF_PROBLEMS; i++) {
-            printf("%d) check problem %d\n", i + 1, i + 1);
+        for (size_t i = 0; i < NUMBER_OF_PROBLEMS; i++) {
+            printf("%zu) check problem %zu\n", i + 1, i + 1);
         }
         printf("0) Quit\n");
         printf("Select the problem you wish to check: ");
-        scanf("%79s", buffer);
-        int option = (int) strtol(buffer, nullptr, 10);
+        int scan_count = scanf("%79s", buffer);
+        size_t option = (size_t) strtol(buffer, nullptr, 10);
         printf("\n");
-        if (option < 0 || option > NUMBER_OF_PROBLEMS) {
-            printf("Invalid choice %d. Please select a choice between 0 and %d.\n", option, NUMBER_OF_PROBLEMS);
-        } else if (option == 0) {
-            if (errno == EINVAL) {
-                printf("Invalid choice (%s). Please select a number between 0 and %d.\n", buffer, NUMBER_OF_PROBLEMS);
+        if (option > NUMBER_OF_PROBLEMS) {
+            printf("Invalid choice %zu. Please select a choice between 0 and %zu.\n", option, NUMBER_OF_PROBLEMS);
+        } else if (option == 0 || scan_count != 1) {
+            if (errno == EINVAL || scan_count != 1) {
+                printf("Invalid choice (%s). Please select a number between 0 and %zu.\n", buffer, NUMBER_OF_PROBLEMS);
                 errno = 0;
             } else {
                 printf("Goodbye.\n");

@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * LinkedListLab (c) 2021-26 Christopher A. Bohn
+ * ListLab (c) 2021-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -25,17 +25,6 @@
 #include <unistd.h>
 #include "sorted-test.h"
 #include "sorted-word-entries.h"
-
-#ifdef TIMEOUT
-#define timed_test(action) do { fprintf(stderr, "[INFO]  10-second timeout enabled.\n"); signal(SIGALRM, timeout_handler); alarm(10); action; alarm(0); } while(0)
-#else
-#define timed_test(action) do { fprintf(stderr, "[INFO]  Timeout disabled.\n"); action; } while (0)
-#endif //TIMEOUT
-
-static void timeout_handler(int signum) {
-    fprintf(stderr, "[ERROR] Timeout after 10 seconds!\n");
-    exit(EXIT_FAILURE);
-}
 
 static char *get_input(char *destination, const char *prompt) {
     printf("%s: ", prompt);
@@ -81,7 +70,7 @@ void test_insert_word_empty_list(void) {
     char word[MAXIMUM_WORD_LENGTH + 1];
     get_input(word, "Enter the word to be inserted into the list");
     list_t *new_list;
-    timed_test(new_list = insert_word(original_list, word));
+    new_list = insert_word(original_list, word);
     printf("\n");
     if (!new_list) {
         printf("insert_word() returned a null list.\n");
@@ -115,7 +104,7 @@ void test_insert_word_singleton_list(void) {
     char word[MAXIMUM_WORD_LENGTH + 1];
     get_input(word, "Enter the word to be inserted into the list");
     list_t *new_list;
-    timed_test(new_list = insert_word(original_list, word));
+    new_list = insert_word(original_list, word);
     printf("\n");
     if (!new_list) {
         printf("insert_word() returned a null list.\n");
@@ -189,7 +178,7 @@ void test_insert_word_populated_list(void) {
     char word[MAXIMUM_WORD_LENGTH + 1];
     get_input(word, "Enter the word to be inserted into the list");
     list_t *new_list;
-    timed_test(new_list = insert_word(original_list, word));
+    new_list = insert_word(original_list, word);
     printf("\n");
     if (!new_list) {
         printf("insert_word() returned a null list.\n");
@@ -207,7 +196,7 @@ void test_build_list(void) {
     get_input(input, "Enter the name of the book file");
     printf("Building the list.\n");
     list_t *list;
-    timed_test(list = build_list(input));
+    list = build_list(input);
     if (!list) {
         printf("build_list() returned a null list.\n");
     }
