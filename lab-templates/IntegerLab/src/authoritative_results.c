@@ -4,7 +4,7 @@
 
 /**************************************************************************//**
  *
- * @file authoritative_default.c
+ * @file authoritative_results.c
  *
  * @author Christopher A. Bohn
  *

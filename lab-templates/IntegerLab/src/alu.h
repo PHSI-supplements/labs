@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 /*
- * IntegerLab (c) 2018-24 Christopher A. Bohn
+ * IntegerLab (c) 2018-26 Christopher A. Bohn
  *
  * Starter code licensed under the Apache License, Version 2.0
  * (http://www.apache.org/licenses/LICENSE-2.0).
@@ -22,7 +22,6 @@
 #ifndef ALU_H
 #define ALU_H
 
-#include <assert.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -49,23 +48,12 @@ typedef enum {
 } data_size_t;
 
 /*
- * PREDEFINED MACROS THAT DO NOT DEPEND ON STUDENT CODE
- */
-
-#define is_zero(number)         (!(number))
-#define is_not_zero(number)     (!!(number))
-#define is_power_of_two(number) (__builtin_popcount(number) == 1)       // stdbit.h --(stdc_count_ones(number) == 1)
-#define LOWER_BITS_MASK(n)      ((UINT64_C(1) << (n)) - UINT64_C(1))
-
-/*
  * UTILITY FUNCTIONS
  */
 
-uint32_t exponentiate(unsigned int exponent);
-unsigned int lg(uint32_t power_of_two);
 bool is_negative(uint16_t value);
-uint32_t zero_extend(uint32_t value, data_size_t from_size, data_size_t to_size);
-uint32_t sign_extend(uint32_t value, data_size_t from_size, data_size_t to_size);
+uint32_t zero_extend(uint32_t value, data_size_t from_size);
+uint32_t sign_extend(uint32_t value, data_size_t from_size);
 
 /*
  * LOGICAL BOOLEAN FUNCTIONS
@@ -137,7 +125,7 @@ static inline bool signed_at_most(uint16_t value1, uint16_t value2) {
     recursion_depth++;
     alu_result_t comparison = subtract(value1, value2);
     recursion_depth--;
-    return logical_or(is_negative(comparison.result) ^ comparison.signed_overflow, is_zero(comparison.result));
+    return logical_or(is_negative(comparison.result) ^ comparison.signed_overflow, !comparison.result);
 }
 
 /**
@@ -197,7 +185,7 @@ static inline bool unsigned_at_most(uint16_t value1, uint16_t value2) {
     recursion_depth++;
     alu_result_t comparison = subtract(value1, value2);
     recursion_depth--;
-    return logical_or(comparison.unsigned_overflow, is_zero(comparison.result));
+    return logical_or(comparison.unsigned_overflow, !comparison.result);
 }
 
 /**

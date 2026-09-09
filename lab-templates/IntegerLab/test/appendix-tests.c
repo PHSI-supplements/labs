@@ -140,111 +140,67 @@ int main() {
 //    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
-//TEST(test_zero_extend_positive_8_16)
-//    uint32_t value = 0xABCD'EF30;
-//    data_size_t from_size = ONE_BYTE;
-//    data_size_t to_size = TWO_BYTES;
-//    uint32_t expected_result = 0xABCD'0030;
-//    uint32_t actual_result = zero_extend(value, from_size, to_size);
-//    ASSERT_EQUAL(expected_result, actual_result);
-//END_TEST
-//
 //TEST(test_zero_extend_positive_8_32)
 //    uint32_t value = 0xABCD'EF30;
 //    data_size_t from_size = ONE_BYTE;
-//    data_size_t to_size = FOUR_BYTES;
 //    uint32_t expected_result = 0x0000'0030;
-//    uint32_t actual_result = zero_extend(value, from_size, to_size);
+//    uint32_t actual_result = zero_extend(value, from_size);
 //    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_zero_extend_positive_16_32)
 //    uint32_t value = 0xABCD'2030;
 //    data_size_t from_size = TWO_BYTES;
-//    data_size_t to_size = FOUR_BYTES;
 //    uint32_t expected_result = 0x0000'2030;
-//    uint32_t actual_result = zero_extend(value, from_size, to_size);
-//    ASSERT_EQUAL(expected_result, actual_result);
-//END_TEST
-//
-//TEST(test_zero_extend_negative_8_16)
-//    uint32_t value = 0xABCD'EF90;
-//    data_size_t from_size = ONE_BYTE;
-//    data_size_t to_size = TWO_BYTES;
-//    uint32_t expected_result = 0xABCD'0090;
-//    uint32_t actual_result = zero_extend(value, from_size, to_size);
+//    uint32_t actual_result = zero_extend(value, from_size);
 //    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_zero_extend_negative_8_32)
 //    uint32_t value = 0xABCD'EF90;
 //    data_size_t from_size = ONE_BYTE;
-//    data_size_t to_size = FOUR_BYTES;
 //    uint32_t expected_result = 0x0000'0090;
-//    uint32_t actual_result = zero_extend(value, from_size, to_size);
+//    uint32_t actual_result = zero_extend(value, from_size);
 //    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_zero_extend_negative_16_32)
 //    uint32_t value = 0xABCD'9080;
 //    data_size_t from_size = TWO_BYTES;
-//    data_size_t to_size = FOUR_BYTES;
 //    uint32_t expected_result = 0x0000'9080;
-//    uint32_t actual_result = zero_extend(value, from_size, to_size);
-//    ASSERT_EQUAL(expected_result, actual_result);
-//END_TEST
-//
-//TEST(test_sign_extend_positive_8_16)
-//    uint32_t value = 0xABCD'EF30;
-//    data_size_t from_size = ONE_BYTE;
-//    data_size_t to_size = TWO_BYTES;
-//    uint32_t expected_result = 0xABCD'0030;
-//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    uint32_t actual_result = zero_extend(value, from_size);
 //    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_sign_extend_positive_8_32)
 //    uint32_t value = 0xABCD'EF30;
 //    data_size_t from_size = ONE_BYTE;
-//    data_size_t to_size = FOUR_BYTES;
 //    uint32_t expected_result = 0x0000'0030;
-//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    uint32_t actual_result = sign_extend(value, from_size);
 //    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_sign_extend_positive_16_32)
 //    uint32_t value = 0xABCD'2030;
 //    data_size_t from_size = TWO_BYTES;
-//    data_size_t to_size = FOUR_BYTES;
 //    uint32_t expected_result = 0x0000'2030;
-//    uint32_t actual_result = sign_extend(value, from_size, to_size);
-//    ASSERT_EQUAL(expected_result, actual_result);
-//END_TEST
-//
-//TEST(test_sign_extend_negative_8_16)
-//    uint32_t value = 0xABCD'EF90;
-//    data_size_t from_size = ONE_BYTE;
-//    data_size_t to_size = TWO_BYTES;
-//    uint32_t expected_result = 0xABCD'FF90;
-//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    uint32_t actual_result = sign_extend(value, from_size);
 //    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_sign_extend_negative_8_32)
 //    uint32_t value = 0xABCD'EF90;
 //    data_size_t from_size = ONE_BYTE;
-//    data_size_t to_size = FOUR_BYTES;
 //    uint32_t expected_result = 0xFFFF'FF90;
-//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    uint32_t actual_result = sign_extend(value, from_size);
 //    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //
 //TEST(test_sign_extend_negative_16_32)
 //    uint32_t value = 0xABCD'9080;
 //    data_size_t from_size = TWO_BYTES;
-//    data_size_t to_size = FOUR_BYTES;
 //    uint32_t expected_result = 0xFFFF'9080;
-//    uint32_t actual_result = sign_extend(value, from_size, to_size);
+//    uint32_t actual_result = sign_extend(value, from_size);
 //    ASSERT_EQUAL(expected_result, actual_result);
 //END_TEST
 //

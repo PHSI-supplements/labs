@@ -17,7 +17,7 @@ endif()
 
 add_library(student_code STATIC
         src/alu.h                       src/alu.c
-                                        src/basetwo.c
+        src/basetwo.h                   src/basetwo.c
         src/authoritative_results.h     src/authoritative_results.c
         src/profiler.h                  src/profiler.c
 )
@@ -33,6 +33,7 @@ target_link_libraries(integerlab PRIVATE student_code ${STD_LIB})
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)
         target_compile_options(integerlab PRIVATE -w)
+        target_compile_options(student_code PRIVATE -w)
     else()
         target_compile_options(integerlab PRIVATE
             -Wall
@@ -40,8 +41,15 @@ if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
             -Wno-unused-parameter
             -finstrument-functions
         )
+        target_compile_options(student_code PRIVATE
+                -Wall
+                -Wextra
+                -Wno-unused-parameter
+                -finstrument-functions
+        )
     endif()
     target_compile_options(integerlab PRIVATE -Og)
+    target_compile_options(student_code PRIVATE -Og)
 endif()
 
 ### Unit Tests

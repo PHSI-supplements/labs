@@ -11,7 +11,7 @@ This assignment is worth 38 points.
 
 ### Submission Deadline
 
-This assignment is due **the week of February 9, before the start of your lab section**.
+This assignment is due **the week of September 21, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
@@ -35,6 +35,7 @@ If you work with a lab partner, be sure to:
 You may use the CodeHelp.app "virtual TA" for help, and
 you may use "Oscar the AI Tutor" built into the course's textbook.
 You may use other generative AI tools to translate this assignment into another human language.
+You may accept IDE single-line code suggestions, but you may not use an IDE feature that makes multi-line code suggestions.
 No other use of generative AI is permitted on this assignment without explicit permission from Dr. Bohn.
 
 ### Table of Contents

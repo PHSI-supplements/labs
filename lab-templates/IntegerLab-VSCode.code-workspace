@@ -1,0 +1,10 @@
+{
+  "folders": [
+    {
+      "path": "IntegerLab"
+    }
+  ],
+  "settings": {
+    "cmake.sourceDirectory": "${workspaceFolder}"
+  }
+}

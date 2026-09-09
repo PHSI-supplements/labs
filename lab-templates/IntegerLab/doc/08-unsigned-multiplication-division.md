@@ -56,20 +56,61 @@ If your solution includes a loop or recursion, please review the Chapter~3 mater
 
 - [ ] Compile and run *integerlab*, trying a few values.
 
-When you enter the inputs for your power-of-two multiplier, the operands will be interpreted as hexadecimal values even if you omit the leading "0x".
+When `multiplier` is 0 or a power of two, the driver code will call `multiply_by_power_of_two()`.
+It will *also* call `unsigned_multiply()` and `signed_multiply()`, but since you haven't implemented those yet, they'll always return `0`.
+
 For example:
-```
-Enter ... "mul2 <hex_value> <hex_power_of_two>" ...:  mul2 5 4
-expected: 0x0005 * 0x0004 = 0x00000014
-actual:   0x0005 * 0x0004 = 0x00000014
+```text
+Expression to evaluate: 5 * 4
+MULTIPY_BY_POWER_OF_TWO
+	expected: 0x0005 * 0x0004 = 0x0000'0014
+	actual:   0x0005 * 0x0004 = 0x0000'0014
+UNSIGNED MULTIPLICATION
+	expected result (hexadecimal): 0x0005 * 0x0004 = 0x0000'0014
+	expected result (unsigned):    5 * 4 = 20 (20)
+	actual result (hexadecimal):   0x0005 * 0x0004 = 0x0000'0000
+	actual result (unsigned):      5 * 4 = 0 (0)
+SIGNED MULTIPLICATION (bonus credit)
+	expected result (hexadecimal): 0x0005 * 0x0004 = 0x0000'0014
+	expected result (signed):      5 * 4 = 20 (20)
+	actual result (hexadecimal):   0x0005 * 0x0004 = 0x0000'0000
+	actual result (signed):        5 * 4 = 0 (0)
+		Number of calls to ripple_carry_addition:    0
+		Number of calls to multiply_by_power_of_two: 1
 
-Enter ... "mul2 <hex_value> <hex_power_of_two>" ...:  mul2 5 0
-expected: 0x0005 * 0x0000 = 0x00000000
-actual:   0x0005 * 0x0000 = 0x00000000
+Expression to evaluate: 5 * 0
+MULTIPY_BY_POWER_OF_TWO
+	expected: 0x0005 * 0x0000 = 0x0000'0000
+	actual:   0x0005 * 0x0000 = 0x0000'0000
+UNSIGNED MULTIPLICATION
+	expected result (hexadecimal): 0x0005 * 0x0000 = 0x0000'0000
+	expected result (unsigned):    5 * 0 = 0 (0)
+	actual result (hexadecimal):   0x0005 * 0x0000 = 0x0000'0000
+	actual result (unsigned):      5 * 0 = 0 (0)
+SIGNED MULTIPLICATION (bonus credit)
+	expected result (hexadecimal): 0x0005 * 0x0000 = 0x0000'0000
+	expected result (signed):      5 * 0 = 0 (0)
+	actual result (hexadecimal):   0x0005 * 0x0000 = 0x0000'0000
+	actual result (signed):        5 * 0 = 0 (0)
+		Number of calls to ripple_carry_addition:    0
+		Number of calls to multiply_by_power_of_two: 1
 
-Enter ... "mul2 <hex_value> <hex_power_of_two>" ...:  mul2 0xFFFF 0x8000
-expected: 0xFFFF * 0x8000 = 0x7FFF8000
-actual:   0xFFFF * 0x8000 = 0x7FFF8000
+Expression to evaluate: 0xFFFF * 0x8000
+MULTIPY_BY_POWER_OF_TWO
+	expected: 0xFFFF * 0x8000 = 0x7FFF'8000
+	actual:   0xFFFF * 0x8000 = 0x7FFF'8000
+UNSIGNED MULTIPLICATION
+	expected result (hexadecimal): 0xFFFF * 0x8000 = 0x7FFF'8000
+	expected result (unsigned):    65535 * 32768 = 32768 (2147450880)
+	actual result (hexadecimal):   0xFFFF * 0x8000 = 0x0000'0000
+	actual result (unsigned):      65535 * 32768 = 0 (0)
+SIGNED MULTIPLICATION (bonus credit)
+	expected result (hexadecimal): 0xFFFF * 0x8000 = 0x0000'8000
+	expected result (signed):      -1 * -32768 = -32768 (32768)
+	actual result (hexadecimal):   0xFFFF * 0x8000 = 0x0000'0000
+	actual result (signed):        -1 * -32768 = 0 (0)
+		Number of calls to ripple_carry_addition:    0
+		Number of calls to multiply_by_power_of_two: 1
 ```
 
 - [ ] Check your code with other values, comparing your actual results with the expected results.
@@ -106,31 +147,39 @@ Assembly language, however, lets programmers access both registers.
 > Unless and until you implement signed multiplication, your "SIGNED MULTIPLICATION" actual results will differ from the expected results.
 > *You are **not** required to implement signed multiplication.*
 
-For example:
-```
-Enter ... a two-operand arithmetic expression... or "quit": 3 * 5
-UNSIGNED MULTIPLICATION
-    expected result (hexadecimal): 0x0003 * 0x0005 = 0x0000'000F
-    expected result (unsigned):    3 * 5 = 15 (15)
-    actual result (hexadecimal):   0x0003 * 0x0005 = 0x0000'000F
-    actual result (unsigned):      3 * 5 = 15 (15)
-SIGNED MULTIPLICATION
-    expected result (hexadecimal): 0x0003 * 0x0005 = 0x0000'000F
-    expected result (signed):      3 * 5 = 15 (15)
-    actual result (hexadecimal):   0x0003 * 0x0005 = 0x0000'0000
-    actual result (signed):        3 * 5 = 0 (0)
+Your values for "Number of calls to ripple_carry_addition" and "Number of calls to multiply_by_power_of_two" may differ from what is shown below, but:
+- they should not be 0
+- they should not indicate brute-force repeated-addition
 
-Enter ... a two-operand arithmetic expression... or "quit": 0x234 * 0x345
+For example:
+```text
+Expression to evaluate: 3 * 5
 UNSIGNED MULTIPLICATION
-    expected result (hexadecimal): 0x0234 * 0x0345 = 0x0007'3404
-    expected result (unsigned):    564 * 837 = 13316 (472068)
-    actual result (hexadecimal):   0x0234 * 0x0345 = 0x0007'3404
-    actual result (unsigned):      564 * 837 = 13316 (472068)
-SIGNED MULTIPLICATION
-    expected result (hexadecimal): 0x0234 * 0x0345 = 0x0007'3404
-    expected result (signed):      564 * 837 = 13316 (472068)
-    actual result (hexadecimal):   0x0234 * 0x0345 = 0x0000'0000
-    actual result (signed):        564 * 837 = 0 (0)
+	expected result (hexadecimal): 0x0003 * 0x0005 = 0x0000'000F
+	expected result (unsigned):    3 * 5 = 15 (15)
+	actual result (hexadecimal):   0x0003 * 0x0005 = 0x0000'000F
+	actual result (unsigned):      3 * 5 = 15 (15)
+SIGNED MULTIPLICATION (bonus credit)
+	expected result (hexadecimal): 0x0003 * 0x0005 = 0x0000'000F
+	expected result (signed):      3 * 5 = 15 (15)
+	actual result (hexadecimal):   0x0003 * 0x0005 = 0x0000'0000
+	actual result (signed):        3 * 5 = 0 (0)
+		Number of calls to ripple_carry_addition:    16
+		Number of calls to multiply_by_power_of_two: 16
+
+Expression to evaluate: 0x234 * 0x345
+UNSIGNED MULTIPLICATION
+	expected result (hexadecimal): 0x0234 * 0x0345 = 0x0007'3404
+	expected result (unsigned):    564 * 837 = 13316 (472068)
+	actual result (hexadecimal):   0x0234 * 0x0345 = 0x0007'3404
+	actual result (unsigned):      564 * 837 = 13316 (472068)
+SIGNED MULTIPLICATION (bonus credit)
+	expected result (hexadecimal): 0x0234 * 0x0345 = 0x0007'3404
+	expected result (signed):      564 * 837 = 13316 (472068)
+	actual result (hexadecimal):   0x0234 * 0x0345 = 0x0000'0000
+	actual result (signed):        564 * 837 = 0 (0)
+		Number of calls to ripple_carry_addition:    16
+		Number of calls to multiply_by_power_of_two: 16
 ```
 
 The expected results (including the upper 16 bits) come directly from the registers used by processor's ALU and are authoritative.
@@ -169,40 +218,56 @@ If your solution includes a loop or recursion, please review the Chapter~3 mater
 > Unless and until you implement signed division, your "SIGNED DIVISION" actual results will differ from the expected results.
 > *You are **not** required to implement signed division.*
 
+Your values for "Number of calls to ripple_carry_addition" and "Number of calls to multiply_by_power_of_two" may differ from what is shown below, but:
+- they should not be 0 when `divisor` is non-zero
+- they should not indicate brute-force repeated-subtraction
+
 For example:
-```
-Enter ... a two-operand arithmetic expression... or "quit": 70 / 8
+```text
+Expression to evaluate: 70 / 8
 UNSIGNED DIVISION
-    expected result (hexadecimal): 0x0046 / 0x0008 = 0x0008    0x0046 % 0x0008 = 0x0006
-    expected result (unsigned):    70 / 8 = 8    70 % 8 = 6
-    actual result (hexadecimal):   0x0046 / 0x0008 = 0x0008    0x0046 % 0x0008 = 0x0006
-    actual result (unsigned):      70 / 8 = 8    70 % 8 = 6
-SIGNED DIVISION
-    expected result (hexadecimal): 0x0046 / 0x0008 = 0x0008    0x0046 % 0x0008 = 0x0006
-    expected result (signed):      70 / 8 = 8    70 % 8 = 6
-    actual result (hexadecimal):   0x0046 / 0x0008 = 0x0000    0x0046 % 0x0008 = 0x0000
-    actual result (signed):        70 / 8 = 0    70 % 8 = 0
+	expected result (hexadecimal): 0x0046 / 0x0008 = 0x0008    0x0046 % 0x0008 = 0x0006
+	expected result (unsigned):    70 / 8 = 8    70 % 8 = 6
+	actual result (hexadecimal):   0x0046 / 0x0008 = 0x0008    0x0046 % 0x0008 = 0x0006
+	actual result (unsigned):      70 / 8 = 8    70 % 8 = 6
+		Number of calls to ripple_carry_addition:    1
+		Number of calls to multiply_by_power_of_two: 1
+SIGNED DIVISION (bonus credit)
+	expected result (hexadecimal): 0x0046 / 0x0008 = 0x0008    0x0046 % 0x0008 = 0x0006
+	expected result (signed):      70 / 8 = 8    70 % 8 = 6
+	actual result (hexadecimal):   0x0046 / 0x0008 = 0x0000    0x0046 % 0x0008 = 0x0000
+	actual result (signed):        70 / 8 = 0    70 % 8 = 0
+		Number of calls to ripple_carry_addition:    0
+		Number of calls to multiply_by_power_of_two: 0
 
-Enter ... a two-operand arithmetic expression... or "quit": 0x29B / 0x40
+Expression to evaluate: 0x29B / 0x40
 UNSIGNED DIVISION
-    expected result (hexadecimal): 0x029B / 0x0040 = 0x000A    0x029B % 0x0040 = 0x001B
-    expected result (unsigned):    667 / 64 = 10    667 % 64 = 27
-    actual result (hexadecimal):   0x029B / 0x0040 = 0x000A    0x029B % 0x0040 = 0x001B
-    actual result (unsigned):      667 / 64 = 10    667 % 64 = 27
-SIGNED DIVISION
-    expected result (hexadecimal): 0x029B / 0x0040 = 0x000A    0x029B % 0x0040 = 0x001B
-    expected result (signed):      667 / 64 = 10    667 % 64 = 27
-    actual result (hexadecimal):   0x029B / 0x0040 = 0x0000    0x029B % 0x0040 = 0x0000
-    actual result (signed):        667 / 64 = 0     667 % 64 = 0
+	expected result (hexadecimal): 0x029B / 0x0040 = 0x000A    0x029B % 0x0040 = 0x001B
+	expected result (unsigned):    667 / 64 = 10    667 % 64 = 27
+	actual result (hexadecimal):   0x029B / 0x0040 = 0x000A    0x029B % 0x0040 = 0x001B
+	actual result (unsigned):      667 / 64 = 10    667 % 64 = 27
+		Number of calls to ripple_carry_addition:    1
+		Number of calls to multiply_by_power_of_two: 1
+SIGNED DIVISION (bonus credit)
+	expected result (hexadecimal): 0x029B / 0x0040 = 0x000A    0x029B % 0x0040 = 0x001B
+	expected result (signed):      667 / 64 = 10    667 % 64 = 27
+	actual result (hexadecimal):   0x029B / 0x0040 = 0x0000    0x029B % 0x0040 = 0x0000
+	actual result (signed):        667 / 64 = 0    667 % 64 = 0
+		Number of calls to ripple_carry_addition:    0
+		Number of calls to multiply_by_power_of_two: 0
 
-Enter ... a two-operand arithmetic expression... or "quit": 53 / 0
+Expression to evaluate: 53 / 0
 UNSIGNED DIVISION
-    expected result: divide-by-zero
-    actual result:   divide-by-zero
-SIGNED DIVISION
-    expected result: divide-by-zero
-    actual result (hexadecimal):   0x0035 / 0x0000 = 0x0000    0x0035 % 0x0000 = 0x0000
-    actual result (signed):        53 / 0 = 0    53 % 0 = 0
+expected result: divide-by-zero
+actual result:   divide-by-zero
+		Number of calls to ripple_carry_addition:    0
+		Number of calls to multiply_by_power_of_two: 0
+SIGNED DIVISION (bonus credit)
+expected result: divide-by-zero
+	actual result (hexadecimal):   0x0035 / 0x0000 = 0x0000    0x0035 % 0x0000 = 0x0000
+	actual result (signed):        53 / 0 = 0    53 % 0 = 0
+		Number of calls to ripple_carry_addition:    0
+		Number of calls to multiply_by_power_of_two: 0
 ```
 
 The expected results (including the remainder) come directly from the registers used by processor's ALU and are authoritative.

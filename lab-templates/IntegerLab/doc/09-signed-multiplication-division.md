@@ -23,16 +23,23 @@ A simple patch would be to keep track of which operands are negative, negate tho
 If we only cared about the 16-bit product, the lower 16 bits of the full 32-bit product, then the unsigned implementation works for both signed and unsigned integers.
 The upper 16 bits, however, differ when `is_negative()` is true.
 For example:
-```
-Enter ... a two-operand arithmetic expression... or "quit": -3 * 8
+```text
+Expression to evaluate: -3 * 8
+MULTIPY_BY_POWER_OF_TWO
+	expected: 0xFFFD * 0x0008 = 0x0007'FFE8
+	actual:   0xFFFD * 0x0008 = 0x0007'FFE8
 UNSIGNED MULTIPLICATION
-    expected result (hexadecimal): 0xFFFD * 0x0008 = 0x0007'FFE8
-    expected result (unsigned):    65533 * 8 = 65512 (524264)
-    ...
-SIGNED MULTIPLICATION
-    expected result (hexadecimal): 0xFFFD * 0x0008 = 0xFFFF'FFE8
-    expected result (signed):      -3 * 8 = -24 (-24)
-    ...
+	expected result (hexadecimal): 0xFFFD * 0x0008 = 0x0007'FFE8
+	expected result (unsigned):    65533 * 8 = 65512 (524264)
+	actual result (hexadecimal):   0xFFFD * 0x0008 = 0x0007'FFE8
+	actual result (unsigned):      65533 * 8 = 65512 (524264)
+SIGNED MULTIPLICATION (bonus credit)
+	expected result (hexadecimal): 0xFFFD * 0x0008 = 0xFFFF'FFE8
+	expected result (signed):      -3 * 8 = -24 (-24)
+	actual result (hexadecimal):   0xFFFD * 0x0008 = 0xFFFF'FFE8
+	actual result (signed):        -3 * 8 = -24 (-24)
+		Number of calls to ripple_carry_addition:    48
+		Number of calls to multiply_by_power_of_two: 17
 ```
 
 Notice that in the example, the upper 13 bits are all 0s after unsigned multiplication but are all 1s after signed multiplication.
@@ -60,14 +67,22 @@ The fast division technique for powers of two used for unsigned integers, howeve
 This is fine for positive quotients, but it rounds negative quotients in the wrong direction.
 
 For example, if we used unsigned fast division for signed division then we would see this:
-```
-Enter ... a two-operand arithmetic expression... or "quit": -14 / 4
-...
-SIGNED DIVISION
-    expected result (hexadecimal): 0xFFF2 / 0x0004 = 0xFFFD    0xFFF2 % 0x0004 = 0xFFFE
-    expected result (signed):      -14 / 4 = -3    -14 % 4 = -2
-    actual result (hexadecimal):   0xFFF2 / 0x0004 = 0xFFFC    0xFFF2 % 0x0004 = 0x0002
-    actual result (signed):        -14 / 4 = -4    -14 % 4 = 2
+```text
+Expression to evaluate: -14 / 4
+UNSIGNED DIVISION
+	expected result (hexadecimal): 0xFFF2 / 0x0004 = 0x3FFC    0xFFF2 % 0x0004 = 0x0002
+	expected result (unsigned):    65522 / 4 = 16380    65522 % 4 = 2
+	actual result (hexadecimal):   0xFFF2 / 0x0004 = 0x3FFC    0xFFF2 % 0x0004 = 0x0002
+	actual result (unsigned):      65522 / 4 = 16380    65522 % 4 = 2
+		Number of calls to ripple_carry_addition:    1
+		Number of calls to multiply_by_power_of_two: 1
+SIGNED DIVISION (bonus credit)
+	expected result (hexadecimal): 0xFFF2 / 0x0004 = 0xFFFD    0xFFF2 % 0x0004 = 0xFFFE
+	expected result (signed):      -14 / 4 = -3    -14 % 4 = -2
+	actual result (hexadecimal):   0xFFF2 / 0x0004 = 0xFFFD    0xFFF2 % 0x0004 = 0xFFFE
+	actual result (signed):        -14 / 4 = -3    -14 % 4 = -2
+		Number of calls to ripple_carry_addition:    3
+		Number of calls to multiply_by_power_of_two: 1
 ```
 
 If you chose to implement signed division then in your implementation of `signed_divide()`, 

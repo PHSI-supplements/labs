@@ -62,28 +62,28 @@ One of those six possibilities will have a predictable output that can be evalua
 - [ ] Compile and run *integerlab*, trying a few values.
 
 For example:
-```
-Enter ... "is_negative <value>" ... or "quit": is_negative 1
+```text
+Expression to evaluate: is_negative 1
 expected: 1 (0x0001) is not negative
 actual:   1 (0x0001) is not negative
 
-Enter ... "is_negative <value>" ... or "quit": is_negative -1
+Expression to evaluate: is_negative -1
 expected: -1 (0xFFFF) is negative
 actual:   -1 (0xFFFF) is negative
 
-Enter ... a two-operand comparison expression ... or "quit": 1 == 1
+Expression to evaluate: 1 == 1
 expected: (1 == 1) = 1
 actual:   (1 == 1) = 1
 
-Enter ... a two-operand comparison expression ... or "quit": 1 != 1
+Expression to evaluate: 1 != 1
 expected: (1 != 1) = 0
 actual:   (1 != 1) = 0
 
-Enter ... a two-operand comparison expression ... or "quit": 1 == -1
+Expression to evaluate: 1 == -1
 expected: (1 == -1) = 0
 actual:   (1 == -1) = 0
 
-Enter ... a two-operand comparison expression ... 1 != -1
+Expression to evaluate: 1 != -1
 expected: (1 != -1) = 1
 actual:   (1 != -1) = 1
 ```

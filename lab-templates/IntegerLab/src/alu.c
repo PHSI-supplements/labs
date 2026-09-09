@@ -15,6 +15,7 @@
  */
 
 #include "alu.h"
+#include "basetwo.h"
 
 /**
  * Determines whether a bit vector, when interpreted as a two's complement signed integer, is negative.
@@ -78,23 +79,19 @@ bool logical_or(uint32_t value1, uint32_t value2) {
  * Zero-extends a value from a smaller data size to a larger data size.
  *
  * The lower `from_size` bits of `value` are interpreted as an unsigned integer.
- * Those bits are copied unchanged into the result. Any bits between `from_size`
- * and `to_size` are set to 0. All bits above the lower `to_size` bits are
- * unchanged from the original value.
+ * Those bits are copied unchanged into the result. All bits above `from_size`
+ * and `to_size` are set to 0.
  *
- * For example, zero-extending an 8-bit (`ONE_BYTE`) value to 16 bits
- * (`TWO_BYTES`) preserves bits 7..0, sets bits 15..8 to 0, and leaves bits
- * 31..16 unchanged.
+ * For example, zero-extending an 8-bit (`ONE_BYTE`) value preserves bits 7..0
+ * and clears bits 31..8 to 0.
  *
- * @pre `to_size` >= `from_size`
- * @pre `to_size` and `from_size` must be 8 (`ONE_BYTE`), 16 (`TWO_BYTES`), or 32 (`FOUR_BYTES`)
+ * @pre `from_size` <= 32
  *
  * @param value     The original value containing the bits to be extended.
  * @param from_size The size (in bits) of the original value to be extended.
- * @param to_size   The size (in bits) of the destination value.
  * @return          The zero-extended value.
  */
-uint32_t zero_extend(uint32_t value, data_size_t from_size, data_size_t to_size) {
+uint32_t zero_extend(uint32_t value, data_size_t from_size) {
     return 0;
 }
 
@@ -103,23 +100,19 @@ uint32_t zero_extend(uint32_t value, data_size_t from_size, data_size_t to_size)
  *
  * The lower `from_size` bits of `value` are interpreted as a signed integer in
  * two’s-complement representation. Those bits are copied unchanged into the
- * result. Bits between `from_size` and `to_size` are filled with copies of the
- * sign bit (bit `from_size - 1`). All bits above the lower `to_size` bits are
- * unchanged from the original value.
+ * result. All bits above `from_size` are filled with copies of the sign bit
+ * (bit `from_size - 1`).
  *
- * For example, sign-extending an 8-bit (`ONE_BYTE`) value to 16 bits
- * (`TWO_BYTES`) copies bit 7 into bits 15..8, while preserving the original
- * lower 8 bits and leaving bits 31..16 unchanged.
+ * For example, sign-extending an 8-bit (`ONE_BYTE`) value copies bit 7 into
+ * bits 31..8, while preserving the original lower 8 bits.
  *
- * @pre `to_size` >= `from_size`
- * @pre `to_size` and `from_size` must be 8 (`ONE_BYTE`), 16 (`TWO_BYTES`), or 32 (`FOUR_BYTES`)
+ * @pre `from_size` <= 32
  *
  * @param value     The original value containing the bits to be extended.
  * @param from_size The size (in bits) of the original signed value.
- * @param to_size   The size (in bits) of the destination value.
  * @return          The sign-extended value.
  */
-uint32_t sign_extend(uint32_t value, data_size_t from_size, data_size_t to_size) {
+uint32_t sign_extend(uint32_t value, data_size_t from_size) {
     return 0;
 }
 

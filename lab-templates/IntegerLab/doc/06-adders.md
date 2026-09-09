@@ -41,12 +41,12 @@ Because the fields are guaranteed to be strictly 1 or 0, you do not need to appl
 
 When you enter the inputs for your 1-bit full adder, only the least significant bit of each operand will be used.
 For example:
-```
-Enter ... "add1 <binary_value1> <binary_value2> <carry_in>" ...: add1 0 0 0
+```text
+Expression to evaluate: add1 0 0 0
 expected: 0 + 0 + 0 = 0 carry 0
 actual:   0 + 0 + 0 = 0 carry 0
 
-Enter ... "add1 <binary_value1> <binary_value2> <carry_in>" ...: add1 0 0 1
+Expression to evaluate: add1 0 0 1
 expected: 0 + 0 + 1 = 1 carry 0
 actual:   0 + 0 + 1 = 1 carry 0
 ```
@@ -71,31 +71,36 @@ Use whatever code that you need, that does not violate any of this assignment's 
 #### Check your work
 
 - [ ] Compile and run *integerlab*, trying a few values.
+  (Your value for "Number of calls to one_bit_full_addition" may differ from what is shown below, but *it should not be 0*!)
 
 When you enter the inputs for your 32-bit adder, the operands will be interpreted as hexadecimal values even if you omit the leading "0x", and only the least-significant bit of the carry-in will be used.
 For example:
-```
-Enter ... "add32 <hex_value1> <hex_value2> <carry_in>" ...: add32 0x1a 0x22 0
+```text
+Expression to evaluate: add32 0x1a 0x22 0
 expected: 0x0000001A + 0x00000022 + 0 = 0x0000003C
 actual:   0x0000001A + 0x00000022 + 0 = 0x0000003C
+		Number of calls to one_bit_full_addition:    32
 
-Enter ... "add32 <hex_value1> <hex_value2> <carry_in>" ...: add32 1a 22 1
+Expression to evaluate: add32 1a 22 1
 expected: 0x0000001A + 0x00000022 + 1 = 0x0000003D
 actual:   0x0000001A + 0x00000022 + 1 = 0x0000003D
+		Number of calls to one_bit_full_addition:    32
 ```
 
 - [ ] Check your code with other values, comparing your actual results with the expected results.
 - [ ] Run the constraint checker: `ctest --test-dir build --output-on-failure`
 
 <font color="red">When you test your 32-bit adder, don't forget to test larger values, too</font>, such as:
-```
-Enter ... "add32 <hex_value1> <hex_value2> <carry_in>" ...: add32 0x76543210 0x89ABCDEF 0
+```text
+Expression to evaluate: add32 0x76543210 0x89ABCDEF 0
 expected: 0x76543210 + 0x89ABCDEF + 0 = 0xFFFFFFFF
 actual:   0x76543210 + 0x89ABCDEF + 0 = 0xFFFFFFFF
+		Number of calls to one_bit_full_addition:    32
 
-Enter ... "add32 <hex_value1> <hex_value2> <carry_in>" ...: add32 0x76543210 0x89ABCDEF 1
+Expression to evaluate: add32 0x76543210 0x89ABCDEF 1
 expected: 0x76543210 + 0x89ABCDEF + 1 = 0x00000000
 actual:   0x76543210 + 0x89ABCDEF + 1 = 0x00000000
+		Number of calls to one_bit_full_addition:    32
 ```
 
 ---

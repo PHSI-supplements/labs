@@ -50,23 +50,16 @@ use a `switch` statement, enumerating the 32 possible cases and returning the ap
 - [ ] Compile and run *integerlab*, trying a few values.
 
 For example:
-```
-Enter a one- or two-operand logical expression,
-    a two-operand comparison expression, a two-operand arithmetic expression,
-    "lg <value>" or "exponentiate <value>" to test your powers-of-two code,
-    "is_negative <value>" to determine if 2's complement value is negative,
-    "extend <value> <from_size> <to_size>" to zero- and sign-extend a value,
-    "add1 <binary_value1> <binary_value2> <carry_in>" for 1-bit full adder,
-    "add32 <hex_value1> <hex_value2> <carry_in>" for 32-bit ripple-carry adder,
-    or "quit": exponentiate 10
+```text
+Expression to evaluate: exponentiate 10
 expected: 2**10 == 0x00000400 == 1024
 actual:   2**10 == 0x00000400 == 1024
 
-Enter ... "lg <value>" or "exponentiate <value>" ... or "quit": lg 1024
+Expression to evaluate: lg 1024
 expected: log2 1024 == log2 0x00000400 == 10
 actual:   log2 1024 == log2 0x00000400 == 10
 
-Enter ... "lg <value>" or "exponentiate <value>" ... or "quit": lg 0x0400
+Expression to evaluate: lg 0x0400
 expected: log2 1024 == log2 0x00000400 == 10
 actual:   log2 1024 == log2 0x00000400 == 10
 ```

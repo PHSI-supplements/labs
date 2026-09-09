@@ -3,7 +3,7 @@
 These instructions assume that you have already [started the development container](accessing-the-container.md).
 
 - Linux-Native Code
-    - [Configuring the Project](#configuring-compiling-running-and-testing-linux-native-code)
+    - [Opening/Configuring the Project](#openingconfiguring-compiling-running-and-testing-linux-native-code)
     - [Compiling the Project](#compiling-the-project-linux-native-code)
     - [Running the Program](#running-the-program-linux-native-code)
     - [Testing the Program](#testing-the-program-linux-native-code)
@@ -13,11 +13,9 @@ These instructions assume that you have already [started the development contain
     - [Uploading the Program](#uploading-the-program-to-the-cow-pi-board-cow-pi-code)
 
 
-## Configuring, Compiling, Running, and Testing (Linux-Native Code)
+## Opening/Configuring, Compiling, Running, and Testing (Linux-Native Code)
 
-### Configuring the Project (Linux-Native Code)
-
-You normally only need to configure the project once.
+### Opening/Configuring the Project (Linux-Native Code)
 
 - [ ] In the Explorer view, click on the *FooLab-VSCode.code-workspace* file.
   The file will open in an Editor tab, and an "Open Workspace" button will appear in the Editor tab.

@@ -43,20 +43,20 @@ After you reduce these values to a 1 or a 0, then their bits will line up, and t
 - [ ] Compile and run *integerlab*, trying a few values.
 
 For example:
-```
-Enter a one- or two-operand logical expression or "quit": !0
+```text
+Expression to evaluate: !0
 expected: !0 = 1
 actual:   !0 = 1
 
-Enter a one- or two-operand logical expression or "quit": !1
+Expression to evaluate: !1
 expected: !1 = 0
 actual:   !1 = 0
 
-Enter a one- or two-operand logical expression or "quit": 0 && 42
+Expression to evaluate: 0 && 42
 expected: 0 && 42 = 0
 actual:   0 && 42 = 0
 
-Enter a one- or two-operand logical expression or "quit": 0 || 73
+Expression to evaluate: 0 || 73
 expected: 0 || 73 = 1
 actual:   0 || 73 = 1
 ```

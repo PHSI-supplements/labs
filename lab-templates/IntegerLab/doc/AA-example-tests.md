@@ -14,12 +14,10 @@
 | logical_not()                   | !50                                  |
 | logical_and()                   | 0 && 10 (do the full truth table)    |
 | logical_or()                    | 0 \|\| 10 (do the full truth table)  |
-| zero_extend() and sign_extend() | 0xABCDEF30 8 16                      |
-| zero_extend() and sign_extend() | 0xABCDEF30 8 32                      |
-| zero_extend() and sign_extend() | 0xABCDEF90 8 16                      |
-| zero_extend() and sign_extend() | 0xABCDEF90 8 32                      |
-| zero_extend() and sign_extend() | 0xABCD2030 16 32                     |
-| zero_extend() and sign_extend() | 0xABCD9080 16 32                     |
+| zero_extend() and sign_extend() | 0xABCDEF30 * 8                       |
+| zero_extend() and sign_extend() | 0xABCDEF90 * 8                       |
+| zero_extend() and sign_extend() | 0xABCD2030 * 16                      |
+| zero_extend() and sign_extend() | 0xABCD9080 * 16                      |
 | one_bit_full_addition()         | add1 0 1 0 (do the full truth table) |
 | ripple_carry_addition()         | add32 0x12345678 0x0 0               |
 | ripple_carry_addition()         | add32 0x70000000 0xA0000000 0        |

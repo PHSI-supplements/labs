@@ -14,7 +14,7 @@
  * IntegerLab solution (c) the above-named student
  */
 
-#include "alu.h"
+#include "basetwo.h"
 
 /**
  * Computes a power of two, specifically, the value of 2 raised to the power of <code>exponent</code>.

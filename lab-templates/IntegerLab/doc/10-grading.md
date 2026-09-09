@@ -14,7 +14,7 @@ Be sure that you have pushed your code to git.unl.edu.
 ### No Credit for Uncompilable Code
 
 If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
-Be sure to compile and test your code on the nuros.unl.edu Linux server with the original driver code, the original header file(s), and the original CMake configuration files.
+Be sure to compile and test your code in the course container with the original driver code, the original header file(s), and the original CMake configuration files.
 
 > ✍️ **One Edit Rule**
 >
@@ -62,7 +62,7 @@ This assignment is worth 38 points.
   - [ ] **+1** The `signed_multiply()` function correctly performs signed integer multiplication by addressing the underlying reason that signed and unsigned multiplication need to be different.
   - [ ] **+1** The `signed_divide()` function correctly performs signed integer division by addressing the underlying reason that signed and unsigned division need to be different.
 - Penalties:
-  - [ ] **no credit** for any of these functions that violates an assignment constraint:
+  - [ ] **no credit** for any of these functions that violates an assignment constraint or that is not attempt at a general solution for the function:
     - `exponentiate()`, `lg()`,
       `is_negative()`, `equal()`, `not_equal()`,
       `logical_not()`, `logical_and()`, `logical_or()`,

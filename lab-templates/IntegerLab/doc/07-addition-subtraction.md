@@ -51,32 +51,35 @@ Following the convention that the most significant bit is $bit_{31}$ and the lea
 #### Check your work
 
 - [ ] Compile and run *integerlab*, trying a few values.
+  (Your value for "Number of calls to ripple_carry_addition" may differ from what is shown below, but *it should not be 0*!)
 
 For example:
-```
-Enter ... a two-operand arithmetic expression... or "quit": 3 + 15
+```text
+Expression to evaluate: 3 + 15
 UNSIGNED ADDITION
-    expected result (hexadecimal): 0x0003 + 0x000F = 0x0012
-    expected result (unsigned):    3 + 15 = 18	overflow: false
-    actual result (hexadecimal):   0x0003 + 0x000F = 0x0012
-    actual result (unsigned):      3 + 15 = 18	overflow: false
+	expected result (hexadecimal): 0x0003 + 0x000F = 0x0012
+	expected result (unsigned):    3 + 15 = 18	overflow: false
+	actual result (hexadecimal):   0x0003 + 0x000F = 0x0012
+	actual result (unsigned):      3 + 15 = 18	overflow: false
 SIGNED ADDITION
-    expected result (hexadecimal): 0x0003 + 0x000F = 0x0012
-    expected result (signed):      3 + 15 = 18	overflow: false
-    actual result (hexadecimal):   0x0003 + 0x000F = 0x0012
-    actual result (signed):        3 + 15 = 18	overflow: false
+	expected result (hexadecimal): 0x0003 + 0x000F = 0x0012
+	expected result (signed):      3 + 15 = 18	overflow: false
+	actual result (hexadecimal):   0x0003 + 0x000F = 0x0012
+	actual result (signed):        3 + 15 = 18	overflow: false
+		Number of calls to ripple_carry_addition:    1
 
-Enter ... a two-operand arithmetic expression... or "quit": 0x6000 + 0x3000
+Expression to evaluate: 0x6000 + 0x3000
 UNSIGNED ADDITION
-    expected result (hexadecimal): 0x6000 + 0x3000 = 0x9000
-    expected result (unsigned):    24576 + 12288 = 36864	overflow: false
-    actual result (hexadecimal):   0x6000 + 0x3000 = 0x9000
-    actual result (unsigned):      24576 + 12288 = 36864	overflow: false
+	expected result (hexadecimal): 0x6000 + 0x3000 = 0x9000
+	expected result (unsigned):    24576 + 12288 = 36864	overflow: false
+	actual result (hexadecimal):   0x6000 + 0x3000 = 0x9000
+	actual result (unsigned):      24576 + 12288 = 36864	overflow: false
 SIGNED ADDITION
-    expected result (hexadecimal): 0x6000 + 0x3000 = 0x9000
-    expected result (signed):      24576 + 12288 = -28672	overflow: true
-    actual result (hexadecimal):   0x6000 + 0x3000 = 0x9000
-    actual result (signed):        24576 + 12288 = -28672	overflow: true
+	expected result (hexadecimal): 0x6000 + 0x3000 = 0x9000
+	expected result (signed):      24576 + 12288 = -28672	overflow: true
+	actual result (hexadecimal):   0x6000 + 0x3000 = 0x9000
+	actual result (signed):        24576 + 12288 = -28672	overflow: true
+		Number of calls to ripple_carry_addition:    1
 ```
 
 The expected overflow flags are obtained directly from flags set in the processor's ALU and are authoritative.
@@ -105,32 +108,35 @@ Having implemented a 32-bit adder, you can use it for your 16-bit subtraction fu
 #### Check your work
 
 - [ ] Compile and run *integerlab*`, trying a few values.
+  (Your value for "Number of calls to ripple_carry_addition" may differ from what is shown below, but *it should not be 0*!)
 
 For example:
-```
-Enter ... a two-operand arithmetic expression... or "quit": 15 - 25
+```text
+Expression to evaluate: 15 - 25
 UNSIGNED SUBTRACTION
-    expected result (hexadecimal): 0x000F - 0x0019 = 0xFFF6
-    expected result (unsigned):    15 - 25 = 65526	overflow: true
-    actual result (hexadecimal):   0x000F - 0x0019 = 0xFFF6
-    actual result (unsigned):      15 - 25 = 65526	overflow: true
+	expected result (hexadecimal): 0x000F - 0x0019 = 0xFFF6
+	expected result (unsigned):    15 - 25 = 65526	overflow: true
+	actual result (hexadecimal):   0x000F - 0x0019 = 0xFFF6
+	actual result (unsigned):      15 - 25 = 65526	overflow: true
 SIGNED SUBTRACTION
-    expected result (hexadecimal): 0x000F - 0x0019 = 0xFFF6
-    expected result (signed):      15 - 25 = -10	overflow: false
-    actual result (hexadecimal):   0x000F - 0x0019 = 0xFFF6
-    actual result (signed):        15 - 25 = -10	overflow: false
+	expected result (hexadecimal): 0x000F - 0x0019 = 0xFFF6
+	expected result (signed):      15 - 25 = -10	overflow: false
+	actual result (hexadecimal):   0x000F - 0x0019 = 0xFFF6
+	actual result (signed):        15 - 25 = -10	overflow: false
+		Number of calls to ripple_carry_addition:    1
 
-Enter ... a two-operand arithmetic expression... or "quit": 0x100 - 0x7F
+Expression to evaluate: 0x100 - 0x7F
 UNSIGNED SUBTRACTION
-    expected result (hexadecimal): 0x0100 - 0x007F = 0x0081
-    expected result (unsigned):    256 - 127 = 129	overflow: false
-    actual result (hexadecimal):   0x0100 - 0x007F = 0x0081
-    actual result (unsigned):      256 - 127 = 129	overflow: false
+	expected result (hexadecimal): 0x0100 - 0x007F = 0x0081
+	expected result (unsigned):    256 - 127 = 129	overflow: false
+	actual result (hexadecimal):   0x0100 - 0x007F = 0x0081
+	actual result (unsigned):      256 - 127 = 129	overflow: false
 SIGNED SUBTRACTION
-    expected result (hexadecimal): 0x0100 - 0x007F = 0x0081
-    expected result (signed):      256 - 127 = 129	overflow: false
-    actual result (hexadecimal):   0x0100 - 0x007F = 0x0081
-    actual result (signed):        256 - 127 = 129	overflow: false
+	expected result (hexadecimal): 0x0100 - 0x007F = 0x0081
+	expected result (signed):      256 - 127 = 129	overflow: false
+	actual result (hexadecimal):   0x0100 - 0x007F = 0x0081
+	actual result (signed):        256 - 127 = 129	overflow: false
+		Number of calls to ripple_carry_addition:    1
 ```
 
 As with addition, the expected overflow flags are obtained directly from flags set in the processor's ALU.

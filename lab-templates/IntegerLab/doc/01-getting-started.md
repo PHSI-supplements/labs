@@ -19,24 +19,6 @@
 During your lab period, the TAs will review ripple-carry addition, overflow for unsigned and signed integers, and bitshift-based multiplication and division.
 During the remaining time, the TAs will be available to answer questions.
 
-### Configuring the Project
-
-#### From VS Code
-
-If you open *only* the `IntegerLab` directory in VS Code, then VS Code will automatically configure the project.
-If instead you open the whole lab repository (so `IntegerLab` is just a subdirectory), then VS Code will *not* configure the `IntegerLab` project automatically.
-If autoconfiguration doesn't happen, then open the Command Palette.
-From the Command Palette, select `CMake: Select Configure Preset`.
-Then select the preset of your choice:
-
-- `default` -- developing on nuros
-- `personal-computer` -- developing on your computer
-
-#### From the Command Line
-
-- `cmake --preset default` -- developing on nuros
-- `cmake --preset personal-computer` -- developing on your computer
-
 ### Suggestion for Loops
 
 Some of the functions in this assignment will require loops that execute a predetermined number of iterations.
@@ -49,24 +31,40 @@ Similarly, a 32-bit unsigned integer initially set to 1 will become 0 after it h
 <span style="background-color: yellow;">You might find that this alternative "loop counter" will be a useful bitmask in some of your functions.</span>
 
 <!--
+
 (If you need to iterate an arbitrary number of times, then an unsigned integer initially set to $2^{n-1}$ will become 0 after it has been right-shifted $n$ times, assuming that the integer type you use has at least $n$ bits.
 We do not anticipate that you will need to iterate an arbitrary number of times.)
+
 -->
 
 ### How the Program will Parse Numbers
 
 When you run the *build/integerlab*, you will be prompted:
 
+```text
+Expression to evaluate:
 ```
-Enter a one- or two-operand logical expression,
-    a two-operand comparison expression, a two-operand arithmetic expression,
-    "lg <value>" or "exponentiate <value>" to test your powers-of-two code,
-    "is_negative <value>" to determine if 2's complement value is negative,
-    "extend <value> <from_size> <to_size>" to zero- and sign-extend a value,
-    "add1 <binary_value1> <binary_value2> <carry_in>" for 1-bit full adder,
-    "add32 <hex_value1> <hex_value2> <carry_in>" for 32-bit ripple-carry adder,
-    "mul2 <hex_value> <hex_power_of_two>" for power-of-two-multiplier,
-    or "quit":
+
+If you type *help* then you will be shown the options that the parser can recognize:
+
+```text
+Expression to evaluate: help
+Usage:
+	"lg <value>" or "exponentiate <value>" to test your powers-of-two code,
+	"is_negative <value>" to determine if 2's complement value is negative,
+	"extend <value> <from_size>" to zero- and sign-extend a value,
+	"add1 <binary_value1> <binary_value2> <carry_in>" for 1-bit full adder,
+	"add32 <hex_value1> <hex_value2> <carry_in>" for 32-bit ripple-carry adder,
+	one-operand expressions: "<op> <value>"
+		logical boolean:        <op> is         !
+	two-operand expressions: "<value1> <op> <value2>"
+		equality/inequality:    <op> is one of  == !=  < <= > >=
+		logical boolean:        <op> is one of  && ||
+		arithmetic:             <op> is one of  + - * /
+	"help" to print this message
+	or "quit" to exit the program
+
+Expression to evaluate: 
 ```
 
 When you enter a value, if it is prepended with `0x` then the parser will parse it as a hexadecimal value;
@@ -99,11 +97,11 @@ Implementing division requires that you be able to determine whether the divisor
 
 ### Descriptions of IntegerLab Files and Data Structures
 
-#### alu.h
+#### alu.h and basetwo.h
 
-Do not edit *alu.h*.
+Do not edit *alu.h* or *basetwo.h*.
 
-This header file contains three type definitions:
+The *alu.h* header file contains three type definitions:
 
 - `one_bit_adder_t` is a structure to hold the 1-bit inputs (`a`, `b`, `c_in`) and 1-bit outputs (`sum`, `c_out`) of a one-bit full adder.
 - `alu_result_t` is a structure to hold the outputs from an arithmetic logic unit.
@@ -116,14 +114,14 @@ This header file contains three type definitions:
 - `data_size_t` is an enumerated type to represent data sizes: 8 bits (`ONE_BYTE`), 16 bits (`TWO_BYTES`), and 32 bits (`FOUR_BYTES`).
   Its primary use is to support calls to `zero_extend()` and `sign_extend()`.
 
-The header file also contains four macros, `is_zero()`, `is_not_zero()`, `is_power_of_two()` and `LOWER_BITS_MASK()` to bootstrap your ALU code.
+The header files also contain four macros, `is_zero()`, `is_not_zero()`, `is_power_of_two()` and `LOWER_BITS_MASK()` to bootstrap your ALU code.
 The `is_zero()` and `is_not_zero()` macros act like functions and return a boolean value to indicate whether an integer is 0 or not.
 <small>(The astute student will quickly realize that `is_not_zero()` is not necessary and, with a little thought, will realize that they can write `is_zero()` as a function within the constraints of this assignment.)</small>
 The `is_power_of_two()` macro checks whether a value is a power of two; it exists primarily to for some precondition checks in the starter code, but you may use it as well.
 The `LOWER_BITS_MASK()` macro will generate a bit vector whose lower $n$ bits are 1s and whose remaining bits are 0s
 (for example, `LOWER_BITS_MASK(5)` will produce `0x1F`).
 
-Finally, the header file contains eight inequality comparison functions for 16-bit integers that you can use;
+Finally, *alu.h* contains eight inequality comparison functions for 16-bit integers that you can use;
 however, <font color="red">these functions will *not* work until you have implemented `subtract()`</font>.
 
 |          |          $<$           |        $\leq$        |        $\geq$         |            $>$            |
