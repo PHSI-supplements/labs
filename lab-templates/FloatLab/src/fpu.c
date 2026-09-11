@@ -15,26 +15,9 @@
  */
 
 #include <assert.h>
-#include <stdio.h>
-#include "bits-to-string.h"
 #include "fpu.h"
 #include "unnormal.h"
-
-/* BITMASKS TO EXTRACT SPECIFIC BITFIELDS */
-
-[[maybe_unused]] constexpr uint32_t SIGN_BIT_MASK      = 0x0000'0000;
-[[maybe_unused]] constexpr uint32_t EXPONENT_BITS_MASK = 0x0000'0000;
-[[maybe_unused]] constexpr uint32_t FRACTION_BITS_MASK = 0x0000'0000;
-
-/* PROPERTIES OF 32-BIT FLOATING POINT NUMBERS */
-
-[[maybe_unused]] constexpr int EXPONENT_BIAS = 0;
-[[maybe_unused]] constexpr int NUMBER_OF_FRACTION_BITS = 0;
-
-/* SPECIAL VALUES */
-
-[[maybe_unused]] constexpr uint32_t NAN      = 0x0000'0000;
-[[maybe_unused]] constexpr uint32_t INFINITY = 0x0000'0000;
+#include "constants.h"
 
 /**
  * Reports whether a number is infinity.
@@ -122,45 +105,6 @@ int8_t get_754_exponent(ieee754_t number) {
     assert(!is_nan(number));
     assert(!is_infinity(number));
     return -1;
-}
-
-/**
- * @brief Converts an IEEE 754-compliant number to a string depicting the
- * number's value as a base-2 floating point number.
- *
- * Unless the number is infinity, NaN, or zero, the expected string consists of
- * the sign (+ or -), then single bit, then a binary point, then the fractional
- * bits, followed by "_{2} x 2^{exponent}" where the exponent is expressed in
- * decimal.
- *
- * The caller is responsible for providing a buffer of sufficient size to hold
- * the string (57 bytes is sufficient).
- *
- * @param destination a buffer to hold the string
- * @param number the value to be converted into a string
- * @return the destination buffer containing the number's string representation
- */
-char *ieee754_to_string(char *destination, ieee754_t number) {
-    sprintf(destination, "%#010x\t", number);
-    sprintf(destination + 11, "%c", is_negative(number) ? '-' : '+');
-    if (is_nan(number)) {
-        sprintf(destination + 12, "Not a Number");
-    } else if (is_infinity(number)) {
-        sprintf(destination + 12, "Infinity");
-    } else if (is_zero(number)) {
-        sprintf(destination + 12, "0.0");
-    } else {
-        // The number is either Normal or Subnormal
-        uint8_t integer = get_754_integer(number);
-        uint32_t fraction = get_754_fraction(number);
-        int8_t exponent = get_754_exponent(number);
-        char fraction_string[40];
-        sprintf(destination + 12, "%u.%s_{2} x 2^{%d}",
-                integer,
-                bits_to_string(fraction_string, fraction, NUMBER_OF_FRACTION_BITS - 1, 0, FROM_LEFT),
-                exponent);
-    }
-    return destination;
 }
 
 /**

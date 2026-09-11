@@ -52,26 +52,26 @@ We summarize the functions that you are likely to use here (there are more funct
 - Prediction Functions (warnings that indicate what will happen in the next operation)
   - **left_shift_will_make_addition_unreliable()** indicates that if the next function is `left_shift_once()` (or one of its aliases) then after that function call,  `addition_is_unreliable()` will return `true`
 
-<!--
-- Unmentioned Functions
-  - **shift_left()** shifts the significand's bits to the left by a specified amount
-  - **shift_right()** shifts the significand's bits to the right by a specified amount
 
-  - **multiplication_is_not_recommended()** indicates that there are `1` bits to the right of the binary point:
-    if there are `1` bits in the fraction, then there will be extra bookkeeping that you will be responsible for;
-    we recommend that you attempt multiplication only when all `1` bits are in the integer portion
-  - **multiplication_is_unreliable()** indicates that there are `1` bits far enough to the left of the binary point that multiplication could yield a product whose integer portion exceeds the available bits
+[//]: # (- Unmentioned Functions)
+[//]: # (  - **shift_left&#40;&#41;** shifts the significand's bits to the left by a specified amount)
+[//]: # (  - **shift_right&#40;&#41;** shifts the significand's bits to the right by a specified amount)
+[//]: # ()
+[//]: # (  - **multiplication_is_not_recommended&#40;&#41;** indicates that there are `1` bits to the right of the binary point:)
+[//]: # (    if there are `1` bits in the fraction, then there will be extra bookkeeping that you will be responsible for;)
+[//]: # (    we recommend that you attempt multiplication only when all `1` bits are in the integer portion)
+[//]: # (  - **multiplication_is_unreliable&#40;&#41;** indicates that there are `1` bits far enough to the left of the binary point that multiplication could yield a product whose integer portion exceeds the available bits)
+[//]: # ()
+[//]: # (  - **shift_overflowed&#40;&#41;** indicates that one or more `1` bit shifted to the left beyond the available bits)
+[//]: # (  - **shift_underflowed&#40;&#41;** indicates that one or more `1` bit shifted to the right beyond the available bits)
+[//]: # (  - **operation_was_not_performed&#40;&#41;** indicates that the previous function did not have the desired result, such as attempting to shift by a negative amount or attempt to set an integer value whose bits are not present in the significand)
+[//]: # ()
+[//]: # (  - **fraction_will_carry_into_integer_on_addition&#40;&#41;** indicates that if the next operation is addition with the specified values, then adding the fractions will carry into the integer portion, requiring you to add 1 to the sum's integer)
+[//]: # (  - **fraction_will_borrow_from_integer_on_subtraction&#40;&#41;** indicates that if the next operation is subtraction with the specified values, then subtracting the fractions will require "borrowing" from the integer portion, requiring you to subtract 1 to the difference's integer)
+[//]: # (  - **left_shift_will_make_multiplication_unreliable&#40;&#41;** indicates that if the next function is `left_shift_once&#40;&#41;` &#40;or one of its aliases&#41; then after that function call, `multiplication_is_unreliable&#40;&#41;` will return `true`)
+[//]: # (  - **left_shift_will_overflow&#40;&#41;** indicates that if the next function is `left_shift_once&#40;&#41;` &#40;or one of its aliases&#41; then after that function call, `shift_overflowed&#40;&#41;` will return `true`)
+[//]: # (  - **right_shift_will_underflow&#40;&#41;** indicates that if the next function is `right_shift_once&#40;&#41;` &#40;or one of its aliases&#41; then after that function call, `shift_underflowed&#40;&#41;` will return `true`)
 
-  - **shift_overflowed()** indicates that one or more `1` bit shifted to the left beyond the available bits
-  - **shift_underflowed()** indicates that one or more `1` bit shifted to the right beyond the available bits
-  - **operation_was_not_performed()** indicates that the previous function did not have the desired result, such as attempting to shift by a negative amount or attempt to set an integer value whose bits are not present in the significand
-
-  - **fraction_will_carry_into_integer_on_addition()** indicates that if the next operation is addition with the specified values, then adding the fractions will carry into the integer portion, requiring you to add 1 to the sum's integer
-  - **fraction_will_borrow_from_integer_on_subtraction()** indicates that if the next operation is subtraction with the specified values, then subtracting the fractions will require "borrowing" from the integer portion, requiring you to subtract 1 to the difference's integer
-  - **left_shift_will_make_multiplication_unreliable()** indicates that if the next function is `left_shift_once()` (or one of its aliases) then after that function call, `multiplication_is_unreliable()` will return `true`
-  - **left_shift_will_overflow()** indicates that if the next function is `left_shift_once()` (or one of its aliases) then after that function call, `shift_overflowed()` will return `true`
-  - **right_shift_will_underflow()** indicates that if the next function is `right_shift_once()` (or one of its aliases) then after that function call, `shift_underflowed()` will return `true`
--->
 
 ---
 

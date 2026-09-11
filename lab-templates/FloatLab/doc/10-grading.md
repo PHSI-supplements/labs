@@ -23,7 +23,7 @@ Be sure that you have pushed your code to git.unl.edu.
 ### No Credit for Uncompilable Code
 
 If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
-Be sure to compile and test your code on the nuros.unl.edu Linux server with the original driver code, the original header file(s), and the original CMake configuration files.
+Be sure to compile and test your code in the course container with the original driver code; the original *fpu.h*, *unnormal.h*, and *ieee754-to-string.h*; and the original CMake configuration files.
 
 > ✍️ **One Edit Rule**
 >

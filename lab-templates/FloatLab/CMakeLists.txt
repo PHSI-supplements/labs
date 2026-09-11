@@ -16,9 +16,10 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 add_library(student_code STATIC
-        src/bits-to-string.h    src/bits-to-string.c
+        src/ieee754-to-string.h src/ieee754-to-string.c
         src/fpu.h               src/fpu.c
         src/unnormal.h          src/unnormal.c
+        src/constants.h
 )
 
 ### Executables
@@ -30,14 +31,21 @@ target_link_libraries(floatlab PRIVATE student_code)
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)
         target_compile_options(floatlab PRIVATE -w)
+        target_compile_options(student_code PRIVATE -w)
     else()
         target_compile_options(floatlab PRIVATE
             -Wall
             -Wextra
             -Wno-unused-parameter
         )
+        target_compile_options(student_code PRIVATE
+                -Wall
+                -Wextra
+                -Wno-unused-parameter
+        )
     endif()
     target_compile_options(floatlab PRIVATE -Og)
+    target_compile_options(student_code PRIVATE -Og)
 endif()
 
 ### Unit Tests

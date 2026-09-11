@@ -26,7 +26,7 @@ it might be zero.
 - [ ] Implement `get_754_fraction()` to return the fraction bits exactly as they appear in the `number`.
 - [ ] Implement `get_754_exponent()` to produce the two's complement representation of the exponent that you get after removing the bias from the `number`'s `E` field.
 
-You will use `ieee754_to_string()` to test your code.
+You will indirectly use `ieee754_to_string()` to test your code.
 
 
 #### Check Your Work

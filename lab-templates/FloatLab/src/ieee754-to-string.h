@@ -8,7 +8,7 @@
  *
  * @author Christopher A. Bohn
  *
- * @brief Auxiliary function prototypes and type declaration for FloatLab.
+ * @brief Auxiliary function prototype and type declaration for FloatLab.
  *
  ******************************************************************************/
 
@@ -22,13 +22,12 @@
 #ifndef BITS_TO_STRING_H
 #define BITS_TO_STRING_H
 
-#include <stdint.h>
+#include "fpu.h"
 
 enum bit_divider_direction {
     NONE, FROM_LEFT, FROM_RIGHT
 };
 
-char *bits_to_string(char *destination, uint64_t bits, int start_bit,
-                     int end_bit, enum bit_divider_direction bit_dividers);
+char *ieee754_to_string(char *destination, ieee754_t number);
 
 #endif //BITS_TO_STRING_H

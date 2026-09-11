@@ -5,7 +5,7 @@
   - [KeyboardLab](/KeyboardLab/README.md)
   - [ListLab](/ListLab/README.md)
   - [IntegerLab](/IntegerLab/README.md)
-  - FloatLab
+  - [FloatLab](/FloatLab/README.md)
   - AddressingLab
   - BombLab
   - HwPreLab

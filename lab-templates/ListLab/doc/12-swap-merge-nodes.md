@@ -42,7 +42,7 @@ If that happens, then the word entries should be merged, resulting in one word e
 - [ ] Test that you can merge the current node with its previous node by selecting function 19 ("merge_previous()").
 - [ ] Test that you can merge the current node with the tail node by selecting function 18 ("merge_next()").
 - [ ] Test that you can merge the current node with the head node by selecting function 19 ("merge_previous()").
-- [ ] Continue to test `swap_next()` and `swap_previous()` until you discover a bug or are satisfied that your implementation is correct.
+- [ ] Continue to test `merge_next()` and `merge_previous()` until you discover a bug or are satisfied that your implementation is correct.
 - [ ] Free the memory by selecting function 2 ("destroy_list()").
   Exit out of the program by selecting function 0, then option 0.
 

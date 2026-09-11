@@ -2,7 +2,7 @@
 
 ### Constants
 
-There are seven named constants in *fpu.c*.
+There are seven named constants in *constants.h*.
 
 - [ ] Assign the appropriate bit vectors to `SIGN_BIT_MASK`, `EXPONENT_BITS_MASK`, and `FRACTION_BITS_MASK` so that you can use them to mask-off the sign bit, the exponent bits, and the fraction bits, respectively, in a `ieee754_t` floating point value.
 - [ ] Assign the single-precision exponent bias to `EXPONENT_BIAS` and assign to `NUMBER_OF_FRACTION_BITS` the number of bits used for the fraction bit field in a single-precision floating point number.
@@ -15,7 +15,7 @@ You may define additional named constants as needed.
 
 ### Query Functions
 
-There are three functions to identify whether an `ieee754_t` floating point value is neither normal nor subnormal.
+There are three functions in *fpu.c* to identify whether an `ieee754_t` floating point value is neither normal nor subnormal.
 The remaining query function determines whether an `ieee754_t` floating point value is negative.
 
 - [ ] Implement `is_nan()` to detect whether a value is Not-a-Number without regard to the value's sign.
@@ -24,7 +24,7 @@ The remaining query function determines whether an `ieee754_t` floating point va
 - [ ] Implement `is_zero()` to detect whether a value is zero without regard to the value's sign.
 - [ ] Implement `is_negative()` to detect whether a value is negative.
 
-You will use `ieee754_to_string()` to test your code.
+You will indirectly use `ieee754_to_string()` to test your code.
 
 
 #### Check Your Work

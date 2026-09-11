@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include "fpu.h"
 #include "unnormal.h"
+#include "ieee754-to-string.h"
 
 union float_converter {
     uint32_t bit_vector;
@@ -51,9 +52,9 @@ char *parse_operand(const char *buffer, union float_converter *operand) {
         buffer++;
     }
     if (!strncmp(buffer, "0x", 2)) {
-        (*operand).bit_vector = strtol(buffer, end_pointer, 16);
+        operand->bit_vector = strtol(buffer, end_pointer, 16);
     } else {
-        (*operand).reference_value = strtof(buffer, end_pointer);
+        operand->reference_value = strtof(buffer, end_pointer);
     }
     return end_pointer[0];
 }

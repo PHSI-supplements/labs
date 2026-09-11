@@ -12,25 +12,6 @@ During your lab period, the TAs will provide a refresher of the IEEE&nbsp;754 fo
 During the remaining time, the TAs will be available to answer questions.
 
 
-### Configuring the Project
-
-#### From VS Code
-
-If you open *only* the `FloatLab` directory in VS Code, then VS Code will automatically configure the project.
-If instead you open the whole lab repository (so `FloatLab` is just a subdirectory), then VS Code will *not* configure the `FloatLab` project automatically.
-If autoconfiguration doesn't happen, then open the Command Palette.
-From the Command Palette, select `CMake: Select Configure Preset`.
-Then select the preset of your choice:
-
-- `default` -- developing on nuros
-- `personal-computer` -- developing on your computer
-
-#### From the Command Line
-
-- `cmake --preset default` -- developing on nuros
-- `cmake --preset personal-computer` -- developing on your computer
-
-
 ### How the Program will Parse Numbers
 
 When you run the *build/floatlab*, you will be prompted:
@@ -89,25 +70,37 @@ Do not edit *unnormal.c*.
 These files provide an encapsulation of the **`unnormal_t`** data type.
 The data type and its functions are described on the [next page](02-unnormal_t.md).
 
+#### ieee754-to-string.h & ieee754-to-string.c
+Do not edit *ieee754-to-string.h*.
+Do not edit *ieee754-to-string.c*.
+
+These files expose a function and a type definition used by *floatlab.c* to print `ieee754_t` variables.
+You will not use this function directly; however, this function uses some of *your* code.
+Consequently, you can test that part of your code by seeing how your values are printed.
+
+[//]: # (- **ieee754_to_string&#40;&#41;** converts an `ieee754_t` value into a meaningful string)
+
+#### constants.h
+
+This file contains stubs for constants that you need to define.
+- **SIGN_BIT_MASK** can be used to determine whether an `ieee754_t` value is positive or negative
+- **EXPONENT_BITS_MASK** can be used to isolate the bits used to encode the exponent in an `ieee754_t` value
+- **FRACTION_BITS_MASK** can be used to isolate the bits used for the fraction in an `ieee754_t` value
+- **EXPONENT_BIAS** is the single-precision exponent bias
+- **NUMBER_OF_FRACTION_BITS** is the number of bits used for the fraction field in a single-precision floating point number
+- **NAN** is a bit vector for an `ieee754_t` value that is not a number
+- **INFINITY** is the bit vector for an `ieee754_t` value that is too great to be represented with the available bits
+
 #### fpu.c
 
-This file contains stubs for constants and functions you need to create.
+This file contains stubs for functions you need to create.
 
-- Constants
-  - **SIGN_BIT_MASK** can be used to determine whether an `ieee754_t` value is positive or negative
-  - **EXPONENT_BITS_MASK** can be used to isolate the bits used to encode the exponent in an `ieee754_t` value
-  - **FRACTION_BITS_MASK** can be used to isolate the bits used for the fraction in an `ieee754_t` value
-  - **EXPONENT_BIAS** is the single-precision exponent bias
-  - **NUMBER_OF_FRACTION_BITS** is the number of bits used for the fraction field in a single-precision floating point number
-  - **NAN** is a bit vector for an `ieee754_t` value that is not a number
-  - **INFINITY** is the bit vector for an `ieee754_t` value that is too great to be represented with the available bits
 - Query functions
   - **is_infinity()** reports whether an `ieee754_t` value is positive or negative infinity
   - **is_nan()** reports whether an `ieee754_t` value is a legal NaN bit vector
   - **is_zero()** reports whether an `ieee754_t` value is positive or negative zero
   - **is_negative()** reports whether an `ieee754_t` value is negative
-- Functions to examine `ieee754_t` values
-  - **ieee754_to_string()** converts an `ieee754_t` value into a meaningful string
+- Function to examine `ieee754_t` values
   - **decode()** converts an `ieee754_t` value into an `unnormal_t` value
 - Function to encode and round_to_nearest_even `ieee754_t` values
   - **encode()** converts an `unnormal_t` value into an `ieee754_t` value, applying rounding as necessary

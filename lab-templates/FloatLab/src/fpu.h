@@ -27,8 +27,11 @@
 
 typedef uint32_t ieee754_t;
 
-typedef __uint128_t __attribute__((deprecated("Advisory: using __uint128_t indicates that your solution is more complicated than necessary. Please consult the assignment instructions."))) student_uint128_t;
+[[deprecated("Advisory: using __uint128_t indicates that your solution is more complicated than necessary. Please consult the assignment instructions.")]]
+typedef __uint128_t student_uint128_t;
+
 #define __uint128_t student_uint128_t
+
 
 bool is_infinity(ieee754_t number);
 bool is_nan(ieee754_t number);
@@ -38,8 +41,6 @@ bool is_negative(ieee754_t number);
 uint8_t get_754_integer(ieee754_t number);
 uint32_t get_754_fraction(ieee754_t number);
 int8_t get_754_exponent(ieee754_t number);
-
-char *ieee754_to_string(char *destination, ieee754_t number);
 
 unnormal_t decode(ieee754_t number);
 ieee754_t encode(unnormal_t number);
