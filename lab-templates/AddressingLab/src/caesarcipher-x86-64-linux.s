@@ -110,7 +110,7 @@ sentence_to_uppercase:
 ##### PLACE INSTRUCTION FOR TASK 6 ON NEXT LINE #####
 
                                         # rdx: sentence[i]
-    leaq    upper, %r8                  # r8: upper
+    leaq    upper(%rip), %r8            # r8: upper
 ##### PLACE INSTRUCTION FOR TASK 7 ON NEXT LINE #####
 
                                         # edx: upper[sentence[i]]

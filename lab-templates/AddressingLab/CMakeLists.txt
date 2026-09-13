@@ -17,8 +17,8 @@ endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(OS linux)
-elseif(APPLE)
-    set(OS macos)
+#elseif(APPLE)
+#    set(OS macos)
 else()
     message(FATAL_ERROR "Unsupported operating system: ${CMAKE_SYSTEM_NAME}")
 endif()
@@ -42,6 +42,21 @@ message(STATUS "Operating System:       ${OS}")
 message(STATUS "EDIT THIS FILE: ${CMAKE_CURRENT_LIST_DIR}/${asm_file}")
 message(STATUS "=========================================================")
 message(STATUS "")
+
+### Put it in a file, too, since the message is hidden in IDEs
+
+file(WRITE "${CMAKE_SOURCE_DIR}/src/WHICH-FILE-TO-EDIT.txt"
+"Your system was detected as:
+
+    Processor Architecture: ${ARCH}
+    Operating System:       ${OS}
+
+EDIT THIS FILE:
+
+    ${asm_file}
+
+Editing other assembly code files will have no effect.
+")
 
 ### Report Environment
 

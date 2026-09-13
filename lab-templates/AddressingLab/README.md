@@ -2,9 +2,16 @@
 
 [//]: # (AddressingLab © 2019-26 Christopher A. Bohn)
 
-In this assignment, you will practice creating the source and destination for x86 assembly language instructions.
+In this assignment, you will practice creating the source and destination either for x86 assembly language instructions or for Arm assembly language instructions.
 There is no design effort required for this lab assignment,
 and **you should be able to complete it during lab time**.
+
+> ❗️ **Important**
+>
+> The instructions are written assuming you will edit and run the code in the course container.
+> Specifically, the assembly code file is written for an x86-64 processor or AAarch64 process running Linux. 
+> If you wish, you may edit the code in a different environment; 
+> however, you will not be able to assemble and link an executable on a system running a Windows or macOS operating system.
 
 > ❗️ **Important**
 > 
@@ -21,7 +28,7 @@ and **you should be able to complete it during lab time**.
 >    "os": "@OS@"
 >  },
 > ```
-> CMake will also replace the placeholder values with the actual values for your system.
+> CMake will replace the placeholder values with the actual values for your system.
 > We will use this information to determine which assembly code file we should grade.
 > **Please do not manually edit the "environment" object.**
 > You may edit the other values as before.
@@ -31,7 +38,7 @@ and **you should be able to complete it during lab time**.
 
 ### Submission Deadline
 
-This assignment is due **the week of February 23, before the start of your lab section**.
+This assignment is due **the week of October 5, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
@@ -57,12 +64,19 @@ you may use "Oscar the AI Tutor" built into the course's textbook.
 You may use other generative AI tools to translate this assignment into another human language.
 No other use of generative AI is permitted on this assignment without explicit permission from Dr. Bohn.
 
+‼️ ️<span style="background-color: yellow;">**You may *NOT* accept IDE single-line code suggestions**, and you may not use an IDE feature that makes multi-line code suggestions.</span>
+
 ### Table of Contents
 
 - [Getting Started](doc/01-getting-started.md)
-- [Caesar Cipher Function](doc/02-caesar-cipher.md)
-- [Sentence to Uppercase Function](doc/03-capitalization.md)
-- [Cipher Validation Function](doc/04-cipher-validation.md)
+- A64
+  - [Caesar Cipher Function](doc/02-caesar-cipher-A64.md)
+  - [Sentence to Uppercase Function](doc/03-capitalization-A64.md)
+  - [Cipher Validation Function](doc/04-cipher-validation-A64.md)
+- x86-64
+  - [Caesar Cipher Function](doc/02-caesar-cipher-x86-64.md)
+  - [Sentence to Uppercase Function](doc/03-capitalization-x86-64.md)
+  - [Cipher Validation Function](doc/04-cipher-validation-x86-64.md)
 - [Turn-In and Grading](doc/05-grading.md)
 
 ### Learning Objectives
@@ -80,8 +94,11 @@ most of that has already been done for you.
 Instead, there are ten lines of assembly code that you will need to complete, demonstrating an understanding of x86 operands and memory addressing modes.
 The assembly code has a few optimizations, so some of it may not be immediately recognizable.
 
+**You will complete the assignment for only *one* instruction set**, the one that is used by your computer.
+After CMake has configured the project to use the assembly code file for your computer's instruction set, it will ignore other assembly code files.
+
 **You should be able to complete this lab assignment during lab time**;
-however, it is not due until the week of February 23, before the start of your lab section.
+however, it is not due until the week of October 5, before the start of your lab section.
 
 #### Constraints
 

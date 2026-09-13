@@ -20,51 +20,30 @@ and of the role of each component of:
 During the remaining time, the TAs will be available to answer questions.
 
 
-### Configuring the Project
+### Which File Should You Edit?
 
-> ⓘ **Note**
->
-> When you initially configure the project,
-> CMake will detect your system's environment and identify the specific assembly code file that you should edit.
-> ```
-> -- The C compiler identification is ...
-> -- The ASM compiler identification is ...
-> -- Found assembler: ...
-> -- Detecting C compiler ABI info
-> -- Detecting C compiler ABI info - done
-> -- Check for working C compiler: ...
-> -- Detecting C compile features
-> -- Detecting C compile features - done
-> --
-> -- ================ Assembly file selection ================
-> -- Processor Architecture: XXX
-> -- Operating System:       YYY
-> -- EDIT THIS FILE: /path/to/AddressingLab/src/caesarcipher-XXX-YYY.s
-> -- =========================================================
-> --
-> -- Configuring done (0.2s)
-> -- Generating done (0.1s)
-> -- Build files have been written to: /path/to/AddressingLab/build
-> ```
-> Editing other assembly code files will have no effect.
-> 
-> If you do not see this message, you can double-check your system's architecture and operating system by looking at *submission_metadata.json*'s "environment" object.
+When you initially configure the project,
+CMake will detect your system's environment and identify the specific assembly code file that you should edit.
 
-#### From VS Code
+CMake will create *src/WHICH-FILE-TO-EDIT.txt* that identifies the file you should edit:
+```text
+Your system was detected as:
 
-If you open *only* the `AddressingLab` directory in VS Code, then VS Code will automatically configure the project.
-If instead you open the whole lab repository (so `AddressingLab` is just a subdirectory), then VS Code will *not* configure the `AddressingLab` project automatically.
-If autoconfiguration doesn't happen, then open the Command Palette.
-From the Command Palette, select `CMake: Select Configure Preset`.
-Then select the preset of your choice:
+    Processor Architecture: XXX
+    Operating System:       YYY
 
-- `default` -- developing on nuros
-- `personal-computer` -- developing on your computer
+EDIT THIS FILE:
 
-#### From the Command Line
+    src/caesarcipher-XXX-YYY.s
 
-- `cmake --preset default` -- developing on nuros
-- `cmake --preset personal-computer` -- developing on your computer
+Editing other assembly code files will have no effect.
+```
+
+
+### Which Set of Instructions Should You Follow?
+
+This assignment includes *02-caesar-cipher*, *03-capitalization*, and *04-cipher-validation* instructions for each available instruction set architecture.
+Follow the instructions for your processor's instruction set (`XXX` in the example contents of *src/WHICH-FILE-TO-EDIT.txt*, above)
 
 
 ### Problem Description and Files
@@ -93,7 +72,6 @@ This header file contains a structure definition and the declarations of the thr
 
 The files are:
 - caesarcipher-A64-linux.s
-- caesarcipher-A64-macos.s
 - caesarcipher-x86-64-linux.s
 
 These files contain the assembly code for the three functions.
@@ -109,6 +87,6 @@ there are ten lines missing, which you will introduce.
 
 ---
 
-|                 |      [⬆️](../README.md)      |           [➡️](02-caesar-cipher.md)           |
-|:---------------:|:----------------------------:|:---------------------------------------------:|
-|                 | [Front Matter](../README.md) | [Caesar Cipher Function](02-caesar-cipher.md) |
+|                 |      [⬆️](../README.md)      |                      [A64 ➡️](02-caesar-cipher-A64.md) <br> [x86-64 ➡️](02-caesar-cipher-x86-64.md)                       |
+|:---------------:|:----------------------------:|:-------------------------------------------------------------------------------------------------------------------------:|
+|                 | [Front Matter](../README.md) | [Caesar Cipher Function (A64)](02-caesar-cipher-A64.md) <br> [Caesar Cipher Function (x86-64](02-caesar-cipher-x86-64.md) |

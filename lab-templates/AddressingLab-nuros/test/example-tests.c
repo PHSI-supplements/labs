@@ -26,7 +26,7 @@ int main() {
 /* TESTS GO HERE */
 /*****************/
 
-//// 02-caesar-cipher.md
+//// 02-caesar-cipher-A64.md
 //
 //TEST(test_caesar_cipher_with_capitalized_plaintext)
 //    char plaintext[] = "ZEBRA";
@@ -37,7 +37,7 @@ int main() {
 //    ASSERT_EQUAL_STRINGS(expected_ciphertext, actual_ciphertext);
 //END_TEST
 //
-//// 03-capitalization.md
+//// 03-capitalization-A64.md
 //
 //TEST(test_sentence_to_uppercase)
 //    char plaintext[] = "ZebrA";
@@ -57,7 +57,7 @@ int main() {
 //    ASSERT_EQUAL_STRINGS(expected_ciphertext, actual_ciphertext);
 //END_TEST
 //
-//// 04-cipher-validation.md
+//// 04-cipher-validation-A64.md
 //
 //TEST(test_validate_valid_cipher)
 //    struct cipher_package package = {

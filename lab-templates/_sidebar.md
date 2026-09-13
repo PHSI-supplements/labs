@@ -6,7 +6,7 @@
   - [ListLab](/ListLab/README.md)
   - [IntegerLab](/IntegerLab/README.md)
   - [FloatLab](/FloatLab/README.md)
-  - AddressingLab
+  - [AddressingLab](/AddressingLab/README.md)
   - BombLab
   - HwPreLab
   - BufferOverflowLab

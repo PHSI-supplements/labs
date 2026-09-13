@@ -30,8 +30,12 @@ char *get_string_input(char *restrict destination, char const *restrict prompt) 
         return nullptr;
     }
     printf("%s: ", prompt);
-    fgets(destination, MAXIMUM_INPUT_LENGTH, stdin);
-    destination[strlen(destination) - 1] = '\0';        // eliminates the undesired newline character
+    if (fgets(destination, MAXIMUM_INPUT_LENGTH, stdin)) {
+        destination[strlen(destination) - 1] = '\0';        // eliminates the undesired newline character
+    } else {
+        printf("Failed to read input.\n");
+        destination[0] = '\0';
+    }
     return destination;
 }
 

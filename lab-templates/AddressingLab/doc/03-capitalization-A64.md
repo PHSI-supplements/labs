@@ -1,9 +1,8 @@
 ## Sentence to Uppercase Function
 
-> ⓘ **Note**
+> 🧩 **Note the Instruction Set**
 >
-> If you are editing caesarcipher-x86-64-linux.s, follow the instructions for **x86-64**.
-> If you are editing caesarcipher-A64-linux.s or caesarcipher-A64-macos.s, follow the instructions for **A64**.
+> Use these instructions if you are editing *caesarcipher-**A64**-linux.s*.
 
 The second of the three functions converts lowercase letters in a sentence to uppercase letters.
 Here is the equivalent C code:
@@ -31,31 +30,11 @@ destination[i] = (char) upper[sentence[i]];
 
 [//]: # (Task 6)
 
-#### x86-64
-First you need to load the character to be capitalized.
-The base address for the `sentence` array is in `%rbx`.
-The loop index `i` is in `%rcx`.
-
-- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
-  ```asm
-  ##### PLACE INSTRUCTION FOR TASK 6 ON NEXT LINE #####
-  ```
-- [ ] On the next line, insert a `movzbq` instruction.
-  The source is a location in the `sentence` array: use the indexed addressing mode.
-  The base address is `%rbx`;
-  the index is `%rcx`, 
-  and each array element is 1 byte.
-  The destination for this instruction is `%rdx`.
-
-Do not delete the `##### PLACE INSTRUCTION...` comment,
-and do not delete or modify any other instructions.
-
-#### A64
 First you need to load the character to be capitalized.
 The base address for the `sentence` array is in `x21`.
 The loop index `i` is in `x10`.
 
-- [ ] Find the line in *caesarcipher-A64-linux.s* or *caesarcipher-A64-macos.s* (as appropriate) that says
+- [ ] Find the line in *caesarcipher-A64-linux.s* that says
   ```asm
   //// PLACE INSTRUCTION FOR TASK 6 ON NEXT LINE ////
   ```
@@ -77,23 +56,7 @@ and do not delete or modify any other instructions.
 You'll now use the character loaded in the previous task as the index to an array.
 To preserve the illusion that the program called the `toupper` function, the lookup table stores integers (`toupper`'s specification states that it returns an `int`).
 
-#### x86-64
-- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
-  ```asm
-  ##### PLACE INSTRUCTION FOR TASK 7 ON NEXT LINE #####
-  ```
-- [ ] On the next line, insert a `movl` instruction.
-  The source is a location in the lookup table array: use the indexed addressing mode.
-  The base address is `%r8`;
-  the index is the character from the previous task in `%rdx`,
-  and each array element is 4 bytes in size.
-  The destination for this instruction is `%edx`.
-
-Do not delete the `##### PLACE INSTRUCTION...` comment,
-and do not delete or modify any other instructions.
-
-#### A64
-- [ ] Find the line in *caesarcipher-A64-linux.s* or *caesarcipher-A64-macos.s* (as appropriate) that says
+- [ ] Find the line in *caesarcipher-A64-linux.s* that says
   ```asm
   ///// PLACE INSTRUCTION FOR TASK 7 ON NEXT LINE /////
   ```
@@ -112,29 +75,10 @@ and do not delete or modify any other instructions.
 
 ### Store a Character to an Array
 
-#### x86-64
 The final part of line&nbsp;49 is casting the integer from Task 7 to a `char` and storing it in the `destination` array.
 The array's base address is in `%rbp`, and as before, the loop index is in `%rcx`.
 
-- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
-  ```asm
-  ##### PLACE INSTRUCTION FOR TASK 8 ON NEXT LINE #####
-  ```
-- [ ] On the next line, use a `movb` instruction to copy the lower 8 bits of the integer into the `destination` array.
-  The instruction's source is `%dl`,
-  and the destination is a location in the array.
-  The array's base address is in `%rbp`; 
-  the index is in `%rcx`,
-  and each array element is 1 byte.
-
-Do not delete the `##### PLACE INSTRUCTION...` comment,
-and do not delete or modify any other instructions.
-
-#### A64
-The final part of line&nbsp;49 is casting the integer from Task 7 to a `char` and storing it in the `destination` array.
-The array's base address is in `%rbp`, and as before, the loop index is in `%rcx`.
-
-- [ ] Find the line in *caesarcipher-A64-linux.s* or *caesarcipher-A64-macos.s* (as appropriate) that says
+- [ ] Find the line in *caesarcipher-A64-linux.s* that says
   ```asm
   ///// PLACE INSTRUCTION FOR TASK 8 ON NEXT LINE /////
   ```
@@ -161,6 +105,6 @@ If the function does not perform correctly go back and double-check each of the 
 
 ---
 
-|           [⬅️](02-caesar-cipher.md)           |      [⬆️](../README.md)      |             [➡️](04-cipher-validation.md)             |
-|:---------------------------------------------:|:----------------------------:|:-----------------------------------------------------:|
-| [Caesar Cipher Function](02-caesar-cipher.md) | [Front Matter](../README.md) | [Cipher Validation Function](04-cipher-validation.md) |
+|           [⬅️](02-caesar-cipher-A64.md)           |      [⬆️](../README.md)      |             [➡️](04-cipher-validation-A64.md)             |
+|:-------------------------------------------------:|:----------------------------:|:---------------------------------------------------------:|
+| [Caesar Cipher Function](02-caesar-cipher-A64.md) | [Front Matter](../README.md) | [Cipher Validation Function](04-cipher-validation-A64.md) |
