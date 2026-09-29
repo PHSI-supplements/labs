@@ -75,7 +75,7 @@ You can now add the value computed in Task&nbsp;2 to the `key` as part of line&n
 The reduced character is still in register `w12`, and we will place the sum in the same register -- `w12` will be the both the instruction's source1 and its destination.
 The `key` is in register `w2` -- this will be the instruction's source2.
 
-- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
+- [ ] Find the line in *caesarcipher-A64-linux.s* that says
   ```asm
   ///// PLACE INSTRUCTION FOR TASK 3 ON NEXT LINE /////
   ```

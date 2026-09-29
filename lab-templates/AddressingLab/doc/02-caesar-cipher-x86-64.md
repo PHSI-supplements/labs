@@ -94,7 +94,7 @@ Register `%dl` holds `(char) (reduced_character+'A')` from line&nbsp;34.
 This character needs to be placed in memory at the address pointed to by the `target` pointer.
 Register `%r9` holds that address.
 
-- [ ] Find the line in *caesarcipher-x86-64-linux.s* or *caesarcipher-A64-macos.s* (as appropriate) that says
+- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
   ```asm
   ##### PLACE INSTRUCTION FOR TASK 4 ON NEXT LINE #####
   ```
@@ -146,6 +146,6 @@ If the function does not perform correctly go back and double-check each of the 
 
 ---
 
-|        [⬅️](01-getting-started.md)         |      [⬆️](../README.md)      |               [➡️](03-capitalization-A64.md)               |
+|        [⬅️](01-getting-started.md)         |      [⬆️](../README.md)      |               [➡️](03-capitalization-x86-64.md)               |
 |:------------------------------------------:|:----------------------------:|:----------------------------------------------------------:|
-|  [Getting Started](01-getting-started.md)  | [Front Matter](../README.md) | [Sentence to Uppercase Function](03-capitalization-A64.md) |
+|  [Getting Started](01-getting-started.md)  | [Front Matter](../README.md) | [Sentence to Uppercase Function](03-capitalization-x86-64.md) |

@@ -9,7 +9,7 @@ and **you should be able to complete it during lab time**.
 > ❗️ **Important**
 >
 > The instructions are written assuming you will edit and run the code in the course container.
-> Specifically, the assembly code file is written for an x86-64 processor or AAarch64 process running Linux. 
+> Specifically, the assembly code file is written for an x86-64 processor or AAarch64 processor running Linux. 
 > If you wish, you may edit the code in a different environment; 
 > however, you will not be able to assemble and link an executable on a system running a Windows or macOS operating system.
 

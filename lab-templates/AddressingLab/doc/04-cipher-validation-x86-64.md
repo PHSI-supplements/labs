@@ -73,7 +73,7 @@ struct cipher_package {
 
 Your final task is to place copy the `ciphertext` pointer into the correct register for the call to `strlen()` in line 57 of the C code.
 
-- [ ] Find the line in *caesarcipher-x86-64-linux.s* or *caesarcipher-A64-macos.s* (as appropriate) that says
+- [ ] Find the line in *caesarcipher-x86-64-linux.s* that says
   ```asm
   ##### PLACE INSTRUCTION FOR TASK 10 ON NEXT LINE #####
   ```
@@ -97,6 +97,6 @@ If `validate_cipher` does not perform correctly go back and double-check each of
 
 ---
 
-|               [⬅️](03-capitalization-A64.md)               |      [⬆️](../README.md)      |         [➡️](05-grading.md)          |
+|               [⬅️](03-capitalization-x86-64.md)               |      [⬆️](../README.md)      |         [➡️](05-grading.md)          |
 |:----------------------------------------------------------:|:----------------------------:|:------------------------------------:|
-| [Sentence to Uppercase Function](03-capitalization-A64.md) | [Front Matter](../README.md) | [Turn-In and Grading](05-grading.md) |
+| [Sentence to Uppercase Function](03-capitalization-x86-64.md) | [Front Matter](../README.md) | [Turn-In and Grading](05-grading.md) |

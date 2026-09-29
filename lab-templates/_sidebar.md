@@ -7,7 +7,7 @@
   - [IntegerLab](/IntegerLab/README.md)
   - [FloatLab](/FloatLab/README.md)
   - [AddressingLab](/AddressingLab/README.md)
-  - BombLab
+  - [BombLab](/BombLab/README.md)
   - HwPreLab
   - BufferOverflowLab
   - DuplicatorLab

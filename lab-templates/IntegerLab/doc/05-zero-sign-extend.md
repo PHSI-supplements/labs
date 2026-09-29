@@ -41,8 +41,7 @@ according to these rules ($variable_{x..y}$ refers to a range of bits in the `va
 | `TWO_BYTES`  | | $value_{15}$ (duplicated 16 times) |  $value_{15..8}$ (unchanged)   | $value_{7..0}$ (unchanged) |
 | `FOUR_BYTES` | |    $value_{31..16}$ (unchanged)    |  $value_{15..8}$ (unchanged)   | $value_{7..0}$ (unchanged) |
 
-You do not need to handle the case of `to_size` being less than `from_size`.
-You do not need to handle the cases of `to_size` or `from_size` being values other than those shown in the table.
+You do not need to handle the cases of `from_size` being values other than those shown in the table.
 
 - [ ] Implement `sign_extend()` to sign-extend the input value from its original size up to but not exceeding its new size.
 

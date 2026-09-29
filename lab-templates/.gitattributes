@@ -1,0 +1,7 @@
+* text=auto eol=lf
+
+# Misinterpreting most binary files in this repo as text files will have minimal consequences.
+# We cannot afford to have binary files with object code be misinterpred as text files.
+*.a         binary
+bomb-a64    binary
+bomb-x86-64 binary

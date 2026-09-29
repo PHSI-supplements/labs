@@ -103,6 +103,6 @@ If the function does not perform correctly go back and double-check each of the 
 
 ---
 
-|           [⬅️](02-caesar-cipher-A64.md)           |      [⬆️](../README.md)      |             [➡️](04-cipher-validation-A64.md)             |
+|           [⬅️](02-caesar-cipher-x86-64.md)           |      [⬆️](../README.md)      |             [➡️](04-cipher-validation-x86-64.md)             |
 |:-------------------------------------------------:|:----------------------------:|:---------------------------------------------------------:|
-| [Caesar Cipher Function](02-caesar-cipher-A64.md) | [Front Matter](../README.md) | [Cipher Validation Function](04-cipher-validation-A64.md) |
+| [Caesar Cipher Function](02-caesar-cipher-x86-64.md) | [Front Matter](../README.md) | [Cipher Validation Function](04-cipher-validation-x86-64.md) |

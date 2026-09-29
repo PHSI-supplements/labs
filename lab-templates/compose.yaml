@@ -11,6 +11,10 @@ services:
     working_dir: /csce231
     stdin_open: true
     tty: true
+    security_opt:
+      - seccomp=unconfined
+    entrypoint: ["/usr/bin/setarch", "-R"]
+    command: ["/bin/bash"]
 
   docs:
     image: csce231-1268
