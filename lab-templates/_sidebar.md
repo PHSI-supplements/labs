@@ -8,7 +8,7 @@
   - [FloatLab](/FloatLab/README.md)
   - [AddressingLab](/AddressingLab/README.md)
   - [BombLab](/BombLab/README.md)
-  - HwPreLab
+  - [HwPreLab](/HwPreLab/README.md)
   - BufferOverflowLab
   - DuplicatorLab
   - ControlPanelLab

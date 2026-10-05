@@ -8,7 +8,7 @@ In this pre-lab, you will learn how to connect an unpowered peripheral to the Co
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 3, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190105).
+> To receive credit for Prelab 3, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028628).
 
 
 ### Attach the Piezobuzzer Module to the Cow Pi
@@ -55,7 +55,7 @@ If the TA or Dr.&nbsp;Bohn confirms that the piezobuzzer module doesn't work, vi
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 3, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190105).
+> To receive credit for Prelab 3, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028628).
 
 
 ---

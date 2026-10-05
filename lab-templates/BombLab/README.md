@@ -8,6 +8,12 @@
 
 > 🛑 **Before You Go Further** 🛑
 > 
+> After you have retrieved the BombLab assignment from git.unl.edu: 
+> - [ ] Double-check that Docker is running
+> - [ ] Close any running instances of the course container
+>   ```bash
+>   docker compose down
+>   ```
 > - [ ] **[Rebuild the course container Docker image](../documentation/first-time-setup/06-build-course-container.md)**
 >   ```bash
 >   docker compose build
@@ -16,6 +22,27 @@
 > There are two reasons you need to rebuild the Docker image,
 > - The *compose.yaml* file has an update to adjust the security settings for the container's OS, so that the OS's security settings don't interfere with an upcoming assignment.
 > - The *Dockerfile* file has an update to add the `dos2unix` utility to Windows users [manage line breaks](doc/04-tips.md#dos-line-breaks-versus-unix-line-breaks).
+> 
+> There are a couple of other "quality of life" updates to the Docker image, too.
+> - Ensures CLion has the PlatformIO plugin while connected to the container.
+> - SSH configuration settings will persist between sessions.
+> 
+> ---
+> 
+> 👍 **Optional**
+> 
+> You may wish to suppress the warning about the connection to git.unl.edu not being quantum-safe.
+> 
+> - [ ] In a terminal window, launch the course container
+>   ```bash
+>   docker compose run --rm csce231
+>   ```
+> - [ ] In the container, run this command
+>   ```bash
+>   printf "Host git.unl.edu\n    WarnWeakCrypto no-pq-kex\n" > ~/.ssh/config
+>   ```
+> 
+
 
 We now return you to your regularly-scheduled assignment. 💣
 

@@ -3,15 +3,25 @@
   "dockerComposeFile": "compose.yaml",
   "service": "csce231",
   "workspaceFolder": "/csce231",
-  "settings": {
-    "terminal.integrated.defaultProfile.linux": "bash"
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.memory-viewer",
+        "platformio.platformio-ide"
+      ]
+    },
+    "jetbrains": {
+      "plugins": [
+        "intellij.clion.embedded.platformio",
+        "com.intellij.mermaid"
+      ]
+    }
   },
-  "extensions": [
-    "ms-vscode.cpptools",
-    "ms-vscode.cpptools-extension-pack",
-    "ms-vscode.cmake-tools",
-    "ms-vscode.memory-viewer",
-    "platformio.platformio-ide"
-  ],
   "remoteUser": "root"
 }

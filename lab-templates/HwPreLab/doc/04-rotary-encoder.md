@@ -8,7 +8,7 @@ In this pre-lab, you will confirm that the rotary encoder module is functioning,
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 4, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190106).
+> To receive credit for Prelab 4, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028629).
 
 
 ### Attach the Rotary Encoder Module to the Cow Pi
@@ -67,7 +67,7 @@ If the TA or Dr.&nbsp;Bohn confirms that the rotary encoder module doesn't work,
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 4, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190106).
+> To receive credit for Prelab 4, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028629).
 
 
 ---

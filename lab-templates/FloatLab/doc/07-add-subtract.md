@@ -77,7 +77,7 @@ however, *you must take care that the most significant bit does not get truncate
 
 > 📝 **Grading Note**
 > 
-> For the `add()* function, we will not deduct points if you have the wrong sign for Zero or for Not-a-Number` because the appropriate sign is usually indeterminate.
+> For the `add()` function, we will not deduct points if you have the wrong sign for Zero or for Not-a-Number because the appropriate sign is usually indeterminate.
 > (There are two cases where the sign can be determined; can you discover which cases those are?)
 
 

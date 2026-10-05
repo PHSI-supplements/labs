@@ -22,7 +22,7 @@ The `multiply()` stub identifies a handful of special cases that you can easily 
 
 - [ ] Produce the appropriate return values for `multiply()`'s guard clauses.
   - If it is easier for you, you *may* change the compound conditionals in the guard clauses into separate guard clauses.
-    For example, instead of handling \
+    For example, instead of handling
     `if (is_infinity(multiplier) || is_zero(multiplier))` as a single guard clause,
     you may handle `if (is_infinity(multiplier)` as its own guard clause and then handle `if (is_zero(multiplier))` as its own guard clause.
 

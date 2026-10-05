@@ -8,7 +8,7 @@ In this pre-lab, you will confirm that the servo and its adapter are functioning
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 6, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190108).
+> To receive credit for Prelab 6, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028631).
 
 
 ### Attach the Servo Arm to the Servomotor
@@ -87,7 +87,7 @@ If the TA or Dr.&nbsp;Bohn confirms that the servo and/or the adapter doesn't wo
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 6, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190108).
+> To receive credit for Prelab 6, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028631).
 
 
 ---

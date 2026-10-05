@@ -6,7 +6,7 @@ In this pre-lab, you will inventory the contents of the hardware kit that you we
 
 > 📝 **Grading Note**
 > 
-> To receive credit for completing the inventory, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190103).
+> To receive credit for completing the inventory, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028634).
 
 
 ### Inventory the Kit
@@ -43,7 +43,7 @@ You understand that:
 
 > 📝 **Grading Note**
 >
-> To receive credit for completing the inventory, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190103).
+> To receive credit for completing the inventory, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028634).
 
 
 ---

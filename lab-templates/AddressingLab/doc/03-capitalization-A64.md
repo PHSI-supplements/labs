@@ -76,7 +76,7 @@ and do not delete or modify any other instructions.
 ### Store a Character to an Array
 
 The final part of line&nbsp;49 is casting the integer from Task 7 to a `char` and storing it in the `destination` array.
-The array's base address is in `%rbp`, and as before, the loop index is in `%rcx`.
+The array's base address is in `x20`, and as before, the loop index is in `x10`.
 
 - [ ] Find the line in *caesarcipher-A64-linux.s* that says
   ```asm

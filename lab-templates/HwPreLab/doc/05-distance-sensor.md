@@ -8,7 +8,7 @@ In this pre-lab, you will learn how to connect a powered peripheral to the Cow P
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 5, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190107).
+> To receive credit for Prelab 5, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028630).
 
 
 ### Attach the Distance Sensor to its Adapter
@@ -87,7 +87,7 @@ If the TA or Dr.&nbsp;Bohn confirms that the distance sensor and/or the adapter 
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 5, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190107).
+> To receive credit for Prelab 5, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028630).
 
 
 ---

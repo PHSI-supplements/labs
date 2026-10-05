@@ -4,7 +4,7 @@ In this pre-lab, you will learn how to upload a program to the Cow Pi, and you w
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 2, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190104).
+> To receive credit for Prelab 2, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028627).
 
 
 ### Connect to the Cow Pi
@@ -114,7 +114,7 @@ If the TA or Dr.&nbsp;Bohn confirms that the Cow&nbsp;Pi doesn't work, visit Ave
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 2, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190104).
+> To receive credit for Prelab 2, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028627).
 
 
 ---

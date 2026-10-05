@@ -1,26 +1,29 @@
 ## Compile a Program
 
+[//]: # (TODO: update the Canvas assignment to reflect the changes here)
+[//]: # (TODO: note in an earlier page that the upload has to happen from the host laptop)
+
 > ❗️ **Important**
 >
 > If you have not already completed Prelab 2, please complete Prelab 2 first!
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 8, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190110).
+> To receive credit for Prelab 8, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028633).
 
 
-We will use PlatformIO to work with the Cow&bnsp;Pi development boards.
-
-The PlatformIO developers recommend using the [VS Code plugin](https://platformio.org/install/ide?install=vscode), 
-but there are [plugins for other IDEs](https://docs.platformio.org/en/latest/integration/ide/index.html), too, as well as a [command line interface toolset](https://platformio.org/install/cli). 
-We have also pre-installed VS Code with the PlatformIO plugin on the lab computers in Avery 12, 15, 20, and 21.
+We will use PlatformIO to work with the Cow&nbsp;Pi development boards.
 
 You may want to take a quick look at the [parts of the PlatformIO Toolbar](https://docs.platformio.org/en/latest/integration/ide/vscode.html#platformio-toolbar).
+
+[//]: # (TODO: link to CLion version, too)
 
 
 ### About PlatformIO and the Arduino Framework
 
-PlatformIO is able to work with many frameworks; for the I/O labs, we will use the Arduino framework. As application programmers, the starting point is a program with two functions, setup() and loop(), along with any helper code that you need. PlatformIO will compile your program and link it to a main() function that looks something like:
+PlatformIO is able to work with many frameworks; for the I/O labs, we will use the Arduino framework. 
+As application programmers, the starting point is a program with two functions, `setup()` and `loop()`, along with any helper code that you need. 
+PlatformIO will compile your program and link it to a `main()` function that looks something like:
 
 ```c
 int main(void) {
@@ -31,6 +34,7 @@ int main(void) {
 }
 ```
 
+[//]: # (TODO: erase this section -- remove the pre-builds from Canvas)
 
 ### Obtain the Starter Code
 
@@ -45,6 +49,10 @@ git merge --ff origin/HwPreLab
 
 
 ### Load the Starter Code
+
+[//]: # (TODO: break the assumption)
+[//]: # (TODO: Rewrite, in general)
+[//]: # (TODO: use checkboxes in that rewrite)
 
 These instructions assume you are using VS Code.
 
@@ -119,22 +127,10 @@ Drag & drop *prelab8-yyyymmdd-hhmm.uf2* from the [build/](../build) directory in
 The Cow&nbsp;Pi's display will show information about the tooling used to build the program.
 
 
-### You Are Now Ready for the Labs that Use the Hardware Kit
-
-If you have completed all eight prelabs (including this one) then you are now ready for the labs that use the hardware kit.
-
-If something didn't work, consult a TA or Dr.&nbsp;Bohn for help.
-
-
-> 📝 **Grading Note**
->
-> To receive credit for Prelab 8, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190110).
-
-
-### Optional, but Recommended
+### Familiarize Yourself with the Debugging Help
 
 Because of USB driver issues on Windows systems (particularly Windows&nbsp;11), 
-we have provided alternatives to printf debugging statements that make use of the Cow&nbsp;Pi's display.
+we have provided alternatives to `printf()` debugging statements that make use of the Cow&nbsp;Pi's display.
 
 
 #### Liveness Counter
@@ -153,12 +149,12 @@ Observe that in the lower-right corner of the display, there is a counter that c
 3. If it stops and the green LED on the Raspberry Pi Pico is *not* blinking,
     then your program has code that blocks further execution.
 
-You can see an example of the third case by pressing your Cow Pi's left pushbutton.
+- [ ] You can see an example of the third case by pressing your Cow Pi's **left pushbutton**.
 
 
 #### Display Debugging Strings
 
-Open *prelab8.c* and look at the first if statement in the loop() function.
+Open *prelab8.c* and look at the first if statement in the `loop()` function.
 Suppose that you wanted to determine which path is taken. 
 If the LEDs aren't being used for anything else, one option is to use the LEDs to indicate the path, as has already been done here.
 
@@ -171,20 +167,22 @@ which can be used to do just that.
 The display has eight rows, numbered 0-7, with 0 at the top.
 Each row can display up to sixteen characters.
 
-In the `if` path, add this line of code:
-```c
-display_string(7, "left position");
-```
+- [ ] In the `if` path, add this line of code:
+    ```c
+    display_string(7, "left position");
+    ```
+
 That is an example of displaying a string literal.
 You can also use `sprintf()` to generate a string.
-Notice that we have already created a buffer.
-In the `else` path, add these lines of code:
-```c
-sprintf(buffer, "line %d", __LINE__);
-display_string(7, buffer);
-```
-Compile the program and upload it to the Cow Pi.
-Toggle the left switch back and forth to see the two different messages.
+
+- [ ] Notice that we have already created a buffer.
+    In the `else` path, add these lines of code:
+    ```c
+    sprintf(buffer, "line %d", __LINE__);
+    display_string(7, buffer);
+    ```
+- [ ] Compile the program and upload it to the Cow Pi.
+- [ ] Toggle the **left switch** back and forth to see the two different messages.
 
 
 #### Counting Visits
@@ -197,37 +195,39 @@ void count_visits(int row)
 that keeps track of the number of times it has been called for a particular row and displays that counter in the last two columns of that row.
 For example, the liveness counter previously mentioned is a call to `count_visits(7)` at the end of the `loop()` function.
 
-Change the display code in the `if` path to:
-```c
-display_string(5, "left position");
-count_visits(5);
-```
-and in the `else` path:
-```c
-sprintf(buffer, "line %d", __LINE__);
-display_string(6, buffer);
-count_visits(6);
-```
+- [ ] Change the display code in the `if` path to:
+    ```c
+    display_string(5, "left position");
+    count_visits(5);
+    ```
+- [ ] Change the display code in the `else` path to:
+    ```c
+    sprintf(buffer, "line %d", __LINE__);
+    display_string(6, buffer);
+    count_visits(6);
+    ```
+
 (Notice that we have changed the rows that these will be displayed on.)
 
-Compile the program and upload it to the Cow Pi. 
-Toggle the left switch back and forth to see the two new counters update accordingly.
+- [ ] Compile the program and upload it to the Cow Pi. 
+- [ ] Toggle the **left switch** back and forth to see the two new counters update accordingly.
 
 
 #### The Display is Buffered
 
-Now look at the second `if` statement, the one that checks whether the left button is pressed.
-In that `if` block, before the `for (;;)` line, add this line of code:
-```c
-display_string(4, "stuck");
-```
-Compile the program and upload it to the Cow Pi.
-After the program is running, press the left button.
-Notice that the liveness counter stopped, but the "stuck" message wasn't displayed.
+Now look at the second `if` statement, the one that checks whether the **left button** is pressed.
+- [ ] In that `if` block, before the `for (;;)` line, add this line of code:
+    ```c
+    display_string(4, "stuck");
+    ```
+- [ ] Compile the program and upload it to the Cow Pi.
+- [ ] After the program is running, press the **left button**.
+- [ ] Notice that the liveness counter stopped, but the "stuck" message wasn't displayed.
 
 You may recall that on a regular computer system, the standard output is buffered, 
 so `printf()` can be problematic when trying to localize code that crashes a program. 
-You can overcome that by flushing the standard output with `fflush(stdout)` or by printing to `stderr` instead with `fprintf(stderr, ...)`.
+On a regular computer system, you can overcome that by flushing the standard output with `fflush(stdout)` or by printing to `stderr` instead with `fprintf(stderr, ...)`.
+
 Similarly, `display_string()` buffers the output -- it accumulates updates until one of three things happen:
 
 1. A call to `refresh_display()` will force the display to be updated:
@@ -246,7 +246,19 @@ Similarly, `display_string()` buffers the output -- it accumulates updates until
     display_string(4, "stuck\n");
    ```
 
-Try each of those options and confirm for yourself that they will allow the "stuck" message to be displayed.
+- [ ] Try each of those options and confirm for yourself that they will allow the "stuck" message to be displayed.
+
+
+### You Are Now Ready for the Labs that Use the Hardware Kit
+
+If you have completed all eight prelabs (including this one) then you are now ready for the labs that use the hardware kit.
+
+If something didn't work, consult a TA or Dr.&nbsp;Bohn for help.
+
+
+> 📝 **Grading Note**
+>
+> To receive credit for Prelab 8, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028633).
 
 
 ---

@@ -126,7 +126,7 @@ After sorting and counting, [we have](CC-word-tables.md#food):
 
 ---
 
-[^gutenberg] The text for these books was obtained from [Project Gutenberg](https://www.gutenberg.org/).
+[^gutenberg]: The text for these books was obtained from [Project Gutenberg](https://www.gutenberg.org/).
 In accordance with Paragraph~1.C of the [Project Gutenberg License](https://www.gutenberg.org/policy/license), all references to Project Gutenberg have been removed from the "derived works" that we are distributing.
 (Removing the references to Project Gutenberg was also necessary to ensure that *only* the words from the books are included in the list.)
 

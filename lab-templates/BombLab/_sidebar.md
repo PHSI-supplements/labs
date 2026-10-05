@@ -1,5 +1,5 @@
 - [CSCE 231 Lab Assignments](/)
-- [AddressingLab](/BombLab/)
+- [BombLab](/BombLab/)
 
 - [Getting Started](/BombLab/doc/01-getting-started.md)
 - [Defusing a Bomb](/BombLab/doc/02-defusing-a-bomb.md)

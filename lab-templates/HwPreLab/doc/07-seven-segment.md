@@ -8,7 +8,7 @@ In this pre-lab, you will confirm that the servo and its adapter are functioning
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 7, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190109).
+> To receive credit for Prelab 7, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028632).
 
 
 ### Attach the Seven-Segment Display Module to the Cow Pi
@@ -69,7 +69,7 @@ If the TA or Dr.&nbsp;Bohn confirms that the display module doesn't work, visit 
 
 > 📝 **Grading Note**
 >
-> To receive credit for Prelab 7, you will need to complete [the assignment on Canvas](https://canvas.unl.edu/courses/209782/assignments/2190109).
+> To receive credit for Prelab 7, you will need to complete [the assignment on Canvas](https://mynu.instructure.com/courses/13509/assignments/1028632).
 
 
 ---

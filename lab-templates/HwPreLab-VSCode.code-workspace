@@ -1,0 +1,10 @@
+{
+  "folders": [
+    {
+      "path": "HwPreLab"
+    }
+  ],
+  "settings": {
+    "cmake.sourceDirectory": "${workspaceFolder}"
+  }
+}

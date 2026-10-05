@@ -1,0 +1,11 @@
+- [CSCE 231 Lab Assignments](/)
+- [HwPreLab](/HwPreLab/)
+
+- [Inventory the Hardware Kit](doc/01-inventory.md)
+- [Test the Control Panel](doc/02-control-panel.md)
+- [Test the Piezobuzzer](doc/03-piezobuzzer.md)
+- [Test the Rotary Encoder](doc/04-rotary-encoder.md)
+- [Test the Distance Sensor](doc/05-distance-sensor.md)
+- [Test the Servo](doc/06-servo.md)
+- [Test the Seven-Segment Display](doc/07-seven-segment.md)
+- [Compile a Program](doc/08-compile-program.md)

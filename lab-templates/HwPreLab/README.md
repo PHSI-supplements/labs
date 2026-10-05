@@ -45,14 +45,14 @@ You may freely use generative AI tools for the prelabs.
 ### Table of Contents
 
 <!--
-- [Inventory the Hardware Kit](https://canvas.unl.edu/courses/200913/assignments/2063425)
-- [Test the Control Panel](https://canvas.unl.edu/courses/200913/assignments/2163571)
-- [Test the Piezobuzzer](https://canvas.unl.edu/courses/200913/assignments/2163681)
-- [Test the Rotary Encoder](https://canvas.unl.edu/courses/200913/assignments/2163829)
-- [Test the Distance Sensor](https://canvas.unl.edu/courses/200913/assignments/2164115)
-- [Test the Servo](https://canvas.unl.edu/courses/200913/assignments/2164129)
-- [Test the Seven-Segment Display](https://canvas.unl.edu/courses/200913/assignments/2164228)
-- [Compile a Program](https://canvas.unl.edu/courses/200913/assignments/2164344)
+- [Inventory the Hardware Kit](https://mynu.instructure.com/courses/13509/assignments/1028634)
+- [Test the Control Panel](https://mynu.instructure.com/courses/13509/assignments/1028627)
+- [Test the Piezobuzzer](https://mynu.instructure.com/courses/13509/assignments/1028628)
+- [Test the Rotary Encoder](https://mynu.instructure.com/courses/13509/assignments/1028629)
+- [Test the Distance Sensor](https://mynu.instructure.com/courses/13509/assignments/1028630)
+- [Test the Servo](https://mynu.instructure.com/courses/13509/assignments/1028631)
+- [Test the Seven-Segment Display](https://mynu.instructure.com/courses/13509/assignments/1028632)
+- [Compile a Program](https://mynu.instructure.com/courses/13509/assignments/1028633)
 -->
 - [Inventory the Hardware Kit](doc/01-inventory.md)
 - [Test the Control Panel](doc/02-control-panel.md)
