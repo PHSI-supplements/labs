@@ -14,21 +14,21 @@ In this pre-lab, you will inventory the contents of the hardware kit that you we
 Make sure that you have:
 
 - [ ] A Cow&nbsp;Pi development board<br>
-    <img src="images/inventory/Cow%20Pi%20mk4b%20development%20board.jpg" width="300" alt="A red circuit board with several buttons and switches">
+    ![A red circuit board with several buttons and switches](media/inventory/Cow%20Pi%20mk4b%20development%20board.jpg)
 - [ ] A USB cable<br>
-    <img src="images/inventory/micro-USB%20cable.jpg" width="300" alt="A USB cable">
+    ![A USB cable](media/inventory/micro-USB%20cable.jpg)
 - [ ] 4 jumper wires (might be individual wires, or might be in strands that can have wires peeled off)<br>
-    <img src="images/inventory/wires.jpg" width="300" alt="Two groups of four wires">
+    ![Two groups of four wires](media/inventory/wires.jpg)
 - [ ] An ultrasonic distance sensor with adapter<br>
-    <img src="images/inventory/DistanceSensorWithAdapter.png" width="300" alt="A blue circuit board with a pair of transducer drums, and a small white circuit board designed to attach to the blue circuit board.">
+    ![A blue circuit board with a pair of transducer drums, and a small white circuit board designed to attach to the blue circuit board.](media/inventory/DistanceSensorWithAdapter.png)
 - [ ] A piezobuzzer module<br>
-    <img src="images/inventory/PiezobuzzerModule.png" width="300" alt="A small black drum with a hole in it, attached to a small white circuit board.">
+    ![A small black drum with a hole in it, attached to a small white circuit board.](media/inventory/PiezobuzzerModule.png)
 - [ ] A rotary encoder module<br>
-    <img src="images/inventory/RotaryEncoderModule.png" width="300" alt="A metal device with a black knob, attached to a small white circuit board.">
+    ![A metal device with a black knob, attached to a small white circuit board.](media/inventory/RotaryEncoderModule.png)
 - [ ] A servomotor with adapter<br>
-    <img src="images/inventory/ServoWithAdapter.png" width="300" alt="A black quasi-cube with a white armature and a colorful wire attached. There is a small white circuit board designed to connect to the wire.">
+    ![A black quasi-cube with a white armature and a colorful wire attached. There is a small white circuit board designed to connect to the wire.](media/inventory/ServoWithAdapter.png)
 - [ ] A 7-segment display module<br>
-    <img src="images/inventory/SevenSegmentDisplayModule.png" width="300" alt="A white circuit board with a black chip and eight digits.">
+    ![A white circuit board with a black chip and eight digits.](media/inventory/SevenSegmentDisplayModule.png)
 
 
 ### Statement of Understanding

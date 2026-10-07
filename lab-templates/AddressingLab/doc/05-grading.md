@@ -13,6 +13,9 @@
 
 Be sure that you have pushed your code to git.unl.edu.
 
+When you initially configured the project, CMake modified *submission_metadata.json* with information about your system.
+The grading script will use that information to determine which file to present to the TA.
+
 
 ### Late Submissions
 
@@ -42,6 +45,6 @@ This assignment is worth 10 points.
 
 ---
 
-|                           [⬅️ A64](04-cipher-validation-A64.md) <br> [⬅️ x86-64](04-cipher-validation-x86-64.md)                           |      [⬆️](../../README.md)      |                              |
+|                           [⬅️ A64](04-cipher-validation-A64.md) <br> [⬅️ x86-64](04-cipher-validation-x86-64.md)                           |      [⬆️](../README.md)         |                              |
 |:------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------:|:----------------------------:|
 | [Cipher Validation Function (A64)](04-cipher-validation-A64.md) <br> [Cipher Validation Function (x86-64)](04-cipher-validation-x86-64.md) | [Front Matter](../../README.md) |                              |

@@ -37,11 +37,11 @@ After your Cow Pi is no longer powered-up:
   <br><img src="images/servo/servo-adapter-inserted.jpg" width="300" alt="A small green circuit board mated to a larger red circuit board. There is also a wire running between the two boards.">
 
 <!--
-  ![A servo arm being held over a servomotor's shaft.](images/servo/aboutToAttachServoArm.jpg)
-  ![A servo. The servo arm has been placed on the servomotor's shaft.](images/servo/servoArmAttached.jpg)
-  ![A 3-wire cable with brown, red, and yellow wires is connected to a small white circuit board. The brown wire lines up with the GND label; the red wire lines up with the PWR label; and the yellow wire lines up with the PWM label.](images/servo/servo-cable-and-adapter.png)
-  ![A small green circuit board held next to a larger red circuit board. one of the green circuit board's pins is lined up with the red's "GND" label, and the other pin is lined up with "GP22".](images/servo/servo-adapter-next-to-sockets.jpg)
-  ![A small green circuit board mated to a larger red circuit board. There is also a wire running between the two boards.](images/servo/servo-adapter-inserted.jpg)
+  ![A servo arm being held over a servomotor's shaft.](media/servo/aboutToAttachServoArm.jpg)
+  ![A servo. The servo arm has been placed on the servomotor's shaft.](media/servo/servoArmAttached.jpg)
+  ![A 3-wire cable with brown, red, and yellow wires is connected to a small white circuit board. The brown wire lines up with the GND label; the red wire lines up with the PWR label; and the yellow wire lines up with the PWM label.](media/servo/servo-cable-and-adapter.png)
+  ![A small green circuit board held next to a larger red circuit board. one of the green circuit board's pins is lined up with the red's "GND" label, and the other pin is lined up with "GP22".](media/servo/servo-adapter-next-to-sockets.jpg)
+  ![A small green circuit board mated to a larger red circuit board. There is also a wire running between the two boards.](media/servo/servo-adapter-inserted.jpg)
 -->
 
 ### Disconnecting the Servo from the Cow Pi
@@ -66,8 +66,8 @@ After your Cow Pi is no longer powered-up:
   <br><img src="images/rotary-encoder/insert-rotary-encoder.png" width="300" alt="A rotary encoder module inserted into a Cow Pi's sockets.">
 
 <!--
-![A rotary encoder module held next to the Cow Pi board with the A pin aligned with the GP17 socket, the B pin aligned with the GP16 socket, and the GND pin aligned to the adjacent GND pin.](images/rotary-encoder/line-up-rotary-encoder.png)
-![A rotary encoder module inserted into a Cow Pi's sockets.](images/rotary-encoder/insert-rotary-encoder.png)
+![A rotary encoder module held next to the Cow Pi board with the A pin aligned with the GP17 socket, the B pin aligned with the GP16 socket, and the GND pin aligned to the adjacent GND pin.](media/rotary-encoder/line-up-rotary-encoder.png)
+![A rotary encoder module inserted into a Cow Pi's sockets.](media/rotary-encoder/insert-rotary-encoder.png)
 -->
 
 ### Disconnecting the Rotary Encoder Module from the Cow Pi

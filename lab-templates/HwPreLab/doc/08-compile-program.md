@@ -1,8 +1,5 @@
 ## Compile a Program
 
-[//]: # (TODO: update the Canvas assignment to reflect the changes here)
-[//]: # (TODO: note in an earlier page that the upload has to happen from the host laptop)
-
 > ❗️ **Important**
 >
 > If you have not already completed Prelab 2, please complete Prelab 2 first!
@@ -13,11 +10,6 @@
 
 
 We will use PlatformIO to work with the Cow&nbsp;Pi development boards.
-
-You may want to take a quick look at the [parts of the PlatformIO Toolbar](https://docs.platformio.org/en/latest/integration/ide/vscode.html#platformio-toolbar).
-
-[//]: # (TODO: link to CLion version, too)
-
 
 ### About PlatformIO and the Arduino Framework
 
@@ -34,92 +26,49 @@ int main(void) {
 }
 ```
 
-[//]: # (TODO: erase this section -- remove the pre-builds from Canvas)
+### Open the PlatformIO Project
 
-### Obtain the Starter Code
-
-If you have not already retrieved HwPreLab, review the "Retrieving the Lab" section in the README.md file at the root directory of your repository and the troubleshooting steps that it refers to. 
-The Git commands to retrieve HwPreLab are:
-
-```shell
-git status
-git fetch origin HwPreLab
-git merge --ff origin/HwPreLab
-```
-
-
-### Load the Starter Code
-
-[//]: # (TODO: break the assumption)
-[//]: # (TODO: Rewrite, in general)
-[//]: # (TODO: use checkboxes in that rewrite)
-
-These instructions assume you are using VS Code.
-
-- Install the [PlatformIO plugin](https://platformio.org/install/ide?install=vscode).
-  (Skip this step if you're using a lab computer.)
-- Open VS Code (or whichever IDE you use).
-- Open the PlatformIO Home.
-  - You will see a bug head icon in VS Code's left-side menu; this is PlatformIO’s logo.
-    <img src="images/PlatformIO/PlatformIO%20icon.png" height="50" alt="A screenshot of a stylized bug's head.">
-  - Click on the PlatformIO logo.
-  - After a few seconds, a PlatformIO side-window will appear.
-    In that side-window, click on the "Select a Folder" or "Pick a Folder" button.
-    - In other IDEs, you will use the "Open Project" button from the PlatformIO Home.
-  - Navigate to the HwPreLab project's directory, and open the project (the directory with the *platformio.ini* file).
-    - If the PlatformIO Home had not already started, wait for the PlatformIO Home to start.
-
-
-### About the PlatformIO Toolbar
-
-The PlatformIO Toolbar has a few options.
-<img src="images/PlatformIO/PlatformIO%20toolbar.png" height="50" alt="A screenshot of a toolbar with several icons.">
-
-- The house icon takes you to the PlatformIO Home
-- The checkmark icon compiles your program
-- ~~The arrow icon uploads your program to the Cow&nbsp;Pi~~ <font color="red">***we will not use the arrow icon this semester***</font>
-- The trash can icon deletes your program’s compiled firmware
-- The beaker icon runs unit tests
-- The plug icon opens a Serial Monitor to interact with programs on the Cow Pi
-- The box with an angle bracket opens a command-line terminal
-
+- [ ] Review the instructions to configure, compile, and upload Cow&nbsp;Pi code
+  - In the [terminal](../../documentation/workflow/terminal/working-on-the-lab.md#configuring-compiling-and-uploading-cow-pi-code)
+  - Using [CLion](../../documentation/workflow/clion/working-on-the-lab.md#openingconfiguring-compiling-and-uploading-cow-pi-code)
+  - Using [VS Code](../../documentation/workflow/vscode/working-on-the-lab.md#openingconfiguring-compiling-and-uploading-cow-pi-code)
+- If you are working in the terminal:
+  - [ ] Launch the course container in the terminal with `docker compose run --rm csce231`
+  - [ ] In the course container, run `cd HwPreLab`
+- If you are using an IDE:
+  - [ ] Launch the IDE and connect it to the course container
+  - [ ] Follow the instructions for your IDE to open the project
+    - [CLion](../../documentation/workflow/clion/working-on-the-lab.md#openingconfiguring-the-project-cow-pi-code)
+    - [VS Code](../../documentation/workflow/vscode/working-on-the-lab.md#openingconfiguring-the-project-cow-pi-code)
 
 ### Compile the Program
 
-Click on the PlatformIO Toolbar's checkmark icon to compile the program
-- The first time that you compile a program for the Cow Pi, you will see several compilation messages as the various libraries are compiled for your program.
-  These will include some warning messages due to a little sloppiness in the Arduino framework's code.
-  You can safely ignore *these* warning messages.
-  (You should always address warning messages that are from your own code.)
-
-We have added a script to place a copy of the compiled program in the [build/](../build) directory, with the date and time of the compilation in the filename.
-
-<!--
-The script also automatically opens your system's file browser, pointing to the [build/](../build) directory. 
-If you do not like this behavior, then edit *rename-uf2.py* to change
-
-```python
-open_file_browser = True
-```
-
-to
-
-```python
-open_file_browser = False
-```
--->
+- If you are working in the terminal:
+  - [ ] [Run the command](../../documentation/workflow/terminal/working-on-the-lab.md#compiling-the-project-cow-pi-code)
+    ```bash
+    pio run
+    ```
+- If you are using CLion:
+  - [ ] [Click on the hammer icon](../../documentation/workflow/clion/working-on-the-lab.md#compiling-the-project-cow-pi-code) in the configuration bar at the top of CLion's window.
+- If you are using VS Code:
+  - [ ] [Click on the checkmark icon](../../documentation/workflow/vscode/working-on-the-lab.md#compiling-the-project-cow-pi-code) in the toolbar at the bottom of VS Code's window.
 
 
-### Activate the Bootloader
+### Upload the Program
 
-Activating the bootloader requires a specific sequence of actions:
+- [ ] Activating the bootloader requires a specific sequence of actions:
 
-1. Press the RESET button, located between the white breadboard and the green Raspberry Pi Pico
-2. While still pressing the RESET button, press the BOOTSEL button on the Raspberry Pi Pico
-3. Release the RESET button
-4. Release the BOOTSEL button
+  1. Press the RESET button, located between the white breadboard and the green Raspberry Pi Pico
+  2. While still pressing the RESET button, press the BOOTSEL button on the Raspberry Pi Pico
+  3. Release the RESET button
+  4. Release the BOOTSEL button
 
-Drag & drop *prelab8-yyyymmdd-hhmm.uf2* from the [build/](../build) directory into the mass storage device.
+- [ ] Drag & drop *prelab8-yyyymmdd-hhmm.uf2* from the [build/](../build) directory into the mass storage device.
+
+> ⓘ **Note**
+>
+> You will need to use your host operating system's file system to upload the file.
+> The course container does not have access to your computer's USB ports.
 
 
 ### What You Will See
@@ -127,13 +76,13 @@ Drag & drop *prelab8-yyyymmdd-hhmm.uf2* from the [build/](../build) directory in
 The Cow&nbsp;Pi's display will show information about the tooling used to build the program.
 
 
-### Familiarize Yourself with the Debugging Help
+## Familiarize Yourself with the Debugging Help
 
 Because of USB driver issues on Windows systems (particularly Windows&nbsp;11), 
 we have provided alternatives to `printf()` debugging statements that make use of the Cow&nbsp;Pi's display.
 
 
-#### Liveness Counter
+### Liveness Counter
 
 Observe that in the lower-right corner of the display, there is a counter that cycles through the 256 values possible with two hex-digits. If this counter stops, one of three things is true:
 
@@ -152,7 +101,7 @@ Observe that in the lower-right corner of the display, there is a counter that c
 - [ ] You can see an example of the third case by pressing your Cow Pi's **left pushbutton**.
 
 
-#### Display Debugging Strings
+### Display Debugging Strings
 
 Open *prelab8.c* and look at the first if statement in the `loop()` function.
 Suppose that you wanted to determine which path is taken. 
@@ -185,7 +134,7 @@ You can also use `sprintf()` to generate a string.
 - [ ] Toggle the **left switch** back and forth to see the two different messages.
 
 
-#### Counting Visits
+### Counting Visits
 
 Suppose that you want to know whether a path has been followed once or many times. 
 We have provided another function
@@ -213,7 +162,7 @@ For example, the liveness counter previously mentioned is a call to `count_visit
 - [ ] Toggle the **left switch** back and forth to see the two new counters update accordingly.
 
 
-#### The Display is Buffered
+### The Display is Buffered
 
 Now look at the second `if` statement, the one that checks whether the **left button** is pressed.
 - [ ] In that `if` block, before the `for (;;)` line, add this line of code:
@@ -249,7 +198,7 @@ Similarly, `display_string()` buffers the output -- it accumulates updates until
 - [ ] Try each of those options and confirm for yourself that they will allow the "stuck" message to be displayed.
 
 
-### You Are Now Ready for the Labs that Use the Hardware Kit
+## You Are Now Ready for the Labs that Use the Hardware Kit
 
 If you have completed all eight prelabs (including this one) then you are now ready for the labs that use the hardware kit.
 

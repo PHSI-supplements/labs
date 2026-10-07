@@ -3,12 +3,12 @@
 These instructions assume that you have already [started the development container](accessing-the-container.md).
 
 - Linux-Native Code
-    - [Configuring the Project](#configuring-compiling-running-and-testing-linux-native-code)
+    - [Configuring the Project](#configuring-the-project-linux-native-code)
     - [Compiling the Project](#compiling-the-project-linux-native-code)
     - [Running the Program](#running-the-program-linux-native-code)
     - [Testing the Program](#testing-the-program-linux-native-code)
 - Cow Pi Code
-    - [Configuring the Project](#configuring-the-project-cow-pi-code)
+    - [Opening/Configuring the Project](#openingconfiguring-the-project-cow-pi-code)
     - [Compiling the Project](#compiling-the-project-cow-pi-code)
     - [Uploading the Program](#uploading-the-program-to-the-cow-pi-board-cow-pi-code)
 
@@ -79,8 +79,6 @@ To debug the program in an interactive debugger:
 
 ### Testing the Program (Linux-Native Code)
 
-[//]: # (TODO)
-
 We expect you to test your own code.
 Most labs' driver code is designed to facilitate this: provide your inputs, and the driver code will show you the actual output and compare it with the expected output.
 We also provide automated tests that correspond to any examples in the assignment's instructions.
@@ -97,15 +95,36 @@ In the "All CTest" tab in the Run view, you can see the test results and rerun a
 > ![CLion's Run view with an "All CTest" tab. We see a list of tests: Test Results is expanded, and under it are unit-tests, ConstraintCheck_keyboardlab1, ConstraintCheck_keyboardlab2, and ConstraintCheck_keyboardlab3. There is a text window that shows details of the test results.](media/testing-view.png)
 
 
-## Configuring, Compiling, and Uploading (Cow Pi Code)
+## Opening/Configuring, Compiling, and Uploading (Cow Pi Code)
 
-### Configuring the Project (Cow Pi Code)
+### Opening/Configuring the Project (Cow Pi Code)
 
-[//]: # (TODO: confirm that "load platformio.ini" will work for this, too -- it should, but I need to confirm it)
+After you have connected CLion to the course container:
+
+- [ ] From CLion's menu, select **File** → **Open...**
+- In the resulting popup window, either:
+  - [ ] Enter `/csce231/FooLab/platformio.ini` in the textbox for the filepath (remembering to substitute the actual lab name for "FooLab"), or
+  - [ ] Navigate to `/csce231/FooLab/platformio.ini` in the file tree.
+    > ![A file selection popup window. The textbox reads: "/csce231/HwPreLab/platformio.ini", and the file tree has been expanded to that same file.](media/open-platformio-ini.png)
+- [ ] Click `OK`.
+- [ ] In the "Open Project" popup, select `Open as Project`.
+- [ ] In the "New Project" popup, select `This Window`.
+
+CLion will re-load, still connected to the development container, with *FooLab* as the workspace root.
+CLion will then recognize FooLab as a PlatformIO project and configure the project for you.
 
 ### Compiling the Project (Cow Pi Code)
 
-[//]: # (TODO: copy from Hardware Prelabs)
+In CLion's configuration bar, you will see buttons to build the project, debug the project, and run the project.
+
+> ![A bar at the top of a window. There is a dropdown labeled "pico", a hammer icon, and a dropdown labeled "PlatformIO".](media/platformio-configuration-bar.png)
+
+- [ ] Click the "🔨" (Build) button.
+- There are many parts of MBED&nbsp;OS that generate compiler warnings the first time that you build the project.
+  You do not need to address *these* compiler warnings: fixing MBED&nbsp;OS is outside the scope of this course.
+
+The constraint checker will run automatically at the end of the build process.
+After a successful build, any constraint violations will be listed after any compiler warnings and before the `[SUCCESS]` message.
 
 ### Uploading the Program to the Cow Pi Board (Cow Pi Code)
 
@@ -119,4 +138,16 @@ In the "All CTest" tab in the Run view, you can see the test results and rerun a
 - [ ] Drag & drop the .uf2 file from the *FooLab/build* directory to the USB mass storage device.
   - After the upload has finished, the USB mass storage device will disconnect.
 
-[//]: # (TODO: confirm that drag & drop can be done from CLion's project view)
+> ⓘ **Note**
+>
+> You will need to use your host operating system's file system to upload the program.
+> The course container does not have access to your computer's USB ports.
+>
+> For the same reason, you will not be able to use CLion's project view to upload the program.
+
+### Testing the Program (Cow Pi Code)
+
+There are no automated tests for code running on the Cow Pi boards.
+You will need to manually test your code.
+
+The constraint checker, however, will run as part of the build process.

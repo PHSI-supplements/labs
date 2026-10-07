@@ -8,9 +8,10 @@ These instructions assume that you have already [started the development contain
     - [Running the Program](#running-the-program-linux-native-code)
     - [Testing the Program](#testing-the-program-linux-native-code)
 - Cow Pi Code
-    - [Configuring the Project](#configuring-the-project-cow-pi-code)
+    - [Opening/Configuring the Project](#openingconfiguring-the-project-cow-pi-code)
     - [Compiling the Project](#compiling-the-project-cow-pi-code)
     - [Uploading the Program](#uploading-the-program-to-the-cow-pi-board-cow-pi-code)
+    - [Testing the Program](#testing-the-program-cow-pi-code)
 
 
 ## Opening/Configuring, Compiling, Running, and Testing (Linux-Native Code)
@@ -24,7 +25,6 @@ These instructions assume that you have already [started the development contain
 
 VS Code will re-load, still connected to the development container, with *FooLab* as the workspace the root.
 VS Code will then process the *CMakePresets.json* and *CMakeLists.txt* files and configure the project for you.
-
 
 ### Compiling the Project (Linux-Native Code)
 
@@ -68,15 +68,29 @@ You can also choose to run all tests or only some tests.
 > ![VS Code's Testing view. Across the top are a series of buttons to select a specific testing action. We also see a list of tests: KeyboardLab is expanded, and under it are ConstraintCheck_keyboardlab1, ConstraintCheck_keyboardlab2, ConstraintCheck_keyboardlab3, and unit-tests.](media/testing-view.png)
 
 
-## Configuring, Compiling, and Uploading (Cow Pi Code)
+## Opening/Configuring, Compiling, and Uploading (Cow Pi Code)
 
-### Configuring the Project (Cow Pi Code)
+### Opening/Configuring the Project (Cow Pi Code)
 
-[//]: # (TODO: confirm that a code-workspace file will work for this, too -- it should, but I need to confirm it)
+- [ ] In the Explorer view, click on the *FooLab-VSCode.code-workspace* file.
+  The file will open in an Editor tab, and an "Open Workspace" button will appear in the Editor tab.
+  > ![PokerLab-VSCode.code-workspace opened in an Editor tab. In the lower-right is a blue "Open Workspace" button.](media/open-workspace.png)
+- [ ] Click on the "Open Workspace" button.
+
+VS Code will re-load, still connected to the development container, with *FooLab* as the workspace root.
+VS Code will then recognize FooLab as a PlatformIO project and configure the project for you.
 
 ### Compiling the Project (Cow Pi Code)
 
-[//]: # (TODO: copy from Hardware Prelabs)
+At the bottom of VS Code, you will see the PlatformIO toolbar.<br />
+> ![The PlatformIO toolbar. From left-to-right are a house, a checkmark, a right-pointing arrow, a trashcan, a beaker, a plug, and a terminal.](media/platformio-toolbar.png)
+
+- [ ] Click on the checkmark ("PlatformIO: Build").
+- There are many parts of MBED&nbsp;OS that generate compiler warnings the first time that you build the project.
+  You do not need to address *these* compiler warnings: fixing MBED&nbsp;OS is outside the scope of this course.
+
+The constraint checker will run automatically at the end of the build process.
+After a successful build, any constraint violations will be listed after any compiler warnings and before the `[SUCCESS]` message.
 
 ### Uploading the Program to the Cow Pi Board (Cow Pi Code)
 
@@ -90,7 +104,16 @@ You can also choose to run all tests or only some tests.
 - [ ] Drag & drop the .uf2 file from the *FooLab/build* directory to the USB mass storage device.
   - After the upload has finished, the USB mass storage device will disconnect.
 
-[//]: # (TODO: confirm that drag & drop can be done from VS Code's file explorer)
+> ⓘ **Note**
+> 
+> You will need to use your host operating system's file system to upload the program.
+> The course container does not have access to your computer's USB ports.
+> 
+> For the same reason, you will not be able to use VS Code's file explorer to upload the program.
 
-[//]: # (TODO: should we explain why the upload button won't work from within the container, simply state that it won't work, or simply state that we won't use it this semester? )
-[//]: # (TODO: double-check: maybe we can use the upload button &#40;except on Windows -- Windows USB drivers suck&#41; -- if so, then we'll go with "we won't use it")
+### Testing the Program (Cow Pi Code)
+
+There are no automated tests for code running on the Cow Pi boards.
+You will need to manually test your code.
+
+The constraint checker, however, will run as part of the build process.

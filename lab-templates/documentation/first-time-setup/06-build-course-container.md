@@ -42,7 +42,7 @@ The first build may take several minutes because Docker must download an Ubuntu 
 
 - [ ] Run the command
   ```bash
-  docker images
+  docker media
   ```
   You should see an entry similar to:
   ```text

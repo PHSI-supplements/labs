@@ -15,28 +15,33 @@ In this pre-lab, you will confirm that the servo and its adapter are functioning
 
 - [ ] Disconnect the Cow Pi from your computer.
 - [ ] The seven-segment display module has a **PWR** socket on its underside. Insert one end of a jumper wire into the PWR socket.<br>
-  <img src="images/display_module/seven-segment-power-wire.png" width="300" alt="A small white circuit board. There is a wire inserted into a socket.">
+  ![A small white circuit board. There is a wire inserted into a socket.](media/display_module/seven-segment-power-wire.png)
 - [ ] From above, most of the display module's pins are hidden.
   Notice that the end of the display module is labeled **SPI**.
   Position the display module near the sockets that have **SPI** secondary labels.
   The display module has a notch; through the notch you can see the **GND** pin.
   Align the GND pin with the **GND** socket that is between the SPI sockets and the I2C sockets.<br>
-  <img src="images/display_module/lining-up-7-segment.jpg" width="300" alt="A white circuit board held next to a larger red circuit board. The white circuit board has a notch, through which we can see a pin. The pin is lined up with a GND label.">
+  ![A white circuit board held next to a larger red circuit board. The white circuit board has a notch, through which we can see a pin. The pin is lined up with a GND label.](media/display_module/lining-up-7-segment.jpg)
 - [ ] Slide the display module's pins into the SPI and GND sockets.
   Insert the other end of the jumper wire into a 5V socket.<br>
-  <img src="images/display_module/seven-segment-attached.jpg" width="300" alt="A white circuit board mated to a larger red circuit board. There is a wire running between the circuit boards.">
+  ![A white circuit board mated to a larger red circuit board. There is a wire running between the circuit boards.](media/display_module/seven-segment-attached.jpg)
 
 
-### Activate the Bootloader
+### Upload the Program
 
-Activating the bootloader requires a specific sequence of actions:
+- [ ] Activating the bootloader requires a specific sequence of actions:
 
-1. Press the RESET button, located between the white breadboard and the green Raspberry Pi Pico
-2. While still pressing the RESET button, press the BOOTSEL button on the Raspberry Pi Pico
-3. Release the RESET button
-4. Release the BOOTSEL button
+  1. Press the RESET button, located between the white breadboard and the green Raspberry Pi Pico
+  2. While still pressing the RESET button, press the BOOTSEL button on the Raspberry Pi Pico
+  3. Release the RESET button
+  4. Release the BOOTSEL button
 
-Drag & drop *prelab7.uf2* from the [build/](../build) directory into the mass storage device.
+- [ ] Drag & drop *prelab7.uf2* from the [build/](../build) directory into the mass storage device.
+
+> ⓘ **Note**
+>
+> You will need to use your host operating system's file system to upload the file.
+> The course container does not have access to your computer's USB ports.
 
 
 ### What You Will See

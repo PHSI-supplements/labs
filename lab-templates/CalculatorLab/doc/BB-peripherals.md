@@ -16,9 +16,9 @@
   <br><img src="images/display_module/seven-segment-attached.jpg" width="300" alt="A white circuit board mated to a larger red circuit board. There is a wire running between the circuit boards.">
 
 <!--
-![A small white circuit board. There is a wire inserted into a socket.](images/display_module/seven-segment-power-wire.png)
-![A white circuit board held next to a larger red circuit board. The white circuit board has a notch, through which we can see a pin. The pin is lined up with a GND label.](images/display_module/lining-up-7-segment.jpg)
-![A white circuit board mated to a larger red circuit board. There is a wire running between the circuit boards.](images/display_module/seven-segment-attached.jpg)
+![A small white circuit board. There is a wire inserted into a socket.](media/display_module/seven-segment-power-wire.png)
+![A white circuit board held next to a larger red circuit board. The white circuit board has a notch, through which we can see a pin. The pin is lined up with a GND label.](media/display_module/lining-up-7-segment.jpg)
+![A white circuit board mated to a larger red circuit board. There is a wire running between the circuit boards.](media/display_module/seven-segment-attached.jpg)
 -->
 
 ### Disconnecting the Seven-Segment Display Module from the Cow Pi

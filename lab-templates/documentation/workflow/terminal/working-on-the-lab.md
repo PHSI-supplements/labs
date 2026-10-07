@@ -3,7 +3,7 @@
 These instructions assume that you have already [started the development container](accessing-the-container.md) in one or more terminal windows.
 
 - Linux-Native Code
-    - [Configuring the Project](#configuring-compiling-running-and-testing-linux-native-code)
+    - [Configuring the Project](#configuring-the-project-linux-native-code)
     - [Compiling the Project](#compiling-the-project-linux-native-code)
     - [Running the Program](#running-the-program-linux-native-code)
     - [Testing the Program](#testing-the-program-linux-native-code)
@@ -82,7 +82,7 @@ PlatformIO won't configure the build system until the first time that you compil
 ### Compiling the Project (Cow Pi Code)
 
 - [ ] Use `cd` to navigate to the *FooLab* directory (the same directory that has platformio.ini).
-- Run the command:
+- [ ] Run the command:
   ```bash
   pio run
   ```
@@ -103,6 +103,11 @@ After a successful build, any constraint violations will be listed after any com
      - This will present the microcontroller's flash memory to your computer as a USB mass storage device.
 - [ ] Drag & drop the .uf2 file from the *FooLab/build* directory to the USB mass storage device.
   - After the upload has finished, the USB mass storage device will disconnect.
+
+> ⓘ **Note**
+>
+> You will need to use your host operating system's file system to upload the file.
+> The course container does not have access to your computer's USB ports.
 
 [//]: # (TODO: Debugging)
 

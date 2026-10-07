@@ -16,21 +16,26 @@ In this pre-lab, you will confirm that the rotary encoder module is functioning,
 - [ ] Disconnect the Cow Pi from your computer.
 - [ ] Hold the rotary encoder module next to the sockets on the left-side of the Cow Pi.
 - [ ] Align the rotary encoder module's **A** pin with the Cow Pi's **GP17**, the rotary encoder module's **B** pin with the Cow Pi's **GP16**, and the rotary encoder module's **GND** pin with the **GND** socket adjacent to GP16.<br>
-  <img src="images/rotary-encoder/line-up-rotary-encoder.png" width="300" alt="A rotary encoder module held next to the Cow Pi board with the A pin aligned with the GP17 socket, the B pin aligned with the GP16 socket, and the GND pin aligned to the adjacent GND pin.">
+  ![A rotary encoder module held next to the Cow Pi board with the A pin aligned with the GP17 socket, the B pin aligned with the GP16 socket, and the GND pin aligned to the adjacent GND pin.](media/rotary-encoder/line-up-rotary-encoder.png)
 - [ ] Slide the rotary encoder's pins into the GP17, GP16, and GND sockets.<br>
-  <img src="images/rotary-encoder/insert-rotary-encoder.png" width="300" alt="A rotary encoder module inserted into a Cow Pi's sockets.">
+  ![A rotary encoder module inserted into a Cow Pi's sockets.](media/rotary-encoder/insert-rotary-encoder.png)
 
 
-### Activate the Bootloader
+### Upload the Program
 
-Activating the bootloader requires a specific sequence of actions:
+- [ ] Activating the bootloader requires a specific sequence of actions:
 
-1. Press the RESET button, located between the white breadboard and the green Raspberry Pi Pico
-2. While still pressing the RESET button, press the BOOTSEL button on the Raspberry Pi Pico
-3. Release the RESET button
-4. Release the BOOTSEL button
+  1. Press the RESET button, located between the white breadboard and the green Raspberry Pi Pico
+  2. While still pressing the RESET button, press the BOOTSEL button on the Raspberry Pi Pico
+  3. Release the RESET button
+  4. Release the BOOTSEL button
 
-Drag & drop *prelab4.uf2* from the [build/](../build) directory into the mass storage device.
+- [ ] Drag & drop *prelab4.uf2* from the [build/](../build) directory into the mass storage device.
+
+> ⓘ **Note**
+>
+> You will need to use your host operating system's file system to upload the file.
+> The course container does not have access to your computer's USB ports.
 
 
 ### What You Will See

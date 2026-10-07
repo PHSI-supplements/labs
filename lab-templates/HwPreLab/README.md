@@ -44,16 +44,6 @@ You may freely use generative AI tools for the prelabs.
 
 ### Table of Contents
 
-<!--
-- [Inventory the Hardware Kit](https://mynu.instructure.com/courses/13509/assignments/1028634)
-- [Test the Control Panel](https://mynu.instructure.com/courses/13509/assignments/1028627)
-- [Test the Piezobuzzer](https://mynu.instructure.com/courses/13509/assignments/1028628)
-- [Test the Rotary Encoder](https://mynu.instructure.com/courses/13509/assignments/1028629)
-- [Test the Distance Sensor](https://mynu.instructure.com/courses/13509/assignments/1028630)
-- [Test the Servo](https://mynu.instructure.com/courses/13509/assignments/1028631)
-- [Test the Seven-Segment Display](https://mynu.instructure.com/courses/13509/assignments/1028632)
-- [Compile a Program](https://mynu.instructure.com/courses/13509/assignments/1028633)
--->
 - [Inventory the Hardware Kit](doc/01-inventory.md)
 - [Test the Control Panel](doc/02-control-panel.md)
 - [Test the Piezobuzzer](doc/03-piezobuzzer.md)
@@ -70,11 +60,11 @@ Their sole purpose is to uncover problems with the hardware kit and to set up yo
 
 
 ---
-<!--
+
 |                 |                              |             [➡️](doc/01-inventory.md)             |
 |:---------------:|:----------------------------:|:-------------------------------------------------:|
 |                 |                              | [Inventory the Hardware Kit](doc/01-inventory.md) |
--->
+
 Assignment and starter code © Christopher A. Bohn,
 licensed under the Creative Commons Attribution 4.0 International License
 and under the Apache License Version 2.0, respectively.

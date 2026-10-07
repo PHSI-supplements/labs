@@ -5,7 +5,7 @@
 > Archie helpfully points out that any challenge is also an opportunity to succeed.
 > You suspect your job will offer plenty of "opportunities to succeed."
 >
-> <!--![Meme from the original 'Jurassic Park' movie. Top: Hammond, with the caption 'Spares No Expense'. Bottom: Nedry, with the caption 'Hires One IT Guy'. Original images © Universal Studios and Amblin Entertainment, Inc. Meme creator unknown.](some-expenses-spared.png)-->
+> <!--![Meme from the original 'Jurassic Park' movie. Top: Hammond, with the caption 'Spares No Expense'. Bottom: Nedry, with the caption 'Hires One IT Guy'. Original media © Universal Studios and Amblin Entertainment, Inc. Meme creator unknown.](some-expenses-spared.png)-->
 > <figure>
 >   <img src="some-expenses-spared.png" width="50%" alt="Meme from the original 'Jurassic Park' movie. Top: Hammond, with the caption 'Spares No Expense'. Bottom: Nedry, with the caption 'Hires One IT Guy'.">
 >   <figcaption>Some expenses were spared. <small>Original images © Universal Studios and Amblin Entertainment, Inc. Meme creator unknown.</small></figcaption>

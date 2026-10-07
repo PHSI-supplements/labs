@@ -16,21 +16,26 @@ In this pre-lab, you will learn how to connect an unpowered peripheral to the Co
 - [ ] Disconnect the Cow Pi from your computer.
 - [ ] Hold the piezobuzzer module next to the sockets on the left-side of the Cow Pi.
   Align the piezobuzzer module's **TONE** pin with the Cow Pi's **GP22**, and the piezobuzzer module's **GND** pin with the **GND** socket adjacent to GP22.<br>
-  <img src="images/piezobuzzer_module/line-up-piezo.png" width="300" alt="A piezobuzzer module held next to the Cow Pi board with the TONE pin aligned with the GP22 socket and the GND pin aligned to the adjacent GND pin.">
+  ![A piezobuzzer module held next to the Cow Pi board with the TONE pin aligned with the GP22 socket and the GND pin aligned to the adjacent GND pin.](media/piezobuzzer_module/line-up-piezo.png)
 - [ ] Slide the piezobuzzer module's TONE and GND pins into the GP22 and GND sockets.<br>
-  <img src="images/piezobuzzer_module/insert-piezo.png" width="300" alt="A piezobuzzer module inserted into a Cow Pi's sockets.">
+  ![A piezobuzzer module inserted into a Cow Pi's sockets.](media/piezobuzzer_module/insert-piezo.png)
 
 
-### Activate the Bootloader
+### Upload the Program
 
-Activating the bootloader requires a specific sequence of actions:
+- [ ] Activating the bootloader requires a specific sequence of actions:
 
-1. Press the RESET button, located between the white breadboard and the green Raspberry Pi Pico
-2. While still pressing the RESET button, press the BOOTSEL button on the Raspberry Pi Pico
-3. Release the RESET button
-4. Release the BOOTSEL button
+  1. Press the RESET button, located between the white breadboard and the green Raspberry Pi Pico
+  2. While still pressing the RESET button, press the BOOTSEL button on the Raspberry Pi Pico
+  3. Release the RESET button
+  4. Release the BOOTSEL button
 
-Drag & drop *prelab3.uf2* from the [build/](../build) directory into the mass storage device.
+- [ ] Drag & drop *prelab3.uf2* from the [build/](../build) directory into the mass storage device.
+
+> ⓘ **Note**
+>
+> You will need to use your host operating system's file system to upload the file.
+> The course container does not have access to your computer's USB ports.
 
 
 ### What You Will Hear
