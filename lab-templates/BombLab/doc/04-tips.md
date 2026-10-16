@@ -19,25 +19,25 @@ Launch GDB: `gdb build/bomb`
 
 #### Stepping through the program
 
-| GDB Command                                                         |                      abbreviation                      | What it does                                                                 |
-|:--------------------------------------------------------------------|:------------------------------------------------------:|:-----------------------------------------------------------------------------|
-| `refresh`                                                           |                                                        | Redraws the TUI, which may get garbled after the program prints              |
-| `break <where>`                                                     |                      `b <where>`                       | Sets a breakpoint at `<where>` in the program                                |
-| `delete <number>`                                                   |                      `d <number>`                      | Deletes breakpoint `<number>`                                                |
-| `clear`                                                             |                                                        | Deletes all breakpoints                                                      |
-| `tbreak <where>`                                                    |                      `tb <where>`                      | Temporarily sets a breakpoint at `<where>` that gets deleted after one break |
-| `info break`                                                        |                                                        | Lists the breakpoings that you have set                                      |
-| `step`                                                              |                          `s`                           | Advance one instruction, stepping into function calls                        |
-| `next`                                                              |                          `n`                           | Advance one instruction, stepping over function calls                        |
-| `finish`                                                            |                          `f`                           | Finishes executing the current function and then breaks                      |
-| `continue`                                                          |                          `c`                           | Continues execution until the next breakpoint                                |
-| `print <expression>` or `print/[format-specifier] <expression>`     | `p <expression>` or `p/[format-specifier] <expression` | Prints `<expression>` as a value (or address); does not dereference pointers |
-| `x <expression>` or `x/[format-specifier> <expression>`             |                                                        | Dereferences `<expression>` to show the contents of memory                   |
-| `display <expression>` or `display/[format-specifier] <expression>` | `d <expression>` or `d/[format-specifier] <expression` | Runs `x ...` after each step                                                 |
-| `undisplay <number>`                                                |                   `undisp <number>`                    | Stops displaying display `<number>`                                          |
-| `kill`                                                              |                          `k`                           | Kills the program in the debugger                                            |
-| `run`                                                               |                          `r`                           | Launches the program in the debugger                                         |
-| `quit`                                                              |                          `q`                           | Exits the debugger                                                           |
+| GDB Command                                                         |                      abbreviation                       | What it does                                                                 |
+|:--------------------------------------------------------------------|:-------------------------------------------------------:|:-----------------------------------------------------------------------------|
+| `refresh`                                                           |                                                         | Redraws the TUI, which may get garbled after the program prints              |
+| `break <where>`                                                     |                       `b <where>`                       | Sets a breakpoint at `<where>` in the program                                |
+| `delete <number>`                                                   |                      `d <number>`                       | Deletes breakpoint `<number>`                                                |
+| `clear`                                                             |                                                         | Deletes all breakpoints                                                      |
+| `tbreak <where>`                                                    |                      `tb <where>`                       | Temporarily sets a breakpoint at `<where>` that gets deleted after one break |
+| `info break`                                                        |                                                         | Lists the breakpoings that you have set                                      |
+| `step`                                                              |                           `s`                           | Advance one instruction, stepping into function calls                        |
+| `next`                                                              |                           `n`                           | Advance one instruction, stepping over function calls                        |
+| `finish`                                                            |                           `f`                           | Finishes executing the current function and then breaks                      |
+| `continue`                                                          |                           `c`                           | Continues execution until the next breakpoint                                |
+| `print <expression>` or `print/[format-specifier] <expression>`     | `p <expression>` or `p/[format-specifier] <expression>` | Prints `<expression>` as a value (or address); does not dereference pointers |
+| `x <expression>` or `x/[format-specifier] <expression>`             |                                                         | Dereferences `<expression>` to show the contents of memory                   |
+| `display <expression>` or `display/[format-specifier] <expression>` | `d <expression>` or `d/[format-specifier] <expression>` | Runs `x ...` after each step                                                 |
+| `undisplay <number>`                                                |                    `undisp <number>`                    | Stops displaying display `<number>`                                          |
+| `kill`                                                              |                           `k`                           | Kills the program in the debugger                                            |
+| `run`                                                               |                           `r`                           | Launches the program in the debugger                                         |
+| `quit`                                                              |                           `q`                           | Exits the debugger                                                           |
 
 In BombLab,
 - `<where>` can be:

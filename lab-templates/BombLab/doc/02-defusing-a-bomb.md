@@ -48,7 +48,7 @@ This is a crucial skill that will pay big dividends the rest of your career.
 
 There are many ways of defusing your bomb.
 - You can examine it in great detail without ever running the program, and figure out exactly what it does.  
-  This is a useful technique, but it not always easy to do.
+  This is a useful technique, but it is not always easy to do.
 - You can run it under a debugger, watch what it does step by step, and use this information to defuse it.
   This is probably the fastest way of defusing it.
 - Do not attempt to brute force the bomb.

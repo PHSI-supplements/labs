@@ -18,13 +18,13 @@ ethumbs.db
 
 # target directories
 [Bb]in/
-[Bb]uild/
+[Bb]uild/*
 [Oo]ut/
 cmake-build-*/
 .pio/
 
 # but we'll allow prelab2.uf2 through prelab7.uf2
-!build/prelab?.uf2
+!build/prelab[2-7].uf2
 
 # Java
 *.class

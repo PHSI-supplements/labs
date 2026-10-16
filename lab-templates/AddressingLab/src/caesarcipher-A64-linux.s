@@ -13,8 +13,6 @@
 // AddressingLab solution (c) the above-named student
 //
 
-// TODO: test this implementation
-
     .arch armv8-a
     .text
 

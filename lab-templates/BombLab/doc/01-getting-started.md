@@ -71,15 +71,6 @@ After [rebuilding the container image](../README.md#rebuild-the-docker-image), l
 
 Elsewhere, we have documented some [useful GDB commands](04-tips.md#useful-gdb-commands).
 
-> ⓘ **Note**
->
-> When you run the bomb in GDB, you will see this warning:
-> ```text
-> warning: Error disabling address space randomization: Operation not permitted
-> ```
-> You can ignore that for now.
-> We'll discuss what that means when we go over the Chapter 7 material.
-
 
 ---
 

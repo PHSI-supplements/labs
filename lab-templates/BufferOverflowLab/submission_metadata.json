@@ -1,0 +1,15 @@
+{
+  "late_days_used": 0,
+  "partner": null,
+  "external_references_used": [],
+  "environment": {
+    "architecture": "@ARCH@",
+    "os": "@OS@"
+  },
+  "usage_notes": [
+    "'late_days_used' must be an integer (no quotes).",
+    "'partner' must be a string (with quotes), or null if you worked alone. If you have a partner, be sure to commit your changes at the end of your lab day.",
+    "'external_references_used' must be a list of strings (URLs or descriptions).",
+    "'environment' will be auto-populated; do not edit it."
+  ]
+}
