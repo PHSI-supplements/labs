@@ -32,7 +32,7 @@ Can you make the program compare the expected student ID (integer or string vers
 
 Try to find any way to attack the program to circumvent the guardrails and make the program produce an exit code of `0`.
 
-- [ ] Open the [BufferOverflowLab Bonus Credit](https://canvas.unl.edu/courses/209782/assignments/2287662) assignment in Canvas.
+- [ ] Open the [BufferOverflowLab Bonus Credit](https://mynu.instructure.com/courses/13509/assignments/1028594) assignment in Canvas.
 - [ ] In the Canvas assignment, describe each attempt to bypass the guardrails that you made, including:
   - Your "reconnaissance" that made you think that you might be able to achieve the bypass.
   - Broadly, how you were going to attempt to achieve that.

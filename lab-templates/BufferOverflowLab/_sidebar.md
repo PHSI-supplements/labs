@@ -1,0 +1,27 @@
+- [CSCE 231 Lab Assignments](/)
+- [BufferOverflowLab](/BufferOverflowLab/)
+
+- [Getting Started](/BufferOverflowLab/doc/01-getting-started.md)
+- What Does the Stack Frame Look Like?
+  - [A64](/BufferOverflowLab/doc/02-stack-frame-a64.md)
+  - [x86-64](/BufferOverflowLab/doc/02-stack-frame-x86-64.md)
+- [Stage 0: Simple Buffer Overflow on the Stack](/BufferOverflowLab/doc/03-stage0.md)
+- [What is Your Student ID?](/BufferOverflowLab/doc/04-student-id.md)
+- Stage 1: Code Injection with Integer Argument
+  - [A64](/BufferOverflowLab/doc/05-stage1-a64.md)
+  - [x86-64](/BufferOverflowLab/doc/05-stage1-x86-64.md)
+- Stage 2: Code Injection with String Argument
+  - [A64](/BufferOverflowLab/doc/06-stage2-a64.md)
+  - [x86-64](/BufferOverflowLab/doc/06-stage2-x86-64.md)
+- Return-Oriented Programming
+  - [A64](/BufferOverflowLab/doc/07-rop-a64.md)
+  - [x86-64](/BufferOverflowLab/doc/07-rop-x86-64.md)
+- [Stage 3: Return-Oriented Programming with Integer Argument](/BufferOverflowLab/doc/08-stage3.md)
+- [Stage 4: Return-Oriented Programming with String Argument](/BufferOverflowLab/doc/09-stage4.md)
+- [Fixing the Code](/BufferOverflowLab/doc/10-fixing-code.md)
+- [Bonus Credit: Jumping the Guardrails](/BufferOverflowLab/doc/11-bonus.md)
+- [Turn-In and Grading](/BufferOverflowLab/doc/12-grading.md)
+- [Appendix A: Generating Instruction Encodings Using Tools](/BufferOverflowLab/doc/AA-assemble-disassemble.md)
+- [Appendix B: A64 Instruction Encodings](/BufferOverflowLab/doc/BB-A64-encoding.md)
+- [Appendix C: x86-64 Instruction Encodings](/BufferOverflowLab/doc/CC-x86-64-encoding.md)
+

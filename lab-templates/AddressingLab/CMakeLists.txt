@@ -15,6 +15,9 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 endif()
 
+
+## Determine the operating environment
+
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(OS linux)
 #elseif(APPLE)
@@ -69,6 +72,9 @@ if(META_CONTENTS MATCHES "@ARCH@" OR META_CONTENTS MATCHES "@OS@")
     configure_file("${META_SRC}" "${META_TMP}" @ONLY)
     file(COPY_FILE "${META_TMP}" "${META_SRC}")
 endif()
+
+
+## Do the build
 
 ### Executables
 

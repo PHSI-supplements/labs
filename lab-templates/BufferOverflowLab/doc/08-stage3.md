@@ -70,6 +70,6 @@ build/target 0 < data/stage3.raw
 
 ---
 
-|             [⬅️](07-rop.md)              |      [⬆️](../README.md)      |                            [➡️](09-stage4.md)                             |
-|:----------------------------------------:|:----------------------------:|:-------------------------------------------------------------------------:|
-| [Return-Oriented Programming](07-rop.md) | [Front Matter](../README.md) | [Stage 4: Return-Oriented Programming with String Argument](09-stage4.md) |
+|                            [⬅️ A64](07-rop-a64.md) <br> [⬅️ x86-64](07-rop-x86-64.md)                            |      [⬆️](../README.md)      |                            [➡️](09-stage4.md)                             |
+|:----------------------------------------------------------------------------------------------------------------:|:----------------------------:|:-------------------------------------------------------------------------:|
+| [Return-Oriented Programming (A64)](07-rop-a64.md) <br> [Return-Oriented Programming (x86-64)](07-rop-x86-64.md) | [Front Matter](../README.md) | [Stage 4: Return-Oriented Programming with String Argument](09-stage4.md) |

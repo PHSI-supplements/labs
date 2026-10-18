@@ -12,12 +12,28 @@ In this assignment, you will gain firsthand experience with methods used to expl
 
 > ❗️ **Important**
 > 
-> The instructions are written assuming you will run the code on nuros.unl.edu. 
-> Specifically, the assembly code file is written for an x86-64 processor running a Linux operating system. 
+> The instructions are written assuming you will run the bomb in the course container.
+> Specifically, the assembly code file is written for x86-64 processors and AArch64 processors running a Linux operating system.
 > If you wish, you may edit your attack strings in a different environment;
-> however, you will not be able to generate a target executable on a Linux system,
-> an attack designed for an Arm processor will not work on an x86 processor, 
-> and we will grade your attacks on nuros.
+> however, you will not be able to generate a target executable except on a Linux system.
+> We will grade your attacks in the course container.
+
+> ❗️ **Important**
+>
+> When you initially configure the project,
+> CMake will detect your system's environment.
+>
+> The *submission_metadata.json* file includes an "environment" object:
+> ```
+>  "environment": {
+>    "architecture": "@ARCH@",
+>    "os": "@OS@"
+>  },
+> ```
+> CMake will replace the placeholder values with the actual values for your system.
+> We will use this information to determine which environment we should use when grading.
+> **Please do not manually edit the "environment" object.**
+> You may edit the other values as before.
 
 The attack portion of this assignment is worth 32 points, and identifying how to fix the vulnerability is worth 1 point.
 
@@ -41,7 +57,7 @@ The attack portion of this assignment is worth 32 points, and identifying how to
 
 ### Submission Deadline
 
-This assignment is due **the week of March 23, before the start of your lab section**.
+This assignment is due **the week of October 26, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
@@ -73,23 +89,28 @@ No other use of generative AI is permitted on this assignment without explicit p
 ### Table of Contents
 
 - [Getting Started](doc/01-getting-started.md)
-- [What Does the Stack Frame Look Like?](doc/02-stack-frame.md)
+- What Does the Stack Frame Look Like?
+  - [A64](doc/02-stack-frame-a64.md)
+  - [x86-64](doc/02-stack-frame-x86-64.md)
 - [Stage 0: Simple Buffer Overflow on the Stack](doc/03-stage0.md)
 - [What is Your Student ID?](doc/04-student-id.md)
-- [Stage 1: Code Injection with Integer Argument](doc/05-stage1.md)
-- [Stage 2: Code Injection with String Argument](doc/06-stage2.md)
-- [Return-Oriented Programming](doc/07-rop.md)
+- Stage 1: Code Injection with Integer Argument
+  - [A64](doc/05-stage1-a64.md)
+  - [x86-64](doc/05-stage1-x86-64.md)
+- Stage 2: Code Injection with String Argument
+  - [A64](doc/06-stage2-a64.md)
+  - [x86-64](doc/06-stage2-x86-64.md)
+- Return-Oriented Programming
+  - [A64](doc/07-rop-a64.md)
+  - [x86-64](doc/07-rop-x86-64.md)
 - [Stage 3: Return-Oriented Programming with Integer Argument](doc/08-stage3.md)
 - [Stage 4: Return-Oriented Programming with String Argument](doc/09-stage4.md)
 - [Fixing the Code](doc/10-fixing-code.md)
-- [Bonus Credit](doc/11-bonus.md)
+- [Bonus Credit: Jumping the Guardrails](doc/11-bonus.md)
 - [Turn-In and Grading](doc/12-grading.md)
 - [Appendix A: Generating Instruction Encodings Using Tools](doc/AA-assemble-disassemble.md)
-- [Appendix B: x86-64 Instruction Encodings](doc/BB-x86-64-encoding.md)
-- [Appendix C: A64 Instruction Encodings](doc/CC-A64-encoding.md)
-<!--
-- [Appendix A: Using `hex2raw`](doc/AA-using-hex2raw.md)
--->
+- [Appendix B: A64 Instruction Encodings](doc/BB-A64-encoding.md)
+- [Appendix C: x86-64 Instruction Encodings](doc/CC-x86-64-encoding.md)
 
 ### Learning Objectives
 
@@ -104,10 +125,9 @@ After successful completion of this assignment, students will be able to:
 
 ### Assignment Summary
 
-[//]: # (TODO: link "code injection" to the relevant discussion if we add a page for that)
 In this assignment, you will cause a buffer on the program stack to overflow, allowing you to overwrite a function call's return address.
 In the code injection portion of the assignment, you will change the return address to point to a snippet of assembly code that you have written to change the program's behavior.
-In the [return-oriented programming](doc/07-rop.md) portion of the assignment, you will create a series of pointers that point to pre-existing instructions, each of which will achieve part of the desired new behavior.  
+In the return-oriented programming portion of the assignment, you will create a series of pointers that point to pre-existing instructions, each of which will achieve part of the desired new behavior.  
 
 > 🤠 **No Blackhats**
 >

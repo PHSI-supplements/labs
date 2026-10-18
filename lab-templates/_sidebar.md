@@ -9,7 +9,7 @@
   - [AddressingLab](/AddressingLab/README.md)
   - [BombLab](/BombLab/README.md)
   - [HwPreLab](/HwPreLab/README.md)
-  - BufferOverflowLab
+  - [BufferOverflowLab](/BufferOverflowLab/README.md)
   - DuplicatorLab
   - ControlPanelLab
   - CalculatorLab

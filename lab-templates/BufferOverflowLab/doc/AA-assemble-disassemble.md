@@ -1,8 +1,9 @@
-## Generating Instruction Encodings Using Tools
+## Appendix A: Generating Instruction Encodings Using Tools
 
 You can use `gcc` or `clang` as an assembler to turn the assembly code instructions for your attack into machine code.
 You can then use `objdump` as a disassembler to obtain the bytes for those instructions.
 
+[//]: # (TODO: Consider splitting this into ISA-specific pages)
 
 ### x86-64
 
@@ -105,6 +106,6 @@ You can pass this file through `hex2raw` before sending it to `target`.
 
 ---
 
-|         [⬅️](12-grading.md)          |      [⬆️](../README.md)      |              [➡️](BB-x86-64-encoding.md)              |
+|         [⬅️](12-grading.md)          |      [⬆️](../README.md)      |              [➡️](CC-x86-64-encoding.md)              |
 |:------------------------------------:|:----------------------------:|:-----------------------------------------------------:|
-| [Turn-In and Grading](12-grading.md) | [Front Matter](../README.md) | [x86-64 Instruction Encodings](BB-x86-64-encoding.md) |
+| [Turn-In and Grading](12-grading.md) | [Front Matter](../README.md) | [x86-64 Instruction Encodings](CC-x86-64-encoding.md) |

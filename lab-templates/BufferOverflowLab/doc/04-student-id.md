@@ -75,6 +75,6 @@ but a few will:
 
 ---
 
-|                      [⬅️](03-stage0.md)                      |      [⬆️](../README.md)      |                      [➡️](05-stage1.md)                       |
-|:------------------------------------------------------------:|:----------------------------:|:-------------------------------------------------------------:|
-| [Stage 0: Simple Buffer Overflow on the Stack](03-stage0.md) | [Front Matter](../README.md) | [Stage 1: Code Injection with Integer Argument](05-stage1.md) |
+|                      [⬅️](03-stage0.md)                      |      [⬆️](../README.md)      |                                              [A64 ➡️](05-stage1-a64.md) <br> [x86-64 ➡️](05-stage1-x86-64.md)                                              |
+|:------------------------------------------------------------:|:----------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| [Stage 0: Simple Buffer Overflow on the Stack](03-stage0.md) | [Front Matter](../README.md) | [Stage 1: Code Injection with Integer Argument (A64)](05-stage1-a64.md) <br> [Stage 1: Code Injection with Integer Argument (x86-64)](05-stage1-x86-64.md) |

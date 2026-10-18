@@ -53,7 +53,7 @@ In this assignment, you will gain greater familiarity with assembly code by step
 > ❗️ **Important**
 >
 > The instructions are written assuming you will run the bomb in the course container.
-> Specifically, the bomb should run on any x86-64 processor or AAarch64 processor running Linux, but we know it runs in the course container.
+> Specifically, the bomb should run on any x86-64 processor or AArch64 processor running Linux, but we know it runs in the course container.
 > The bomb will not run in a Windows or macOS operating system.
 
 > ❗️ **Important**
@@ -71,7 +71,7 @@ In this assignment, you will gain greater familiarity with assembly code by step
 >  },
 > ```
 > CMake will replace the placeholder values with the actual values for your system.
-> We will use this information to determine which assembly code file we should grade.
+> We will use this information to determine which environment and which bomb we should use when grading.
 > **Please do not manually edit the "environment" object.**
 > You may edit the other values as before.
 

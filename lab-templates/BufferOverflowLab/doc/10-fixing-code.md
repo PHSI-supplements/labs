@@ -3,7 +3,7 @@
 > 📇 **Scenario, continued**
 >
 > Everything seems to have been set right.
-> You have a suspicion that if this disaster were to have happened seven months from now,
+> You have a suspicion that if this disaster were to have happened five months from now,
 > that you'd have a couple more functions to execute and would have to contend with a
 > 
 > > 🛡️ ***Compiler-Level Protection***
@@ -34,7 +34,7 @@ size_t get_input(void) {
 
 What change can you make to this function to prevent a buffer overflow? 
 
-- [ ] Open the [BufferOverflowLab Fixing the Code](https://canvas.unl.edu/courses/209782/assignments/2287658) quiz in Canvas.
+- [ ] Open the [BufferOverflowLab Fixing the Code](https://mynu.instructure.com/courses/13509/assignments/1028595) quiz in Canvas.
 - [ ] Place your answer in the Canvas quiz.
 
 

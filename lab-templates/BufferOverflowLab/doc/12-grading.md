@@ -32,11 +32,11 @@ This assignment is worth 33 points.
 - [ ] **+7** Complete Stage 2
 - [ ] **+7** Complete Stage 3
 - [ ] **+7** Complete Stage 4
-- [ ] **+1** Identify in this [Canvas assignment](https://canvas.unl.edu/courses/209782/assignments/2287658) how to fix the buffer overflow vulnerability
+- [ ] **+1** Identify in this [Canvas assignment](https://mynu.instructure.com/courses/13509/assignments/1028595) how to fix the buffer overflow vulnerability
 - Bonus:
   - [ ] **up to +2** Attempt to bypass the guardrails
   - [ ] **+1** for each successful attack that bypasses the guardrails, if you are the first to report a particular exploit
-  - Use this [Canvas assignment](https://canvas.unl.edu/courses/209782/assignments/2287662) to describe your attempts to jump the guardrails; use email or a private Piazza post to report an exploit that successfully bypasses the guardrails
+  - Use this [Canvas assignment](https://mynu.instructure.com/courses/13509/assignments/1028594) to describe your attempts to jump the guardrails; use email or a private Piazza post to report an exploit that successfully bypasses the guardrails
 
 
 ---

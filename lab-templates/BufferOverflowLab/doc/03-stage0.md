@@ -16,6 +16,8 @@ so that when the vulnerable function returns, it will "return" to the start of `
 > 
 > We will look for your attack string in `data/stage0.hex`.
 
+[//]: # (TODO: Consider splitting this into ISA-specific pages)
+
 
 ### Determine the Size of your Attack String
 
@@ -24,7 +26,7 @@ so that when the vulnerable function returns, it will "return" to the start of `
   objdump -d build/target > data/target.d
   ```
 - [ ] Open `data/target.d` and locate the `get_input` function.
-- [ ] Using the information from [the discussion about stack frames](02-stack-frame.md),
+- [ ] Using the information from the discussion about stack frames ([A64](02-stack-frame-a64.md), [x86-64](02-stack-frame-x86-64.md)),
   study the function's prologue to determine how large `get_input`'s stack frame is.
   - Look for the space used to save registers and the space allocated for local variables.
 - [ ] Your attack will overwrite the return address;
@@ -32,7 +34,7 @@ so that when the vulnerable function returns, it will "return" to the start of `
   > ⓘ **Note**
   > 
   > On AArch64, the return address you overwrite might be in the caller's frame.
-  > (See the earlier [discussion about the AArch64 stack](02-stack-frame.md#aarch64-stack-frame-with-a-small-buffer).)
+  > (See the earlier [discussion about the AArch64 stack](02-stack-frame-a64.md#aarch64-stack-frame-with-a-small-buffer).)
 - [ ] Within `get_input()`, locate the function call to `get_s`.
 - [ ] Shortly before the function call will be a line of code that places the buffer's address into the first-argument register (`%rdi` for x86-64<!--, `x0` for AArch64, `r0` for AArch32-->).
   Locate that line of code and determine where the start of the buffer is relative to the address in the stack pointer (*i.e.*, relative to the low-address end of the stack frame).
@@ -51,7 +53,7 @@ so that when the vulnerable function returns, it will "return" to the start of `
 For example, if there were 16 bytes between the start of the buffer and the start of the return address,
 and if `activate_pa_system`'s address were 0x1234'5678 then you would put something like this in `stage0.hex`:
 
-[//]: # (TODO distinguish between x86-64 & A64 example and T32 example)
+[//]: # (TODO distinguish between 64-bit example and 32-bit example)
 ```
 00 00 00 00 00 00 00 00    // 00 is a common choice for padding
 3E 3E 3E 3E 3E 3E 3E 3E    // something a visually-distinctive is also a good choice
@@ -107,7 +109,7 @@ A successful attack will result in one of two outputs:
 [GRADING] Stage 0 cleared.
 ```
 
-On an x86-64 system, you are likely to see this:
+On an x86-64 system, you may see this:
 
 ```
 [INFO] You reached activate_pa_system!
@@ -127,7 +129,7 @@ So we allow credit for stage 0 with a misaligned stack pointer on an x86-64 syst
 
 In later stages you'll have many options to ensure the stack pointer is properly aligned when entering a checkpoint function.
 If your attack would cause a misaligned stack pointer, we'll expect you to think of one of these options and incorporate it into your attack.
-You will want to review [the discussion about x86-64 stack alignment](02-stack-frame.md#x86-64-stack-alignment).
+You will want to review [the discussion about x86-64 stack alignment](02-stack-frame-x86-64.md#x86-64-stack-alignment).
 Reflect on why -- in *normal* operation, when the program arrives at the start function from a function call -- an x86-64 function's prologue must re-align the stack pointer to a 16-byte boundary.
 Reflect also on why your stage 0 attack -- which caused the program to arrive at a function from a `ret` instruction -- resulted in the function's prologue causing the stack pointer's alignment to be off by 8.
 
@@ -139,6 +141,6 @@ You will find it to be less frustrating if you anticipate whether it will or won
 
 ---
 
-|                  [⬅️](02-stack-frame.md)                  |      [⬆️](../README.md)      |            [➡️](04-student-id.md)            |
-|:---------------------------------------------------------:|:----------------------------:|:--------------------------------------------:|
-| [What Does the Stack Frame Look Like?](02-stack-frame.md) | [Front Matter](../README.md) | [What is Your Student ID?](04-student-id.md) |
+|                                     [⬅️ A64](02-stack-frame-a64.md) <br> [⬅️ x86-64](02-stack-frame-x86-64.md)                                     |      [⬆️](../README.md)      |            [➡️](04-student-id.md)            |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------:|:--------------------------------------------:|
+| [What Does the Stack Frame Look Like? (A64)](02-stack-frame-a64.md) <br> [What Does the Stack Frame Look Like? (x86-64)](02-stack-frame-x86-64.md) | [Front Matter](../README.md) | [What is Your Student ID?](04-student-id.md) |

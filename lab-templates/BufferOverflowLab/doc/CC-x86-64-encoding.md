@@ -1,4 +1,4 @@
-## x86-64 Instruction Encodings
+## Appendix C: x86-64 Instruction Encodings
 
 To keep the options simple, we will limit the available registers to x86's original eight "named" registers.
 Among those eight, the corresponding register numbers are:
@@ -370,6 +370,6 @@ While these are unlikely to appear intentionally, they can be useful when lookin
 
 ---
 
-|                      [⬅️](AA-assemble-disassemble.md)                      |      [⬆️](../README.md)      |            [➡️](CC-A64-encoding.md)             |
+|                      [⬅️](AA-assemble-disassemble.md)                      |      [⬆️](../README.md)      |            [➡️](BB-A64-encoding.md)             |
 |:--------------------------------------------------------------------------:|:----------------------------:|:-----------------------------------------------:|
-| [Generating Instruction Encodings Using Tools](AA-assemble-disassemble.md) | [Front Matter](../README.md) | [A64 Instruction Encodings](CC-A64-encoding.md) |
+| [Generating Instruction Encodings Using Tools](AA-assemble-disassemble.md) | [Front Matter](../README.md) | [A64 Instruction Encodings](BB-A64-encoding.md) |

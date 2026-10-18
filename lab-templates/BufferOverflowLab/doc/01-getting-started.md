@@ -44,16 +44,21 @@ The TAs will also demonstrate solving Stage 0.
 During the remaining time, the TAs will be available to answer questions.
 
 
+### Run BufferOverflowLab in the Terminal Only
+
+You can edit the <tt>data/stage*nn*.hex</tt> files in your editor of choice, but **you must run BufferOverflowLab in the terminal**, in the course container.
+(There's no pedagogical reason for this; it's simply that sending the attack string to the target's `stdin` file stream is most easily accomplished with UNIX I/O redirection.)
+
+
 ### Configuring, Building, and Disassembling the Project
 
 > ❗️ **Important**
 >
-> The instructions are written assuming you will run the code on nuros.unl.edu.
-> Specifically, the assembly code file is written for an x86-64 processor running a Linux operating system.
+> The instructions are written assuming you will run the bomb in the course container.
+> Specifically, the assembly code file is written for x86-64 processors and AArch64 processors running a Linux operating system.
 > If you wish, you may edit your attack strings in a different environment;
-> however, you will not be able to generate a target executable on a Linux system,
-> an attack designed for an Arm processor will not work on an x86 processor,
-> and we will grade your attacks on nuros.
+> however, you will not be able to generate a target executable except on a Linux system.
+> We will grade your attacks in the course container.
 
 The project consists of the target's source code in the `src/` directory, and of <tt>stage*nn*.hex</tt> files in the `data/` directory.
 You will not need to (and should not) edit the source code.
@@ -326,6 +331,6 @@ The program can, however, provide the category of error:
 
 ---
 
-|                 |      [⬆️](../README.md)      |                  [➡️](02-stack-frame.md)                  |
-|:---------------:|:----------------------------:|:---------------------------------------------------------:|
-|                 | [Front Matter](../README.md) | [What Does the Stack Frame Look Like?](02-stack-frame.md) |
+|                 |      [⬆️](../README.md)      |                                     [A64 ➡️](02-stack-frame-a64.md) <br> [x86-64 ➡️](02-stack-frame-x86-64.md)                                     |
+|:---------------:|:----------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------:|
+|                 | [Front Matter](../README.md) | [What Does the Stack Frame Look Like? (A64)](02-stack-frame-a64.md) <br> [What Does the Stack Frame Look Like? (x86-64)](02-stack-frame-x86-64.md) |

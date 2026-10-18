@@ -15,6 +15,9 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 endif()
 
+
+## Determine the operating environment
+
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(OS linux)
 else()

@@ -1,4 +1,4 @@
-## A64 Instruction Encodings
+## Appendix B: A64 Instruction Encodings
 
 - [Register-register move](#register-register-move)
 - [Immediate-register move](#immediate-register-move)
@@ -192,6 +192,6 @@ The encoding for `nop` is:
 
 ---
 
-|              [⬅️](BB-x86-64-encoding.md)              |      [⬆️](../README.md)      |                           |
+|              [⬅️](CC-x86-64-encoding.md)              |      [⬆️](../README.md)      |                           |
 |:-----------------------------------------------------:|:----------------------------:|:-------------------------:|
-| [x86-64 Instruction Encodings](BB-x86-64-encoding.md) | [Front Matter](../README.md) |                           |
+| [x86-64 Instruction Encodings](CC-x86-64-encoding.md) | [Front Matter](../README.md) |                           |

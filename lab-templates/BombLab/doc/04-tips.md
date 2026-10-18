@@ -21,12 +21,12 @@ Launch GDB: `gdb build/bomb`
 
 | GDB Command                                                         |                      abbreviation                       | What it does                                                                 |
 |:--------------------------------------------------------------------|:-------------------------------------------------------:|:-----------------------------------------------------------------------------|
-| `refresh`                                                           |                                                         | Redraws the TUI, which may get garbled after the program prints              |
+| `refresh`                                                           |                          `ref`                          | Redraws the TUI, which may get garbled after the program prints              |
 | `break <where>`                                                     |                       `b <where>`                       | Sets a breakpoint at `<where>` in the program                                |
 | `delete <number>`                                                   |                      `d <number>`                       | Deletes breakpoint `<number>`                                                |
 | `clear`                                                             |                                                         | Deletes all breakpoints                                                      |
 | `tbreak <where>`                                                    |                      `tb <where>`                       | Temporarily sets a breakpoint at `<where>` that gets deleted after one break |
-| `info break`                                                        |                                                         | Lists the breakpoings that you have set                                      |
+| `info break`                                                        |                                                         | Lists the breakpoints that you have set                                      |
 | `step`                                                              |                           `s`                           | Advance one instruction, stepping into function calls                        |
 | `next`                                                              |                           `n`                           | Advance one instruction, stepping over function calls                        |
 | `finish`                                                            |                           `f`                           | Finishes executing the current function and then breaks                      |
