@@ -62,7 +62,7 @@ You will also need the address of your buffer.
 
   > 😖 **Avoid Frustration**
   >
-  > If your assembly code places any data in the caller's frame *other than overwriting the return address*, be mindful that `caller` will overwrite four bytes in its stack.
+  > If your attack string places any data in the caller's frame *other than overwriting the return address*, be mindful that `caller` will overwrite four bytes in its stack.
   > Review `caller`'s assembly code in `data/target.d` to identify which bytes these are, and do not place anything in those bytes that you need for your attack.
 - [ ] Determine the bytes for your assembly instructions' machine code
   - Option 1: [Use tools](AA-assemble-disassemble.md)

@@ -15,41 +15,67 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 endif()
 
-### Executables
-
-#file(GLOB SRC_FILES CONFIGURE_DEPENDS src/*.c)
-#file(GLOB HDR_FILES CONFIGURE_DEPENDS src/*.h)      # some IDEs need this
-#
-#add_executable(duplicator ${SRC_FILES} ${HDR_FILES})
-
-add_executable(duplicator src/duplicatorlab.c src/duplicator.h src/duplicator.c)
+### Libraries
 
 find_package(Threads REQUIRED)
-target_link_libraries(duplicator PRIVATE Threads::Threads)
+
+add_library(thread-sanitizer INTERFACE)
+if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(thread-sanitizer INTERFACE
+            -fsanitize=thread
+    )
+    target_link_options(thread-sanitizer INTERFACE
+            -fsanitize=thread
+    )
+endif()
+
+add_library(student_code STATIC src/duplicator.h src/duplicator.c)
+target_link_libraries(student_code PRIVATE thread-sanitizer)
+
+### Executables
+
+add_executable(duplicator src/duplicatorlab.c)
+
+target_link_libraries(duplicator PRIVATE
+        Threads::Threads
+        thread-sanitizer
+        student_code
+)
 
 if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     if (INSTRUCTOR_BUILD)
         target_compile_options(duplicator PRIVATE -w)
+        target_compile_options(student_code PRIVATE -w)
     else()
         target_compile_options(duplicator PRIVATE
             -Wall
             -Wextra
             -Wno-unused-parameter
         )
+        target_compile_options(student_code PRIVATE
+                -Wall
+                -Wextra
+                -Wno-unused-parameter
+        )
     endif()
     target_compile_options(duplicator PRIVATE -Og)
+    target_compile_options(student_code PRIVATE -Og)
 endif()
 
 ### Unit Tests
 
-file (GLOB TEST_SOURCES CONFIGURE_DEPENDS test/*.c)
+file(GLOB TEST_SOURCES CONFIGURE_DEPENDS test/*.c)
 
-foreach (test_src ${TEST_SOURCES})
+foreach(test_src ${TEST_SOURCES})
     get_filename_component(test_name ${test_src} NAME_WE)
-    add_executable(${test_name} ${test_src} test/unit-tests.h src/duplicator.h src/duplicator.c)
-#    target_link_libraries(${test_name} PRIVATE student_code)
+    add_executable(${test_name} ${test_src} test/unit-tests.h)
+    target_link_libraries(${test_name} PRIVATE
+            Threads::Threads
+            thread-sanitizer
+            student_code
+    )
     add_test(NAME ${test_name} COMMAND ${test_name})
-endforeach ()
+endforeach()
 
 ### Constraint Check
 

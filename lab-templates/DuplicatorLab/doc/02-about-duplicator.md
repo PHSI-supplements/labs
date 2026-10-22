@@ -11,21 +11,40 @@ We designed *duplicator* specifically for text files so that it's easier for you
 
 [^1]: *duplicator* probably shouldn't be used to copy prehistoric animals' DNA, either.
 
+> ⓘ **Note**
+>
+> If you run the starter code version of `build/duplicator`, then you will see output similar to:
+> ```text
+> ==================
+> WARNING: ThreadSanitizer: data race (pid=102)
+> Read of size 4 at 0xaaaaaaac0010 by thread T2:
+> #0 write_copy /csce231/DuplicatorLab/src/duplicator.c:72 (duplicator+0x10a4) (BuildId: 3c0c394bc9efe3b1d080fda39c404ba2b84fc789)
+> ...
+> ... 81 lines omitted for brevity
+> ...
+>     #1 duplicate /csce231/DuplicatorLab/src/duplicator.c:94 (duplicator+0x1174) (BuildId: 3c0c394bc9efe3b1d080fda39c404ba2b84fc789)
+>     #2 main /csce231/DuplicatorLab/src/duplicatorlab.c:37 (duplicator+0xe14) (BuildId: 3c0c394bc9efe3b1d080fda39c404ba2b84fc789)
+> 
+> SUMMARY: ThreadSanitizer: data race /csce231/DuplicatorLab/src/duplicator.c:50 in read_original
+> ==================
+> ThreadSanitizer: reported 4 warnings
+> ```
+> We will explain ThreadSanitizer later.
 
 For example, running the program with the command 
-```shell
-build/duplicator data/paleolama.txt copy.txt
+```bash
+build/duplicator data/palaeolama.txt copy.txt
 ```
-will create a new file, *copy.txt* that is almost -- but not quite -- a copy of *paleolama.txt*.
+will create a new file, *copy.txt* that is almost -- but not quite -- a copy of *palaeolama.txt*.
 As a shortcut, you can run the command
-```shell
-build/duplicator data/paleolama.txt copy.txt; cat copy.txt
+```bash
+build/duplicator data/palaeolama.txt copy.txt; cat copy.txt
 ````
 to display the contents of *copy.txt* after creating it.
 For reference, here are the contents of the original file:
 
 ```text
-% cat paleolama.txt
+% cat palaeolama.txt
   (\__/)
 (o '' )
    \  \
@@ -40,7 +59,7 @@ For reference, here are the contents of the original file:
 Here is one possible result:
 
 ```text
-% build/duplicator data/paleolama.txt copy.txt; cat copy.txt
+% build/duplicator data/palaeolama.txt copy.txt; cat copy.txt
   (\__/)
    \  \
    \  \
@@ -55,7 +74,7 @@ Here is one possible result:
 Here is another:
 
 ```text
-% build/duplicator data/paleolama.txt copy.txt; cat copy.txt
+% build/duplicator data/palaeolama.txt copy.txt; cat copy.txt
 (o '' )
 (o '' )
 (o '' )
@@ -75,9 +94,9 @@ The problem is that there is a **race condition** in *duplicator.c*.
 > 
 > After you have finished this assignment, you will have removed the race condition, and the command
 > ```shell
-> build/duplicator data/paleolama.txt copy.txt
+> build/duplicator data/palaeolama.txt copy.txt
 > ```
-> will create *copy.txt* that is a perfect copy of *paleolama.txt*.
+> will create *copy.txt* that is a perfect copy of *palaeolama.txt*.
 
 ---
 

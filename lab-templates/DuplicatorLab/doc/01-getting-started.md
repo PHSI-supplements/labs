@@ -10,29 +10,10 @@
 > As you can imagine, duplicating the genetic information for our exhibits can take a long time, and H.Awk realized that we might be able to duplicate the data faster if we had a concurrent program which has one thread reading from the original data and another thread writing the copy.
 > Unfortunately, he ran off to sell samples to the Supersized Safari Syndicate before finishing the duplicator.
 > Right now the duplicator seems to work, but it usually makes imperfect copies.
-> Have you ever seen a paleolama with two noses, four eyes, and no ears!?"
+> Have you ever seen a palaeolama with two noses, four eyes, and no ears!?"
 
 During your lab period, the TAs will explain how the code is designed to work.
 During the remaining time, the TAs will be available to answer questions.
-
-
-### Configuring the Project
-
-#### From VS Code
-
-If you open *only* the `DuplicatorLab` directory in VS Code, then VS Code will automatically configure the project.
-If instead you open the whole lab repository (so `DuplicatorLab` is just a subdirectory), then VS Code will *not* configure the `DuplicatorLab` project automatically.
-If autoconfiguration doesn't happen, then open the Command Palette.
-From the Command Palette, select `CMake: Select Configure Preset`.
-Then select the preset of your choice:
-
-- `default` -- developing on nuros
-- `personal-computer` -- developing on your computer
-
-#### From the Command Line
-
-- `cmake --preset default` -- developing on nuros
-- `cmake --preset personal-computer` -- developing on your computer
 
 
 ### Descriptions of DuplicatorLab Files

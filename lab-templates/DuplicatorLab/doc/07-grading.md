@@ -14,7 +14,7 @@ Be sure that you have pushed your code to git.unl.edu.
 ### No Credit for Uncompilable Code
 
 If the TA cannot create an executable from your code, then your code will be assumed to have no functionality.
-Be sure to compile and test your code on the nuros.unl.edu Linux server with the original driver code, the original header file(s), and the original CMake configuration files.
+Be sure to compile and test your code in the course container with the original driver code, the original header file(s), and the original CMake configuration files.
 
 > ✍️ **One Edit Rule**
 >
@@ -35,23 +35,26 @@ After you have exhausted your late days, any work turned in more than one hour l
 
 This assignment is worth 20 points.
 
-- In <!--*answers.txt*--> the [DuplicatorLab Questions/Answers](https://canvas.unl.edu/courses/209782/assignments/2190100) Canvas quiz:
+- In <!--*answers.txt*--> the [DuplicatorLab Questions/Answers](https://mynu.instructure.com/courses/13509/assignments/1028615) Canvas quiz:
   - [ ] **+3** Provides a valid interleaving that produces the specified output
   - [ ] **+2** Proposes reasonable locations to lock the mutex
   - [ ] **+2** Proposes reasonable locations to unlock the mutex
   - [ ] **+2** Demonstrates that the proposed changes would prevent the shared buffer from being prematurely overwritten
 - In *duplicator.c*:
-  - [ ] **+2** Correctly initializes and destroys the mutex
-  - [ ] **+2** Correctly locks and unlocks the mutex…
+  - [ ] **+1** Correctly initializes and destroys the mutex
+  - [ ] **+1** Correctly locks and unlocks the mutex…
   - [ ] **+1** … and does so in the locations that are identified in <!--*answers.txt*--> the Canvas quiz
-  - [ ] **+3** The duplicator makes correct copies
-  - [ ] **+3** No thread starves
-- Penalties:
-  - [ ] **-1** for each line of code added other than calls to `pthread_mutex_init()`, `pthread_mutex_destroy()`, `pthread_mutex_lock()`, and `pthread_mutex_unlock()`
-  - [ ] **-1** for each line of the starter code edited, moved, or deleted
+- The `duplicator` program:
+  - [ ] **+2** Terminates without deadlock, livelock, or starvation
+  - [ ] **+3** Makes correct copies
+  - [ ] **+3** Produces no `ThreadSanitizer` warnings
+
+[//]: # (- Penalties:)
+[//]: # (  - [ ] **-1** for each line of code added other than calls to `pthread_mutex_init&#40;&#41;`, `pthread_mutex_destroy&#40;&#41;`, `pthread_mutex_lock&#40;&#41;`, and `pthread_mutex_unlock&#40;&#41;`)
+[//]: # (  - [ ] **-1** for each line of the starter code edited, moved, or deleted)
 
 ---
 
-|            [⬅️](05-remove-race-condition.md)             |      [⬆️](../README.md)      |                              |
+|            [⬅️](06-remove-race-condition.md)             |      [⬆️](../README.md)      |                              |
 |:--------------------------------------------------------:|:----------------------------:|:----------------------------:|
-| [Remove the Race Condition](05-remove-race-condition.md) | [Front Matter](../README.md) |                              |
+| [Remove the Race Condition](06-remove-race-condition.md) | [Front Matter](../README.md) |                              |

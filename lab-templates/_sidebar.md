@@ -10,7 +10,7 @@
   - [BombLab](/BombLab/README.md)
   - [HwPreLab](/HwPreLab/README.md)
   - [BufferOverflowLab](/BufferOverflowLab/README.md)
-  - DuplicatorLab
+  - [DuplicatorLab](/DuplicatorLab/README.md)
   - ControlPanelLab
   - CalculatorLab
   - ProximityAlarmLab

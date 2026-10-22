@@ -11,7 +11,7 @@ This assignment is worth 20 points.
 
 ### Submission Deadline
 
-This assignment is due **the week of March 30, before the start of your lab section**.
+This assignment is due **the week of November 2, before the start of your lab section**.
 Your completed assignment must be pushed to git.unl.edu before it is due.
 
 If you have late days available, you may use one or more to extend your deadline.
@@ -35,6 +35,7 @@ If you work with a lab partner, be sure to:
 You may use the CodeHelp.app "virtual TA" for help, and
 you may use "Oscar the AI Tutor" built into the course's textbook.
 You may use other generative AI tools to translate this assignment into another human language.
+You may accept IDE single-line code suggestions, but you may not use an IDE feature that makes multi-line code suggestions.
 No other use of generative AI is permitted on this assignment without explicit permission from Dr. Bohn.
 
 ### Table of Contents
@@ -43,8 +44,9 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [About the Duplicator](doc/02-about-duplicator.md)
 - [Understand the Starter Code](doc/03-understanding-code.md)
 - [Understand the Race Condition](doc/04-understand-race-condition.md)
-- [Remove the Race Condition](doc/05-remove-race-condition.md)
-- [Turn-In and Grading](doc/06-grading.md)
+- [About `ThreadSanitizer`](doc/05-thread-sanitizer.md)
+- [Remove the Race Condition](doc/06-remove-race-condition.md)
+- [Turn-In and Grading](doc/07-grading.md)
 
 ### Learning Objectives
 
@@ -64,6 +66,8 @@ you will use valid interleavings to find suitable locations to lock and unlock a
 This assignment also introduces a couple of concepts that aren’t central this assignment’s objectives but will re-appear in the input/output lab assignments.
 
 #### Constraints
+
+[//]: # (With ThreadSanitizer, we'll try making this an unpenalized constraint in Fall 2026)
 
 Do not add any lines of code other than those specified by the assignment.
 Do not edit, delete, or move any lines of code that are present in the starter code.
@@ -91,19 +95,23 @@ The file *test/example-tests.c* contains two unit tests that correspond to the e
 
 After compiling the project, you can use the command `ctest --test-dir build --output-on-failure` to run the automated unit tests.
 
-> ❗️ **Important**
-> 
-> Running the unit tests once is ***not*** sufficient to demonstrate the absence of a race condition.
-> If you can run the unit tests several times without any failures, then you probably have eliminated the race condition in *duplicator.c*. 
+[//]: # (Thread Sanitizer makes this caveat unnecessary)
 
-<!--
-### Structured Control Flow Only
+[//]: # (> ❗️ **Important**)
+[//]: # (> )
+[//]: # (> Running the unit tests once is ***not*** sufficient to demonstrate the absence of a race condition.)
+[//]: # (> If you can run the unit tests several times without any failures, then you probably have eliminated the race condition in *duplicator.c*. )
 
-In the interest of keeping your code readable, you may not use any `goto` statements,
-nor may you use any `break` statements to exit from a loop,
-nor may you have any functions `return` from within a loop.
-You can use the command `ctest --test-dir build --output-on-failure` to check whether you inadvertently violated this constraint.
--->
+
+[//]: # (Since students shouldn't add any code other than mutex init/destroy/lock/unlock, the structured control flow constraint is unnecessary)
+
+[//]: # (### Structured Control Flow Only)
+[//]: # ()
+[//]: # (In the interest of keeping your code readable, you may not use any `goto` statements,)
+[//]: # (nor may you use any `break` statements to exit from a loop,)
+[//]: # (nor may you have any functions `return` from within a loop.)
+[//]: # (You can use the command `ctest --test-dir build --output-on-failure` to check whether you inadvertently violated this constraint.)
+
 
 ---
 

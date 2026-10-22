@@ -37,21 +37,6 @@ In this assignment, you will gain firsthand experience with methods used to expl
 
 The attack portion of this assignment is worth 32 points, and identifying how to fix the vulnerability is worth 1 point.
 
-<!--
-[//]: # (TODO: update CMakeLists.txt to accommodate this feature)
-> 🔬 **Experimental Feature**
->
-> The *submission_metadata.json* file includes an "environment" object:
-> ```
->  "environment": {
->    "architecture": "@ARCH@",
->    "os": "@OS@"
->  },
-> ```
-> CMake *should* replace the placeholder values with the actual values for nuros.
-> **Please do not manually edit the "environment" object.**
-> You may edit the other values as before.
--->
 
 ## Front Matter
 

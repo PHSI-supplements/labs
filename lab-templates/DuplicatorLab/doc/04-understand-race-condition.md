@@ -1,6 +1,6 @@
 ## Understand the Race Condition
 
-- [ ] Open the [DuplicatorLab Questions/Answers](https://canvas.unl.edu/courses/209782/assignments/2190100) quiz in Canvas.
+- [ ] Open the [DuplicatorLab Questions/Answers](https://mynu.instructure.com/courses/13509/assignments/1028615) quiz in Canvas.
 
 There is a file included with the starter code, *threelines.txt* that contains three lines of text.
 The race condition in the starter code is so pronounced that it can cause errors in the output even when copying only three lines:
@@ -103,6 +103,6 @@ Using the line numbering from [the previous section](03-understanding-code.md), 
 
 ---
 
-|             [⬅️](03-understanding-code.md)              |      [⬆️](../README.md)      |            [➡️](05-remove-race-condition.md)             |
-|:-------------------------------------------------------:|:----------------------------:|:--------------------------------------------------------:|
-| [Understand the Starter Code](03-understanding-code.md) | [Front Matter](../README.md) | [Remove the Race Condition](05-remove-race-condition.md) |
+|             [⬅️](03-understanding-code.md)              |      [⬆️](../README.md)      |           [➡️](05-thread-sanitizer.md)            |
+|:-------------------------------------------------------:|:----------------------------:|:-------------------------------------------------:|
+| [Understand the Starter Code](03-understanding-code.md) | [Front Matter](../README.md) | [About `ThreadSanitizer`](05-thread-sanitizer.md) |

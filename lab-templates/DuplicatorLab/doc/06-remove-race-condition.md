@@ -71,10 +71,27 @@ For example:
     ```
   - [ ] Then try this command several times:
     ```shell
-    build/duplicator data/paleolama.txt copy.txt; cat copy.txt
+    build/duplicator data/palaeolama.txt copy.txt; cat copy.txt
     ```
 
 If you find that you are not producing identical copies of the originals, or if the program never terminates, then revisit [your lock/unlock placement](#determine-where-to-lock-and-unlock-the-mutex).
+
+> 🏎️ **Remove all Data Races**
+> 
+> If `ThreadSanitizer` still issues warnings, then you are not finished.
+> 
+> If you follow the assignment's instructions, then obtaining consistently-correct copies will generally coincide with eliminating the data races.
+> 
+> A few students in the past, instead of following the instructions, rewrote portions of *duplicator.c*.
+> Their modifications appeared to produce correct copies.
+> They did not, however, eliminate the data races.
+> Race conditions that rarely produce observable errors are pernicious because ordinary functional tests are unlikely to detect the error,
+> and the error may manifest at particularly inopportune times -- such as during grading.
+> 
+> You are finished when your program:
+> - Terminates without deadlock, livelock, or starvation;
+> - Makes correct copies; and
+> - Produces no `ThreadSanitizer` warnings. 
 
 You can test with larger files, using `diff` instead of `cat` to check for differences.
 (If `diff` produces no output, then there is no difference between the files.)
@@ -82,15 +99,9 @@ For example:
 ```shell
 build/duplicator src/duplicator.c copy.c; diff src/duplicator.c copy.c
 ```
-<!--
-or:
-```shell
-build/duplicator data/answers.txt copy.txt; diff data/answers.txt copy.txt
-```
--->
 
 ---
 
-|              [⬅️](04-understand-race-condition.md)               |      [⬆️](../README.md)      |         [➡️](06-grading.md)          |
-|:----------------------------------------------------------------:|:----------------------------:|:------------------------------------:|
-| [Understand the Race Condition](04-understand-race-condition.md) | [Front Matter](../README.md) | [Turn-In and Grading](06-grading.md) |
+|           [➡️](05-thread-sanitizer.md)            |      [⬆️](../README.md)      |         [➡️](07-grading.md)          |
+|:-------------------------------------------------:|:----------------------------:|:------------------------------------:|
+| [About `ThreadSanitizer`](05-thread-sanitizer.md) | [Front Matter](../README.md) | [Turn-In and Grading](07-grading.md) |

@@ -4,15 +4,18 @@
  *
  * @author (TYPE YOUR NAME HERE)
  *
- * @brief Unit tests for FloatLab.
+ * @brief Unit tests for DuplicatorLab.
  *
  ******************************************************************************/
 
 /*
- * FloatLab assignment and starter code (c) 2019-26 Christopher A. Bohn
- * FloatLab solution (c) the above-named student
+ * DuplicatorLab assignment and starter code (c) 2019-26 Christopher A. Bohn
+ * DuplicatorLab solution (c) the above-named student
  */
 
+#if !defined (_POSIX_C_SOURCE)
+#define _POSIX_C_SOURCE 200809L
+#endif
 #include "unit-tests.h"
 #include "../src/duplicator.h"
 

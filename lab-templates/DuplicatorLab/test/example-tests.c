@@ -14,9 +14,12 @@
  ******************************************************************************/
 
 /*
- * DuplicatorLab assignment and starter code (c) 2022-25 Christopher A. Bohn
+ * DuplicatorLab assignment and starter code (c) 2022-26 Christopher A. Bohn
  */
 
+#if !defined (_POSIX_C_SOURCE)
+#define _POSIX_C_SOURCE 200809L
+#endif
 #include <stdint.h>
 #include <stdio.h>
 #include "unit-tests.h"
@@ -36,13 +39,13 @@ char const threelines[] = {
 #embed "../data/threelines.txt"
 };
 
-char const paleolama[] = {
-#embed "../data/paleolama.txt"
+char const palaeolama[] = {
+#embed "../data/palaeolama.txt"
 };
 
-char data_sink[sizeof(threelines) + sizeof(paleolama)];   // guaranteed to be big enough for either source, regardless of which is bigger
+char data_sink[sizeof(threelines) + sizeof(palaeolama)];    // guaranteed to be big enough for either source, regardless of which is bigger
 
-char const zeroes[sizeof(threelines) + sizeof(paleolama)];
+char const zeroes[sizeof(threelines) + sizeof(palaeolama)];
 
 struct files {
     FILE *source;
@@ -72,19 +75,19 @@ TEST(test_threelines)
     get_file_streams(&files, threelines, sizeof(threelines));
     duplicate(files.source, files.destination);
 //    fprintf(stderr, "%s\n", data_sink);
+    fclose(files.source);
+    fclose(files.destination);
     ASSERT_EQUAL_MEMORY(threelines, data_sink, sizeof(threelines));
     ASSERT_EQUAL_MEMORY(zeroes, data_sink + sizeof(threelines), sizeof(data_sink) - sizeof(threelines));
-    fclose(files.source);
-    fclose(files.destination);
 END_TEST
 
-TEST(test_paleolama)
+TEST(test_palaeolama)
     struct files files;
-    get_file_streams(&files, paleolama, sizeof(paleolama));
+    get_file_streams(&files, palaeolama, sizeof(palaeolama));
     duplicate(files.source, files.destination);
 //    fprintf(stderr, "%s\n", data_sink);
-    ASSERT_EQUAL_MEMORY(paleolama, data_sink, sizeof(paleolama));
-    ASSERT_EQUAL_MEMORY(zeroes, data_sink + sizeof(paleolama), sizeof(data_sink) - sizeof(paleolama));
     fclose(files.source);
     fclose(files.destination);
+    ASSERT_EQUAL_MEMORY(palaeolama, data_sink, sizeof(palaeolama));
+    ASSERT_EQUAL_MEMORY(zeroes, data_sink + sizeof(palaeolama), sizeof(data_sink) - sizeof(palaeolama));
 END_TEST

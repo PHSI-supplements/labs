@@ -98,6 +98,7 @@ if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
             -DGADGETS_SIZE=4096
             -DVALIDATION_CODE_SIZE=65536
             -DVALIDATION_DATA_SIZE=256
+            -D_FORTIFY_SOURCE=0
     )
     target_link_options(target PRIVATE
             -no-pie

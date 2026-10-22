@@ -114,6 +114,7 @@ No other use of generative AI is permitted on this assignment without explicit p
 - [Getting Started](doc/01-getting-started.md)
 - [Defusing a Bomb](doc/02-defusing-a-bomb.md)
 - [Partial Source Code](doc/03-bomb.c.md)
+- [Tips, Tricks, and Gotchas](doc/04-tips.md)
 - [Turn-In and Grading](doc/05-grading.md)
 
 
