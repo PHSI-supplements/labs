@@ -48,6 +48,8 @@ This assignment is worth 20 points.
   - [ ] **+2** Terminates without deadlock, livelock, or starvation
   - [ ] **+3** Makes correct copies
   - [ ] **+3** Produces no `ThreadSanitizer` warnings
+- Penalty:
+  - **No credit** for rewriting `duplictor.c` as a sequential program
 
 [//]: # (- Penalties:)
 [//]: # (  - [ ] **-1** for each line of code added other than calls to `pthread_mutex_init&#40;&#41;`, `pthread_mutex_destroy&#40;&#41;`, `pthread_mutex_lock&#40;&#41;`, and `pthread_mutex_unlock&#40;&#41;`)
