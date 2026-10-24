@@ -35,24 +35,18 @@ Disassembly of section .text:
 
 The lines in the "text" section show
 ```
-instruction-address : instruction-bytes      assembly-instruction      possible-comments
+instruction-displacement : instruction-bytes      assembly-instruction      possible-comments
 ```
 
-You can use the instruction-bytes column to prepare your `stageN.hex` file:
+Copy the text section into your `stageN.hex` file, and comment-out the plain-text assembly instructions:
 ```text
-48 c7 c3 de c0 00 00    // movq  $0xC0DE, %rbx
-48 01 c1                // addq  %rax, %rcx
-52                      // pushq %rdx
-```
-You might want to apply some formatting to keep track of the number of bytes used:
-```text
-48 c7 c3 de c0 00 00    /*  7 */    // movq  $0xC0DE, %rbx
-                     48 /*  8 */    // addq  %rax, %rcx   
-01 c1                   /* 10 */    //    (add, cont'd)   
-      52                /* 11 */    // pushq %rdx         
+   0:   48 c7 c3 de c0 00 00    // mov    $0xc0de,%rbx
+   7:   48 01 c1                // add    %rax,%rcx
+   a:   52                      // push   %rdx
 ```
 
-You can pass this file through `hex2raw` before sending it to `target`.
+After adding any necessary padding, addresses, and data, 
+you can pass this file through `hex2raw` before sending it to `target`.
 
 
 ### A64
@@ -85,23 +79,19 @@ Disassembly of section .text:
 
 The lines in the "text" section show
 ```
-instruction-address : instruction-bytes      assembly-instruction      possible-comments
+instruction-displacement : instruction-bytes      assembly-instruction      possible-comments
 ```
 
-You can use the instruction-bytes column to prepare your `stageN.hex` file, byte-reversing the instructions' bytes:
+Copy the text section into your `stageN.hex` file, and comment-out the plain-text assembly instructions:
 ```text
-C3 1B 98 52             // mov w3, #0xC0DE
-A1 5C 2C 91             // add x1, x5, #0xB17
-E2 1F BF A9             // stp x2, x7, [sp, -16]!
-```
-You might want to apply some formatting to keep track of the number of bytes used:
-```text
-C3 1B 98 52             /*  4 */    // mov w3, #0xC0DE
-            A1 5C 2C 91 /*  8 */    // add x1, x5, #0xB17
-E2 1F BF A9             /* 12 */    // stp x2, x7, [sp, -16]!
+   0:   52981bc3        // mov     w3, #0xc0de                     // #49374
+   4:   912c5ca1        // add     x1, x5, #0xb17
+   8:   a9bf1fe2        // stp     x2, x7, [sp, #-16]!
 ```
 
-You can pass this file through `hex2raw` before sending it to `target`.
+After adding any necessary padding, addresses, and data,
+you can pass this file through `hex2raw` before sending it to `target`.
+
 
 
 ---

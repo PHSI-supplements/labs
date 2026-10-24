@@ -3,8 +3,8 @@
   "partner": null,
   "external_references_used": [],
   "environment": {
-    "architecture": "@ARCH@",
-    "os": "@OS@"
+    "architecture": "A64",
+    "os": ""
   },
   "usage_notes": [
     "'late_days_used' must be an integer (no quotes).",
